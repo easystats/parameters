@@ -1,14 +1,36 @@
 #' Number of components/factors to retain in PCA/FA
 #'
-#' This function runs many existing procedures for determining how many factors to retain for your factor analysis (FA) or dimension reduction (PCA). It returns the number of factors based on the maximum consensus between methods. In case of ties, it will keep the simplest models and select the solution with the less factors.
+#' This function runs many existing procedures for determining how many factors
+#' to retain/extract from factor analysis (FA) or dimension reduction (PCA). It
+#' returns the number of factors based on the maximum consensus between methods.
+#' In case of ties, it will keep the simplest model and select the solution
+#' with the fewer factors.
 #'
 #' @param x A data frame.
-#' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.
-#' @param rotation Only used for VSS (Very Simple Structure criterion, see \code{\link[psych]{VSS}}). The rotation to apply. Can be \code{"none"}, \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"} for oblique transformations.
-#' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components. \code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
-#' @param package These are the packages from which methods are used. Can be \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
-#' @param safe If \code{TRUE}, will run all the procedures in try blocks, and will only return those that work and silently skip the ones that may fail.
-#' @param cor An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If \code{NULL}, will compute it by running \code{cor()} on the passed data.
+#' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to
+#'   do.
+#' @param rotation Only used for VSS (Very Simple Structure criterion, see
+#'   \code{\link[psych]{VSS}}). The rotation to apply. Can be \code{"none"},
+#'   \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"},
+#'   \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal
+#'   rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
+#'   \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and
+#'   \code{"cluster"} for oblique transformations.
+#' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for
+#'   Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS)
+#'   factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for
+#'   Principal Components. \code{"default"} will select \code{"minres"} if
+#'   \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
+#' @param package Package from which respective methods are used. Can be
+#'   \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and
+#'   \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger
+#'   datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
+#' @param safe If \code{TRUE}, the function will run all the procedures in try
+#'   blocks, and will only return those that work and silently skip the ones
+#'   that may fail.
+#' @param cor An optional correlation matrix that can be used (note that the
+#'   data must still be passed as the first argument). If \code{NULL}, will
+#'   compute it by running \code{cor()} on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details \code{n_components} is actually an alias for \code{n_factors}, with
@@ -29,7 +51,7 @@
 #'   result <- n_factors(mtcars[1:5], type = "FA")
 #'   as.data.frame(result)
 #'   summary(result)
-#' \donttest{
+#'   \donttest{
 #'   n_factors(mtcars, type = "PCA", package = "all")
 #'   n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
@@ -37,17 +59,48 @@
 #' @return A data frame.
 #'
 #' @references \itemize{
-#'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis. British Journal of statistical psychology, 3(2), 77-85.
-#'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in eigenvalues of a covariance matrix with application to data analysis. British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
-#'   \item Cattell, R. B. (1966). The scree test for the number of factors. Multivariate behavioral research, 1(2), 245-276.
-#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the Optimal Number of Factors to Retain in an Exploratory Factor Analysis. Educational and Psychological Measurement.
-#'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the visual scree test for factor analysis: The standard error scree. Educational and Psychological Measurement, 56(3), 443-451.
-#'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine the number of factors to retain in factor analysis. Multiple Linear Regression Viewpoints, 20(1), 5-9.
-#'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of regression-based variations of the visual scree for determining the number of common factors. Educational and psychological measurement, 62(3), 397-419.
-#'   \item Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M. D., Sadana, R., & Thiyagarajan, J. A. (2018). Investigating the performance of Exploratory Graph Analysis and traditional techniques to identify the number of latent factors: A simulation and tutorial.
-#'   \item Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A new approach for estimating the number of dimensions in psychological research. PloS one, 12(6), e0174035.
-#'   \item Revelle, W., & Rocklin, T. (1979). Very simple structure: An alternative procedure for estimating the optimal number of interpretable factors. Multivariate Behavioral Research, 14(4), 403-414.
-#'   \item Velicer, W. F. (1976). Determining the number of components from the matrix of partial correlations. Psychometrika, 41(3), 321-327.
+#'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis.
+#'   British Journal of statistical psychology, 3(2), 77-85.
+#'
+#'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in
+#'   eigenvalues of a covariance matrix with application to data analysis.
+#'   British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
+#'
+#'   \item Cattell, R. B. (1966). The scree test for the number of factors.
+#'   Multivariate behavioral research, 1(2), 245-276.
+#'
+#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
+#'   Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
+#'   Educational and Psychological Measurement.
+#'
+#'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the
+#'   visual scree test for factor analysis: The standard error scree.
+#'   Educational and Psychological Measurement, 56(3), 443-451.
+#'
+#'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine
+#'   the number of factors to retain in factor analysis. Multiple Linear
+#'   Regression Viewpoints, 20(1), 5-9.
+#'
+#'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of
+#'   regression-based variations of the visual scree for determining the number
+#'   of common factors. Educational and psychological measurement, 62(3),
+#'   397-419.
+#'
+#'   \item Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
+#'   D., Sadana, R., & Thiyagarajan, J. A. (2018). Investigating the performance
+#'   of Exploratory Graph Analysis and traditional techniques to identify the
+#'   number of latent factors: A simulation and tutorial.
+#'
+#'   \item Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
+#'   new approach for estimating the number of dimensions in psychological
+#'   research. PloS one, 12(6), e0174035.
+#'
+#'   \item Revelle, W., & Rocklin, T. (1979). Very simple structure: An
+#'   alternative procedure for estimating the optimal number of interpretable
+#'   factors. Multivariate Behavioral Research, 14(4), 403-414.
+#'
+#'   \item Velicer, W. F. (1976). Determining the number of components from the
+#'   matrix of partial correlations. Psychometrika, 41(3), 321-327.
 #' }
 #' @importFrom stats cor
 #' @export
@@ -282,7 +335,6 @@ print.n_factors <- function(x, ...) {
   }
 
 
-
   # Text
   text <- paste0(
     "The choice of ",
@@ -335,17 +387,17 @@ print.n_clusters <- print.n_factors
 
 
 
-
-
-
-
-
-
-
 #' Bartlett, Anderson and Lawley Procedures
 #' @keywords internal
 .n_factors_bartlett <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
-  nfac <- nFactors::nBartlett(eigen_values, N = nobs, alpha = 0.05, details = FALSE, model = model)$nFactors
+  nfac <- nFactors::nBartlett(
+    eigen_values,
+    N = nobs,
+    alpha = 0.05,
+    details = FALSE,
+    model = model
+  )$nFactors
+
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = .capitalize(names(nfac)),
@@ -357,7 +409,13 @@ print.n_clusters <- print.n_factors
 #' Bentler and Yuan's Procedure
 #' @keywords internal
 .n_factors_bentler <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
-  nfac <- .nBentler(x = eigen_values, N = nobs, model = model, alpha = 0.05, details = FALSE)$nFactors
+  nfac <- .nBentler(
+    x = eigen_values,
+    N = nobs,
+    model = model,
+    alpha = 0.05,
+    details = FALSE
+  )$nFactors
 
   data.frame(
     n_Factors = as.numeric(nfac),
@@ -405,6 +463,7 @@ print.n_clusters <- print.n_factors
 #' @keywords internal
 .n_factors_scree <- function(eigen_values = NULL, model = "factors") {
   nfac <- unlist(nFactors::nScree(x = eigen_values, cor = TRUE, model = model)$Components)
+
   data.frame(
     n_Factors = as.numeric(nfac),
     Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
@@ -426,14 +485,15 @@ print.n_clusters <- print.n_factors
 
 
 
-
-
-
 # EGAnet ------------------------
 
 #' @importFrom utils capture.output
 #' @keywords internal
-.n_factors_ega <- function(x = NULL, cor = NULL, nobs = NULL, eigen_values = NULL, type = "FA") {
+.n_factors_ega <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           eigen_values = NULL,
+                           type = "FA") {
 
   # Replace with own corelation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
@@ -579,78 +639,72 @@ print.n_clusters <- print.n_factors
 
 
 
-
-
-
-
-
 # Re-implementation of nBentler in nFactors ------------------------
 
 #' @importFrom stats lm
 #' @keywords internal
-.nBentler <-
-  function(x,
-           N,
-           model = model,
-           log = TRUE,
-           alpha = 0.05,
-           cor = TRUE,
-           details = TRUE,
-           ...) {
-    if (!requireNamespace("nFactors", quietly = TRUE)) {
-      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
-    }
-
-    lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
-    if (length(which(lambda < 0)) > 0) {
-      stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
-    }
-
-    minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
-    maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
-
-
-    n <- N
-    significance <- alpha
-    min.k <- 3
-    LRT <- data.frame(
-      q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
-      LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
-      b = numeric(length(lambda) - min.k),
-      p = numeric(length(lambda) - min.k),
-      convergence = numeric(length(lambda) - min.k)
-    )
-    bentler.n <- 0
-    for (i in 1:(length(lambda) - min.k)) {
-      temp <-
-        nFactors::bentlerParameters(
-          x = lambda,
-          N = n,
-          nFactors = i,
-          log = log,
-          cor = cor,
-          minPar = minPar,
-          maxPar = maxPar,
-          graphic = FALSE
-        )
-      LRT[i, 3] <- temp$lrt
-      LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
-      LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
-      LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
-      LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
-      LRT[i, 2] <- i
-      LRT[i, 1] <- length(lambda) - i
-    }
-    # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
-    for (i in 1:(length(lambda) - min.k)) {
-      if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-      if (i > 1) {
-        if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-      }
-    }
-    if (bentler.n == 0) bentler.n <- length(lambda)
-    if (details == TRUE) details <- LRT else details <- NULL
-    res <- list(detail = details, nFactors = bentler.n)
-    class(res) <- c("nFactors", "list")
-    res
+.nBentler <- function(x,
+                      N,
+                      model = model,
+                      log = TRUE,
+                      alpha = 0.05,
+                      cor = TRUE,
+                      details = TRUE,
+                      ...) {
+  if (!requireNamespace("nFactors", quietly = TRUE)) {
+    stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
   }
+
+  lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
+  if (length(which(lambda < 0)) > 0) {
+    stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.")
+  }
+
+  minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+  maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
+
+
+  n <- N
+  significance <- alpha
+  min.k <- 3
+  LRT <- data.frame(
+    q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
+    LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
+    b = numeric(length(lambda) - min.k),
+    p = numeric(length(lambda) - min.k),
+    convergence = numeric(length(lambda) - min.k)
+  )
+  bentler.n <- 0
+  for (i in 1:(length(lambda) - min.k)) {
+    temp <-
+      nFactors::bentlerParameters(
+        x = lambda,
+        N = n,
+        nFactors = i,
+        log = log,
+        cor = cor,
+        minPar = minPar,
+        maxPar = maxPar,
+        graphic = FALSE
+      )
+    LRT[i, 3] <- temp$lrt
+    LRT[i, 4] <- ifelse(is.null(temp$coef[1]), NA, temp$coef[1])
+    LRT[i, 5] <- ifelse(is.null(temp$coef[2]), NA, temp$coef[2])
+    LRT[i, 6] <- ifelse(is.null(temp$p.value), NA, temp$p.value)
+    LRT[i, 7] <- ifelse(is.null(temp$convergence), NA, temp$convergence)
+    LRT[i, 2] <- i
+    LRT[i, 1] <- length(lambda) - i
+  }
+  # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
+  for (i in 1:(length(lambda) - min.k)) {
+    if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    if (i > 1) {
+      if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    }
+  }
+  if (bentler.n == 0) bentler.n <- length(lambda)
+  if (details == TRUE) details <- LRT else details <- NULL
+  res <- list(detail = details, nFactors = bentler.n)
+  class(res) <- c("nFactors", "list")
+  res
+}

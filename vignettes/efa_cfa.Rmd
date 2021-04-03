@@ -54,7 +54,7 @@ This is why PCA is popular for feature reduction, as it will try to best
 represent the variance contained in the original data, minimizing the loss of
 information. On the other hand, EFA is usually in the context of exploring the
 latent dimensions that might be hidden in the observed variables, without
-necessary striving at representing the whole dataset.
+necessarily striving to represent the whole dataset.
 
 To illustrate EFA, let us use the [International Personality Item Pool](https://ipip.ori.org/) data available in the
 [`psych`](https://www.personality-project.org/r/html/bfi.html) package. It
@@ -63,27 +63,29 @@ following the **big 5** personality structure.
 
 ## Factor Structure (Sphericity and KMO)
 
-The first step is to test the dataset for factor analysis suitability. Two
-existing methods are the **Bartlett's Test of Sphericity** and the **Kaiser,
-Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)**. The former tests
-whether a matrix is significantly different from an identity matrix. This
-statistical test for the presence of correlations among variables, providing the
-statistical probability that the correlation matrix has significant correlations
-among at least some of variables. As for factor analysis to work, some
-relationships between variables are needed, thus, a significant Bartlett's test
-of sphericity is required, say *p* < .001. The latter was introduced by Kaiser
-(1970) as the Measure of Sampling Adequacy (MSA), later modified by Kaiser and
-Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1,
-indicates the degree to which each variable in a set is predicted without error
-by the other variables. A value of 0 indicates that the sum of partial
-correlations is large relative to the sum correlations, indicating factor
-analysis is likely to be inappropriate. A KMO value close to 1 indicates that
-the sum of partial correlations is not large relative to the sum of correlations
-and so factor analysis should yield distinct and reliable factors.
+The first step is to test if the dataset is suitable for carrying out factor analysis. There are two
+
+- **Bartlett's Test of Sphericity**: This tests whether a matrix (of correlations)
+is significantly different from an identity matrix. The test provides
+probability that the correlation matrix has significant correlations among at
+least some of the variables in a dataset, a prerequisite for factor analysis to
+work. In other words, before starting with factor analysis, one needs to check
+whether Bartlett’s test of sphericity is significant.
+
+- **Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)**: This test
+was introduced by Kaiser (1970) as the Measure of Sampling Adequacy (MSA), later
+modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic,
+which can vary from 0 to 1, indicates the degree to which each variable in a set
+is predicted without error by the other variables. A value of 0 indicates that
+the sum of partial correlations is large relative to the sum correlations,
+indicating factor analysis is likely to be inappropriate. A KMO value close to 1
+indicates that the sum of partial correlations is not large relative to the sum
+of correlations and so factor analysis should yield distinct and reliable
+factors.
 
 Both tests can be performed by using the `check_factorstructure()` function.
 
-```{r }
+```{r}
 library(parameters)
 library(dplyr)
 library(psych)
@@ -102,10 +104,11 @@ Now that we are confident that our dataset is appropriate, we will explore a
 factor structure made of 5 latent variables, corresponding to the items' authors
 theory of personality.
 
-```{r }
+```{r}
 # Fit an EFA
 efa <- psych::fa(data, nfactors = 5) %>%
   model_parameters(sort = TRUE, threshold = "max")
+
 efa
 ```
 
@@ -113,23 +116,22 @@ As we can see, the 25 items nicely spread on the 5 latent factors, the famous
 **big 5**. Based on this model, we can now predict back the scores for each
 individual for these new variables:
 
-```{r , eval=FALSE}
-predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
-```
-```{r , echo=FALSE}
+```{r}
+# let's look only at the first five individuals
 head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")), 5)
 ```
 
 ## How many factors to retain in Factor Analysis (FA)
 
-When running a **factor analysis (FA)**, one often needs to specify **how many
-components** (or latent variables) to retain or to extract. This decision is
+When running a **factor analysis (FA)**, one often needs to specify **how many components** (or latent variables) to retain or to extract. This decision is
 often motivated or supported by some statistical indices and procedures aiming
 at finding the optimal number of factors.
 
-Interestingly, a huge amount of methods exist to statistically address this
-issue, giving sometimes very different results. Unfortunately, there is no
-consensus on **which method to use**, or which is the best.
+There are a huge number of methods exist to statistically address this issue,
+and they can sometimes give very different results.
+
+> **Unfortunately, there is no consensus on which method to use, or which is the
+best.**
 
 ### The Method Agreement procedure
 
@@ -144,24 +146,24 @@ package. One can provide a dataframe, and the function will run a large number
 of routines and return the optimal number of factors based on the higher
 consensus.
 
-```{r }
+```{r}
 n <- n_factors(data)
 n
 ```
 
-Interestingly, the smallest nubmer of factors that most methods suggest is 6...
-Which is consistent whith the newer models of personality (e.g., HEXACO).
+Interestingly, the smallest nubmer of factors that most methods suggest is 6,
+which is consistent with the newer models of personality (e.g., HEXACO).
 
 More details, as well as a summary table can be obtained as follows:
 
-```{r }
+```{r}
 as.data.frame(n)
 summary(n)
 ```
 
 A plot can also be obtained (the `see` package must be loaded):
 
-```{r }
+```{r}
 library(see)
 
 plot(n) + theme_modern()
@@ -171,22 +173,23 @@ plot(n) + theme_modern()
 
 We've seen above that while an EFA with 5 latent variables works great on our
 dataset, a structure with 6 latent factors might in fact be more appropriate.
-How can we **statistically test** if that's actually the case? This can be done
-using Confirmatory Factor Analysis (CFA), that bridges factor analysis with
-Structural Equation Modelling (SEM).
+How can we **statistically test** if that is actually the case? This can be done
+using **Confirmatory Factor Analysis (CFA)** (as opposed to **Exploratory** FA),
+which bridges factor analysis with Structural Equation Modelling (SEM).
 
-However, in order to do that cleanly, EFA should be independent from CFA, in the
-sense that the factor structure should be explored on a **"training" set**, and
-then tested (or "confirmed") on a **test set**. In other words, the dataset used
-for exploration and confirmation is not the same. Note that this procedure is
-also standard in the field of machine learning.
+However, in order to do that cleanly, EFA should be **independent** from CFA:
+the factor structure should be explored in a **"training" set**, and then tested
+(or "confirmed") in a **"testing" set**. 
+
+In other words, the dataset used for exploration and confirmation should not be
+the same, a standard widely adopted in the field of machine learning.
 
 ### Partition the data
 
 The data can be easily split into two sets with the `data_partition()` function,
 through which we will use 70\% of the sample as training and the rest as test.
 
-```{r }
+```{r}
 partitions <- data_partition(data, training_proportion = 0.7)
 training <- partitions$training
 test <- partitions$test
@@ -198,25 +201,26 @@ In the next step, we will run two EFA models on the training set, specifying 5
 and 6 latent factors respectively, that we will then transform into CFA
 structures.
 
-```{r }
+```{r}
 structure_big5 <- psych::fa(training, nfactors = 5) %>%
   efa_to_cfa()
 structure_big6 <- psych::fa(training, nfactors = 6) %>%
   efa_to_cfa()
 
-# Investigate how a model looks
+# Investigate how the models look
 structure_big5
+
+structure_big6
 ```
 
-As we can see, a structure is just a string encoding how the **manifest
-variables** (the observed variables) are integrated into latent variables.
+As we can see, a structure is just a string encoding how the **manifest variables** (the observed variables) are integrated into **latent variables**.
 
 ### Fit and Compare models
 
-We can finally with that structure to the test set using the `lavaan` package,
-and compare these models together:
+We can finally apply this structure to the testing dataset using the `lavaan`
+package, and compare these models against each other:
 
-```{r }
+```{r}
 library(lavaan)
 library(performance)
 
@@ -230,11 +234,13 @@ All in all, it seems that the big 5 structure remains quite reliable.
 
 # Structural Equation Modeling
 
-The last example shows one of the enormous amount of modeling possibilities for
+<!-- TO DO: needs a better intro -->
+
+The previous example shows one of the enormous amount of modeling possibilities for
 structural equation models, in particular an example for mediation analysis,
 i.e. a model that estimates indirect effects in partial mediation structures.
 
-```{r }
+```{r}
 set.seed(1234)
 X <- rnorm(100)
 M <- 0.5 * X + rnorm(100)

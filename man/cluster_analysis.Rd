@@ -52,7 +52,9 @@ to dummy-variables (numeric 0/1) and are included in the cluster analysis.
 If \code{FALSE}, factors and character vectors are removed before computing
 the cluster analysis.}
 
-\item{package}{These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
+\item{package}{Package from which methods are to be called to determine the
+number of clusters. Can be \code{"all"} or a vector containing
+\code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
 \item{verbose}{Toggle warnings and messages.}
 }
