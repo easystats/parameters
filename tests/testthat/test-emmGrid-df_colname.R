@@ -10,8 +10,8 @@ if (.runThisTest &&
   data(fiber)
 
   m <- lm(strength ~ diameter + machine, data = fiber)
-  emm <- emmeans::emmeans(m, "machine")
-  es1 <- emmeans::eff_size(emm, sigma = sigma(m), edf = df.residual(m))
+  emm <- emmeans(m, "machine")
+  es1 <- eff_size(emm, sigma = sigma(m), edf = df.residual(m))
 
   sleep$group <- as.factor(sleep$group)
   m2 <- lme4::lmer(extra ~ group + (1 | ID), sleep)
