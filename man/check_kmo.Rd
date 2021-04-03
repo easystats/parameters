@@ -15,14 +15,26 @@ check_kmo(x, ...)
 A list of indices related to KMO.
 }
 \description{
-Kaiser (1970) introduced a Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables.
+Kaiser (1970) introduced a Measure of Sampling Adequacy (MSA), later modified
+by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can
+vary from 0 to 1, indicates the degree to which each variable in a set is
+predicted without error by the other variables.
 }
 \details{
-A value of 0 indicates that the sum of partial correlations is large relative to the sum correlations, indicating factor analysis is likely to be inappropriate. A KMO value close to 1 indicates that the sum of partial correlations is not large relative to the sum of correlations and so factor analysis should yield distinct and reliable factors.
+A value of 0 indicates that the sum of partial correlations is large relative
+to the sum correlations, indicating factor analysis is likely to be
+inappropriate. A KMO value close to 1 indicates that the sum of partial
+correlations is not large relative to the sum of correlations and so factor
+analysis should yield distinct and reliable factors.
 
-Kaiser (1975) suggested that KMO > .9 were marvelous, in the .80s, meritourious, in the .70s, middling, in the .60s, mediocre, in the .50s, miserable, and less than .5, unacceptable. Hair et al. (2006) suggest accepting a value > 0.5. Values between 0.5 and 0.7 are mediocre, and values between 0.7 and 0.8 are good.
+Kaiser (1975) suggested that KMO > .9 were marvelous, in the .80s,
+meritorious, in the .70s, middling, in the .60s, mediocre, in the .50s,
+miserable, and less than .5, unacceptable. Hair et al. (2006) suggest
+accepting a value > 0.5. Values between 0.5 and 0.7 are mediocre, and values
+between 0.7 and 0.8 are good.
 
-This function is strongly inspired by the \code{KMO} function in the \code{psych} package (Revelle, 2016). All credits go to its author.
+This function is strongly inspired by the \code{KMO} function in the
+  \code{psych} package (Revelle, 2016). All credit goes to its author.
 }
 \examples{
 library(parameters)
@@ -30,9 +42,16 @@ check_kmo(mtcars)
 }
 \references{
 \itemize{
-  \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and data reduction.
-  \item Kaiser, H. F. (1970). A second generation little jiffy. Psychometrika, 35(4), 401-415.
-  \item Kaiser, H. F., & Rice, J. (1974). Little jiffy, mark IV. Educational and psychological measurement, 34(1), 111-117.
-  \item Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31-36.
+  \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
+  and data reduction.
+
+  \item Kaiser, H. F. (1970). A second generation little jiffy.
+  Psychometrika, 35(4), 401-415.
+
+  \item Kaiser, H. F., & Rice, J. (1974). Little jiffy, mark IV. Educational
+  and psychological measurement, 34(1), 111-117.
+
+  \item Kaiser, H. F. (1974). An index of factorial simplicity.
+  Psychometrika, 39(1), 31-36.
 }
 }

@@ -1,14 +1,20 @@
 #' Number of clusters to extract
 #'
-#' This function runs many existing procedures for determining how many clusters are present in your data. It returns the number of clusters based on the maximum consensus. In case of ties, it will select the solution with the less clusters.
+#' This function runs many existing procedures for determining how many clusters
+#' are present in data. It returns the number of clusters based on the maximum
+#' consensus. In case of ties, it will select the solution with fewer clusters.
 #'
 #' @inheritParams check_clusterstructure
 #' @param force Logical, if \code{TRUE}, factors are converted to numerical
 #'   values in order to be included in the data for determining the number of
-#'   clusters. By default, factors are removed, because most methods that determine
-#'   the number of clusters need numeric input only.
-#' @param package These are the packages from which methods are used to determine the number of clusters. Can be \code{"all"} or a vector containing \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.
-#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is computationally heavy.
+#'   clusters. By default, factors are removed, because most methods that
+#'   determine the number of clusters need numeric input only.
+#' @param package Package from which methods are to be called to determine the
+#'   number of clusters. Can be \code{"all"} or a vector containing
+#'   \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.
+#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index =
+#'   "allong"} in \code{NbClust}). This has been deactivated by default as it is
+#'   computationally heavy.
 #'
 #' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -44,15 +50,19 @@ n_clusters <- function(x,
   }
 
   out <- data.frame()
+
   if ("nbclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
   }
+
   if ("mclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_mclust(x))
   }
+
   if ("cluster" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_cluster(x))
   }
+
   if ("M3C" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_M3C(x, fast = fast))
   }
@@ -69,6 +79,7 @@ n_clusters <- function(x,
       dupli <- c(dupli, i)
     }
   }
+
   if (!is.null(dupli)) {
     out <- out[-dupli, ]
   }
@@ -89,13 +100,6 @@ n_clusters <- function(x,
 
 
 
-
-
-
-
-
-
-
 #' @keywords internal
 .n_clusters_mclust <- function(x, ...) {
   if (!requireNamespace("mclust", quietly = TRUE)) {
@@ -109,9 +113,6 @@ n_clusters <- function(x,
 }
 
 
-
-
-
 #' @importFrom utils capture.output
 #' @keywords internal
 .n_clusters_cluster <- function(x, ...) {
@@ -121,17 +122,20 @@ n_clusters <- function(x,
 
   # listwise deletion of missing
   x <- stats::na.omit(x)
+
   # Gap Statistic for Estimating the Number of Clusters
   junk <- utils::capture.output(gap <- cluster::clusGap(x, kmeans, K.max = 10, B = 100)$Tab)
+
   # Gap Statistic for Estimating the Number of Clusters
-  n <- cluster::maxSE(f = gap[, "gap"], SE.f = gap[, "SE.sim"], method = "Tibs2001SEmax", SE.factor = 1)
+  n <- cluster::maxSE(
+    f = gap[, "gap"],
+    SE.f = gap[, "SE.sim"],
+    method = "Tibs2001SEmax",
+    SE.factor = 1
+  )
+
   data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
 }
-
-
-
-
-
 
 
 
@@ -150,15 +154,20 @@ n_clusters <- function(x,
   } else {
     indices <- "allong"
   }
-  junk <- utils::capture.output(n <- NbClust::NbClust(x, min.nc = 2, max.nc = 9, method = "ward.D2", index = indices))
+
+  junk <- utils::capture.output(n <- NbClust::NbClust(
+    x,
+    min.nc = 2,
+    max.nc = 9,
+    method = "ward.D2",
+    index = indices
+  ))
   grDevices::dev.off()
   unlink(ff)
 
   out <- as.data.frame(t(n$Best.nc))
   data.frame(n_Clusters = out$Number_clusters, Method = row.names(out), Package = "NbClust")
 }
-
-
 
 
 #' @keywords internal
@@ -171,7 +180,12 @@ n_clusters <- function(x,
   colnames(data) <- paste0("x", seq(1, ncol(data))) # Add columns names as required by the package
 
   suppressMessages(out <- M3C::M3C(data, method = 2))
-  out <- data.frame(n_Clusters = which.max(out$scores$PCSI), Method = "Consensus clustering algorithm (penalty term)", Package = "M3C")
+
+  out <- data.frame(
+    n_Clusters = which.max(out$scores$PCSI),
+    Method = "Consensus clustering algorithm (penalty term)",
+    Package = "M3C"
+  )
 
   # Doesn't work
   # if (fast == FALSE){
