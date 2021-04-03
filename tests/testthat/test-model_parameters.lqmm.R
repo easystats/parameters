@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("testthat") && require("lqmm") && require("parameters")) {
+if (FALSE && require("testthat") && require("lqmm") && require("parameters")) {
   # lqm -----------------------
 
   test_that("model_parameters - lqm", {
