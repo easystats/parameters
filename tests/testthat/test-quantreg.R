@@ -17,8 +17,10 @@ if (.runThisTest &&
   if (packageVersion("insight") > "0.13.2") {
     mp <- suppressWarnings(model_parameters(m1))
     test_that("mp_rqss", {
-      expect_identical(mp$Parameter, c("(Intercept)", "w"))
-      expect_equal(mp$Coefficient, c(17.63057, 1.12506), tolerance = 1e-3)
+      expect_identical(mp$Parameter, c("(Intercept)", "w", "cbind(x, y)"))
+      expect_equal(mp$Coefficient, c(17.63057, 1.12506, NA), tolerance = 1e-3)
+      expect_equal(mp$df_error, c(35, 35, NA), tolerance = 1e-3)
+      expect_equal(mp[["df"]], c(NA, NA, 70), tolerance = 1e-3)
     })
   }
 
