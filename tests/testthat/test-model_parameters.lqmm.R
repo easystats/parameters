@@ -62,7 +62,8 @@ if (.runThisTest && require("testthat") && require("lqmm") && require("parameter
         data = test,
         tau = 0.5,
         nK = 11,
-        type = "normal"
+        type = "normal",
+        data = test
       )
 
     df_lqmm <- as.data.frame(model_parameters(fit.lqmm))
