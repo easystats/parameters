@@ -150,7 +150,7 @@ model_parameters.brmsfit <- function(model,
   # add weights
   params$Weight <- 1 / c(insight::get_response(model)[[2]], NA)
 
-  # merge description with diagnostis
+  # merge description with diagnostic
   params <- merge(params, params_diagnostics, by = "Parameter", all.x = TRUE, sort = FALSE)
 
   # Renaming
