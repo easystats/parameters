@@ -195,6 +195,9 @@
   eta_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   epsilon_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
   cohens_g <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rank_biserial <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rank_epsilon_squared <span class='op'>=</span> <span class='cn'>NULL</span>,
+  kendalls_w <span class='op'>=</span> <span class='cn'>NULL</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -239,6 +242,22 @@ applies to objects from <code><a href='https://rdrr.io/r/stats/oneway.test.html'
       <th>cohens_g</th>
       <td><p>If <code>TRUE</code>, compute Cohen's g as index of effect size.
 Only applies to objects from <code><a href='https://rdrr.io/r/stats/mcnemar.test.html'>mcnemar.test()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>rank_biserial</th>
+      <td><p>If <code>TRUE</code>, compute the rank-biserial correlation as
+effect size measure. Only applies to objects from <code><a href='https://rdrr.io/r/stats/wilcox.test.html'>wilcox.test()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>rank_epsilon_squared</th>
+      <td><p>If <code>TRUE</code>, compute the rank epsilon squared
+as effect size measure. Only applies to objects from <code><a href='https://rdrr.io/r/stats/kruskal.test.html'>kruskal.test()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>kendalls_w</th>
+      <td><p>If <code>TRUE</code>, compute the Kendall's coefficient of
+concordance as effect size measure. Only applies to objects from
+<code><a href='https://rdrr.io/r/stats/friedman.test.html'>friedman.test()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
