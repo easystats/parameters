@@ -10,21 +10,20 @@
 
 ### `model_parameters()`
 
-* `model_parameters()` for `blavaan` models is now fully treated as Bayesian 
+* `model_parameters()` for `blavaan` models is now fully treated as Bayesian
   model and thus relies on the functions from *bayestestR* (i.e. ROPE, Rhat or
   ESS are reported) .
 
-* The `effects`-argument from `model_parameters()` for mixed models was
-  revised and now shows the random effects variances by default (same 
-  functionality as `random_parameters()`, but mimicking the behaviour from
-  `broom.mixed::tidy()`). When the `group_level` argument is set to `TRUE`,
-  the conditional modes (BLUPs) of the random effects are shown.
+* The `effects`-argument from `model_parameters()` for mixed models was revised
+  and now shows the random effects variances by default (same functionality as
+  `random_parameters()`, but mimicking the behaviour from
+  `broom.mixed::tidy()`). When the `group_level` argument is set to `TRUE`, the
+  conditional modes (BLUPs) of the random effects are shown.
 
 * `model_parameters()` for mixed models now returns an `Effects` column even
-  when there is just one type of "effects", to mimic the behaviour from 
-  `broom.mixed::tidy()`. In conjunction with `standardize_names()` users
-  can get the same column names as in `tidy()` for `model_parameters()`
-  objects.
+  when there is just one type of "effects", to mimic the behaviour from
+  `broom.mixed::tidy()`. In conjunction with `standardize_names()` users can get
+  the same column names as in `tidy()` for `model_parameters()` objects.
 
 * `model_parameters()` for t-tests now uses the group values as column names.
 
@@ -37,13 +36,14 @@
 
 * Minor improvements for models from *quantreg*.
 
-* `model_parameters` supports rank-biserial as effect size measure for
-  `wilcox.test()`.
+* `model_parameters` supports rank-biserial, rank epsilon-squared, and Kendall's
+  *W* as effect size measures for `wilcox.test()`, `kruskal.test`, and
+  `friedman.test`, respectively.
 
 ### Other functions
 
-* `describe_distribution()` gets a `quartiles` argument to include 25th
-  and 75th quartiles of a variable.
+* `describe_distribution()` gets a `quartiles` argument to include 25th and 75th
+  quartiles of a variable.
 
 ## Bug fixes
 
@@ -68,11 +68,11 @@
 
 * Roll-back R dependency to R >= 3.4.
 
-* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`) 
-  can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, 
-  simple slopes (etc) and their CIs.
+* Bootstrapped estimates (from `bootstrap_model()` or `bootstrap_parameters()`)
+  can be passed to `emmeans` to obtain bootstrapped estimates, contrasts, simple
+  slopes (etc) and their CIs.
 
-  * These can then be passed to `model_parameters()` and related functions to 
+  * These can then be passed to `model_parameters()` and related functions to
     obtain standard errors, p-values, etc.
 
 ## Breaking changes
@@ -94,36 +94,37 @@
 
 ## Changes to functions
 
-* Estimation of bootstrapped *p*-values has been re-written to be more accurate.
+* Estimation of bootstrapped *p*-values has been re-written to be more
+  accurate.
 
-* `model_parameters()` for mixed models gains an `effects`-argument, to
-  return fixed, random or both fixed and random effects parameters.
+* `model_parameters()` for mixed models gains an `effects`-argument, to return
+  fixed, random or both fixed and random effects parameters.
 
 * Revised printing for `model_parameters()` for *metafor* models.
 
 * `model_parameters()` for *metafor* models now recognized confidence levels
   specified in the function call (via argument `level`).
 
-* Improved support for effect sizes in `model_parameters()` from *anova* objects.
+* Improved support for effect sizes in `model_parameters()` from *anova*
+  objects.
 
 ## Bug fixes
 
-* Fixed edge case when formatting parameters from polynomial terms with many 
+* Fixed edge case when formatting parameters from polynomial terms with many
   degrees.
-  
-* Fixed issue with random sampling and dropped factor levels in 
+
+* Fixed issue with random sampling and dropped factor levels in
   `bootstrap_model()`.
 
 # parameters 0.11.0
 
 ## New supported model classes
 
-* `coxr` (*coxrobust*), `coeftest` (*lmtest*), `ivfixed` (*ivfixed*), 
-  `ivprobit` (*ivprobit*), `riskRegression` (*riskRegression*),
-  `fitdistr` (*MASS*), `yuen`, `t1way`, `onesampb`, `mcp1` and `mcp2` (*WRS2*),
-  `Anova.mlm` (*car*), `rqs` (*quantreg*), `lmodel2` (*lmodel2*),
-  `summary.lm`, `PMCMR`, `osrt` and `trendPMCMR` (*PMCMRplus*), `bamlss`
-  (*bamlss*).
+* `coxr` (*coxrobust*), `coeftest` (*lmtest*), `ivfixed` (*ivfixed*), `ivprobit`
+  (*ivprobit*), `riskRegression` (*riskRegression*), `fitdistr` (*MASS*),
+  `yuen`, `t1way`, `onesampb`, `mcp1` and `mcp2` (*WRS2*), `Anova.mlm` (*car*),
+  `rqs` (*quantreg*), `lmodel2` (*lmodel2*), `summary.lm`, `PMCMR`, `osrt` and
+  `trendPMCMR` (*PMCMRplus*), `bamlss` (*bamlss*).
 
 ## New functions
 
@@ -140,10 +141,11 @@
 * `model_parameters()` for anova objects gains a `power` argument, to calculate
   the power for each parameter.
 
-* `ci()` for models from *lme4* and *glmmTMB* can now computed profiled confidence
-  intervals, using `method = "profile"`. Consequently, `model_parameters()` with
-  `df_method = "profile"` also computes profiled confidence intervals. For
-  models of class `glmmTMB`, option `"uniroot"` is also available.
+* `ci()` for models from *lme4* and *glmmTMB* can now computed profiled
+  confidence intervals, using `method = "profile"`. Consequently,
+  `model_parameters()` with `df_method = "profile"` also computes profiled
+  confidence intervals. For models of class `glmmTMB`, option `"uniroot"` is
+  also available.
 
 ## Bug fixes
 
@@ -155,14 +157,15 @@
 * Fixed issue in `model_parameters()` for `glmer()` models with p-values that
   were calculated with `df_method = "ml1"` or `df_method = "betwithin"`.
 
-* Fixed issue in `model_parameters()` for multinomial models when response
-  was a character vector (and no factor).
+* Fixed issue in `model_parameters()` for multinomial models when response was a
+  character vector (and no factor).
 
-* Fixed issue in `print_md()` for model-parameters objects from Bayesian models.
+* Fixed issue in `print_md()` for model-parameters objects from Bayesian
+  models.
 
-* Fixed issues with printing of model parameters for multivariate response 
+* Fixed issues with printing of model parameters for multivariate response
   models from *brms*.
-  
+
 * Fixed issue with paired t-tests and `model_parameters()`.
 
 # parameters 0.10.1
@@ -177,7 +180,7 @@
 
 * Fixed issue with `model_parameters()` for models of class `mlm`.
 
-* Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for 
+* Undocumented arguments `digits`, `ci_digits` and `p_digits` worked for
   `print()`, but not when directly called inside `model_parameters()`. Now,
   `model_parameters(model, digits = 5, ci_digits = 8)` works again.
 
@@ -202,7 +205,7 @@
 
 * `Glm` (*rms*), `mediate` (*mediation*).
 
-* `model_parameters()` supports `Gam` models (*gam*), `ridgelm` (*MASS*), 
+* `model_parameters()` supports `Gam` models (*gam*), `ridgelm` (*MASS*),
   `htest` objects from `oneway.test()`, `chisq.test()`, `prop.test()`,
   `mcnemar.test()` and `pairwise.htest` objects, `mcmc.list` (e.g. from
   *bayesGARCH*).
@@ -218,7 +221,7 @@
   _parameters_) into nicely rendered markdown tables.
 
 * `format()`, to create a "pretty data frame" with nicer column names and
-  formatted values. This is one of the worker-functions behind `print()` or 
+  formatted values. This is one of the worker-functions behind `print()` or
   `print_md()`.
 
 ## Changes to functions
@@ -230,21 +233,21 @@
 
 * `model_parameters()` for `htest` objects gains a `cramers_v` and `phi`
   argument, to compute effect size parameters for objects from `chisq.test()`,
-  and a `standardized_D` argument, to compute effect size parameters for 
-  objects from `t.test()`.
+  and a `standardized_D` argument, to compute effect size parameters for objects
+  from `t.test()`.
 
-* `model_parameters()` for `metafor`-models is more stable when called from inside
-  functions.
-  
+* `model_parameters()` for `metafor`-models is more stable when called from
+  inside functions.
+
 * `model_parameters()` for *metaBMA*-models now includes prior information for
   the meta-parameters.
 
-* `model_parameters()` for meta-analysis-models gains a `include_studies`-argument,
-  to include or remove studies from the output.
-  
+* `model_parameters()` for meta-analysis-models gains a
+  `include_studies`-argument, to include or remove studies from the output.
+
 * `model_parameters()` for gam-models now includes the residual df for smooth
-   terms, and no longer the reference df.
-  
+  terms, and no longer the reference df.
+
 * Slightly revised and improved the `print()` method for `model_parameters()`.
 
 ### Other functions
@@ -259,11 +262,10 @@
 
 * Fixed issue in `ci()` for *lme* models with non-positive definite
   variance-covariance.
-  
-* Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()`,
-  `mgcv::gam()`, and `margins::margins()` models, and models from package 
-  *blme*.
 
+* Fixed issue in `model_parameters()` for `nnet::multinom()`, `lqmm::lqm()`,
+  `mgcv::gam()`, and `margins::margins()` models, and models from package
+  *blme*.
 
 # parameters 0.9.0
 
