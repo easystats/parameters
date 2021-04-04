@@ -283,8 +283,8 @@
 <span class="va">structure_big5</span>
 <span class="co">#&gt; # Latent variables</span>
 <span class="co">#&gt; MR2 =~ N1 + N2 + N3 + N4 + N5</span>
-<span class="co">#&gt; MR1 =~ E1 + E2 + E3 + E4 + E5</span>
 <span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span>
+<span class="co">#&gt; MR1 =~ E1 + E2 + E3 + E4 + E5</span>
 <span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span>
 <span class="co">#&gt; MR4 =~ O1 + O2 + O3 + O4 + O5</span>
 
@@ -294,7 +294,8 @@
 <span class="co">#&gt; MR3 =~ C1 + C2 + C3 + C4 + C5</span>
 <span class="co">#&gt; MR1 =~ E1 + E2 + E4 + E5 + N4 + O4</span>
 <span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span>
-<span class="co">#&gt; MR4 =~ E3 + O1 + O2 + O3 + O5</span></code></pre></div>
+<span class="co">#&gt; MR4 =~ E3 + O1 + O2 + O3</span>
+<span class="co">#&gt; MR6 =~ O5</span></code></pre></div>
 <p>As we can see, a structure is just a string encoding how the <strong>manifest variables</strong> (the observed variables) are integrated into <strong>latent variables</strong>.</p>
 </div>
 <div id="fit-and-compare-models" class="section level3">
@@ -311,10 +312,10 @@
 <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">compare_performance</a></span><span class="op">(</span><span class="va">big5</span>, <span class="va">big6</span><span class="op">)</span>
 <span class="co">#&gt; # Comparison of Model Performance Indices</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Name |  Model | Chi2(265) | p (Chi2) | Baseline(300) | p (Baseline) |   GFI |  AGFI |   NFI |  NNFI |   CFI | RMSEA |    RMSEA  CI | p (RMSEA) |   RMR |  SRMR |   RFI |  PNFI |   IFI |   RNI | Loglikelihood |       AIC |       BIC | BIC_adjusted</span>
-<span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; big5 | lavaan |  1357.270 |   &lt; .001 |      5821.528 |       &lt; .001 | 0.857 | 0.824 | 0.767 | 0.776 | 0.802 | 0.075 | [0.07, 0.08] |    &lt; .001 | 0.157 | 0.077 | 0.736 | 0.677 | 0.803 | 0.802 |    -29897.049 | 59914.097 | 60189.762 |    59999.243</span>
-<span class="co">#&gt; big6 | lavaan |  1529.934 |   &lt; .001 |      5821.528 |       &lt; .001 | 0.842 | 0.806 | 0.737 | 0.741 | 0.771 | 0.081 | [0.08, 0.08] |    &lt; .001 | 0.179 | 0.085 | 0.702 | 0.651 | 0.772 | 0.771 |    -29983.381 | 60086.762 | 60362.427 |    60171.907</span></code></pre></div>
+<span class="co">#&gt; Name |  Model |     Chi2 | Chi2_df | p (Chi2) | Baseline(300) | p (Baseline) |   GFI |  AGFI |   NFI |  NNFI |   CFI | RMSEA |    RMSEA  CI | p (RMSEA) |   RMR |  SRMR |   RFI |  PNFI |   IFI |   RNI | Loglikelihood |       AIC |       BIC | BIC_adjusted</span>
+<span class="co">#&gt; --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; big5 | lavaan | 1331.378 | 265.000 |   &lt; .001 |      5374.808 |       &lt; .001 | 0.859 | 0.827 | 0.752 | 0.762 | 0.790 | 0.074 | [0.07, 0.08] |    &lt; .001 | 0.160 | 0.078 | 0.720 | 0.665 | 0.791 | 0.790 |    -30041.777 | 60203.553 | 60479.218 |    60288.699</span>
+<span class="co">#&gt; big6 | lavaan | 1468.941 | 261.000 |   &lt; .001 |      5374.808 |       &lt; .001 | 0.852 | 0.815 | 0.727 | 0.726 | 0.762 | 0.080 | [0.08, 0.08] |    &lt; .001 | 0.179 | 0.085 | 0.686 | 0.632 | 0.764 | 0.762 |    -30110.558 | 60349.116 | 60643.159 |    60439.938</span></code></pre></div>
 <p>All in all, it seems that the big 5 structure remains quite reliable.</p>
 </div>
 </div>
@@ -329,7 +330,7 @@
 <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 <span class="va">M</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fl">0.7</span> <span class="op">*</span> <span class="va">M</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, M <span class="op">=</span> <span class="va">M</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, M <span class="op">=</span> <span class="va">M</span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="st">" # direct effect
              Y ~ c*X
@@ -341,7 +342,7 @@
            # total effect
              total := c + (a*b)
          "</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">Data</span>, test <span class="op">=</span> <span class="st">"Satorra-Bentler"</span><span class="op">)</span>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">df</span>, test <span class="op">=</span> <span class="st">"Satorra-Bentler"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 <span class="co">#&gt; # Regression</span>
 <span class="co">#&gt; </span>
