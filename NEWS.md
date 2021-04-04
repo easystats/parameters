@@ -37,6 +37,9 @@
 
 * Minor improvements for models from *quantreg*.
 
+* `model_parameters` supports rank-biserial as effect size measure for
+  `wilcox.test()`.
+
 ### Other functions
 
 * `describe_distribution()` gets a `quartiles` argument to include 25th

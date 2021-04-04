@@ -18,6 +18,13 @@
 #' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
 #'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 #'   applies to objects from \code{oneway.test()}.
+#' @param rank_biserial If \code{TRUE}, compute the rank-biserial correlation as
+#'   effect size measure. Only applies to objects from \code{wilcox.test()}.
+#' @param rank_epsilon_squared If \code{TRUE}, compute the rank epsilon squared
+#'   as effect size measure. Only applies to objects from \code{kruskal.test()}.
+#' @param kendalls_w If \code{TRUE}, compute the Kendall's coefficient of
+#'   concordance as effect size measure. Only applies to objects from
+#'   \code{friedman.test()}.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
 #' @inheritParams model_parameters.default
@@ -56,6 +63,9 @@ model_parameters.htest <- function(model,
                                    eta_squared = NULL,
                                    epsilon_squared = NULL,
                                    cohens_g = NULL,
+                                   rank_biserial = NULL,
+                                   rank_epsilon_squared = NULL,
+                                   kendalls_w = NULL,
                                    ci = .95,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -73,6 +83,9 @@ model_parameters.htest <- function(model,
       eta_squared = eta_squared,
       epsilon_squared = epsilon_squared,
       cohens_g = cohens_g,
+      rank_biserial = rank_biserial,
+      rank_epsilon_squared = rank_epsilon_squared,
+      kendalls_w = kendalls_w,
       ci = ci,
       verbose = verbose,
       ...
@@ -101,8 +114,6 @@ p_value.htest <- function(model, ...) {
 }
 
 
-
-
 # .pairwise.htest --------------------
 
 
@@ -127,7 +138,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 
-
 # ==== extract parameters ====
 
 
@@ -141,6 +151,9 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       eta_squared = NULL,
                                       epsilon_squared = NULL,
                                       cohens_g = NULL,
+                                      rank_biserial = NULL,
+                                      rank_epsilon_squared = NULL,
+                                      kendalls_w = NULL,
                                       ci = 0.95,
                                       verbose = TRUE,
                                       ...) {
@@ -162,6 +175,36 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     )
   } else if (m_info$is_ranktest) {
     out <- .extract_htest_ranktest(model)
+
+    if (grepl("^Wilcox", model$method)) {
+      out <- .add_effectsize_rankbiserial(model,
+        out,
+        rank_biserial,
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
+    }
+
+    if (grepl("^Kruskal", model$method)) {
+      out <- .add_effectsize_rankepsilon(model,
+        out,
+        rank_epsilon_squared,
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
+    }
+
+    if (grepl("^Friedman", model$method)) {
+      out <- .add_effectsize_kendalls_w(model,
+        out,
+        kendalls_w,
+        ci = ci,
+        verbose = verbose,
+        ...
+      )
+    }
   } else if (m_info$is_onewaytest) {
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(
@@ -263,14 +306,16 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   }
 
   if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
-    out$W <- model$statistic
-    out$df_error <- model$parameter
-    out$p <- model$p.value
-  } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE)) {
-    out$Chi2 <- model$statistic
-    out$df_error <- model$parameter
-    out$p <- model$p.value
+    out$W <- model$statistic[[1]]
+    out$df_error <- model$parameter[[1]]
+    out$p <- model$p.value[[1]]
+  } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
+             grepl("Friedman", model$method, fixed = TRUE)) {
+    out$Chi2 <- model$statistic[[1]]
+    out$df_error <- model$parameter[[1]]
+    out$p <- model$p.value[[1]]
   }
+
   out$Method <- model$method
   out
 }
@@ -601,10 +646,13 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   # reorder
   col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference", "CI_low", "CI_high", "t", "df_error", "d", "Cohens_d",
-    "d_CI_low", "d_CI_high", "g", "Hedges_g",
-    "g_CI_low", "g_CI_high", "p", "Method", "method"
+    "Parameter1", "Parameter2", "Parameter", "Group",
+    "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2",
+    "mu", "Difference", "CI_low", "CI_high",
+    "t", "df_error",
+    "d", "Cohens_d", "d_CI_low", "d_CI_high",
+    "g", "Hedges_g", "g_CI_low", "g_CI_high",
+    "p", "Method", "method"
   )
 
   out <- out[col_order[col_order %in% names(out)]]
@@ -612,7 +660,105 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 }
 
 
+.add_effectsize_rankbiserial <- function(model,
+                                         out,
+                                         rank_biserial = NULL,
+                                         ci = .95,
+                                         verbose = TRUE,
+                                         ...) {
+  if (is.null(rank_biserial)) {
+    return(out)
+  }
 
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    es <- effectsize::effectsize(model,
+      type = "r_rank_biserial",
+      ci = ci,
+      verbose = verbose,
+      ...
+    )
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("rank_biserial_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "W", "r_rank_biserial", "CI",
+    "rank_biserial_CI_low", "rank_biserial_CI_high", "p", "Method", "method"
+  )
+
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
+
+.add_effectsize_rankepsilon <- function(model,
+                                        out,
+                                        rank_epsilon_squared = NULL,
+                                        ci = .95,
+                                        verbose = TRUE,
+                                        ...) {
+  if (is.null(rank_epsilon_squared)) {
+    return(out)
+  }
+
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    es <- effectsize::effectsize(model,
+      type = "rank_epsilon_squared",
+      ci = ci,
+      verbose = verbose,
+      ...
+    )
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("rank_epsilon_squared_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "Chi2", "df_error",
+    "rank_epsilon_squared", "CI", "rank_epsilon_squared_CI_low", "rank_epsilon_squared_CI_high",
+    "p", "Method", "method"
+  )
+
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
+
+.add_effectsize_kendalls_w <- function(model,
+                                       out,
+                                       kendalls_w = NULL,
+                                       ci = .95,
+                                       verbose = TRUE,
+                                       ...) {
+  if (is.null(kendalls_w)) {
+    return(out)
+  }
+
+  if (requireNamespace("effectsize", quietly = TRUE)) {
+    es <- effectsize::effectsize(model,
+      type = "kendalls_w",
+      ci = ci,
+      verbose = verbose,
+      ...
+    )
+    es$CI <- NULL
+    ci_cols <- grepl("^CI", names(es))
+    names(es)[ci_cols] <- paste0("Kendalls_W_", names(es)[ci_cols])
+    out <- cbind(out, es)
+  }
+
+  # reorder
+  col_order <- c(
+    "Parameter1", "Parameter2", "Parameter", "Chi2", "df_error", "Kendalls_W", "CI",
+    "Kendalls_W_CI_low", "Kendalls_W_CI_high", "p", "Method", "method"
+  )
+
+  out <- out[col_order[col_order %in% names(out)]]
+  out
+}
 
 .add_effectsize_oneway <- function(model,
                                    out,
