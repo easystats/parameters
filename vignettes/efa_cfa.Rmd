@@ -189,17 +189,13 @@ the same, a standard widely adopted in the field of machine learning.
 The data can be easily split into two sets with the `data_partition()` function,
 through which we will use 70\% of the sample as training and the rest as test.
 
-```{r, eval=FALSE}
-partitions <- data_partition(data, training_proportion = 0.7)
-training <- partitions$training
-test <- partitions$test
-```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+# to have reproducible result, we will also set seed here so that similar
+# portions of the data are used each time we run the following code
 partitions <- data_partition(data, training_proportion = 0.7, seed = 111)
 training <- partitions$training
 test <- partitions$test
 ```
-
 
 ### Create CFA structures out of EFA models
 
@@ -226,7 +222,7 @@ As we can see, a structure is just a string encoding how the **manifest variable
 We can finally apply this structure to the testing dataset using the `lavaan`
 package, and compare these models against each other:
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 library(lavaan)
 library(performance)
 
@@ -237,12 +233,11 @@ performance::compare_performance(big5, big6)
 ```
 
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r eval=FALSE, include=FALSE}
 performance::test_likelihoodratio(big5, big6)  # TODO: This doesn't work
 ```
 
-All in all, it seems that the big 5 structure remains quite reliable.
-
+All in all, it seems that the Big-5 structure remains quite reliable.
 
 # Structural Equation Modeling
 
