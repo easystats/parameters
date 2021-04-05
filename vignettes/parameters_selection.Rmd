@@ -7,7 +7,7 @@ output:
     fig_height: 6
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
-  %\VignetteIndexEntry{Parameters Selection}
+  %\VignetteIndexEntry{Selection of Model Parameters}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
