@@ -49,14 +49,14 @@ involves expressing data in terms of standard deviation (i.e., mean = 0, SD =
 1). That is, it the process of subtracting the mean and dividing the quantity by
 standard deviation. Standardization can help avoid multicollinearity issues when more complex (polynomial, for instance) terms are included in the model.
 
-There are different methods of standardizing model
-parameters (see
-[`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html)for
-further details)):
+There are different methods of standardizing model parameters (see also [`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html)):
 - `"refit"`,
 - `"posthoc"`
 - `"smart"` 
 - `"basic"`
+
+If you are interested in more statistical and technical details, and how standardization methods relate to different (standardized) effect size measures, read the following vignette from *effectsize* package, from whence this functionality comes:
+<https://easystats.github.io/effectsize/articles/standardize_parameters.html>
 
 ## Standardization by re-fitting the model
 
