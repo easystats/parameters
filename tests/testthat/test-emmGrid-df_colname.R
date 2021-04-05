@@ -25,6 +25,6 @@ if (.runThisTest &&
 
     expect_equal(colnames(model_parameters(es2)),
                  c("contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-                   "z", "df", "p"))
+                   "z", "df_error", "p"))
   })
 }
