@@ -131,7 +131,7 @@ if (require("testthat") &&
     )
   })
 
-  if (.runThisTest && require("glmmTMB")) {
+  if (.runThisTest && require("glmmTMB") && packageVersion("insight") > "0.13.2") {
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,
