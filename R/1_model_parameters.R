@@ -67,6 +67,18 @@ model_parameters <- function(model, ...) {
 }
 
 
+# DF naming convention --------------------
+
+
+# DF column naming
+# F has df, df_error
+# t has df_error
+# z has df_error = Inf
+# Chisq has df
+# https://github.com/easystats/parameters/issues/455
+
+
+
 #' @rdname model_parameters
 #' @export
 parameters <- model_parameters
