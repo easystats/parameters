@@ -71,7 +71,7 @@ model_parameters.emmGrid <- function(model,
   }
 
   # rename if necessary
-  if ("df" %in% colnames(params) && insight::find_statistic(model) == "t-statistic") {
+  if ("df" %in% colnames(params)) {
     colnames(params)[colnames(params) == "df"] <- "df_error"
   }
 
