@@ -131,6 +131,19 @@ if (.runThisTest &&
         "----------------------------------",
         "SD (Intercept: gear) |        0.27",
         "SD (Residual)        |        0.77"))
+
+    out <- utils::capture.output(print(model_parameters(m1, summary = TRUE)))
+    expect_equal(
+      out,
+      c("# Fixed Effects",
+        "",
+        "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
+        "-----------------------------------------------------------------",
+        "(Intercept) |        0.65 | 0.50 | [-0.34, 1.64] |  1.29 | 0.196 ",
+        "cyl         |        0.40 | 0.08 | [ 0.25, 0.55] |  5.29 | < .001",
+        "",
+        "Model: wt ~ cyl (32 Observations)",
+        "Residual standard deviation: 0.59 (df = 28)"))
   })
 
 }
