@@ -197,7 +197,9 @@
 <span class="co"># we use only the first two rows, because the remaining rows are</span>
 <span class="co"># the estimates for "ID", which is not of interest here...</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
 <span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
@@ -210,7 +212,9 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
 <span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></code></pre></div>
@@ -238,7 +242,7 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_1</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(558) |      p</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(558) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       71.53 | 1.56 | [68.48, 74.58] |  45.98 | &lt; .001</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.088 </span>
@@ -257,7 +261,9 @@
 
 <span class="co"># compare to FE-model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
 <span class="co">#&gt; phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></code></pre></div>
@@ -269,7 +275,7 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter        | Coefficient |   SE |         95% CI | t(554) |      p</span>
+<span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(554) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.49, 72.22] |  27.15 | &lt; .001</span>
 <span class="co">#&gt; time             |        1.09 | 0.66 | [-0.20,  2.38] |   1.65 | 0.098 </span>
@@ -324,7 +330,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter        | Coefficient |   SE |         95% CI | t(551) |      p</span>
+<span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(551) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] |  28.13 | &lt; .001</span>
 <span class="co">#&gt; time             |        1.18 | 0.60 | [ 0.00,  2.37] |   1.95 | 0.051 </span>
@@ -405,7 +411,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | &lt; .001</span>
 <span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | &lt; .001</span></code></pre></div>
@@ -421,7 +429,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="va">grp</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
-<span class="co">#&gt; # Fixed EffectsParameter | Coefficient |   SE |       95% CI | t(99) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI | t(99) |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------</span>
 <span class="co">#&gt; x_within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | &lt; .001</span></code></pre></div>
 </div>
@@ -434,7 +444,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | &lt; .001</span>
 <span class="co">#&gt; x_between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | &lt; .001</span></code></pre></div>
@@ -448,7 +460,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(100) |      p</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(100) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.83 | 0.33 | [37.18, 38.48] | 114.46 | &lt; .001</span>
 <span class="co">#&gt; </span>
@@ -471,7 +483,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI |  t(98) |      p</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |  t(98) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.95 | 0.34 | [37.29, 38.62] | 111.15 | &lt; .001</span>
 <span class="co">#&gt; </span>
@@ -526,7 +538,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co"># Between-subject effect of typing speed</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | &lt; .001</span>
 <span class="co">#&gt; x_between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | &lt; .001</span>
@@ -534,7 +548,9 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co"># Between-subject effect of typing speed, accounting for group structure</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |         95% CI | t(101) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(101) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |       37.02 | 2.73 | [31.66, 42.38] |  13.54 | &lt; .001</span>
 <span class="co">#&gt; x_between   |       -2.71 | 0.35 | [-3.39, -2.03] |  -7.81 | &lt; .001</span></code></pre></div>

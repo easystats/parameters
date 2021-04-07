@@ -147,7 +147,9 @@
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed EffectsParameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
+<pre><code>#&gt; # Fixed Effects
+#&gt; 
+#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
 #&gt; -------------------------------------------------------------------------------
 #&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001
 #&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 
@@ -190,7 +192,9 @@
   <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed EffectsParameter   | Log-Odds |   SE |         95% CI | Statistic |      p
+<pre><code>#&gt; # Fixed Effects
+#&gt; 
+#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p
 #&gt; -------------------------------------------------------------------
 #&gt; (Intercept) |    -1.45 | 0.24 | [-1.93, -0.97] |     -5.93 | &lt; .001
 #&gt; period [2]  |    -0.88 | 0.34 | [-1.55, -0.20] |     -2.55 | 0.011 
@@ -219,7 +223,9 @@
   <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span>, data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imp</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed EffectsParameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
+<pre><code>#&gt; # Fixed Effects
+#&gt; 
+#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
 #&gt; -------------------------------------------------------------------------------
 #&gt; (Intercept) |       19.67 | 3.37 | [ 12.21, 27.13] |      5.83 | 10.62 | &lt; .001
 #&gt; age [40-59] |       -5.71 | 1.71 | [ -9.37, -2.04] |     -3.33 | 14.41 | 0.005 
@@ -238,7 +244,9 @@
 <span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed EffectsParameter   | Coefficient |   SE |          95% CI |     t |    df |      p
+<pre><code>#&gt; # Fixed Effects
+#&gt; 
+#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
 #&gt; ---------------------------------------------------------------------------
 #&gt; (Intercept) |       17.10 | 3.87 | [  8.63, 25.58] |  4.42 | 11.51 | &lt; .001
 #&gt; age [40-59] |       -5.03 | 2.55 | [-11.44,  1.38] | -1.97 |  5.42 | 0.101 

@@ -149,13 +149,17 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Pearson's product-moment correlationParameter1        |       Parameter2 |     r |        95% CI | t(148) |     p</span>
+<span class="co">#&gt; Pearson's product-moment correlation</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter1        |       Parameter2 |     r |        95% CI | t(148) |     p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------</span>
 <span class="co">#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | [-0.27, 0.04] |  -1.44 | 0.152</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Welch Two Sample t-testParameter | Group | vs = 0 | vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
+<span class="co">#&gt; Welch Two Sample t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Group | vs = 0 | vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; mpg       |    vs |  16.62 |  24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span></code></pre></div>
 </div>
@@ -167,13 +171,17 @@
 
 <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html" class="external-link">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Bayesian correlation analysisParameter | Median |        89% CI |     pd | % in ROPE |         Prior |    BF</span>
+<span class="co">#&gt; Bayesian correlation analysis</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Median |        89% CI |     pd | % in ROPE |         Prior |    BF</span>
 <span class="co">#&gt; -------------------------------------------------------------------------------</span>
 <span class="co">#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    44.23% | Beta (3 +- 3) | 0.509</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Bayesian t-testParameter  | Median |         89% CI |     pd | % in ROPE |              Prior |     BF</span>
+<span class="co">#&gt; Bayesian t-test</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter  | Median |         89% CI |     pd | % in ROPE |              Prior |     BF</span>
 <span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; Difference |   7.31 | [ 4.50, 10.12] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</span>
 <span class="co">#&gt; Cohen's D  |  -1.57 | [-2.21, -0.84] | 99.98% |        0% |                    |</span></code></pre></div>
@@ -193,7 +201,9 @@
     eta_squared <span class="op">=</span> <span class="st">"partial"</span>,
     epsilon_squared <span class="op">=</span> <span class="st">"partial"</span>
   <span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 | Eta2 | Epsilon2</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 | Eta2 | Epsilon2</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |   0.61 | 0.62 |     0.61</span>
 <span class="co">#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |        |      |</span></code></pre></div>
@@ -205,7 +215,9 @@
     eta_squared <span class="op">=</span> <span class="st">"partial"</span>,
     ci <span class="op">=</span> <span class="fl">.8</span>
   <span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter           | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 (partial) | Omega2 80% CI | Eta2 (partial) |  Eta2 80% CI</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter           | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 (partial) | Omega2 80% CI | Eta2 (partial) |  Eta2 80% CI</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; Species             |       63.21 |   2 |       31.61 | 163.44 | &lt; .001 |             0.68 |  [0.63, 0.72] |           0.69 | [0.64, 0.73]</span>
 <span class="co">#&gt; Sepal.Width         |       10.95 |   1 |       10.95 |  56.64 | &lt; .001 |             0.27 |  [0.19, 0.34] |           0.28 | [0.21, 0.36]</span>
@@ -219,7 +231,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects# gear</span>
+<span class="co">#&gt; # gear</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter | Sum_Squares | df | Mean_Square</span>
 <span class="co">#&gt; ------------------------------------------</span>
@@ -243,7 +255,9 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter        | Log-Odds |   SE |          95% CI |     z |     p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter        | Log-Odds |   SE |          95% CI |     z |     p</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |    13.51 | 7.20 | [  2.56, 33.42] |  1.88 | 0.060</span>
 <span class="co">#&gt; mpg [1st degree] |    -6.64 | 8.99 | [-27.81, 11.13] | -0.74 | 0.461</span>
@@ -252,7 +266,9 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, df_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter        | Odds Ratio |       SE |           95% CI |     z |     p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter        | Odds Ratio |       SE |           95% CI |     z |     p</span>
 <span class="co">#&gt; ---------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [0.55, 9.87e+11] |  1.88 | 0.060</span>
 <span class="co">#&gt; mpg [1st degree] |   1.31e-03 |     0.01 | [0.00, 59497.56] | -0.74 | 0.461</span>
@@ -267,7 +283,9 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter    | Coefficient |   SE |       95% CI | t(146) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | &lt; .001</span>
 <span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.17, 0.40] |   4.75 | &lt; .001</span></code></pre></div>
@@ -278,7 +296,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects# Fixed Effects</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------</span>
@@ -307,7 +325,7 @@
   data <span class="op">=</span> <span class="va">Salamanders</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects# Fixed Effects</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------</span>
@@ -357,7 +375,7 @@
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span> <span class="op">~</span><span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects# Fixed Effects</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter   | Coefficient |   SE |            95% CI |       z |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------</span>
@@ -581,7 +599,9 @@
 
 <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">effectsize</span>, sei <span class="op">=</span> <span class="va">standarderror</span>, method <span class="op">=</span> <span class="st">"REML"</span>, data <span class="op">=</span> <span class="va">mydat</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Meta-analysis using 'metafor'Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight</span>
+<span class="co">#&gt; Meta-analysis using 'metafor'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95</span>
 <span class="co">#&gt; Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95</span>

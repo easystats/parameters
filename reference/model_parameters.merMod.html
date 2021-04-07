@@ -411,7 +411,9 @@ for working examples.</p></td>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: lme4</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘lme4’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:nlme’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects</span><span>Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
+#&gt; <span class='message'>    lmList</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Fixed Effects</span><span>
+#&gt; 
+#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
 #&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | &lt; .001
 #&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | &lt; .001</div><div class='input'><span class='co'># \donttest{</span>
@@ -425,7 +427,7 @@ for working examples.</p></td>
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='message'>Argument 'details' is deprecated. Please use 'group_level'.</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects# Fixed Effects </span><span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='message'>Argument 'details' is deprecated. Please use 'group_level'.</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects </span><span>
 #&gt; 
 #&gt; Parameter   | Log-Mean |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
@@ -457,7 +459,9 @@ for working examples.</p></td>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>gear</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span>, iterations <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects</span><span>Parameter   | Coefficient |         95% CI |     p
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects</span><span>
+#&gt; 
+#&gt; Parameter   | Coefficient |         95% CI |     p
 #&gt; --------------------------------------------------
 #&gt; (Intercept) |       36.59 | [32.13, 40.57] | 0.020
 #&gt; wt          |       -5.14 | [-6.45, -3.82] | 0.020</div><div class='input'><span class='co'># }</span>

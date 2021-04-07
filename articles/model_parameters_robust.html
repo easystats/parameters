@@ -155,7 +155,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, where SE, CI, and p-values are *not* based on robust estimation</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |          95% CI | t(48) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | t(48) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |      -17.58 | 6.76 | [-31.17, -3.99] | -2.60 | 0.012 </span>
 <span class="co">#&gt; speed       |        3.93 | 0.42 | [  3.10,  4.77] |  9.46 | &lt; .001</span>
@@ -163,7 +165,9 @@
 <span class="co"># model parameters, where SE, CI, and p-values are based on robust estimation</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">mp</span>
-<span class="co">#&gt; # Fixed EffectsParameter   | Coefficient |   SE |          95% CI | t(48) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | t(48) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept) |      -17.58 | 5.93 | [-29.51, -5.65] | -2.96 | 0.005 </span>
 <span class="co">#&gt; speed       |        3.93 | 0.43 | [  3.07,  4.79] |  9.20 | &lt; .001</span>
@@ -193,7 +197,9 @@
 <span class="op">)</span>
 
 <span class="va">mp</span>
-<span class="co">#&gt; # Fixed EffectsParameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |        0.87 | 0.42 | [ 0.03, 1.70] |   2.05 | 0.042 </span>
 <span class="co">#&gt; Sepal.Length                        |        0.04 | 0.11 | [-0.18, 0.26] |   0.40 | 0.692 </span>
@@ -222,7 +228,9 @@
 <span class="op">)</span>
 
 <span class="va">mp</span>
-<span class="co">#&gt; # Fixed EffectsParameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |        0.87 | 0.34 | [ 0.20, 1.53] |   2.57 | 0.011 </span>
 <span class="co">#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.19] |   0.61 | 0.540 </span>
@@ -255,7 +263,9 @@
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">mp</span>
-<span class="co">#&gt; # Fixed EffectsParameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |        0.87 | 0.33 | [ 0.21, 1.52] |   2.62 | 0.010 </span>
 <span class="co">#&gt; Sepal.Length                        |        0.04 | 0.07 | [-0.10, 0.18] |   0.63 | 0.531 </span>
@@ -279,7 +289,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, robust estimation on standardized model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | &lt; .001</span>
 <span class="co">#&gt; Sepal.Length                        |        0.02 | 0.06 | [-0.09,  0.13] |   0.37 | 0.711 </span>
@@ -311,7 +323,9 @@
 
 <span class="co"># model parameters without robust estimation</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.77,  2.34] |   3.87 | &lt; .001</span>
 <span class="co">#&gt; Species [versicolor]               |        0.41 | 0.55 | [-0.66,  1.49] |   0.75 | 0.453 </span>
@@ -329,7 +343,9 @@
   vcov_type <span class="op">=</span> <span class="st">"CR1"</span>,
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.76,  2.35] |   3.87 | &lt; .001</span>
 <span class="co">#&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |   0.75 | 0.608 </span>
@@ -354,7 +370,9 @@
   vcov_type <span class="op">=</span> <span class="st">"CR1"</span>,
   vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span>
-<span class="co">#&gt; # Fixed EffectsParameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |   4.74 | &lt; .001</span>
 <span class="co">#&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] |  -4.91 | &lt; .001</span>
