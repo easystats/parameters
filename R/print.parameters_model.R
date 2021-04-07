@@ -73,7 +73,7 @@ print.parameters_model <- function(x,
     split_components = split_components,
     select = select,
     digits = digits,
-    ci_digits = 2,
+    ci_digits = ci_digits,
     p_digits = p_digits,
     zap_small = zap_small,
     ci_width = "auto",
@@ -144,9 +144,9 @@ print.parameters_brms_meta <- print.parameters_model
                         format = text,
                         ...) {
   # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+  digits <- .additional_arguments(x, "digits", digits)
+  ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  p_digits <- .additional_arguments(x, "p_digits", p_digits)
 
   format(
     x,
@@ -185,7 +185,7 @@ print.parameters_brms_meta <- print.parameters_model
   }
 
   # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  digits <- .additional_arguments(x, "digits", 2)
 
   .format_footer(
     x,
