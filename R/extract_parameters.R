@@ -1,7 +1,7 @@
 # generic function ------------------------------------------------------
 
 
-#' @importFrom insight get_statistic get_parameters get_sigma
+#' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model,
@@ -280,9 +280,22 @@
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
-  # ==== add sigma
+  # ==== add sigma and residual df
 
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+  parameters <- .add_sigma_residual_df(parameters, model)
+
+
+  rownames(parameters) <- NULL
+  parameters
+}
+
+
+# helper ----------------
+
+
+#' @importFrom insight get_sigma get_df
+.add_sigma_residual_df <- function(params, model) {
+  if (is.null(params$Component) || !"sigma" %in% params$Component) {
     sig <- tryCatch(
       {
         suppressWarnings(insight::get_sigma(model))
@@ -291,12 +304,19 @@
         NULL
       }
     )
-    attr(parameters, "sigma") <- as.numeric(sig)
+    attr(params, "sigma") <- as.numeric(sig)
+
+    resdf <- tryCatch(
+      {
+        suppressWarnings(insight::get_df(model, type = "residual"))
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    attr(params, "residual_df") <- as.numeric(resdf)
   }
-
-
-  rownames(parameters) <- NULL
-  parameters
+  params
 }
 
 
@@ -492,18 +512,7 @@
 
 
   # add sigma
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
-    attr(parameters, "sigma") <- as.numeric(sig)
-  }
-
+  parameters <- .add_sigma_residual_df(parameters, model)
 
   rownames(parameters) <- NULL
   parameters

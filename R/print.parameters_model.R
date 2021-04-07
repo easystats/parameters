@@ -52,6 +52,7 @@ print.parameters_model <- function(x,
                                    pretty_names = TRUE,
                                    split_components = TRUE,
                                    select = NULL,
+                                   caption = NULL,
                                    digits = 2,
                                    ci_digits = 2,
                                    p_digits = 3,
@@ -62,46 +63,42 @@ print.parameters_model <- function(x,
   # save original input
   orig_x <- x
 
-  # get attributes
-  res <- attributes(x)$details
-  sigma <- attributes(x)$sigma
-  ci_method <- .additional_arguments(x, "ci_method", NULL)
-  verbose <- .additional_arguments(x, "verbose", TRUE)
+  # table caption
+  table_caption <- .print_caption(x, caption, type = "text")
 
-  # set defaults, if necessary
-  if (is.null(sigma)) {
-    show_sigma <- FALSE
-  }
-
-  # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-
-
-  # print header
-  if (!is.null(attributes(x)$title)) {
-    insight::print_color(paste0("# ", attributes(x)$title, "\n\n"), "blue")
-  } else if (!is.null(res)) {
-    insight::print_color("# Fixed Effects\n\n", "blue")
-  }
-
-  formatted_table <- format(
-    x,
+  # main table
+  formatted_table <- .print_core(
+    x = x,
     pretty_names = pretty_names,
     split_components = split_components,
     select = select,
     digits = digits,
-    ci_digits = ci_digits,
+    ci_digits = 2,
     p_digits = p_digits,
+    zap_small = zap_small,
     ci_width = "auto",
     ci_brackets = TRUE,
-    zap_small = zap_small,
     format = "text",
     ...
   )
 
-  footer <- .format_footer(x, digits = digits, verbose = verbose, show_sigma = show_sigma, show_formula = show_formula)
+  # footer
+  footer <- .print_footer(
+    x,
+    digits = digits,
+    show_sigma = show_sigma,
+    show_formula = show_formula
+  )
+
+  # get attributes
+  res <- attributes(x)$details
+  ci_method <- .additional_arguments(x, "ci_method", NULL)
+  verbose <- .additional_arguments(x, "verbose", TRUE)
+
+  # print header
+  insight::print_color(table_caption, "blue")
+
+  # print main table
   cat(insight::export_table(formatted_table, format = "text", footer = footer))
 
   # for Bayesian models
@@ -109,13 +106,12 @@ print.parameters_model <- function(x,
     .print_footer_cimethod(ci_method)
   }
 
+
+  ## TODO remove in future update when deprecated
+
   # print summary for random effects
   if (!is.null(res)) {
-    if (isTRUE(show_sigma)) {
-      cat("\n\n")
-    } else {
-      cat("\n")
-    }
+    cat("\n")
     .print_random_parameters(res, digits = digits)
   }
   invisible(orig_x)
@@ -126,6 +122,96 @@ print.parameters_simulate <- print.parameters_model
 
 #' @export
 print.parameters_brms_meta <- print.parameters_model
+
+
+
+
+# helper ------------------
+
+
+.print_core <- function(x,
+                        pretty_names = TRUE,
+                        split_components = TRUE,
+                        select = NULL,
+                        digits = 2,
+                        ci_digits = 2,
+                        p_digits = 3,
+                        zap_small = FALSE,
+                        ci_width = "auto",
+                        ci_brackets = TRUE,
+                        format = text,
+                        ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
+  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+
+  format(
+    x,
+    pretty_names = pretty_names,
+    split_components = split_components,
+    select = select,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    format = format,
+    ...
+  )
+}
+
+
+.print_footer <- function(x,
+                          digits = 2,
+                          show_sigma = FALSE,
+                          show_formula = FALSE,
+                          format = "text") {
+    # get attributes
+  sigma <- attributes(x)$sigma
+  verbose <- .additional_arguments(x, "verbose", TRUE)
+
+  # override defaults. if argument "summary" is called in "model_parameters()",
+  # this overrides the defaults...
+  show_sigma <- .additional_arguments(x, "show_summary", show_sigma)
+  show_formula <- .additional_arguments(x, "show_summary", show_formula)
+
+  # set defaults, if necessary
+  if (is.null(sigma)) {
+    show_sigma <- FALSE
+  }
+
+  # check if user supplied digits attributes
+  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
+
+  .format_footer(
+    x,
+    digits = digits,
+    verbose = verbose,
+    show_sigma = show_sigma,
+    show_formula = show_formula,
+    type = format
+  )
+}
+
+
+
+.print_caption <- function(x, caption = NULL, type = "text") {
+  if (!is.null(attributes(x)$title) && is.null(caption)) {
+    table_caption <- attributes(x)$title
+  } else if (!is.null(caption)) {
+    table_caption <- caption
+  } else if (identical(type, "html")) {
+    table_caption <- "Regression Model"
+  } else if (identical(type, "text")) {
+    table_caption <- "# Fixed Effects"
+  } else {
+    table_caption <- "Fixed Effects"
+  }
+
+  table_caption
+}
 
 
 

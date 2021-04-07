@@ -9,31 +9,34 @@ print_md.parameters_model <- function(x,
                                       caption = NULL,
                                       subtitle = NULL,
                                       footer = NULL,
+                                      align = NULL,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
                                       ci_brackets = c("(", ")"),
+                                      show_sigma = FALSE,
+                                      show_formula = FALSE,
+                                      zap_small = FALSE,
+                                      verbose = TRUE,
                                       ...) {
   # table caption
-  res <- attributes(x)$details
-  if (!is.null(attributes(x)$title)) {
-    table_caption <- attributes(x)$title
-  } else if (!is.null(res)) {
-    if (is.null(caption)) {
-      table_caption <- "Fixed Effects"
-    } else {
-      table_caption <- caption
-    }
-  } else {
-    table_caption <- caption
-  }
+  table_caption <- .print_caption(x, caption, type = "markdown")
 
-  # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-
-  formatted_table <- format(x, format = "markdown", pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, ci_digits = ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = ci_brackets)
+  # main table
+  formatted_table <- .print_core(
+    x = x,
+    pretty_names = pretty_names,
+    split_components = split_components,
+    select = select,
+    digits = digits,
+    ci_digits = 2,
+    p_digits = p_digits,
+    zap_small = zap_small,
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    format = "markdown",
+    ...
+  )
 
   # replace brackets by parenthesis
   if (!is.null(ci_brackets) && "Parameter" %in% colnames(formatted_table)) {
@@ -41,7 +44,24 @@ print_md.parameters_model <- function(x,
     formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
   }
 
-  insight::export_table(formatted_table, format = "markdown", caption = table_caption, subtitle = subtitle, footer = footer, align = "firstleft", ...)
+  # footer
+  footer <- .print_footer(
+    x,
+    digits = digits,
+    show_sigma = show_sigma,
+    show_formula = show_formula,
+    format = "markdown"
+  )
+
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = table_caption,
+    subtitle = subtitle,
+    footer = footer,
+    align = "firstleft",
+    ...
+  )
 }
 
 #' @export
@@ -74,10 +94,10 @@ print_md.compare_parameters <- function(x,
     p_digits = p_digits,
     ci_width = NULL,
     ci_brackets = c("(", ")"),
-    format = "md"
+    format = "markdown"
   )
 
-  insight::export_table(formatted_table, format = "md", footer = NULL)
+  insight::export_table(formatted_table, format = "markdown", footer = NULL)
 }
 
 

@@ -92,6 +92,7 @@
   ci_brackets = c("(", ")"),
   show_sigma = FALSE,
   show_formula = FALSE,
+  zap_small = FALSE,
   verbose = TRUE,
   ...
 )
@@ -104,10 +105,15 @@
   caption = NULL,
   subtitle = NULL,
   footer = NULL,
+  align = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
   ci_brackets = c("(", ")"),
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  zap_small = FALSE,
+  verbose = TRUE,
   ...
 )
 }

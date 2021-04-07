@@ -9,6 +9,7 @@
   pretty_names = TRUE,
   split_components = TRUE,
   select = NULL,
+  caption = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,

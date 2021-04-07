@@ -423,24 +423,26 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   type <- tolower(type)
 
   sigma <- attributes(x)$sigma
+  residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
   footer_text <- attributes(x)$footer_text
+  n_obs <- attributes(x)$n_obs
+
+  # footer: model formula
+  if (isTRUE(show_formula)) {
+    footer <- .add_footer_formula(footer, model_formula, n_obs, type)
+  }
 
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
-    footer <- .add_footer_sigma(footer, digits, sigma, type)
+    footer <- .add_footer_sigma(footer, digits, sigma, residual_df, type)
   }
 
   # footer: p-adjustment
   if ("p" %in% colnames(x) && isTRUE(verbose)) {
     footer <- .add_footer_padjust(footer, p_adjust, type)
-  }
-
-  # footer: model formula
-  if (isTRUE(show_formula)) {
-    footer <- .add_footer_formula(footer, model_formula, type)
   }
 
   # footer: anova test
@@ -486,17 +488,25 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: residual standard deviation
-.add_footer_sigma <- function(footer = NULL, digits, sigma, type = "text") {
+.add_footer_sigma <- function(footer = NULL, digits, sigma, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
+
+    # format residual df
+    if (!is.null(residual_df)) {
+      res_df <- paste0(" (df = ", residual_df, ")")
+    } else {
+      res_df <- ""
+    }
+
     if (type == "text") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f\n", fill, digits, sigma))
+      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, sprintf("Residual standard deviation: %.*f", digits, sigma))
+      footer <- c(footer, trimws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
     }
   }
   footer
@@ -540,17 +550,25 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: model formula
-.add_footer_formula <- function(footer = NULL, model_formula, type = "text") {
+.add_footer_formula <- function(footer = NULL, model_formula, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
+
+    # format n of observations
+    if (!is.null(n_obs)) {
+      n <- paste0(" (", n_obs, " Observations)")
+    } else {
+      n <- ""
+    }
+
     if (type == "text") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, fill, "Model: ", model_formula, "\n")
+      footer <- paste0(footer, fill, "Model: ", model_formula, n, "\n")
     } else if (type == "html") {
-      footer <- c(footer, paste0("Model: ", model_formula))
+      footer <- c(footer, trimws(paste0("Model: %s", model_formula, n)))
     }
   }
   footer
