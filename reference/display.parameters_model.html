@@ -201,6 +201,10 @@
   ci_digits <span class='op'>=</span> <span class='fl'>2</span>,
   p_digits <span class='op'>=</span> <span class='fl'>3</span>,
   ci_brackets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"("</span>, <span class='st'>")"</span><span class='op'>)</span>,
+  show_sigma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_formula <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  zap_small <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -375,6 +379,25 @@ intervals and p-values).</p></td>
 encompassed in square brackets (else in parentheses).</p></td>
     </tr>
     <tr>
+      <th>show_sigma</th>
+      <td><p>Logical, if <code>TRUE</code>, adds information about the residual
+standard deviation.</p></td>
+    </tr>
+    <tr>
+      <th>show_formula</th>
+      <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
+    </tr>
+    <tr>
+      <th>zap_small</th>
+      <td><p>Logical, if <code>TRUE</code>, small values are rounded after
+<code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal
+places than <code>digits</code> are printed in scientific notation.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle messages and warnings.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
@@ -404,25 +427,6 @@ structure).</p></td>
 intervals. If not <code>NULL</code> and width is larger than the string's length,
 leading whitespaces are added to the string. If <code>width="auto"</code>, width
 will be set to the length of the longest string.</p></td>
-    </tr>
-    <tr>
-      <th>zap_small</th>
-      <td><p>Logical, if <code>TRUE</code>, small values are rounded after
-<code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal
-places than <code>digits</code> are printed in scientific notation.</p></td>
-    </tr>
-    <tr>
-      <th>show_sigma</th>
-      <td><p>Logical, if <code>TRUE</code>, adds information about the residual
-standard deviation.</p></td>
-    </tr>
-    <tr>
-      <th>show_formula</th>
-      <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Toggle messages and warnings.</p></td>
     </tr>
     </table>
 
