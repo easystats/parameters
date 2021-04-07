@@ -128,7 +128,7 @@ model_parameters.merMod <- function(model,
                                     details = FALSE,
                                     p_adjust = NULL,
                                     wb_component = TRUE,
-                                    summary = TRUE,
+                                    summary = FALSE,
                                     verbose = TRUE,
                                     ...) {
 
