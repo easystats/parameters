@@ -202,7 +202,7 @@ print.parameters_brms_meta <- print.parameters_model
 .print_caption <- function(x, caption = NULL, format = "text") {
   title_attribute <- attributes(x)$title
   if (identical(format, "html") && is.null(caption)) {
-    table_caption <- "Regression Model"
+    table_caption <- "Model Summary"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
   } else if (!is.null(title_attribute) && is.null(caption)) {
