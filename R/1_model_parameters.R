@@ -131,6 +131,9 @@ parameters <- model_parameters
 #' @param df_method Method for computing degrees of freedom for confidence
 #'   intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
 #'   May be \code{"profile"} or \code{"wald"}.
+#' @param summary Logical, if \code{TRUE}, prints summary information about the
+#'   model (model formula, number of observations, residual standard deviation
+#'   and more).
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
@@ -171,6 +174,7 @@ model_parameters.default <- function(model,
                                      exponentiate = FALSE,
                                      robust = FALSE,
                                      p_adjust = NULL,
+                                     summary = FALSE,
                                      verbose = TRUE,
                                      ...) {
   out <- tryCatch(
@@ -185,6 +189,7 @@ model_parameters.default <- function(model,
         exponentiate = exponentiate,
         robust = robust,
         p_adjust = p_adjust,
+        summary = summary,
         verbose = verbose,
         ...
       )
@@ -215,6 +220,7 @@ model_parameters.default <- function(model,
                                       robust = FALSE,
                                       df_method = NULL,
                                       p_adjust = NULL,
+                                      summary = FALSE,
                                       verbose = TRUE,
                                       ...) {
 
@@ -260,6 +266,7 @@ model_parameters.default <- function(model,
     iterations,
     df_method = df_method,
     p_adjust = p_adjust,
+    summary = summary,
     verbose = verbose,
     ...
   )

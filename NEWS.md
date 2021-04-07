@@ -34,6 +34,9 @@
 * To be internally consistent, the degrees of freedom column for `lqm(m)` and
   `cgam(m)` objects (with *t*-statistic) is called `df_error`.
 
+* `model_parameters()` gains a `summary` argument to add summary information 
+  about the model to printed outputs.
+
 * Minor improvements for models from *quantreg*.
 
 * `model_parameters` supports rank-biserial, rank epsilon-squared, and Kendall's

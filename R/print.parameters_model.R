@@ -95,11 +95,13 @@ print.parameters_model <- function(x,
   ci_method <- .additional_arguments(x, "ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
-  # print header
-  insight::print_color(table_caption, "blue")
-
   # print main table
-  cat(insight::export_table(formatted_table, format = "text", footer = footer))
+  cat( insight::export_table(
+    formatted_table,
+    format = "text",
+    caption = table_caption,
+    footer = footer
+  ))
 
   # for Bayesian models
   if (isTRUE(verbose)) {
@@ -191,21 +193,23 @@ print.parameters_brms_meta <- print.parameters_model
     verbose = verbose,
     show_sigma = show_sigma,
     show_formula = show_formula,
-    type = format
+    format = format
   )
 }
 
 
 
 .print_caption <- function(x, caption = NULL, type = "text") {
-  if (!is.null(attributes(x)$title) && is.null(caption)) {
+  if (identical(type, "html") && is.null(caption)) {
+    table_caption <- "Regression Model"
+  } else if (isTRUE(attributes(x)$ordinal_model)) {
+    table_caption <- ""
+  } else if (!is.null(attributes(x)$title) && is.null(caption)) {
     table_caption <- attributes(x)$title
   } else if (!is.null(caption)) {
     table_caption <- caption
-  } else if (identical(type, "html")) {
-    table_caption <- "Regression Model"
   } else if (identical(type, "text")) {
-    table_caption <- "# Fixed Effects"
+    table_caption <- c("# Fixed Effects", "blue")
   } else {
     table_caption <- "Fixed Effects"
   }

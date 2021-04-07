@@ -17,6 +17,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  summary = FALSE,
   verbose = TRUE,
   ...
 )
@@ -118,6 +119,10 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
+
+\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 
 \item{verbose}{Toggle warnings and messages.}
 

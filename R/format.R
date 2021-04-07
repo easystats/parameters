@@ -417,10 +417,15 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 # footer functions ------------------
 
-.format_footer <- function(x, digits = 2, verbose = TRUE, show_sigma = FALSE, show_formula = FALSE, type = "text") {
-  # prepare footer
+.format_footer <- function(x,
+                           digits = 2,
+                           verbose = TRUE,
+                           show_sigma = FALSE,
+                           show_formula = FALSE,
+                           format = "text") {
+    # prepare footer
   footer <- NULL
-  type <- tolower(type)
+  type <- tolower(format)
 
   sigma <- attributes(x)$sigma
   residual_df <- attributes(x)$residual_df

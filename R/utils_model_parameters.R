@@ -9,6 +9,7 @@
                                              df_method = NULL,
                                              ci_method = NULL,
                                              p_adjust = NULL,
+                                             summary = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
                                              ...) {
@@ -49,6 +50,7 @@
   attr(params, "p_adjust") <- p_adjust
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
+  attr(params, "show_summary") <- isTRUE(summary)
 
   weighted_nobs <- tryCatch(
     {

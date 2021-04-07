@@ -34,6 +34,21 @@ if (require("testthat") && require("parameters") && require("boot")) {
   })
 
 
+  test_that("print digits model_parameters.lm", {
+    model <- lm(mpg ~ wt, data = mtcars)
+    params <- model_parameters(model, summary = TRUE)
+    out <- capture.output(print(params))
+    expect_equal(
+      out,
+      c("# Fixed Effects", "", "Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
+        "------------------------------------------------------------------",
+        "(Intercept) |       37.29 | 1.88 | [33.45, 41.12] | 19.86 | < .001",
+        "wt          |       -5.34 | 0.56 | [-6.49, -4.20] | -9.56 | < .001",
+        "", "Model: mpg ~ wt (32 Observations)", "Residual standard deviation: 3.05 (df = 30)"
+      ))
+  })
+
+
   test_that("model_parameters.glm - binomial", {
     set.seed(333)
     model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
