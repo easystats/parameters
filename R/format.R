@@ -573,7 +573,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, fill, "Model: ", model_formula, n, "\n")
     } else if (type == "html") {
-      footer <- c(footer, trimws(paste0("Model: %s", model_formula, n)))
+      footer <- c(footer, trimws(paste0("Model: ", model_formula, n)))
     }
   }
   footer
