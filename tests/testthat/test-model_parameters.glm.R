@@ -30,7 +30,7 @@ if (require("testthat") && require("parameters") && require("boot")) {
     model <- lm(mpg ~ wt, data = mtcars)
     params <- model_parameters(model, digits = 4, ci_digits = 5)
     out <- capture.output(print(params))
-    expect_equal(out[3], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
+    expect_equal(out[5], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
   })
 
 
