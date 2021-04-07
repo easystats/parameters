@@ -103,7 +103,7 @@
       ))
     }
     if (!is.null(ci_df)) {
-      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
@@ -400,7 +400,7 @@
     } else {
       ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   } else {
@@ -587,8 +587,8 @@
 # Bayes function ------------------------------------------------------
 
 
-#' @importFrom bayestestR describe_posterior reshape_ci
-#' @importFrom insight is_multivariate
+#' @importFrom bayestestR describe_posterior
+#' @importFrom insight is_multivariate reshape_ci
 #' @importFrom stats sd setNames na.omit
 #' @keywords internal
 .extract_parameters_bayesian <- function(model,
@@ -686,7 +686,7 @@
   }
 
   if (length(ci) > 1) {
-    parameters <- bayestestR::reshape_ci(parameters)
+    parameters <- insight::reshape_ci(parameters)
   }
 
   # Remove unnecessary columns
