@@ -216,6 +216,7 @@
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  summary <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -235,6 +236,7 @@
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  summary <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -377,6 +379,12 @@ will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 <code>Component</code> column indicates, which parameters belong to the
 conditional or zero-inflated component of the model.</p></td>
+    </tr>
+    <tr>
+      <th>summary</th>
+      <td><p>Logical, if <code>TRUE</code>, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).</p></td>
     </tr>
     <tr>
       <th>robust</th>
