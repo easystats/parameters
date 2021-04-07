@@ -27,6 +27,10 @@
   ci_digits = 2,
   p_digits = 3,
   ci_brackets = c("(", ")"),
+  show_sigma = FALSE,
+  show_formula = FALSE,
+  zap_small = FALSE,
+  verbose = TRUE,
   ...
 )
 
@@ -164,6 +168,17 @@ intervals and p-values).}
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
 
+\item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
+standard deviation.}
+
+\item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
+
+\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
+\code{digits} decimal places. If \code{FALSE}, values with more decimal
+places than \code{digits} are printed in scientific notation.}
+
+\item{verbose}{Toggle messages and warnings.}
+
 \item{...}{Arguments passed to or from other methods.}
 
 \item{sort}{Sort the loadings.}
@@ -182,17 +197,6 @@ structure).}
 intervals. If not \code{NULL} and width is larger than the string's length,
 leading whitespaces are added to the string. If \code{width="auto"}, width
 will be set to the length of the longest string.}
-
-\item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
-\code{digits} decimal places. If \code{FALSE}, values with more decimal
-places than \code{digits} are printed in scientific notation.}
-
-\item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
-standard deviation.}
-
-\item{show_formula}{Logical, if \code{TRUE}, adds the model formula to the output.}
-
-\item{verbose}{Toggle messages and warnings.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
