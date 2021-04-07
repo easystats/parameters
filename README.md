@@ -147,6 +147,8 @@ model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
 model_parameters(model)
+#> # Fixed Effects
+#> 
 #> Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
 #> ------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | < .001
@@ -154,6 +156,8 @@ model_parameters(model)
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
+#> # Fixed Effects
+#> 
 #> Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
