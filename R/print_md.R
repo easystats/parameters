@@ -20,7 +20,7 @@ print_md.parameters_model <- function(x,
                                       verbose = TRUE,
                                       ...) {
   # table caption
-  table_caption <- .print_caption(x, caption, type = "markdown")
+  table_caption <- .print_caption(x, caption, format = "markdown")
 
   # main table
   formatted_table <- .print_core(

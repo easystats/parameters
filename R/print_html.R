@@ -20,7 +20,7 @@ print_html.parameters_model <- function(x,
                                         verbose = TRUE,
                                         ...) {
   # table caption
-  table_caption <- .print_caption(x, caption, type = "html")
+  table_caption <- .print_caption(x, caption, format = "html")
 
   # main table
   formatted_table <- .print_core(

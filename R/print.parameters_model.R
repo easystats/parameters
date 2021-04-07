@@ -64,7 +64,7 @@ print.parameters_model <- function(x,
   orig_x <- x
 
   # table caption
-  table_caption <- .print_caption(x, caption, type = "text")
+  table_caption <- .print_caption(x, caption, format = "text")
 
   # main table
   formatted_table <- .print_core(
@@ -141,7 +141,7 @@ print.parameters_brms_meta <- print.parameters_model
                         zap_small = FALSE,
                         ci_width = "auto",
                         ci_brackets = TRUE,
-                        format = text,
+                        format = "text",
                         ...) {
   # check if user supplied digits attributes
   digits <- .additional_arguments(x, "digits", digits)
@@ -199,8 +199,8 @@ print.parameters_brms_meta <- print.parameters_model
 
 
 
-.print_caption <- function(x, caption = NULL, type = "text") {
-  if (identical(type, "html") && is.null(caption)) {
+.print_caption <- function(x, caption = NULL, format = "text") {
+  if (identical(format, "html") && is.null(caption)) {
     table_caption <- "Regression Model"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
@@ -208,7 +208,7 @@ print.parameters_brms_meta <- print.parameters_model
     table_caption <- attributes(x)$title
   } else if (!is.null(caption)) {
     table_caption <- caption
-  } else if (identical(type, "text")) {
+  } else if (identical(format, "text")) {
     table_caption <- c("# Fixed Effects", "blue")
   } else {
     table_caption <- "Fixed Effects"
