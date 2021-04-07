@@ -200,14 +200,21 @@ print.parameters_brms_meta <- print.parameters_model
 
 
 .print_caption <- function(x, caption = NULL, format = "text") {
+  title_attribute <- attributes(x)$title
   if (identical(format, "html") && is.null(caption)) {
     table_caption <- "Regression Model"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
-  } else if (!is.null(attributes(x)$title) && is.null(caption)) {
-    table_caption <- attributes(x)$title
-  } else if (!is.null(caption)) {
+  } else if (!is.null(title_attribute) && is.null(caption)) {
+    if (title_attribute == "") {
+      table_caption <- NULL
+    } else {
+      table_caption <- title_attribute
+    }
+  } else if (!is.null(caption) && caption != "") {
     table_caption <- caption
+  } else if (!is.null(caption) && caption == "") {
+    table_caption <- NULL
   } else if (identical(format, "text")) {
     table_caption <- c("# Fixed Effects", "blue")
   } else {

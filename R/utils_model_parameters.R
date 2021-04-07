@@ -52,6 +52,11 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
 
+  # here we add exception for objects that should not have a table headline
+  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm"))) {
+    attr(params, "title") <- ""
+  }
+
   weighted_nobs <- tryCatch(
     {
       w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)

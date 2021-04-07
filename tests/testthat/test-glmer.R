@@ -23,7 +23,9 @@ if (.runThisTest &&
     out <- utils::capture.output(print(params))
     expect_equal(
       out,
-      c("# Fixed Effects", "", "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
+      c("# Fixed Effects",
+        "",
+        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
         "---------------------------------------------------------------",
         "(Intercept) |    -1.36 | 0.23 | [-1.81, -0.91] | -5.98 | < .001",
         "period [2]  |    -0.98 | 0.30 | [-1.57, -0.38] | -3.22 | 0.001 ",
@@ -35,14 +37,20 @@ if (.runThisTest &&
     out <- utils::capture.output(print(mp))
     expect_equal(
       out,
-      c("# Fixed Effects", "", "Parameter   | Odds Ratio |   SE |       95% CI |     z |      p",
+      c("# Fixed Effects",
+        "",
+        "Parameter   | Odds Ratio |   SE |       95% CI |     z |      p",
         "---------------------------------------------------------------",
         "(Intercept) |       0.26 | 0.06 | [0.16, 0.40] | -5.98 | < .001",
         "period [2]  |       0.38 | 0.11 | [0.21, 0.68] | -3.22 | 0.001 ",
         "period [3]  |       0.33 | 0.11 | [0.17, 0.62] | -3.43 | < .001",
         "period [4]  |       0.21 | 0.09 | [0.09, 0.48] | -3.67 | < .001",
-        "", "# Random Effects", "", "Parameter            | Coefficient",
-        "----------------------------------", "SD (Intercept: herd) |        0.64",
+        "",
+        "# Random Effects",
+        "",
+        "Parameter            | Coefficient",
+        "----------------------------------",
+        "SD (Intercept: herd) |        0.64",
         "SD (Residual)        |        1.00"))
   })
 

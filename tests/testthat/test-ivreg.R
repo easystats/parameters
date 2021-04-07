@@ -48,7 +48,9 @@ if (require("testthat") &&
     out <- utils::capture.output(print(model_parameters(m1)))
     expect_equal(
       out,
-      c("# Fixed Effects", "", "Parameter     | Coefficient |   SE |         95% CI | t(45) |      p",
+      c("# Fixed Effects",
+        "",
+        "Parameter     | Coefficient |   SE |         95% CI | t(45) |      p",
         "--------------------------------------------------------------------",
         "(Intercept)   |        9.89 | 1.06 | [ 7.82, 11.97] |  9.35 | < .001",
         "rprice [log]  |       -1.28 | 0.26 | [-1.79, -0.76] | -4.85 | < .001",

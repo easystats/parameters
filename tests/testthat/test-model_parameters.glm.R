@@ -30,7 +30,7 @@ if (require("testthat") && require("parameters") && require("boot")) {
     model <- lm(mpg ~ wt, data = mtcars)
     params <- model_parameters(model, digits = 4, ci_digits = 5)
     out <- capture.output(print(params))
-    expect_equal(out[5], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
+    expect_equal(out[3], "(Intercept) |     37.2851 | 1.8776 | [33.45050, 41.11975] | 19.8576 | < .001")
   })
 
 
@@ -40,11 +40,13 @@ if (require("testthat") && require("parameters") && require("boot")) {
     out <- capture.output(print(params))
     expect_equal(
       out,
-      c("# Fixed Effects", "", "Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
+      c("Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
         "------------------------------------------------------------------",
         "(Intercept) |       37.29 | 1.88 | [33.45, 41.12] | 19.86 | < .001",
         "wt          |       -5.34 | 0.56 | [-6.49, -4.20] | -9.56 | < .001",
-        "", "Model: mpg ~ wt (32 Observations)", "Residual standard deviation: 3.05 (df = 30)"
+        "",
+        "Model: mpg ~ wt (32 Observations)",
+        "Residual standard deviation: 3.05 (df = 30)"
       ))
   })
 
