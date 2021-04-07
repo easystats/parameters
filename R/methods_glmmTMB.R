@@ -125,6 +125,7 @@ model_parameters.glmmTMB <- function(model,
     p_adjust = p_adjust,
     verbose = verbose,
     group_level = group_level,
+    summary = summary,
     ...
   )
 

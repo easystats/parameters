@@ -206,6 +206,7 @@ model_parameters.merMod <- function(model,
     df_method,
     p_adjust = p_adjust,
     verbose = verbose,
+    summary = summary,
     group_level = group_level,
     ...
   )
