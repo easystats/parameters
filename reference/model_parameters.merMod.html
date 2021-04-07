@@ -216,7 +216,7 @@
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  summary <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -236,7 +236,7 @@
   details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  summary <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -424,11 +424,7 @@ for working examples.</p></td>
 #&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p
 #&gt; ------------------------------------------------------------------
 #&gt; (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | &lt; .001
-#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | &lt; .001
-#&gt; </span><span style='color: #0000BB;'>
-#&gt; Model: mpg ~ wt (32 Observations)
-#&gt; Residual standard deviation: 2.91 (df = 28)
-#&gt; </span><span></div><div class='input'><span class='co'># \donttest{</span>
+#&gt; wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | &lt; .001</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>Salamanders</span><span class='op'>)</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
@@ -476,10 +472,7 @@ for working examples.</p></td>
 #&gt; Parameter   | Coefficient |         95% CI |     p
 #&gt; --------------------------------------------------
 #&gt; (Intercept) |       36.59 | [32.13, 40.57] | 0.020
-#&gt; wt          |       -5.14 | [-6.45, -3.82] | 0.020
-#&gt; </span><span style='color: #0000BB;'>
-#&gt; Model: mpg ~ wt (32 Observations)
-#&gt; </span><span></div><div class='input'><span class='co'># }</span>
+#&gt; wt          |       -5.14 | [-6.45, -3.82] | 0.020</div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
