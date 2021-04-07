@@ -143,9 +143,7 @@ be printed. If \code{NULL} (default), all columns are printed. The shortcut
 \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
-\item{caption}{Table title (same as caption) and subtitle, as strings. If \code{NULL},
-no title or subtitle is printed, unless it is stored as attributes (\code{table_title},
-or its alias \code{table_caption}, and \code{table_subtitle}).}
+\item{caption}{Table caption as string. If \code{NULL}, no table caption is printed.}
 
 \item{subtitle}{Table title (same as caption) and subtitle, as strings. If \code{NULL},
 no title or subtitle is printed, unless it is stored as attributes (\code{table_title},
