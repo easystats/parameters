@@ -235,6 +235,11 @@
     attr(params, "anova_test") <- model$test
   }
 
+  # here we add exception for objects that should not have a table headline
+  if (inherits(model, c("aov", "anova", "lm"))) {
+    attr(params, "title") <- ""
+  }
+
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {

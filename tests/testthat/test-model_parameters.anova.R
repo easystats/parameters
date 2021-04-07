@@ -15,6 +15,19 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     expect_equal(mp$p, c(NA, 0.00023, 0.00123, 0.01262), tolerance = 1e-3)
   })
 
+  test_that("print-model_parameters", {
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      out,
+      c("Parameter   | df | Deviance | df (error) | Deviance (error) |      p",
+        "--------------------------------------------------------------------",
+        "NULL        |    |          |         31 |            43.23 |       ",
+        "mpg         |  1 |    13.55 |         30 |            29.68 | < .001",
+        "hp          |  1 |    10.44 |         29 |            19.23 | 0.001 ",
+        "factor(cyl) |  2 |     8.75 |         27 |            10.49 | 0.013 "
+      ))
+  })
+
   if (require("car")) {
     a <- car::Anova(m, type = 3, test.statistic = "F")
     mp <- model_parameters(a)
@@ -22,6 +35,19 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     test_that("model_parameters.anova", {
       expect_equal(colnames(mp), c("Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p"))
       expect_equal(mp[["F"]], c(53.40138, 60.42944, 13.96887, NA), tolerance = 1e-3)
+    })
+
+    test_that("print-model_parameters", {
+      out <- utils::capture.output(print(mp))
+      expect_equal(
+        out,
+        c("Parameter   | Sum_Squares | df | Mean_Square |     F |      p",
+          "-------------------------------------------------------------",
+          "mpg         |       16.72 |  1 |       16.72 | 53.40 | < .001",
+          "hp          |       18.92 |  1 |       18.92 | 60.43 | < .001",
+          "factor(cyl) |        8.75 |  2 |        4.37 | 13.97 | < .001",
+          "Residuals   |        8.45 | 27 |        0.31 |       |       "
+        ))
     })
 
 
