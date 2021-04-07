@@ -21,6 +21,7 @@ model_parameters.glmmTMB <- function(model,
                                      details = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
+                                     summary = TRUE,
                                      verbose = TRUE,
                                      ...) {
   component <- match.arg(component)
