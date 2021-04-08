@@ -11,8 +11,8 @@ linux <- tryCatch({
 if (require("testthat") &&
   require("parameters") &&
   require("psych") &&
-  require("lavaan") &&
-  require("BayesFM") &&
+  suppressPackageStartupMessages(require("lavaan", quietly = TRUE)) &&
+  suppressPackageStartupMessages(require("BayesFM", quietly = TRUE)) &&
   require("FactoMineR")) {
   test_that("principal_components", {
     set.seed(333)
@@ -71,7 +71,7 @@ if (require("testthat") &&
 
 
   set.seed(333)
-  befa <- BayesFM::befa(mtcars, iter = 1000)
+  befa <- BayesFM::befa(mtcars, iter = 1000, verbose = FALSE)
   params <- suppressWarnings(parameters::model_parameters(befa, sort = TRUE))
 
   test_that("BayesFM", {

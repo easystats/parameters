@@ -1,6 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
-  require("afex")) {
+  suppressPackageStartupMessages(require("afex", quietly = TRUE))) {
   data(obk.long, package = "afex")
   m_between <- suppressWarnings(aov_car(value ~ treatment * gender + Error(id), data = obk.long))
   m_within <- suppressWarnings(aov_car(value ~ Error(id / (phase * hour)), data = obk.long))

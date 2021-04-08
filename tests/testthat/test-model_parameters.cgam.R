@@ -48,6 +48,7 @@ if (.runThisTest && require("testthat") && require("cgam") && packageVersion("in
         digits = 2,
         ci_digits = 2,
         p_digits = 3,
+        footer_digits = 3,
         class = "data.frame",
         object_name = "m_cgam"
       ),
@@ -94,7 +95,7 @@ if (.runThisTest && require("testthat") && require("cgam") && packageVersion("in
     # use REML method to fit the model
     ans <- cgam::cgamm(formula = y ~ s.incr(x) + (1 | group), reml = TRUE)
 
-    df <- as.data.frame(parameters::model_parameters(ans))
+    df <- as.data.frame(suppressWarnings(parameters::model_parameters(ans)))
 
     expect_equal(df,
       structure(
@@ -133,6 +134,7 @@ if (.runThisTest && require("testthat") && require("cgam") && packageVersion("in
         digits = 2,
         ci_digits = 2,
         p_digits = 3,
+        footer_digits = 3,
         class = "data.frame",
         object_name = "ans"
       ),

@@ -1,6 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
-  require("BayesFactor") &&
+  suppressPackageStartupMessages(require("BayesFactor", quietly = TRUE)) &&
   require("logspline") &&
   getRversion() >= "3.6") {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
@@ -43,7 +43,7 @@ if (require("testthat") &&
   if (.runThisTest) {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
-    mp <- model_parameters(bf)
+    mp <- suppressWarnings(model_parameters(bf, verbose = FALSE))
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c(

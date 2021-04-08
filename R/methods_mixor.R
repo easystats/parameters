@@ -3,7 +3,7 @@
 #' @export
 model_parameters.mixor <- function(model,
                                    ci = .95,
-                                   effects = "all",
+                                   effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                    bootstrap = FALSE,
                                    iterations = 1000,
                                    standardize = NULL,

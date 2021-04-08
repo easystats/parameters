@@ -39,6 +39,8 @@ format_p_adjust <- function(method) {
   # check if we have any adjustment at all, and a p-column
   if (!is.null(p_adjust) && "p" %in% colnames(params) && p_adjust != "none") {
 
+    ## TODO add "mvt" method from emmeans
+
     # prepare arguments
     all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
 

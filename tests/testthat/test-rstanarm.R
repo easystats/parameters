@@ -14,7 +14,10 @@ osx <- tryCatch(
   }
 )
 
-if (.runThisTest && !osx && require("testthat") && require("parameters") && require("rstanarm")) {
+if (.runThisTest && !osx &&
+    require("testthat") &&
+    require("parameters") &&
+    suppressPackageStartupMessages(require("rstanarm", quietly = TRUE))) {
   data(mtcars)
   set.seed(123)
   model <- stan_glm(

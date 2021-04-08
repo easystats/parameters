@@ -8,25 +8,25 @@ if (.runThisTest &&
   data("fish")
   data("Salamanders")
 
-  m1 <- glmmTMB(
+  m1 <- suppressWarnings(glmmTMB(
     count ~ child + camper + (1 | persons),
     ziformula = ~ child + camper + (1 | persons),
     data = fish,
     family = truncated_poisson()
-  )
+  ))
 
-  m2 <- glmmTMB(
+  m2 <- suppressWarnings(glmmTMB(
     count ~ child + camper + (1 | persons),
     data = fish,
     family = poisson()
-  )
+  ))
 
-  m3 <- glmmTMB(
+  m3 <- suppressWarnings(glmmTMB(
     count ~ spp + mined + (1 | site),
     ziformula =  ~ spp + mined,
     family = nbinom2,
     data = Salamanders
-  )
+  ))
 
   test_that("ci", {
     expect_equal(

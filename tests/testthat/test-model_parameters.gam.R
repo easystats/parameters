@@ -1,4 +1,7 @@
-if (require("testthat") && require("insight") && require("parameters") && require("mgcv")) {
+if (require("testthat") &&
+    require("insight") &&
+    require("parameters") &&
+    suppressPackageStartupMessages(require("mgcv", quietly = TRUE))) {
   set.seed(123)
   model <-
     mgcv::gam(
