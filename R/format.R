@@ -532,7 +532,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     rsq <- tryCatch(
       {
         paste0(unlist(lapply(r2, function(i) {
-          paste0(attributes(i)$names, ": ", insight::format_value(i, digits = 2))
+          paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
         })), collapse = "; ")
       },
       error = function(e) {

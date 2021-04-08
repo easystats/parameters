@@ -57,6 +57,7 @@ print.parameters_model <- function(x,
                                    digits = 2,
                                    ci_digits = 2,
                                    p_digits = 3,
+                                   footer_digits = 3,
                                    show_sigma = FALSE,
                                    show_formula = FALSE,
                                    zap_small = FALSE,
@@ -86,7 +87,7 @@ print.parameters_model <- function(x,
   # footer
   footer <- .print_footer(
     x,
-    digits = digits,
+    digits = footer_digits,
     show_sigma = show_sigma,
     show_formula = show_formula
   )
@@ -174,6 +175,7 @@ print.parameters_brms_meta <- print.parameters_model
     # get attributes
   sigma <- attributes(x)$sigma
   verbose <- .additional_arguments(x, "verbose", TRUE)
+  digits <- .additional_arguments(x, "footer_digits", digits)
 
   # override defaults. if argument "summary" is called in "model_parameters()",
   # this overrides the defaults...
@@ -185,9 +187,6 @@ print.parameters_brms_meta <- print.parameters_model
   if (is.null(sigma)) {
     show_sigma <- FALSE
   }
-
-  # check if user supplied digits attributes
-  digits <- .additional_arguments(x, "footer_digits", 3)
 
   .format_footer(
     x,
