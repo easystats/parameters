@@ -16,6 +16,7 @@
 #'   standard deviation.
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
 #' @param caption Table caption as string. If \code{NULL}, no table caption is printed.
+#' @param footer_digits Number of decimal places for values in the footer summary.
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms

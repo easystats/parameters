@@ -26,6 +26,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  footer_digits = 3,
   ci_brackets = c("(", ")"),
   show_sigma = FALSE,
   show_formula = FALSE,
@@ -93,6 +94,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  footer_digits = 3,
   ci_brackets = c("(", ")"),
   show_sigma = FALSE,
   show_formula = FALSE,
@@ -113,6 +115,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  footer_digits = 3,
   ci_brackets = c("(", ")"),
   show_sigma = FALSE,
   show_formula = FALSE,
@@ -162,6 +165,8 @@ intervals and p-values).}
 \item{ci_digits}{Number of decimal places for confidence intervals.}
 
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
+
+\item{footer_digits}{Number of decimal places for values in the footer summary.}
 
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}

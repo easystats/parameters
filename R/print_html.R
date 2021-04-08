@@ -13,6 +13,7 @@ print_html.parameters_model <- function(x,
                                         digits = 2,
                                         ci_digits = 2,
                                         p_digits = 3,
+                                        footer_digits = 3,
                                         ci_brackets = c("(", ")"),
                                         show_sigma = FALSE,
                                         show_formula = FALSE,
@@ -47,7 +48,7 @@ print_html.parameters_model <- function(x,
   # footer
   footer <- .print_footer(
     x,
-    digits = digits,
+    digits = footer_digits,
     show_sigma = show_sigma,
     show_formula = show_formula,
     format = "html"

@@ -45,6 +45,8 @@ intervals and p-values).}
 
 \item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
 
+\item{footer_digits}{Number of decimal places for values in the footer summary.}
+
 \item{show_sigma}{Logical, if \code{TRUE}, adds information about the residual
 standard deviation.}
 
