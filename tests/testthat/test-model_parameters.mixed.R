@@ -143,7 +143,8 @@ if (.runThisTest &&
         "cyl         |        0.40 | 0.08 | [ 0.25, 0.55] |  5.29 | < .001",
         "",
         "Model: wt ~ cyl (32 Observations)",
-        "Residual standard deviation: 0.59 (df = 28)"))
+        "Residual standard deviation: 0.594 (df = 28)",
+        "Conditional R2: 0.628; Marginal R2: 0.550"))
   })
 
 }
