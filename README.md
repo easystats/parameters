@@ -5,7 +5,7 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 
-***Describe and understand your model’s parameters\!***
+***Describe and understand your model’s parameters!***
 
 **parameters**’ primary goal is to provide utilities for processing the
 parameters of various statistical models (see
@@ -54,21 +54,21 @@ Click on the buttons above to access the package
 [easystats blog](https://easystats.github.io/blog/posts/), and check-out
 these vignettes:
 
-  - [Summary of Model
+-   [Summary of Model
     Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
-  - [Standardized Model
+-   [Standardized Model
     Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
-  - [Robust Estimation of Standard Errors, Confidence Intervals and
+-   [Robust Estimation of Standard Errors, Confidence Intervals and
     p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
-  - [Model Parameters and Missing
+-   [Model Parameters and Missing
     Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
-  - [Feature reduction (PCA, cMDS,
+-   [Feature reduction (PCA, cMDS,
     ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-  - [Structural models (EFA, CFA,
+-   [Structural models (EFA, CFA,
     SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
-  - [Parameters
+-   [Parameters
     selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
-  - [A Practical Guide for Panel Data
+-   [A Practical Guide for Panel Data
     Analysis](https://easystats.github.io/parameters/articles/demean.html)
 
 ## Contributing and Support
@@ -84,9 +84,7 @@ email or also file an issue.
 ## Model’s parameters description
 
 <p>
-
 <img src='man/figures/figure1.png' align="center" />
-
 </p>
 
 The
@@ -97,15 +95,15 @@ models in a consistent way. It can be considered as a lightweight
 alternative to [`broom::tidy()`](https://github.com/tidymodels/broom),
 with some notable differences:
 
-  - The column names of the returned data frame are *specific* to their
+-   The column names of the returned data frame are *specific* to their
     content. For instance, the column containing the statistic is named
     following the statistic name, i.e., *t*, *z*, etc., instead of a
     generic name such as *statistic* (however, you can get standardized
     (generic) column names using
     [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
-  - It is able to compute or extract indices not available by default,
+-   It is able to compute or extract indices not available by default,
     such as *p-values*, *CIs*, etc.
-  - It includes *feature engineering* capabilities, including parameters
+-   It includes *feature engineering* capabilities, including parameters
     [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 ### Classical Regression Models
@@ -146,7 +144,7 @@ library(lme4)
 model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
-model_parameters(model)
+model_parameters(model, effects = "all")
 #> # Fixed Effects
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
@@ -169,13 +167,6 @@ model_parameters(model, df_method = "kenward")
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter               | Coefficient
-#> -------------------------------------
-#> SD (Intercept: Species) |        0.89
-#> SD (Residual)           |        0.56
 ```
 
 ### Structural Models
@@ -208,9 +199,7 @@ model_parameters(model)
 ## Variable and parameters selection
 
 <p>
-
 <img src='man/figures/figure2.png' align="center" />
-
 </p>
 
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
@@ -255,7 +244,7 @@ describe_distribution(iris)
 
 In order to cite this package, please use the following citation:
 
-  - Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters:
+-   Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters:
     Extracting, Computing and Exploring the Parameters of Statistical
     Models using R. *Journal of Open Source Software*, *5*(53), 2445.
     doi: 10.21105/joss.02445
