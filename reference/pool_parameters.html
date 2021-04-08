@@ -280,12 +280,12 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
   <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://amices.org/mice/reference/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;          term    estimate std.error statistic        df     p.value
-#&gt; 1 (Intercept) 18.36195030 4.0983152  4.480366  6.986311 0.002878973
-#&gt; 2    age40-59 -5.24925424 1.7946018 -2.925025 11.487116 0.013252729
-#&gt; 3    age60-99 -7.26385773 2.3775479 -3.055189  5.752850 0.023590258
-#&gt; 4      hypyes  1.93105200 1.8093027  1.067291 11.649722 0.307459112
-#&gt; 5         chl  0.05764972 0.0236093  2.441823  5.790755 0.051809421</div></pre>
+</div><div class='output co'>#&gt;          term    estimate  std.error statistic        df     p.value
+#&gt; 1 (Intercept) 18.66629249 4.51314366  4.135985  7.201770 0.004109471
+#&gt; 2    age40-59 -5.11838600 2.07838353 -2.462676 10.012944 0.033493965
+#&gt; 3    age60-99 -7.44303104 2.67999721 -2.777253  5.913643 0.032606098
+#&gt; 4      hypyes  2.56688523 2.06323356  1.244108 11.008115 0.239299254
+#&gt; 5         chl  0.05456703 0.02606586  2.093429  5.798915 0.082822287</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
