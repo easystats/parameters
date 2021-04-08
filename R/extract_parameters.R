@@ -702,6 +702,7 @@
     parameters$ROPE_high <- NULL
   }
 
+  rownames(parameters) <- NULL
   parameters
 }
 

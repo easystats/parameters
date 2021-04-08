@@ -188,5 +188,7 @@
   if (effects == "random") {
     out[c(stat_column, "df_error", "p", "CI")] <- NULL
   }
+
+  rownames(out) <- NULL
   out
 }

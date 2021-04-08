@@ -13,6 +13,7 @@
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
+  footer_digits = 3,
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
