@@ -175,7 +175,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter | Median |        89% CI |     pd | % in ROPE |         Prior |    BF</span>
 <span class="co">#&gt; -------------------------------------------------------------------------------</span>
-<span class="co">#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    44.23% | Beta (3 +- 3) | 0.509</span></code></pre></div>
+<span class="co">#&gt; rho       |  -0.11 | [-0.23, 0.02] | 92.25% |    18.98% | Beta (3 +- 3) | 0.509</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
@@ -279,7 +279,8 @@
 <span class="co">#&gt; cyl              |       0.10 |     0.12 | [ 0.00,     0.60] | -1.92 | 0.055</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Model: vs ~ poly(mpg, 2) + cyl (32 Observations)</span>
-<span class="co">#&gt; Residual standard deviation: 0.79 (df = 28)</span></code></pre></div>
+<span class="co">#&gt; Residual standard deviation: 0.79 (df = 28)</span>
+<span class="co">#&gt; Tjur's R2: 0.67</span></code></pre></div>
 </div>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
