@@ -22,9 +22,14 @@
 
 # Revdeps
 
-## New problems (1)
+## Failed to check (6)
 
-|package                              |version |error  |warning |note |
-|:------------------------------------|:-------|:------|:-------|:----|
-|[effectsize](problems.md#effectsize) |0.4.4-1 |__+1__ |        |2    |
+|package     |version |error |warning |note |
+|:-----------|:-------|:-----|:-------|:----|
+|bayestestR  |?       |      |        |     |
+|broomExtra  |?       |      |        |     |
+|correlation |?       |      |        |     |
+|effectsize  |?       |      |        |     |
+|gtsummary   |1.3.7   |1     |        |     |
+|insight     |?       |      |        |     |
 
