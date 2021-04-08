@@ -180,9 +180,7 @@
 <h2 class="hasAnchor">
 <a href="#models-parameters-description" class="anchor"></a>Model’s parameters description</h2>
 <p>
-</p>
-<p><img src="reference/figures/figure1.png" align="center"></p>
-
+<img src="reference/figures/figure1.png" align="center"></p>
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom" class="external-link"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
 <li>The column names of the returned data frame are <em>specific</em> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (however, you can get standardized (generic) column names using <a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link"><code>standardize_names()</code></a>).</li>
@@ -228,7 +226,7 @@
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
 <span class="co"># model parameters with CI, df and p-values based on Wald approximation</span>
-<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
 <span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span>
@@ -250,14 +248,7 @@
 <span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 </span>
-<span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter               | Coefficient</span>
-<span class="co">#&gt; -------------------------------------</span>
-<span class="co">#&gt; SD (Intercept: Species) |        0.89</span>
-<span class="co">#&gt; SD (Residual)           |        0.56</span></code></pre></div>
+<span class="co">#&gt; Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span></code></pre></div>
 </div>
 <div id="structural-models" class="section level3">
 <h3 class="hasAnchor">
@@ -287,9 +278,7 @@
 <h2 class="hasAnchor">
 <a href="#variable-and-parameters-selection" class="anchor"></a>Variable and parameters selection</h2>
 <p>
-</p>
-<p><img src="reference/figures/figure2.png" align="center"></p>
-
+<img src="reference/figures/figure2.png" align="center"></p>
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html" class="external-link"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
