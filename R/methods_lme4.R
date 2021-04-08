@@ -114,6 +114,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
+#' @importFrom utils modifyList
 #' @export
 model_parameters.merMod <- function(model,
                                     ci = .95,
@@ -164,6 +165,7 @@ model_parameters.merMod <- function(model,
     }
 
     params$Effects <- "fixed"
+    att <- attributes(params)
 
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
@@ -195,6 +197,11 @@ model_parameters.merMod <- function(model,
   if (!is.null(params$Level) && all(is.na(params$Level))) {
     params$Level <- NULL
   }
+
+  # due to rbind(), we lose attributes from "extract_parameters()",
+  # so we add those attributes back here...
+
+  attributes(params) <- utils::modifyList(att, attributes(params))
 
   params <- .add_model_parameters_attributes(
     params,

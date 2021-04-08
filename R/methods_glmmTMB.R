@@ -5,6 +5,7 @@
 
 
 #' @importFrom stats coef
+#' @importFrom utils modifyList
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
@@ -83,6 +84,7 @@ model_parameters.glmmTMB <- function(model,
     params$Effects <- "fixed"
   }
 
+  att <- attributes(params)
 
   if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
@@ -115,6 +117,11 @@ model_parameters.glmmTMB <- function(model,
   if (!is.null(params$Level) && all(is.na(params$Level))) {
     params$Level <- NULL
   }
+
+  # due to rbind(), we lose attributes from "extract_parameters()",
+  # so we add those attributes back here...
+
+  attributes(params) <- utils::modifyList(att, attributes(params))
 
   params <- .add_model_parameters_attributes(
     params,

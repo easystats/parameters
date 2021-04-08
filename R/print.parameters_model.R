@@ -179,6 +179,7 @@ print.parameters_brms_meta <- print.parameters_model
   # this overrides the defaults...
   show_sigma <- .additional_arguments(x, "show_summary", show_sigma)
   show_formula <- .additional_arguments(x, "show_summary", show_formula)
+  show_r2 <- .additional_arguments(x, "show_summary", FALSE)
 
   # set defaults, if necessary
   if (is.null(sigma)) {
@@ -194,6 +195,7 @@ print.parameters_brms_meta <- print.parameters_model
     verbose = verbose,
     show_sigma = show_sigma,
     show_formula = show_formula,
+    show_r2 = show_r2,
     format = format
   )
 }

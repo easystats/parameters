@@ -422,12 +422,14 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
                            verbose = TRUE,
                            show_sigma = FALSE,
                            show_formula = FALSE,
+                           show_r2 = FALSE,
                            format = "text") {
     # prepare footer
   footer <- NULL
   type <- tolower(format)
 
   sigma <- attributes(x)$sigma
+  r2 <- attributes(x)$r2
   residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
@@ -443,6 +445,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
     footer <- .add_footer_sigma(footer, digits, sigma, residual_df, type)
+  }
+
+  # footer: r-squared
+  if (isTRUE(show_r2)) {
+    footer <- .add_footer_r2(footer, digits, r2, type)
   }
 
   # footer: p-adjustment
@@ -512,6 +519,37 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
       footer <- c(footer, trimws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+    }
+  }
+  footer
+}
+
+
+# footer: r-squared
+#' @importFrom insight format_value
+.add_footer_r2 <- function(footer = NULL, digits, r2 = NULL, type = "text") {
+  if (!is.null(r2)) {
+    rsq <- tryCatch(
+      {
+        paste0(unlist(lapply(r2, function(i) {
+          paste0(attributes(i)$names, ": ", insight::format_value(i, digits = 2))
+        })), collapse = "; ")
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    if (!is.null(rsq)) {
+      if (type == "text") {
+        if (is.null(footer)) {
+          fill <- "\n"
+        } else {
+          fill <- ""
+        }
+        footer <- paste0(footer, fill, rsq, "\n")
+      } else if (type == "html") {
+        footer <- c(footer, rsq)
+      }
     }
   }
   footer

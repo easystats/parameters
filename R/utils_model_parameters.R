@@ -52,6 +52,20 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
 
+  if (isTRUE(summary)) {
+    if (requireNamespace("performance", quietly = TRUE)) {
+      rsq <- tryCatch(
+        {
+          suppressWarnings(performance::r2(model))
+        },
+        error = function(e) {
+          NULL
+        }
+      )
+      attr(params, "r2") <- rsq
+    }
+  }
+
   # here we add exception for objects that should not have a table headline
   if (inherits(model, c("emmGrid", "emm_list", "lm", "glm"))) {
     attr(params, "title") <- ""
