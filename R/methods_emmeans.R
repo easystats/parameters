@@ -106,7 +106,13 @@ model_parameters.emm_list <- function(model,
                                       ...) {
   s <- summary(model)
   params <- lapply(seq_along(s), function(i) {
-    pars <- model_parameters(model[[i]])
+    pars <- model_parameters(
+      model[[i]],
+      ci = ci,
+      exponentiate = exponentiate,
+      p_adjust = p_adjust,
+      verbose = verbose
+    )
     estimate_pos <- which(colnames(pars) == "Coefficient")
     pars[1:(estimate_pos - 1)] <- NULL
     cbind(
