@@ -240,6 +240,14 @@ model_parameters.cpglmm <- function(model,
   df_method <- .check_df_method(df_method)
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    if (verbose) {
+      warning("Standardized coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
+  }
+
   params <- .mixed_model_parameters_generic(
     model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
     merge_by = "Parameter", standardize = standardize,

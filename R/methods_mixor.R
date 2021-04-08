@@ -12,6 +12,15 @@ model_parameters.mixor <- function(model,
                                    verbose = TRUE,
                                    ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
+
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    if (verbose) {
+      warning("Standardized coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

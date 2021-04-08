@@ -141,6 +141,14 @@ model_parameters.merMod <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   params <- params_random <- params_variance <- NULL
 
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    if (verbose) {
+      warning("Standardized coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
+  }
+
   if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {

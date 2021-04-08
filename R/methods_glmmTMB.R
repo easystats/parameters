@@ -32,6 +32,14 @@ model_parameters.glmmTMB <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    if (verbose) {
+      warning("Standardized coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
+  }
+
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
   has_zeroinf <- insight::model_info(model)$is_zero_inflated
