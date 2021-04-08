@@ -153,6 +153,13 @@ model_parameters(model)
 #> ------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | < .001
 #> Petal.Length |        0.28 | 0.06 | [0.17, 0.40] |   4.75 | < .001
+#> 
+#> # Random Effects
+#> 
+#> Parameter               | Coefficient
+#> -------------------------------------
+#> SD (Intercept: Species) |        0.89
+#> SD (Residual)           |        0.56
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
@@ -162,6 +169,13 @@ model_parameters(model, df_method = "kenward")
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | < .001
+#> 
+#> # Random Effects
+#> 
+#> Parameter               | Coefficient
+#> -------------------------------------
+#> SD (Intercept: Species) |        0.89
+#> SD (Residual)           |        0.56
 ```
 
 ### Structural Models

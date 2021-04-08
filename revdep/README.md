@@ -2,7 +2,7 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 4.0.4 (2021-02-15) |
+|version  |R version 4.0.5 (2021-03-31) |
 |os       |Windows 10 x64               |
 |system   |x86_64, mingw32              |
 |ui       |RStudio                      |
@@ -10,15 +10,21 @@
 |collate  |German_Germany.1252          |
 |ctype    |German_Germany.1252          |
 |tz       |Europe/Berlin                |
-|date     |2021-04-03                   |
+|date     |2021-04-08                   |
 
 # Dependencies
 
 |package    |old    |new      |<U+0394>  |
 |:----------|:------|:--------|:--|
 |parameters |0.12.0 |0.12.0.1 |*  |
-|bayestestR |0.8.2  |0.8.2    |   |
-|insight    |0.13.2 |0.13.2.1 |*  |
+|bayestestR |0.9.0  |0.9.0    |   |
+|insight    |0.13.2 |0.13.2   |   |
 
 # Revdeps
+
+## New problems (1)
+
+|package                              |version |error  |warning |note |
+|:------------------------------------|:-------|:------|:-------|:----|
+|[effectsize](problems.md#effectsize) |0.4.4-1 |__+1__ |        |2    |
 
