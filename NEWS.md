@@ -1,4 +1,8 @@
-# parameters 0.12.1
+# parameters 0.13.0
+
+## General
+
+* Revised and improved the `print()` method for `model_parameters()`.
 
 ## New supported model classes
 
