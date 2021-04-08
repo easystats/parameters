@@ -15,7 +15,7 @@
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
-  effects = "fixed",
+  effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
   details = FALSE,
@@ -30,8 +30,8 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
-  effects = "fixed",
-  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  effects = "all",
+  component = "all",
   group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
@@ -51,7 +51,7 @@
   df_method = "wald",
   iterations = 1000,
   standardize = NULL,
-  effects = "fixed",
+  effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
   robust = FALSE,
@@ -66,7 +66,7 @@
 \method{model_parameters}{mixor}(
   model,
   ci = 0.95,
-  effects = c("all", "fixed", "random"),
+  effects = "all",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -82,7 +82,7 @@
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
-  effects = "fixed",
+  effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
   details = FALSE,
@@ -159,7 +159,8 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{\link{demean}}), the \code{Component} column

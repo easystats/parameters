@@ -13,8 +13,8 @@ model_parameters.glmmTMB <- function(model,
                                      ci = .95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     effects = "fixed",
-                                     component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                     effects = "all",
+                                     component = "all",
                                      group_level = FALSE,
                                      standardize = NULL,
                                      exponentiate = FALSE,
@@ -25,13 +25,12 @@ model_parameters.glmmTMB <- function(model,
                                      summary = FALSE,
                                      verbose = TRUE,
                                      ...) {
-  component <- match.arg(component)
-
   # p-values, CI and se might be based on different df-methods
   df_method <- .check_df_method(df_method)
 
-  # which component to return?
+  # which components to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
@@ -53,6 +52,12 @@ model_parameters.glmmTMB <- function(model,
         ci = ci,
         ...
       )
+      if (effects != "fixed") {
+        effects <- "fixed"
+        if (verbose) {
+          warning("Bootstrapping only returns fixed effects of the mixed model.", call. = FALSE)
+        }
+      }
     } else {
       params <- .extract_parameters_generic(
         model,

@@ -4,7 +4,7 @@ if (require("testthat") && require("parameters") && require("blme")) {
   model <- blmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy, cov.prior = NULL)
 
   test_that("model_parameters.blmerMod", {
-    params <- model_parameters(model)
+    params <- model_parameters(model, effects = "fixed")
     expect_equal(params$SE, c(6.8246, 1.54579), tolerance = 1e-3)
     expect_equal(
       colnames(params),

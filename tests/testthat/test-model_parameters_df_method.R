@@ -8,9 +8,9 @@ if (require("testthat") &&
   model <- suppressMessages(lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
   model2 <- suppressMessages(lmerTest::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
 
-  mp1 <- model_parameters(model, digits = 5)
-  mp2 <- model_parameters(model, digits = 5, df_method = "s")
-  mp3 <- model_parameters(model, digits = 5, df_method = "k")
+  mp1 <- model_parameters(model, digits = 5, effects = "fixed")
+  mp2 <- model_parameters(model, digits = 5, df_method = "s", effects = "fixed")
+  mp3 <- model_parameters(model, digits = 5, df_method = "k", effects = "fixed")
 
   test_that("model_parameters, df_method wald", {
     expect_equal(mp1$SE, c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668), tolerance = 1e-3)

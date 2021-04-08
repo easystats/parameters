@@ -72,7 +72,7 @@
   ...
 )
 
-\method{ci}{mixor}(x, ci = 0.95, effects = c("all", "fixed", "random"), ...)
+\method{ci}{mixor}(x, ci = 0.95, effects = "all", ...)
 
 \method{ci}{lme}(x, ci = 0.95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...)
 
@@ -129,7 +129,8 @@ computed.}
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{verbose}{Toggle warnings and messages.}
 

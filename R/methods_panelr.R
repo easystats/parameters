@@ -7,7 +7,7 @@
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = .95,
-                                 effects = "fixed",
+                                 effects = "all",
                                  group_level = FALSE,
                                  bootstrap = FALSE,
                                  iterations = 1000,

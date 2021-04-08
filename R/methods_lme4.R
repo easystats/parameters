@@ -122,7 +122,7 @@ model_parameters.merMod <- function(model,
                                     df_method = "wald",
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed",
+                                    effects = "all",
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
@@ -150,6 +150,12 @@ model_parameters.merMod <- function(model,
         ci = ci,
         ...
       )
+      if (effects != "fixed") {
+        effects <- "fixed"
+        if (verbose) {
+          warning("Bootstrapping only returns fixed effects of the mixed model.", call. = FALSE)
+        }
+      }
     } else {
       params <- .extract_parameters_mixed(
         model,
