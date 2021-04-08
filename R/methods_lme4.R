@@ -200,8 +200,9 @@ model_parameters.merMod <- function(model,
 
   # due to rbind(), we lose attributes from "extract_parameters()",
   # so we add those attributes back here...
-
-  attributes(params) <- utils::modifyList(att, attributes(params))
+  if (!is.null(att)) {
+    attributes(params) <- utils::modifyList(att, attributes(params))
+  }
 
   params <- .add_model_parameters_attributes(
     params,

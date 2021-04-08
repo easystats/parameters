@@ -142,6 +142,12 @@
     attr(params, "p_digits") <- 3
   }
 
+  if ("footer_digits" %in% names(dot.arguments)) {
+    attr(params, "footer_digits") <- eval(dot.arguments[["footer_digits"]])
+  } else {
+    attr(params, "footer_digits") <- 3
+  }
+
   if ("s_value" %in% names(dot.arguments)) {
     attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
   }

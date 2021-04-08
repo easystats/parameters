@@ -254,7 +254,7 @@
     }
 
     formatted_table <- insight::format_table(tables[[type]], digits = digits, ci_digits = ci_digits, p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
-    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars)
+    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table)
 
     # exceptions for random effects
     if (.n_unique(formatted_table$Group) == 1) {
@@ -332,7 +332,7 @@
 
 
 # helper to format the header / subheader of different model components
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars) {
+.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
   component_name <- switch(type,
     "mu" = ,
     "fixed" = ,
@@ -421,6 +421,13 @@
   }
   if (grepl("^random\\.(.*)", component_name)) {
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
+  }
+
+  # if we show ZI component only, make sure this appears in header
+  if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
+      !is.null(formatted_table$Component) &&
+      all(formatted_table$Component == "zero_inflated")) {
+    component_name <- paste0(component_name, " (Zero-Inflated Model)")
   }
 
   # tweaking of sub headers

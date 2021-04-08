@@ -418,7 +418,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 # footer functions ------------------
 
 .format_footer <- function(x,
-                           digits = 2,
+                           digits = 3,
                            verbose = TRUE,
                            show_sigma = FALSE,
                            show_formula = FALSE,

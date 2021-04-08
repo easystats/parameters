@@ -15,6 +15,7 @@
                                         p_adjust = NULL,
                                         wb_component = FALSE,
                                         verbose = TRUE,
+                                        keep_component_column = FALSE,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -224,7 +225,7 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1) parameters$Component <- NULL
+  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
   if ((!is.null(parameters$Effects) && .n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
 
 

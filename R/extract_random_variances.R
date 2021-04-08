@@ -27,7 +27,13 @@
 
 
 
-.extract_random_variances.glmmTMB <- function(model, ci = .95, effects = "random", ...) {
+.extract_random_variances.glmmTMB <- function(model,
+                                              ci = .95,
+                                              effects = "random",
+                                              component = "all",
+                                              ...) {
+  component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
+
   out <- suppressWarnings(
     .extract_random_variances_helper(
       model,
@@ -52,6 +58,15 @@
     zi_var$Component <- "zero_inflated"
     out <- rbind(out, zi_var)
   }
+
+  # filter
+  if (component != "all") {
+    if (component == "zi") {
+      component <- "zero_inflated"
+    }
+    out <- out[out$Component == component, ]
+  }
+
   out
 }
 

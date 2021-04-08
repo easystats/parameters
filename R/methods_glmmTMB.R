@@ -63,6 +63,7 @@ model_parameters.glmmTMB <- function(model,
         df_method = df_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
+        keep_component_column = component != "conditional",
         ...
       )
     }
@@ -91,7 +92,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component)
   }
 
 
@@ -101,7 +102,7 @@ model_parameters.glmmTMB <- function(model,
     params$Group <- ""
     # add component column
     if (!"Component" %in% colnames(params)) {
-      params$Component <- "conditional"
+      params$Component <- ifelse(component %in% c("zi", "zero_inflated"), "zero_inflated", "conditional")
     }
 
     # reorder
@@ -120,8 +121,9 @@ model_parameters.glmmTMB <- function(model,
 
   # due to rbind(), we lose attributes from "extract_parameters()",
   # so we add those attributes back here...
-
-  attributes(params) <- utils::modifyList(att, attributes(params))
+  if (!is.null(att)) {
+    attributes(params) <- utils::modifyList(att, attributes(params))
+  }
 
   params <- .add_model_parameters_attributes(
     params,

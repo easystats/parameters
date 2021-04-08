@@ -167,7 +167,7 @@ print.parameters_brms_meta <- print.parameters_model
 
 
 .print_footer <- function(x,
-                          digits = 2,
+                          digits = 3,
                           show_sigma = FALSE,
                           show_formula = FALSE,
                           format = "text") {
@@ -187,7 +187,7 @@ print.parameters_brms_meta <- print.parameters_model
   }
 
   # check if user supplied digits attributes
-  digits <- .additional_arguments(x, "digits", 2)
+  digits <- .additional_arguments(x, "footer_digits", 3)
 
   .format_footer(
     x,
@@ -204,6 +204,19 @@ print.parameters_brms_meta <- print.parameters_model
 
 .print_caption <- function(x, caption = NULL, format = "text") {
   title_attribute <- attributes(x)$title
+
+  # check effects and component parts
+  if (!is.null(x$Effects) && all(x$Effects == "random")) {
+    eff_name <- "Random"
+  } else {
+    eff_name <- "Fixed"
+  }
+  if (!is.null(x$Component) && all(x$Component == "zero_inflated")) {
+    zero_inflated <- " (Zero-Inflated Model)"
+  } else {
+    zero_inflated <- ""
+  }
+
   if (identical(format, "html") && is.null(caption)) {
     table_caption <- "Model Summary"
   } else if (isTRUE(attributes(x)$ordinal_model)) {
@@ -219,9 +232,9 @@ print.parameters_brms_meta <- print.parameters_model
   } else if (!is.null(caption) && caption == "") {
     table_caption <- NULL
   } else if (identical(format, "text")) {
-    table_caption <- c("# Fixed Effects", "blue")
+    table_caption <- c(paste0("# ", eff_name, " Effects", zero_inflated), "blue")
   } else {
-    table_caption <- "Fixed Effects"
+    table_caption <- paste0(eff_name, " Effects", zero_inflated)
   }
 
   table_caption
