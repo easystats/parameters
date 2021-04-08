@@ -165,12 +165,13 @@ model_parameters.merMod <- function(model,
     }
 
     params$Effects <- "fixed"
-    att <- attributes(params)
 
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)
     }
   }
+
+  att <- attributes(params)
 
   if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
