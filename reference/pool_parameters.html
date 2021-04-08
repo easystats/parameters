@@ -280,12 +280,12 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
   <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://amices.org/mice/reference/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;          term    estimate  std.error statistic       df    p.value
-#&gt; 1 (Intercept) 17.98519880 3.99313205  4.504033 8.034765 0.00196983
-#&gt; 2    age40-59 -4.63573188 2.12372035 -2.182835 9.024114 0.05683252
-#&gt; 3    age60-99 -6.29893122 3.04549192 -2.068280 4.865740 0.09499204
-#&gt; 4      hypyes  1.84038907 2.45908171  0.748405 8.013868 0.47560431
-#&gt; 5         chl  0.05631978 0.02186155  2.576203 7.681416 0.03392045</div></pre>
+</div><div class='output co'>#&gt;          term   estimate  std.error statistic        df      p.value
+#&gt; 1 (Intercept) 18.8019383 3.21930205  5.840377 16.786380 2.069528e-05
+#&gt; 2    age40-59 -5.3299829 2.02343457 -2.634127  9.912746 2.515600e-02
+#&gt; 3    age60-99 -6.4035364 2.50766708 -2.553583  6.559850 4.005019e-02
+#&gt; 4      hypyes  2.0943589 1.88984268  1.108219 12.802659 2.881530e-01
+#&gt; 5         chl  0.0548304 0.01844202  2.973124 14.762479 9.610239e-03</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
