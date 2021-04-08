@@ -144,9 +144,10 @@ model_parameters.merMod <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
     effects <- "fixed"
-    if (verbose) {
-      warning("Standardized coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    }
+    ## TODO enable later, when fixed in "effectsize"
+    # if (verbose) {
+    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    # }
   }
 
   if (effects %in% c("fixed", "all")) {

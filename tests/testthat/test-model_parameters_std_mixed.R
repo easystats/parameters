@@ -16,7 +16,7 @@ if (.runThisTest &&
   )
 
   test_that("model_parameters, standardize-refit", {
-    params <- model_parameters(model, standardize = "refit")
+    params <- model_parameters(model, standardize = "refit", verbose = FALSE)
     expect_equal(c(nrow(params), ncol(params)), c(7, 10))
     expect_equal(params$Coefficient, c(0.96949, -1.28631, -1.81461, 0.34791, 1.74252, -0.25421, -0.18834), tolerance = 1e-3)
     expect_equal(params$SE, c(0.2045, 0.2619, 0.34035, 0.05968, 0.13914, 0.09762, 0.0945), tolerance = 1e-3)
