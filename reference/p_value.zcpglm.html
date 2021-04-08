@@ -208,7 +208,8 @@
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
+(default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -231,13 +232,16 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   components etc.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"pscl"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://github.com/atahk/pscl'>"pscl"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bioChemists"</span><span class='op'>)</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>zeroinfl</span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>fem</span> <span class='op'>+</span> <span class='va'>mar</span> <span class='op'>+</span> <span class='va'>kid5</span> <span class='op'>|</span> <span class='va'>kid5</span> <span class='op'>+</span> <span class='va'>phd</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>fem</span> <span class='op'>+</span> <span class='va'>mar</span> <span class='op'>+</span> <span class='va'>kid5</span> <span class='op'>|</span> <span class='va'>kid5</span> <span class='op'>+</span> <span class='va'>phd</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span>
   <span class='fu'><a href='p_value.html'>p_value</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
   <span class='fu'><a href='p_value.html'>p_value</a></span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zi"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘pscl’</span></div></pre>
+</div><div class='output co'>#&gt;          Parameter         p     Component
+#&gt; 5 zero_(Intercept) 0.0446362 zero_inflated
+#&gt; 6        zero_kid5 0.4146050 zero_inflated
+#&gt; 7         zero_phd 0.0248504 zero_inflated</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

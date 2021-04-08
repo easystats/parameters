@@ -215,7 +215,8 @@
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
+(default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -251,19 +252,19 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
-#&gt; 1    3.860390        -1.0394576        -1.942683   0.3070037    0.7370946
-#&gt; 2    3.664702        -1.0772179        -1.793974   0.2314721    0.8740453
-#&gt; 3    3.365775        -0.6341365        -1.677799   1.0883272    0.8965303
-#&gt; 4    3.516608        -1.5310996        -1.905633   0.8769748    0.8784435
-#&gt; 5    3.694168        -1.2328679        -1.898666  -0.2709859    0.8976869
-#&gt; 6    3.810025        -0.8180942        -2.242413   0.1553175    0.8432900
+#&gt; 1    3.662706        -0.9956017        -2.209584  -0.3587959    0.9451276
+#&gt; 2    3.647275        -0.6123895        -2.501323  -0.1082739    0.9663680
+#&gt; 3    3.504114        -1.4132301        -2.650989   0.2286031    0.9742007
+#&gt; 4    3.395503        -1.2891012        -2.343047   0.7040094    0.9899346
+#&gt; 5    3.269931        -1.7395932        -2.668695   0.6356595    1.0781432
+#&gt; 6    3.278125        -0.5871270        -2.007362   1.4275434    0.9803884
 #&gt;   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width
-#&gt; 1                   -0.27132516                   0.01410033
-#&gt; 2                   -0.52688695                  -0.28625865
-#&gt; 3                   -1.58251102                  -1.09847462
-#&gt; 4                   -0.70884026                  -0.83881685
-#&gt; 5                   -0.09196815                   0.19128783
-#&gt; 6                   -0.61859455                  -0.02344100</div><div class='input'><span class='co'># \donttest{</span>
+#&gt; 1                    -0.1868436                    0.2901496
+#&gt; 2                    -0.7978578                    0.1586344
+#&gt; 3                    -0.4461917                   -0.0389400
+#&gt; 4                    -1.0049591                   -0.6809964
+#&gt; 5                    -0.7689287                   -0.6236015
+#&gt; 6                    -2.1371130                   -1.4734537</div><div class='input'><span class='co'># \donttest{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
     <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,
@@ -275,12 +276,12 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt;   (Intercept)   minedno
-#&gt; 1   0.4553118 -1.515673
-#&gt; 2   0.5503793 -1.416835
-#&gt; 3   0.9486720 -1.974456
-#&gt; 4   0.6072947 -1.902215
-#&gt; 5   0.6084405 -2.110648
-#&gt; 6   0.9931196 -1.928001</div><div class='input'><span class='co'># }</span>
+#&gt; 1   0.8381675 -2.195582
+#&gt; 2   0.9332055 -1.989318
+#&gt; 3   0.2996814 -1.532834
+#&gt; 4   0.7315934 -1.785108
+#&gt; 5   1.1235214 -2.141896
+#&gt; 6   0.5997095 -1.839832</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

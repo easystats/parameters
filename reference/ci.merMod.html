@@ -245,7 +245,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for mixor</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, effects <span class='op'>=</span> <span class='st'>"all"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for lme</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -321,7 +321,8 @@ computed.</p></td>
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
+(default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

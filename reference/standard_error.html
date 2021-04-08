@@ -237,7 +237,7 @@ standard errors.</p>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for mixor</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"fixed"</span>, <span class='st'>"random"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='st'>"all"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for clm2</span>
 <span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -290,7 +290,8 @@ package for robust covariance matrix estimators. For certain mixed models,
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code> or <code>"all"</code> (default). May be abbreviated.</p></td>
+<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
+(default). May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>force</th>

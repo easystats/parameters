@@ -287,13 +287,13 @@ included in the summary output.</p></td>
 #&gt; 
 #&gt; Parameter                     | Coefficient |         95% CI |      p
 #&gt; ---------------------------------------------------------------------
-#&gt; (Intercept)                   |        3.52 | [ 3.23,  3.84] | &lt; .001
-#&gt; Speciesversicolor             |       -1.15 | [-1.81, -0.48] | 0.002 
-#&gt; Speciesvirginica              |       -2.26 | [-3.05, -1.36] | &lt; .001
-#&gt; Petal.Width                   |        0.41 | [-0.43,  1.30] | 0.352 
-#&gt; Petal.Length                  |        0.94 | [ 0.78,  1.09] | &lt; .001
-#&gt; Speciesversicolor:Petal.Width |       -0.73 | [-1.81,  0.26] | 0.154 
-#&gt; Speciesvirginica:Petal.Width  |       -0.36 | [-1.31,  0.53] | 0.434 </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; (Intercept)                   |        3.53 | [ 3.21,  3.83] | &lt; .001
+#&gt; Speciesversicolor             |       -1.17 | [-1.84, -0.50] | &lt; .001
+#&gt; Speciesvirginica              |       -2.27 | [-3.14, -1.39] | &lt; .001
+#&gt; Petal.Width                   |        0.40 | [-0.48,  1.32] | 0.411 
+#&gt; Petal.Length                  |        0.94 | [ 0.79,  1.09] | &lt; .001
+#&gt; Speciesversicolor:Petal.Width |       -0.73 | [-1.73,  0.27] | 0.183 
+#&gt; Speciesvirginica:Petal.Width  |       -0.37 | [-1.33,  0.53] | 0.487 </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span>
     <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,

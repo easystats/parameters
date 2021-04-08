@@ -144,7 +144,30 @@
 <span class="va">iris</span><span class="op">$</span><span class="va">Petlen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petlen</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Call:</span>
+<span class="co">#&gt; lm(formula = Sepal.Width ~ poly(Sepal.Length, 2) + Species + </span>
+<span class="co">#&gt;     Petlen, data = iris)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residuals:</span>
+<span class="co">#&gt;     Min      1Q  Median      3Q     Max </span>
+<span class="co">#&gt; -0.7742 -0.1490 -0.0056  0.1666  0.6973 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Coefficients:</span>
+<span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="co">#&gt; (Intercept)              3.8127     0.0582   65.50  &lt; 2e-16 ***</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)1   4.0602     0.4668    8.70    7e-15 ***</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)2  -1.3024     0.3149   -4.14    6e-05 ***</span>
+<span class="co">#&gt; Speciesversicolor       -1.0056     0.2781   -3.62  0.00041 ***</span>
+<span class="co">#&gt; Speciesvirginica        -0.9913     0.2851   -3.48  0.00067 ***</span>
+<span class="co">#&gt; Petlen(3,7]             -0.1360     0.2818   -0.48  0.63019    </span>
+<span class="co">#&gt; ---</span>
+<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Residual standard error: 0.28 on 144 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.615,  Adjusted R-squared:  0.602 </span>
+<span class="co">#&gt; F-statistic:   46 on 5 and 144 DF,  p-value: &lt;2e-16</span></code></pre></div>
 </div>
 <div id="formatting-parameter-names" class="section level2">
 <h2 class="hasAnchor">
@@ -153,10 +176,22 @@
 <p>Thus, the first step would be to format the parameter names, which can be done with <code><a href="../reference/format_parameters.html">format_parameters()</a></code> from the <em>parameters</em> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
-<span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt;                 (Intercept)      poly(Sepal.Length, 2)1 </span>
+<span class="co">#&gt;               "(Intercept)" "Sepal.Length [1st degree]" </span>
+<span class="co">#&gt;      poly(Sepal.Length, 2)2           Speciesversicolor </span>
+<span class="co">#&gt; "Sepal.Length [2nd degree]"      "Species [versicolor]" </span>
+<span class="co">#&gt;            Speciesvirginica                 Petlen(3,7] </span>
+<span class="co">#&gt;       "Species [virginica]"              "Petlen [4-7]"</span></code></pre></div>
 <p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> returns a (named) character vector with the original coefficients as <em>names</em> of each character element, and the formatted names of the coefficients as values of the character vector. Let’s look at the results again:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
+<span class="co">#&gt; (Intercept)</span>
+<span class="co">#&gt; Sepal.Length [1st degree]</span>
+<span class="co">#&gt; Sepal.Length [2nd degree]</span>
+<span class="co">#&gt; Species [versicolor]</span>
+<span class="co">#&gt; Species [virginica]</span>
+<span class="co">#&gt; Petlen [4-7]</span></code></pre></div>
 <p>Now variable names and factor levels, but also polynomial terms or even factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> are much more readable. Factor levels are separated from the variable name, inside brackets. Same for the coefficients of the different polynomial degrees. And the exact range for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>-factors is also clearer now.</p>
 </div>
 <div id="standardizing-column-names-of-parameter-tables" class="section level2">
@@ -165,11 +200,14 @@
 <p>As seen above, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns columns named <code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>. While <code>Estimate</code> is not specific for certain models, <code>t value</code> is. For logistic regression models, you would get <code>z value</code>. Some packages alter the names, so you get just <code>t</code> or <code>t-value</code> etc.</p>
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     </span>
+<span class="co">#&gt; [6] "CI_high"     "t"           "df_error"    "p"</span></code></pre></div>
 <p>For Bayesian models, <code>Coefficient</code> is usually named <code>Median</code> etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the <em>broom</em> package, where you get “standardized” column names:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/" class="external-link">broom</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "term"      "estimate"  "std.error" "statistic" "p.value"</span></code></pre></div>
 <p>To deal with such situations, the <em>insight</em> package provides a <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> function, which exactly does that: standardizing the column names of the input. In the following example, you see that the statistic-column is no longer named <code>t</code>, but <code>statistic</code>. <code>df_error</code> or <code>df_residuals</code> will be renamed to <code>df</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/insight/" class="external-link">insight</a></span><span class="op">)</span>
@@ -177,34 +215,68 @@
 <span class="va">model</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     </span>
+<span class="co">#&gt; [6] "CI_high"     "Statistic"   "df"          "p"</span></code></pre></div>
 <p>Furthermore, you can request “broom”-style for column names:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"broom"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "term"       "estimate"   "std.error"  "conf.level" "conf.low"  </span>
+<span class="co">#&gt; [6] "conf.high"  "statistic"  "df.error"   "p.value"</span></code></pre></div>
 </div>
 <div id="formatting-column-names-and-columns" class="section level2">
 <h2 class="hasAnchor">
 <a href="#formatting-column-names-and-columns" class="anchor"></a>Formatting Column Names and Columns</h2>
 <p>Beside formatting parameter names (coefficient names) using <code><a href="../reference/format_parameters.html">format_parameters()</a></code>, we can do even more to make the output more readable. Let’s look at an example that includes confidence intervals.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|) 2.5 % 97.5 %</span>
+<span class="co">#&gt; (Intercept)                3.81      0.058   65.50 4.6e-109  3.70   3.93</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)1     4.06      0.467    8.70  7.0e-15  3.14   4.98</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)2    -1.30      0.315   -4.14  6.0e-05 -1.92  -0.68</span>
+<span class="co">#&gt; Speciesversicolor         -1.01      0.278   -3.62  4.1e-04 -1.56  -0.46</span>
+<span class="co">#&gt; Speciesvirginica          -0.99      0.285   -3.48  6.7e-04 -1.55  -0.43</span>
+<span class="co">#&gt; Petlen(3,7]               -0.14      0.282   -0.48  6.3e-01 -0.69   0.42</span></code></pre></div>
 <p>We can get a similar tabular output using <em>broom</em>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt;   term                 estimate std.error statistic   p.value conf.low conf.high</span>
+<span class="co">#&gt;   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 (Intercept)             3.81     0.0582    65.5   4.61e-109    3.70      3.93 </span>
+<span class="co">#&gt; 2 poly(Sepal.Length, …    4.06     0.467      8.70  7.00e- 15    3.14      4.98 </span>
+<span class="co">#&gt; 3 poly(Sepal.Length, …   -1.30     0.315     -4.14  5.98e-  5   -1.92     -0.680</span>
+<span class="co">#&gt; 4 Speciesversicolor      -1.01     0.278     -3.62  4.12e-  4   -1.56     -0.456</span>
+<span class="co">#&gt; 5 Speciesvirginica       -0.991    0.285     -3.48  6.72e-  4   -1.55     -0.428</span>
+<span class="co">#&gt; 6 Petlen(3,7]            -0.136    0.282     -0.482 6.30e-  1   -0.693     0.421</span></code></pre></div>
 <p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that does all the work for you.</p>
 <p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em> packages</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt;                     term estimate std.error statistic p.value       conf.int</span>
+<span class="co">#&gt; 1            (Intercept)     3.81      0.06     65.50  &lt; .001 [ 3.70,  3.93]</span>
+<span class="co">#&gt; 2 poly(Sepal.Length, 2)1     4.06      0.47      8.70  &lt; .001 [ 3.14,  4.98]</span>
+<span class="co">#&gt; 3 poly(Sepal.Length, 2)2    -1.30      0.31     -4.14  &lt; .001 [-1.92, -0.68]</span>
+<span class="co">#&gt; 4      Speciesversicolor    -1.01      0.28     -3.62  &lt; .001 [-1.56, -0.46]</span>
+<span class="co">#&gt; 5       Speciesvirginica    -0.99      0.29     -3.48  &lt; .001 [-1.55, -0.43]</span>
+<span class="co">#&gt; 6            Petlen(3,7]    -0.14      0.28     -0.48  0.630  [-0.69,  0.42]</span></code></pre></div>
 <p>When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt;                   Parameter Coefficient   SE         95% CI t(144)      p</span>
+<span class="co">#&gt; 1               (Intercept)        3.81 0.06 [ 3.70,  3.93]  65.50 &lt; .001</span>
+<span class="co">#&gt; 2 Sepal.Length [1st degree]        4.06 0.47 [ 3.14,  4.98]   8.70 &lt; .001</span>
+<span class="co">#&gt; 3 Sepal.Length [2nd degree]       -1.30 0.31 [-1.92, -0.68]  -4.14 &lt; .001</span>
+<span class="co">#&gt; 4      Species [versicolor]       -1.01 0.28 [-1.56, -0.46]  -3.62 &lt; .001</span>
+<span class="co">#&gt; 5       Species [virginica]       -0.99 0.29 [-1.55, -0.43]  -3.48 &lt; .001</span>
+<span class="co">#&gt; 6              Petlen [4-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</span></code></pre></div>
 </div>
 <div id="exporting-the-parameters-table" class="section level2">
 <h2 class="hasAnchor">
@@ -212,17 +284,43 @@
 <p>Finally, <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> from <em>insight</em> formats the data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more “table-like”.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt;   mpg | cyl |   disp |  hp | drat</span>
+<span class="co">#&gt; ---------------------------------</span>
+<span class="co">#&gt; 21.00 |   6 | 160.00 | 110 | 3.90</span>
+<span class="co">#&gt; 21.00 |   6 | 160.00 | 110 | 3.90</span>
+<span class="co">#&gt; 22.80 |   4 | 108.00 |  93 | 3.85</span>
+<span class="co">#&gt; 21.40 |   6 | 258.00 | 110 | 3.08</span>
+<span class="co">#&gt; 18.70 |   8 | 360.00 | 175 | 3.15</span>
+<span class="co">#&gt; 18.10 |   6 | 225.00 | 105 | 2.76</span>
+<span class="co">#&gt; 14.30 |   8 | 360.00 | 245 | 3.21</span>
+<span class="co">#&gt; 24.40 |   4 | 146.70 |  62 | 3.69</span></code></pre></div>
 <p>Putting all this together allows us to create nice tabular outputs of parameters tables. This can be done using <em>broom</em>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; term                   | estimate | std.error | statistic | p.value |       conf.int</span>
+<span class="co">#&gt; ------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)            |     3.81 |      0.06 |     65.50 |  &lt; .001 | [ 3.70,  3.93]</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)1 |     4.06 |      0.47 |      8.70 |  &lt; .001 | [ 3.14,  4.98]</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)2 |    -1.30 |      0.31 |     -4.14 |  &lt; .001 | [-1.92, -0.68]</span>
+<span class="co">#&gt; Speciesversicolor      |    -1.01 |      0.28 |     -3.62 |  &lt; .001 | [-1.56, -0.46]</span>
+<span class="co">#&gt; Speciesvirginica       |    -0.99 |      0.29 |     -3.48 |  &lt; .001 | [-1.55, -0.43]</span>
+<span class="co">#&gt; Petlen(3,7]            |    -0.14 |      0.28 |     -0.48 |  0.630  | [-0.69,  0.42]</span></code></pre></div>
 <p>Or, in a simpler way and with much more options (like standardizing, robust standard errors, bootstrapping, …) using <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>-method does all these steps automatically:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                 | Coefficient |   SE |         95% CI | t(144) |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)               |        3.81 | 0.06 | [ 3.70,  3.93] |  65.50 | &lt; .001</span>
+<span class="co">#&gt; Sepal.Length [1st degree] |        4.06 | 0.47 | [ 3.14,  4.98] |   8.70 | &lt; .001</span>
+<span class="co">#&gt; Sepal.Length [2nd degree] |       -1.30 | 0.31 | [-1.92, -0.68] |  -4.14 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]      |       -1.01 | 0.28 | [-1.56, -0.46] |  -3.62 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]       |       -0.99 | 0.29 | [-1.55, -0.43] |  -3.48 | &lt; .001</span>
+<span class="co">#&gt; Petlen [4-7]              |       -0.14 | 0.28 | [-0.69,  0.42] |  -0.48 | 0.630</span></code></pre></div>
 </div>
 <div id="formatting-the-parameters-table-in-markdown" class="section level2">
 <h2 class="hasAnchor">
@@ -235,16 +333,947 @@
   <span class="co"># parenthesis look better in markdown-tables, so we use "brackets" here</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span>ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"markdown"</span>, caption <span class="op">=</span> <span class="st">"My Table"</span>, align <span class="op">=</span> <span class="st">"lcccrr"</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<caption>My Table</caption>
+<thead><tr class="header">
+<th align="left">term</th>
+<th align="center">estimate</th>
+<th align="center">std.error</th>
+<th align="center">statistic</th>
+<th align="right">p.value</th>
+<th align="right">conf.int</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="center">3.81</td>
+<td align="center">0.06</td>
+<td align="center">65.50</td>
+<td align="right">&lt; .001</td>
+<td align="right">( 3.70, 3.93)</td>
+</tr>
+<tr class="even">
+<td align="left">poly(Sepal.Length, 2)1</td>
+<td align="center">4.06</td>
+<td align="center">0.47</td>
+<td align="center">8.70</td>
+<td align="right">&lt; .001</td>
+<td align="right">( 3.14, 4.98)</td>
+</tr>
+<tr class="odd">
+<td align="left">poly(Sepal.Length, 2)2</td>
+<td align="center">-1.30</td>
+<td align="center">0.31</td>
+<td align="center">-4.14</td>
+<td align="right">&lt; .001</td>
+<td align="right">(-1.92, -0.68)</td>
+</tr>
+<tr class="even">
+<td align="left">Speciesversicolor</td>
+<td align="center">-1.01</td>
+<td align="center">0.28</td>
+<td align="center">-3.62</td>
+<td align="right">&lt; .001</td>
+<td align="right">(-1.56, -0.46)</td>
+</tr>
+<tr class="odd">
+<td align="left">Speciesvirginica</td>
+<td align="center">-0.99</td>
+<td align="center">0.29</td>
+<td align="center">-3.48</td>
+<td align="right">&lt; .001</td>
+<td align="right">(-1.55, -0.43)</td>
+</tr>
+<tr class="even">
+<td align="left">Petlen(3,7]</td>
+<td align="center">-0.14</td>
+<td align="center">0.28</td>
+<td align="center">-0.48</td>
+<td align="right">0.630</td>
+<td align="right">(-0.69, 0.42)</td>
+</tr>
+</tbody>
+</table>
 <p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> is a convenient wrapper around <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table(format = "markdown")</a></code>, and allows to directly format the output of functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> or other <em>parameters</em> functions in markdown-format.</p>
 <p>These tables are also nicely formatted when knitting markdown-documents into Word or PDF. <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> applies some default settings that have proven to work well for markdown, PDF or Word tables.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="center">Coefficient</th>
+<th align="center">SE</th>
+<th align="center">95% CI</th>
+<th align="center">t(144)</th>
+<th align="center">p</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="center">3.81</td>
+<td align="center">0.06</td>
+<td align="center">(3.70, 3.93)</td>
+<td align="center">65.50</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="even">
+<td align="left">Sepal.Length (1st degree)</td>
+<td align="center">4.06</td>
+<td align="center">0.47</td>
+<td align="center">(3.14, 4.98)</td>
+<td align="center">8.70</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td align="left">Sepal.Length (2nd degree)</td>
+<td align="center">-1.30</td>
+<td align="center">0.31</td>
+<td align="center">(-1.92, -0.68)</td>
+<td align="center">-4.14</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="even">
+<td align="left">Species (versicolor)</td>
+<td align="center">-1.01</td>
+<td align="center">0.28</td>
+<td align="center">(-1.56, -0.46)</td>
+<td align="center">-3.62</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td align="left">Species (virginica)</td>
+<td align="center">-0.99</td>
+<td align="center">0.29</td>
+<td align="center">(-1.55, -0.43)</td>
+<td align="center">-3.48</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="even">
+<td align="left">Petlen (4-7)</td>
+<td align="center">-0.14</td>
+<td align="center">0.28</td>
+<td align="center">(-0.69, 0.42)</td>
+<td align="center">-0.48</td>
+<td align="center">0.630</td>
+</tr>
+</tbody>
+</table>
 <p>A similar option is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>, which is a convenient wrapper for <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table(format = "html")</a></code>. Using HTML in markdown has the advantage that it will be properly rendered when exporting to PDF.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#niwbgbfclw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#niwbgbfclw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#niwbgbfclw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#niwbgbfclw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#niwbgbfclw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#niwbgbfclw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#niwbgbfclw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#niwbgbfclw .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#niwbgbfclw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#niwbgbfclw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#niwbgbfclw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#niwbgbfclw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#niwbgbfclw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#niwbgbfclw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niwbgbfclw .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#niwbgbfclw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#niwbgbfclw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#niwbgbfclw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#niwbgbfclw .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#niwbgbfclw .gt_left {
+  text-align: left;
+}
+
+#niwbgbfclw .gt_center {
+  text-align: center;
+}
+
+#niwbgbfclw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#niwbgbfclw .gt_font_normal {
+  font-weight: normal;
+}
+
+#niwbgbfclw .gt_font_bold {
+  font-weight: bold;
+}
+
+#niwbgbfclw .gt_font_italic {
+  font-style: italic;
+}
+
+#niwbgbfclw .gt_super {
+  font-size: 65%;
+}
+
+#niwbgbfclw .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="niwbgbfclw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<thead class="gt_header">
+<tr>
+<th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model Summary</th>
+    </tr>
+<tr>
+<th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
+    </tr>
+</thead>
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">SE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">95% CI</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(144)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">p</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">(Intercept)</td>
+      <td class="gt_row gt_center">3.81</td>
+      <td class="gt_row gt_center">0.06</td>
+      <td class="gt_row gt_center">(3.70, 3.93)</td>
+      <td class="gt_row gt_center">65.50</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Sepal.Length (1st degree)</td>
+      <td class="gt_row gt_center">4.06</td>
+      <td class="gt_row gt_center">0.47</td>
+      <td class="gt_row gt_center">(3.14, 4.98)</td>
+      <td class="gt_row gt_center">8.70</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Sepal.Length (2nd degree)</td>
+      <td class="gt_row gt_center">-1.30</td>
+      <td class="gt_row gt_center">0.31</td>
+      <td class="gt_row gt_center">(-1.92, -0.68)</td>
+      <td class="gt_row gt_center">-4.14</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Species (versicolor)</td>
+      <td class="gt_row gt_center">-1.01</td>
+      <td class="gt_row gt_center">0.28</td>
+      <td class="gt_row gt_center">(-1.56, -0.46)</td>
+      <td class="gt_row gt_center">-3.62</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Species (virginica)</td>
+      <td class="gt_row gt_center">-0.99</td>
+      <td class="gt_row gt_center">0.29</td>
+      <td class="gt_row gt_center">(-1.55, -0.43)</td>
+      <td class="gt_row gt_center">-3.48</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Petlen (4-7)</td>
+      <td class="gt_row gt_center">-0.14</td>
+      <td class="gt_row gt_center">0.28</td>
+      <td class="gt_row gt_center">(-0.69, 0.42)</td>
+      <td class="gt_row gt_center">-0.48</td>
+      <td class="gt_row gt_center">0.630 </td>
+    </tr>
+</tbody>
+<tfoot class="gt_sourcenotes"></tfoot>
+</table></div>
 <p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> are considered as main functions for users who want to generate nicely rendered tables inside markdown-documents. A wrapper around these both is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, which either calls <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></code></pre></div>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#ghawkzfndf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ghawkzfndf .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ghawkzfndf .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ghawkzfndf .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ghawkzfndf .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ghawkzfndf .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ghawkzfndf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ghawkzfndf .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ghawkzfndf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ghawkzfndf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ghawkzfndf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ghawkzfndf .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ghawkzfndf .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#ghawkzfndf .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghawkzfndf .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ghawkzfndf .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ghawkzfndf .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ghawkzfndf .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ghawkzfndf .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ghawkzfndf .gt_left {
+  text-align: left;
+}
+
+#ghawkzfndf .gt_center {
+  text-align: center;
+}
+
+#ghawkzfndf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ghawkzfndf .gt_font_normal {
+  font-weight: normal;
+}
+
+#ghawkzfndf .gt_font_bold {
+  font-weight: bold;
+}
+
+#ghawkzfndf .gt_font_italic {
+  font-style: italic;
+}
+
+#ghawkzfndf .gt_super {
+  font-size: 65%;
+}
+
+#ghawkzfndf .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="ghawkzfndf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
+<thead class="gt_header">
+<tr>
+<th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model Summary</th>
+    </tr>
+<tr>
+<th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
+    </tr>
+</thead>
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">SE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">95% CI</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">t(144)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">p</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">(Intercept)</td>
+      <td class="gt_row gt_center">3.81</td>
+      <td class="gt_row gt_center">0.06</td>
+      <td class="gt_row gt_center">(3.70, 3.93)</td>
+      <td class="gt_row gt_center">65.50</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Sepal.Length (1st degree)</td>
+      <td class="gt_row gt_center">4.06</td>
+      <td class="gt_row gt_center">0.47</td>
+      <td class="gt_row gt_center">(3.14, 4.98)</td>
+      <td class="gt_row gt_center">8.70</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Sepal.Length (2nd degree)</td>
+      <td class="gt_row gt_center">-1.30</td>
+      <td class="gt_row gt_center">0.31</td>
+      <td class="gt_row gt_center">(-1.92, -0.68)</td>
+      <td class="gt_row gt_center">-4.14</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Species (versicolor)</td>
+      <td class="gt_row gt_center">-1.01</td>
+      <td class="gt_row gt_center">0.28</td>
+      <td class="gt_row gt_center">(-1.56, -0.46)</td>
+      <td class="gt_row gt_center">-3.62</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Species (virginica)</td>
+      <td class="gt_row gt_center">-0.99</td>
+      <td class="gt_row gt_center">0.29</td>
+      <td class="gt_row gt_center">(-1.55, -0.43)</td>
+      <td class="gt_row gt_center">-3.48</td>
+      <td class="gt_row gt_center">&lt; .001</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Petlen (4-7)</td>
+      <td class="gt_row gt_center">-0.14</td>
+      <td class="gt_row gt_center">0.28</td>
+      <td class="gt_row gt_center">(-0.69, 0.42)</td>
+      <td class="gt_row gt_center">-0.48</td>
+      <td class="gt_row gt_center">0.630 </td>
+    </tr>
+</tbody>
+<tfoot class="gt_sourcenotes"></tfoot>
+</table></div>
 </div>
   </div>
 
