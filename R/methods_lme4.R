@@ -120,7 +120,7 @@ model_parameters.merMod <- function(model,
                                     df_method = "wald",
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                    effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
@@ -140,11 +140,10 @@ model_parameters.merMod <- function(model,
 
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
+    if (!missing(effects) && effects != "fixed" && verbose) {
+      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
     effects <- "fixed"
-    ## TODO enable later, when fixed in "effectsize"
-    # if (verbose) {
-    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    # }
   }
 
   if (effects %in% c("fixed", "all")) {

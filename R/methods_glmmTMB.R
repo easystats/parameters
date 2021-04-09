@@ -13,7 +13,7 @@ model_parameters.glmmTMB <- function(model,
                                      ci = .95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                     effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                      component = "all",
                                      group_level = FALSE,
                                      standardize = NULL,
@@ -33,11 +33,10 @@ model_parameters.glmmTMB <- function(model,
 
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
+    if (!missing(effects) && effects != "fixed" && verbose) {
+      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
     effects <- "fixed"
-    ## TODO enable later, when fixed in "effectsize"
-    # if (verbose) {
-    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    # }
   }
 
   # fix argument, if model has only conditional component
