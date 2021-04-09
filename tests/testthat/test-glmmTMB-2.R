@@ -58,11 +58,4 @@ if (.runThisTest && require("testthat") && require("parameters") && require("glm
     expect_equal(mp$Component, c("conditional", "conditional", "dispersion", "dispersion"))
   })
 
-  mp <- model_parameters(model, effects = "all")
-
-  test_that("model_parameters", {
-    expect_equal(mp$Coefficient, c(as.vector(unlist(fixef(model))), 0.00047, 1.61129), tolerance = 1e-3)
-    expect_equal(mp$Effects, c("fixed", "fixed", "fixed", "fixed", "random", "random"))
-  })
-
 }
