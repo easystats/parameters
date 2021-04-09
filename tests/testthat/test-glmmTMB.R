@@ -127,17 +127,23 @@ if (.runThisTest &&
 
   test_that("model_parameters", {
     expect_equal(
-      model_parameters(m1)$Coefficient,
+      model_parameters(m1, effects = "fixed")$Coefficient,
       c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823),
       tolerance = 1e-3
     )
     expect_equal(
-      model_parameters(m2)$Coefficient,
+      model_parameters(m1, effects = "all")$Coefficient,
+      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
+        1, 1.17399, 1),
+      tolerance = 1e-3
+    )
+    expect_equal(
+      model_parameters(m2, effects = "fixed")$Coefficient,
       c(0.73785, -1.69166, 0.93516),
       tolerance = 1e-3
     )
     expect_equal(
-      model_parameters(m3)$Coefficient,
+      model_parameters(m3, effects = "fixed")$Coefficient,
       c(
         -0.6104, -0.9637, 0.1707, -0.3871, 0.4879, 0.5895, -0.1133,
         1.4294, 0.91, 1.1614, -0.9393, 1.0424, -0.5623, -0.893, -2.5398,
@@ -149,12 +155,16 @@ if (.runThisTest &&
       model_parameters(m1)$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
+        "zero_inflated", "zero_inflated", "conditional", "conditional",
         "zero_inflated", "zero_inflated"
       )
     )
-    expect_null(model_parameters(m2)$Component)
+    expect_null(model_parameters(m2, effects = "fixed")$Component)
+    expect_equal(model_parameters(m2)$Component,
+                 c("conditional", "conditional", "conditional", "conditional",
+                   "conditional"))
     expect_equal(
-      model_parameters(m3)$Component,
+      model_parameters(m3, effects = "fixed")$Component,
       c(
         "conditional", "conditional", "conditional", "conditional",
         "conditional", "conditional", "conditional", "conditional", "zero_inflated",
@@ -163,7 +173,7 @@ if (.runThisTest &&
       )
     )
     expect_equal(
-      model_parameters(m3)$SE,
+      model_parameters(m3, effects = "fixed")$SE,
       c(
         0.4052, 0.6436, 0.2353, 0.3424, 0.2383, 0.2278, 0.2439, 0.3666,
         0.6279, 1.3346, 0.8005, 0.714, 0.7263, 0.7535, 2.1817, 0.6045,

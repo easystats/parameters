@@ -355,6 +355,7 @@
     "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
     "survival" = ,
     "survival.fixed" = "Survival",
+    "dispersion.fixed" = ,
     "dispersion.fixed." = ,
     "dispersion" = "Dispersion",
     "marginal" = "Marginal Effects",
