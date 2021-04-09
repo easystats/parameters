@@ -98,6 +98,7 @@
                                           ci_width = "auto",
                                           ci_brackets = TRUE,
                                           zap_small = FALSE,
+                                          defined_equation = TRUE,
                                           ...) {
   final_table <- list()
 
@@ -146,6 +147,12 @@
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
     x$From <- ifelse(x$Label == "" | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
     x$Label <- NULL
+  }
+
+  if (!defined_equation && inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+    x$From[x$Component == "Defined"] <- ""
+    x$Operator[x$Component == "Defined"] <- ""
+    x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
   }
 
   # set up split-factor
