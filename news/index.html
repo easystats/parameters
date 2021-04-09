@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0.1</span>
       </span>
     </div>
 
@@ -176,9 +176,21 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="parameters-0131" class="section level1">
+<h1 class="page-header" data-toc-text="0.13.1">
+<a href="#parameters-0131" class="anchor"></a>parameters 0.13.1<small> Unreleased </small>
+</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>Removed deprecated arguments.</li>
+</ul>
+</div>
+</div>
     <div id="parameters-0130" class="section level1">
 <h1 class="page-header" data-toc-text="0.13.0">
-<a href="#parameters-0130" class="anchor"></a>parameters 0.13.0<small> Unreleased </small>
+<a href="#parameters-0130" class="anchor"></a>parameters 0.13.0<small> 2021-04-08 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -252,9 +264,9 @@
 </li>
 </ul>
 </div>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now always returns the confidence level for as additional <code>CI</code> column.</p></li>
 <li><p>The <code>rule</code> argument in <code>equivalenct_test()</code> defaults to <code>"classic"</code>.</p></li>
@@ -370,9 +382,9 @@
 <h1 class="page-header" data-toc-text="0.10.0">
 <a href="#parameters-0100" class="anchor"></a>parameters 0.10.0<small> 2020-12-01 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code>) is now <code>"partial"</code>, as initially intended.</p></li>
 <li><p>Column names for degrees of freedom were revised. <code>"df_residual"</code> was replaced by the more generic <code>"df_error"</code>. Moreover, models of class <code>htest</code> now also have the column name <code>"df_error"</code> and no longer <code>"df"</code> (where applicable).</p></li>
@@ -745,9 +757,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#parameters-060" class="anchor"></a>parameters 0.6.0<small> 2020-03-12 </small>
 </h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p>Alias <code>model_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
 <li><p>Alias <code>parameters_bootstrap()</code> was removed, please use <code><a href="../reference/bootstrap_parameters.html">bootstrap_parameters()</a></code>.</p></li>

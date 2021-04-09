@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0.1</span>
       </span>
     </div>
 
@@ -202,17 +202,17 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; High Correlation</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;                 Parameter        VIF Increased SE</span>
-<span class="co">#&gt;               Sepal.Width      29.42         5.42</span>
-<span class="co">#&gt;              Petal.Length    3204.78        56.61</span>
-<span class="co">#&gt;               Petal.Width    2442.10        49.42</span>
-<span class="co">#&gt;                   Species  398125.98       630.97</span>
-<span class="co">#&gt;  Sepal.Width:Petal.Length    2183.98        46.73</span>
-<span class="co">#&gt;   Sepal.Width:Petal.Width    1866.48        43.20</span>
-<span class="co">#&gt;       Sepal.Width:Species  349436.10       591.13</span>
-<span class="co">#&gt;  Petal.Length:Petal.Width    4032.80        63.50</span>
-<span class="co">#&gt;      Petal.Length:Species 1230070.70      1109.09</span>
-<span class="co">#&gt;       Petal.Width:Species  377458.32       614.38</span></code></pre></div>
+<span class="co">#&gt;                      Term        VIF Increased SE Tolerance</span>
+<span class="co">#&gt;               Sepal.Width      29.42         5.42      0.03</span>
+<span class="co">#&gt;              Petal.Length    3204.78        56.61      0.00</span>
+<span class="co">#&gt;               Petal.Width    2442.10        49.42      0.00</span>
+<span class="co">#&gt;                   Species  398125.98       630.97      0.00</span>
+<span class="co">#&gt;  Sepal.Width:Petal.Length    2183.98        46.73      0.00</span>
+<span class="co">#&gt;   Sepal.Width:Petal.Width    1866.48        43.20      0.00</span>
+<span class="co">#&gt;       Sepal.Width:Species  349436.10       591.13      0.00</span>
+<span class="co">#&gt;  Petal.Length:Petal.Width    4032.80        63.50      0.00</span>
+<span class="co">#&gt;      Petal.Length:Species 1230070.70      1109.09      0.00</span>
+<span class="co">#&gt;       Petal.Width:Species  377458.32       614.38      0.00</span></code></pre></div>
 <p>The main issue of the model seems to be the high <a href="https://en.wikipedia.org/wiki/Multicollinearity" class="external-link">multicollinearity</a>. This suggests that our model might not be able to give valid results about any individual predictor, nor tell which predictors are redundant with respect to others.</p>
 </div>
 <div id="parameters-selection" class="section level3">

@@ -91,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.13.0.1</span>
       </span>
     </div>
 
@@ -194,7 +194,6 @@
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -213,7 +212,6 @@
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
-  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
   summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -233,7 +231,6 @@
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   wb_component <span class='op'>=</span> <span class='cn'>TRUE</span>,
   summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -250,7 +247,6 @@
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -265,7 +261,6 @@
   effects <span class='op'>=</span> <span class='st'>"fixed"</span>,
   group_level <span class='op'>=</span> <span class='cn'>FALSE</span>,
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  details <span class='op'>=</span> <span class='cn'>FALSE</span>,
   df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -327,11 +322,6 @@ multiplying the standard errors with the exponentiated coefficients), to
 mimic behaviour of other software packages, such as Stata. For
 <code><a href='compare_parameters.html'>compare_parameters()</a></code>, <code>exponentiate = "nongaussian"</code> will only
 exponentiate coefficients for all models except those from Gaussian family.</p></td>
-    </tr>
-    <tr>
-      <th>details</th>
-      <td><p>Logical, if <code>TRUE</code>, a summary of the random effects is
-included. See <code><a href='random_parameters.html'>random_parameters</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>df_method</th>
@@ -434,9 +424,9 @@ for working examples.</p></td>
     family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,
     data <span class='op'>=</span> <span class='va'>Salamanders</span>
   <span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, details <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, effects <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='message'>Argument 'details' is deprecated. Please use 'group_level'.</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects </span><span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Fixed Effects (Count Model) </span><span>
 #&gt; 
 #&gt; Parameter   | Log-Mean |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
@@ -449,21 +439,25 @@ for working examples.</p></td>
 #&gt; spp [DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 
 #&gt; mined [no]  |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Zero-Inflated </span><span>
+#&gt; </span><span style='color: #0000BB;'># Fixed Effects (Zero-Inflated Model) </span><span>
 #&gt; 
 #&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; ---------------------------------------------------------------
 #&gt; (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 
 #&gt; mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Random Effects
+#&gt; </span><span style='color: #0000BB;'># Random Effects Variances </span><span>
 #&gt; 
-#&gt; Within-Group Variance      </span><span>0.51 (0.71)
-#&gt; </span><span style='color: #0000BB;'>Between-Group Variance
-#&gt; </span><span>  Random Intercept (site)  0.11 (0.33)
-#&gt; </span><span style='color: #0000BB;'>N (groups per factor)
-#&gt; </span><span>  site                       23
-#&gt; </span><span style='color: #0000BB;'>Observations               </span><span> 644</div><div class='input'>
+#&gt; Parameter            | Coefficient
+#&gt; ----------------------------------
+#&gt; SD (Intercept: site) |        0.33
+#&gt; SD (Residual)        |        1.00
+#&gt; 
+#&gt; </span><span style='color: #0000BB;'># Random Effects (Zero-Inflated Model) </span><span>
+#&gt; 
+#&gt; Parameter     | Coefficient
+#&gt; ---------------------------
+#&gt; SD (Residual) |        1.00</div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>gear</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span>, iterations <span class='op'>=</span> <span class='fl'>50</span><span class='op'>)</span>
