@@ -8,7 +8,6 @@ model_parameters.mixor <- function(model,
                                    iterations = 1000,
                                    standardize = NULL,
                                    exponentiate = FALSE,
-                                   details = FALSE,
                                    verbose = TRUE,
                                    ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
@@ -36,10 +35,6 @@ model_parameters.mixor <- function(model,
   )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-
-  if (isTRUE(details)) {
-    attr(out, "details") <- .randomeffects_summary(model)
-  }
 
   out
 }

@@ -61,8 +61,6 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param effects Should parameters for fixed effects (\code{"fixed"}), random
 #'   effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 #'   to mixed models. May be abbreviated.
-#' @param details Logical, if \code{TRUE}, a summary of the random effects is
-#'   included. See \code{\link{random_parameters}} for details.
 #' @param df_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). May be \code{"wald"}
 #'   (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see
@@ -105,7 +103,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'     family = poisson(),
 #'     data = Salamanders
 #'   )
-#'   model_parameters(model, details = TRUE)
+#'   model_parameters(model, effects = "all")
 #' }
 #'
 #' if (require("lme4")) {
@@ -126,7 +124,6 @@ model_parameters.merMod <- function(model,
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
-                                    details = FALSE,
                                     p_adjust = NULL,
                                     wb_component = TRUE,
                                     summary = FALSE,
@@ -235,14 +232,6 @@ model_parameters.merMod <- function(model,
     ...
   )
 
-
-  ## TODO remove in a future update
-  if (isTRUE(details)) {
-    attr(params, "details") <- .randomeffects_summary(model)
-    if (verbose) {
-      message("Argument 'details' is deprecated. Please use 'group_level'.")
-    }
-  }
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))

@@ -18,7 +18,6 @@
   effects = "fixed",
   group_level = FALSE,
   exponentiate = FALSE,
-  details = FALSE,
   df_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
@@ -36,7 +35,6 @@
   standardize = NULL,
   exponentiate = FALSE,
   df_method = NULL,
-  details = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
@@ -55,7 +53,6 @@
   group_level = FALSE,
   exponentiate = FALSE,
   robust = FALSE,
-  details = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
@@ -71,7 +68,6 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  details = FALSE,
   verbose = TRUE,
   ...
 )
@@ -85,7 +81,6 @@
   effects = "fixed",
   group_level = FALSE,
   exponentiate = FALSE,
-  details = FALSE,
   df_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
@@ -129,9 +124,6 @@ multiplying the standard errors with the exponentiated coefficients), to
 mimic behaviour of other software packages, such as Stata. For
 \code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
 exponentiate coefficients for all models except those from Gaussian family.}
-
-\item{details}{Logical, if \code{TRUE}, a summary of the random effects is
-included. See \code{\link{random_parameters}} for details.}
 
 \item{df_method}{Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). May be \code{"wald"}
@@ -206,7 +198,7 @@ if (require("glmmTMB")) {
     family = poisson(),
     data = Salamanders
   )
-  model_parameters(model, details = TRUE)
+  model_parameters(model, effects = "all")
 }
 
 if (require("lme4")) {

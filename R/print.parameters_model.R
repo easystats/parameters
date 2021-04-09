@@ -94,7 +94,6 @@ print.parameters_model <- function(x,
   )
 
   # get attributes
-  res <- attributes(x)$details
   ci_method <- .additional_arguments(x, "ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
@@ -111,14 +110,6 @@ print.parameters_model <- function(x,
     .print_footer_cimethod(ci_method)
   }
 
-
-  ## TODO remove in future update when deprecated
-
-  # print summary for random effects
-  if (!is.null(res)) {
-    cat("\n")
-    .print_random_parameters(res, digits = digits)
-  }
   invisible(orig_x)
 }
 
