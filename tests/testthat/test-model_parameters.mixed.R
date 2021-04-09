@@ -9,20 +9,20 @@ if (.runThisTest &&
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
   test_that("model_parameters.mixed", {
-    params <- model_parameters(m1)
+    params <- model_parameters(m1, effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
     expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
-    params <- model_parameters(m1, ci = c(0.8, 0.9))
+    params <- model_parameters(m1, ci = c(0.8, 0.9), effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 12))
     expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
 
-    params <- model_parameters(m2)
+    params <- model_parameters(m2, effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
 
     model <- lme4::glmer(vs ~ drat + cyl + (1 | gear), data = mtcars, family = "binomial")
-    params <- model_parameters(model)
+    params <- model_parameters(model, effects = "fixed")
     cs <- coef(summary(model))
     expect_equal(c(nrow(params), ncol(params)), c(3, 10))
     expect_equal(colnames(params), c(
@@ -84,7 +84,7 @@ if (.runThisTest &&
     QoL ~ time + phq4_within + phq4_between + (1 | ID),
     data = qol_cancer
   )
-  mp <- model_parameters(model)
+  mp <- model_parameters(model, effects = "fixed")
 
   test_that("model_parameters.mixed", {
     expect_equal(mp$Component, c("rewb-contextual", "rewb-contextual", "within", "between"))
@@ -92,7 +92,7 @@ if (.runThisTest &&
 
 
   test_that("print-model_parameters", {
-    out <- utils::capture.output(print(model_parameters(model)))
+    out <- utils::capture.output(print(model_parameters(model, effects = "fixed")))
     expect_equal(
       out,
       c("Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
@@ -133,7 +133,7 @@ if (.runThisTest &&
         "SD (Residual)        |        0.77"))
 
     if (packageVersion("insight") > "0.13.2") {
-      out <- utils::capture.output(print(model_parameters(m1, summary = TRUE)))
+      out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", summary = TRUE)))
       expect_equal(
         out,
         c("# Fixed Effects",
