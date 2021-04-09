@@ -27,10 +27,11 @@ model_parameters.bamlss <- function(model,
     rope_ci = rope_ci,
     bf_prior = NULL,
     diagnostic = NULL,
-    priors = NULL,
+    priors = FALSE,
     effects = "all",
     component = component,
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 

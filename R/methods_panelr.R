@@ -7,7 +7,7 @@
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = .95,
-                                 effects = "fixed",
+                                 effects = "all",
                                  group_level = FALSE,
                                  bootstrap = FALSE,
                                  iterations = 1000,
@@ -37,6 +37,8 @@ model_parameters.wbm <- function(model,
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
+
+  ## TODO remove in a future update
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
     if (verbose) {
@@ -112,7 +114,19 @@ p_value.wbgee <- p_value.wbm
 # utils -------------------
 
 
-.mixed_model_parameters_generic <- function(model, ci, bootstrap, iterations, merge_by, standardize, exponentiate, effects, robust, p_adjust, group_level, df_method, ...) {
+.mixed_model_parameters_generic <- function(model,
+                                            ci,
+                                            bootstrap,
+                                            iterations,
+                                            merge_by,
+                                            standardize,
+                                            exponentiate,
+                                            effects,
+                                            robust,
+                                            p_adjust,
+                                            group_level,
+                                            df_method,
+                                            ...) {
   params <- params_random <- params_variance <- att <- NULL
 
   if (effects %in% c("fixed", "all")) {

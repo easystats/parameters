@@ -1,6 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
-  require("mgcv")) {
+  suppressPackageStartupMessages(require("mgcv", quietly = TRUE))) {
   set.seed(123)
   dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
   m1 <-
@@ -56,7 +56,7 @@ if (require("testthat") &&
   test_that("model_parameters", {
     expect_equal(
       mp$df_error,
-      c(183.4606, 183.4606, 183.4606, 183.4606),
+      c(183.4606, NA, NA, NA),
       tolerance = 1e-3
     )
   })

@@ -1,8 +1,10 @@
 #' Automated selection of model parameters
 #'
-#' This function performs an automated selection of the 'best' parameters, updating and returning the "best" model.
+#' This function performs an automated selection of the 'best' parameters,
+#' updating and returning the "best" model.
 #'
-#' @param model A statistical model (of class \code{lm}, \code{glm}, \code{merMod}, \code{stanreg} or \code{brmsfit}).
+#' @param model A statistical model (of class \code{lm}, \code{glm},
+#'   \code{merMod}, \code{stanreg} or \code{brmsfit}).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
@@ -10,13 +12,15 @@
 #'     For frequentist GLMs, \code{select_parameters()} performs an AIC-based
 #'     stepwise selection.
 #'   }
+#'
 #'   \subsection{Mixed models}{
-#'     For mixed models of class \code{merMod}, stepwise selection is
+#'     For mixed-effects models of class \code{merMod}, stepwise selection is
 #'     based on \code{\link[cAIC4:stepcAIC]{stepcAIC()}}. This step function
-#'     only searches the "best" model based on the random effects structure,
-#'     i.e. \code{select_parameters()} adds or excludes random effects until
+#'     only searches the "best" model based on the random-effects structure,
+#'     i.e. \code{select_parameters()} adds or excludes random-effects until
 #'     the cAIC can't be improved further.
 #'   }
+#'
 #'   \subsection{Bayesian models}{
 #'     For Bayesian models, it uses the \pkg{projpred} package.
 #'   }
@@ -68,7 +72,11 @@ select_parameters <- function(model, ...) {
 #' @inheritParams stats::step
 #' @importFrom stats step
 #' @export
-select_parameters.lm <- function(model, direction = "both", steps = 1000, k = 2, ...) {
+select_parameters.lm <- function(model,
+                                 direction = "both",
+                                 steps = 1000,
+                                 k = 2,
+                                 ...) {
   junk <- utils::capture.output(best <- stats::step(model,
     trace = 0,
     direction = direction,
@@ -85,7 +93,11 @@ select_parameters.lm <- function(model, direction = "both", steps = 1000, k = 2,
 #' @importFrom insight find_random
 #' @rdname select_parameters
 #' @export
-select_parameters.merMod <- function(model, direction = "backward", steps = 1000, ...) {
+select_parameters.merMod <- function(model,
+                                     direction = "backward",
+                                     steps = 1000,
+                                     ...) {
+
 
   # Using cAIC4's stepcAIC()
   if (!requireNamespace("cAIC4", quietly = TRUE)) {

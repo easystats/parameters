@@ -54,7 +54,17 @@
 #' }
 #' @importFrom insight is_model_supported
 #' @export
-compare_parameters <- function(..., ci = .95, effects = "fixed", component = "conditional", standardize = NULL, exponentiate = FALSE, df_method = "wald", p_adjust = NULL, style = NULL, column_names = NULL, verbose = TRUE) {
+compare_parameters <- function(...,
+                               ci = .95,
+                               effects = "fixed",
+                               component = "conditional",
+                               standardize = NULL,
+                               exponentiate = FALSE,
+                               df_method = "wald",
+                               p_adjust = NULL,
+                               style = NULL,
+                               column_names = NULL,
+                               verbose = TRUE) {
   models <- list(...)
   model_names <- match.call(expand.dots = FALSE)$`...`
 
@@ -90,7 +100,17 @@ compare_parameters <- function(..., ci = .95, effects = "fixed", component = "co
     if (inherits(model, "parameters_model")) {
       dat <- model
     } else {
-      dat <- model_parameters(model, ci = ci, effects = effects, component = component, standardize = standardize, exponentiate = exponentiate, df_method = df_method, p_adjust = p_adjust, verbose = verbose)
+      dat <- model_parameters(
+        model,
+        ci = ci,
+        effects = effects,
+        component = component,
+        standardize = standardize,
+        exponentiate = exponentiate,
+        df_method = df_method,
+        p_adjust = p_adjust,
+        verbose = verbose
+      )
     }
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name

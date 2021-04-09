@@ -62,6 +62,9 @@
 
 
 .prepare_splitby_for_print <- function(x) {
+  if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
+    x$Response <- NULL
+  }
   split_by <- ""
   split_by <- c(split_by, ifelse("Component" %in% names(x) && .n_unique(x$Component) > 1, "Component", ""))
   split_by <- c(split_by, ifelse("Effects" %in% names(x) && .n_unique(x$Effects) > 1, "Effects", ""))
@@ -81,12 +84,36 @@
 # sophisticated, to ensure nicely outputs even for complicated or complex models,
 # or edge cases...
 
+#' @importFrom insight format_value
+#' @importFrom stats quantile
 #' @keywords internal
-.print_model_parms_components <- function(x, pretty_names, split_column = "Component", digits = 2, ci_digits = 2, p_digits = 3, coef_column = NULL, format = NULL, ci_width = "auto", ci_brackets = TRUE, zap_small = FALSE, ...) {
+.print_model_parms_components <- function(x,
+                                          pretty_names,
+                                          split_column = "Component",
+                                          digits = 2,
+                                          ci_digits = 2,
+                                          p_digits = 3,
+                                          coef_column = NULL,
+                                          format = NULL,
+                                          ci_width = "auto",
+                                          ci_brackets = TRUE,
+                                          zap_small = FALSE,
+                                          ...) {
   final_table <- list()
 
   ignore_group <- isTRUE(attributes(x)$ignore_group)
   ran_pars <- isTRUE(attributes(x)$ran_pars)
+  is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
+
+
+  # name of "Parameter" column - usually the first column, however, for
+  # ggeffects objects, this column has the name of the focal term
+
+  if (is_ggeffects) {
+    parameter_column <- colnames(x)[1]
+  } else {
+    parameter_column <- "Parameter"
+  }
 
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -202,6 +229,11 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
+    # rename columns for correlation part
+    if (type == "correlation" && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
+    }
+
     # rename columns for random part
     if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
       colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
@@ -211,8 +243,18 @@
       tables[[type]]$CI <- NULL
     }
 
-    formatted_table <- insight::format_table(tables[[type]], pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
-    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars)
+    # for ggeffects objects, only choose selectes lines, to have
+    # a more compact output
+    if (is_ggeffects && is.numeric(tables[[type]][[1]])) {
+      n_rows <- nrow(tables[[type]])
+      row_steps <- round(sqrt(n_rows))
+      sample_rows <- round(c(1, stats::quantile(seq_len(n_rows), seq_len(row_steps - 2) / row_steps), n_rows))
+      tables[[type]] <- tables[[type]][sample_rows, ]
+      tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
+    }
+
+    formatted_table <- insight::format_table(tables[[type]], digits = digits, ci_digits = ci_digits, p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table)
 
     # exceptions for random effects
     if (.n_unique(formatted_table$Group) == 1) {
@@ -237,8 +279,8 @@
         table_caption <- sprintf("%s %s", component_header$subheader1, tolower(component_header$subheader2))
       }
       # replace brackets by parenthesis
-      formatted_table$Parameter <- gsub("[", ci_brackets[1], formatted_table$Parameter, fixed = TRUE)
-      formatted_table$Parameter <- gsub("]", ci_brackets[2], formatted_table$Parameter, fixed = TRUE)
+      formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
+      formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
     }
 
     if (identical(format, "html")) {
@@ -290,7 +332,7 @@
 
 
 # helper to format the header / subheader of different model components
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars) {
+.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
   component_name <- switch(type,
     "mu" = ,
     "fixed" = ,
@@ -325,6 +367,7 @@
     "sigma.fixed" = ,
     "sigma.fixed." = ,
     "sigma" = "Sigma",
+    "thresholds" = "Thresholds",
     "correlation" = "Correlation",
     "SD/Cor" = "SD / Correlation",
     "Loading" = "Loading",
@@ -380,9 +423,19 @@
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
   }
 
+  # if we show ZI component only, make sure this appears in header
+  if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
+      !is.null(formatted_table$Component) &&
+      all(formatted_table$Component == "zero_inflated")) {
+    component_name <- paste0(component_name, " (Zero-Inflated Model)")
+  }
+
   # tweaking of sub headers
 
-  if ("DirichletRegModel" %in% attributes(x)$model_class) {
+  if (isTRUE(attributes(x)$is_ggeffects)) {
+    s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
+    s2 <- ""
+  } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
     if (grepl("^conditional\\.", component_name) || split_column == "Response") {
       s1 <- "Response level:"
       s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)

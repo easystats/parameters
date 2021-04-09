@@ -114,6 +114,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
+#' @importFrom utils modifyList
 #' @export
 model_parameters.merMod <- function(model,
                                     ci = .95,
@@ -121,13 +122,14 @@ model_parameters.merMod <- function(model,
                                     df_method = "wald",
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed",
+                                    effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
                                     details = FALSE,
                                     p_adjust = NULL,
                                     wb_component = TRUE,
+                                    summary = FALSE,
                                     verbose = TRUE,
                                     ...) {
 
@@ -139,6 +141,15 @@ model_parameters.merMod <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   params <- params_random <- params_variance <- NULL
 
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    ## TODO enable later, when fixed in "effectsize"
+    # if (verbose) {
+    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    # }
+  }
+
   if (effects %in% c("fixed", "all")) {
     # Processing
     if (bootstrap) {
@@ -148,6 +159,12 @@ model_parameters.merMod <- function(model,
         ci = ci,
         ...
       )
+      if (effects != "fixed") {
+        effects <- "fixed"
+        if (verbose) {
+          warning("Bootstrapping only returns fixed effects of the mixed model.", call. = FALSE)
+        }
+      }
     } else {
       params <- .extract_parameters_mixed(
         model,
@@ -168,6 +185,8 @@ model_parameters.merMod <- function(model,
       params <- .exponentiate_parameters(params, model, exponentiate)
     }
   }
+
+  att <- attributes(params)
 
   if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects)
@@ -195,6 +214,12 @@ model_parameters.merMod <- function(model,
     params$Level <- NULL
   }
 
+  # due to rbind(), we lose attributes from "extract_parameters()",
+  # so we add those attributes back here...
+  if (!is.null(att)) {
+    attributes(params) <- utils::modifyList(att, attributes(params))
+  }
+
   params <- .add_model_parameters_attributes(
     params,
     model,
@@ -205,10 +230,13 @@ model_parameters.merMod <- function(model,
     df_method,
     p_adjust = p_adjust,
     verbose = verbose,
+    summary = summary,
     group_level = group_level,
     ...
   )
 
+
+  ## TODO remove in a future update
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
     if (verbose) {

@@ -35,6 +35,11 @@ format.parameters_model <- function(x,
     x$Method <- NULL
   }
 
+  # remove response for mvord
+  if (!is.null(m_class) && any(m_class == "mvord")) {
+    x$Response <- NULL
+  }
+
   # rename columns for t-tests
   if (!is.null(htest_type) && htest_type == "ttest" && !is.null(mean_group_values)) {
     if (all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
@@ -101,7 +106,7 @@ format.parameters_model <- function(x,
   }
 
   # fix coefficient column name for random effects
-  if (all(x$EFfects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
     colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
@@ -121,11 +126,18 @@ format.parameters_simulate <- format.parameters_model
 #' @export
 format.parameters_brms_meta <- format.parameters_model
 
+
 #' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
+  m_class <- attributes(x)$model_class
   x$Method <- NULL
+
+  # remove response for mvord
+  if (!is.null(m_class) && any(m_class == "mvord")) {
+    x$Response <- NULL
+  }
 
   out <- data.frame(
     Parameter = x$Parameter,
@@ -184,6 +196,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 
   formatted_table
 }
+
 
 
 
@@ -342,6 +355,12 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     colnames(x)[which(colnames(x) == "Min")] <- "Range"
   }
 
+  if (all(c("Q1", "Q3") %in% names(x))) {
+    x$Q1 <- insight::format_ci(x$Q1, x$Q3, ci = NULL, digits = digits, width = ci_width, brackets = FALSE)
+    x$Q3 <- NULL
+    colnames(x)[which(colnames(x) == "Q1")] <- "Quartiles"
+  }
+
   if (all(c("CI_low", "CI_high") %in% names(x))) {
     x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
     x$CI_high <- NULL
@@ -398,30 +417,44 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 # footer functions ------------------
 
-.format_footer <- function(x, digits = 2, verbose = TRUE, show_sigma = FALSE, show_formula = FALSE, type = "text") {
-  # prepare footer
+.format_footer <- function(x,
+                           digits = 3,
+                           verbose = TRUE,
+                           show_sigma = FALSE,
+                           show_formula = FALSE,
+                           show_r2 = FALSE,
+                           format = "text") {
+    # prepare footer
   footer <- NULL
-  type <- tolower(type)
+  type <- tolower(format)
 
   sigma <- attributes(x)$sigma
+  r2 <- attributes(x)$r2
+  residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
   footer_text <- attributes(x)$footer_text
+  n_obs <- attributes(x)$n_obs
+
+  # footer: model formula
+  if (isTRUE(show_formula)) {
+    footer <- .add_footer_formula(footer, model_formula, n_obs, type)
+  }
 
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
-    footer <- .add_footer_sigma(footer, digits, sigma, type)
+    footer <- .add_footer_sigma(footer, digits, sigma, residual_df, type)
+  }
+
+  # footer: r-squared
+  if (isTRUE(show_r2)) {
+    footer <- .add_footer_r2(footer, digits, r2, type)
   }
 
   # footer: p-adjustment
   if ("p" %in% colnames(x) && isTRUE(verbose)) {
     footer <- .add_footer_padjust(footer, p_adjust, type)
-  }
-
-  # footer: model formula
-  if (isTRUE(show_formula)) {
-    footer <- .add_footer_formula(footer, model_formula, type)
   }
 
   # footer: anova test
@@ -467,17 +500,56 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: residual standard deviation
-.add_footer_sigma <- function(footer = NULL, digits, sigma, type = "text") {
+.add_footer_sigma <- function(footer = NULL, digits, sigma, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
+
+    # format residual df
+    if (!is.null(residual_df)) {
+      res_df <- paste0(" (df = ", residual_df, ")")
+    } else {
+      res_df <- ""
+    }
+
     if (type == "text") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f\n", fill, digits, sigma))
+      footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, sprintf("Residual standard deviation: %.*f", digits, sigma))
+      footer <- c(footer, trimws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+    }
+  }
+  footer
+}
+
+
+# footer: r-squared
+#' @importFrom insight format_value
+.add_footer_r2 <- function(footer = NULL, digits, r2 = NULL, type = "text") {
+  if (!is.null(r2)) {
+    rsq <- tryCatch(
+      {
+        paste0(unlist(lapply(r2, function(i) {
+          paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
+        })), collapse = "; ")
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    if (!is.null(rsq)) {
+      if (type == "text") {
+        if (is.null(footer)) {
+          fill <- "\n"
+        } else {
+          fill <- ""
+        }
+        footer <- paste0(footer, fill, rsq, "\n")
+      } else if (type == "html") {
+        footer <- c(footer, rsq)
+      }
     }
   }
   footer
@@ -521,17 +593,25 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: model formula
-.add_footer_formula <- function(footer = NULL, model_formula, type = "text") {
+.add_footer_formula <- function(footer = NULL, model_formula, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
+
+    # format n of observations
+    if (!is.null(n_obs)) {
+      n <- paste0(" (", n_obs, " Observations)")
+    } else {
+      n <- ""
+    }
+
     if (type == "text") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, fill, "Model: ", model_formula, "\n")
+      footer <- paste0(footer, fill, "Model: ", model_formula, n, "\n")
     } else if (type == "html") {
-      footer <- c(footer, paste0("Model: ", model_formula))
+      footer <- c(footer, trimws(paste0("Model: ", model_formula, n)))
     }
   }
   footer

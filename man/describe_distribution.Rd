@@ -15,6 +15,7 @@ describe_distribution(x, ...)
   dispersion = TRUE,
   iqr = TRUE,
   range = TRUE,
+  quartiles = FALSE,
   ci = NULL,
   iterations = 100,
   threshold = 0.1,
@@ -29,6 +30,7 @@ describe_distribution(x, ...)
   dispersion = TRUE,
   iqr = TRUE,
   range = TRUE,
+  quartiles = FALSE,
   include_factors = FALSE,
   ci = NULL,
   iterations = 100,
@@ -49,6 +51,8 @@ describe_distribution(x, ...)
 (based on \code{\link[stats]{IQR}}, using \code{type = 6}).}
 
 \item{range}{Return the range (min and max).}
+
+\item{quartiles}{Return the first and third quartiles (25th and 75pth percentiles).}
 
 \item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no
 confidence intervals are computed. If not \code{NULL}, confidence intervals
@@ -83,5 +87,5 @@ describe_distribution(rnorm(100))
 
 data(iris)
 describe_distribution(iris)
-describe_distribution(iris, include_factors = TRUE)
+describe_distribution(iris, include_factors = TRUE, quartiles = TRUE)
 }

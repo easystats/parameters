@@ -34,6 +34,7 @@ model_parameters.lqmm <- function(model,
     verbose = verbose,
     ...
   )
+
   attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
@@ -70,7 +71,7 @@ standard_error.lqm <- standard_error.lqmm
 #' @export
 degrees_of_freedom.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
-  out$df
+  out$df_error
 }
 
 
@@ -111,9 +112,9 @@ p_value.lqm <- p_value.lqmm
   parameters$SE <- summary_table[, 2]
   parameters$t <- parameters$Estimate / parameters$SE
 
-  # ==== DF and Conf Int
+  # ==== DF
 
-  parameters$df <- tryCatch(
+  parameters$df_error <- tryCatch(
     {
       if (!is.null(cs$rdf)) {
         cs$rdf
@@ -125,8 +126,10 @@ p_value.lqm <- p_value.lqmm
       Inf
     }
   )
-  parameters$CI_low <- parameters$Coefficient - stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
-  parameters$CI_high <- parameters$Coefficient + stats::qt((1 + ci) / 2, df = parameters$df) * parameters$SE
+
+  # ==== Conf Int
+  parameters$CI_low <- parameters$Coefficient - stats::qt((1 + ci) / 2, df = parameters$df_error) * parameters$SE
+  parameters$CI_high <- parameters$Coefficient + stats::qt((1 + ci) / 2, df = parameters$df_error) * parameters$SE
 
   # ==== p-value
 
@@ -138,6 +141,6 @@ p_value.lqm <- p_value.lqmm
 
   # ==== Reorder
 
-  col_order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df", "p", "Component")
+  col_order <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "t", "df_error", "p", "Component")
   parameters[col_order[col_order %in% names(parameters)]]
 }

@@ -227,7 +227,7 @@ model_parameters.cpglmm <- function(model,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed",
+                                    effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     details = FALSE,
@@ -240,6 +240,15 @@ model_parameters.cpglmm <- function(model,
   df_method <- .check_df_method(df_method)
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    ## TODO enable later, when fixed in "effectsize"
+    # if (verbose) {
+    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    # }
+  }
+
   params <- .mixed_model_parameters_generic(
     model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
     merge_by = "Parameter", standardize = standardize,
@@ -250,6 +259,8 @@ model_parameters.cpglmm <- function(model,
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
+
+  ## TODO remove in a future update
   if (isTRUE(details)) {
     attr(params, "details") <- .randomeffects_summary(model)
     if (verbose) {

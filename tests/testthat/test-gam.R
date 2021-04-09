@@ -1,6 +1,6 @@
 if (require("testthat") &&
   require("parameters") &&
-  require("mgcv")) {
+  suppressPackageStartupMessages(require("mgcv", quietly = TRUE))) {
   set.seed(123)
   dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
   m1 <- mgcv::gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)
@@ -46,9 +46,30 @@ if (require("testthat") &&
       )
       expect_equal(
         mp$df_error,
-        c(383.04913, 383.04913, 383.04913, 383.04913, 383.04913),
+        c(383.04913, NA, NA, NA, NA),
         tolerance = 1e-3
       )
     })
+
+    test_that("print model_parameters", {
+      out <- utils::capture.output(print(mp))
+      expect_equal(
+        out,
+        c("# Fixed Effects",
+          "",
+          "Parameter   | Coefficient |   SE |       95% CI | t(383.05) |      p",
+          "--------------------------------------------------------------------",
+          "(Intercept) |        7.97 | 0.10 | [7.77, 8.17] |     78.10 | < .001",
+          "",
+          "# Smooth Terms",
+          "",
+          "Parameter        |     F |   df |      p",
+          "----------------------------------------",
+          "Smooth term (x0) | 10.53 | 3.63 | < .001",
+          "Smooth term (x1) | 87.44 | 2.97 | < .001",
+          "Smooth term (x2) | 72.49 | 8.30 | < .001",
+          "Smooth term (x3) |  9.58 | 1.05 | 0.002 "))
+    })
+
   }
 }

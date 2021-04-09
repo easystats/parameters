@@ -127,13 +127,14 @@ p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ..
 p_value.clmm2 <- p_value.clm2
 
 
-
-
 # simulate model -------------------
 
 
 #' @export
-simulate_model.clm2 <- function(model, iterations = 1000, component = c("all", "conditional", "scale"), ...) {
+simulate_model.clm2 <- function(model,
+                                iterations = 1000,
+                                component = c("all", "conditional", "scale"),
+                                ...) {
   component <- match.arg(component)
   out <- .simulate_model(model, iterations, component = component)
 

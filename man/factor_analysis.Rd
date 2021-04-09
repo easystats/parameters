@@ -41,9 +41,11 @@ structure).}
 
 \item{standardize}{A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
-analysis takes place (in general, such scaling is advisable).}
+analysis (in general, such scaling is advisable).}
 
-\item{cor}{An optional correlation matrix that can be used (note that the data must still be passed as the first argument). If \code{NULL}, will compute it by running \code{cor()} on the passed data.}
+\item{cor}{An optional correlation matrix that can be used (note that the
+data must still be passed as the first argument). If \code{NULL}, will
+compute it by running \code{cor()} on the passed data.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -61,6 +63,7 @@ This function performs a Factor Analysis (FA).
    a solution with evenly distributed items has a complexity greater than 1
    (\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
  }
+
  \subsection{Uniqueness}{
    Uniqueness represents the variance that is 'unique' to the variable and
    not shared with other variables. It is equal to \code{1 – communality}
@@ -69,6 +72,7 @@ This function performs a Factor Analysis (FA).
    variables in the overall factor model. The greater 'uniqueness' the lower
    the relevance of the variable in the factor model.
  }
+
  \subsection{MSA}{
    MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
    (\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there
@@ -76,29 +80,30 @@ This function performs a Factor Analysis (FA).
    value should be > 0.6, and desirable values are > 0.8
    (\cite{Tabachnick and Fidell, 2013}).
  }
+
  \subsection{PCA or FA?}{
  There is a simplified rule of thumb that may help do decide whether to run
  a factor analysis or a principal component analysis:
  \itemize{
    \item Run \emph{factor analysis} if you assume or wish to test a
-   theoretical model of latent factors causing observed variables.
+   theoretical model of \emph{latent factors} causing observed variables.
 
-   \item Run \emph{principal component analysis} If you want to simply reduce
-   your correlated observed variables to a smaller set of important
-   independent composite variables.
+   \item Run \emph{principal component analysis} If you want to simply
+   \emph{reduce} your correlated observed variables to a smaller set of
+   important independent composite variables.
  }
  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
  }
- \subsection{Computing Item Scores}{
-   Use \code{\link{get_scores}} to compute scores for the "subscales" represented
-   by the extracted principal components. \code{get_scores()} takes the results
-   from \code{principal_components()} and extracts the variables for each
-   component found by the PCA. Then, for each of these "subscales", row means
-   are calculated (which equals adding up the single items and dividing by
-   the number of items). This results in a sum score for each component from
-   the PCA, which is on the same scale as the original, single items that were
-   used to compute the PCA.
 
+ \subsection{Computing Item Scores}{
+   Use \code{\link{get_scores}} to compute scores for the "subscales"
+   represented by the extracted principal components. \code{get_scores()}
+   takes the results from \code{principal_components()} and extracts the
+   variables for each component found by the PCA. Then, for each of these
+   "subscales", raw means are calculated (which equals adding up the single
+   items and dividing by the number of items). This results in a sum score
+   for each component from the PCA, which is on the same scale as the
+   original, single items that were used to compute the PCA.
    One can also use \code{predict()} to back-predict scores for each component,
    to which one can provide \code{newdata} or a vector of \code{names} for the
    components.

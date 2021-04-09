@@ -21,7 +21,7 @@ if (.runThisTest && require("testthat") && require("parameters")) {
       tolerance = 0.1
     )
 
-    mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl))
+    mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl), verbose = FALSE)
     expect_true("p" %in% colnames(mp))
     expect_true("SE" %in% colnames(mp))
     expect_equal(nrow(mp), 5)
@@ -49,7 +49,7 @@ if (.runThisTest && require("testthat") && require("parameters")) {
       tolerance = 0.1
     )
 
-    mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl))
+    mp <- suppressWarnings(model_parameters(emmeans::emmeans(b, consec ~ cyl)))
     expect_true("p" %in% colnames(mp))
     expect_true("SE" %in% colnames(mp))
     expect_equal(nrow(mp), 5)

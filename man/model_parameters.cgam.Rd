@@ -12,9 +12,10 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
-  component = c("conditional", "smooth_terms", "all"),
   standardize = NULL,
   exponentiate = FALSE,
+  robust = FALSE,
+  p_adjust = NULL,
   verbose = TRUE,
   ...
 )
@@ -37,9 +38,10 @@
   ci = 0.95,
   bootstrap = FALSE,
   iterations = 1000,
-  component = c("conditional", "smooth_terms", "all"),
   standardize = NULL,
   exponentiate = FALSE,
+  robust = FALSE,
+  p_adjust = NULL,
   verbose = TRUE,
   ...
 )
@@ -57,12 +59,6 @@ regressions} apply (see also
 \item{iterations}{The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.}
 
-\item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
-
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
 \code{"pseudo"} or \code{NULL} (default) for no standardization. See
@@ -79,12 +75,6 @@ mimic behaviour of other software packages, such as Stata. For
 \code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
 exponentiate coefficients for all models except those from Gaussian family.}
 
-\item{verbose}{Toggle warnings and messages.}
-
-\item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-\code{\link[bayestestR]{describe_posterior}}.}
-
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
 robust standard errors. Additional arguments like \code{vcov_estimation} or
@@ -98,12 +88,19 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
+\code{\link[bayestestR]{describe_posterior}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
 }
 \description{
-Extract and compute indices and measures to describe parameters of generalized additive models (GAM(M)s).
+Extract and compute indices and measures to describe parameters
+  of generalized additive models (GAM(M)s).
 }
 \details{
 The reporting of degrees of freedom \emph{for the spline terms}

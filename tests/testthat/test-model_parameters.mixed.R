@@ -89,4 +89,64 @@ if (.runThisTest &&
   test_that("model_parameters.mixed", {
     expect_equal(mp$Component, c("rewb-contextual", "rewb-contextual", "within", "between"))
   })
+
+
+  test_that("print-model_parameters", {
+    out <- utils::capture.output(print(model_parameters(model)))
+    expect_equal(
+      out,
+      c("Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
+        "-------------------------------------------------------------------",
+        "(Intercept) |       71.53 | 1.56 | [68.48, 74.58] |  45.98 | < .001",
+        "time        |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.088 ",
+        "",
+        "# Within-Effects",
+        "",
+        "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
+        "-------------------------------------------------------------------",
+        "phq4_within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001",
+        "",
+        "# Between-Effects",
+        "",
+        "Parameter    | Coefficient |   SE |         95% CI | t(558) |      p",
+        "--------------------------------------------------------------------",
+        "phq4_between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001"
+      ))
+  })
+
+  test_that("print-model_parameters", {
+    out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
+    expect_equal(
+      out,
+      c("# Fixed Effects",
+        "",
+        "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
+        "-----------------------------------------------------------------",
+        "(Intercept) |        0.65 | 0.50 | [-0.34, 1.64] |  1.29 | 0.196 ",
+        "cyl         |        0.40 | 0.08 | [ 0.25, 0.55] |  5.29 | < .001",
+        "",
+        "# Random Effects",
+        "",
+        "Parameter            | Coefficient",
+        "----------------------------------",
+        "SD (Intercept: gear) |        0.27",
+        "SD (Residual)        |        0.77"))
+
+    if (packageVersion("insight") > "0.13.2") {
+      out <- utils::capture.output(print(model_parameters(m1, summary = TRUE)))
+      expect_equal(
+        out,
+        c("# Fixed Effects",
+          "",
+          "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
+          "-----------------------------------------------------------------",
+          "(Intercept) |        0.65 | 0.50 | [-0.34, 1.64] |  1.29 | 0.196 ",
+          "cyl         |        0.40 | 0.08 | [ 0.25, 0.55] |  5.29 | < .001",
+          "",
+          "Model: wt ~ cyl (32 Observations)",
+          "Residual standard deviation: 0.594 (df = 28)",
+          "Conditional R2: 0.628; Marginal R2: 0.550"))
+    }
+  })
+
 }

@@ -31,7 +31,7 @@
   bootstrap = FALSE,
   iterations = 1000,
   effects = "fixed",
-  component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+  component = "all",
   group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
@@ -39,6 +39,7 @@
   details = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
+  summary = FALSE,
   verbose = TRUE,
   ...
 )
@@ -57,6 +58,7 @@
   details = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
+  summary = FALSE,
   verbose = TRUE,
   ...
 )
@@ -64,7 +66,7 @@
 \method{model_parameters}{mixor}(
   model,
   ci = 0.95,
-  effects = c("all", "fixed", "random"),
+  effects = "fixed",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -157,7 +159,8 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{\link{demean}}), the \code{Component} column
@@ -165,6 +168,10 @@ will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 \code{Component} column indicates, which parameters belong to the
 conditional or zero-inflated component of the model.}
+
+\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these

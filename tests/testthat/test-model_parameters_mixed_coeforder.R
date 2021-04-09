@@ -11,7 +11,7 @@ if (require("lme4") && require("testthat") && require("parameters")) {
 
   test_that("model_parameters.mixed.coeforder", {
     cs <- coef(summary(m))
-    mp <- model_parameters(m)
+    mp <- model_parameters(m, effects = "fixed")
     expect_equal(mp$Parameter, rownames(cs))
   })
 }

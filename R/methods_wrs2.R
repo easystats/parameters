@@ -1,7 +1,6 @@
-#' Parameters from \code{WRS2} objects
+#' Parameters from robust statistical objects in \code{WRS2}
 #'
-#' @param model Object of class \code{t1way}, \code{yuen}, \code{mcp1} or
-#'   \code{mcp2}.
+#' @param model Object from \code{WRS2} package.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.default
 #'
@@ -20,7 +19,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
 }
 
 
-# extract WRS2 anova ----------------------
+# WRS2 anova ----------------------
 
 .extract_wrs2_t1way <- function(model) {
   fcall <- .safe_deparse(model$call)
@@ -61,7 +60,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 }
 
 
-# extract WRS2 ttest ----------------------
+# WRS2 ttest ----------------------
 
 .extract_wrs2_yuen <- function(model) {
   fcall <- .safe_deparse(model$call)
@@ -100,7 +99,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
-  parameters <- .extract_wrs2_mcp(model)
+  parameters <- .extract_wrs2_mcp12(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
@@ -110,15 +109,22 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
 #' @export
 model_parameters.mcp2 <- model_parameters.mcp1
 
+#' @export
+model_parameters.robtab <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_robtab(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
 
-# extract WRS2 post hoc comparisons ----------------------
+# WRS2 post hoc comparisons ----------------------
 
-.extract_wrs2_mcp <- function(model) {
+.extract_wrs2_mcp12 <- function(model) {
   # component of the object containing results from multiple comparisons
   out <- as.data.frame(model$comp)
 
   # rename to `eaystats` conventions
-  names(out)[1:5] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high")
+  names(out)[1:6] <- c("Group1", "Group2", "Psihat", "CI_low", "CI_high", "p")
 
   # convert names to character
   out$Group1 <- model$fnames[model$comp[, 1]]
@@ -128,9 +134,35 @@ model_parameters.mcp2 <- model_parameters.mcp1
   out$CI <- .95
 
   # reorder
-  col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p.value", "p.crit")
+  col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p", "p.crit")
   out <- out[col_order[col_order %in% names(out)]]
   out
+
+  out
+}
+
+.extract_wrs2_robtab <- function(model) {
+  fcall <- .safe_deparse(model$call)
+
+  # dataframe
+  out <- as.data.frame(model$partable)
+
+  # rename to `eaystats` conventions
+  if (grepl("^(discmcp\\(|WRS2::discmcp\\()", fcall)) {
+    names(out)[1:3] <- c("Group1", "Group2", "p")
+  }
+
+  if (grepl("^(discstep\\(|WRS2::discstep\\()", fcall)) {
+    names(out)[1:2] <- c("Groups", "p")
+  }
+
+  if (grepl("^(binband\\(|WRS2::binband\\()", fcall)) {
+    names(out)[1:4] <- c("Value", "Probability1", "Probability2", "Difference")
+    if ("p.value" %in% names(out)) {
+      out$p <- out$p.value
+      out <- subset(out, select = -c("p.value"))
+    }
+  }
 
   out
 }
@@ -145,7 +177,7 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
 }
 
 
-# extract WRS2 one-sample percentile bootstrap ----------------------
+# WRS2 one-sample percentile bootstrap ----------------------
 
 .extract_wrs2_onesampb <- function(model) {
   data.frame(
@@ -161,6 +193,25 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
   )
 }
 
+#' @export
+model_parameters.med1way <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_med1way(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+.extract_wrs2_med1way <- function(model) {
+  data.frame(
+    "F" = model$test,
+    "Critical value" = model$crit.val,
+    "p" = model$p.value,
+    "Method" = "Heteroscedastic one-way ANOVA for medians",
+    stringsAsFactors = FALSE
+  )
+}
+
+# WRS2 one-sample percentile bootstrap ----------------------
 
 #' @export
 model_parameters.AKP <- function(model, verbose = TRUE, ...) {
@@ -171,7 +222,7 @@ model_parameters.AKP <- function(model, verbose = TRUE, ...) {
 }
 
 
-# extract AKP effect size ----------------------
+# AKP effect size ----------------------
 
 .extract_wrs2_AKP <- function(model) {
   data.frame(

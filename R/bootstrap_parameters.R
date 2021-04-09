@@ -66,7 +66,8 @@ bootstrap_parameters <- function(model,
 
 
 
-
+#' @importFrom insight reshape_ci
+#' @importFrom bayestestR describe_posterior
 #' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
   # Is the p-value requested?
@@ -91,7 +92,7 @@ bootstrap_parameters <- function(model,
   if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
   } else if ("CI" %in% names(parameters) && .n_unique(parameters$CI) > 1) {
-    parameters <- bayestestR::reshape_ci(parameters)
+    parameters <- insight::reshape_ci(parameters)
   }
 
   # Coef

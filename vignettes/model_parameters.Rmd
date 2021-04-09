@@ -17,7 +17,7 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
 
 knitr::opts_chunk$set(
@@ -30,16 +30,16 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
-    !requireNamespace("BayesFactor", quietly = TRUE) ||
-    !requireNamespace("lme4", quietly = TRUE) ||
-    !requireNamespace("metafor", quietly = TRUE) ||
-    !requireNamespace("lavaan", quietly = TRUE) ||
-    !requireNamespace("nFactors", quietly = TRUE) ||
-    !requireNamespace("EGAnet", quietly = TRUE) ||
-    !requireNamespace("brms", quietly = TRUE) ||
-    !requireNamespace("psych", quietly = TRUE) ||
-    !requireNamespace("rstanarm", quietly = TRUE) ||
-    !requireNamespace("FactoMineR", quietly = TRUE)) {
+  !requireNamespace("BayesFactor", quietly = TRUE) ||
+  !requireNamespace("lme4", quietly = TRUE) ||
+  !requireNamespace("metafor", quietly = TRUE) ||
+  !requireNamespace("lavaan", quietly = TRUE) ||
+  !requireNamespace("nFactors", quietly = TRUE) ||
+  !requireNamespace("EGAnet", quietly = TRUE) ||
+  !requireNamespace("brms", quietly = TRUE) ||
+  !requireNamespace("psych", quietly = TRUE) ||
+  !requireNamespace("rstanarm", quietly = TRUE) ||
+  !requireNamespace("FactoMineR", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -49,112 +49,144 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 set.seed(333)
 ```
 
-The `model_parameters()` function (also accessible via the shortcut `parameters()`) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
+The `model_parameters()` function (also accessible via the shortcut
+`parameters()`) allows you to extract the parameters and their characteristics
+from various models in a consistent way. It can be considered as a lightweight
+alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some
+notable differences:
 
-- The names of the returned data frame are **specific** to their content. For instance, the column containing the statistic is named following the statistic name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic* (**however**, you can get standardized (generic) column names using [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
-- It is able to compute or extract indices not available by default, such as ***p*-values**, **CIs**, etc.
-- It includes **feature engineering** capabilities, including parameters [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_model.html).
+- The names of the returned data frame are **specific** to their content. For
+  instance, the column containing the statistic is named following the statistic
+  name, i.e., *t*, *z*, etc., instead of a generic name such as *statistic*
+  (**however**, you can get standardized (generic) column names using
+  [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
 
+- It is able to compute or extract indices not available by default, such as
+  ***p*-values**, **CIs**, etc.
+
+- It includes **feature engineering** capabilities, including parameters
+  [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_model.html).
 
 ## Correlations and *t*-tests
 
 ### Frequentist
 
-```{r, warning=FALSE, message=FALSE}
-cor.test(iris$Sepal.Length, iris$Sepal.Width) %>% 
+```{r}
+cor.test(iris$Sepal.Length, iris$Sepal.Width) %>%
   parameters()
 ```
 
-```{r, warning=FALSE, message=FALSE}
-t.test(mpg ~ vs, data = mtcars) %>% 
+```{r}
+t.test(mpg ~ vs, data = mtcars) %>%
   parameters()
 ```
-
 
 ### Bayesian
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(BayesFactor)
 
-BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) %>% 
+BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) %>%
   parameters()
 ```
 
-```{r, warning=FALSE, message=FALSE}
-BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>% 
+```{r}
+BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>%
   parameters()
 ```
-
 
 ## ANOVAs
 
-Indices of effect size for ANOVAs, such as partial and non-partial versions of `eta_squared()`, `epsilon_sqared()` or `omega_squared()` are powered by the [**effectsize**-package](https://easystats.github.io/effectsize/). However, **parameters** uses these function to compute such indices for parameters summaries, including confidence intervals
+Indices of effect size for ANOVAs, such as partial and non-partial versions of
+`eta_squared()`, `epsilon_sqared()` or `omega_squared()` are powered by the
+[**effectsize**-package](https://easystats.github.io/effectsize/). However,
+**parameters** uses these function to compute such indices for parameters
+summaries, including confidence intervals
 
 ### Simple
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 aov(Sepal.Length ~ Species, data = iris) %>%
-  parameters(omega_squared = "partial", eta_squared = "partial", epsilon_squared = "partial")
+  parameters(
+    omega_squared = "partial",
+    eta_squared = "partial",
+    epsilon_squared = "partial"
+  )
 ```
 
-```{r, warning=FALSE, message=FALSE}
+Let's complicate things further with an interaction term:
+
+```{r}
 aov(Sepal.Length ~ Species * Sepal.Width, data = iris) %>%
-  parameters(omega_squared = "partial", eta_squared = "partial", ci = .8)
+  parameters(
+    omega_squared = "partial",
+    eta_squared = "partial",
+    ci = .8
+  )
 ```
 
 ### Repeated measures
 
-`parameters()` (resp. its alias `model_parameters()`) also works on repeated measures ANOVAs, whether computed from `aov()` or from a mixed model.
+`parameters()` (resp. its alias `model_parameters()`) also works on repeated
+measures ANOVAs, whether computed from `aov()` or from a mixed model.
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 aov(mpg ~ am + Error(gear), data = mtcars) %>%
   parameters()
 ```
 
-
 ## Regressions (GLMs, Mixed Models, GAMs, ...)
 
-`parameters()` (resp. its alias `model_parameters()`) was mainly built with regression models in mind. It works for many types of models and packages, including mixed models and Bayesian models.
+`parameters()` (resp. its alias `model_parameters()`) was mainly built with
+regression models in mind. It works for many types of models and packages,
+including mixed models and Bayesian models.
 
 ### GLMs
 
-```{r, warning=FALSE, message=FALSE}
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>% 
+```{r}
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
   parameters()
 ```
 
-```{r, warning=FALSE, message=FALSE}
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>% 
+```{r}
+# show Odds Ratios and Wald-method for degrees of freedom
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
   parameters(exponentiate = TRUE, df_method = "wald")
+```
+
+```{r}
+# show Odds Ratios and include model summary
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
+  parameters(exponentiate = TRUE, summary = TRUE)
 ```
 
 ### Mixed Models
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(lme4)
 
-lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>% 
+lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
   parameters()
 ```
 
 ### Mixed Models, including Random Effects Variances
 
-```{r, warning=FALSE, message=FALSE}
-lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris) %>% 
+```{r}
+lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
   parameters(effects = "all")
 ```
 
 ### Mixed Model with Zero-Inflation Model
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(GLMMadaptive)
 library(glmmTMB)
 data("Salamanders")
 model <- mixed_model(
   count ~ spp + mined,
-  random = ~1 | site,
-  zi_fixed = ~spp + mined,
-  family = zi.negative.binomial(), 
+  random = ~ 1 | site,
+  zi_fixed = ~ spp + mined,
+  family = zi.negative.binomial(),
   data = Salamanders
 )
 parameters(model)
@@ -162,8 +194,9 @@ parameters(model)
 
 ### Mixed Models with Dispersion Model
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(glmmTMB)
+
 sim1 <- function(nfac = 40, nt = 100, facsd = 0.1, tsd = 0.15, mu = 0, residsd = 1) {
   dat <- expand.grid(fac = factor(letters[1:nfac]), t = 1:nt)
   n <- nrow(dat)
@@ -172,121 +205,63 @@ sim1 <- function(nfac = 40, nt = 100, facsd = 0.1, tsd = 0.15, mu = 0, residsd =
   dat$x <- rnorm(n, mean = mu, sd = residsd) + dat$REfac + dat$REt
   dat
 }
+
 set.seed(101)
 d1 <- sim1(mu = 100, residsd = 10)
 d2 <- sim1(mu = 200, residsd = 5)
 d1$sd <- "ten"
 d2$sd <- "five"
 dat <- rbind(d1, d2)
-model <- glmmTMB(x ~ sd + (1 | t), dispformula =  ~ sd, data = dat)
+model <- glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat)
 
 parameters(model)
 ```
 
 ### Bayesian Models
 
-`model_parameters()` works fine with Bayesian models from the **rstanarm** package...
+`model_parameters()` also works with Bayesian models from the **rstanarm**
+package:
 
-```{r, warning=FALSE, message=FALSE, eval = FALSE}
+```{r}
 library(rstanarm)
 
-stan_glm(mpg ~ wt * cyl, data = mtcars) %>% 
-  parameters()
-```
-```{r, warning=FALSE, message=FALSE, echo = FALSE}
-library(rstanarm)
-
-stan_glm(mpg ~ wt * cyl, data = mtcars, iter = 500, chains = 2, refresh = 0) %>% 
+# if you are unfamiliar with the `refresh` argument here, it just avoids
+# printing few messages to the console
+stan_glm(mpg ~ wt * cyl, data = mtcars, refresh = 0) %>%
   parameters()
 ```
 
-... as well as for (more complex) models from the **brms** package. For more complex models, other model components can be printed using the arguments `effects` and `component` arguments.
+Additionally, it also works for models from the **brms** package.
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+For more complex models, specific model components can be printed using the
+arguments `effects` and `component` arguments.
+
+```{r}
 library(brms)
 data(fish)
 set.seed(123)
-model <- brm(bf(
-   count ~ persons + child + camper + (1 | persons),
-   zi ~ child + camper + (1 | persons)
- ),
- data = fish,
- family = zero_inflated_poisson()
+
+# fitting a model using `brms`
+model <- brm(
+  bf(
+    count ~ persons + child + camper + (1 | persons),
+    zi ~ child + camper + (1 | persons)
+  ),
+  data = fish,
+  family = zero_inflated_poisson(),
+  refresh = 0
 )
+
 parameters(model, component = "conditional")
-#> # Fixed effects 
-#> 
-#> Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS
-#> -------------------------------------------------------------------------
-#> (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178
-#> persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171
-#> child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421
-#> camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552
-#> 
-#> Using highest density intervals as credible intervals.
 
 parameters(model, effects = "all", component = "all")
-#> # Fixed effects (conditional) 
-#> 
-#> Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS
-#> -------------------------------------------------------------------------
-#> (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178
-#> persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171
-#> child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421
-#> camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552
-#> 
-#> # Fixed effects (zero-inflated) 
-#> 
-#> Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS
-#> -------------------------------------------------------------------------
-#> (Intercept) |  -0.65 | [-1.81,  0.37] | 84.72% |     7.25% | 1.007 |  988
-#> child       |   1.86 | [ 1.33,  2.39] |   100% |        0% | 1.003 |  999
-#> camper1     |  -0.81 | [-1.39, -0.23] | 98.75% |     1.65% | 1.001 | 2103
-#> 
-#> # Random effects (conditional) SD/Cor: persons
-#> 
-#> Parameter   | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS
-#> --------------------------------------------------------------------
-#> (Intercept) |   0.12 | [0.00, 0.44] | 100% |    43.25% | 1.018 | 293
-#> 
-#> # Random effects (zero-inflated) SD/Cor: persons
-#> 
-#> Parameter    | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS
-#> ---------------------------------------------------------------------
-#> zi_Intercept |   1.29 | [0.52, 2.56] | 100% |        0% | 1.009 | 484
-#> 
-#> Using highest density intervals as credible intervals.
 ```
 
-To include information about the random effect parameters (group levels), set `group_level = TRUE`:
+To include information about the random effect parameters (group levels), set
+`group_level = TRUE`:
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
+```{r}
 parameters(model, effects = "all", component = "conditional", group_level = TRUE)
-#> # Fixed effects 
-#> 
-#> Parameter   | Median |         89% CI |     pd | % in ROPE |  Rhat |  ESS
-#> -------------------------------------------------------------------------
-#> (Intercept) |  -0.86 | [-1.40, -0.12] | 97.88% |     0.68% | 1.014 |  178
-#> persons     |   0.84 | [ 0.64,  1.05] |   100% |        0% | 1.014 |  171
-#> child       |  -1.16 | [-1.30, -1.00] |   100% |        0% | 1.001 | 1421
-#> camper1     |   0.73 | [ 0.59,  0.88] |   100% |        0% | 1.000 | 3552
-#> 
-#> # Random effects Intercept: persons
-#> 
-#> Parameter |    Median |        89% CI |     pd | % in ROPE |  Rhat | ESS
-#> ------------------------------------------------------------------------
-#> persons.1 | -4.77e-03 | [-0.35, 0.36] | 54.00% |    61.05% | 1.019 | 182
-#> persons.2 |      0.02 | [-0.15, 0.34] | 65.18% |    62.30% | 1.011 | 230
-#> persons.3 |     -0.01 | [-0.23, 0.15] | 58.48% |    68.80% | 1.006 | 341
-#> persons.4 |  2.72e-03 | [-0.22, 0.34] | 52.78% |    62.28% | 1.009 | 250
-#> 
-#> # Random effects SD/Cor: persons
-#> 
-#> Parameter   | Median |       89% CI |   pd | % in ROPE |  Rhat | ESS
-#> --------------------------------------------------------------------
-#> (Intercept) |   0.12 | [0.00, 0.44] | 100% |    43.25% | 1.018 | 293
-#> 
-#> Using highest density intervals as credible intervals.
 ```
 
 ## Structural Models (PCA, EFA, CFA, SEM...)
@@ -295,38 +270,34 @@ The **parameters** package extends the support to structural models.
 
 ### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(psych)
 
-psych::pca(mtcars, nfactors = 3) %>% 
+psych::pca(mtcars, nfactors = 3) %>%
   parameters()
 ```
 
-```{r, warning=FALSE, message=FALSE, eval = FALSE}
+We will avoid displaying a graph while carrying out factor analysis:
+
+```{r}
 library(FactoMineR)
 
-FactoMineR::FAMD(iris, ncp = 3) %>% 
+FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) %>%
   parameters()
 ```
-```{r, warning=FALSE, message=FALSE, echo = FALSE}
-library(FactoMineR)
-
-FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) %>% 
-  parameters()
-```
-
 
 ### Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)
 
 #### Frequentist
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(lavaan)
 
-model <- lavaan::cfa(' visual  =~ x1 + x2 + x3
+model <- lavaan::cfa(" visual  =~ x1 + x2 + x3
                        textual =~ x4 + x5 + x6
-                       speed   =~ x7 + x8 + x9 ', 
-                       data = HolzingerSwineford1939)
+                       speed   =~ x7 + x8 + x9 ",
+  data = HolzingerSwineford1939
+)
 
 model_parameters(model)
 ```
@@ -339,7 +310,7 @@ model_parameters(model)
 
 `parameters()` also works for `rma`-objects from the **metafor** package.
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(metafor)
 
 mydat <- data.frame(
@@ -347,10 +318,12 @@ mydat <- data.frame(
   standarderror = c(0.317, 0.317, 0.13, 0.36)
 )
 
-rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) %>% 
+rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) %>%
   model_parameters()
 ```
 
 ## Plotting Model Parameters
 
-There is a `plot()`-method implemented in the [**see**-package](https://easystats.github.io/see/). Several examples are shown [in this vignette](https://easystats.github.io/see/articles/parameters.html).
+There is a `plot()`-method implemented in the
+[**see**-package](https://easystats.github.io/see/). Several examples are shown
+[in this vignette](https://easystats.github.io/see/articles/parameters.html).

@@ -12,7 +12,8 @@ random_parameters(model, component = "conditional")
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 }
 \value{
 A data frame with random effects statistics for the variance components,
@@ -24,8 +25,8 @@ This function extracts the different variance components of a
   mixed model and returns the result as a data frame.
 }
 \details{
-The variance components are obtained from \code{\link[insight]{get_variance}}
-  and are denoted as following:
+The variance components are obtained from
+  \code{\link[insight]{get_variance}} and are denoted as following:
   \subsection{Within-group (or residual) variance}{
     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
     is the sum of the distribution-specific variance and the variance due to additive dispersion.

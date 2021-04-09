@@ -6,21 +6,42 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class \code{\link{aov}}, \code{\link{anova}}, \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{Anova.mlm}, \code{afex_aov} or \code{maov}.
-#' @param omega_squared Compute omega squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
-#' @param eta_squared Compute eta squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or \code{"adjusted"} (the latter option only for ANOVA-tables from mixed models).
-#' @param epsilon_squared Compute epsilon squared as index of effect size. Can be \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
-#' @param df_error Denominator degrees of freedom (or degrees of freedom of the error estimate, i.e., the residuals). This is used to compute effect sizes for ANOVA-tables from mixed models. See 'Examples'. (Ignored for \code{afex_aov}.)
-#' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3, ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for \code{afex_aov}.)
-#' @param ci Confidence Interval (CI) level for effect sizes \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL}, will compute no confidence intervals. \code{ci} should be a scalar between 0 and 1.
-#' @param test String, indicating the type of test for \code{Anova.mlm} to be returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of the multivariate test (that is also given by the \code{print}-method). If \code{test = "univariate"}, returns the summary of the univariate test.
-#' @param power Logical, if \code{TRUE}, adds a column with power for each parameter.
+#' @param model Object of class \code{\link{aov}}, \code{\link{anova}},
+#'   \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{Anova.mlm},
+#'   \code{afex_aov} or \code{maov}.
+#' @param omega_squared Compute omega squared as index of effect size. Can be
+#'   \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
+#' @param eta_squared Compute eta squared as index of effect size. Can be
+#'   \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or
+#'   \code{"adjusted"} (the latter option only for ANOVA-tables from mixed
+#'   models).
+#' @param epsilon_squared Compute epsilon squared as index of effect size. Can
+#'   be \code{"partial"} (the default, adjusted for effect size) or
+#'   \code{"raw"}.
+#' @param df_error Denominator degrees of freedom (or degrees of freedom of the
+#'   error estimate, i.e., the residuals). This is used to compute effect sizes
+#'   for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
+#'   \code{afex_aov}.)
+#' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+#'   ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
+#'   \code{afex_aov}.)
+#' @param ci Confidence Interval (CI) level for effect sizes
+#'   \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL},
+#'   will compute no confidence intervals. \code{ci} should be a scalar between
+#'   0 and 1.
+#' @param test String, indicating the type of test for \code{Anova.mlm} to be
+#'   returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
+#'   the multivariate test (that is also given by the \code{print}-method). If
+#'   \code{test = "univariate"}, returns the summary of the univariate test.
+#' @param power Logical, if \code{TRUE}, adds a column with power for each
+#'   parameter.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
-#' @note For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only partial or adjusted effect sizes can be computed.
+#' @note For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only
+#'   partial or adjusted effect sizes can be computed.
 #'
 #' @examples
 #' if (requireNamespace("effectsize", quietly = TRUE)) {
@@ -103,7 +124,16 @@ model_parameters.aov <- function(model,
   parameters <- .extract_parameters_anova(model, test)
 
   # add effect sizes, if available
-  parameters <- .effectsizes_for_aov(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error, ci, verbose = verbose)
+  parameters <- .effectsizes_for_aov(
+      model,
+      parameters,
+      omega_squared,
+      eta_squared,
+      epsilon_squared,
+      df_error,
+      ci,
+      verbose = verbose
+    )
 
   # add power, if possible
   if (isTRUE(power)) {

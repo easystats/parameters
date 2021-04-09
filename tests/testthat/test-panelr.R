@@ -50,12 +50,18 @@ if (.runThisTest &&
 
   test_that("model_parameters", {
     expect_equal(
-      model_parameters(m1)$Coefficient,
+      model_parameters(m1, effects = "fixed")$Coefficient,
       c(0.05825, -0.00164, 6.59813, -0.028, 0.00438, -0.22941, -0.44176, -0.12732),
       tolerance = 1e-3
     )
     expect_equal(
-      model_parameters(m2)$Coefficient,
+      model_parameters(m1, effects = "all")$Coefficient,
+      c(0.05825, -0.00164, 6.59813, -0.028, 0.00438, -0.22941, -0.44176,
+        -0.12732, 0.35399, 0.48233),
+      tolerance = 1e-3
+    )
+    expect_equal(
+      model_parameters(m2, effects = "fixed")$Coefficient,
       c(0.01934, 4e-05, 6.45957, -0.02143, 0.00371, -0.20753, -0.44861),
       tolerance = 1e-3
     )

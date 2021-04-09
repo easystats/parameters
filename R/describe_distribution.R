@@ -5,6 +5,7 @@
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
+#' @param quartiles Return the first and third quartiles (25th and 75pth percentiles).
 #' @param include_factors Logical, if \code{TRUE}, factors are included in the
 #'   output, however, only columns for range (first and last factor levels) as
 #'   well as n and missing will contain information.
@@ -30,7 +31,7 @@
 #'
 #' data(iris)
 #' describe_distribution(iris)
-#' describe_distribution(iris, include_factors = TRUE)
+#' describe_distribution(iris, include_factors = TRUE, quartiles = TRUE)
 #' @export
 describe_distribution <- function(x, ...) {
   UseMethod("describe_distribution")
@@ -46,6 +47,7 @@ describe_distribution.numeric <- function(x,
                                           dispersion = TRUE,
                                           iqr = TRUE,
                                           range = TRUE,
+                                          quartiles = FALSE,
                                           ci = NULL,
                                           iterations = 100,
                                           threshold = .1,
@@ -104,6 +106,16 @@ describe_distribution.numeric <- function(x,
     )
   }
 
+  # Quartiles
+  if (quartiles) {
+    out <- cbind(
+      out,
+      data.frame(
+        Q1 = stats::quantile(x, probs = 0.25, na.rm = TRUE),
+        Q3 = stats::quantile(x, probs = 0.75, na.rm = TRUE)
+      )
+    )
+  }
 
   # Skewness
   out <- cbind(
@@ -145,6 +157,8 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     IQR = NA,
     Min = levels(x)[1],
     Max = levels(x)[nlevels(x)],
+    Q1 = NA,
+    Q3 = NA,
     Skewness = as.numeric(skewness(x)),
     Kurtosis = as.numeric(kurtosis(x)),
     n = length(x),
@@ -163,11 +177,13 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
-  if (is.null(dot.arguments[["iqr"]])) {
+  if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
-
-
+  if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
+    out$Q1 <- NULL
+    out$Q3 <- NULL
+  }
   if (!range) {
     out$Min <- NULL
     out$Max <- NULL
@@ -195,6 +211,8 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     CI_high = NA,
     Min = values[1],
     Max = values[length(values)],
+    Q1 = NA,
+    Q3 = NA,
     Skewness = as.numeric(skewness(x)),
     Kurtosis = as.numeric(kurtosis(x)),
     n = length(x),
@@ -213,10 +231,13 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
-  if (is.null(dot.arguments[["iqr"]])) {
+  if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
-
+  if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
+    out$Q1 <- NULL
+    out$Q3 <- NULL
+  }
 
   if (!range) {
     out$Min <- NULL
@@ -237,6 +258,7 @@ describe_distribution.data.frame <- function(x,
                                              dispersion = TRUE,
                                              iqr = TRUE,
                                              range = TRUE,
+                                             quartiles = FALSE,
                                              include_factors = FALSE,
                                              ci = NULL,
                                              iterations = 100,
@@ -250,6 +272,7 @@ describe_distribution.data.frame <- function(x,
         dispersion = dispersion,
         iqr = iqr,
         range = range,
+        quartiles = quartiles,
         ci = ci,
         iterations = iterations,
         threshold = threshold
@@ -278,6 +301,7 @@ describe_distribution.grouped_df <- function(x,
                                              dispersion = TRUE,
                                              iqr = TRUE,
                                              range = TRUE,
+                                             quartiles = FALSE,
                                              include_factors = FALSE,
                                              ci = NULL,
                                              iterations = 100,
@@ -294,6 +318,7 @@ describe_distribution.grouped_df <- function(x,
       dispersion = dispersion,
       iqr = iqr,
       range = range,
+      quartiles = quartiles,
       include_factors = include_factors,
       ci = ci,
       iterations = iterations,
@@ -344,6 +369,7 @@ print.parameters_distribution <- function(x, digits = 2, ...) {
     dispersion = FALSE,
     iqr = FALSE,
     range = FALSE,
+    quartiles = FALSE,
     ci = NULL
   )
   out[[1]]

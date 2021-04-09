@@ -2,13 +2,12 @@
 % Please edit documentation in R/methods_wrs2.R
 \name{model_parameters.t1way}
 \alias{model_parameters.t1way}
-\title{Parameters from \code{WRS2} objects}
+\title{Parameters from robust statistical objects in \code{WRS2}}
 \usage{
 \method{model_parameters}{t1way}(model, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{Object of class \code{t1way}, \code{yuen}, \code{mcp1} or
-\code{mcp2}.}
+\item{model}{Object from \code{WRS2} package.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -18,7 +17,7 @@
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from \code{WRS2} objects
+Parameters from robust statistical objects in \code{WRS2}
 }
 \examples{
 if (require("WRS2")) {

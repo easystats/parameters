@@ -3,7 +3,7 @@
 #' @export
 model_parameters.mixor <- function(model,
                                    ci = .95,
-                                   effects = c("all", "fixed", "random"),
+                                   effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                    bootstrap = FALSE,
                                    iterations = 1000,
                                    standardize = NULL,
@@ -11,7 +11,17 @@ model_parameters.mixor <- function(model,
                                    details = FALSE,
                                    verbose = TRUE,
                                    ...) {
-  effects <- match.arg(effects)
+  effects <- match.arg(effects, choices = c("all", "fixed", "random"))
+
+  # standardize only works for fixed effects...
+  if (!is.null(standardize)) {
+    effects <- "fixed"
+    ## TODO enable later, when fixed in "effectsize"
+    # if (verbose) {
+    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    # }
+  }
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -37,8 +47,8 @@ model_parameters.mixor <- function(model,
 
 #' @rdname ci.merMod
 #' @export
-ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
+ci.mixor <- function(x, ci = .95, effects = "all", ...) {
+  effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
 }
 
@@ -46,8 +56,8 @@ ci.mixor <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
 #' @rdname standard_error
 #' @importFrom insight get_parameters
 #' @export
-standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
+standard_error.mixor <- function(model, effects = "all", ...) {
+  effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   stats <- model$Model[, "Std. Error"]
   parms <- insight::get_parameters(model, effects = effects)
 
@@ -62,8 +72,8 @@ standard_error.mixor <- function(model, effects = c("all", "fixed", "random"), .
 #' @rdname p_value.lmerMod
 #' @importFrom insight get_parameters
 #' @export
-p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
+p_value.mixor <- function(model, effects = "all", ...) {
+  effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   stats <- model$Model[, "P(>|z|)"]
   parms <- insight::get_parameters(model, effects = effects)
 
@@ -76,8 +86,8 @@ p_value.mixor <- function(model, effects = c("all", "fixed", "random"), ...) {
 
 
 #' @export
-simulate_model.mixor <- function(model, iterations = 1000, effects = c("all", "fixed", "random"), ...) {
-  effects <- match.arg(effects)
+simulate_model.mixor <- function(model, iterations = 1000, effects = "all", ...) {
+  effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
 
   class(out) <- c("parameters_simulate_model", class(out))

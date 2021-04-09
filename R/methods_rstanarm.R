@@ -74,6 +74,7 @@ model_parameters.stanreg <- function(model,
     priors = priors,
     effects = effects,
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 
@@ -138,6 +139,7 @@ model_parameters.stanmvreg <- function(model,
     priors = priors,
     effects = effects,
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 

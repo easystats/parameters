@@ -72,7 +72,11 @@ summary.parameters_omega <- function(object, ...) {
 #' @rdname principal_components
 #' @importFrom stats predict
 #' @export
-predict.parameters_efa <- function(object, newdata = NULL, names = NULL, keep_na = TRUE, ...) {
+predict.parameters_efa <- function(object,
+                                   newdata = NULL,
+                                   names = NULL,
+                                   keep_na = TRUE,
+                                   ...) {
   if (is.null(newdata)) {
     out <- as.data.frame(attributes(object)$scores)
     if (isTRUE(keep_na)) {
@@ -135,7 +139,12 @@ print.parameters_pca_summary <- print.parameters_efa_summary
 
 #' @importFrom insight print_color print_colour
 #' @export
-print.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
+print.parameters_efa <- function(x,
+                                 digits = 2,
+                                 sort = FALSE,
+                                 threshold = NULL,
+                                 labels = NULL,
+                                 ...) {
   cat(
     .print_parameters_cfa_efa(
       x,

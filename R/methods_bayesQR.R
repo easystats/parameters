@@ -27,6 +27,7 @@ model_parameters.bayesQR <- function(model,
     bf_prior = bf_prior,
     diagnostic = diagnostic,
     priors = priors,
+    verbose = verbose,
     ...
   )
 
@@ -36,3 +37,7 @@ model_parameters.bayesQR <- function(model,
 
   params
 }
+
+
+#' @export
+p_value.bayesQR <- p_value.BFBayesFactor

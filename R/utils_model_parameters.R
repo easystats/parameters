@@ -9,6 +9,7 @@
                                              df_method = NULL,
                                              ci_method = NULL,
                                              p_adjust = NULL,
+                                             summary = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
                                              ...) {
@@ -49,6 +50,26 @@
   attr(params, "p_adjust") <- p_adjust
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
+  attr(params, "show_summary") <- isTRUE(summary)
+
+  if (isTRUE(summary)) {
+    if (requireNamespace("performance", quietly = TRUE)) {
+      rsq <- tryCatch(
+        {
+          suppressWarnings(performance::r2(model))
+        },
+        error = function(e) {
+          NULL
+        }
+      )
+      attr(params, "r2") <- rsq
+    }
+  }
+
+  # here we add exception for objects that should not have a table headline
+  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm"))) {
+    attr(params, "title") <- ""
+  }
 
   weighted_nobs <- tryCatch(
     {
@@ -121,6 +142,12 @@
     attr(params, "p_digits") <- 3
   }
 
+  if ("footer_digits" %in% names(dot.arguments)) {
+    attr(params, "footer_digits") <- eval(dot.arguments[["footer_digits"]])
+  } else {
+    attr(params, "footer_digits") <- 3
+  }
+
   if ("s_value" %in% names(dot.arguments)) {
     attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
   }
@@ -184,9 +211,17 @@
   }
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
   if (any(columns)) {
-    params[columns] <- exp(params[columns])
-    if (all(c("Coefficient", "SE") %in% names(params))) {
-      params$SE <- params$Coefficient * params$SE
+    if (inherits(model, "mvord")) {
+      rows <- params$Component != "correlation"
+      params[rows, columns] <- exp(params[rows, columns])
+      if (all(c("Coefficient", "SE") %in% names(params))) {
+        params$SE[rows] <- params$Coefficient[rows] * params$SE[rows]
+      }
+    } else {
+      params[columns] <- exp(params[columns])
+      if (all(c("Coefficient", "SE") %in% names(params))) {
+        params$SE <- params$Coefficient * params$SE
+      }
     }
   }
   params
@@ -218,6 +253,11 @@
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test
+  }
+
+  # here we add exception for objects that should not have a table headline
+  if (inherits(model, c("aov", "anova", "lm"))) {
+    attr(params, "title") <- ""
   }
 
   if ("digits" %in% names(dot.arguments)) {

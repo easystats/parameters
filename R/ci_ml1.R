@@ -2,7 +2,14 @@
 #' @export
 ci_ml1 <- function(model, ci = .95) {
   out <- lapply(ci, function(i) {
-    .ci_wald(model = model, ci = i, effects = "fixed", component = "all", dof = Inf, method = "ml1")
+    .ci_wald(
+      model = model,
+      ci = i,
+      effects = "fixed",
+      component = "all",
+      dof = Inf,
+      method = "ml1"
+    )
   })
   out <- do.call(rbind, out)
   row.names(out) <- NULL

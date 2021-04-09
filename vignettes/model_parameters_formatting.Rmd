@@ -17,12 +17,12 @@ bibliography: bibliography.bib
 
 ```{r , include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
 
 knitr::opts_chunk$set(
   echo = TRUE,
-  collapse = TRUE, 
+  collapse = TRUE,
   warning = FALSE,
   message = FALSE,
   comment = "#>",
@@ -31,8 +31,8 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("broom", quietly = TRUE) ||
-    !requireNamespace("gt", quietly = TRUE) ||
-    !requireNamespace("magrittr", quietly = TRUE)) {
+  !requireNamespace("gt", quietly = TRUE) ||
+  !requireNamespace("magrittr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -45,11 +45,19 @@ if (!requireNamespace("broom", quietly = TRUE) ||
 set.seed(333)
 ```
 
-The *parameters* package, together with the [*insight* package](https://easystats.github.io/insight/), provides tools to format the layout and style of tables from model parameters. When you use the `model_parameters()` function, you usually don't have to take care about formatting and layout, at least not for simple purposes like printing to the console or inside rmarkdown documents. However, sometime you may want to do the formatting steps manually. This vignette introduces the various functions that are used for parameters table formatting.
+The *parameters* package, together with the [*insight*
+package](https://easystats.github.io/insight/), provides tools to format the
+layout and style of tables from model parameters. When you use the
+`model_parameters()` function, you usually don't have to take care about
+formatting and layout, at least not for simple purposes like printing to the
+console or inside rmarkdown documents. However, sometime you may want to do the
+formatting steps manually. This vignette introduces the various functions that
+are used for parameters table formatting.
 
 ## An Example Model
 
-We start with a model that does not make much sense, but it is useful for demonstrating the formatting functions.
+We start with a model that does not make much sense, but it is useful for
+demonstrating the formatting functions.
 
 ```{r}
 data(iris)
@@ -61,27 +69,43 @@ summary(model)
 
 ## Formatting Parameter Names
 
-As we can see, in such cases, the standard R output looks a bit cryptic, although all necessary and important information is included in the summary. The formatting of coefficients for polynomial transformation is difficult to read, factors grouped with `cut()` always require a short time of thinking to find out which of the bound (in this case, `Petlen(3,7]`, 3 and 7) is included in the range, and names of factor levels are directly concatenated to the name of the factor variable.
+As we can see, in such cases, the standard R output looks a bit cryptic,
+although all necessary and important information is included in the summary. The
+formatting of coefficients for polynomial transformation is difficult to read,
+factors grouped with `cut()` always require a short time of thinking to find out
+which of the bound (in this case, `Petlen(3,7]`, 3 and 7) is included in the
+range, and names of factor levels are directly concatenated to the name of the
+factor variable.
 
-Thus, the first step would be to format the parameter names, which can be done with `format_parameters()` from the *parameters* package:
-
+Thus, the first step would be to format the parameter names, which can be done
+with `format_parameters()` from the *parameters* package:
 
 ```{r}
 library(parameters)
 format_parameters(model)
 ```
 
-`format_parameters()` returns a (named) character vector with the original coefficients as _names_ of each character element, and the formatted names of the coefficients as values of the character vector. Let's look at the results again:
+`format_parameters()` returns a (named) character vector with the original
+coefficients as _names_ of each character element, and the formatted names of
+the coefficients as values of the character vector. Let's look at the results
+again:
 
 ```{r}
 cat(format_parameters(model), sep = "\n")
 ```
 
-Now variable names and factor levels, but also polynomial terms or even factors grouped with `cut()` are much more readable. Factor levels are separated from the variable name, inside brackets. Same for the coefficients of the different polynomial degrees. And the exact range for `cut()`-factors is also clearer now.
+Now variable names and factor levels, but also polynomial terms or even factors
+grouped with `cut()` are much more readable. Factor levels are separated from
+the variable name, inside brackets. Same for the coefficients of the different
+polynomial degrees. And the exact range for `cut()`-factors is also clearer
+now.
 
 ## Standardizing Column Names of Parameter Tables
 
-As seen above, the `summary()` returns columns named `Estimate`, `t value` or `Pr(>|t|)`. While `Estimate` is not specific for certain models, `t value` is. For logistic regression models, you would get `z value`. Some packages alter the names, so you get just `t` or `t-value` etc.
+As seen above, the `summary()` returns columns named `Estimate`, `t value` or
+`Pr(>|t|)`. While `Estimate` is not specific for certain models, `t value` is.
+For logistic regression models, you would get `z value`. Some packages alter the
+names, so you get just `t` or `t-value` etc.
 
 `model_parameters()` also uses context-specific column names, where applicable:
 
@@ -89,36 +113,47 @@ As seen above, the `summary()` returns columns named `Estimate`, `t value` or `P
 colnames(model_parameters(model))
 ```
 
-For Bayesian models, `Coefficient` is usually named `Median` etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the *broom* package, where you get "standardized" column names:
+For Bayesian models, `Coefficient` is usually named `Median` etc. While this
+makes sense from a user perspective, because you instantly know which type of
+statistic or coefficient you have, it becomes difficult when you need a generic
+naming scheme to access model parameters when the input model is unknown. This
+is the typical approach from the *broom* package, where you get "standardized"
+column names:
 
 ```{r}
 library(broom)
 colnames(tidy(model))
 ```
 
-To deal with such situations, the *insight* package provides a `standardize_names()` function, which exactly does that: standardizing the column names of the input. In the following example, you see that the statistic-column is no longer named `t`, but `statistic`. `df_error` or `df_residuals` will be renamed to `df`.
+To deal with such situations, the *insight* package provides a
+`standardize_names()` function, which exactly does that: standardizing the
+column names of the input. In the following example, you see that the
+statistic-column is no longer named `t`, but `statistic`. `df_error` or
+`df_residuals` will be renamed to `df`.
 
 ```{r}
 library(insight)
 library(magrittr)
-model %>% 
-  model_parameters() %>% 
-  standardize_names() %>% 
+model %>%
+  model_parameters() %>%
+  standardize_names() %>%
   colnames()
 ```
 
 Furthermore, you can request "broom"-style for column names:
 
 ```{r}
-model %>% 
-  model_parameters() %>% 
-  standardize_names(style = "broom") %>% 
+model %>%
+  model_parameters() %>%
+  standardize_names(style = "broom") %>%
   colnames()
 ```
 
 ## Formatting Column Names and Columns
 
-Beside formatting parameter names (coefficient names) using `format_parameters()`, we can do even more to make the output more readable. Let's look at an example that includes confidence intervals.
+Beside formatting parameter names (coefficient names) using
+`format_parameters()`, we can do even more to make the output more readable.
+Let's look at an example that includes confidence intervals.
 
 ```{r}
 cbind(summary(model)$coefficients, confint(model))
@@ -130,44 +165,59 @@ We can get a similar tabular output using *broom*.
 tidy(model, conf.int = TRUE)
 ```
 
-Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the `format_table()` function is a convenient function that does all the work for you. 
+Some improvements according to readability could be collapsing and formatting
+the confidence intervals, and maybe the p-values. This would require some
+effort, for instance, to format the values of the lower and upper confidence
+intervals and collapsing them into one column. However, the `format_table()`
+function is a convenient function that does all the work for you.
 
-`format_table()` requires a data frame with model parameters as input, however, there are some requirements to make `format_table()` work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from *broom* or the [*easystats* packages](https://easystats.github.io/easystats/).
+`format_table()` requires a data frame with model parameters as input, however,
+there are some requirements to make `format_table()` work. In particular, the
+column names must follow a certain pattern to be recognized, and this pattern
+may either be the naming convention from *broom* or the [*easystats*
+packages](https://easystats.github.io/easystats/).
 
 ```{r}
-model %>% 
-  tidy(conf.int = TRUE) %>% 
+model %>%
+  tidy(conf.int = TRUE) %>%
   format_table()
 ```
 
-When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for `model_parameters()`:
+When the parameters table also includes degrees of freedom, and the degrees of
+freedom are the same for each parameter, then this information is included in
+the statistic-column. This is usually the default for `model_parameters()`:
 
 ```{r}
-model %>% 
-  model_parameters() %>% 
+model %>%
+  model_parameters() %>%
   format_table()
 ```
 
 ## Exporting the Parameters Table
 
-Finally, `export_table()` from *insight* formats the data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more "table-like".
+Finally, `export_table()` from *insight* formats the data frame and returns a
+character vector that can be printed to the console or inside rmarkdown
+documents. The data frame then looks more "table-like".
 
 ```{r}
 data(mtcars)
 cat(export_table(mtcars[1:8, 1:5]))
 ```
 
-Putting all this together allows us to create nice tabular outputs of parameters tables. This can be done using *broom*:
+Putting all this together allows us to create nice tabular outputs of parameters
+tables. This can be done using *broom*:
 
 ```{r}
-model %>% 
-  tidy(conf.int = TRUE) %>% 
-  format_table() %>% 
-  export_table() %>% 
+model %>%
+  tidy(conf.int = TRUE) %>%
+  format_table() %>%
+  export_table() %>%
   cat()
 ```
 
-Or, in a simpler way and with much more options (like standardizing, robust standard errors, bootstrapping, ...) using `model_parameters()`, which `print()`-method does all these steps automatically:
+Or, in a simpler way and with much more options (like standardizing, robust
+standard errors, bootstrapping, ...) using `model_parameters()`, which
+`print()`-method does all these steps automatically:
 
 ```{r}
 model_parameters(model)
@@ -175,33 +225,50 @@ model_parameters(model)
 
 ## Formatting the Parameters Table in Markdown
 
-`export_table()` provides a few options to generate tables in markdown-format. This allows to easily render nice-looking tables inside markdown-documents. First of all, use `format = "markdown"` to activate the markdown-formatting. `caption` can be used to add a table caption. Furthermore, `align` allows to choose an alignment for all table columns, or to specify the alignment for each column individually.
+`export_table()` provides a few options to generate tables in markdown-format.
+This allows to easily render nice-looking tables inside markdown-documents.
+First of all, use `format = "markdown"` to activate the markdown-formatting.
+`caption` can be used to add a table caption. Furthermore, `align` allows to
+choose an alignment for all table columns, or to specify the alignment for each
+column individually.
 
-The following table has six columns. Using `align = "lcccrr"` would left-align the first column, center columns two to four, and right-align the last two columns.
+The following table has six columns. Using `align = "lcccrr"` would left-align
+the first column, center columns two to four, and right-align the last two
+columns.
 
 ```{r}
-model %>% 
-  tidy(conf.int = TRUE) %>% 
+model %>%
+  tidy(conf.int = TRUE) %>%
   # parenthesis look better in markdown-tables, so we use "brackets" here
-  format_table(ci_brackets = c("(", ")")) %>% 
+  format_table(ci_brackets = c("(", ")")) %>%
   export_table(format = "markdown", caption = "My Table", align = "lcccrr")
 ```
 
-`print_md()` is a convenient wrapper around `format_table()` and `export_table(format = "markdown")`, and allows to directly format the output of functions like `model_parameters()`, `simulate_parameters()` or other _parameters_ functions in markdown-format.
+`print_md()` is a convenient wrapper around `format_table()` and
+`export_table(format = "markdown")`, and allows to directly format the output of
+functions like `model_parameters()`, `simulate_parameters()` or other
+_parameters_ functions in markdown-format.
 
-These tables are also nicely formatted when knitting markdown-documents into Word or PDF. `print_md()` applies some default settings that have proven to work well for markdown, PDF or Word tables.
+These tables are also nicely formatted when knitting markdown-documents into
+Word or PDF. `print_md()` applies some default settings that have proven to work
+well for markdown, PDF or Word tables.
 
 ```{r}
 model_parameters(model) %>% print_md()
 ```
 
-A similar option is `print_html()`, which is a convenient wrapper for `format_table()` and `export_table(format = "html")`. Using HTML in markdown has the advantage that it will be properly rendered when exporting to PDF.
+A similar option is `print_html()`, which is a convenient wrapper for
+`format_table()` and `export_table(format = "html")`. Using HTML in markdown has
+the advantage that it will be properly rendered when exporting to PDF.
 
 ```{r}
 model_parameters(model) %>% print_html()
 ```
 
-`print_md()` and `print_html()` are considered as main functions for users who want to generate nicely rendered tables inside markdown-documents. A wrapper around these both is `display()`, which either calls `print_md()` or `print_html()`.
+`print_md()` and `print_html()` are considered as main functions for users who
+want to generate nicely rendered tables inside markdown-documents. A wrapper
+around these both is `display()`, which either calls `print_md()` or
+`print_html()`.
 
 ```{r}
 model_parameters(model) %>% display(format = "html")

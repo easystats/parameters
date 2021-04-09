@@ -79,6 +79,7 @@ model_parameters.lavaan <- function(model,
                                     type = component,
                                     ...) {
 
+  ## TODO remove in a future update
   if (!missing(type)) {
     if (verbose) {
       warning("Argument 'type' is deprecated. Please use 'component' instead.", call. = FALSE)
@@ -137,6 +138,7 @@ model_parameters.blavaan <- function(model,
     diagnostic = diagnostic,
     effects = "all",
     standardize = standardize,
+    verbose = verbose,
     ...
   )
 

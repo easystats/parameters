@@ -1,4 +1,7 @@
-if (require("testthat") && require("insight") && require("parameters") && require("mgcv")) {
+if (require("testthat") &&
+    require("insight") &&
+    require("parameters") &&
+    suppressPackageStartupMessages(require("mgcv", quietly = TRUE))) {
   set.seed(123)
   model <-
     mgcv::gam(
@@ -10,7 +13,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
   test_that("model_parameters.gam", {
     params <- model_parameters(model)
     expect_equal(params$SE, c(10.83359, 1.80704, 2.82608, 1.71366, 0.53172, NA, NA), tolerance = 1e-2)
-    expect_equal(params$df_error, c(23.3923, 23.3923, 23.3923, 23.3923, 23.3923, 23.3923, 23.3923), tolerance = 1e-2)
+    expect_equal(params$df_error, c(23.3923, 23.3923, 23.3923, 23.3923, 23.3923, NA, NA), tolerance = 1e-2)
     expect_equal(params$CI[[1]], .95, tolerance = 1e-2)
     expect_equal(
       colnames(params),

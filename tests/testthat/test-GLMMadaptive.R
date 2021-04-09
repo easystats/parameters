@@ -120,18 +120,18 @@ if (require("testthat") &&
 
   test_that("model_parameters", {
     expect_equal(
-      model_parameters(m1)$Coefficient,
+      model_parameters(m1, effects = "fixed")$Coefficient,
       c(1.14549, -1.17125, 0.76937, -0.08243, 1.33197, -1.12165),
       tolerance = 1e-3
     )
     expect_equal(
-      model_parameters(m2)$Coefficient,
+      model_parameters(m2, effects = "fixed")$Coefficient,
       c(-1.39946, -0.99138, -1.1278, -1.57945),
       tolerance = 1e-3
     )
   })
 
-  if (.runThisTest && require("glmmTMB")) {
+  if (.runThisTest && require("glmmTMB") && packageVersion("insight") > "0.13.2") {
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,
@@ -166,7 +166,7 @@ if (require("testthat") &&
       )
       expect_equal(
         params$Coefficient,
-        c(0.56552, 0.29951, 0.06307, 1.54471, 1.02233, 0.38209, -0.17162, 1.54471),
+        c(0.56552, 0.29951, 0.06307, 1.27254, 1.02233, 0.38209, -0.17162, 1.27254),
         tolerance = 1e-2
       )
     })

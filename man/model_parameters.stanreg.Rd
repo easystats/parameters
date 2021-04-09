@@ -31,7 +31,7 @@
   rope_ci = 1,
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
-  priors = TRUE,
+  priors = FALSE,
   effects = "fixed",
   component = "all",
   exponentiate = FALSE,

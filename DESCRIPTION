@@ -1,7 +1,7 @@
 Package: parameters
 Type: Package
 Title: Processing of Model Parameters
-Version: 0.12.0.1
+Version: 0.13.0
 Authors@R: 
   c(
     person("Daniel", 
@@ -36,7 +36,12 @@ Authors@R:
            family = "Arel-Bundock",
            role = c("ctb"),
            email = "vincent.arel-bundock@umontreal.ca",
-           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab"))
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab")),
+    person(given = "Jeffrey",
+           family = "Girard",
+           role = c("ctb"),
+           email = "me@jmgirard.com",
+           comment = c(ORCID = "0000-0002-7359-3746", Twitter = "@jeffreymgirard"))
   )
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
@@ -53,7 +58,7 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.8.2),
-    insight (>= 0.13.0),
+    insight (>= 0.13.2),
     methods,
     stats,
     utils
@@ -72,6 +77,7 @@ Suggests:
     broom,
     cAIC4,
     car,
+    cgam,
     clubSandwich,
     cluster,
     cplm,
@@ -96,6 +102,7 @@ Suggests:
     lme4,
     lmerTest,
     logspline,
+    lqmm,
     knitr,
     MASS,
     magrittr,
@@ -144,4 +151,3 @@ Language: en-US
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Remotes: easystats/insight

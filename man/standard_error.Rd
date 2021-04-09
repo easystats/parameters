@@ -60,7 +60,7 @@ standard_error(model, ...)
   ...
 )
 
-\method{standard_error}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+\method{standard_error}{mixor}(model, effects = "all", ...)
 
 \method{standard_error}{clm2}(model, component = c("all", "conditional", "scale"), ...)
 
@@ -98,7 +98,8 @@ package for robust covariance matrix estimators. For certain mixed models,
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{force}{Logical, if \code{TRUE}, factors are converted to numerical
 values to calculate the standard error, with the lowest level being the

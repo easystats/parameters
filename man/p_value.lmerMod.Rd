@@ -30,7 +30,7 @@
   ...
 )
 
-\method{p_value}{mixor}(model, effects = c("all", "fixed", "random"), ...)
+\method{p_value}{mixor}(model, effects = "all", ...)
 }
 \arguments{
 \item{model}{A statistical model.}
@@ -42,7 +42,8 @@
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"} or \code{"all"} (default). May be abbreviated.}
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{verbose}{Toggle warnings and messages.}
 

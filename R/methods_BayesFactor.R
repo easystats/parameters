@@ -107,7 +107,8 @@ model_parameters.BFBayesFactor <- function(model,
         effsize <- effectsize::effectsize(model,
           centrality = centrality,
           ci = ci,
-          ci_method = ci_method
+          ci_method = ci_method,
+          rope_ci = rope_ci
         )
         out <- merge(out, effsize, sort = FALSE, all = TRUE)
       },

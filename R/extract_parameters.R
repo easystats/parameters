@@ -1,7 +1,7 @@
 # generic function ------------------------------------------------------
 
 
-#' @importFrom insight get_statistic get_parameters get_sigma
+#' @importFrom insight get_statistic get_parameters
 #' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model,
@@ -15,6 +15,7 @@
                                         p_adjust = NULL,
                                         wb_component = FALSE,
                                         verbose = TRUE,
+                                        keep_component_column = FALSE,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -103,9 +104,9 @@
       ))
     }
     if (!is.null(ci_df)) {
-      if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+      if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
-      parameters <- merge(parameters, ci_df, by = merge_by)
+      parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
       ci_cols <- c()
     }
@@ -135,7 +136,7 @@
   }
 
   if (!is.null(pval)) {
-    parameters <- merge(parameters, pval, by = merge_by)
+    parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
 
 
@@ -162,7 +163,7 @@
   }
 
   if (!is.null(std_err)) {
-    parameters <- merge(parameters, std_err, by = merge_by)
+    parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
 
@@ -171,7 +172,7 @@
   if (isTRUE(robust)) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else if (!is.null(statistic)) {
-    parameters <- merge(parameters, statistic, by = merge_by)
+    parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
   }
 
 
@@ -182,7 +183,13 @@
     df_error <- degrees_of_freedom(model, method = "any")
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
-    parameters$df_error <- df_error
+    if (length(df_error) == 1) {
+      parameters$df_error <- df_error
+    } else {
+      # order may have changed due to merging, so make sure
+      # df are in correct order.
+      parameters$df_error <- df_error[order(parameters$.id)]
+    }
   }
 
 
@@ -218,7 +225,7 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1) parameters$Component <- NULL
+  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
   if ((!is.null(parameters$Effects) && .n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
 
 
@@ -274,9 +281,22 @@
   parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
-  # ==== add sigma
+  # ==== add sigma and residual df
 
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
+  parameters <- .add_sigma_residual_df(parameters, model)
+
+
+  rownames(parameters) <- NULL
+  parameters
+}
+
+
+# helper ----------------
+
+
+#' @importFrom insight get_sigma get_df
+.add_sigma_residual_df <- function(params, model) {
+  if (is.null(params$Component) || !"sigma" %in% params$Component) {
     sig <- tryCatch(
       {
         suppressWarnings(insight::get_sigma(model))
@@ -285,12 +305,19 @@
         NULL
       }
     )
-    attr(parameters, "sigma") <- as.numeric(sig)
+    attr(params, "sigma") <- as.numeric(sig)
+
+    resdf <- tryCatch(
+      {
+        suppressWarnings(insight::get_df(model, type = "residual"))
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    attr(params, "residual_df") <- as.numeric(resdf)
   }
-
-
-  rownames(parameters) <- NULL
-  parameters
+  params
 }
 
 
@@ -374,9 +401,9 @@
     } else {
       ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- bayestestR::reshape_ci(ci_df)
+    if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
-    parameters <- merge(parameters, ci_df, by = "Parameter")
+    parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   } else {
     ci_cols <- c()
   }
@@ -385,30 +412,30 @@
   # standard error - only if we don't already have SE for std. parameters
   if (!("SE" %in% colnames(parameters))) {
     if (isTRUE(robust)) {
-      parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter")
+      parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter", sort = FALSE)
       # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
       se_kr$df_error <- NULL
-      parameters <- merge(parameters, se_kr, by = "Parameter")
+      parameters <- merge(parameters, se_kr, by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter")
+      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
   }
 
 
   # p value
   if (isTRUE(robust)) {
-    parameters <- merge(parameters, p_value_robust(model, ...), by = "Parameter")
+    parameters <- merge(parameters, p_value_robust(model, ...), by = "Parameter", sort = FALSE)
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
     } else if (df_method %in% special_df_methods) {
       # special handling for KR-p, which we already have computed from dof
       # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
-      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = df_method, se = df_error$SE), by = "Parameter")
+      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = df_method, se = df_error$SE), by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter")
+      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
   }
 
@@ -417,7 +444,7 @@
   if (isFALSE(robust) && df_method %in% special_df_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
-    parameters <- merge(parameters, statistic, by = "Parameter")
+    parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
   }
 
 
@@ -434,7 +461,7 @@
       if ("SE" %in% colnames(df_error)) {
         df_error$SE <- NULL
       }
-      parameters <- merge(parameters, df_error, by = "Parameter")
+      parameters <- merge(parameters, df_error, by = "Parameter", sort = FALSE)
     }
   }
 
@@ -486,18 +513,7 @@
 
 
   # add sigma
-  if (is.null(parameters$Component) || !"sigma" %in% parameters$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
-    attr(parameters, "sigma") <- as.numeric(sig)
-  }
-
+  parameters <- .add_sigma_residual_df(parameters, model)
 
   rownames(parameters) <- NULL
   parameters
@@ -572,8 +588,8 @@
 # Bayes function ------------------------------------------------------
 
 
-#' @importFrom bayestestR describe_posterior reshape_ci
-#' @importFrom insight is_multivariate
+#' @importFrom bayestestR describe_posterior
+#' @importFrom insight is_multivariate reshape_ci
 #' @importFrom stats sd setNames na.omit
 #' @keywords internal
 .extract_parameters_bayesian <- function(model,
@@ -586,8 +602,9 @@
                                          rope_ci = 1.0,
                                          bf_prior = NULL,
                                          diagnostic = c("ESS", "Rhat"),
-                                         priors = TRUE,
+                                         priors = FALSE,
                                          standardize = NULL,
+                                         verbose = TRUE,
                                          ...) {
   # check if standardization is required and package available
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
@@ -613,6 +630,7 @@
       rope_range = rope_range,
       rope_ci = rope_ci,
       diagnostic = "ESS",
+      verbose = verbose,
       ...
     )
   } else if (!is.null(standardize)) {
@@ -628,6 +646,7 @@
       bf_prior = bf_prior,
       diagnostic = diagnostic,
       priors = priors,
+      verbose = verbose,
       ...
     )
 
@@ -644,6 +663,7 @@
       test = test_no_BF,
       rope_range = rope_range,
       rope_ci = rope_ci,
+      verbose = verbose,
       ...
     )
 
@@ -661,12 +681,13 @@
       bf_prior = bf_prior,
       diagnostic = diagnostic,
       priors = priors,
+      verbose = verbose,
       ...
     )
   }
 
   if (length(ci) > 1) {
-    parameters <- bayestestR::reshape_ci(parameters)
+    parameters <- insight::reshape_ci(parameters)
   }
 
   # Remove unnecessary columns
@@ -681,6 +702,7 @@
     parameters$ROPE_high <- NULL
   }
 
+  rownames(parameters) <- NULL
   parameters
 }
 
@@ -778,6 +800,7 @@
     SE = data$se,
     CI_low = data$ci.lower,
     CI_high = data$ci.upper,
+    z = data$z,
     p = data$pvalue,
     stringsAsFactors = FALSE
   )

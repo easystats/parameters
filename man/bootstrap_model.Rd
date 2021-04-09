@@ -21,6 +21,13 @@ A data frame of bootstrapped estimates.
 \description{
 Bootstrap a statistical model n times to return a data frame of estimates.
 }
+\details{
+By default, \code{boot::boot()} is used to generate bootstraps from
+the model data, which are then used to \code{update()} the model, i.e. refit
+the model with the bootstrapped samples. For \code{merMod} objects (\pkg{lme4})
+the \code{lme4::bootMer()} function is used to obtain bootstrapped samples.
+\code{bootstrap_parameters()} summarizes the bootstrapped model estimates.
+}
 \section{Using with \code{emmeans}}{
 
 The output can be passed directly to the various functions from the
