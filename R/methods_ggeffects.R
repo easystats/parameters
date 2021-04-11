@@ -1,14 +1,14 @@
 #' @export
 model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
-  response_name <- attributes(model)$response.name
   terms <- attributes(model)$terms[-1]
+  focal_term <- attributes(model)$terms[1]
   constant_values <- attributes(model)$constant.values
   title <- attr(model, "title")
 
   # exception for survival
   if (attributes(model)$type %in% c("surv", "survival", "cumhaz", "cumulative_hazard")) {
-    response_name <- "Time"
+    focal_term <- "Time"
   }
 
   model <- as.data.frame(model)
@@ -29,8 +29,8 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   if (.n_unique(model$Component) == 1) {
     model$Component <- NULL
   }
-  if (!is.null(response_name)) {
-    colnames(model)[1] <- response_name
+  if (!is.null(focal_term)) {
+    colnames(model)[1] <- focal_term
   }
 
   if (length(terms) >= 1) {
@@ -48,7 +48,7 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   # special attributes
   attr(model, "is_ggeffects") <- TRUE
   attr(model, "footer_text") <- .generate_ggeffects_footer(constant_values)
-  attr(model, "title") <- title
+  attr(model, "title") <- c(title, "blue")
 
   attr(model, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(model) <- c("parameters_model", "data.frame")
@@ -82,7 +82,7 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
       cv.space2 <- 0
 
     adjusted_predictors <- paste0(sprintf("* %*s = %*s", cv.space, cv.names, cv.space2, cv), collapse = "\n")
-    footer <- c(paste0("Adjusted for:\n", adjusted_predictors), "blue")
+    footer <- paste0("Adjusted for:\n", adjusted_predictors)
   }
 
   footer
