@@ -3,6 +3,8 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
   response_name <- attributes(model)$response.name
   terms <- attributes(model)$terms[-1]
+  constant_values <- attributes(model)$constant.values
+  title <- attr(model, "title")
 
   # exception for survival
   if (attributes(model)$type %in% c("surv", "survival", "cumhaz", "cumulative_hazard")) {
@@ -42,8 +44,46 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   }
 
   model <- .add_model_parameters_attributes(model, model, ci = ci, verbose = verbose)
+
+  # special attributes
   attr(model, "is_ggeffects") <- TRUE
+  attr(model, "footer_text") <- .generate_ggeffects_footer(constant_values)
+  attr(model, "title") <- title
+
   attr(model, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(model) <- c("parameters_model", "data.frame")
   model
+}
+
+
+.generate_ggeffects_footer <- function(constant_values) {
+  cv <- lapply(constant_values, function(.x) {
+    if (is.numeric(.x))
+      sprintf("%.2f", .x)
+    else
+      as.character(.x)
+  })
+  footer <- NULL
+
+  if (!.is_empty_object(cv)) {
+    cv.names <- names(cv)
+    cv.space <- max(nchar(cv.names))
+
+    # ignore this string when determining maximum length
+    poplev <- which(cv %in% c("NA (population-level)", "0 (population-level)"))
+    if (!.is_empty_object(poplev))
+      mcv <- cv[-poplev]
+    else
+      mcv <- cv
+
+    if (!.is_empty_object(mcv))
+      cv.space2 <- max(nchar(mcv))
+    else
+      cv.space2 <- 0
+
+    adjusted_predictors <- paste0(sprintf("* %*s = %*s", cv.space, cv.names, cv.space2, cv), collapse = "\n")
+    footer <- c(paste0("Adjusted for:\n", adjusted_predictors), "blue")
+  }
+
+  footer
 }

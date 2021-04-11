@@ -243,7 +243,7 @@
       tables[[type]]$CI <- NULL
     }
 
-    # for ggeffects objects, only choose selectes lines, to have
+    # for ggeffects objects, only choose selected lines, to have
     # a more compact output
     if (is_ggeffects && is.numeric(tables[[type]][[1]])) {
       n_rows <- nrow(tables[[type]])
