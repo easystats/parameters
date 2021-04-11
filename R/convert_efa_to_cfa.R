@@ -37,6 +37,11 @@ convert_efa_to_cfa.fa <- function(model, threshold = "max", names = NULL, ...) {
 }
 
 #' @export
+convert_efa_to_cfa.fa.ci <- convert_efa_to_cfa.fa
+
+
+
+#' @export
 convert_efa_to_cfa.parameters_efa <- function(model, threshold = NULL, names = NULL, ...) {
   if (!is.null(threshold)) {
     model <- model_parameters(attributes(model)$model, threshold = threshold, ...)
@@ -47,6 +52,7 @@ convert_efa_to_cfa.parameters_efa <- function(model, threshold = NULL, names = N
 
 #' @export
 convert_efa_to_cfa.parameters_pca <- convert_efa_to_cfa.parameters_efa
+
 
 
 #' @rdname convert_efa_to_cfa
