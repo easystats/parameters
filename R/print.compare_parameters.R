@@ -8,6 +8,17 @@ print.compare_parameters <- function(x,
   # save original input
   orig_x <- x
 
+  # check if user supplied digits attributes
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", digits)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", p_digits)
+  }
+
   # get attributes
   if (missing(style)) {
     style <- attributes(x)$output_style

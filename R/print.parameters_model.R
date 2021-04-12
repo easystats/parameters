@@ -66,6 +66,22 @@ print.parameters_model <- function(x,
   # save original input
   orig_x <- x
 
+
+  # check if user supplied digits attributes
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", digits)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", p_digits)
+  }
+  if (missing(footer_digits)) {
+    footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
+  }
+
+
   # table caption
   table_caption <- .print_caption(x, caption, format = "text")
 
@@ -146,11 +162,6 @@ print.parameters_brms_meta <- print.parameters_model
                         ci_brackets = TRUE,
                         format = "text",
                         ...) {
-  # check if user supplied digits attributes
-  digits <- .additional_arguments(x, "digits", digits)
-  ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
-  p_digits <- .additional_arguments(x, "p_digits", p_digits)
-
   format(
     x,
     pretty_names = pretty_names,
@@ -176,7 +187,6 @@ print.parameters_brms_meta <- print.parameters_model
     # get attributes
   sigma <- attributes(x)$sigma
   verbose <- .additional_arguments(x, "verbose", TRUE)
-  digits <- .additional_arguments(x, "footer_digits", digits)
 
   # override defaults. if argument "summary" is called in "model_parameters()",
   # this overrides the defaults...
@@ -271,9 +281,16 @@ print.parameters_stan <- function(x,
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # check if user supplied digits attributes
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+  # check if user supplied digits attributes
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", digits)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", p_digits)
+  }
 
 
   formatted_table <- format(
