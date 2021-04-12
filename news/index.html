@@ -187,6 +187,13 @@
 <li>Removed deprecated arguments.</li>
 </ul>
 </div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> were ignored for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> and only worked when used in the call to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> directly.</li>
+</ul>
+</div>
 </div>
     <div id="parameters-0130" class="section level1">
 <h1 class="page-header" data-toc-text="0.13.0">
@@ -235,9 +242,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issue with non-initialized argument <code>style</code> in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code>.</p></li>
 <li><p>Make <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> work with objects that have “simple” column names for confidence intervals with missing CI-level (i.e. when column is named <code>"CI"</code> instead of, say, <code>"95% CI"</code>).</p></li>
@@ -299,9 +306,9 @@
 <li><p>Improved support for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> from <em>anova</em> objects.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed edge case when formatting parameters from polynomial terms with many degrees.</p></li>
 <li><p>Fixed issue with random sampling and dropped factor levels in <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
@@ -341,9 +348,9 @@
 <li><p><code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for models from <em>lme4</em> and <em>glmmTMB</em> can now computed profiled confidence intervals, using <code>method = "profile"</code>. Consequently, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>df_method = "profile"</code> also computes profiled confidence intervals. For models of class <code>glmmTMB</code>, option <code>"uniroot"</code> is also available.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests when <code>standardize_d = TRUE</code>, did not return columns for the group-specific means.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> for <code>fixest::feols()</code>.</p></li>
@@ -367,9 +374,9 @@
 <code><a href="../reference/format_p_adjust.html">format_p_adjust()</a></code>, to create pretty names for p-adjustment methods.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed breaking code / failing tests due to latest <em>effectsize</em> update.</p></li>
 <li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models of class <code>mlm</code>.</p></li>
@@ -438,9 +445,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <em>lme</em> models with non-positive definite variance-covariance.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>, <code><a href="https://rdrr.io/pkg/lqmm/man/lqm.html" class="external-link">lqmm::lqm()</a></code>, <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
@@ -496,9 +503,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>vgam</em> and <em>mira</em> objects.</p></li>
 <li><p>Fixed issue where <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>emmGrid</em> objects falsely removed the <code>Coefficient</code> column.</p></li>
@@ -511,9 +518,9 @@
 <h1 class="page-header" data-toc-text="0.8.6">
 <a href="#parameters-086" class="anchor"></a>parameters 0.8.6<small> 2020-09-21 </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issues with <em>glmmTMB</em> models with dispersion-parameter.</p></li>
 <li><p>Fixed issue where <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>glmmTMB</em> models falsely removed the <code>Component</code> column.</p></li>
@@ -551,9 +558,9 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> and <em>blavaan</em> gains more option for standardized parameters.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>coxph.penal</code> models.</p></li>
 <li><p>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</p></li>
@@ -586,9 +593,9 @@
 <li><p>Improved <code><a href="../reference/select_parameters.html">select_parameters()</a></code> for mixed models, and revised docs and associated vignette.</p></li>
 </ul>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Allow <code>threshold</code> to be passed to <code><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa()</a></code> when the model is from <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</p></li>
 <li><p>Allow correlation matrix to be passed to <code><a href="../reference/factor_analysis.html">factor_analysis()</a></code>.</p></li>
@@ -626,9 +633,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>fix issue with rank deficient models.</li>
 </ul>
@@ -707,9 +714,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-11" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> for mixed models.</p></li>
 <li><p>Fixed bug for <code>model_parameters.anova(..., eta_squared = "partial")</code> when called with non-mixed models.</p></li>
@@ -745,9 +752,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-11" class="section level2">
+<div id="bug-fixes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-11" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-12" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
@@ -812,9 +819,9 @@
 </ul>
 </div>
 </div>
-<div id="bug-fixes-12" class="section level2">
+<div id="bug-fixes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-12" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-13" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li><p>Fixed minor issue with the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>-method for <code><a href="../reference/model_parameters.befa.html">model_parameters.befa()</a></code>.</p></li>
 <li><p>Fixed issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) with wrong order of degrees of freedom when <code>df_method</code> was different from default.</p></li>
