@@ -19,7 +19,7 @@
 #'   variances of observed and latent variables, but not the variances of
 #'   exogenous covariates. See \code{lavaan::standardizedsolution} for details.
 #' @inheritParams model_parameters.default
-#' @param component,type What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
+#' @param component What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -76,16 +76,7 @@ model_parameters.lavaan <- function(model,
                                     standardize = FALSE,
                                     component = c("regression", "correlation", "loading", "defined"),
                                     verbose = TRUE,
-                                    type = component,
                                     ...) {
-
-  ## TODO remove in a future update
-  if (!missing(type)) {
-    if (verbose) {
-      warning("Argument 'type' is deprecated. Please use 'component' instead.", call. = FALSE)
-    }
-    component <- type
-  }
 
   params <- .extract_parameters_lavaan(model,
                                        ci = ci,

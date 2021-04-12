@@ -1,3 +1,9 @@
+# parameters 0.13.1
+
+## Breaking changes
+
+* Removed deprecated arguments.
+
 # parameters 0.13.0
 
 ## General

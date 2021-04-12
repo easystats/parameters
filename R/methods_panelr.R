@@ -12,7 +12,6 @@ model_parameters.wbm <- function(model,
                                  bootstrap = FALSE,
                                  iterations = 1000,
                                  exponentiate = FALSE,
-                                 details = FALSE,
                                  p_adjust = NULL,
                                  verbose = TRUE,
                                  ...) {
@@ -37,14 +36,6 @@ model_parameters.wbm <- function(model,
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
-
-  ## TODO remove in a future update
-  if (isTRUE(details)) {
-    attr(params, "details") <- .randomeffects_summary(model)
-    if (verbose) {
-      message("Argument 'details' is deprecated. Please use 'group_level'.")
-    }
-  }
 
   params
 }

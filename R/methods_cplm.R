@@ -227,10 +227,9 @@ model_parameters.cpglmm <- function(model,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                    effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                     group_level = FALSE,
                                     exponentiate = FALSE,
-                                    details = FALSE,
                                     df_method = NULL,
                                     p_adjust = NULL,
                                     verbose = TRUE,
@@ -242,11 +241,10 @@ model_parameters.cpglmm <- function(model,
 
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
+    if (!missing(effects) && effects != "fixed" && verbose) {
+      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
     effects <- "fixed"
-    ## TODO enable later, when fixed in "effectsize"
-    # if (verbose) {
-    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    # }
   }
 
   params <- .mixed_model_parameters_generic(
@@ -258,15 +256,6 @@ model_parameters.cpglmm <- function(model,
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
-
-
-  ## TODO remove in a future update
-  if (isTRUE(details)) {
-    attr(params, "details") <- .randomeffects_summary(model)
-    if (verbose) {
-      message("Argument 'details' is deprecated. Please use 'group_level'.")
-    }
-  }
 
   params
 }

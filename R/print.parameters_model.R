@@ -110,7 +110,6 @@ print.parameters_model <- function(x,
   )
 
   # get attributes
-  res <- attributes(x)$details
   ci_method <- .additional_arguments(x, "ci_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
@@ -127,14 +126,6 @@ print.parameters_model <- function(x,
     .print_footer_cimethod(ci_method)
   }
 
-
-  ## TODO remove in future update when deprecated
-
-  # print summary for random effects
-  if (!is.null(res)) {
-    cat("\n")
-    .print_random_parameters(res, digits = digits)
-  }
   invisible(orig_x)
 }
 
@@ -228,7 +219,11 @@ print.parameters_brms_meta <- print.parameters_model
   }
 
   if (identical(format, "html") && is.null(caption)) {
-    table_caption <- "Model Summary"
+    if (isTRUE(attributes(x)$is_ggeffects)) {
+      table_caption <- title_attribute
+    } else {
+      table_caption <- "Model Summary"
+    }
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
   } else if (!is.null(title_attribute) && is.null(caption)) {

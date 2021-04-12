@@ -10,7 +10,6 @@
   standardize = FALSE,
   component = c("regression", "correlation", "loading", "defined"),
   verbose = TRUE,
-  type = component,
   ...
 )
 }
@@ -29,7 +28,7 @@ on the variances of the latent variables only; or \code{"no_exogenous"}
 variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
-\item{component, type}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+\item{component}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
