@@ -4,6 +4,11 @@
 
 * Removed deprecated arguments.
 
+## Bug fixes
+
+* Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
+  and only worked when used in the call to `model_parameters()` directly.
+
 # parameters 0.13.0
 
 ## General
