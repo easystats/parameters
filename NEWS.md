@@ -1,3 +1,10 @@
+# parameters 0.13.1
+
+## Changes to functions
+
+* `model_parameters()` gains a `parameters` argument, which takes a regular
+  expression as string, to filter parameters from the returned data frame.
+
 # parameters 0.13.0
 
 ## General
