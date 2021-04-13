@@ -187,6 +187,14 @@
 <li>Removed deprecated arguments.</li>
 </ul>
 </div>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>parameters</code> argument, which takes a regular expression as string, to filter parameters from the returned data frame.</li>
+</ul>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
@@ -214,9 +222,9 @@
 <code>blrm</code> (<em>rmsb</em>), <code>AKP</code>, <code>med1way</code>, <code>robtab</code> (<em>WRS2</em>), <code>epi.2by2</code> (<em>epiR</em>), <code>mjoint</code> (<em>joineRML</em>), <code>mhurdle</code> (<em>mhurdle</em>), <code>sarlm</code> (<em>spatialreg</em>), <code>model_fit</code> (<em>tidymodels</em>), <code>BGGM</code> (<em>BGGM</em>), <code>mvord</code> (<em>mvord</em>)</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <div id="model_parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model_parameters" class="anchor"></a><code>model_parameters()</code>
@@ -295,9 +303,9 @@
 <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> (and its alias <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) to show / print parameters of multiple models in one table.</li>
 </ul>
 </div>
-<div id="changes-to-functions-1" class="section level2">
+<div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li><p>Estimation of bootstrapped <em>p</em>-values has been re-written to be more accurate.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gains an <code>effects</code>-argument, to return fixed, random or both fixed and random effects parameters.</p></li>
@@ -339,9 +347,9 @@
 </ul>
 </div>
 </div>
-<div id="changes-to-functions-2" class="section level2">
+<div id="changes-to-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li><p>Added more effect size measures to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for anova objects gains a <code>power</code> argument, to calculate the power for each parameter.</p></li>
@@ -419,9 +427,9 @@
 </ul>
 </div>
 </div>
-<div id="changes-to-functions-3" class="section level2">
+<div id="changes-to-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
 <div id="model_parameters-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model_parameters-1" class="anchor"></a><code>model_parameters()</code>
@@ -482,9 +490,9 @@
 <li><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> is now re-exported from the <em>insight</em> package.</p></li>
 </ul>
 </div>
-<div id="changes-to-functions-4" class="section level2">
+<div id="changes-to-functions-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
 <div id="printing-model-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#printing-model-parameters" class="anchor"></a>Printing model parameters</h3>
@@ -549,9 +557,9 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for objects of class <code>mira</code> (<em>mice</em>).</p></li>
 </ul>
 </div>
-<div id="changes-to-functions-5" class="section level2">
+<div id="changes-to-functions-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gets a specific behaviour for brms-meta-analysis models.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> and <em>blavaan</em> now also prints self-defined parameters.</p></li>
@@ -584,9 +592,9 @@
 <li><p>Improved support for models from the <em>rms</em> package.</p></li>
 </ul>
 </div>
-<div id="changes-to-functions-6" class="section level2">
+<div id="changes-to-functions-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-7" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li><p>Improved parameters formatting for ordered factors in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (and <code><a href="../reference/format_parameters.html">format_parameters()</a></code>).</p></li>
 <li><p>Argument <code>df_method</code> can now also be applied to GLMs, to allow calculation of confidence intervals based on Wald-approximation, not profiled confidence intervals. This speeds up computation of CIs for models fit to large data sets.</p></li>
@@ -619,9 +627,9 @@
 <code>robmixglm</code> (<em>robmixglm</em>), <code>betaor</code>, <code>betamfx</code>, <code>logitor</code>, <code>poissonirr</code>, <code>negbinirr</code>, <code>logitmfx</code>, <code>probitmfx</code>, <code>poissonmfx</code>, <code>negbinmfx</code> (<em>mfx</em>), partial support <code>emmGrid</code> (<em>emmeans</em>)</li>
 </ul>
 </div>
-<div id="changes-to-functions-7" class="section level2">
+<div id="changes-to-functions-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-7" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
 <div id="simulate_parameters-and-simulate_model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#simulate_parameters-and-simulate_model" class="anchor"></a><code>simulate_parameters()</code> and <code>simulate_model()</code>
@@ -668,9 +676,9 @@
 <code><a href="../reference/demean.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html" class="external-link">this vignette</a>).</li>
 </ul>
 </div>
-<div id="changes-to-functions-8" class="section level2">
+<div id="changes-to-functions-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-9" class="anchor"></a>Changes to functions</h2>
 <div id="equivalence_test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#equivalence_test" class="anchor"></a><code>equivalence_test()</code>
@@ -736,9 +744,9 @@
 <li>Remove ‘Zelig’ from suggested packages, as it was removed from CRAN.</li>
 </ul>
 </div>
-<div id="changes-to-functions-9" class="section level2">
+<div id="changes-to-functions-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-9" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-10" class="anchor"></a>Changes to functions</h2>
 <div id="model_parameters-3" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model_parameters-3" class="anchor"></a>model_parameters()</h3>
@@ -785,9 +793,9 @@
 <li>Added support for <code>arima</code> (<em>stats</em>), <code>bife</code> (<em>bife</em>), <code>bcplm</code> and <code>zcpglm</code> (<em>cplm</em>)</li>
 </ul>
 </div>
-<div id="changes-to-functions-10" class="section level2">
+<div id="changes-to-functions-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-10" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-11" class="anchor"></a>Changes to functions</h2>
 <div id="model_parameters-4" class="section level3">
 <h3 class="hasAnchor">
 <a href="#model_parameters-4" class="anchor"></a>model_parameters()</h3>

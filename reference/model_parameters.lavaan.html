@@ -190,6 +190,7 @@
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   standardize <span class='op'>=</span> <span class='cn'>FALSE</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"regression"</span>, <span class='st'>"correlation"</span>, <span class='st'>"loading"</span>, <span class='st'>"defined"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -220,6 +221,19 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
     <tr>
       <th>component</th>
       <td><p>What type of links to return. Can be <code>"all"</code> or some of <code><a href='https://rdrr.io/r/base/c.html'>c("regression", "correlation", "loading", "variance", "mean")</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Character vector with a regular expression pattern that
+describes the parameters that should be filtered from the data frame, or
+a named list of regular expressions. In the first case, every parameter
+in the <em>"Parameters"</em> column that matches the regular expression in
+<code>parameters</code> will be removed from the returned data frame. If
+<code>parameters</code> is a named list of regular expression patterns, the
+names of the list-element should equal the column name where filtering
+should be applied. This is useful for model objects where
+<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
+like in <code>model_parameters.lavaan</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -263,6 +277,13 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>HolzingerSwineford1939</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+  <span class='co'># filter parameters</span>
+  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
+    <span class='va'>model</span>,
+    parameters <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>To <span class='op'>=</span> <span class='st'>"^(?!visual)"</span>,
+                      From <span class='op'>=</span> <span class='st'>"^(?!(x7|x8))"</span><span class='op'>)</span>
+  <span class='op'>)</span>
 
   <span class='co'># Structural Equation Model (SEM) ------------</span>
 
