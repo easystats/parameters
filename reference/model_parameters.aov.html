@@ -195,6 +195,7 @@
   ci <span class='op'>=</span> <span class='cn'>NULL</span>,
   test <span class='op'>=</span> <span class='cn'>NULL</span>,
   power <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -257,6 +258,19 @@ the multivariate test (that is also given by the <code>print</code>-method). If
       <th>power</th>
       <td><p>Logical, if <code>TRUE</code>, adds a column with power for each
 parameter.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Character vector with a regular expression pattern that
+describes the parameters that should be filtered from the data frame, or
+a named list of regular expressions. In the first case, every parameter
+in the <em>"Parameters"</em> column that matches the regular expression in
+<code>parameters</code> will be removed from the returned data frame. If
+<code>parameters</code> is a named list of regular expression patterns, the
+names of the list-element should equal the column name where filtering
+should be applied. This is useful for model objects where
+<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
+like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
