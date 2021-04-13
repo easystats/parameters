@@ -341,6 +341,7 @@
 
 
 
+
 # mixed models function ------------------------------------------------------
 
 
@@ -353,6 +354,7 @@
                                       robust = FALSE,
                                       p_adjust = NULL,
                                       wb_component = FALSE,
+                                      filter_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
   # check if standardization is required and package available
@@ -533,6 +535,12 @@
   # add sigma
   parameters <- .add_sigma_residual_df(parameters, model)
 
+
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -622,6 +630,7 @@
                                          diagnostic = c("ESS", "Rhat"),
                                          priors = FALSE,
                                          standardize = NULL,
+                                         filter_parameters = NULL,
                                          verbose = TRUE,
                                          ...) {
   # check if standardization is required and package available
@@ -720,6 +729,11 @@
     parameters$ROPE_high <- NULL
   }
 
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -732,7 +746,12 @@
 
 
 #' @keywords internal
-.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, verbose = TRUE, ...) {
+.extract_parameters_lavaan <- function(model,
+                                       ci = 0.95,
+                                       standardize = FALSE,
+                                       filter_parameters = NULL,
+                                       verbose = TRUE,
+                                       ...) {
   if (!requireNamespace("lavaan", quietly = TRUE)) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
@@ -844,6 +863,11 @@
 
   if ("group" %in% names(data)) {
     params$Group <- data$group
+  }
+
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(params, filter_parameters)
   }
 
   params

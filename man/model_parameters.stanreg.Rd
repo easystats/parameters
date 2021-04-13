@@ -16,6 +16,7 @@
   test = c("pd", "rope"),
   rope_range = "default",
   rope_ci = 1,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -37,6 +38,7 @@
   exponentiate = FALSE,
   standardize = NULL,
   group_level = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -57,6 +59,7 @@
   exponentiate = FALSE,
   standardize = NULL,
   group_level = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -91,6 +94,9 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned.}
 
 \item{verbose}{Toggle messages and warnings.}
 

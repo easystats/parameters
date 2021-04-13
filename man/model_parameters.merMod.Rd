@@ -40,6 +40,7 @@
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -59,6 +60,7 @@
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -172,6 +174,9 @@ conditional or zero-inflated component of the model.}
 \item{summary}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned.}
 
 \item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these

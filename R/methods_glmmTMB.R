@@ -23,6 +23,7 @@ model_parameters.glmmTMB <- function(model,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = FALSE,
+                                     parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
   # p-values, CI and se might be based on different df-methods
@@ -77,6 +78,7 @@ model_parameters.glmmTMB <- function(model,
         df_method = df_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
+        filter_parameters = NULL,
         keep_component_column = component != "conditional",
         ...
       )
@@ -132,6 +134,12 @@ model_parameters.glmmTMB <- function(model,
   if (!is.null(params$Level) && all(is.na(params$Level))) {
     params$Level <- NULL
   }
+
+  # filter parameters
+  if (!is.null(parameters)) {
+    params <- .filter_parameters(params, parameters)
+  }
+
 
   # due to rbind(), we lose attributes from "extract_parameters()",
   # so we add those attributes back here...

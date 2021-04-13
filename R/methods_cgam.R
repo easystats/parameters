@@ -39,18 +39,19 @@ model_parameters.cgam <- function(model,
                                   exponentiate = FALSE,
                                   robust = FALSE,
                                   p_adjust = NULL,
+                                  parameters = NULL,
                                   verbose = TRUE,
                                   ...) {
   # Processing
   if (bootstrap) {
-    parameters <- bootstrap_parameters(
+    params <- bootstrap_parameters(
       model,
       iterations = iterations,
       ci = ci,
       ...
     )
   } else {
-    parameters <-
+    params <-
       .extract_parameters_generic(
         model,
         ci = ci,
@@ -58,39 +59,40 @@ model_parameters.cgam <- function(model,
         merge_by = c("Parameter", "Component"),
         standardize = standardize,
         robust = robust,
-        p_adjust = p_adjust
+        p_adjust = p_adjust,
+        filter_parameters = parameters
       )
   }
 
   # fix statistic column
-  if ("t" %in% names(parameters) && !is.null(parameters$Component) && "smooth_terms" %in% parameters$Component) {
-    names(parameters)[names(parameters) == "t"] <- "t / F"
+  if ("t" %in% names(params) && !is.null(params$Component) && "smooth_terms" %in% params$Component) {
+    names(params)[names(params) == "t"] <- "t / F"
   }
 
   # fix estimated df column
-  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% parameters$Component && !("df" %in% names(parameters))) {
-    parameters$df <- parameters$Coefficient
-    parameters$df[parameters$Component != "smooth_terms"] <- NA
-    parameters$df_error[parameters$Component == "smooth_terms"] <- NA
-    parameters$Coefficient[parameters$Component == "smooth_terms"] <- NA
+  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) {
+    params$df <- params$Coefficient
+    params$df[params$Component != "smooth_terms"] <- NA
+    params$df_error[params$Component == "smooth_terms"] <- NA
+    params$Coefficient[params$Component == "smooth_terms"] <- NA
     # reorder
-    insert_column <- which(names(parameters) == "df_error")
+    insert_column <- which(names(params) == "df_error")
     if (!length(insert_column)) {
-      insert_column <- which(names(parameters) == "p")
+      insert_column <- which(names(params) == "p")
     }
     if (length(insert_column)) {
-      n_col <- ncol(parameters)
-      parameters <- parameters[c(1:(insert_column - 1), n_col, insert_column:(n_col - 1))]
+      n_col <- ncol(params)
+      params <- params[c(1:(insert_column - 1), n_col, insert_column:(n_col - 1))]
     }
-  } else if (all(c("df", "df_error") %in% names(parameters)) && "smooth_terms" %in% parameters$Component) {
-    parameters$df_error[parameters$Component == "smooth_terms"] <- NA
+  } else if (all(c("df", "df_error") %in% names(params)) && "smooth_terms" %in% params$Component) {
+    params$df_error[params$Component == "smooth_terms"] <- NA
   }
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    parameters <- .exponentiate_parameters(parameters, model, exponentiate)
+    params <- .exponentiate_parameters(params, model, exponentiate)
   }
-  parameters <- .add_model_parameters_attributes(
-    parameters,
+  params <- .add_model_parameters_attributes(
+    params,
     model,
     ci,
     exponentiate,
@@ -99,14 +101,14 @@ model_parameters.cgam <- function(model,
     ...
   )
 
-  if ("CI" %in% colnames(parameters)) {
-    parameters$CI[is.na(parameters$CI_low)] <- NA
+  if ("CI" %in% colnames(params)) {
+    params$CI[is.na(params$CI_low)] <- NA
   }
 
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
-  parameters
+  params
 }
 
 

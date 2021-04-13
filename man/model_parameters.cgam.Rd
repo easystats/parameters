@@ -16,6 +16,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -29,6 +30,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -42,6 +44,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -88,6 +91,9 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned.}
 
 \item{verbose}{Toggle warnings and messages.}
 
