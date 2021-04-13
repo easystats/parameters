@@ -14,6 +14,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -66,6 +67,17 @@ adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
+
+\item{parameters}{Character vector with a regular expression pattern that
+describes the parameters that should be filtered from the data frame, or
+a named list of regular expressions. In the first case, every parameter
+in the \emph{"Parameters"} column that matches the regular expression in
+\code{parameters} will be removed from the returned data frame. If
+\code{parameters} is a named list of regular expression patterns, the
+names of the list-element should equal the column name where filtering
+should be applied. This is useful for model objects where
+\code{model_parameters()} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

@@ -148,6 +148,12 @@
     x$Label <- NULL
   }
 
+  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+    x$From[x$Component == "Defined"] <- ""
+    x$Operator[x$Component == "Defined"] <- ""
+    x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
+  }
+
   # set up split-factor
   if (length(split_column) > 1) {
     split_by <- lapply(split_column, function(i) x[[i]])

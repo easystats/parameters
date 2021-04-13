@@ -134,6 +134,16 @@ parameters <- model_parameters
 #' @param summary Logical, if \code{TRUE}, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
+#' @param parameters Character vector with a regular expression pattern that
+#'   describes the parameters that should be filtered from the data frame, or
+#'   a named list of regular expressions. In the first case, every parameter
+#'   in the \emph{"Parameters"} column that matches the regular expression in
+#'   \code{parameters} will be removed from the returned data frame. If
+#'   \code{parameters} is a named list of regular expression patterns, the
+#'   names of the list-element should equal the column name where filtering
+#'   should be applied. This is useful for model objects where
+#'   \code{model_parameters()} returns multiple columns with parameter components,
+#'   like in \code{\link{model_parameters.lavaan}}.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
@@ -175,6 +185,7 @@ model_parameters.default <- function(model,
                                      robust = FALSE,
                                      p_adjust = NULL,
                                      summary = FALSE,
+                                     parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
   out <- tryCatch(
@@ -190,6 +201,7 @@ model_parameters.default <- function(model,
         robust = robust,
         p_adjust = p_adjust,
         summary = summary,
+        filter_parameters = parameters,
         verbose = verbose,
         ...
       )
@@ -221,6 +233,7 @@ model_parameters.default <- function(model,
                                       df_method = NULL,
                                       p_adjust = NULL,
                                       summary = FALSE,
+                                      filter_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
 
@@ -248,6 +261,7 @@ model_parameters.default <- function(model,
       robust = robust,
       df_method = df_method,
       p_adjust = p_adjust,
+      filter_parameters = filter_parameters,
       verbose = verbose,
       ...
     )

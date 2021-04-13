@@ -8,6 +8,7 @@ model_parameters.data.frame <- function(model,
                                         test = c("pd", "rope"),
                                         rope_range = "default",
                                         rope_ci = 1.0,
+                                        parameters = NULL,
                                         verbose = TRUE,
                                         ...) {
   # Processing
@@ -23,6 +24,7 @@ model_parameters.data.frame <- function(model,
     bf_prior = NULL,
     diagnostic = NULL,
     priors = FALSE,
+    filter_parameters = parameters,
     verbose = verbose,
     ...
   )

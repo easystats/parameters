@@ -16,6 +16,7 @@
   test = c("pd", "rope"),
   rope_range = "default",
   rope_ci = 1,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -37,6 +38,7 @@
   exponentiate = FALSE,
   standardize = NULL,
   group_level = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -57,6 +59,7 @@
   exponentiate = FALSE,
   standardize = NULL,
   group_level = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -91,6 +94,17 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
+
+\item{parameters}{Character vector with a regular expression pattern that
+describes the parameters that should be filtered from the data frame, or
+a named list of regular expressions. In the first case, every parameter
+in the \emph{"Parameters"} column that matches the regular expression in
+\code{parameters} will be removed from the returned data frame. If
+\code{parameters} is a named list of regular expression patterns, the
+names of the list-element should equal the column name where filtering
+should be applied. This is useful for model objects where
+\code{model_parameters()} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}.}
 
 \item{verbose}{Toggle messages and warnings.}
 

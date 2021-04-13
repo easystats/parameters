@@ -11,6 +11,7 @@ model_parameters.bamlss <- function(model,
                                     component = "all",
                                     exponentiate = FALSE,
                                     standardize = NULL,
+                                    parameters = NULL,
                                     verbose = TRUE,
                                     ...) {
   modelinfo <- insight::model_info(model)
@@ -31,6 +32,7 @@ model_parameters.bamlss <- function(model,
     effects = "all",
     component = component,
     standardize = standardize,
+    filter_parameters = parameters,
     verbose = verbose,
     ...
   )

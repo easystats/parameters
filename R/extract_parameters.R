@@ -16,6 +16,7 @@
                                         wb_component = FALSE,
                                         verbose = TRUE,
                                         keep_component_column = FALSE,
+                                        filter_parameters = NULL,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -286,6 +287,13 @@
   parameters <- .add_sigma_residual_df(parameters, model)
 
 
+  # ==== filter parameters, if requested
+
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -322,6 +330,33 @@
 
 
 
+.filter_parameters <- function(params, filter_params) {
+  if (is.list(filter_params)) {
+    for (i in names(filter_params)) {
+      params <- .filter_parameters_vector(params, filter_params[[i]], column = i)
+    }
+  } else {
+    params <- .filter_parameters_vector(params, filter_params, column = NULL)
+  }
+  params
+}
+
+
+.filter_parameters_vector <- function(params, filter_params, column = NULL) {
+  if (is.null(column) || !column %in% colnames(params)) {
+    if ("Parameter" %in% colnames(params)) {
+      column <- "Parameter"
+    } else {
+      column <- 1
+    }
+  }
+  params[grepl(filter_params, params[[column]], perl = TRUE), ]
+}
+
+
+
+
+
 
 # mixed models function ------------------------------------------------------
 
@@ -335,6 +370,7 @@
                                       robust = FALSE,
                                       p_adjust = NULL,
                                       wb_component = FALSE,
+                                      filter_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
   # check if standardization is required and package available
@@ -515,6 +551,12 @@
   # add sigma
   parameters <- .add_sigma_residual_df(parameters, model)
 
+
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -604,6 +646,7 @@
                                          diagnostic = c("ESS", "Rhat"),
                                          priors = FALSE,
                                          standardize = NULL,
+                                         filter_parameters = NULL,
                                          verbose = TRUE,
                                          ...) {
   # check if standardization is required and package available
@@ -702,6 +745,11 @@
     parameters$ROPE_high <- NULL
   }
 
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -714,7 +762,12 @@
 
 
 #' @keywords internal
-.extract_parameters_lavaan <- function(model, ci = 0.95, standardize = FALSE, verbose = TRUE, ...) {
+.extract_parameters_lavaan <- function(model,
+                                       ci = 0.95,
+                                       standardize = FALSE,
+                                       filter_parameters = NULL,
+                                       verbose = TRUE,
+                                       ...) {
   if (!requireNamespace("lavaan", quietly = TRUE)) {
     stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
   }
@@ -826,6 +879,11 @@
 
   if ("group" %in% names(data)) {
     params$Group <- data$group
+  }
+
+  # filter parameters, if requested
+  if (!is.null(filter_parameters)) {
+    params <- .filter_parameters(params, filter_parameters)
   }
 
   params
