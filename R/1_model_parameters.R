@@ -134,6 +134,8 @@ parameters <- model_parameters
 #' @param summary Logical, if \code{TRUE}, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
+#' @param parameters Regular expression pattern that describes the parameters
+#'   that should be returned.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
@@ -175,6 +177,7 @@ model_parameters.default <- function(model,
                                      robust = FALSE,
                                      p_adjust = NULL,
                                      summary = FALSE,
+                                     parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
   out <- tryCatch(
@@ -190,6 +193,7 @@ model_parameters.default <- function(model,
         robust = robust,
         p_adjust = p_adjust,
         summary = summary,
+        filter_parameters = parameters,
         verbose = verbose,
         ...
       )
@@ -221,6 +225,7 @@ model_parameters.default <- function(model,
                                       df_method = NULL,
                                       p_adjust = NULL,
                                       summary = FALSE,
+                                      filter_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
 
@@ -248,6 +253,7 @@ model_parameters.default <- function(model,
       robust = robust,
       df_method = df_method,
       p_adjust = p_adjust,
+      filter_parameters = filter_parameters,
       verbose = verbose,
       ...
     )

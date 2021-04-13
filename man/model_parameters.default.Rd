@@ -18,6 +18,7 @@
   robust = FALSE,
   p_adjust = NULL,
   summary = FALSE,
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -123,6 +124,9 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{summary}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
+
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned.}
 
 \item{verbose}{Toggle warnings and messages.}
 

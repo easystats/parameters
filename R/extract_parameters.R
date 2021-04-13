@@ -16,6 +16,7 @@
                                         wb_component = FALSE,
                                         verbose = TRUE,
                                         keep_component_column = FALSE,
+                                        filter_parameters = NULL,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -286,6 +287,13 @@
   parameters <- .add_sigma_residual_df(parameters, model)
 
 
+  # ==== filter parameters, if requested
+
+  if (!is.null(filter_parameters)) {
+    parameters <- .filter_parameters(parameters, filter_parameters)
+  }
+
+
   rownames(parameters) <- NULL
   parameters
 }
@@ -320,6 +328,16 @@
   params
 }
 
+
+
+.filter_parameters <- function(params, filter_params) {
+  if ("Parameter" %in% colnames(params)) {
+    params <- params[grepl(filter_params, params$Parameter), ]
+  } else {
+    params <- params[grepl(filter_params, params[[1]]), ]
+  }
+  params
+}
 
 
 
