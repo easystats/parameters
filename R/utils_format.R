@@ -98,7 +98,6 @@
                                           ci_width = "auto",
                                           ci_brackets = TRUE,
                                           zap_small = FALSE,
-                                          defined_equation = TRUE,
                                           ...) {
   final_table <- list()
 
@@ -149,7 +148,7 @@
     x$Label <- NULL
   }
 
-  if (!defined_equation && inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
     x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
