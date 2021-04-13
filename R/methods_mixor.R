@@ -3,23 +3,21 @@
 #' @export
 model_parameters.mixor <- function(model,
                                    ci = .95,
-                                   effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                   effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                    bootstrap = FALSE,
                                    iterations = 1000,
                                    standardize = NULL,
                                    exponentiate = FALSE,
-                                   details = FALSE,
                                    verbose = TRUE,
                                    ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
 
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
+    if (!missing(effects) && effects != "fixed" && verbose) {
+      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
     effects <- "fixed"
-    ## TODO enable later, when fixed in "effectsize"
-    # if (verbose) {
-    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    # }
   }
 
   out <- .model_parameters_generic(
@@ -36,10 +34,6 @@ model_parameters.mixor <- function(model,
   )
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
-
-  if (isTRUE(details)) {
-    attr(out, "details") <- .randomeffects_summary(model)
-  }
 
   out
 }

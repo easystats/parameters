@@ -492,7 +492,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, sprintf("%s%s\n", fill, text))
     } else if (type == "html") {
-      footer <- c(footer, text)
+      footer <- c(footer, gsub("\n", "", text))
     }
   }
   footer

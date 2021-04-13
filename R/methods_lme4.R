@@ -61,8 +61,6 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param effects Should parameters for fixed effects (\code{"fixed"}), random
 #'   effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 #'   to mixed models. May be abbreviated.
-#' @param details Logical, if \code{TRUE}, a summary of the random effects is
-#'   included. See \code{\link{random_parameters}} for details.
 #' @param df_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). May be \code{"wald"}
 #'   (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see
@@ -105,7 +103,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'     family = poisson(),
 #'     data = Salamanders
 #'   )
-#'   model_parameters(model, details = TRUE)
+#'   model_parameters(model, effects = "all")
 #' }
 #'
 #' if (require("lme4")) {
@@ -122,11 +120,10 @@ model_parameters.merMod <- function(model,
                                     df_method = "wald",
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "fixed", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                    effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     robust = FALSE,
-                                    details = FALSE,
                                     p_adjust = NULL,
                                     wb_component = TRUE,
                                     summary = FALSE,
@@ -144,11 +141,10 @@ model_parameters.merMod <- function(model,
 
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
+    if (!missing(effects) && effects != "fixed" && verbose) {
+      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+    }
     effects <- "fixed"
-    ## TODO enable later, when fixed in "effectsize"
-    # if (verbose) {
-    #   warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
-    # }
   }
 
   if (effects %in% c("fixed", "all")) {
@@ -237,14 +233,6 @@ model_parameters.merMod <- function(model,
     ...
   )
 
-
-  ## TODO remove in a future update
-  if (isTRUE(details)) {
-    attr(params, "details") <- .randomeffects_summary(model)
-    if (verbose) {
-      message("Argument 'details' is deprecated. Please use 'group_level'.")
-    }
-  }
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))

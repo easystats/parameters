@@ -20,6 +20,20 @@ print_html.parameters_model <- function(x,
                                         zap_small = FALSE,
                                         verbose = TRUE,
                                         ...) {
+  # check if user supplied digits attributes
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", digits)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", p_digits)
+  }
+  if (missing(footer_digits)) {
+    footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
+  }
+
   # table caption
   table_caption <- .print_caption(x, caption, format = "html")
 
@@ -80,6 +94,17 @@ print_html.compare_parameters <- function(x,
                                           ...) {
   # save original input
   orig_x <- x
+
+  # check if user supplied digits attributes
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", digits)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", p_digits)
+  }
 
   # get attributes
   if (missing(style) || is.null(style)) {

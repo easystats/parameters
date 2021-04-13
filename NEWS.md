@@ -1,9 +1,18 @@
 # parameters 0.13.1
 
+## Breaking changes
+
+* Removed deprecated arguments.
+
 ## Changes to functions
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
   expression as string, to filter parameters from the returned data frame.
+
+## Bug fixes
+
+* Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
+  and only worked when used in the call to `model_parameters()` directly.
 
 # parameters 0.13.0
 

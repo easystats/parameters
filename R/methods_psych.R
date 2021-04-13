@@ -147,9 +147,11 @@ model_parameters.principal <- function(model,
 }
 
 
-
 #' @export
 model_parameters.fa <- model_parameters.principal
+
+#' @export
+model_parameters.fa.ci <- model_parameters.fa
 
 
 
