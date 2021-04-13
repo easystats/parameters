@@ -331,13 +331,29 @@
 
 
 .filter_parameters <- function(params, filter_params) {
-  if ("Parameter" %in% colnames(params)) {
-    params <- params[grepl(filter_params, params$Parameter, perl = TRUE), ]
+  if (is.list(filter_params)) {
+    for (i in names(filter_params)) {
+      params <- .filter_parameters_vector(params, filter_params[[i]], column = i)
+    }
   } else {
-    params <- params[grepl(filter_params, params[[1]], perl = TRUE), ]
+    params <- .filter_parameters_vector(params, filter_params, column = NULL)
   }
   params
 }
+
+
+.filter_parameters_vector <- function(params, filter_params, column = NULL) {
+  if (is.null(column) || !column %in% colnames(params)) {
+    if ("Parameter" %in% colnames(params)) {
+      column <- "Parameter"
+    } else {
+      column <- 1
+    }
+  }
+  params[grepl(filter_params, params[[column]], perl = TRUE), ]
+}
+
+
 
 
 

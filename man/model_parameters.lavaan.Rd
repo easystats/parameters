@@ -9,6 +9,7 @@
   ci = 0.95,
   standardize = FALSE,
   component = c("regression", "correlation", "loading", "defined"),
+  parameters = NULL,
   verbose = TRUE,
   ...
 )
@@ -29,6 +30,17 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{component}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+
+\item{parameters}{Character vector with a regular expression pattern that
+describes the parameters that should be filtered from the data frame, or
+a named list of regular expressions. In the first case, every parameter
+in the \code{"Parameters"} column that matches the regular expression in
+\code{parameters} will be removed from the returned data frame. If
+\code{parameters} is a named list of regular expression patterns, the
+names of the list-element should equal the column name where filtering
+should be applied. This is useful for model objects where
+\code{model_parameters} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -57,6 +69,13 @@ if (require("lavaan", quietly = TRUE)) {
   model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
   model_parameters(model)
   model_parameters(model, standardize = TRUE)
+
+  # filter parameters
+  model_parameters(
+    model,
+    parameters = list(To = "^(?!visual)",
+                      From = "^(?!textual)")
+  )
 
   # Structural Equation Model (SEM) ------------
 

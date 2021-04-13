@@ -39,6 +39,13 @@
 #'   model_parameters(model)
 #'   model_parameters(model, standardize = TRUE)
 #'
+#'   # filter parameters
+#'   model_parameters(
+#'     model,
+#'     parameters = list(To = "^(?!visual)",
+#'                       From = "^(?!textual)")
+#'   )
+#'
 #'   # Structural Equation Model (SEM) ------------
 #'
 #'   structure <- "
@@ -75,12 +82,14 @@ model_parameters.lavaan <- function(model,
                                     ci = 0.95,
                                     standardize = FALSE,
                                     component = c("regression", "correlation", "loading", "defined"),
+                                    parameters = NULL,
                                     verbose = TRUE,
                                     ...) {
 
   params <- .extract_parameters_lavaan(model,
                                        ci = ci,
                                        standardize = standardize,
+                                       filter_parameters = parameters,
                                        verbose = verbose,
                                        ...
   )
