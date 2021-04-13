@@ -74,7 +74,7 @@ if (require("lavaan", quietly = TRUE)) {
   model_parameters(
     model,
     parameters = list(To = "^(?!visual)",
-                      From = "^(?!textual)")
+                      From = "^(?!(x7|x8))")
   )
 
   # Structural Equation Model (SEM) ------------
