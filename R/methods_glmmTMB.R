@@ -76,7 +76,7 @@ model_parameters.glmmTMB <- function(model,
         df_method = df_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
-        filter_parameters = parameters,
+        filter_parameters = NULL,
         keep_component_column = component != "conditional",
         ...
       )
