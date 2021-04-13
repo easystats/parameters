@@ -867,7 +867,7 @@
 
   # filter parameters, if requested
   if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(params, filter_parameters)
+    params <- .filter_parameters(params, filter_parameters)
   }
 
   params
