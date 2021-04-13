@@ -332,9 +332,9 @@
 
 .filter_parameters <- function(params, filter_params) {
   if ("Parameter" %in% colnames(params)) {
-    params <- params[grepl(filter_params, params$Parameter), ]
+    params <- params[grepl(filter_params, params$Parameter, perl = TRUE), ]
   } else {
-    params <- params[grepl(filter_params, params[[1]]), ]
+    params <- params[grepl(filter_params, params[[1]], perl = TRUE), ]
   }
   params
 }
