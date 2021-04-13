@@ -105,6 +105,7 @@ model_parameters.aov <- function(model,
                                  ci = NULL,
                                  test = NULL,
                                  power = FALSE,
+                                 parameters = NULL,
                                  verbose = TRUE,
                                  ...) {
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
@@ -121,30 +122,35 @@ model_parameters.aov <- function(model,
   }
 
   # extract standard parameters
-  parameters <- .extract_parameters_anova(model, test)
+  params <- .extract_parameters_anova(model, test)
 
   # add effect sizes, if available
-  parameters <- .effectsizes_for_aov(
+  params <- .effectsizes_for_aov(
       model,
-      parameters,
-      omega_squared,
-      eta_squared,
-      epsilon_squared,
-      df_error,
-      ci,
+      parameters = params,
+      omega_squared = omega_squared,
+      eta_squared = eta_squared,
+      epsilon_squared = epsilon_squared,
+      df_error = df_error,
+      ci = ci,
       verbose = verbose
     )
 
   # add power, if possible
   if (isTRUE(power)) {
-    parameters <- .power_for_aov(model, parameters)
+    params <- .power_for_aov(model, params)
+  }
+
+  # filter parameters
+  if (!is.null(parameters)) {
+    params <- .filter_parameters(params, parameters)
   }
 
   # add attributes
-  parameters <- .add_anova_attributes(parameters, model, ci, test = test, ...)
+  params <- .add_anova_attributes(params, model, ci, test = test, ...)
 
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  parameters
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+  params
 }
 
 
@@ -245,6 +251,7 @@ model_parameters.afex_aov <- function(model,
                                       epsilon_squared = NULL,
                                       df_error = NULL,
                                       type = NULL,
+                                      parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
   if (inherits(model$Anova, "Anova.mlm")) {
@@ -259,7 +266,7 @@ model_parameters.afex_aov <- function(model,
 
   out <- .effectsizes_for_aov(
     model,
-    out,
+    parameters = out,
     omega_squared = omega_squared,
     eta_squared = eta_squared,
     epsilon_squared = epsilon_squared,
@@ -267,6 +274,11 @@ model_parameters.afex_aov <- function(model,
     verbose = verbose,
     ...
   )
+
+  # filter parameters
+  if (!is.null(parameters)) {
+    params <- .filter_parameters(params, parameters)
+  }
 
   if (!"Method" %in% names(out)) {
     out$Method <- "ANOVA estimation for factorial designs using 'afex'"
@@ -283,7 +295,14 @@ model_parameters.afex_aov <- function(model,
 # helper ------------------------------
 
 
-.effectsizes_for_aov <- function(model, parameters, omega_squared, eta_squared, epsilon_squared, df_error = NULL, ci = NULL, verbose = TRUE) {
+.effectsizes_for_aov <- function(model,
+                                 parameters,
+                                 omega_squared,
+                                 eta_squared,
+                                 epsilon_squared,
+                                 df_error = NULL,
+                                 ci = NULL,
+                                 verbose = TRUE) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(parameters)

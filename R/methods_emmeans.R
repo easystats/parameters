@@ -8,6 +8,7 @@ model_parameters.emmGrid <- function(model,
                                      ci = .95,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
 
@@ -86,6 +87,11 @@ model_parameters.emmGrid <- function(model,
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
     params <- .exponentiate_parameters(params, model, exponentiate)
+  }
+
+  # filter parameters
+  if (!is.null(parameters)) {
+    params <- .filter_parameters(params, parameters)
   }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))

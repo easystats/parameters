@@ -1,5 +1,5 @@
 #' @export
-model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
+model_parameters.ggeffects <- function(model, parameters = NULL, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
   terms <- attributes(model)$terms[-1]
   focal_term <- attributes(model)$terms[1]
@@ -41,6 +41,11 @@ model_parameters.ggeffects <- function(model, verbose = TRUE, ...) {
   }
   if (length(terms) >= 3) {
     model$Subgroup <- paste0(terms[3], " = ", model$Subgroup)
+  }
+
+  # filter parameters
+  if (!is.null(parameters)) {
+    model <- .filter_parameters(model, parameters)
   }
 
   model <- .add_model_parameters_attributes(model, model, ci = ci, verbose = verbose)
