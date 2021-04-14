@@ -521,6 +521,43 @@ if (.runThisTest &&
         "SD (Residual)           |      1.0000"
       ))
 
+    mp <- model_parameters(m4, effects = "all", component = "all", digits = 4, ci_digits = 5)
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      out[-c(5,14)],
+      c("# Fixed Effects (Count Model)",
+        "",
+        "Parameter   | Log-Mean |     SE |               95% CI |        z |      p",
+        "--------------------------------------------------------------------------",
+        "child       |  -1.0875 | 0.0981 | [-1.27966, -0.89529] | -11.0903 | < .001",
+        "camper [1]  |   0.2723 | 0.1009 | [ 0.07462,  0.46998] |   2.6997 | 0.007 ",
+        "",
+        "# Fixed Effects (Zero-Inflated Model)",
+        "",
+        "Parameter   | Log-Odds |     SE |              95% CI |       z |     p",
+        "-----------------------------------------------------------------------",
+        "(Intercept) |   1.8896 | 0.6642 | [ 0.58790, 3.19137] |  2.8451 | 0.004",
+        "camper [1]  |  -0.1701 | 0.3868 | [-0.92810, 0.58796] | -0.4397 | 0.660",
+        "",
+        "# Random Effects Variances",
+        "",
+        "Parameter               | Coefficient",
+        "-------------------------------------",
+        "SD (Intercept: persons) |      3.4056",
+        "SD (xb: persons)        |      1.2132",
+        "Cor (Intercept~persons) |     -1.0000",
+        "SD (Residual)           |      1.0000",
+        "",
+        "# Random Effects (Zero-Inflated Model)",
+        "",
+        "Parameter               | Coefficient",
+        "-------------------------------------",
+        "SD (Intercept: persons) |      2.7358",
+        "SD (zg: persons)        |      1.5683",
+        "Cor (Intercept~persons) |      1.0000",
+        "SD (Residual)           |      1.0000"
+      ))
+
   })
 
 
