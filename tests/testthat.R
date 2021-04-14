@@ -20,6 +20,6 @@ osx <- tryCatch(
   }
 )
 
-if (!osx) {
+if (!osx || (osx && getRversion() >= "4.0.0")) {
   test_check("parameters")
 }
