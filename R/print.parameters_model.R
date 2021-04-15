@@ -204,7 +204,7 @@ print.parameters_brms_meta <- print.parameters_model
 
 
 .print_caption <- function(x, caption = NULL, format = "text") {
-  title_attribute <- attributes(x)$title
+  title_attribute <- attributes(x)$title[1]
 
   # check effects and component parts
   if (!is.null(x$Effects) && all(x$Effects == "random")) {
@@ -227,7 +227,7 @@ print.parameters_brms_meta <- print.parameters_model
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
   } else if (!is.null(title_attribute) && is.null(caption)) {
-    if (title_attribute == "") {
+    if (length(title_attribute) == 1 && title_attribute == "") {
       table_caption <- NULL
     } else {
       table_caption <- title_attribute
