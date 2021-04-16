@@ -57,8 +57,8 @@ check_multimodal.data.frame <- function(x, ...) {
   model_h0 <- mclust::Mclust(x, G = 1, verbose = FALSE)
 
   # Parametric
-  loglik <- logLik(model)
-  loglik0 <- logLik(model_h0)
+  loglik <- stats::logLik(model)
+  loglik0 <- stats::logLik(model_h0)
   rez <- list(Chisq = as.numeric(loglik - loglik0), df = attributes(loglik)$df - 2)
   rez$p <- 1 - stats::pchisq(rez$Chisq, df = rez$df)
 

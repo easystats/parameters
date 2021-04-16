@@ -392,7 +392,7 @@ sort.parameters_pca <- sort.parameters_efa
       }
     } else {
       for (col in loadings_columns) {
-        loadings[tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)), col] <- NA
+        loadings[utils::tail(order(abs(loadings[, col]), decreasing = TRUE), -round(threshold)), col] <- NA
       }
     }
   } else {

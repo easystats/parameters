@@ -140,7 +140,7 @@ p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zer
 
   component <- match.arg(component)
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
-  params <- get_parameters(model)
+  params <- insight::get_parameters(model)
 
   tweedie <- .data_frame(
     Parameter = params$Parameter[params$Component == "conditional"],

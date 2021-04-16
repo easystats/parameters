@@ -103,7 +103,7 @@ degrees_of_freedom.mediate <- function(model, ...) {
 
 #' @export
 p_value.mediate <- function(model, ...) {
-  info <- model_info(model$model.y)
+  info <- insight::model_info(model$model.y)
   if (info$is_linear && !model$INT) {
     out <- data.frame(
       Parameter = c("ACME", "ADE", "Total Effect", "Prop. Mediated"),

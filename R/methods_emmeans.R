@@ -200,7 +200,7 @@ boot_em_standard_error <- function(model) {
 
   out <- .data_frame(
     Parameter = .pretty_emmeans_Parameter_names(model),
-    SE = sapply(est, sd)
+    SE = sapply(est, stats::sd)
   )
 
   if (!is.null(Component)) out$Component <- Component
@@ -328,7 +328,7 @@ boot_em_pval <- function(model, adjust) {
 
   p <- sapply(est, p_value)
 
-  p <- p.adjust(p, method = adjust)
+  p <- stats::p.adjust(p, method = adjust)
 
   Component <- NULL
   if (inherits(s <- summary(model), "list")) {

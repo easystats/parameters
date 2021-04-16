@@ -123,7 +123,7 @@ n_clusters <- function(x,
   x <- stats::na.omit(x)
 
   # Gap Statistic for Estimating the Number of Clusters
-  junk <- utils::capture.output(gap <- cluster::clusGap(x, kmeans, K.max = 10, B = 100)$Tab)
+  junk <- utils::capture.output(gap <- cluster::clusGap(x, stats::kmeans, K.max = 10, B = 100)$Tab)
 
   # Gap Statistic for Estimating the Number of Clusters
   n <- cluster::maxSE(

@@ -25,7 +25,7 @@ standard_error.vgam <- function(model, ...) {
 #' @export
 degrees_of_freedom.vgam <- function(model, ...) {
   params <- insight::get_parameters(model)
-  out <- setNames(rep(NA, nrow(params)), params$Parameter)
+  out <- stats::setNames(rep(NA, nrow(params)), params$Parameter)
   out[names(model@nl.df)] <- model@nl.df
   out
 }

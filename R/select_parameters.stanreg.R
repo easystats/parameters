@@ -42,7 +42,7 @@ select_parameters.brmsfit <- select_parameters.stanreg
 .reconstruct_formula <- function(parameters, model) {
 
   # # Clean
-  # if (tail(parameters, 1) == "sigma") {
+  # if (utils::tail(parameters, 1) == "sigma") {
   #   parameters <- parameters[1:length(parameters) - 1]
   # }
   # if (parameters[1] == "(Intercept)") {

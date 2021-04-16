@@ -94,9 +94,9 @@ plot.check_clusterstructure <- function(x, ...) {
   p <- matrix(0, ncol = ncol(x), nrow = n) # n vectors of space
   for (i in 1:ncol(x))
   {
-    p[, i] <- runif(n, min = c[i], max = d[i])
+    p[, i] <- stats::runif(n, min = c[i], max = d[i])
   }
-  k <- round(runif(n, 1, nrow(x)))
+  k <- round(stats::runif(n, 1, nrow(x)))
   q <- as.matrix(x[k, ])
   distp <- rep(0, nrow(x))
   # distq=rep(0,nrow(x)-1)
@@ -105,15 +105,15 @@ plot.check_clusterstructure <- function(x, ...) {
   minq <- rep(0, n)
   for (i in 1:n)
   {
-    distp[1] <- dist(rbind(p[i, ], x[1, ]), method = distance)
-    minqi <- dist(rbind(q[i, ], x[1, ]), method = distance)
+    distp[1] <- stats::dist(rbind(p[i, ], x[1, ]), method = distance)
+    minqi <- stats::dist(rbind(q[i, ], x[1, ]), method = distance)
     for (j in 2:nrow(x))
     {
-      distp[j] <- dist(rbind(p[i, ], x[j, ]), method = distance)
+      distp[j] <- stats::dist(rbind(p[i, ], x[j, ]), method = distance)
       error <- q[i, ] - x[j, ]
       if (sum(abs(error)) != 0) {
-        # distq[j]<-dist(rbind(q[i,],x[j,]))
-        distq <- dist(rbind(q[i, ], x[j, ]), method = distance)
+        # distq[j]<-stats::dist(rbind(q[i,],x[j,]))
+        distq <- stats::dist(rbind(q[i, ], x[j, ]), method = distance)
         if (distq < minqi) {
           minqi <- distq
         }
