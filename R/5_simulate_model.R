@@ -58,8 +58,6 @@ simulate_model <- function(model, iterations = 1000, ...) {
 # Models with single component only -----------------------------------------
 
 
-#' @importFrom stats vcov setNames
-#' @importFrom insight get_parameters
 #' @export
 simulate_model.default <- function(model, iterations = 1000, ...) {
   out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
@@ -222,7 +220,6 @@ simulate_model.bracl <- simulate_model.default
 # helper -----------------------------------------
 
 
-#' @importFrom insight get_varcov
 .simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
   if (!requireNamespace("MASS", quietly = TRUE)) {
     stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)

@@ -33,7 +33,6 @@
 #' }
 #' @return A data frame.
 #' @references Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.
-#' @importFrom stats pt coef
 #' @export
 p_value_satterthwaite <- function(model, dof = NULL) {
   UseMethod("p_value_satterthwaite")

@@ -33,7 +33,6 @@ format_p_adjust <- function(method) {
 
 
 
-#' @importFrom stats ptukey p.adjust.methods p.adjust pf
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
 
   # check if we have any adjustment at all, and a p-column

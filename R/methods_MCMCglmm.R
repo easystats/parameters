@@ -10,7 +10,6 @@ standard_error.MCMCglmm <- function(model, ...) {
 }
 
 
-#' @importFrom insight find_parameters
 #' @export
 p_value.MCMCglmm <- function(model, ...) {
   nF <- model$Fixed$nfl

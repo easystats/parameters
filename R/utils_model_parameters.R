@@ -1,4 +1,3 @@
-#' @importFrom insight is_multivariate model_info find_formula get_data
 #' @keywords internal
 .add_model_parameters_attributes <- function(params,
                                              model,
@@ -203,7 +202,6 @@
 
 
 
-#' @importFrom insight model_info
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
   if (!is.null(model) && insight::model_info(model)$is_linear && identical(exponentiate, "nongaussian")) {
@@ -230,7 +228,6 @@
 
 
 
-#' @importFrom insight clean_parameters
 .add_pretty_names <- function(params, model) {
   attr(params, "model_class") <- class(model)
   cp <- insight::clean_parameters(model)

@@ -84,7 +84,6 @@ model_parameters.zcpglm <- function(model,
 }
 
 
-#' @importFrom utils capture.output
 #' @export
 standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   if (!requireNamespace("cplm", quietly = TRUE)) {
@@ -133,7 +132,6 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 #'   p_value(model)
 #'   p_value(model, component = "zi")
 #' }
-#' @importFrom utils capture.output
 #' @export
 p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
   if (!requireNamespace("cplm", quietly = TRUE)) {
@@ -179,7 +177,6 @@ p_value.bcplm <- p_value.brmsfit
 ########## .cpglm ---------------
 
 
-#' @importFrom utils capture.output
 #' @export
 p_value.cpglm <- function(model, ...) {
   if (!requireNamespace("cplm", quietly = TRUE)) {
@@ -196,7 +193,6 @@ p_value.cpglm <- function(model, ...) {
 }
 
 
-#' @importFrom utils capture.output
 #' @export
 standard_error.cpglm <- function(model, ...) {
   if (!requireNamespace("cplm", quietly = TRUE)) {

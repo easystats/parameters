@@ -47,7 +47,6 @@
 #' }
 #'
 #' @return A data frame of indices related to the model's parameters.
-#' @importFrom stats qt pt setNames
 #' @export
 model_parameters.rma <- function(model,
                                  ci = .95,

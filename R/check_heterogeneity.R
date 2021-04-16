@@ -1,6 +1,4 @@
 #' @rdname demean
-#' @importFrom insight is_model find_random find_predictors get_data
-#' @importFrom stats ave
 #' @export
 check_heterogeneity <- function(x, select = NULL, group = NULL) {
   if (insight::is_model(x)) {

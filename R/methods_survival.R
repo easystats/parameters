@@ -131,8 +131,6 @@ p_value.survreg <- function(model, method = NULL, ...) {
 #################### .riskRegression ------
 
 
-#' @importFrom stats coef
-#' @importFrom utils capture.output
 #' @export
 standard_error.riskRegression <- function(model, ...) {
   junk <- utils::capture.output(cs <- stats::coef(model))

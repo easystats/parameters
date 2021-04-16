@@ -209,7 +209,6 @@ center.data.frame <- function(x,
 
 
 
-#' @importFrom stats na.omit
 .factor_to_numeric <- function(x) {
   if (is.numeric(x)) {
     return(x)
@@ -227,7 +226,6 @@ center.data.frame <- function(x,
 
 
 
-#' @importFrom stats weighted.mean
 .mean <- function(x, weights = NULL, verbose = TRUE) {
   if (!.are_weights(weights)) {
     return(mean(x, na.rm = TRUE))
@@ -245,7 +243,6 @@ center.data.frame <- function(x,
 
 
 
-#' @importFrom stats median
 .median <- function(x, weights = NULL, verbose = TRUE) {
   # From spatstat + wiki
   if (!.are_weights(weights)) {

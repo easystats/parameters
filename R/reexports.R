@@ -1,7 +1,7 @@
-#' @export
 #' @importFrom insight standardize_names
+#' @export
 insight::standardize_names
 
-#' @export
 #' @importFrom insight supported_models
+#' @export
 insight::supported_models

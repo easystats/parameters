@@ -4,7 +4,6 @@
 }
 
 
-#' @importFrom insight get_variance get_sigma find_statistic
 .extract_random_variances.default <- function(model,
                                               ci = .95,
                                               effects = "random",

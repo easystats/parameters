@@ -143,8 +143,6 @@ standard_error.rqss <- function(model,
 }
 
 
-#' @importFrom stats coef setNames
-#' @importFrom insight get_varcov
 .get_quantreg_se <- function(model) {
   se <- tryCatch(
     {
@@ -270,8 +268,6 @@ p_value.rqss <- function(model,
 }
 
 
-#' @importFrom stats coef setNames
-#' @importFrom insight get_varcov
 .get_quantreg_p <- function(model) {
   p <- tryCatch(
     {

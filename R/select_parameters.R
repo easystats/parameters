@@ -70,7 +70,6 @@ select_parameters <- function(model, ...) {
 
 #' @rdname select_parameters
 #' @inheritParams stats::step
-#' @importFrom stats step
 #' @export
 select_parameters.lm <- function(model,
                                  direction = "both",
@@ -90,7 +89,6 @@ select_parameters.lm <- function(model,
 
 
 
-#' @importFrom insight find_random
 #' @rdname select_parameters
 #' @export
 select_parameters.merMod <- function(model,

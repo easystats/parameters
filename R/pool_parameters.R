@@ -45,8 +45,6 @@
 #'   summary(pool(m))
 #' }
 #' @return A data frame of indices related to the model's parameters.
-#' @importFrom stats var pt
-#' @importFrom insight is_model_supported is_model
 #' @export
 pool_parameters <- function(x,
                             exponentiate = FALSE,
@@ -229,7 +227,6 @@ pool_parameters <- function(x,
 
 
 
-#' @importFrom insight find_formula
 .add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate, verbose = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)
   pretty_names <- attributes(model_params)$pretty_names

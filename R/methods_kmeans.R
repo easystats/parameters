@@ -39,7 +39,6 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
 }
 
 
-#' @importFrom insight export_table
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
   insight::print_color("# K-means Cluster Means", "blue")
@@ -60,7 +59,6 @@ summary.parameters_clusters <- function(object, ...) {
 }
 
 
-#' @importFrom stats predict
 #' @export
 predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {

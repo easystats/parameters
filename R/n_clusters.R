@@ -113,7 +113,6 @@ n_clusters <- function(x,
 }
 
 
-#' @importFrom utils capture.output
 #' @keywords internal
 .n_clusters_cluster <- function(x, ...) {
   if (!requireNamespace("cluster", quietly = TRUE)) {
@@ -139,7 +138,6 @@ n_clusters <- function(x,
 
 
 
-#' @importFrom grDevices png dev.off
 #' @keywords internal
 .n_clusters_NbClust <- function(x, fast = TRUE, ...) {
   if (!requireNamespace("NbClust", quietly = TRUE)) {

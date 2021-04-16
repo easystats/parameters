@@ -32,7 +32,6 @@ standard_error.lmodel2 <- function(model, ...) {
 }
 
 
-#' @importFrom utils stack
 #' @export
 p_value.lmodel2 <- function(model, ...) {
   res <- model$regression.results
@@ -46,7 +45,6 @@ p_value.lmodel2 <- function(model, ...) {
 }
 
 
-#' @importFrom utils stack
 #' @export
 ci.lmodel2 <- function(x, ...) {
   res <- x$confidence.intervals

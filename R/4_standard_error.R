@@ -42,9 +42,6 @@
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
-#' @importFrom stats coef vcov setNames var na.omit
-#' @importFrom insight get_varcov print_color get_parameters find_parameters
-#' @importFrom utils capture.output
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")

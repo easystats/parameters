@@ -27,8 +27,6 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verb
 }
 
 
-#' @importFrom insight get_parameters model_info
-#' @importFrom stats quantile
 #' @export
 ci.mediate <- function(x, ci = .95, ...) {
   info <- insight::model_info(x$model.y)

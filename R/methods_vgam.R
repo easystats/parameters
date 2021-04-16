@@ -8,7 +8,6 @@
 model_parameters.vgam <- model_parameters.gam
 
 
-#' @importFrom insight get_varcov
 #' @export
 standard_error.vgam <- function(model, ...) {
   params <- insight::get_parameters(model)
@@ -32,7 +31,6 @@ degrees_of_freedom.vgam <- function(model, ...) {
 }
 
 
-#' @importFrom stats pchisq
 #' @export
 p_value.vgam <- function(model, ...) {
   stat <- insight::get_statistic(model)
@@ -75,7 +73,6 @@ p_value.vglm <- function(model, ...) {
 }
 
 
-#' @importFrom insight get_varcov
 #' @export
 standard_error.vglm <- function(model, ...) {
   se <- sqrt(diag(insight::get_varcov(model)))

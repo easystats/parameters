@@ -61,7 +61,6 @@ model_parameters.glht <- function(model,
 }
 
 
-#' @importFrom stats pnorm
 #' @export
 ci.glht <- function(x, ci = .95, method = "robust", ...) {
   s <- summary(x)
@@ -97,7 +96,6 @@ degrees_of_freedom.glht <- function(model, ...) {
 }
 
 
-#' @importFrom insight find_parameters
 #' @export
 p_value.glht <- function(model, ...) {
   s <- summary(model)

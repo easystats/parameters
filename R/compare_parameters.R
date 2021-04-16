@@ -52,7 +52,6 @@
 #'   # change column names
 #'   compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 #' }
-#' @importFrom insight is_model_supported
 #' @export
 compare_parameters <- function(...,
                                ci = .95,

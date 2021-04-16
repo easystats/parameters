@@ -39,8 +39,6 @@ describe_distribution <- function(x, ...) {
 
 
 #' @rdname describe_distribution
-#' @importFrom stats na.omit IQR
-#' @importFrom bayestestR ci
 #' @export
 describe_distribution.numeric <- function(x,
                                           centrality = "mean",

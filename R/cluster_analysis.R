@@ -58,7 +58,6 @@
 #' groups <- cluster_analysis(iris[, 1:4], method = "k")
 #' groups
 #' }
-#' @importFrom stats dist na.omit hclust kmeans cutree complete.cases
 #' @export
 cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
                              distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),

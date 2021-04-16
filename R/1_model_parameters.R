@@ -295,7 +295,6 @@ model_parameters.default <- function(model,
 #################### .glm ----------------------
 
 
-#' @importFrom insight n_obs
 #' @rdname model_parameters.default
 #' @export
 model_parameters.glm <- function(model,

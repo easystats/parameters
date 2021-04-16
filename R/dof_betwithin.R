@@ -1,6 +1,4 @@
 #' @rdname p_value_betwithin
-#' @importFrom insight find_random_slopes find_parameters has_intercept n_obs
-#' @importFrom stats setNames
 #' @export
 dof_betwithin <- function(model) {
   if (!insight::model_info(model)$is_mixed) {

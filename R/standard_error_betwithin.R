@@ -1,6 +1,4 @@
 #' @rdname p_value_betwithin
-#' @importFrom stats qt
-#' @importFrom insight get_parameters
 #' @export
 se_betwithin <- function(model) {
   params <- insight::get_parameters(model)

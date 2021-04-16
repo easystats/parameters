@@ -371,8 +371,6 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 #'   p_value(model)
 #'   p_value(model, component = "marginal")
 #' }
-#' @importFrom stats coef
-#' @importFrom insight get_parameters
 #' @export
 p_value.poissonmfx <- function(model, component = c("all", "conditional", "marginal"), ...) {
   parms <- insight::get_parameters(model, component = "all")
@@ -428,8 +426,6 @@ p_value.betaor <- function(model, component = c("all", "conditional", "precision
 }
 
 
-#' @importFrom stats coef
-#' @importFrom insight get_parameters
 #' @rdname p_value.poissonmfx
 #' @export
 p_value.betamfx <- function(model, component = c("all", "conditional", "precision", "marginal"), ...) {

@@ -479,7 +479,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 # extract htest prop ----------------------
 
 
-#' @importFrom insight format_value
 .extract_htest_prop <- function(model) {
   out <- data.frame(
     Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
@@ -816,7 +815,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 # ==== add attributes ====
 
 
-#' @importFrom utils modifyList
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
   attr(params, "title") <- unique(params$Method)
   attr(params, "model_class") <- class(model)

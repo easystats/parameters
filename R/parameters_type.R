@@ -160,7 +160,6 @@ parameters_type <- function(model, ...) {
 
 
 
-#' @importFrom utils tail head
 #' @keywords internal
 .parameters_type_basic <- function(name, data, reference, brackets = c("[", "]")) {
   if (is.na(name)) {

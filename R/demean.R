@@ -204,7 +204,6 @@ demean <- function(x, select, group, suffix_demean = "_within", suffix_groupmean
 
 
 #' @rdname demean
-#' @importFrom stats median na.omit ave
 #' @export
 degroup <- function(x, select, group, center = "mean", suffix_demean = "_within", suffix_groupmean = "_between", add_attributes = TRUE, verbose = TRUE) {
   # ugly tibbles again...

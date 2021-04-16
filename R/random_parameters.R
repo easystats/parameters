@@ -65,8 +65,6 @@ random_parameters <- function(model, component = "conditional") {
 
 
 
-#' @importFrom insight find_random get_variance find_random_slopes n_obs
-#' @importFrom stats setNames
 .randomeffects_summary <- function(model, component = "conditional") {
   out <- list()
 

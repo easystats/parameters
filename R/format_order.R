@@ -11,8 +11,6 @@
 #' format_order(2)
 #' format_order(8)
 #' format_order(25, textual = FALSE)
-#' @importFrom insight format_value format_number
-#' @importFrom utils tail
 #' @export
 format_order <- function(order, textual = TRUE, ...) {
   if (textual) {

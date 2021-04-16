@@ -51,7 +51,6 @@ p_value.gam <- function(model, ...) {
 }
 
 
-#' @importFrom insight get_varcov
 #' @export
 simulate_model.gam <- function(model, iterations = 1000, ...) {
   if (!requireNamespace("MASS", quietly = TRUE)) {

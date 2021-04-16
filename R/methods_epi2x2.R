@@ -1,5 +1,3 @@
-#' @importFrom insight get_parameters format_value format_p
-#' @importFrom stats setNames
 #' @export
 model_parameters.epi.2by2 <- function(model, verbose = TRUE, ...) {
   # get parameter estimates

@@ -1,7 +1,6 @@
 #' @param method The method used in the variable selection. Can be \code{NULL} (default), \code{"forward"} or \code{"L1"}. See \code{projpred::varsel}.
 #' @param cross_validation Select with cross-validation.
 #' @rdname select_parameters
-#' @importFrom stats update
 #' @export
 select_parameters.stanreg <- function(model, method = NULL, cross_validation = FALSE, ...) {
   if (!requireNamespace("projpred", quietly = TRUE)) {
@@ -39,7 +38,6 @@ select_parameters.brmsfit <- select_parameters.stanreg
 
 
 
-#' @importFrom insight find_response
 #' @keywords internal
 .reconstruct_formula <- function(parameters, model) {
 

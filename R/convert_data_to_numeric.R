@@ -9,7 +9,6 @@
 #' @examples
 #' head(convert_data_to_numeric(iris))
 #' @return A data frame of numeric variables.
-#' @importFrom stats model.matrix
 #' @export
 convert_data_to_numeric <- function(x, dummy_factors = TRUE, ...) {
   UseMethod("convert_data_to_numeric")
@@ -39,7 +38,6 @@ convert_data_to_numeric.double <- convert_data_to_numeric.numeric
 convert_data_to_numeric.logical <- convert_data_to_numeric.numeric
 
 
-#' @importFrom stats model.matrix
 #' @export
 convert_data_to_numeric.factor <- function(x, dummy_factors = TRUE, ...) {
   if (dummy_factors) {

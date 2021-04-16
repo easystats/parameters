@@ -1,4 +1,3 @@
-#' @importFrom insight clean_names
 #' @keywords internal
 .clean_parameter_names <- function(x, full = FALSE) {
   # return if x is empty

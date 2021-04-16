@@ -1,5 +1,4 @@
 #' @rdname p_value_ml1
-#' @importFrom insight get_random find_predictors find_parameters get_data has_intercept
 #' @export
 dof_ml1 <- function(model) {
   if (!insight::model_info(model)$is_mixed) {
@@ -41,7 +40,6 @@ dof_ml1 <- function(model) {
 
 
 
-#' @importFrom stats ave var
 .get_df_ml1_approx <- function(x, g) {
   if (!is.factor(g)) {
     g <- as.factor(g)
@@ -66,8 +64,6 @@ dof_ml1 <- function(model) {
 
 
 
-#' @importFrom stats na.omit
-#' @importFrom insight clean_names
 .find_term_assignment <- function(model_data, predictors, parameters) {
   parms <- unlist(lapply(1:length(predictors), function(i) {
     p <- predictors[i]

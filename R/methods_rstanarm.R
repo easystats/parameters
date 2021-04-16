@@ -38,7 +38,6 @@
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
-#' @importFrom insight get_priors
 #' @export
 model_parameters.stanreg <- function(model,
                                      centrality = "median",

@@ -19,7 +19,6 @@ ci.MixMod <- function(x,
 
 
 #' @rdname standard_error
-#' @importFrom insight find_random
 #' @export
 standard_error.MixMod <- function(model,
                                   effects = c("fixed", "random"),
@@ -73,7 +72,6 @@ standard_error.MixMod <- function(model,
 }
 
 
-#' @importFrom insight find_parameters
 #' @rdname p_value.lmerMod
 #' @export
 p_value.MixMod <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), verbose = TRUE, ...) {

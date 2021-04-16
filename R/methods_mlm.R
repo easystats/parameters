@@ -34,7 +34,6 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
-#' @importFrom insight get_response
 #' @export
 model_parameters.mlm <- function(model,
                                  ci = .95,
@@ -115,7 +114,6 @@ ci.mlm <- function(x, ci = .95, ...) {
 }
 
 
-#' @importFrom insight find_response
 #' @export
 simulate_model.mlm <- function(model, iterations = 1000, ...) {
   responses <- insight::find_response(model, combine = FALSE)

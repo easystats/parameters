@@ -276,7 +276,6 @@ equivalence_test.MixMod <- equivalence_test.merMod
 
 # Special classes -------------------------
 
-#' @importFrom bayestestR rope_range
 #' @export
 equivalence_test.parameters_simulate_model <- function(x,
                                                        range = "default",
@@ -316,7 +315,6 @@ equivalence_test.parameters_simulate_model <- function(x,
 # helper -------------------
 
 
-#' @importFrom bayestestR equivalence_test rope_range
 #' @keywords internal
 .equivalence_test_frequentist <- function(x,
                                           range = "default",
@@ -392,9 +390,6 @@ equivalence_test.parameters_simulate_model <- function(x,
 
 
 
-#' @importFrom stats qnorm
-#' @importFrom insight get_parameters
-#' @importFrom bayestestR rope_range
 #' @keywords internal
 .equivalence_test_frequentist_random <- function(x,
                                                  range = "default",
@@ -577,7 +572,6 @@ equivalence_test.parameters_simulate_model <- function(x,
 
 
 
-#' @importFrom stats pt p.adjust
 .add_p_to_equitest <- function(model, ci, range, decision) {
   tryCatch(
     {
@@ -608,7 +602,6 @@ equivalence_test.parameters_simulate_model <- function(x,
 # methods ----------------
 
 
-#' @importFrom insight print_color
 #' @export
 print.equivalence_test_lm <- function(x, digits = 2, ...) {
   orig_x <- x
@@ -674,7 +667,6 @@ plot.equivalence_test_lm <- function(x, ...) {
 
 # method-helper ----------------------
 
-#' @importFrom insight format_p
 .print_equitest_freq <- function(x, digits, ...) {
   # find the longest CI-value, so we can align the brackets in the output
   x$CI_low <- sprintf("%.*f", digits, x$CI_low)

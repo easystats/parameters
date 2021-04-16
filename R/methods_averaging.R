@@ -67,7 +67,6 @@ standard_error.averaging <- function(model, component = c("conditional", "full")
 }
 
 
-#' @importFrom insight get_parameters
 #' @rdname p_value.DirichletRegModel
 #' @export
 p_value.averaging <- function(model, component = c("conditional", "full"), ...) {

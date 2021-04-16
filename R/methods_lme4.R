@@ -112,7 +112,6 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
-#' @importFrom utils modifyList
 #' @export
 model_parameters.merMod <- function(model,
                                     ci = .95,
@@ -288,7 +287,6 @@ model_parameters.merMod <- function(model,
 #'   ci(model, component = "zi")
 #' }
 #' }
-#' @importFrom stats profile
 #' @export
 ci.merMod <- function(x,
                       ci = 0.95,

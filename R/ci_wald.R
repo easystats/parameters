@@ -7,7 +7,6 @@
 #' @inheritParams standard_error
 #' @inheritParams model_parameters.default
 #'
-#' @importFrom stats qt coef
 #' @export
 ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", "all"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"), robust = FALSE, ...) {
   effects <- match.arg(effects)
@@ -21,8 +20,6 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 }
 
 
-#' @importFrom insight get_parameters n_obs
-#' @importFrom stats qt complete.cases
 #' @keywords internal
 .ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
   if (inherits(model, "emmGrid")) {

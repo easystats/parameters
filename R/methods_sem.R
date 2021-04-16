@@ -23,8 +23,6 @@ standard_error.sem <- function(model, ...) {
 }
 
 
-#' @importFrom insight get_statistic
-#' @importFrom stats pnorm
 #' @export
 p_value.sem <- function(model, ...) {
   if (!.is_semLme(model)) {

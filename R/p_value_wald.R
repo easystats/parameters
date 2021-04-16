@@ -15,7 +15,6 @@
 #' }
 #' }
 #' @return A data frame.
-#' @importFrom stats coef pt
 #' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export
 p_value_wald <- function(model, ...) {

@@ -102,7 +102,6 @@
 #'   \item Velicer, W. F. (1976). Determining the number of components from the
 #'   matrix of partial correlations. Psychometrika, 41(3), 321-327.
 #' }
-#' @importFrom stats cor
 #' @export
 n_factors <- function(x,
                       type = "FA",
@@ -316,7 +315,6 @@ n_components <- function(x,
 
 
 
-#' @importFrom insight print_color
 #' @export
 print.n_factors <- function(x, ...) {
   results <- attributes(x)$summary
@@ -487,7 +485,6 @@ print.n_clusters <- print.n_factors
 
 # EGAnet ------------------------
 
-#' @importFrom utils capture.output
 #' @keywords internal
 .n_factors_ega <- function(x = NULL,
                            cor = NULL,
@@ -495,7 +492,7 @@ print.n_clusters <- print.n_factors
                            eigen_values = NULL,
                            type = "FA") {
 
-  # Replace with own corelation matrix
+  # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
   junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
   # junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso_boot <- EGAnet::bootEGA(x, model = "glasso", n = 500, plot.typicalStructure = FALSE)$n.dim)))
@@ -641,7 +638,6 @@ print.n_clusters <- print.n_factors
 
 # Re-implementation of nBentler in nFactors ------------------------
 
-#' @importFrom stats lm
 #' @keywords internal
 .nBentler <- function(x,
                       N,

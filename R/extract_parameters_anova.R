@@ -186,7 +186,6 @@
 
 # Anova.mlm -------------
 
-#' @importFrom stats pf
 .extract_anova_mlm <- function(model, test = NULL) {
   if (identical(test, "univariate")) {
     ut <- unclass(summary(model)$univariate.tests)
@@ -284,7 +283,6 @@
 # parameter-power ----------------
 
 
-#' @importFrom stats pf qf
 .power_for_aov <- function(model, params) {
   if (requireNamespace("effectsize", quietly = TRUE)) {
     power <- tryCatch(

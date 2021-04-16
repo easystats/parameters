@@ -58,8 +58,6 @@ check_clusterstructure <- function(x, standardize = TRUE, distance = "euclidean"
 
 
 
-#' @importFrom stats heatmap
-#' @importFrom grDevices colorRampPalette
 #' @export
 plot.check_clusterstructure <- function(x, ...) {
   # Can be reimplemented with ggplot in see
@@ -73,7 +71,6 @@ plot.check_clusterstructure <- function(x, ...) {
 
 
 
-#' @importFrom stats hclust dist
 #' @keywords internal
 .clusterstructure_dm <- function(x, distance = "euclidean", method = "ward.D2") {
   d <- stats::dist(x, method = distance)
@@ -83,7 +80,6 @@ plot.check_clusterstructure <- function(x, ...) {
 
 
 
-#' @importFrom stats runif
 #' @keywords internal
 .clusterstructure_hopkins <- function(x, distance = "euclidean") {
   # This is based on the hopkins() function from the clustertend package

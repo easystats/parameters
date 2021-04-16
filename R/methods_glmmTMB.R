@@ -4,8 +4,6 @@
 # model_parameters -----
 
 
-#' @importFrom stats coef
-#' @importFrom utils modifyList
 #' @inheritParams simulate_model
 #' @rdname model_parameters.merMod
 #' @export
@@ -260,8 +258,6 @@ standard_error.glmmTMB <- function(model,
 # p_value -----
 
 
-#' @importFrom insight find_parameters
-#' @importFrom stats coef
 #' @rdname p_value.lmerMod
 #' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
@@ -293,8 +289,6 @@ p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "ze
 # simulate model -----
 
 
-#' @importFrom stats vcov setNames
-#' @importFrom insight get_parameters
 #' @rdname simulate_model
 #' @export
 simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = FALSE, ...) {

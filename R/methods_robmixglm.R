@@ -1,5 +1,4 @@
 
-#' @importFrom stats na.omit
 #' @export
 standard_error.robmixglm <- function(model, ...) {
   se <- stats::na.omit(.get_se_from_summary(model))
@@ -10,7 +9,6 @@ standard_error.robmixglm <- function(model, ...) {
 }
 
 
-#' @importFrom stats na.omit
 #' @export
 p_value.robmixglm <- function(model, ...) {
   p <- stats::na.omit(.get_pval_from_summary(model))

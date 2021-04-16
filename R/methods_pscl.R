@@ -94,8 +94,6 @@ standard_error.zerocount <- standard_error.zeroinfl
 
 
 #' @rdname p_value.zcpglm
-#' @importFrom stats coef
-#' @importFrom insight find_parameters
 #' @export
 p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
   component <- match.arg(component)

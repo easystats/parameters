@@ -1,4 +1,3 @@
-#' @importFrom stats setNames
 #' @rdname p_value_satterthwaite
 #' @export
 dof_satterthwaite <- function(model) {

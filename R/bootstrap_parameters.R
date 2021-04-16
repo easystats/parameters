@@ -66,8 +66,6 @@ bootstrap_parameters <- function(model,
 
 
 
-#' @importFrom insight reshape_ci
-#' @importFrom bayestestR describe_posterior
 #' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
   # Is the p-value requested?

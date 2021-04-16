@@ -104,8 +104,6 @@ standard_error.DirichletRegModel <- function(model,
 #' @inheritParams p_value
 #'
 #' @return The p-values.
-#' @importFrom stats pnorm
-#' @importFrom insight get_parameters
 #' @export
 p_value.DirichletRegModel <- function(model,
                                       component = c("all", "conditional", "precision"),

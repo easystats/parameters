@@ -15,8 +15,6 @@
 #' @return Value of smoothness.
 #' @references https://stats.stackexchange.com/questions/24607/how-to-measure-smoothness-of-a-time-series-in-r
 #'
-#' @importFrom stats cor sd
-#' @importFrom utils head tail
 #' @export
 smoothness <- function(x, method = "cor", lag = 1, iterations = NULL, ...) {
   UseMethod("smoothness")

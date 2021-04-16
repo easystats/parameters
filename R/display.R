@@ -117,7 +117,6 @@ display.parameters_sem <- function(object,
 
 
 #' @rdname display.parameters_model
-#' @importFrom insight export_table
 #' @export
 display.parameters_efa_summary <- function(object, format = "markdown", digits = 3, ...) {
   print_md(x = object, digits = digits, ...)

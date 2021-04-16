@@ -1,5 +1,4 @@
 #' @rdname p_value_kenward
-#' @importFrom insight get_parameters
 #' @export
 se_kenward <- function(model) {
   .check_REML_fit(model)

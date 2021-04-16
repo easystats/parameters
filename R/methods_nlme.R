@@ -49,7 +49,6 @@ ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterth
 }
 
 
-#' @importFrom stats coef
 #' @export
 p_value.lme <- function(model, ...) {
   cs <- stats::coef(summary(model))

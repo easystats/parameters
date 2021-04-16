@@ -67,7 +67,6 @@
 #'
 #' out <- reduce_data(iris, method = "PCA", n = "max")
 #' head(out)
-#' @importFrom stats dist cor cmdscale update
 #' @export
 reduce_parameters <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   UseMethod("reduce_parameters")
@@ -194,7 +193,6 @@ principal_components.merMod <- principal_components.lm
 
 
 
-#' @importFrom utils capture.output
 #' @keywords internal
 .drr <- function(x, n = "all", ...) {
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = "none")

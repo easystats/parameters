@@ -1,8 +1,6 @@
 # generic function ------------------------------------------------------
 
 
-#' @importFrom insight get_statistic get_parameters
-#' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_generic <- function(model,
                                         ci,
@@ -302,7 +300,6 @@
 # helper ----------------
 
 
-#' @importFrom insight get_sigma get_df
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
     sig <- tryCatch(
@@ -361,7 +358,6 @@
 # mixed models function ------------------------------------------------------
 
 
-#' @importFrom stats confint
 #' @keywords internal
 .extract_parameters_mixed <- function(model,
                                       ci = .95,
@@ -612,7 +608,6 @@
 
 
 
-#' @importFrom stats model.frame
 .find_within_between <- function(model, which_effect) {
   mf <- stats::model.frame(model)
   unlist(sapply(names(mf), function(i) {
@@ -630,9 +625,6 @@
 # Bayes function ------------------------------------------------------
 
 
-#' @importFrom bayestestR describe_posterior
-#' @importFrom insight is_multivariate reshape_ci
-#' @importFrom stats sd setNames na.omit
 #' @keywords internal
 .extract_parameters_bayesian <- function(model,
                                          centrality = "median",

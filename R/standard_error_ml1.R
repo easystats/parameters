@@ -1,6 +1,4 @@
 #' @rdname p_value_ml1
-#' @importFrom stats qt
-#' @importFrom insight get_parameters
 #' @export
 se_ml1 <- function(model) {
   params <- insight::get_parameters(model)

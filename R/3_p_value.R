@@ -27,10 +27,6 @@
 #' data(iris)
 #' model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #' p_value(model)
-#' @importFrom stats coef vcov pt pnorm na.omit
-#' @importFrom insight get_statistic get_parameters find_parameters print_color
-#' @importFrom methods slot
-#' @importFrom utils capture.output
 #' @export
 p_value <- function(model, ...) {
   UseMethod("p_value")

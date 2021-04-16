@@ -1,5 +1,3 @@
-#' @importFrom insight get_statistic
-#' @importFrom stats pnorm
 #' @export
 p_value.sarlm <- function(model, ...) {
   stat <- insight::get_statistic(model)

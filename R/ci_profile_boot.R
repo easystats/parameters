@@ -1,5 +1,3 @@
-#' @importFrom insight get_parameters
-#' @importFrom stats confint
 .ci_profiled <- function(model, ci) {
   glm_ci <- tryCatch(
     {
@@ -30,7 +28,6 @@
 
 # we need this function for models where confint and get_parameters return
 # different length (e.g. as for "polr" models)
-#' @importFrom stats confint
 .ci_profiled2 <- function(model, ci) {
   glm_ci <- tryCatch(
     {
@@ -58,8 +55,6 @@
 }
 
 
-#' @importFrom stats confint
-#' @importFrom insight find_parameters
 #' @keywords internal
 .ci_profile_merMod <- function(x, ci, profiled, ...) {
   out <- as.data.frame(stats::confint(profiled, level = ci, ...))
@@ -76,7 +71,6 @@
 }
 
 
-#' @importFrom stats confint
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
   out <- as.data.frame(stats::confint(profiled, level = ci, ...))
@@ -85,7 +79,6 @@
 
 
 
-#' @importFrom stats confint
 #' @keywords internal
 .ci_uniroot_glmmTMB <- function(x, ci, component, ...) {
   out <- as.data.frame(stats::confint(x, level = ci, method = "uniroot", ...))
@@ -94,7 +87,6 @@
 
 
 
-#' @importFrom insight get_parameters
 .process_glmmTMB_CI <- function(x, out, ci, component) {
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 

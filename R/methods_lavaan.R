@@ -222,7 +222,6 @@ p_value.blavaan <- p_value.BFBayesFactor
 
 # print ---------------------------
 
-#' @importFrom insight export_table
 #' @export
 print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
   # check if user supplied digits attributes

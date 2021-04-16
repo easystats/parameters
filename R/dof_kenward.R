@@ -1,5 +1,4 @@
 #' @rdname p_value_kenward
-#' @importFrom insight find_parameters
 #' @export
 dof_kenward <- function(model) {
   parameters <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
@@ -78,7 +77,6 @@ dof_kenward <- function(model) {
 
 
 
-#' @importFrom stats update
 .vcov_kenward_ajusted <- function(model) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it.")
@@ -92,7 +90,6 @@ dof_kenward <- function(model) {
 
 
 
-#' @importFrom stats sigma
 .get_SigmaG <- function(model) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it.")

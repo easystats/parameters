@@ -1,6 +1,3 @@
-
-#' @importFrom insight print_color
-#' @importFrom stats qt
 #' @export
 ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
   se <- attr(x, "standard_error")

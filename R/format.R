@@ -127,7 +127,6 @@ format.parameters_simulate <- format.parameters_model
 format.parameters_brms_meta <- format.parameters_model
 
 
-#' @importFrom insight format_p format_table
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
@@ -293,8 +292,6 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
 
 # stan models ----------------------------
 
-#' @importFrom utils modifyList
-#' @importFrom insight print_parameters format_table
 #' @export
 format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
   cp <- attributes(x)$parameter_info
@@ -526,7 +523,6 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: r-squared
-#' @importFrom insight format_value
 .add_footer_r2 <- function(footer = NULL, digits, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
     rsq <- tryCatch(

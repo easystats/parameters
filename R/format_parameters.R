@@ -37,7 +37,6 @@
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' format_parameters(model)
 #' @return A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
-#' @importFrom utils tail head
 #' @export
 format_parameters <- function(model, ...) {
   UseMethod("format_parameters")
@@ -240,7 +239,6 @@ format_parameters.parameters_model <- function(model, ...) {
 }
 
 
-#' @importFrom utils tail head
 #' @keywords internal
 .format_interaction <- function(components, type, is_nested = FALSE, is_simple = FALSE) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")

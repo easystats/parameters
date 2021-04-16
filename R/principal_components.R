@@ -188,7 +188,6 @@ rotated_data <- function(x) {
 
 
 
-#' @importFrom stats prcomp na.omit setNames complete.cases
 #' @export
 principal_components.data.frame <- function(x,
                                             n = "auto",
@@ -333,7 +332,6 @@ principal_components.data.frame <- function(x,
 
 
 
-#' @importFrom stats complete.cases
 #' @keywords internal
 .pca_rotate <- function(x,
                         n,

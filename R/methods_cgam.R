@@ -114,7 +114,6 @@ model_parameters.cgam <- function(model,
 
 
 #' @rdname p_value.DirichletRegModel
-#' @importFrom insight get_parameters
 #' @export
 p_value.cgam <- function(model, component = c("all", "conditional", "smooth_terms"), ...) {
   component <- match.arg(component)

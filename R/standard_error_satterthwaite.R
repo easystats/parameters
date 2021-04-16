@@ -1,5 +1,4 @@
 #' @rdname p_value_satterthwaite
-#' @importFrom insight get_parameters
 #' @export
 se_satterthwaite <- function(model) {
   UseMethod("se_satterthwaite")
@@ -10,7 +9,6 @@ se_satterthwaite.default <- function(model) {
   standard_error(model)
 }
 
-#' @importFrom stats setNames
 #' @export
 se_satterthwaite.lme <- function(model) {
   if (!requireNamespace("lavaSearch2", quietly = TRUE)) {

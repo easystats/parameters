@@ -84,8 +84,6 @@
 # sophisticated, to ensure nicely outputs even for complicated or complex models,
 # or edge cases...
 
-#' @importFrom insight format_value
-#' @importFrom stats quantile
 #' @keywords internal
 .print_model_parms_components <- function(x,
                                           pretty_names,
@@ -317,7 +315,6 @@
 # helper to fix unequal number of columns for list of data frames,
 # when used for HTML printing
 
-#' @importFrom utils modifyList
 .fix_nonmatching_columns <- function(final_table) {
   col_len <- sapply(final_table, function(i) length(colnames(i)))
   if (!all(col_len) == max(col_len)) {

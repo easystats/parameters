@@ -110,7 +110,6 @@ standard_error.table <- function(model, ...) {
 standard_error.xtabs <- standard_error.table
 
 
-#' @importFrom insight print_color
 #' @export
 standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
   se <- attr(model, "standard_error")

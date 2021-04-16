@@ -82,7 +82,6 @@ check_factorstructure <- function(x, ...) {
 #'   \item Kaiser, H. F. (1974). An index of factorial simplicity.
 #'   Psychometrika, 39(1), 31-36.
 #' }
-#' @importFrom stats cor cov2cor
 #' @export
 check_kmo <- function(x, ...) {
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
@@ -146,10 +145,6 @@ check_kmo <- function(x, ...) {
 #'   \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square
 #'   approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #' }
-#'
-#' @importFrom stats pchisq cor
-#' @importFrom insight format_p
-#'
 #' @export
 check_sphericity <- function(x, ...) {
 

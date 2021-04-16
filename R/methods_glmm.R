@@ -34,7 +34,6 @@ ci.glmm <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
 }
 
 
-#' @importFrom insight get_parameters get_varcov
 #' @export
 standard_error.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
@@ -53,7 +52,6 @@ standard_error.glmm <- function(model, effects = c("all", "fixed", "random"), ..
 }
 
 
-#' @importFrom insight get_parameters
 #' @export
 p_value.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)

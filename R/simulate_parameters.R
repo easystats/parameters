@@ -45,7 +45,6 @@
 #'   simulate_parameters(model, ci = c(.8, .95), component = "zero_inflated")
 #' }
 #' }
-#' @importFrom bayestestR describe_posterior
 #' @export
 simulate_parameters <- function(model, ...) {
   UseMethod("simulate_parameters")

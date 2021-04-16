@@ -208,7 +208,6 @@ print_md.parameters_pca <- print_md.parameters_efa
 
 # Equivalence test ----------------------------
 
-#' @importFrom insight format_table
 #' @export
 print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"), zap_small = FALSE, ...) {
   rule <- attributes(x)$rule

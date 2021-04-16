@@ -141,7 +141,6 @@ ci.metaplus <- function(x, ...) {
 ###### .meta_random -------------------
 
 
-#' @importFrom insight get_priors
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = .95,

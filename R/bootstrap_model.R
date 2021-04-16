@@ -56,8 +56,6 @@ bootstrap_model <- function(model,
 
 
 
-#' @importFrom stats coef update setNames complete.cases
-#' @importFrom insight get_data find_parameters get_parameters
 #' @export
 bootstrap_model.default <- function(model,
                                     iterations = 1000,

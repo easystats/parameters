@@ -78,7 +78,6 @@ skewness <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
 # skewness -----------------------------------------
 
 
-#' @importFrom stats sd pnorm
 #' @export
 skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
   if (na.rm) x <- x[!is.na(x)]
@@ -293,7 +292,6 @@ print.parameters_kurtosis <- function(x, digits = 3, test = FALSE, ...) {
 #' @export
 print.parameters_skewness <- print.parameters_kurtosis
 
-#' @importFrom stats pnorm
 #' @rdname skewness
 #' @export
 summary.parameters_skewness <- function(object, test = FALSE, ...) {

@@ -70,7 +70,6 @@ summary.parameters_omega <- function(object, ...) {
 
 
 #' @rdname principal_components
-#' @importFrom stats predict
 #' @export
 predict.parameters_efa <- function(object,
                                    newdata = NULL,
@@ -119,7 +118,6 @@ predict.parameters_pca <- predict.parameters_efa
 # print -------------------------------------------------------------------
 
 
-#' @importFrom insight export_table
 #' @export
 print.parameters_efa_summary <- function(x, digits = 3, ...) {
   if ("Parameter" %in% names(x)) {
@@ -137,7 +135,6 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
 print.parameters_pca_summary <- print.parameters_efa_summary
 
 
-#' @importFrom insight print_color print_colour
 #' @export
 print.parameters_efa <- function(x,
                                  digits = 2,

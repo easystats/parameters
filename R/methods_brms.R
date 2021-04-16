@@ -1,4 +1,3 @@
-#' @importFrom insight clean_parameters find_random get_response model_info is_multivariate
 #' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
@@ -96,7 +95,6 @@ model_parameters.brmsfit <- function(model,
 
 # brms meta analysis -------
 
-#' @importFrom insight get_parameters
 .model_parameters_brms_meta <- function(model,
                                         centrality = "median",
                                         dispersion = FALSE,

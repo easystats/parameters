@@ -75,7 +75,6 @@ ci.clmm2 <- ci.clm2
 
 
 #' @rdname standard_error
-#' @importFrom insight get_parameters
 #' @export
 standard_error.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
@@ -99,8 +98,6 @@ standard_error.clmm2 <- standard_error.clm2
 # p values ----------------
 
 
-#' @importFrom stats coef
-#' @importFrom insight get_parameters
 #' @rdname p_value.DirichletRegModel
 #' @export
 p_value.clm2 <- function(model, component = c("all", "conditional", "scale"), ...) {

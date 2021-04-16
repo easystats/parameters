@@ -43,8 +43,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 
-#' @importFrom insight export_table format_table
-#' @importFrom stats reshape
 #' @keywords internal
 .wide_loadings <- function(loadings,
                            loadings_columns = "Loading",
@@ -79,7 +77,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 }
 
 
-#' @importFrom stats reshape
 #' @keywords internal
 .long_loadings <- function(loadings, threshold = NULL, loadings_columns = NULL) {
   if (is.null(loadings_columns)) {
@@ -128,7 +125,6 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
 
 
 
-#' @importFrom insight export_table
 #' @export
 print.parameters_loadings <- function(x, ...) {
   formatted_table <- insight::format_table(x)

@@ -57,7 +57,6 @@ degrees_of_freedom <- function(model, ...) {
 }
 
 
-#' @importFrom insight find_statistic
 #' @rdname degrees_of_freedom
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
@@ -133,8 +132,6 @@ dof <- degrees_of_freedom
 
 # Model approach (Residual df) ------------------------------
 
-#' @importFrom bayestestR bayesian_as_frequentist
-#' @importFrom stats df.residual
 #' @keywords internal
 .degrees_of_freedom_fit <- function(model, verbose = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)

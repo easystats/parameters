@@ -48,7 +48,6 @@
 #'   print(mp, select = "minimal")
 #' }
 #' }
-#' @importFrom insight export_table
 #' @export
 print.parameters_model <- function(x,
                                    pretty_names = TRUE,
@@ -317,7 +316,6 @@ print.parameters_stan <- function(x,
 # helper --------------------
 
 
-#' @importFrom insight print_color
 #' @keywords internal
 .print_random_parameters <- function(random_params, digits = 2) {
   insight::print_color("# Random Effects\n\n", "blue")
