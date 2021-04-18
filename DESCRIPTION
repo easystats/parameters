@@ -13,7 +13,7 @@ Authors@R:
            "Makowski", 
            email = "dom.makowski@gmail.com",
            role = c("aut"), 
-           comment = c(ORCID = "0000-0001-5375-9967")),
+           comment = c(ORCID = "0000-0001-5375-9967", Twitter = "@Dom_Makowski")),
     person("Mattan S.", 
            "Ben-Shachar", 
            role = c("aut"), 
