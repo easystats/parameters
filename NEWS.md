@@ -6,7 +6,7 @@
 
 ## New supported model classes
 
-* `SemiParBIV` (*GJRM*)
+* `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*)
 
 ## Changes to functions
 
