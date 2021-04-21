@@ -4,6 +4,10 @@
 
 * Removed deprecated arguments.
 
+## New supported model classes
+
+* `SemiParBIV` (*GJRM*)
+
 ## Changes to functions
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
