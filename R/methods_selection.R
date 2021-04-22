@@ -91,3 +91,10 @@ simulate_model.selection <- function(model, iterations = 1000, component = c("al
 
 #' @export
 ci.selection <- ci.default
+
+
+#' @export
+degrees_of_freedom.selection <- function(model, ...) {
+  s <- summary(model)
+  s$param$df
+}
