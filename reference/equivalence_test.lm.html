@@ -273,7 +273,7 @@ this test (see below), statistical significance does not necessarily indicate
 whether the null hypothesis can be rejected or not, i.e. the classical
 interpretation of the p-value may differ from the results returned from
 the equivalence test.</p>
-<h3 class='hasAnchor' id='calculation-of-equivalence-testing'><a class='anchor' href='#calculation-of-equivalence-testing'></a>Calculation of equivalence testing</h3>
+<h3 class='hasAnchor' id='calculation-of-equivalence-testing'><a class='anchor' aria-hidden='true' href='#calculation-of-equivalence-testing'></a>Calculation of equivalence testing</h3>
 <p></p><dl>
     <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke,
       2014, 2018)</cite> used for the
@@ -301,14 +301,14 @@ the equivalence test.</p>
   
 </dl>
 
-<h3 class='hasAnchor' id='levels-of-confidence-intervals-used-for-equivalence-testing'><a class='anchor' href='#levels-of-confidence-intervals-used-for-equivalence-testing'></a>Levels of Confidence Intervals used for Equivalence Testing</h3>
+<h3 class='hasAnchor' id='levels-of-confidence-intervals-used-for-equivalence-testing'><a class='anchor' aria-hidden='true' href='#levels-of-confidence-intervals-used-for-equivalence-testing'></a>Levels of Confidence Intervals used for Equivalence Testing</h3>
 <p>For <code>rule = "classic"</code>, "narrow" confidence intervals are used for
   equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
   but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
   and internally a ci-level of 0.90 is used. <code>rule = "cet"</code> uses
   both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
   only uses the regular intervals.</p>
-<h3 class='hasAnchor' id='second-generation-p-value-sgpv-'><a class='anchor' href='#second-generation-p-value-sgpv-'></a>Second Generation p-Value (SGPV)</h3>
+<h3 class='hasAnchor' id='second-generation-p-value-sgpv-'><a class='anchor' aria-hidden='true' href='#second-generation-p-value-sgpv-'></a>Second Generation p-Value (SGPV)</h3>
 <p>Second generation p-values (SGPV) were proposed as a statistic
   that represents &#8220;the proportion of data-supported hypotheses
   that are also null hypotheses&#8221; <cite>(Blume et al. 2018)</cite>. This statistic
@@ -316,7 +316,7 @@ the equivalence test.</p>
   returned by <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
   for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
   column reflects the SGPV.</p>
-<h3 class='hasAnchor' id='adjustment-for-multiple-testing'><a class='anchor' href='#adjustment-for-multiple-testing'></a>Adjustment for multiple testing</h3>
+<h3 class='hasAnchor' id='adjustment-for-multiple-testing'><a class='anchor' aria-hidden='true' href='#adjustment-for-multiple-testing'></a>Adjustment for multiple testing</h3>
 <p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
 <li><p>... is rejected, the p-value equals a NHST as if the upper / lower
     boundary of the ROPE (see <code>range</code>) would be the point-null to test
@@ -328,7 +328,7 @@ the equivalence test.</p>
     upper confidence interval limit + half the ROPE range).</p></li>
 </ul><p>All p-values are then adjusted for multiple testing (using
   <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
-<h3 class='hasAnchor' id='rope-range'><a class='anchor' href='#rope-range'></a>ROPE range</h3>
+<h3 class='hasAnchor' id='rope-range'><a class='anchor' aria-hidden='true' href='#rope-range'></a>ROPE range</h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
   (argument <code>range</code>). See 'Details' in <code><a href='https://easystats.github.io/bayestestR/reference/rope_range.html'>rope_range</a></code>
   for further information.</p>
@@ -415,7 +415,7 @@ the equivalence test.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard.</p></p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, Brenton M. Wiernik.</p></p>
 </div>
 
 <div class="pkgdown">

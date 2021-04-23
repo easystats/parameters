@@ -139,7 +139,7 @@
 <p>If you are interested in more statistical and technical details, and how standardization methods relate to different (standardized) effect size measures, read the following vignette from <em>effectsize</em> package, from whence this functionality comes: <a href="https://easystats.github.io/effectsize/articles/standardize_parameters.html" class="external-link uri">https://easystats.github.io/effectsize/articles/standardize_parameters.html</a></p>
 <div id="standardization-by-re-fitting-the-model" class="section level2">
 <h2 class="hasAnchor">
-<a href="#standardization-by-re-fitting-the-model" class="anchor"></a>Standardization by re-fitting the model</h2>
+<a href="#standardization-by-re-fitting-the-model" class="anchor" aria-hidden="true"></a>Standardization by re-fitting the model</h2>
 <p><code>standardize = "refit"</code> is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables <em>before</em> fitting the model. It is the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for heavy models such as, for instance, Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).</p>
 <p>When <code>standardize = "refit"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link"><code>effectsize::standardize()</code></a> to standardize the data that was used to fit the model and updates the model with the standardized data. Note that <code><a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link">effectsize::standardize()</a></code> tries to detect which variables should be standardized and which not. For instance, having a <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log(x)</a></code> in the model formula would exclude <code>x</code> from being standardized, because <code>x</code> might get negative values, and thus <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">log(x)</a></code> would no longer be defined. Factors or dates will also <em>not</em> be standardized. Response variables will be standardized, if appropriate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -218,7 +218,7 @@
 </div>
 <div id="post-hoc-standardization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#post-hoc-standardization" class="anchor"></a>Post-hoc standardization</h2>
+<a href="#post-hoc-standardization" class="anchor" aria-hidden="true"></a>Post-hoc standardization</h2>
 <p><code>standardize = "posthoc"</code> aims at emulating the results obtained by <code>"refit"</code> without refitting the model. The coefficients are divided by the standard deviation of the outcome (which becomes their expression <em>unit</em>). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., “a change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>”). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
 <p>This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the “classic” result obtained by many statistical packages when standardized coefficients are requested.</p>
 <p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
@@ -253,7 +253,7 @@
 </div>
 <div id="smart-standardization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#smart-standardization" class="anchor"></a>Smart standardization</h2>
+<a href="#smart-standardization" class="anchor" aria-hidden="true"></a>Smart standardization</h2>
 <p><code>standardize = "smart"</code> is similar to <code>standardize = "posthoc"</code> in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B versus A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ delta.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span>
@@ -283,7 +283,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link external-link">Indrajeet Patil</a>, Søren Højsgaard.</p>
+<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link external-link">Indrajeet Patil</a>, Søren Højsgaard, Brenton M. Wiernik.</p>
 </div>
 
 <div class="pkgdown">

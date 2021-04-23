@@ -139,10 +139,10 @@
 <p>The <code>parameters</code> package implements a helper that will <strong>automatically</strong> pick a method deemed appropriate for the provided model, run the variables selection and return the <strong>optimal formula</strong>, which you can then re-use to update the model.</p>
 <div id="simple-linear-regression" class="section level2">
 <h2 class="hasAnchor">
-<a href="#simple-linear-regression" class="anchor"></a>Simple linear regression</h2>
+<a href="#simple-linear-regression" class="anchor" aria-hidden="true"></a>Simple linear regression</h2>
 <div id="fit-a-powerful-model" class="section level3">
 <h3 class="hasAnchor">
-<a href="#fit-a-powerful-model" class="anchor"></a>Fit a powerful model</h3>
+<a href="#fit-a-powerful-model" class="anchor" aria-hidden="true"></a>Fit a powerful model</h3>
 <p>If you are familiar with R and the formula interface, you know of the possibility of including a dot (<code>.</code>) in the formula, signifying “all the remaining variables”. Curiously, few are aware of the possibility of additionally easily adding “all the interaction terms”. This can be achieved using the <code>.*.</code> notation.</p>
 <p>Let’s try that with the linear regression predicting <strong>Sepal.Length</strong> with the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" class="external-link"><code>iris</code></a> dataset, included by default in R.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -185,7 +185,7 @@
 </div>
 <div id="too-many-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#too-many-parameters" class="anchor"></a>Too many parameters?</h3>
+<a href="#too-many-parameters" class="anchor" aria-hidden="true"></a>Too many parameters?</h3>
 <p>As you might know, having a <strong>model that is too performant is not always a good thing</strong>. For instance, it can be a marker of <a href="https://en.wikipedia.org/wiki/Overfitting" class="external-link"><strong>overfitting</strong></a>: the model corresponds too closely to a particular set of data, and may therefore fail to predict future observations reliably. In multiple regressions, in can also fall under the <a href="https://en.wikipedia.org/wiki/Freedman%27s_paradox" class="external-link"><strong>Freedman’s paradox</strong></a>: some predictors that have actually no relation to the dependent variable being predicted will be <strong>spuriously found to be statistically significant</strong>.</p>
 <p>Let’s run a few checks using the <a href="https://github.com/easystats/performance" class="external-link"><strong>performance</strong></a> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -217,7 +217,7 @@
 </div>
 <div id="parameters-selection" class="section level3">
 <h3 class="hasAnchor">
-<a href="#parameters-selection" class="anchor"></a>Parameters selection</h3>
+<a href="#parameters-selection" class="anchor" aria-hidden="true"></a>Parameters selection</h3>
 <p>Time to do some variables selection! This can be easily done using the <code><a href="../reference/select_parameters.html">select_parameters()</a></code> function in <code>parameters</code>. It will <strong>automatically</strong> select the best variables and update the model accordingly. One way of using that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/" class="external-link"><code>%&gt;%</code></a>), using this output to update a new model.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -258,11 +258,11 @@
 </div>
 <div id="mixed-and-bayesian-models" class="section level2">
 <h2 class="hasAnchor">
-<a href="#mixed-and-bayesian-models" class="anchor"></a>Mixed and Bayesian models</h2>
+<a href="#mixed-and-bayesian-models" class="anchor" aria-hidden="true"></a>Mixed and Bayesian models</h2>
 <p>For simple linear regressions as above, the selection is made using the <code><a href="https://rdrr.io/r/stats/step.html" class="external-link">step()</a></code> function (available in base R). This performs a <a href="https://en.wikipedia.org/wiki/Stepwise_regression" class="external-link"><strong>stepwise</strong></a> selection. However, this procedures is not available for other types of models, such as <strong>mixed</strong> or <strong>Bayesian</strong> models.</p>
 <div id="mixed-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#mixed-models" class="anchor"></a>Mixed models</h3>
+<a href="#mixed-models" class="anchor" aria-hidden="true"></a>Mixed models</h3>
 <p>For mixed models (of class <code>merMod</code>), stepwise selection is based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html" class="external-link">cAIC4::stepcAIC()</a></code>. This step function only searches the “best” model based on the <em>random effects structure</em>, i.e. <code><a href="../reference/select_parameters.html">select_parameters()</a></code> adds or excludes random effects until the <code>cAIC</code> can’t be improved further.</p>
 <p>This is what our initial model looks like.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -363,7 +363,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link external-link">Indrajeet Patil</a>, Søren Højsgaard.</p>
+<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link external-link">Indrajeet Patil</a>, Søren Højsgaard, Brenton M. Wiernik.</p>
 </div>
 
 <div class="pkgdown">

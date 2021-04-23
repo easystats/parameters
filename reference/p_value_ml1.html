@@ -215,7 +215,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='small-sample-cluster-corrected-degrees-of-freedom'><a class='anchor' href='#small-sample-cluster-corrected-degrees-of-freedom'></a>Small Sample Cluster corrected Degrees of Freedom</h3>
+<h3 class='hasAnchor' id='small-sample-cluster-corrected-degrees-of-freedom'><a class='anchor' aria-hidden='true' href='#small-sample-cluster-corrected-degrees-of-freedom'></a>Small Sample Cluster corrected Degrees of Freedom</h3>
 <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -225,12 +225,12 @@ for such inferential statitics (see <cite>Li and Redden 2015</cite>). The
 fewer degrees of freedom (<code>dof_ml1</code>) to calculate p-values
 (<code>p_value_ml1</code>), standard errors (<code>se_ml1</code>) and confidence intervals
 (<code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci(method = "ml1")</a></code>).</p>
-<h3 class='hasAnchor' id='degrees-of-freedom-for-longitudinal-designs-repeated-measures-'><a class='anchor' href='#degrees-of-freedom-for-longitudinal-designs-repeated-measures-'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
+<h3 class='hasAnchor' id='degrees-of-freedom-for-longitudinal-designs-repeated-measures-'><a class='anchor' aria-hidden='true' href='#degrees-of-freedom-for-longitudinal-designs-repeated-measures-'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
 residual or infinite degrees of freedom, because <code><a href='p_value_ml1.html'>dof_ml1()</a></code> returns
 different degrees of freedom for within-cluster and between-cluster effects.</p>
-<h3 class='hasAnchor' id='limitations-of-the-m-l-heuristic'><a class='anchor' href='#limitations-of-the-m-l-heuristic'></a>Limitations of the "m-l-1" Heuristic</h3>
+<h3 class='hasAnchor' id='limitations-of-the-m-l-heuristic'><a class='anchor' aria-hidden='true' href='#limitations-of-the-m-l-heuristic'></a>Limitations of the "m-l-1" Heuristic</h3>
 <p>Note that the "m-l-1" heuristic is not applicable (or at least less accurate)
 for complex multilevel designs, e.g. with cross-classified clusters. In such cases,
 more accurate approaches like the Kenward-Roger approximation (<code><a href='p_value_kenward.html'>dof_kenward()</a></code>)
@@ -273,7 +273,7 @@ parameters, based on the "m-l-1" heuristic.</p></div>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard.</p></p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, Brenton M. Wiernik.</p></p>
 </div>
 
 <div class="pkgdown">

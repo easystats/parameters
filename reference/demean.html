@@ -281,7 +281,7 @@ between-effects are printed in separated blocks.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3 class='hasAnchor' id='heterogeneity-bias'><a class='anchor' href='#heterogeneity-bias'></a>Heterogeneity Bias</h3>
+<h3 class='hasAnchor' id='heterogeneity-bias'><a class='anchor' aria-hidden='true' href='#heterogeneity-bias'></a>Heterogeneity Bias</h3>
 <p>Mixed models include different levels of sources of variability, i.e.
     error terms at each level. When macro-indicators (or level-2 predictors,
     or higher-level units, or more general: <em>group-level predictors that
@@ -301,7 +301,7 @@ between-effects are printed in separated blocks.</p></td>
     "group-meaning": After demeaning time-varying predictors, &#8220;at the
     higher level, the mean term is no longer constrained by Level 1 effects,
     so it is free to account for all the higher-level variance associated
-    with that variable&#8221; (<cite>Bell et al. 2015</cite>).</p><p></p><h3 class='hasAnchor' id='panel-data-and-correlating-fixed-and-group-effects'><a class='anchor' href='#panel-data-and-correlating-fixed-and-group-effects'></a>Panel data and correlating fixed and group effects</h3>
+    with that variable&#8221; (<cite>Bell et al. 2015</cite>).</p><p></p><h3 class='hasAnchor' id='panel-data-and-correlating-fixed-and-group-effects'><a class='anchor' aria-hidden='true' href='#panel-data-and-correlating-fixed-and-group-effects'></a>Panel data and correlating fixed and group effects</h3>
 <p><code><a href='demean.html'>demean()</a></code> is intended to create group- and de-meaned variables
     for panel regression models (fixed effects models), or for complex
     random-effect-within-between models (see <cite>Bell et al. 2015, 2018</cite>),
@@ -313,7 +313,7 @@ between-effects are printed in separated blocks.</p></td>
     (and group-meaned version of <em>time-invariant covariates</em> that are on
     a higher level, e.g. level-2 predictors) in the model. By this, one can
     fit complex multilevel models for panel data, including time-varying
-    predictors, time-invariant predictors and random effects.</p><p></p><h3 class='hasAnchor' id='why-mixed-models-are-preferred-over-fixed-effects-models'><a class='anchor' href='#why-mixed-models-are-preferred-over-fixed-effects-models'></a>Why mixed models are preferred over fixed effects models</h3>
+    predictors, time-invariant predictors and random effects.</p><p></p><h3 class='hasAnchor' id='why-mixed-models-are-preferred-over-fixed-effects-models'><a class='anchor' aria-hidden='true' href='#why-mixed-models-are-preferred-over-fixed-effects-models'></a>Why mixed models are preferred over fixed effects models</h3>
 <p>A mixed models approach can model the causes of endogeneity explicitly
     by including the (separated) within- and between-effects of time-varying
     fixed effects and including time-constant fixed effects. Furthermore,
@@ -324,7 +324,7 @@ between-effects are printed in separated blocks.</p></td>
     fixed effects regressions are neglecting &#8220;cross-cluster differences
     in the effects of lower-level controls (which) reduces the precision of
     estimated context effects, resulting in unnecessarily wide confidence
-    intervals and low statistical power&#8221; (<cite>Heisig et al. 2017</cite>).</p><p></p><h3 class='hasAnchor' id='terminology'><a class='anchor' href='#terminology'></a>Terminology</h3>
+    intervals and low statistical power&#8221; (<cite>Heisig et al. 2017</cite>).</p><p></p><h3 class='hasAnchor' id='terminology'><a class='anchor' aria-hidden='true' href='#terminology'></a>Terminology</h3>
 <p>The group-meaned variable is simply the mean of an independent variable
     within each group (or id-level or cluster) represented by <code>group</code>.
     It represents the cluster-mean of an independent variable. The regression
@@ -332,14 +332,14 @@ between-effects are printed in separated blocks.</p></td>
     The de-meaned variable is then the centered version of the group-meaned
     variable. De-meaning is sometimes also called person-mean centering or
     centering within clusters. The regression coefficient of a de-meaned
-    variable represents the <em>within-subject-effect</em>.</p><p></p><h3 class='hasAnchor' id='de-meaning-with-continuous-predictors'><a class='anchor' href='#de-meaning-with-continuous-predictors'></a>De-meaning with continuous predictors</h3>
+    variable represents the <em>within-subject-effect</em>.</p><p></p><h3 class='hasAnchor' id='de-meaning-with-continuous-predictors'><a class='anchor' aria-hidden='true' href='#de-meaning-with-continuous-predictors'></a>De-meaning with continuous predictors</h3>
 <p>For continuous time-varying predictors, the recommendation is to include
     both their de-meaned and group-meaned versions as fixed effects, but not
     the raw (untransformed) time-varying predictors themselves. The de-meaned
     predictor should also be included as random effect (random slope). In
     regression models, the coefficient of the de-meaned predictors indicates
     the within-subject effect, while the coefficient of the group-meaned
-    predictor indicates the between-subject effect.</p><p></p><h3 class='hasAnchor' id='de-meaning-with-binary-predictors'><a class='anchor' href='#de-meaning-with-binary-predictors'></a>De-meaning with binary predictors</h3>
+    predictor indicates the between-subject effect.</p><p></p><h3 class='hasAnchor' id='de-meaning-with-binary-predictors'><a class='anchor' aria-hidden='true' href='#de-meaning-with-binary-predictors'></a>De-meaning with binary predictors</h3>
 <p>For binary time-varying predictors, there are two recommendations. First
     is to include the raw (untransformed) binary predictor as fixed effect
     only and the <em>de-meaned</em> variable as random effect (random slope).
@@ -351,13 +351,13 @@ between-effects are printed in separated blocks.</p></td>
     chapter 8-2.I</cite>). <code><a href='demean.html'>demean()</a></code> will thus coerce categorical time-varying
     predictors to numeric to compute the de- and group-meaned versions for
     these variables, where the raw (untransformed) binary predictor and the
-    de-meaned version should be added to the model.</p><p></p><h3 class='hasAnchor' id='de-meaning-of-factors-with-more-than-levels'><a class='anchor' href='#de-meaning-of-factors-with-more-than-levels'></a>De-meaning of factors with more than 2 levels</h3>
+    de-meaned version should be added to the model.</p><p></p><h3 class='hasAnchor' id='de-meaning-of-factors-with-more-than-levels'><a class='anchor' aria-hidden='true' href='#de-meaning-of-factors-with-more-than-levels'></a>De-meaning of factors with more than 2 levels</h3>
 <p>Factors with more than two levels are demeaned in two ways: first, these
     are also converted to numeric and de-meaned; second, dummy variables
     are created (binary, with 0/1 coding for each level) and these binary
     dummy-variables are de-meaned in the same way (as described above).
     Packages like <span class="pkg">panelr</span> internally convert factors to dummies before
-    demeaning, so this behaviour can be mimicked here.</p><p></p><h3 class='hasAnchor' id='de-meaning-interaction-terms'><a class='anchor' href='#de-meaning-interaction-terms'></a>De-meaning interaction terms</h3>
+    demeaning, so this behaviour can be mimicked here.</p><p></p><h3 class='hasAnchor' id='de-meaning-interaction-terms'><a class='anchor' aria-hidden='true' href='#de-meaning-interaction-terms'></a>De-meaning interaction terms</h3>
 <p>There are multiple ways to deal with interaction terms of within- and
     between-effects. A classical approach is to simply use the product
     term of the de-meaned variables (i.e. introducing the de-meaned variables
@@ -376,7 +376,7 @@ between-effects are printed in separated blocks.</p></td>
     function from the <span class="pkg">panelr</span> package should be used. <br /> <br />
     To de-mean interaction terms for within-between models, simply specify
     the term as interaction for the <code>select</code>-argument, e.g.
-    <code>select = "a*b"</code> (see 'Examples').</p><p></p><h3 class='hasAnchor' id='analysing-panel-data-with-mixed-models-using-lme-'><a class='anchor' href='#analysing-panel-data-with-mixed-models-using-lme-'></a>Analysing panel data with mixed models using lme4</h3>
+    <code>select = "a*b"</code> (see 'Examples').</p><p></p><h3 class='hasAnchor' id='analysing-panel-data-with-mixed-models-using-lme-'><a class='anchor' aria-hidden='true' href='#analysing-panel-data-with-mixed-models-using-lme-'></a>Analysing panel data with mixed models using lme4</h3>
 <p>A description of how to translate the
     formulas described in <em>Bell et al. 2018</em> into R using <code><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer()</a></code>
     from <span class="pkg">lme4</span> can be found in
@@ -493,7 +493,7 @@ between-effects are printed in separated blocks.</p></td>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard.</p></p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, Brenton M. Wiernik.</p></p>
 </div>
 
 <div class="pkgdown">
