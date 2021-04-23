@@ -180,7 +180,7 @@ rotated_data <- function(x) {
     out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
     out$.parameters_merge_id <- NULL
   } else {
-    warning("Either the original or the rotated data could not be retrieved.", call. = FALSE)
+    warning(insight::format_message("Either the original or the rotated data could not be retrieved."), call. = FALSE)
     return(NULL)
   }
   out

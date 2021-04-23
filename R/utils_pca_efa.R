@@ -100,7 +100,7 @@ predict.parameters_pca <- predict.parameters_efa
 .merge_na <- function(object, out) {
   compl_cases <- attributes(object)$complete_cases
   if (is.null(compl_cases)) {
-    warning("Could not retrieve information about missing data. Returning only complete cases.", call. = FALSE)
+    warning(insight::format_message("Could not retrieve information about missing data. Returning only complete cases."), call. = FALSE)
   } else {
     original_data <- data.frame(.parameters_merge_id = 1:length(compl_cases))
     out$.parameters_merge_id <- (1:nrow(original_data))[compl_cases]

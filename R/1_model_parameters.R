@@ -309,7 +309,7 @@ model_parameters.glm <- function(model,
                                  verbose = TRUE,
                                  ...) {
   if (insight::n_obs(model) > 1e4 && df_method == "profile") {
-    message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs.")
+    message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs."))
   }
 
   out <- .model_parameters_generic(

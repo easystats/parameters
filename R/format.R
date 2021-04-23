@@ -264,7 +264,7 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   # observations differs from "raw" observations
   if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
     if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
-      message("Number of weighted observations differs from number of unweighted observations.")
+      message(insight::format_message("Number of weighted observations differs from number of unweighted observations."))
     }
     observations <- weighted_observations
   }

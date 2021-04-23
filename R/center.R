@@ -192,9 +192,9 @@ center.data.frame <- function(x,
   if (length(unique(x)) == 2 && !is.factor(x) && !is.character(x)) {
     if (verbose) {
       if (is.null(name)) {
-        message("The variable contains only two different values. Consider converting it to a factor.")
+        message(insight::format_message("The variable contains only two different values. Consider converting it to a factor."))
       } else {
-        message(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor."))
+        message(insight::format_message(paste0("Variable `", name, "` contains only two different values. Consider converting it to a factor.")))
       }
     }
   }

@@ -72,7 +72,7 @@ pool_parameters <- function(x,
   }
 
   if (isTRUE(attributes(x[[1]])$exponentiate)) {
-    warning("Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and rather call 'pool_parameters(..., exponentiate = TRUE)'.", call. = FALSE)
+    warning(insight::format_message("Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and then call 'pool_parameters(..., exponentiate = TRUE)'."), call. = FALSE)
   }
 
 

@@ -240,7 +240,7 @@ model_parameters.cpglmm <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize)) {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning("Standardizing coefficients only works for fixed effects of the mixed model.", call. = FALSE)
+      warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
     }
     effects <- "fixed"
   }
@@ -302,7 +302,7 @@ standard_error.cpglmm <- function(model, ...) {
   if (!is.null(df_method)) {
     df_method <- tolower(df_method)
     if (df_method %in% c("satterthwaite", "kenward", "kr")) {
-      warning("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.", call. = FALSE)
+      warning(insight::format_message("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models."), call. = FALSE)
       df_method <- "wald"
     }
     df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "profile", "boot", "uniroot"))

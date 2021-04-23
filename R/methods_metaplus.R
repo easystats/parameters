@@ -16,7 +16,7 @@ model_parameters.metaplus <- function(model,
                                       ...) {
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
-      message("'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored.")
+      message(insight::format_message("'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."))
     }
     ci <- .95
   }

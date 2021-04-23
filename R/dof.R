@@ -209,7 +209,7 @@ dof <- degrees_of_freedom
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot"))) {
-    warning("'df_method' must be one of 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", call. = FALSE)
+    warning(insight::format_message("'df_method' must be one of 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now."), call. = FALSE)
     return(FALSE)
   }
 
