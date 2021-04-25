@@ -1,25 +1,26 @@
-library(testthat)
-library(parameters)
-if (length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3) {
-  Sys.setenv("RunAllparametersTests" = "yes")
-} else {
-  Sys.setenv("RunAllparametersTests" = "no")
-}
+if (require("testthat")) {
+  library(parameters)
+  if (length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3) {
+    Sys.setenv("RunAllparametersTests" = "yes")
+  } else {
+    Sys.setenv("RunAllparametersTests" = "no")
+  }
 
-osx <- tryCatch(
-  {
-    si <- Sys.info()
-    if (!is.null(si["sysname"])) {
-      si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
-    } else {
+  osx <- tryCatch(
+    {
+      si <- Sys.info()
+      if (!is.null(si["sysname"])) {
+        si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
+      } else {
+        FALSE
+      }
+    },
+    error = function(e) {
       FALSE
     }
-  },
-  error = function(e) {
-    FALSE
-  }
-)
+  )
 
-if (!osx || (osx && getRversion() >= "4.0.0")) {
-  test_check("parameters")
+  if (!osx || (osx && getRversion() >= "4.0.0")) {
+    test_check("parameters")
+  }
 }
