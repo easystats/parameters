@@ -496,13 +496,24 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }
-    data.frame(
-      "Chi2" = model$statistic,
-      "df" = model$parameter,
-      "p" = model$p.value,
-      "Method" = model$method,
-      stringsAsFactors = FALSE
-    )
+    if (names(model$statistic) == "F") {
+      data.frame(
+        "F" = model$statistic,
+        "df" = model$parameter[1],
+        "df_error" = model$parameter[2],
+        "p" = model$p.value,
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    } else {
+      data.frame(
+        "Chi2" = model$statistic,
+        "df" = model$parameter,
+        "p" = model$p.value,
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    }
   } else {
     if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
       data.frame(
