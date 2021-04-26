@@ -293,7 +293,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 .extract_htest_ranktest <- function(model) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
-    names <- unlist(strsplit(model$data.name, " ~ "))
+    names <- gsub("~", "", unlist(strsplit(model$data.name, " + ", fixed = TRUE)), fixed = TRUE)
     out <- data.frame(
       "Parameter1" = names[1],
       "Parameter2" = names[2],
