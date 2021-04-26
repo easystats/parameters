@@ -291,32 +291,49 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_ranktest <- function(model) {
-  if (grepl(" (and|by) ", model$data.name)) {
-    names <- unlist(strsplit(model$data.name, " (and|by) "))
+  # survey
+  if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
+    names <- unlist(strsplit(model$data.name, " ~ "))
     out <- data.frame(
       "Parameter1" = names[1],
       "Parameter2" = names[2],
+      "Statistic" = model$statistic[[1]],
+      "df_error" = model$parameter[[1]],
+      "Method" = model$method,
+      "p" = model$p.value[[1]],
       stringsAsFactors = FALSE
     )
+    out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
+    colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
   } else {
-    out <- data.frame(
-      "Parameter" = model$data.name,
-      stringsAsFactors = FALSE
-    )
+    if (grepl(" (and|by) ", model$data.name)) {
+      names <- unlist(strsplit(model$data.name, " (and|by) "))
+      out <- data.frame(
+        "Parameter1" = names[1],
+        "Parameter2" = names[2],
+        stringsAsFactors = FALSE
+      )
+    } else {
+      out <- data.frame(
+        "Parameter" = model$data.name,
+        stringsAsFactors = FALSE
+      )
+    }
+
+    if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
+      out$W <- model$statistic[[1]]
+      out$df_error <- model$parameter[[1]]
+      out$p <- model$p.value[[1]]
+    } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
+               grepl("Friedman", model$method, fixed = TRUE)) {
+      out$Chi2 <- model$statistic[[1]]
+      out$df_error <- model$parameter[[1]]
+      out$p <- model$p.value[[1]]
+    }
+
+    out$Method <- model$method
   }
 
-  if (grepl("Wilcoxon", model$method, fixed = TRUE)) {
-    out$W <- model$statistic[[1]]
-    out$df_error <- model$parameter[[1]]
-    out$p <- model$p.value[[1]]
-  } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
-             grepl("Friedman", model$method, fixed = TRUE)) {
-    out$Chi2 <- model$statistic[[1]]
-    out$df_error <- model$parameter[[1]]
-    out$p <- model$p.value[[1]]
-  }
-
-  out$Method <- model$method
   out
 }
 
@@ -344,41 +361,42 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
-  paired_test <- grepl("^Paired", model$method) && length(model$estimate) == 1
-  if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
-    names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
+  # survey
+  if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
+    names <- unlist(strsplit(model$data.name, " ~ "))
     out <- data.frame(
       "Parameter1" = names[1],
       "Parameter2" = names[2],
-      "Mean_Parameter1" = model$estimate[1],
-      "Mean_Parameter2" = model$estimate[2],
-      "Difference" = model$estimate[1] - model$estimate[2],
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "t" = model$statistic,
-      "df_error" = model$parameter,
-      "p" = model$p.value,
+      "Difference" = model$estimate[[1]],
+      "t" = model$statistic[[1]],
+      "df_error" = model$parameter[[1]],
       "Method" = model$method,
+      "p" = model$p.value[[1]],
       stringsAsFactors = FALSE
     )
-    attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
-  } else if (isTRUE(paired_test)) {
-    names <- unlist(strsplit(model$data.name, " (and|by) "))
-    out <- data.frame(
-      "Parameter" = names[1],
-      "Group" = names[2],
-      "Difference" = model$estimate,
-      "t" = model$statistic,
-      "df_error" = model$parameter,
-      "p" = model$p.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "Method" = model$method,
-      stringsAsFactors = FALSE
-    )
-  } else if (grepl(" by ", model$data.name, fixed = TRUE)) {
-    if (length(model$estimate) == 1) {
-      names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
+    out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
+    colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
+  } else {
+    paired_test <- grepl("^Paired", model$method) && length(model$estimate) == 1
+    if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
+      names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
+      out <- data.frame(
+        "Parameter1" = names[1],
+        "Parameter2" = names[2],
+        "Mean_Parameter1" = model$estimate[1],
+        "Mean_Parameter2" = model$estimate[2],
+        "Difference" = model$estimate[1] - model$estimate[2],
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
+        "t" = model$statistic,
+        "df_error" = model$parameter,
+        "p" = model$p.value,
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+      attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
+    } else if (isTRUE(paired_test)) {
+      names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
         "Parameter" = names[1],
         "Group" = names[2],
@@ -391,14 +409,48 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
+    } else if (grepl(" by ", model$data.name, fixed = TRUE)) {
+      if (length(model$estimate) == 1) {
+        names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
+        out <- data.frame(
+          "Parameter" = names[1],
+          "Group" = names[2],
+          "Difference" = model$estimate,
+          "CI" = .95,
+          "CI_low" = as.vector(model$conf.int[, 1]),
+          "CI_high" = as.vector(model$conf.int[, 2]),
+          "t" = model$statistic,
+          "df_error" = model$parameter,
+          "p" = model$p.value,
+          "CI_low" = model$conf.int[1],
+          "CI_high" = model$conf.int[2],
+          "Method" = model$method,
+          stringsAsFactors = FALSE
+        )
+      } else {
+        names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
+        out <- data.frame(
+          "Parameter" = names[1],
+          "Group" = names[2],
+          "Mean_Group1" = model$estimate[1],
+          "Mean_Group2" = model$estimate[2],
+          "Difference" = model$estimate[2] - model$estimate[1],
+          "CI_low" = model$conf.int[1],
+          "CI_high" = model$conf.int[2],
+          "t" = model$statistic,
+          "df_error" = model$parameter,
+          "p" = model$p.value,
+          "Method" = model$method,
+          stringsAsFactors = FALSE
+        )
+        attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
+      }
     } else {
-      names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
       out <- data.frame(
-        "Parameter" = names[1],
-        "Group" = names[2],
-        "Mean_Group1" = model$estimate[1],
-        "Mean_Group2" = model$estimate[2],
-        "Difference" = model$estimate[2] - model$estimate[1],
+        "Parameter" = model$data.name,
+        "Mean" = model$estimate,
+        "mu" = model$null.value,
+        "Difference" = model$estimate - model$null.value,
         "CI_low" = model$conf.int[1],
         "CI_high" = model$conf.int[2],
         "t" = model$statistic,
@@ -407,23 +459,9 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "Method" = model$method,
         stringsAsFactors = FALSE
       )
-      attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
     }
-  } else {
-    out <- data.frame(
-      "Parameter" = model$data.name,
-      "Mean" = model$estimate,
-      "mu" = model$null.value,
-      "Difference" = model$estimate - model$null.value,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "t" = model$statistic,
-      "df_error" = model$parameter,
-      "p" = model$p.value,
-      "Method" = model$method,
-      stringsAsFactors = FALSE
-    )
   }
+
   attr(out, "htest_type") <- "ttest"
   out
 }
@@ -452,17 +490,12 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 .extract_htest_chi2 <- function(model) {
-  if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
-    data.frame(
-      "Odds Ratio" = model$estimate,
-      # "CI" = attributes(model$conf.int)$conf.level,
-      "CI_low" = model$conf.int[1],
-      "CI_high" = model$conf.int[2],
-      "p" = model$p.value,
-      "Method" = model$method,
-      stringsAsFactors = FALSE
-    )
-  } else {
+  # survey-chisq-test
+  if (("observed" %in% names(model) && inherits(model$observed, "svytable")) ||
+      grepl("^svychisq", model$data.name)) {
+    if (grepl("Pearson's X", model$method, fixed = TRUE)) {
+      model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
+    }
     data.frame(
       "Chi2" = model$statistic,
       "df" = model$parameter,
@@ -470,6 +503,26 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       "Method" = model$method,
       stringsAsFactors = FALSE
     )
+  } else {
+    if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
+      data.frame(
+        "Odds Ratio" = model$estimate,
+        # "CI" = attributes(model$conf.int)$conf.level,
+        "CI_low" = model$conf.int[1],
+        "CI_high" = model$conf.int[2],
+        "p" = model$p.value,
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    } else {
+      data.frame(
+        "Chi2" = model$statistic,
+        "df" = model$parameter,
+        "p" = model$p.value,
+        "Method" = model$method,
+        stringsAsFactors = FALSE
+      )
+    }
   }
 }
 
