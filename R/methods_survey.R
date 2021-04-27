@@ -98,6 +98,9 @@ ci.svyglm <- function(x, ci = .95, method = c("wald", "likelihood"), ...) {
 }
 
 #' @export
+ci.svyolr <- ci.svyglm
+
+#' @export
 ci.svyglm.nb <- ci.tobit
 
 #' @export
