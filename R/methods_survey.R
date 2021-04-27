@@ -1,5 +1,6 @@
 # model_parameters -----------------------------------------
 
+#' @export
 model_parameters.svyglm <- function(model,
                                     ci = .95,
                                     df_method = "wald",
