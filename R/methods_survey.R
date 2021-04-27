@@ -1,3 +1,38 @@
+# model_parameters -----------------------------------------
+
+model_parameters.svyglm <- function(model,
+                                    ci = .95,
+                                    df_method = "wald",
+                                    bootstrap = FALSE,
+                                    iterations = 1000,
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    robust = FALSE,
+                                    p_adjust = NULL,
+                                    verbose = TRUE,
+                                    ...) {
+  if (insight::n_obs(model) > 1e4 && df_method == "likelihood") {
+    message(insight::format_message("Likelihood confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs."))
+  }
+
+  out <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    df_method = df_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    ...
+  )
+
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  out
+}
+
 
 
 # simulate_model -----------------------------------------
@@ -8,6 +43,7 @@ simulate_model.svyglm.nb <- simulate_model.default
 
 #' @export
 simulate_model.svyglm.zip <- simulate_model.default
+
 
 
 # standard erors -----------------------------------------
@@ -45,6 +81,21 @@ standard_error.svyolr <- standard_error.svyglm
 
 
 # confidence intervals -----------------------------------
+
+#' @rdname ci.merMod
+#' @export
+ci.svyglm <- function(x, ci = .95, method = c("wald", "likelihood"), ...) {
+  method <- match.arg(method)
+  if (method == "likelihood") {
+    out <- lapply(ci, function(i) .ci_likelihood(model = x, ci = i))
+    out <- do.call(rbind, out)
+  } else {
+    out <- ci_wald(model = x, ci = ci)
+  }
+
+  row.names(out) <- NULL
+  out
+}
 
 #' @export
 ci.svyglm.nb <- ci.tobit
@@ -94,3 +145,34 @@ p_value.svyglm.nb <- function(model, ...) {
 
 #' @export
 p_value.svyglm.zip <- p_value.svyglm.nb
+
+
+
+
+# helper --------------------
+
+.ci_likelihood <- function(model, ci) {
+  glm_ci <- tryCatch(
+    {
+      out <- as.data.frame(stats::confint(model, level = ci, method = "likelihood"), stringsAsFactors = FALSE)
+      names(out) <- c("CI_low", "CI_high")
+
+      out$CI <- ci
+      out$Parameter <- insight::get_parameters(model, effects = "fixed", component = "conditional")$Parameter
+
+      out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
+      rownames(out) <- NULL
+
+      out
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  if (is.null(glm_ci)) {
+    glm_ci <- ci_wald(model, ci = ci)
+  }
+
+  glm_ci
+}

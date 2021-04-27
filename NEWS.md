@@ -9,10 +9,16 @@
 * `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the 
   *survey* package.
 
+## General
+
+* Performance improvements for models from package *survey*.
+
 ## Changes to functions
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
   expression as string, to filter parameters from the returned data frame.
+
+* `ci()` for `svyglm` gains a `method` argument.
 
 ## Bug fixes
 

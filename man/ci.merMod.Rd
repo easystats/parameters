@@ -2,7 +2,8 @@
 % Please edit documentation in R/2_ci.R, R/methods_DirichletReg.R,
 %   R/methods_betareg.R, R/methods_glmmTMB.R, R/methods_lme4.R,
 %   R/methods_mass.R, R/methods_mfx.R, R/methods_mixmod.R, R/methods_mixor.R,
-%   R/methods_nlme.R, R/methods_ordinal.R, R/methods_pscl.R, R/methods_spaMM.R
+%   R/methods_nlme.R, R/methods_ordinal.R, R/methods_pscl.R, R/methods_spaMM.R,
+%   R/methods_survey.R
 \name{ci.default}
 \alias{ci.default}
 \alias{ci.glm}
@@ -20,6 +21,7 @@
 \alias{ci.zeroinfl}
 \alias{ci.hurdle}
 \alias{ci.HLfit}
+\alias{ci.svyglm}
 \title{Confidence Intervals (CI)}
 \usage{
 \method{ci}{default}(x, ci = 0.95, dof = Inf, method = NULL, ...)
@@ -103,6 +105,8 @@
   iterations = 100,
   ...
 )
+
+\method{ci}{svyglm}(x, ci = 0.95, method = c("wald", "likelihood"), ...)
 }
 \arguments{
 \item{x}{A statistical model.}

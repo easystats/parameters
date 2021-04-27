@@ -195,7 +195,7 @@ dof <- degrees_of_freedom
 
   method <- tolower(method)
   if (inherits(model, c("polr", "glm"))) {
-    if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr")) {
+    if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr", "likelihood")) {
       return(TRUE)
     } else {
       warning("'df_method' must be one of 'wald' or 'profile'. Using 'wald' now.", call. = FALSE)
