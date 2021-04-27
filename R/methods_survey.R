@@ -31,13 +31,17 @@ standard_error.svyglm.zip <- standard_error.svyglm.nb
 
 #' @export
 standard_error.svyglm <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  se <- cs[, 2]
+  vc <- insight::get_varcov(model)
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(se)),
-    SE = as.vector(se)
+    Parameter = .remove_backticks_from_string(row.names(vc)),
+    SE = as.vector(sqrt(diag(vc)))
   )
 }
+
+
+#' @export
+standard_error.svyolr <- standard_error.svyglm
+
 
 
 # confidence intervals -----------------------------------
@@ -52,43 +56,23 @@ ci.svyglm.glimML <- ci.tobit
 ci.svyglm.zip <- ci.tobit
 
 
+
 # p values -----------------------------------------------
 
 #' @export
 p_value.svyglm <- function(model, verbose = TRUE, ...) {
-  cs <- stats::coef(summary(model))
-  if (ncol(cs) < 4) {
-    if (isTRUE(verbose)) {
-      warning("Could not retrieve p-values.", call. = FALSE)
-    }
-    return(NULL)
-  }
-
-  p <- cs[, 4]
+  statistic <- insight::get_statistic(model)
+  df <- insight::get_df(model, type = "residual")
+  p <- 2 * stats::pt(-abs(statistic$Statistic), df = df)
   .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
+    Parameter = statistic$Parameter,
     p = as.vector(p)
   )
 }
 
 
 #' @export
-p_value.svyolr <- function(model, verbose = TRUE, ...) {
-  cs <- stats::coef(summary(model))
-  if (ncol(cs) < 3) {
-    if (isTRUE(verbose)) {
-      warning("Could not retrieve p-values.", call. = FALSE)
-    }
-    return(NULL)
-  }
-
-  p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    p = as.vector(p)
-  )
-}
+p_value.svyolr <- p_value.svyglm
 
 
 #' @export
