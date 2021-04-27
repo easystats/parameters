@@ -195,12 +195,19 @@
 <code>SemiParBIV</code> (<em>GJRM</em>), <code>selection</code> (<em>sampleSelection</em>), <code>htest</code> from the <em>survey</em> package.</li>
 </ul>
 </div>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor" aria-hidden="true"></a>General</h2>
+<ul>
+<li>Performance improvements for models from package <em>survey</em>.</li>
+</ul>
+</div>
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
 <ul>
-<li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>parameters</code> argument, which takes a regular expression as string, to filter parameters from the returned data frame.</li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>parameters</code> argument, which takes a regular expression as string, to filter parameters from the returned data frame.</p></li>
+<li><p><code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <code>svyglm</code> gains a <code>method</code> argument.</p></li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -215,9 +222,9 @@
 <h1 class="page-header" data-toc-text="0.13.0">
 <a href="#parameters-0130" class="anchor" aria-hidden="true"></a>parameters 0.13.0<small> 2021-04-08 </small>
 </h1>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-1" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li>Revised and improved the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li>
 </ul>
@@ -274,9 +281,9 @@
 <h1 class="page-header" data-toc-text="0.12.0">
 <a href="#parameters-0120" class="anchor" aria-hidden="true"></a>parameters 0.12.0<small> 2021-02-21 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-2" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li><p>Roll-back R dependency to R &gt;= 3.4.</p></li>
 <li>
@@ -490,9 +497,9 @@
 <li><p><code><a href="../reference/center.html">center()</a></code>, to center variables.</p></li>
 </ul>
 </div>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-3" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li><p>Better support for (weighted) multivariate response models of class <code>mlm</code> for functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code> or <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code>.</p></li>
 <li><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> is now re-exported from the <em>insight</em> package.</p></li>
@@ -549,9 +556,9 @@
 <h1 class="page-header" data-toc-text="0.8.5">
 <a href="#parameters-085" class="anchor" aria-hidden="true"></a>parameters 0.8.5<small> 2020-09-12 </small>
 </h1>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-4" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li><p>Added vignette on model parameters and missing data.</p></li>
 <li><p>Update citation.</p></li>
@@ -661,9 +668,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#parameters-070" class="anchor" aria-hidden="true"></a>parameters 0.7.0<small> 2020-05-18 </small>
 </h1>
-<div id="general-4" class="section level2">
+<div id="general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-4" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-5" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li>We changed the computation of confidence intervals or standard errors, so these are now based on a t-distribution with degrees of freedom and not normal distribution assuming infinite degrees of freedom. This was implemented for most functions before and only affects few functions (like <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> or CIs for standardized parameters from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when standardization method was <code>"posthoc"</code>).</li>
 </ul>
@@ -745,9 +752,9 @@
 <h1 class="page-header" data-toc-text="0.6.1">
 <a href="#parameters-061" class="anchor" aria-hidden="true"></a>parameters 0.6.1<small> 2020-04-08 </small>
 </h1>
-<div id="general-5" class="section level2">
+<div id="general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-5" class="anchor" aria-hidden="true"></a>General</h2>
+<a href="#general-6" class="anchor" aria-hidden="true"></a>General</h2>
 <ul>
 <li>Remove ‘Zelig’ from suggested packages, as it was removed from CRAN.</li>
 </ul>
