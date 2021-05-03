@@ -304,7 +304,7 @@
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
     sig <- tryCatch(
       {
-        suppressWarnings(insight::get_sigma(model))
+        suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE))
       },
       error = function(e) {
         NULL

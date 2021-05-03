@@ -107,7 +107,7 @@
     )
   )
 
-  ran_sigma <- data.frame(insight::get_sigma(model, verbose = FALSE))
+  ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
 
   # random intercept - tau00
   if (nrow(ran_intercept) > 0) {
