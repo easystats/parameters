@@ -257,7 +257,7 @@ returned.</p></td>
     <p>By default, p-values are based on Wald-test approximations (see <code><a href='p_value_wald.html'>p_value_wald</a></code>). For certain situations, the "m-l-1" rule might be a better approximation. That is, for <code>method = "ml1"</code>, <code><a href='p_value_ml1.html'>p_value_ml1</a></code> is called. For <code>lmerMod</code> objects, if <code>method = "kenward"</code>, p-values are based on Kenward-Roger approximations, i.e. <code><a href='p_value_kenward.html'>p_value_kenward</a></code> is called, and <code>method = "satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code><a href='p_value.html'>p_value(method = "robust")</a></code>
+    <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code>p_value(method = "robust")</code>
   rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
   <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
   thus only work for those models supported by those packages.</p>
@@ -268,7 +268,7 @@ returned.</p></td>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
   <span class='fu'><a href='p_value.html'>p_value</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;      Parameter            p
+</div><div class='co'>#&gt;      Parameter            p
 #&gt; 1  (Intercept) 9.561737e-01
 #&gt; 2 Sepal.Length 1.273781e-44</div></pre>
   </div>

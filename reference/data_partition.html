@@ -216,7 +216,7 @@
 <span class='va'>df</span><span class='op'>$</span><span class='va'>Smell</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Strong"</span>, <span class='st'>"Light"</span><span class='op'>)</span>, <span class='fl'>75</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $training
+</div><div class='co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 136          7.7         3.0          6.1         2.3  virginica  Light
 #&gt; 68           5.8         2.7          4.1         1.0 versicolor  Light
@@ -372,7 +372,7 @@
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
 #&gt; 149          6.2         3.4          5.4         2.3  virginica Strong
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span>, group <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $training
+</div><div class='co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 39           4.4         3.0          1.3         0.2     setosa Strong
 #&gt; 9            4.4         2.9          1.4         0.2     setosa Strong
@@ -528,7 +528,7 @@
 #&gt; 148          6.5         3.0          5.2         2.0  virginica  Light
 #&gt; 150          5.9         3.0          5.1         1.8  virginica  Light
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Species"</span>, <span class='st'>"Smell"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $training
+</div><div class='co'>#&gt; $training
 #&gt;     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species  Smell
 #&gt; 8            5.0         3.4          1.5         0.2     setosa  Light
 #&gt; 4            4.6         3.1          1.5         0.2     setosa  Light

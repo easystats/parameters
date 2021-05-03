@@ -239,17 +239,17 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>Days</span> <span class='op'>|</span> <span class='va'>Subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleepstudy</span><span class='op'>)</span>
   <span class='fu'>random_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Random Effects
-#&gt; 
-#&gt; Within-Group Variance          </span><span>654.94 (25.59)
-#&gt; </span><span style='color: #0000BB;'>Between-Group Variance
-#&gt; </span><span>  Random Intercept (Subject)    612.1 (24.74)
+</div><div class='co'>#&gt; <span style='color: #0000BB;'># Random Effects</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; Within-Group Variance          </span><span>654.94 (25.59)</span>
+#&gt; <span style='color: #0000BB;'>Between-Group Variance</span>
+<span style='color: #0000BB;'>#&gt; </span><span>  Random Intercept (Subject)    612.1 (24.74)</span>
 #&gt;   Random Slope (Subject.Days)   35.07  (5.92)
-#&gt; </span><span style='color: #0000BB;'>Correlations
-#&gt; </span><span>  Subject.Days                   0.07
-#&gt; </span><span style='color: #0000BB;'>N (groups per factor)
-#&gt; </span><span>  Subject                          18
-#&gt; </span><span style='color: #0000BB;'>Observations                   </span><span>   180</div></span></pre>
+#&gt; <span style='color: #0000BB;'>Correlations</span>
+<span style='color: #0000BB;'>#&gt; </span><span>  Subject.Days                   0.07</span>
+#&gt; <span style='color: #0000BB;'>N (groups per factor)</span>
+<span style='color: #0000BB;'>#&gt; </span><span>  Subject                          18</span>
+#&gt; <span style='color: #0000BB;'>Observations                   </span><span>   180</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

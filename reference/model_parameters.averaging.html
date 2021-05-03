@@ -293,7 +293,7 @@ case of bootstrapped frequentist models.</p></td>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
 categorical predictors is desired, standardize the data with
-<code><a href='https://easystats.github.io/effectsize/reference/standardize.html'>effectsize::standardize(force = TRUE)</a></code> before fitting the model.
+<code>effectsize::standardize(force = TRUE)</code> before fitting the model.
 Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></td>
     </tr>
@@ -319,7 +319,7 @@ works when <code>standardize="refit"</code>.</p></td>
   <span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Response level: definitely</span><span>
+</div><div class='co'>#&gt; <span style='color: #0000BB;'># Response level: definitely</span>
 #&gt; 
 #&gt; Parameter       | Log-Odds |   SE |         95% CI |     z |      p
 #&gt; -------------------------------------------------------------------
@@ -327,7 +327,7 @@ works when <code>standardize="refit"</code>.</p></td>
 #&gt; religion        |     0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | &lt; .001
 #&gt; gender [female] |    -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 0.414 
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Response level: probably</span><span>
+#&gt; <span style='color: #0000BB;'># Response level: probably</span>
 #&gt; 
 #&gt; Parameter       | Log-Odds |   SE |        95% CI |    z |     p
 #&gt; ----------------------------------------------------------------
@@ -335,13 +335,13 @@ works when <code>standardize="refit"</code>.</p></td>
 #&gt; religion        |     0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 0.044
 #&gt; gender [female] |     0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 0.370
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Response level: probably not</span><span>
+#&gt; <span style='color: #0000BB;'># Response level: probably not</span>
 #&gt; 
 #&gt; Parameter       | Log-Odds |   SE |        95% CI |     z |     p
 #&gt; -----------------------------------------------------------------
 #&gt; (Intercept)     |     0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 0.268
 #&gt; religion        |     0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945
-#&gt; gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</div></span></pre>
+#&gt; gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

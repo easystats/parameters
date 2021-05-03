@@ -251,7 +251,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
+</div><div class='co'>#&gt;   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length
 #&gt; 1    3.662706        -0.9956017        -2.209584  -0.3587959    0.9451276
 #&gt; 2    3.647275        -0.6123895        -2.501323  -0.1082739    0.9663680
 #&gt; 3    3.504114        -1.4132301        -2.650989   0.2286031    0.9742007
@@ -275,7 +275,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>simulate_model</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'giveCsparse' has been deprecated; setting 'repr = "T"' for you</span></div><div class='output co'>#&gt;   (Intercept)   minedno
+</div><div class='co'>#&gt; <span class='warning'>Warning: </span>'giveCsparse' has been deprecated; setting 'repr = "T"' for you</div><div class='co'>#&gt; <span class='warning'>Warning: </span>'giveCsparse' has been deprecated; setting 'repr = "T"' for you</div><div class='co'>#&gt; <span class='warning'>Warning: </span>'giveCsparse' has been deprecated; setting 'repr = "T"' for you</div><div class='co'>#&gt;   (Intercept)   minedno
 #&gt; 1   0.8381675 -2.195582
 #&gt; 2   0.9332055 -1.989318
 #&gt; 3   0.2996814 -1.532834

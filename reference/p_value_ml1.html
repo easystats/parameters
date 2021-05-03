@@ -224,7 +224,7 @@ for such inferential statitics (see <cite>Li and Redden 2015</cite>). The
 <em>m-l-1</em> heuristic is such an approach that uses a t-distribution with
 fewer degrees of freedom (<code>dof_ml1</code>) to calculate p-values
 (<code>p_value_ml1</code>), standard errors (<code>se_ml1</code>) and confidence intervals
-(<code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci(method = "ml1")</a></code>).</p>
+(<code>ci(method = "ml1")</code>).</p>
 <h3 class='hasAnchor' id='degrees-of-freedom-for-longitudinal-designs-repeated-measures-'><a class='anchor' aria-hidden='true' href='#degrees-of-freedom-for-longitudinal-designs-repeated-measures-'></a>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
@@ -258,7 +258,7 @@ parameters, based on the "m-l-1" heuristic.</p></div>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
   <span class='fu'><a href='p_value_ml1.html'>p_value_ml1</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;      Parameter          p
+</div><div class='co'>#&gt;      Parameter          p
 #&gt; 1  (Intercept) 0.96504927
 #&gt; 2 Sepal.Length 0.04534945</div><div class='input'><span class='co'># }</span>
 </div></pre>

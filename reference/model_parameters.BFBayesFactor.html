@@ -239,7 +239,7 @@ included in the summary output.</p></td>
     <tr>
       <th>rope_range</th>
       <td><p>ROPE's lower and higher bounds. Should be a list of two
-values (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>,
+values (e.g., <code>c(-0.1, 0.1)</code>) or <code>"default"</code>. If <code>"default"</code>,
 the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
@@ -290,17 +290,17 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: BayesFactor</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'>************</span>
-#&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; Bayesian t-test
+</div><div class='co'>#&gt; Loading required package: BayesFactor</div><div class='co'>#&gt; Loading required package: coda</div><div class='co'>#&gt; Loading required package: Matrix</div><div class='co'>#&gt; ************
+#&gt; Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).
+#&gt; 
+#&gt; Type BFManual() to open the manual.
+#&gt; ************</div><div class='co'>#&gt; Bayesian t-test
 #&gt; 
 #&gt; Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior |     BF
 #&gt; -------------------------------------------------------------------------------------
 #&gt; Difference |  -0.92 | [-1.07, -0.78] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000
-#&gt; Cohen's D  |   1.00 | [ 0.81,  1.20] | 100% |        0% |                    |       </div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Using highest density intervals as credible intervals.</span></div><div class='input'><span class='co'># }</span>
+#&gt; Cohen's D  |   1.00 | [ 0.81,  1.20] | 100% |        0% |                    |       </div><div class='co'>#&gt; 
+#&gt; Using highest density intervals as credible intervals.</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

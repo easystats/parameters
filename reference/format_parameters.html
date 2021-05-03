@@ -226,14 +226,14 @@ depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 that calculate estimated marginal means or marginal effects, such as
 <a href='https://CRAN.R-project.org/package=modelbased'><span class="pkg">modelbased</span></a>, <a href='https://CRAN.R-project.org/package=emmeans'><span class="pkg">emmeans</span></a> or <a href='https://CRAN.R-project.org/package=ggeffects'><span class="pkg">ggeffects</span></a>. To raise
-awareness for this issue, you may use <code><a href='https://rdrr.io/r/base/print.html'>print(...,show_formula=TRUE)</a></code>
+awareness for this issue, you may use <code>print(...,show_formula=TRUE)</code>
 to add the model-specification to the output of the
 <code><a href='print.parameters_model.html'>print()</a></code> method for <code><a href='model_parameters.html'>model_parameters()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Sepal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>format_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                          (Intercept)                    Speciesversicolor 
+</div><div class='co'>#&gt;                          (Intercept)                    Speciesversicolor 
 #&gt;                        "(Intercept)"               "Species [versicolor]" 
 #&gt;                     Speciesvirginica                          Sepal.Width 
 #&gt;                "Species [virginica]"                        "Sepal.Width" 
@@ -241,7 +241,7 @@ to add the model-specification to the output of the
 #&gt; "Species [versicolor] * Sepal.Width"  "Species [virginica] * Sepal.Width" </div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>Species</span> <span class='op'>/</span> <span class='va'>Sepal.Width</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>format_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                          (Intercept)                         Petal.Length 
+</div><div class='co'>#&gt;                          (Intercept)                         Petal.Length 
 #&gt;                        "(Intercept)"                       "Petal.Length" 
 #&gt;                    Speciesversicolor                     Speciesvirginica 
 #&gt;               "Species [versicolor]"                "Species [virginica]" 
@@ -251,7 +251,7 @@ to add the model-specification to the output of the
 #&gt;  "Species [virginica] * Sepal.Width" </div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span>, <span class='fl'>2</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>format_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                (Intercept)          Speciesversicolor 
+</div><div class='co'>#&gt;                (Intercept)          Speciesversicolor 
 #&gt;              "(Intercept)"     "Species [versicolor]" 
 #&gt;           Speciesvirginica      poly(Sepal.Width, 2)1 
 #&gt;      "Species [virginica]" "Sepal.Width [1st degree]" 
@@ -259,7 +259,7 @@ to add the model-specification to the output of the
 #&gt; "Sepal.Width [2nd degree]" </div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span>, <span class='fl'>2</span>, raw <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>format_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                       (Intercept)                 Speciesversicolor 
+</div><div class='co'>#&gt;                       (Intercept)                 Speciesversicolor 
 #&gt;                     "(Intercept)"            "Species [versicolor]" 
 #&gt;                  Speciesvirginica poly(Sepal.Width, 2, raw = TRUE)1 
 #&gt;             "Species [virginica]"        "Sepal.Width [1st degree]" 

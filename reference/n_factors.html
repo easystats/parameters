@@ -249,7 +249,7 @@ Principal Components. <code>"default"</code> will select <code>"minres"</code> i
       <td><p>Package from which respective methods are used. Can be
 <code>"all"</code> or a vector containing <code>"nFactors"</code>, <code>"psych"</code> and
 <code>"EGAnet"</code>. However, <code>"EGAnet"</code> can be very slow for bigger
-datasets. Thus, by default, <code><a href='https://rdrr.io/r/base/c.html'>c("nFactors", "psych")</a></code> are selected.</p></td>
+datasets. Thus, by default, <code>c("nFactors", "psych")</code> are selected.</p></td>
     </tr>
     <tr>
       <th>cor</th>
@@ -336,17 +336,17 @@ that may fail.</p></td>
   <span class='fu'>n_factors</span><span class='op'>(</span><span class='va'>mtcars</span>, type <span class='op'>=</span> <span class='st'>"FA"</span>, algorithm <span class='op'>=</span> <span class='st'>"mle"</span>, package <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 <span class='co'># }</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘nFactors’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:lattice’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    parallel</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>EGAnet (version 0.9.8) </span>
-#&gt; <span class='message'>For help getting started, type browseVignettes("EGAnet")</span>
-#&gt; <span class='message'> For bugs and errors, submit an issue to &lt;https://github.com/hfgolino/EGAnet/issues&gt; </span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>NEW: EGAnet will write your Methods section for you. Type ?methods.section for more details</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:
+</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘nFactors’</div><div class='co'>#&gt; The following object is masked from ‘package:lattice’:
 #&gt; 
-#&gt; </span><span>The choice of 3 dimensions is supported by 7 (28.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, Velicer's MAP, BIC, BIC).</div></span></pre>
+#&gt;     parallel</div><div class='co'>#&gt; 
+#&gt; EGAnet (version 0.9.8) 
+#&gt; For help getting started, type browseVignettes("EGAnet")
+#&gt;  For bugs and errors, submit an issue to &lt;https://github.com/hfgolino/EGAnet/issues&gt; 
+#&gt; 
+#&gt; NEW: EGAnet will write your Methods section for you. Type ?methods.section for more details</div><div class='co'>#&gt; <span style='color: #0000BB;'># Method Agreement Procedure:</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>The choice of 3 dimensions is supported by 7 (28.00%) methods out of 25 (Bartlett, CNG, SE Scree, R2, Velicer's MAP, BIC, BIC).</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

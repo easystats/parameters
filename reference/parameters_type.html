@@ -208,7 +208,7 @@
 
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           Parameter      Type        Link              Term     Variable
+</div><div class='co'>#&gt;           Parameter      Type        Link              Term     Variable
 #&gt; 1       (Intercept) intercept        Mean       (Intercept)         &lt;NA&gt;
 #&gt; 2      Petal.Length   numeric Association      Petal.Length Petal.Length
 #&gt; 3 Speciesversicolor    factor  Difference Speciesversicolor      Species
@@ -225,7 +225,7 @@
 #&gt; 4                 NA              NA                 NA</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span>, <span class='fl'>2</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               Parameter      Type        Link                  Term    Variable
+</div><div class='co'>#&gt;               Parameter      Type        Link                  Term    Variable
 #&gt; 1           (Intercept) intercept        Mean           (Intercept)        &lt;NA&gt;
 #&gt; 2     Speciesversicolor    factor  Difference     Speciesversicolor     Species
 #&gt; 3      Speciesvirginica    factor  Difference      Speciesvirginica     Species
@@ -245,7 +245,7 @@
 #&gt; 5                 NA              NA                 NA</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/poly.html'>poly</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span>, <span class='fl'>2</span>, raw <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           Parameter      Type        Link                  Term
+</div><div class='co'>#&gt;                           Parameter      Type        Link                  Term
 #&gt; 1                       (Intercept) intercept        Mean           (Intercept)
 #&gt; 2                 Speciesversicolor    factor  Difference     Speciesversicolor
 #&gt; 3                  Speciesvirginica    factor  Difference      Speciesvirginica
@@ -266,7 +266,7 @@
 <span class='co'># Interactions</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Width</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                       Parameter        Type        Link              Term
+</div><div class='co'>#&gt;                       Parameter        Type        Link              Term
 #&gt; 1                   (Intercept)   intercept        Mean       (Intercept)
 #&gt; 2                   Sepal.Width     numeric Association       Sepal.Width
 #&gt; 3             Speciesversicolor      factor  Difference Speciesversicolor
@@ -289,7 +289,7 @@
 #&gt; 6    Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Width</span> <span class='op'>*</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                                     Parameter        Type        Link
+</div><div class='co'>#&gt;                                     Parameter        Type        Link
 #&gt; 1                                 (Intercept)   intercept        Mean
 #&gt; 2                                 Sepal.Width     numeric Association
 #&gt; 3                           Speciesversicolor      factor  Difference
@@ -343,7 +343,7 @@
 #&gt; 12       virginica        Sepal.Width</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Sepal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                       Parameter        Type        Link              Term
+</div><div class='co'>#&gt;                       Parameter        Type        Link              Term
 #&gt; 1                   (Intercept)   intercept        Mean       (Intercept)
 #&gt; 2             Speciesversicolor      factor  Difference Speciesversicolor
 #&gt; 3              Speciesvirginica      factor  Difference  Speciesvirginica
@@ -366,7 +366,7 @@
 #&gt; 6  Speciesvirginica            Species       virginica               &lt;NA&gt;</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>/</span> <span class='va'>Sepal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                       Parameter      Type       Link              Term
+</div><div class='co'>#&gt;                       Parameter      Type       Link              Term
 #&gt; 1                   (Intercept) intercept       Mean       (Intercept)
 #&gt; 2             Speciesversicolor    factor Difference Speciesversicolor
 #&gt; 3              Speciesvirginica    factor Difference  Speciesvirginica
@@ -393,7 +393,7 @@
 <span class='va'>data</span><span class='op'>$</span><span class='va'>fac2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>Sepal.Width</span> <span class='op'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>Sepal.Width</span><span class='op'>)</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>/</span> <span class='va'>fac2</span> <span class='op'>/</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                               Parameter      Type        Link              Term
+</div><div class='co'>#&gt;                               Parameter      Type        Link              Term
 #&gt; 1                           (Intercept) intercept        Mean       (Intercept)
 #&gt; 2                     Speciesversicolor    factor  Difference Speciesversicolor
 #&gt; 3                      Speciesvirginica    factor  Difference  Speciesvirginica
@@ -447,7 +447,7 @@
 #&gt; 12   Speciesvirginica</div><div class='input'>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>/</span> <span class='va'>fac2</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span>
 <span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                               Parameter        Type        Link
+</div><div class='co'>#&gt;                               Parameter        Type        Link
 #&gt; 1                           (Intercept)   intercept        Mean
 #&gt; 2                     Speciesversicolor      factor  Difference
 #&gt; 3                      Speciesvirginica      factor  Difference

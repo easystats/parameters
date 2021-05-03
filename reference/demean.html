@@ -407,7 +407,7 @@ between-effects are printed in separated blocks.</p></td>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
+</div><div class='co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
 #&gt; 1             5.890698             3.927907          -0.7906977
 #&gt; 2             5.721622             3.645946          -0.8216216
 #&gt; 3             5.721622             3.645946          -1.0216216
@@ -422,9 +422,9 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 5           -1.982051
 #&gt; 6           -2.429032</div><div class='input'>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.
-#&gt; </span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
+</div><div class='co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.</span>
+<span style='color: #BBBB00;'>#&gt; </span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
 #&gt; 1             5.890698       1.0930233      0.3488372              0.3023256
 #&gt; 2             5.721622       0.9459459      0.3513514              0.3513514
 #&gt; 3             5.721622       0.9459459      0.3513514              0.3513514
@@ -453,7 +453,7 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 5               -0.2307692
 #&gt; 6               -0.4193548</div><div class='input'>
 <span class='fu'><a href='demean.html'>check_heterogeneity</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Possible heterogeneity bias due to following predictors: </span><span style='color: #BB0000;'>Sepal.Length, Petal.Length</span><span></div><div class='input'>
+</div><div class='co'>#&gt; Possible heterogeneity bias due to following predictors: <span style='color: #BB0000;'>Sepal.Length, Petal.Length</span></div><div class='input'>
 <span class='co'># demean interaction term x*y</span>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,
@@ -462,7 +462,7 @@ between-effects are printed in separated blocks.</p></td>
   ID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
 <span class='op'>)</span>
 <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"x*y"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
+</div><div class='co'>#&gt;   a_between x_y_between   a_within x_y_within
 #&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
 #&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
 #&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
@@ -473,7 +473,7 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div><div class='input'>
 <span class='co'># or in formula-notation</span>
 <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   a_between x_y_between   a_within x_y_within
+</div><div class='co'>#&gt;   a_between x_y_between   a_within x_y_within
 #&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
 #&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
 #&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
@@ -481,7 +481,7 @@ between-effects are printed in separated blocks.</p></td>
 #&gt; 5  2.333333    4.000000 -1.3333333  0.0000000
 #&gt; 6  2.500000    4.500000 -0.5000000  1.5000000
 #&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
-#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div></span></pre>
+#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

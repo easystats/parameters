@@ -280,7 +280,7 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
   <span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://amices.org/mice/reference/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;          term    estimate  std.error statistic        df      p.value
+</div><div class='co'>#&gt;          term    estimate  std.error statistic        df      p.value
 #&gt; 1 (Intercept) 18.14256305 3.54562901  5.116881 11.625350 0.0002813879
 #&gt; 2    age40-59 -6.15715380 2.19792337 -2.801351  5.969005 0.0312810653
 #&gt; 3    age60-99 -7.72866592 2.45997959 -3.141760  6.642762 0.0174969755

@@ -358,7 +358,7 @@
 <a href="#printing-and-table-formatting" class="anchor" aria-hidden="true"></a>Printing and table Formatting</h3>
 <ul>
 <li>
-<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> as an alias for <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display(format = "html")</a></code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered HTML markdown tables.</li>
+<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> as an alias for <code>display(format = "html")</code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered HTML markdown tables.</li>
 </ul>
 </div>
 </div>
@@ -403,7 +403,7 @@
 <ul>
 <li><p>Fixed breaking code / failing tests due to latest <em>effectsize</em> update.</p></li>
 <li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models of class <code>mlm</code>.</p></li>
-<li><p>Undocumented arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> worked for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>, but not when directly called inside <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Now, <code><a href="../reference/model_parameters.html">model_parameters(model, digits = 5, ci_digits = 8)</a></code> works again.</p></li>
+<li><p>Undocumented arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> worked for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>, but not when directly called inside <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Now, <code>model_parameters(model, digits = 5, ci_digits = 8)</code> works again.</p></li>
 <li><p>Fixed some minor printing-issues.</p></li>
 </ul>
 </div>
@@ -437,7 +437,7 @@
 <a href="#printing-and-table-formatting-1" class="anchor" aria-hidden="true"></a>Printing and table Formatting</h3>
 <ul>
 <li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, to format output from package-functions into different formats.</p></li>
-<li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> as an alias for <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display(format = "markdown")</a></code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered markdown tables.</p></li>
+<li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> as an alias for <code>display(format = "markdown")</code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered markdown tables.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>, to create a “pretty data frame” with nicer column names and formatted values. This is one of the worker-functions behind <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>.</p></li>
 </ul>
 </div>
@@ -767,7 +767,7 @@
 <a href="#model_parameters-3" class="anchor" aria-hidden="true"></a>model_parameters()</h3>
 <ul>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Bayesian models gains a <code>standardize</code> argument, to return standardized parameters from the posterior distribution.</p></li>
 <li><p>Improved <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for nested <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> (repeated measurements).</p></li>
@@ -779,7 +779,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-12" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
 <ul>
-<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://drizopoulos.github.io/GLMMadaptive/reference/methods.html" class="external-link">anova()</a></code> from <em>lmerTest</em> models.</li>
+<li>Fixed <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> from <em>lmerTest</em> models.</li>
 </ul>
 </div>
 </div>
