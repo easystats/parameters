@@ -88,4 +88,3 @@ if (require("testthat") && require("parameters")) {
     })
   }
 }
-

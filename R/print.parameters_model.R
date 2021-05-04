@@ -113,7 +113,7 @@ print.parameters_model <- function(x,
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print main table
-  cat( insight::export_table(
+  cat(insight::export_table(
     formatted_table,
     format = "text",
     caption = table_caption,
@@ -174,7 +174,7 @@ print.parameters_brms_meta <- print.parameters_model
                           show_sigma = FALSE,
                           show_formula = FALSE,
                           format = "text") {
-    # get attributes
+  # get attributes
   sigma <- attributes(x)$sigma
   verbose <- .additional_arguments(x, "verbose", TRUE)
 

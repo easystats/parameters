@@ -325,7 +325,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       out$df_error <- model$parameter[[1]]
       out$p <- model$p.value[[1]]
     } else if (grepl("Kruskal-Wallis", model$method, fixed = TRUE) ||
-               grepl("Friedman", model$method, fixed = TRUE)) {
+      grepl("Friedman", model$method, fixed = TRUE)) {
       out$Chi2 <- model$statistic[[1]]
       out$df_error <- model$parameter[[1]]
       out$p <- model$p.value[[1]]
@@ -492,7 +492,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
   if (("observed" %in% names(model) && inherits(model$observed, "svytable")) ||
-      grepl("^svychisq", model$data.name)) {
+    grepl("^svychisq", model$data.name)) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }

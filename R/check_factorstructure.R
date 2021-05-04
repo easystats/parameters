@@ -131,7 +131,6 @@ check_kmo <- function(x, ...) {
 #' @examples
 #' library(parameters)
 #' check_sphericity(mtcars)
-#'
 #' @details This function is strongly inspired by the \code{cortest.bartlett}
 #'   function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
 #'   author.

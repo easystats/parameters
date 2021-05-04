@@ -42,7 +42,8 @@ if (require("testthat") && require("parameters") && require("boot")) {
       out <- capture.output(print(params))
       expect_equal(
         out,
-        c("Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
+        c(
+          "Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
           "------------------------------------------------------------------",
           "(Intercept) |       37.29 | 1.88 | [33.45, 41.12] | 19.86 | < .001",
           "wt          |       -5.34 | 0.56 | [-6.49, -4.20] | -9.56 | < .001",
@@ -50,18 +51,21 @@ if (require("testthat") && require("parameters") && require("boot")) {
           "Model: mpg ~ wt (32 Observations)",
           "Residual standard deviation: 3.046 (df = 30)",
           "R2: 0.753; adjusted R2: 0.745"
-        ))
+        )
+      )
     }
 
     params <- model_parameters(model, summary = FALSE)
     out <- capture.output(print(params))
     expect_equal(
       out,
-      c("Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
+      c(
+        "Parameter   | Coefficient |   SE |         95% CI | t(30) |      p",
         "------------------------------------------------------------------",
         "(Intercept) |       37.29 | 1.88 | [33.45, 41.12] | 19.86 | < .001",
         "wt          |       -5.34 | 0.56 | [-6.49, -4.20] | -9.56 | < .001"
-      ))
+      )
+    )
   })
 
 

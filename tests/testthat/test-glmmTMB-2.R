@@ -57,5 +57,4 @@ if (.runThisTest && require("testthat") && require("parameters") && require("glm
     expect_equal(mp$Coefficient, as.vector(unlist(fixef(model))), tolerance = 1e-3)
     expect_equal(mp$Component, c("conditional", "conditional", "dispersion", "dispersion"))
   })
-
 }

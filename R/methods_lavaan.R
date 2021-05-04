@@ -42,8 +42,10 @@
 #'   # filter parameters
 #'   model_parameters(
 #'     model,
-#'     parameters = list(To = "^(?!visual)",
-#'                       From = "^(?!(x7|x8))")
+#'     parameters = list(
+#'       To = "^(?!visual)",
+#'       From = "^(?!(x7|x8))"
+#'     )
 #'   )
 #'
 #'   # Structural Equation Model (SEM) ------------
@@ -85,13 +87,12 @@ model_parameters.lavaan <- function(model,
                                     parameters = NULL,
                                     verbose = TRUE,
                                     ...) {
-
   params <- .extract_parameters_lavaan(model,
-                                       ci = ci,
-                                       standardize = standardize,
-                                       filter_parameters = parameters,
-                                       verbose = verbose,
-                                       ...
+    ci = ci,
+    standardize = standardize,
+    filter_parameters = parameters,
+    verbose = verbose,
+    ...
   )
 
   # Filter

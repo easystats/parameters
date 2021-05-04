@@ -1,14 +1,14 @@
 #' @export
 model_parameters.selection <- function(model,
-                                        ci = .95,
-                                        component = c("all", "selection", "outcome", "auxiliary"),
-                                        bootstrap = FALSE,
-                                        iterations = 1000,
-                                        standardize = NULL,
-                                        exponentiate = FALSE,
-                                        p_adjust = NULL,
-                                        verbose = TRUE,
-                                        ...) {
+                                       ci = .95,
+                                       component = c("all", "selection", "outcome", "auxiliary"),
+                                       bootstrap = FALSE,
+                                       iterations = 1000,
+                                       standardize = NULL,
+                                       exponentiate = FALSE,
+                                       p_adjust = NULL,
+                                       verbose = TRUE,
+                                       ...) {
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,
@@ -49,7 +49,6 @@ p_value.selection <- function(model, component = c("all", "selection", "outcome"
   }
 
   .remove_backticks_from_parameter_names(params)
-
 }
 
 

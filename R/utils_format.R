@@ -429,8 +429,8 @@
 
   # if we show ZI component only, make sure this appears in header
   if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
-      !is.null(formatted_table$Component) &&
-      all(formatted_table$Component == "zero_inflated")) {
+    !is.null(formatted_table$Component) &&
+    all(formatted_table$Component == "zero_inflated")) {
     component_name <- paste0(component_name, " (Zero-Inflated Model)")
   }
 

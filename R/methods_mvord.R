@@ -37,9 +37,11 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
   params <- insight::get_parameters(model, component = "all")
   junk <- utils::capture.output(s <- summary(model))
 
-  params$SE <- c(unname(s$thresholds[, "Std. Error"]),
-                 unname(s$coefficients[, "Std. Error"]),
-                 unname(s$error.structure[, "Std. Error"]))
+  params$SE <- c(
+    unname(s$thresholds[, "Std. Error"]),
+    unname(s$coefficients[, "Std. Error"]),
+    unname(s$error.structure[, "Std. Error"])
+  )
 
   params <- params[c("Parameter", "SE", "Component", "Response")]
 
@@ -61,9 +63,11 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
   params <- insight::get_parameters(model, component = "all")
   junk <- utils::capture.output(s <- summary(model))
 
-  params$p <- c(unname(s$thresholds[, "Pr(>|z|)"]),
-                unname(s$coefficients[, "Pr(>|z|)"]),
-                unname(s$error.structure[, "Pr(>|z|)"]))
+  params$p <- c(
+    unname(s$thresholds[, "Pr(>|z|)"]),
+    unname(s$coefficients[, "Pr(>|z|)"]),
+    unname(s$error.structure[, "Pr(>|z|)"])
+  )
 
   params <- params[c("Parameter", "p", "Component", "Response")]
 

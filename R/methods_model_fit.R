@@ -17,11 +17,21 @@ model_parameters.model_fit <- function(model,
                                        p_adjust = NULL,
                                        verbose = TRUE,
                                        ...) {
-
-  model_parameters(model$fit, ci = ci, effects = effects, component = component,
-                   df_method = df_method, bootstrap = bootstrap, iterations = iterations,
-                   standardize = standardize, exponentiate = exponentiate,
-                   robust = robust, p_adjust = p_adjust, verbose = verbose, ...)
+  model_parameters(
+    model$fit,
+    ci = ci,
+    effects = effects,
+    component = component,
+    df_method = df_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    robust = robust,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  )
 }
 
 

@@ -421,7 +421,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
                            show_formula = FALSE,
                            show_r2 = FALSE,
                            format = "text") {
-    # prepare footer
+  # prepare footer
   footer <- NULL
   type <- tolower(format)
 

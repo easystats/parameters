@@ -23,7 +23,8 @@ if (.runThisTest &&
     out <- utils::capture.output(print(params))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
         "---------------------------------------------------------------",
@@ -31,13 +32,15 @@ if (.runThisTest &&
         "period [2]  |    -0.98 | 0.30 | [-1.57, -0.38] | -3.22 | 0.001 ",
         "period [3]  |    -1.11 | 0.32 | [-1.75, -0.48] | -3.43 | < .001",
         "period [4]  |    -1.56 | 0.42 | [-2.39, -0.73] | -3.67 | < .001"
-      ))
+      )
+    )
 
     mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
     out <- utils::capture.output(print(mp))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Odds Ratio |   SE |       95% CI |     z |      p",
         "---------------------------------------------------------------",
@@ -51,7 +54,9 @@ if (.runThisTest &&
         "Parameter            | Coefficient",
         "----------------------------------",
         "SD (Intercept: herd) |        0.64",
-        "SD (Residual)        |        1.00"))
+        "SD (Residual)        |        1.00"
+      )
+    )
   })
 
 
@@ -94,4 +99,3 @@ if (.runThisTest &&
     expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
   })
 }
-

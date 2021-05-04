@@ -19,3 +19,4 @@
 ^tests/_snaps/.
 ^cran-comments\.md$
 ^revdep$
+^CODE_OF_CONDUCT\.md$

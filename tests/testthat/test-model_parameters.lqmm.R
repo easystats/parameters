@@ -68,47 +68,55 @@ if (FALSE && require("testthat") && require("lqmm") && require("parameters")) {
     df_lqmm <- as.data.frame(model_parameters(fit.lqmm))
 
     expect_equal(df_lqmm,
-                 structure(
-                   list(
-                     Parameter = c("(Intercept)", "x"),
-                     Coefficient = c(3.44347538706013,
-                                     9.25833091219961),
-                     SE = c(0.491049614414579, 0.458163772053399),
-                     CI = c(0.95, 0.95),
-                     CI_low = c(2.47868633791118, 8.35815427623814),
-                     CI_high = c(4.40826443620908, 10.1585075481611),
-                     t = c(7.01247956617455,
-                           20.207470509302),
-                     df_error = c(497L, 497L),
-                     p = c(6.34497395571023e-09,
-                           2.05172540270515e-25)
-                   ),
-                   row.names = 1:2,
-                   pretty_names = c(`(Intercept)` = "(Intercept)",
-                                    x = "x"),
-                   ci = 0.95,
-                   verbose = TRUE,
-                   exponentiate = FALSE,
-                   ordinal_model = FALSE,
-                   linear_model = TRUE,
-                   mixed_model = TRUE,
-                   n_obs = 500L,
-                   model_class = "lqmm",
-                   bootstrap = FALSE,
-                   iterations = 1000,
-                   ignore_group = TRUE,
-                   ran_pars = TRUE,
-                   weighted_nobs = 500,
-                   model_formula = "y ~ x",
-                   coefficient_name = "Coefficient",
-                   zi_coefficient_name = "Log-Odds",
-                   digits = 2,
-                   ci_digits = 2,
-                   p_digits = 3,
-                   class = "data.frame",
-                   object_name = "fit.lqmm"
-                 ),
-                 tolerance = 0.001
+      structure(
+        list(
+          Parameter = c("(Intercept)", "x"),
+          Coefficient = c(
+            3.44347538706013,
+            9.25833091219961
+          ),
+          SE = c(0.491049614414579, 0.458163772053399),
+          CI = c(0.95, 0.95),
+          CI_low = c(2.47868633791118, 8.35815427623814),
+          CI_high = c(4.40826443620908, 10.1585075481611),
+          t = c(
+            7.01247956617455,
+            20.207470509302
+          ),
+          df_error = c(497L, 497L),
+          p = c(
+            6.34497395571023e-09,
+            2.05172540270515e-25
+          )
+        ),
+        row.names = 1:2,
+        pretty_names = c(
+          `(Intercept)` = "(Intercept)",
+          x = "x"
+        ),
+        ci = 0.95,
+        verbose = TRUE,
+        exponentiate = FALSE,
+        ordinal_model = FALSE,
+        linear_model = TRUE,
+        mixed_model = TRUE,
+        n_obs = 500L,
+        model_class = "lqmm",
+        bootstrap = FALSE,
+        iterations = 1000,
+        ignore_group = TRUE,
+        ran_pars = TRUE,
+        weighted_nobs = 500,
+        model_formula = "y ~ x",
+        coefficient_name = "Coefficient",
+        zi_coefficient_name = "Log-Odds",
+        digits = 2,
+        ci_digits = 2,
+        p_digits = 3,
+        class = "data.frame",
+        object_name = "fit.lqmm"
+      ),
+      tolerance = 0.001
     )
   })
 }
