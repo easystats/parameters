@@ -55,7 +55,8 @@ if (require("testthat") &&
       out <- utils::capture.output(print(mp))
       expect_equal(
         out,
-        c("# Fixed Effects",
+        c(
+          "# Fixed Effects",
           "",
           "Parameter   | Coefficient |   SE |       95% CI | t(383.05) |      p",
           "--------------------------------------------------------------------",
@@ -68,8 +69,9 @@ if (require("testthat") &&
           "Smooth term (x0) | 10.53 | 3.63 | < .001",
           "Smooth term (x1) | 87.44 | 2.97 | < .001",
           "Smooth term (x2) | 72.49 | 8.30 | < .001",
-          "Smooth term (x3) |  9.58 | 1.05 | 0.002 "))
+          "Smooth term (x3) |  9.58 | 1.05 | 0.002 "
+        )
+      )
     })
-
   }
 }

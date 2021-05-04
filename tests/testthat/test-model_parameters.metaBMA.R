@@ -1,8 +1,8 @@
 if (require("testthat") &&
-    require("insight") &&
-    require("parameters") &&
-    suppressPackageStartupMessages(require("metaBMA", quietly = TRUE)) &&
-    getRversion() >= "3.6.0") {
+  require("insight") &&
+  require("parameters") &&
+  suppressPackageStartupMessages(require("metaBMA", quietly = TRUE)) &&
+  getRversion() >= "3.6.0") {
   data(towels)
 
   # default

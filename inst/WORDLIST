@@ -41,6 +41,7 @@ Epskamp
 Fairbrother
 FastICA
 Fidell
+GJRM
 GLMMadaptive
 Garrido
 Gelman
@@ -201,7 +202,6 @@ logistf
 lqmm
 meaned
 merTools
-meritourious
 mesokurtic
 metaBMA
 metafor
@@ -235,6 +235,7 @@ rms
 rmsb
 robmixglm
 rstanarm
+sampleSelection
 smicd
 spaMM
 spatialreg
@@ -251,7 +252,6 @@ tseries
 untransformed
 varimax
 vgam
-whith
 wikipedia
 www
 ’

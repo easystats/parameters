@@ -95,7 +95,8 @@ if (.runThisTest &&
     out <- utils::capture.output(print(model_parameters(model, effects = "fixed")))
     expect_equal(
       out,
-      c("Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
+      c(
+        "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
         "-------------------------------------------------------------------",
         "(Intercept) |       71.53 | 1.56 | [68.48, 74.58] |  45.98 | < .001",
         "time        |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.088 ",
@@ -111,14 +112,16 @@ if (.runThisTest &&
         "Parameter    | Coefficient |   SE |         95% CI | t(558) |      p",
         "--------------------------------------------------------------------",
         "phq4_between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001"
-      ))
+      )
+    )
   })
 
   test_that("print-model_parameters", {
     out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
         "-----------------------------------------------------------------",
@@ -130,13 +133,16 @@ if (.runThisTest &&
         "Parameter            | Coefficient",
         "----------------------------------",
         "SD (Intercept: gear) |        0.27",
-        "SD (Residual)        |        0.77"))
+        "SD (Residual)        |        0.77"
+      )
+    )
 
     if (packageVersion("insight") > "0.13.2") {
       out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", summary = TRUE)))
       expect_equal(
         out,
-        c("# Fixed Effects",
+        c(
+          "# Fixed Effects",
           "",
           "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
           "-----------------------------------------------------------------",
@@ -145,8 +151,9 @@ if (.runThisTest &&
           "",
           "Model: wt ~ cyl (32 Observations)",
           "Residual standard deviation: 0.594 (df = 28)",
-          "Conditional R2: 0.628; Marginal R2: 0.550"))
+          "Conditional R2: 0.628; Marginal R2: 0.550"
+        )
+      )
     }
   })
-
 }

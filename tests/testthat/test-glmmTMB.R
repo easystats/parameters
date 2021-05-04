@@ -1,10 +1,9 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    require("testthat") &&
-    require("parameters") &&
-    require("glmmTMB")) {
-
+  require("testthat") &&
+  require("parameters") &&
+  require("glmmTMB")) {
   data("fish")
   data("Salamanders")
 
@@ -133,8 +132,10 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m1, effects = "all")$Coefficient,
-      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
-        1, 1.17399, 1),
+      c(
+        1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
+        1, 1.17399, 1
+      ),
       tolerance = 1e-3
     )
     expect_equal(
@@ -160,9 +161,13 @@ if (.runThisTest &&
       )
     )
     expect_null(model_parameters(m2, effects = "fixed")$Component)
-    expect_equal(model_parameters(m2)$Component,
-                 c("conditional", "conditional", "conditional", "conditional",
-                   "conditional"))
+    expect_equal(
+      model_parameters(m2)$Component,
+      c(
+        "conditional", "conditional", "conditional", "conditional",
+        "conditional"
+      )
+    )
     expect_equal(
       model_parameters(m3, effects = "fixed")$Component,
       c(
@@ -351,19 +356,22 @@ if (.runThisTest &&
     out <- utils::capture.output(print(mp))
     expect_equal(
       out[-5],
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
         "----------------------------------------------------------------",
         "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001",
         "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 "
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "random", component = "conditional")
     out <- utils::capture.output(print(mp))
     expect_equal(
       out,
-      c("# Random Effects",
+      c(
+        "# Random Effects",
         "",
         "Parameter               | Coefficient",
         "-------------------------------------",
@@ -371,25 +379,29 @@ if (.runThisTest &&
         "SD (xb: persons)        |        1.21",
         "Cor (Intercept~persons) |       -1.00",
         "SD (Residual)           |        1.00"
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "fixed", component = "zero_inflated")
     out <- utils::capture.output(print(mp))
     expect_equal(
       out[-6],
-      c("# Fixed Effects (Zero-Inflated Model)",
+      c(
+        "# Fixed Effects (Zero-Inflated Model)",
         "",
         "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
         "-------------------------------------------------------------",
         "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
         "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660"
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "random", component = "zero_inflated")
     out <- utils::capture.output(print(mp))
     expect_equal(
       out,
-      c("# Random Effects (Zero-Inflated Model)",
+      c(
+        "# Random Effects (Zero-Inflated Model)",
         "",
         "Parameter               | Coefficient",
         "-------------------------------------",
@@ -397,13 +409,15 @@ if (.runThisTest &&
         "SD (zg: persons)        |        1.57",
         "Cor (Intercept~persons) |        1.00",
         "SD (Residual)           |        1.00"
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "all", component = "conditional")
     out <- utils::capture.output(print(mp))
     expect_equal(
       out[-5],
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
         "----------------------------------------------------------------",
@@ -418,13 +432,15 @@ if (.runThisTest &&
         "SD (xb: persons)        |        1.21",
         "Cor (Intercept~persons) |       -1.00",
         "SD (Residual)           |        1.00"
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "all", component = "zero_inflated")
     out <- utils::capture.output(print(mp))
     expect_equal(
       out[-6],
-      c("# Fixed Effects (Zero-Inflated Model)",
+      c(
+        "# Fixed Effects (Zero-Inflated Model)",
         "",
         "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
         "-------------------------------------------------------------",
@@ -439,13 +455,15 @@ if (.runThisTest &&
         "SD (zg: persons)        |        1.57",
         "Cor (Intercept~persons) |        1.00",
         "SD (Residual)           |        1.00"
-      ))
+      )
+    )
 
     mp <- model_parameters(m4, effects = "all", component = "all")
     out <- utils::capture.output(print(mp))
     expect_equal(
-      out[-c(5,14)],
-      c("# Fixed Effects (Count Model)",
+      out[-c(5, 14)],
+      c(
+        "# Fixed Effects (Count Model)",
         "",
         "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
         "----------------------------------------------------------------",
@@ -476,8 +494,8 @@ if (.runThisTest &&
         "SD (zg: persons)        |        1.57",
         "Cor (Intercept~persons) |        1.00",
         "SD (Residual)           |        1.00"
-      ))
-
+      )
+    )
   })
 
 
@@ -502,8 +520,9 @@ if (.runThisTest &&
       mp <- model_parameters(m4, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
       expect_equal(
-        out[-c(5,14)],
-        c("# Fixed Effects (Count Model)",
+        out[-c(5, 14)],
+        c(
+          "# Fixed Effects (Count Model)",
           "",
           "Parameter   | Log-Mean |     SE |               95% CI |        z |      p",
           "--------------------------------------------------------------------------",
@@ -534,13 +553,15 @@ if (.runThisTest &&
           "SD (zg: persons)        |      1.5683",
           "Cor (Intercept~persons) |      1.0000",
           "SD (Residual)           |      1.0000"
-        ))
+        )
+      )
 
       mp <- model_parameters(m4, effects = "all", component = "all", digits = 4, ci_digits = 5)
       out <- utils::capture.output(print(mp))
       expect_equal(
-        out[-c(5,14)],
-        c("# Fixed Effects (Count Model)",
+        out[-c(5, 14)],
+        c(
+          "# Fixed Effects (Count Model)",
           "",
           "Parameter   | Log-Mean |     SE |               95% CI |        z |      p",
           "--------------------------------------------------------------------------",
@@ -571,8 +592,8 @@ if (.runThisTest &&
           "SD (zg: persons)        |      1.5683",
           "Cor (Intercept~persons) |      1.0000",
           "SD (Residual)           |      1.0000"
-        ))
-
+        )
+      )
     })
   }
 
@@ -620,7 +641,8 @@ if (.runThisTest &&
     out <- utils::capture.output(print(model_parameters(m1, effects = "fixed")))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
         "----------------------------------------------------------------",
@@ -635,12 +657,14 @@ if (.runThisTest &&
         "(Intercept) |    -0.39 | 0.65 | [-1.67,  0.89] | -0.60 | 0.551 ",
         "child       |     2.05 | 0.31 | [ 1.45,  2.66] |  6.63 | < .001",
         "camper [1]  |    -1.01 | 0.32 | [-1.64, -0.37] | -3.12 | 0.002 "
-      ))
+      )
+    )
 
     out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", exponentiate = TRUE)))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   |  IRR |   SE |       95% CI |      z |      p",
         "----------------------------------------------------------",
@@ -655,12 +679,14 @@ if (.runThisTest &&
         "(Intercept) |       0.68 | 0.44 | [0.19,  2.43] | -0.60 | 0.551 ",
         "child       |       7.80 | 2.42 | [4.25, 14.32] |  6.63 | < .001",
         "camper [1]  |       0.36 | 0.12 | [0.19,  0.69] | -3.12 | 0.002 "
-      ))
+      )
+    )
 
     out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
     expect_equal(
       out,
-      c("# Fixed Effects (Count Model)",
+      c(
+        "# Fixed Effects (Count Model)",
         "",
         "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
         "----------------------------------------------------------------",
@@ -689,7 +715,7 @@ if (.runThisTest &&
         "-------------------------------------",
         "SD (Intercept: persons) |        1.17",
         "SD (Residual)           |        1.00"
-      ))
+      )
+    )
   })
 }
-

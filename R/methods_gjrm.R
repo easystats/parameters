@@ -8,7 +8,6 @@ model_parameters.SemiParBIV <- function(model,
                                         p_adjust = NULL,
                                         verbose = TRUE,
                                         ...) {
-
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
