@@ -8,9 +8,9 @@
 
   if (!is.null(select)) {
     if (all(select == "minimal")) {
-      select <- c("Parameter", "Coefficient", "CI", "CI_low", "CI_high", "p")
+      select <- c("Parameter", "Coefficient", "Std_Coefficient", "CI", "CI_low", "CI_high", "p")
     } else if (all(select == "short")) {
-      select <- c("Parameter", "Coefficient", "SE", "p")
+      select <- c("Parameter", "Coefficient", "Std_Coefficient", "SE", "p")
     } else if (is.numeric(select)) {
       select <- colnames(x)[select]
     }
