@@ -176,12 +176,13 @@ print.parameters_brms_meta <- print.parameters_model
                           format = "text") {
   # get attributes
   sigma <- attributes(x)$sigma
+  show_summary <- isTRUE(attributes(x)$show_summary)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # override defaults. if argument "summary" is called in "model_parameters()",
   # this overrides the defaults...
-  show_sigma <- .additional_arguments(x, "show_summary", show_sigma)
-  show_formula <- .additional_arguments(x, "show_summary", show_formula)
+  show_sigma <- ifelse(show_summary, TRUE, show_sigma)
+  show_formula <- ifelse(show_summary, TRUE, show_formula)
   show_r2 <- .additional_arguments(x, "show_summary", FALSE)
 
   # set defaults, if necessary

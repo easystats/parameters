@@ -311,6 +311,7 @@ model_parameters.glm <- function(model,
                                  exponentiate = FALSE,
                                  robust = FALSE,
                                  p_adjust = NULL,
+                                 summary = FALSE,
                                  verbose = TRUE,
                                  ...) {
   if (insight::n_obs(model) > 1e4 && df_method == "profile") {
@@ -328,6 +329,7 @@ model_parameters.glm <- function(model,
     exponentiate = exponentiate,
     robust = robust,
     p_adjust = p_adjust,
+    summary = summary,
     ...
   )
 
