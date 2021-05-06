@@ -11,9 +11,9 @@ random_parameters(model, component = "conditional")
 
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
+with zero-inflated component. \code{component} may be one of
+\code{"conditional"} (default), \code{"zi"} or \code{"zero-inflated"}.
+May be abbreviated.}
 }
 \value{
 A data frame with random effects statistics for the variance components,

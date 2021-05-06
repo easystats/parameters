@@ -33,6 +33,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
+  summary = FALSE,
   verbose = TRUE,
   ...
 )

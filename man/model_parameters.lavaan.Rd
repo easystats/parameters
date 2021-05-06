@@ -73,8 +73,10 @@ if (require("lavaan", quietly = TRUE)) {
   # filter parameters
   model_parameters(
     model,
-    parameters = list(To = "^(?!visual)",
-                      From = "^(?!(x7|x8))")
+    parameters = list(
+      To = "^(?!visual)",
+      From = "^(?!(x7|x8))"
+    )
   )
 
   # Structural Equation Model (SEM) ------------

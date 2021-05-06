@@ -30,7 +30,6 @@ This function is strongly inspired by the \code{cortest.bartlett}
 \examples{
 library(parameters)
 check_sphericity(mtcars)
-
 }
 \references{
 \itemize{

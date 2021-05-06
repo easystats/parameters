@@ -5,6 +5,11 @@
 #'   mixed model and returns the result as a data frame.
 #'
 #' @param model A mixed effects model (including \code{stanreg} models).
+#' @param component Should all parameters, parameters for the conditional model,
+#'   or for the zero-inflated part of the model be returned? Applies to models
+#'   with zero-inflated component. \code{component} may be one of
+#'   \code{"conditional"} (default), \code{"zi"} or \code{"zero-inflated"}.
+#'   May be abbreviated.
 #' @inheritParams simulate_model
 #'
 #' @return A data frame with random effects statistics for the variance components,
