@@ -246,14 +246,15 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
   thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-<span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='co'>#&gt;           Parameter            p
-#&gt; 1       (Intercept) 1.005180e-11
-#&gt; 2      Sepal.Length 1.121002e-28
-#&gt; 3 Speciesversicolor 9.645641e-67
-#&gt; 4  Speciesvirginica 4.917626e-71</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>p_value</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           Parameter            p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       (Intercept) 1.005180e-11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      Sepal.Length 1.121002e-28</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 Speciesversicolor 9.645641e-67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  Speciesvirginica 4.917626e-71</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

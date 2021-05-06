@@ -285,53 +285,56 @@ source, which makes it a poor tool for dimensionality reduction. Requires the
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Petal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>model</span>
-</div><div class='co'>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = Sepal.Width ~ Species * Sepal.Length + Petal.Width, 
-#&gt;     data = iris)
-#&gt; 
-#&gt; Coefficients:
-#&gt;                    (Intercept)               Speciesversicolor  
-#&gt;                        -0.4731                          1.2981  
-#&gt;               Speciesvirginica                    Sepal.Length  
-#&gt;                         1.2252                          0.7515  
-#&gt;                    Petal.Width  Speciesversicolor:Sepal.Length  
-#&gt;                         0.5662                         -0.5503  
-#&gt;  Speciesvirginica:Sepal.Length  
-#&gt;                        -0.5883  
-#&gt; </div><div class='input'><span class='fu'>reduce_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; Call:
-#&gt; lm(formula = Sepal.Width ~ `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78` + 
-#&gt;     `Species.versicolor_-0.99`, data = cbind(data, y))
-#&gt; 
-#&gt; Coefficients:
-#&gt;                                                                      (Intercept)  
-#&gt;                                                                          3.05733  
-#&gt; `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78`  
-#&gt;                                                                         -0.08903  
-#&gt;                                                       `Species.versicolor_-0.99`  
-#&gt;                                                                          0.14879  
-#&gt; </div><div class='input'>
-<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>reduce_data</span><span class='op'>(</span><span class='va'>iris</span>, method <span class='op'>=</span> <span class='st'>"PCA"</span>, n <span class='op'>=</span> <span class='st'>"max"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   Petal.Length_0.99/Petal.Width_0.97/Species.setosa_-0.94/Sepal.Length_0.86/Species.virginica_0.73
-#&gt; 1                                                                                        -2.803852
-#&gt; 2                                                                                        -2.633035
-#&gt; 3                                                                                        -2.866923
-#&gt; 4                                                                                        -2.808656
-#&gt; 5                                                                                        -2.907343
-#&gt; 6                                                                                        -2.668523
-#&gt;   Species.versicolor_0.93 Sepal.Width_0.62
-#&gt; 1             -0.65195900        0.1365792
-#&gt; 2             -0.09924539       -0.8296167
-#&gt; 3             -0.26560467       -0.5984029
-#&gt; 4             -0.14622405       -0.8154592
-#&gt; 5             -0.73579102        0.2543209
-#&gt; 6             -1.14741717        1.0076406</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Petal.Width</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = Sepal.Width ~ Species * Sepal.Length + Petal.Width, </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     data = iris)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    (Intercept)               Speciesversicolor  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        -0.4731                          1.2981  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               Speciesvirginica                    Sepal.Length  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                         1.2252                          0.7515  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    Petal.Width  Speciesversicolor:Sepal.Length  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                         0.5662                         -0.5503  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Speciesvirginica:Sepal.Length  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        -0.5883  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'>reduce_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> lm(formula = Sepal.Width ~ `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78` + </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     `Species.versicolor_-0.99`, data = cbind(data, y))</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                      (Intercept)  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                          3.05733  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                         -0.08903  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                       `Species.versicolor_-0.99`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                                          0.14879  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>reduce_data</span><span class='op'>(</span><span class='va'>iris</span>, method <span class='op'>=</span> <span class='st'>"PCA"</span>, n <span class='op'>=</span> <span class='st'>"max"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length_0.99/Petal.Width_0.97/Species.setosa_-0.94/Sepal.Length_0.86/Species.virginica_0.73</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                                                                                        -2.803852</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                                                                                        -2.633035</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                                                                                        -2.866923</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                                                                                        -2.808656</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                                                                                        -2.907343</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                                                                                        -2.668523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species.versicolor_0.93 Sepal.Width_0.62</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1             -0.65195900        0.1365792</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2             -0.09924539       -0.8296167</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3             -0.26560467       -0.5984029</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4             -0.14622405       -0.8154592</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5             -0.73579102        0.2543209</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6             -1.14741717        1.0076406</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

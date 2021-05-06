@@ -265,29 +265,30 @@ and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</
     <div class='dont-index'><p>Working examples cam be found <a href='https://easystats.github.io/parameters/articles/model_parameters_robust.html'>in this vignette</a>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://sandwich.R-Forge.R-project.org/'>"sandwich"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'># robust standard errors, calling sandwich::vcovHC(type="HC3") by default</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='fu'>standard_error_robust</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt;                        Parameter         SE
-#&gt; 1                    (Intercept) 0.42486667
-#&gt; 2                   Sepal.Length 0.08504442
-#&gt; 3              Speciesversicolor 0.67252996
-#&gt; 4               Speciesvirginica 0.58942889
-#&gt; 5 Sepal.Length:Speciesversicolor 0.12045791
-#&gt; 6  Sepal.Length:Speciesvirginica 0.10558799</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/jepusto/clubSandwich'>"clubSandwich"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'># cluster-robust standard errors, using clubSandwich</span>
-  <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, length.out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='fu'>standard_error_robust</span><span class='op'>(</span>
-    <span class='va'>model</span>,
-    vcov_type <span class='op'>=</span> <span class='st'>"CR2"</span>,
-    vcov_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>cluster <span class='op'>=</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span><span class='op'>)</span>
-  <span class='op'>)</span>
-<span class='op'>}</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://sandwich.R-Forge.R-project.org/'>"sandwich"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='co'># robust standard errors, calling sandwich::vcovHC(type="HC3") by default</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>standard_error_robust</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        Parameter         SE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    (Intercept) 0.42486667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                   Sepal.Length 0.08504442</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3              Speciesversicolor 0.67252996</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4               Speciesvirginica 0.58942889</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 Sepal.Length:Speciesversicolor 0.12045791</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  Sepal.Length:Speciesvirginica 0.10558799</span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/jepusto/clubSandwich'>"clubSandwich"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='co'># cluster-robust standard errors, using clubSandwich</span></span>
+<span class='r-in'>  <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, length.out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>standard_error_robust</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>model</span>,</span>
+<span class='r-in'>    vcov_type <span class='op'>=</span> <span class='st'>"CR2"</span>,</span>
+<span class='r-in'>    vcov_args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>cluster <span class='op'>=</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>cluster</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

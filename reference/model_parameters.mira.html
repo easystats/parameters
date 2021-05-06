@@ -241,114 +241,121 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
   of multiple imputed repeated regression analyses.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
-  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
-  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; 
-#&gt; Attaching package: ‘mice’</div><div class='co'>#&gt; The following object is masked from ‘package:stats’:
-#&gt; 
-#&gt;     filter</div><div class='co'>#&gt; The following objects are masked from ‘package:base’:
-#&gt; 
-#&gt;     cbind, rbind</div><div class='co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='co'>#&gt; <span style='color: #0000BB;'># Fixed Effects</span>
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p
-#&gt; ------------------------------------------------------------------------------
-#&gt; (Intercept) |       19.33 | 4.64 | [  8.43, 30.24] |      4.16 |  7.26 | 0.004
-#&gt; age40-59    |       -5.35 | 2.12 | [-10.13, -0.57] |     -2.53 |  9.10 | 0.032
-#&gt; age60-99    |       -7.06 | 2.17 | [-11.79, -2.34] |     -3.25 | 12.33 | 0.007
-#&gt; hypyes      |        2.62 | 2.51 | [ -3.52,  8.75] |      1.04 |  6.04 | 0.337
-#&gt; chl         |        0.05 | 0.03 | [ -0.01,  0.11] |      2.01 |  6.61 | 0.087</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span>
-  <span class='va'>warpbreaks</span><span class='op'>$</span><span class='va'>tension</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
-  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>
-  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, expr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/gee/man/gee.html'>gee</a></span><span class='op'>(</span><span class='va'>breaks</span> <span class='op'>~</span> <span class='va'>tension</span>, id <span class='op'>=</span> <span class='va'>wool</span><span class='op'>)</span><span class='op'>)</span>
-
-  <span class='co'># does not work:</span>
-  <span class='co'># summary(pool(fit))</span>
-
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-<span class='op'>}</span>
-<span class='op'>}</span>
-
-
-
-<span class='co'># and it works with pooled results</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"nhanes2"</span><span class='op'>)</span>
-  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span>
-  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='va'>pooled</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>pooled</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; 
-#&gt;  iter imp variable
-#&gt;   1   1  bmi  hyp  chl
-#&gt;   1   2  bmi  hyp  chl
-#&gt;   1   3  bmi  hyp  chl
-#&gt;   1   4  bmi  hyp  chl
-#&gt;   1   5  bmi  hyp  chl
-#&gt;   2   1  bmi  hyp  chl
-#&gt;   2   2  bmi  hyp  chl
-#&gt;   2   3  bmi  hyp  chl
-#&gt;   2   4  bmi  hyp  chl
-#&gt;   2   5  bmi  hyp  chl
-#&gt;   3   1  bmi  hyp  chl
-#&gt;   3   2  bmi  hyp  chl
-#&gt;   3   3  bmi  hyp  chl
-#&gt;   3   4  bmi  hyp  chl
-#&gt;   3   5  bmi  hyp  chl
-#&gt;   4   1  bmi  hyp  chl
-#&gt;   4   2  bmi  hyp  chl
-#&gt;   4   3  bmi  hyp  chl
-#&gt;   4   4  bmi  hyp  chl
-#&gt;   4   5  bmi  hyp  chl
-#&gt;   5   1  bmi  hyp  chl
-#&gt;   5   2  bmi  hyp  chl
-#&gt;   5   3  bmi  hyp  chl
-#&gt;   5   4  bmi  hyp  chl
-#&gt;   5   5  bmi  hyp  chl</div><div class='co'>#&gt; <span style='color: #0000BB;'># Fixed Effects</span>
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |   df |     p
-#&gt; -----------------------------------------------------------------------------
-#&gt; (Intercept) |       18.05 | 4.23 | [  8.15, 27.94] |      4.27 | 7.38 | 0.003
-#&gt; age40-59    |       -5.90 | 2.13 | [-10.73, -1.07] |     -2.78 | 8.76 | 0.022
-#&gt; age60-99    |       -7.32 | 2.25 | [-12.45, -2.19] |     -3.25 | 8.62 | 0.011
-#&gt; hypyes      |        1.50 | 2.10 | [ -3.21,  6.21] |      0.71 | 9.70 | 0.492
-#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.11] |      2.71 | 7.66 | 0.028</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘mice’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:stats’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     filter</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     cbind, rbind</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       19.33 | 4.64 | [  8.43, 30.24] |      4.16 |  7.26 | 0.004</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -5.35 | 2.12 | [-10.13, -0.57] |     -2.53 |  9.10 | 0.032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -7.06 | 2.17 | [-11.79, -2.34] |     -3.25 | 12.33 | 0.007</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        2.62 | 2.51 | [ -3.52,  8.75] |      1.04 |  6.04 | 0.337</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.05 | 0.03 | [ -0.01,  0.11] |      2.01 |  6.61 | 0.087</span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1234</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>warpbreaks</span><span class='op'>$</span><span class='va'>tension</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span></span>
+<span class='r-in'>  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>warpbreaks</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, expr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/gee/man/gee.html'>gee</a></span><span class='op'>(</span><span class='va'>breaks</span> <span class='op'>~</span> <span class='va'>tension</span>, id <span class='op'>=</span> <span class='va'>wool</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># does not work:</span></span>
+<span class='r-in'>  <span class='co'># summary(pool(fit))</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># and it works with pooled results</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"nhanes2"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>imp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/mice.html'>mice</a></span><span class='op'>(</span><span class='va'>nhanes2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>imp</span>, exp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bmi</span> <span class='op'>~</span> <span class='va'>age</span> <span class='op'>+</span> <span class='va'>hyp</span> <span class='op'>+</span> <span class='va'>chl</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>pooled</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://amices.org/mice/reference/pool.html'>pool</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>pooled</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  iter imp variable</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   2   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   3   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   4   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   1  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   2  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   3  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   4  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |   df |     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       18.05 | 4.23 | [  8.15, 27.94] |      4.27 | 7.38 | 0.003</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -5.90 | 2.13 | [-10.73, -1.07] |     -2.78 | 8.76 | 0.022</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -7.32 | 2.25 | [-12.45, -2.19] |     -3.25 | 8.62 | 0.011</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        1.50 | 2.10 | [ -3.21,  6.21] |      0.71 | 9.70 | 0.492</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.06 | 0.02 | [  0.01,  0.11] |      2.71 | 7.66 | 0.028</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

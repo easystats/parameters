@@ -220,26 +220,27 @@ columns in a data frame.</p></td>
   used to compute the PCA.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://personality-project.org/r/psych/'>"psych"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='principal_components.html'>principal_components</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, rotation <span class='op'>=</span> <span class='st'>"varimax"</span><span class='op'>)</span>
-
-  <span class='co'># PCA extracted two components</span>
-  <span class='va'>pca</span>
-
-  <span class='co'># assignment of items to each component</span>
-  <span class='fu'><a href='principal_components.html'>closest_component</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
-
-  <span class='co'># now we want to have sum scores for each component</span>
-  <span class='fu'>get_scores</span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span>
-
-  <span class='co'># compare to manually computed sum score for 2nd component, which</span>
-  <span class='co'># consists of items "hp" and "qsec"</span>
-  <span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>hp</span> <span class='op'>+</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>qsec</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950
-#&gt; [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735
-#&gt; [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850
-#&gt; [28]  64.950 139.250  95.250 174.800  63.800</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://personality-project.org/r/psych/'>"psych"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>pca</span> <span class='op'>&lt;-</span> <span class='fu'><a href='principal_components.html'>principal_components</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, rotation <span class='op'>=</span> <span class='st'>"varimax"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># PCA extracted two components</span></span>
+<span class='r-in'>  <span class='va'>pca</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># assignment of items to each component</span></span>
+<span class='r-in'>  <span class='fu'><a href='principal_components.html'>closest_component</a></span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># now we want to have sum scores for each component</span></span>
+<span class='r-in'>  <span class='fu'>get_scores</span><span class='op'>(</span><span class='va'>pca</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># compare to manually computed sum score for 2nd component, which</span></span>
+<span class='r-in'>  <span class='co'># consists of items "hp" and "qsec"</span></span>
+<span class='r-in'>  <span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>hp</span> <span class='op'>+</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>qsec</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [28]  64.950 139.250  95.250 174.800  63.800</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

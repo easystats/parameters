@@ -322,15 +322,16 @@ returned.</p></td>
   error is the SD of the posterior samples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-<span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                        Parameter        SE
-#&gt; 1                    (Intercept) 0.5310388
-#&gt; 2                   Sepal.Length 0.1058237
-#&gt; 3              Speciesversicolor 0.6836543
-#&gt; 4               Speciesvirginica 0.6578142
-#&gt; 5 Sepal.Length:Speciesversicolor 0.1281447
-#&gt; 6  Sepal.Length:Speciesvirginica 0.1209952</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>standard_error</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                        Parameter        SE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                    (Intercept) 0.5310388</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                   Sepal.Length 0.1058237</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3              Speciesversicolor 0.6836543</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4               Speciesvirginica 0.6578142</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 Sepal.Length:Speciesversicolor 0.1281447</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  Sepal.Length:Speciesvirginica 0.1209952</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

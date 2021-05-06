@@ -310,31 +310,32 @@ column headers. Must be of same length as number of models in <code>...</code>.<
   components.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span><span class='op'>(</span><span class='st'>"insight"</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='st'>"0.13.0"</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-  <span class='va'>lm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='va'>lm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
-  <span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
-  <span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
-  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span><span class='op'>)</span>
-
-  <span class='co'># exponentiate coefficients, but not for lm</span>
-  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span>, exponentiate <span class='op'>=</span> <span class='st'>"nongaussian"</span><span class='op'>)</span>
-
-  <span class='co'># change column names</span>
-  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span>, column_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"linear model"</span>, <span class='st'>"logistic reg."</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; Parameter    |         linear model |        logistic reg.
-#&gt; ----------------------------------------------------------
-#&gt; (Intercept)  | 37.29 (33.45, 41.12) | 10.62 ( 2.45, 18.79)
-#&gt; wt           | -5.34 (-6.49, -4.20) |  2.10 (-0.93,  5.13)
-#&gt; cyl          |                      | -2.93 (-5.63, -0.23)
-#&gt; ----------------------------------------------------------
-#&gt; Observations |                   32 |                   32</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span><span class='op'>(</span><span class='st'>"insight"</span><span class='op'>)</span> <span class='op'>&gt;=</span> <span class='st'>"0.13.0"</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>lm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>lm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># exponentiate coefficients, but not for lm</span></span>
+<span class='r-in'>  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span>, exponentiate <span class='op'>=</span> <span class='st'>"nongaussian"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># change column names</span></span>
+<span class='r-in'>  <span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>m1</span>, <span class='va'>m2</span>, column_names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"linear model"</span>, <span class='st'>"logistic reg."</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter    |         linear model |        logistic reg.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)  | 37.29 (33.45, 41.12) | 10.62 ( 2.45, 18.79)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt           | -5.34 (-6.49, -4.20) |  2.10 (-0.93,  5.13)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl          |                      | -2.93 (-5.63, -0.23)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations |                   32 |                   32</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

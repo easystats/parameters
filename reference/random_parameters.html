@@ -199,9 +199,9 @@
       <th>component</th>
       <td><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
-(default). May be abbreviated.</p></td>
+with zero-inflated component. <code>component</code> may be one of
+<code>"conditional"</code> (default), <code>"zi"</code> or <code>"zero-inflated"</code>.
+May be abbreviated.</p></td>
     </tr>
     </table>
 
@@ -234,22 +234,23 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
   are shown.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sleepstudy</span><span class='op'>)</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>Days</span> <span class='op'>|</span> <span class='va'>Subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleepstudy</span><span class='op'>)</span>
-  <span class='fu'>random_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; <span style='color: #0000BB;'># Random Effects</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; Within-Group Variance          </span><span>654.94 (25.59)</span>
-#&gt; <span style='color: #0000BB;'>Between-Group Variance</span>
-<span style='color: #0000BB;'>#&gt; </span><span>  Random Intercept (Subject)    612.1 (24.74)</span>
-#&gt;   Random Slope (Subject.Days)   35.07  (5.92)
-#&gt; <span style='color: #0000BB;'>Correlations</span>
-<span style='color: #0000BB;'>#&gt; </span><span>  Subject.Days                   0.07</span>
-#&gt; <span style='color: #0000BB;'>N (groups per factor)</span>
-<span style='color: #0000BB;'>#&gt; </span><span>  Subject                          18</span>
-#&gt; <span style='color: #0000BB;'>Observations                   </span><span>   180</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sleepstudy</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Reaction</span> <span class='op'>~</span> <span class='va'>Days</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='va'>Days</span> <span class='op'>|</span> <span class='va'>Subject</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleepstudy</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>random_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Random Effects</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Within-Group Variance          </span><span>654.94 (25.59)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Between-Group Variance</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>  Random Intercept (Subject)    612.1 (24.74)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Random Slope (Subject.Days)   35.07  (5.92)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Correlations</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>  Subject.Days                   0.07</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>N (groups per factor)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>  Subject                          18</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Observations                   </span><span>   180</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

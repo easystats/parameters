@@ -401,87 +401,93 @@ between-effects are printed in separated blocks.</p></td>
   is required, see <code><a href='center.html'>center</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>iris</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># fake-ID</span>
-<span class='va'>iris</span><span class='op'>$</span><span class='va'>binary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>150</span>, <span class='fl'>1</span>, <span class='fl'>.35</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># binary variable</span>
-
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   Sepal.Length_between Petal.Length_between Sepal.Length_within
-#&gt; 1             5.890698             3.927907          -0.7906977
-#&gt; 2             5.721622             3.645946          -0.8216216
-#&gt; 3             5.721622             3.645946          -1.0216216
-#&gt; 4             6.061290             4.129032          -1.4612903
-#&gt; 5             5.733333             3.382051          -0.7333333
-#&gt; 6             6.061290             4.129032          -0.6612903
-#&gt;   Petal.Length_within
-#&gt; 1           -2.527907
-#&gt; 2           -2.245946
-#&gt; 3           -2.345946
-#&gt; 4           -2.629032
-#&gt; 5           -1.982051
-#&gt; 6           -2.429032</div><div class='input'>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.</span>
-<span style='color: #BBBB00;'>#&gt; </span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   Sepal.Length_between Species_between binary_between Species_setosa_between
-#&gt; 1             5.890698       1.0930233      0.3488372              0.3023256
-#&gt; 2             5.721622       0.9459459      0.3513514              0.3513514
-#&gt; 3             5.721622       0.9459459      0.3513514              0.3513514
-#&gt; 4             6.061290       1.1935484      0.4516129              0.2258065
-#&gt; 5             5.733333       0.7948718      0.3076923              0.4358974
-#&gt; 6             6.061290       1.1935484      0.4516129              0.2258065
-#&gt;   Species_versicolor_between Species_virginica_between Sepal.Length_within
-#&gt; 1                  0.3023256                 0.3953488          -0.7906977
-#&gt; 2                  0.3513514                 0.2972973          -0.8216216
-#&gt; 3                  0.3513514                 0.2972973          -1.0216216
-#&gt; 4                  0.3548387                 0.4193548          -1.4612903
-#&gt; 5                  0.3333333                 0.2307692          -0.7333333
-#&gt; 6                  0.3548387                 0.4193548          -0.6612903
-#&gt;   Species_within binary_within Species_setosa_within Species_versicolor_within
-#&gt; 1     -1.0930233    -0.3488372             0.6976744                -0.3023256
-#&gt; 2     -0.9459459    -0.3513514             0.6486486                -0.3513514
-#&gt; 3     -0.9459459     0.6486486             0.6486486                -0.3513514
-#&gt; 4     -1.1935484    -0.4516129             0.7741935                -0.3548387
-#&gt; 5     -0.7948718    -0.3076923             0.5641026                -0.3333333
-#&gt; 6     -1.1935484     0.5483871             0.7741935                -0.3548387
-#&gt;   Species_virginica_within
-#&gt; 1               -0.3953488
-#&gt; 2               -0.2972973
-#&gt; 3               -0.2972973
-#&gt; 4               -0.4193548
-#&gt; 5               -0.2307692
-#&gt; 6               -0.4193548</div><div class='input'>
-<span class='fu'><a href='demean.html'>check_heterogeneity</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Possible heterogeneity bias due to following predictors: <span style='color: #BB0000;'>Sepal.Length, Petal.Length</span></div><div class='input'>
-<span class='co'># demean interaction term x*y</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,
-  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
-  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  ID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"x*y"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   a_between x_y_between   a_within x_y_within
-#&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
-#&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
-#&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
-#&gt; 4  2.666667    4.666667  1.3333333  3.3333333
-#&gt; 5  2.333333    4.000000 -1.3333333  0.0000000
-#&gt; 6  2.500000    4.500000 -0.5000000  1.5000000
-#&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
-#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div><div class='input'>
-<span class='co'># or in formula-notation</span>
-<span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   a_between x_y_between   a_within x_y_within
-#&gt; 1  2.666667    4.666667 -1.6666667 -0.6666667
-#&gt; 2  2.333333    4.000000 -0.3333333  2.0000000
-#&gt; 3  2.500000    4.500000  0.5000000 -1.5000000
-#&gt; 4  2.666667    4.666667  1.3333333  3.3333333
-#&gt; 5  2.333333    4.000000 -1.3333333  0.0000000
-#&gt; 6  2.500000    4.500000 -0.5000000  1.5000000
-#&gt; 7  2.666667    4.666667  0.3333333 -2.6666667
-#&gt; 8  2.333333    4.000000  1.6666667 -2.0000000</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>iris</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># fake-ID</span></span>
+<span class='r-in'><span class='va'>iris</span><span class='op'>$</span><span class='va'>binary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>150</span>, <span class='fl'>1</span>, <span class='fl'>.35</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># binary variable</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length_between Petal.Length_between Sepal.Length_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1             5.890698             3.927907          -0.7906977</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2             5.721622             3.645946          -0.8216216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3             5.721622             3.645946          -1.0216216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4             6.061290             4.129032          -1.4612903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5             5.733333             3.382051          -0.7333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6             6.061290             4.129032          -0.6612903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           -2.527907</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           -2.245946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           -2.345946</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           -2.629032</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           -1.982051</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           -2.429032</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'></span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length_between Species_between binary_between Species_setosa_between</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1             5.890698       1.0930233      0.3488372              0.3023256</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2             5.721622       0.9459459      0.3513514              0.3513514</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3             5.721622       0.9459459      0.3513514              0.3513514</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4             6.061290       1.1935484      0.4516129              0.2258065</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5             5.733333       0.7948718      0.3076923              0.4358974</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6             6.061290       1.1935484      0.4516129              0.2258065</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species_versicolor_between Species_virginica_between Sepal.Length_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1                  0.3023256                 0.3953488          -0.7906977</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2                  0.3513514                 0.2972973          -0.8216216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3                  0.3513514                 0.2972973          -1.0216216</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4                  0.3548387                 0.4193548          -1.4612903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5                  0.3333333                 0.2307692          -0.7333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6                  0.3548387                 0.4193548          -0.6612903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species_within binary_within Species_setosa_within Species_versicolor_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     -1.0930233    -0.3488372             0.6976744                -0.3023256</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     -0.9459459    -0.3513514             0.6486486                -0.3513514</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3     -0.9459459     0.6486486             0.6486486                -0.3513514</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     -1.1935484    -0.4516129             0.7741935                -0.3548387</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     -0.7948718    -0.3076923             0.5641026                -0.3333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6     -1.1935484     0.5483871             0.7741935                -0.3548387</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species_virginica_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1               -0.3953488</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2               -0.2972973</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3               -0.2972973</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4               -0.4193548</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5               -0.2307692</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6               -0.4193548</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='demean.html'>check_heterogeneity</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Possible heterogeneity bias due to following predictors: <span style='color: #BB0000;'>Sepal.Length, Petal.Length</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># demean interaction term x*y</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span class='r-in'>  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  ID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"x*y"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   a_between x_y_between   a_within x_y_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2.666667    4.666667 -1.6666667 -0.6666667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2.333333    4.000000 -0.3333333  2.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2.500000    4.500000  0.5000000 -1.5000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2.666667    4.666667  1.3333333  3.3333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2.333333    4.000000 -1.3333333  0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2.500000    4.500000 -0.5000000  1.5000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2.666667    4.666667  0.3333333 -2.6666667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2.333333    4.000000  1.6666667 -2.0000000</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># or in formula-notation</span></span>
+<span class='r-in'><span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   a_between x_y_between   a_within x_y_within</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2.666667    4.666667 -1.6666667 -0.6666667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2.333333    4.000000 -0.3333333  2.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2.500000    4.500000  0.5000000 -1.5000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2.666667    4.666667  1.3333333  3.3333333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2.333333    4.000000 -1.3333333  0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2.500000    4.500000 -0.5000000  1.5000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2.666667    4.666667  0.3333333 -2.6666667</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2.333333    4.000000  1.6666667 -2.0000000</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

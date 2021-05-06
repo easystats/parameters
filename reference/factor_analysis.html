@@ -313,32 +313,34 @@ compute it by running <code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://personality-project.org/r/psych/'>"psych"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='st'>"all"</span>, threshold <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
-  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, rotation <span class='op'>=</span> <span class='st'>"oblimin"</span>, threshold <span class='op'>=</span> <span class='st'>"max"</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, threshold <span class='op'>=</span> <span class='fl'>2</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-  <span class='va'>efa</span> <span class='op'>&lt;-</span> <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efa</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>efa</span><span class='op'>)</span>
-<span class='co'># \donttest{</span>
-  <span class='co'># Automated number of components</span>
-  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
-<span class='co'># }</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; <span class='warning'>Warning: </span>Could not retrieve information about missing data. Returning only complete
-#&gt;   cases.</div><div class='co'>#&gt; <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)</span>
-#&gt; 
-#&gt; Variable |  MR1  | Complexity | Uniqueness
-#&gt; ------------------------------------------
-#&gt; mpg      | -0.90 |    1.00    |    0.19   
-#&gt; cyl      | 0.96  |    1.00    |    0.08   
-#&gt; disp     | 0.93  |    1.00    |    0.13   
-#&gt; hp       | 0.86  |    1.00    |    0.26   
-#&gt; <span style='color: #BBBB00;'></span>
-<span style='color: #BBBB00;'>#&gt; The unique latent factor accounted for 83.55% of the total variance of the original data.</span>
-<span style='color: #BBBB00;'>#&gt; </span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://personality-project.org/r/psych/'>"psych"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='st'>"all"</span>, threshold <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, rotation <span class='op'>=</span> <span class='st'>"oblimin"</span>, threshold <span class='op'>=</span> <span class='st'>"max"</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span>, threshold <span class='op'>=</span> <span class='fl'>2</span>, sort <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>efa</span> <span class='op'>&lt;-</span> <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efa</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>efa</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'>  <span class='co'># Automated number of components</span></span>
+<span class='r-in'>  <span class='fu'>factor_analysis</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, n <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Could not retrieve information about missing data. Returning only complete</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span>   cases.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Loadings from Factor Analysis (no rotation)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Variable |  MR1  | Complexity | Uniqueness</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mpg      | -0.90 |    1.00    |    0.19   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl      | 0.96  |    1.00    |    0.08   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> disp     | 0.93  |    1.00    |    0.13   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hp       | 0.86  |    1.00    |    0.26   </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>The unique latent factor accounted for 83.55% of the total variance of the original data.</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'></span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

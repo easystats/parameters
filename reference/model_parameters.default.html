@@ -213,6 +213,7 @@ linear models (GLMs).</p>
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
+  summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -381,56 +382,63 @@ one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">b
   rename columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
-
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(29) |      p
-#&gt; ------------------------------------------------------------------
-#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | &lt; .001
-#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | &lt; .001
-#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.001 </div><div class='input'>
-<span class='co'># bootstrapped parameters</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Coefficient |         95% CI |      p
-#&gt; ---------------------------------------------------
-#&gt; (Intercept) |       39.91 | [35.34, 43.89] | &lt; .001
-#&gt; wt          |       -3.23 | [-4.85, -2.00] | 0.002 
-#&gt; cyl         |       -1.48 | [-2.26, -0.75] | 0.002 </div><div class='input'>
-<span class='co'># standardized parameters</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='st'>"refit"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p
-#&gt; ---------------------------------------------------------------------
-#&gt; (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | &gt; .999
-#&gt; wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001
-#&gt; cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </div><div class='input'>
-<span class='co'># different p-value style in output</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, p_digits <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Coefficient |   SE |         95% CI | t(29) |           p
-#&gt; -----------------------------------------------------------------------
-#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 3.04318e-20
-#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 0.00022    
-#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.00106    </div><div class='input'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, ci_digits <span class='op'>=</span> <span class='fl'>4</span>, p_digits <span class='op'>=</span> <span class='st'>"scientific"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Coefficient |    SE |             95% CI |  t(29) |           p
-#&gt; -----------------------------------------------------------------------------
-#&gt; (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 3.04318e-20
-#&gt; wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 2.22020e-04
-#&gt; cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 1.06428e-03</div><div class='input'>
-<span class='co'># logistic regression model</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |     p
-#&gt; --------------------------------------------------------------
-#&gt; (Intercept) |    10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011
-#&gt; wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174
-#&gt; cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</div><div class='input'>
-<span class='co'># show odds ratio / exponentiated coefficients</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, exponentiate <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; Parameter   | Odds Ratio |       SE |             95% CI |     z |     p
-#&gt; ------------------------------------------------------------------------
-#&gt; (Intercept) |   40911.34 | 1.71e+05 | [120.16, 6.95e+09] |  2.55 | 0.011
-#&gt; wt          |       8.17 |    12.63 | [  0.59,   514.10] |  1.36 | 0.174
-#&gt; cyl         |       0.05 |     0.07 | [  0.00,     0.34] | -2.12 | 0.034</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.001 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># bootstrapped parameters</span></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, bootstrap <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       39.91 | [35.34, 43.89] | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -3.23 | [-4.85, -2.00] | 0.002 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |       -1.48 | [-2.26, -0.75] | 0.002 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># standardized parameters</span></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='st'>"refit"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | &gt; .999</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># different p-value style in output</span></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, p_digits <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |           p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 3.04318e-20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 0.00022    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.00106    </span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, ci_digits <span class='op'>=</span> <span class='fl'>4</span>, p_digits <span class='op'>=</span> <span class='st'>"scientific"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |    SE |             95% CI |  t(29) |           p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 3.04318e-20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 2.22020e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 1.06428e-03</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># logistic regression model</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Log-Odds |   SE |         95% CI |     z |     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |    10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># show odds ratio / exponentiated coefficients</span></span>
+<span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, exponentiate <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Odds Ratio |       SE |             95% CI |     z |     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |   40911.34 | 1.71e+05 | [120.16, 6.95e+09] |  2.55 | 0.011</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       8.17 |    12.63 | [  0.59,   514.10] |  1.36 | 0.174</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> cyl         |       0.05 |     0.07 | [  0.00,     0.34] | -2.12 | 0.034</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

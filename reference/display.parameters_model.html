@@ -450,16 +450,17 @@ will be set to the length of the longest string.</p></td>
   for examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='fu'><a href='https://easystats.github.io/insight/reference/display.html'>display</a></span><span class='op'>(</span><span class='va'>mp</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; 
-#&gt; |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |
-#&gt; |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|
-#&gt; |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |
-#&gt; |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |
-#&gt; |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://easystats.github.io/insight/reference/display.html'>display</a></span><span class='op'>(</span><span class='va'>mp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

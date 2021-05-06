@@ -264,82 +264,85 @@ like in <code>model_parameters.lavaan</code>.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span>
-
-<span class='co'># lavaan -------------------------------------</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://lavaan.ugent.be'>"lavaan"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
-  <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span>
-
-  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3
-                 textual =~ x4 + x5 + x6
-                 speed   =~ x7 + x8 + x9 "</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>HolzingerSwineford1939</span><span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-  <span class='co'># filter parameters</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
-    <span class='va'>model</span>,
-    parameters <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>To <span class='op'>=</span> <span class='st'>"^(?!visual)"</span>,
-                      From <span class='op'>=</span> <span class='st'>"^(?!(x7|x8))"</span><span class='op'>)</span>
-  <span class='op'>)</span>
-
-  <span class='co'># Structural Equation Model (SEM) ------------</span>
-
-  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>"
-    # latent variable definitions
-      ind60 =~ x1 + x2 + x3
-      dem60 =~ y1 + a*y2 + b*y3 + c*y4
-      dem65 =~ y5 + a*y6 + b*y7 + c*y8
-    # regressions
-      dem60 ~ ind60
-      dem65 ~ ind60 + dem60
-    # residual correlations
-      y1 ~~ y5
-      y2 ~~ y4 + y6
-      y3 ~~ y7
-      y4 ~~ y8
-      y6 ~~ y8
-  "</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>PoliticalDemocracy</span><span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; <span style='color: #0000BB;'># Loading </span>
-#&gt; 
-#&gt; Link            | Coefficient |   SE |       95% CI |     z |      p
-#&gt; --------------------------------------------------------------------
-#&gt; ind60 =~ x1     |        0.92 | 0.02 | [0.88, 0.97] | 40.08 | &lt; .001
-#&gt; ind60 =~ x2     |        0.97 | 0.02 | [0.94, 1.01] | 59.14 | &lt; .001
-#&gt; ind60 =~ x3     |        0.87 | 0.03 | [0.81, 0.93] | 28.09 | &lt; .001
-#&gt; dem60 =~ y1     |        0.85 | 0.04 | [0.77, 0.93] | 20.92 | &lt; .001
-#&gt; dem60 =~ y2 (a) |        0.69 | 0.06 | [0.57, 0.81] | 11.58 | &lt; .001
-#&gt; dem60 =~ y3 (b) |        0.76 | 0.05 | [0.66, 0.86] | 14.70 | &lt; .001
-#&gt; dem60 =~ y4 (c) |        0.84 | 0.04 | [0.76, 0.92] | 20.11 | &lt; .001
-#&gt; dem65 =~ y5     |        0.82 | 0.04 | [0.73, 0.90] | 18.52 | &lt; .001
-#&gt; dem65 =~ y6 (a) |        0.75 | 0.05 | [0.65, 0.86] | 14.01 | &lt; .001
-#&gt; dem65 =~ y7 (b) |        0.80 | 0.05 | [0.71, 0.89] | 17.40 | &lt; .001
-#&gt; dem65 =~ y8 (c) |        0.83 | 0.04 | [0.75, 0.91] | 19.79 | &lt; .001
-#&gt; 
-#&gt; <span style='color: #0000BB;'># Regression </span>
-#&gt; 
-#&gt; Link          | Coefficient |   SE |       95% CI |     z |      p
-#&gt; ------------------------------------------------------------------
-#&gt; dem60 ~ ind60 |        0.45 | 0.10 | [0.25, 0.65] |  4.33 | &lt; .001
-#&gt; dem65 ~ ind60 |        0.19 | 0.07 | [0.05, 0.33] |  2.64 | 0.008 
-#&gt; dem65 ~ dem60 |        0.88 | 0.05 | [0.78, 0.98] | 17.24 | &lt; .001
-#&gt; 
-#&gt; <span style='color: #0000BB;'># Correlation </span>
-#&gt; 
-#&gt; Link     | Coefficient |   SE |        95% CI |    z |      p
-#&gt; -------------------------------------------------------------
-#&gt; y1 ~~ y5 |        0.28 | 0.14 | [ 0.00, 0.56] | 1.97 | 0.049 
-#&gt; y2 ~~ y4 |        0.29 | 0.11 | [ 0.07, 0.52] | 2.55 | 0.011 
-#&gt; y2 ~~ y6 |        0.36 | 0.10 | [ 0.17, 0.54] | 3.71 | &lt; .001
-#&gt; y3 ~~ y7 |        0.17 | 0.13 | [-0.09, 0.43] | 1.26 | 0.208 
-#&gt; y4 ~~ y8 |        0.11 | 0.13 | [-0.14, 0.36] | 0.86 | 0.388 
-#&gt; y6 ~~ y8 |        0.34 | 0.11 | [ 0.12, 0.55] | 3.08 | 0.002 </div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># lavaan -------------------------------------</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://lavaan.ugent.be'>"lavaan"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># Confirmatory Factor Analysis (CFA) ---------</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>" visual  =~ x1 + x2 + x3</span>
+<span class='r-in'>                 textual =~ x4 + x5 + x6</span>
+<span class='r-in'>                 speed   =~ x7 + x8 + x9 "</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/cfa.html'>cfa</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>HolzingerSwineford1939</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># filter parameters</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>model</span>,</span>
+<span class='r-in'>    parameters <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>      To <span class='op'>=</span> <span class='st'>"^(?!visual)"</span>,</span>
+<span class='r-in'>      From <span class='op'>=</span> <span class='st'>"^(?!(x7|x8))"</span></span>
+<span class='r-in'>    <span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># Structural Equation Model (SEM) ------------</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>structure</span> <span class='op'>&lt;-</span> <span class='st'>"</span>
+<span class='r-in'>    # latent variable definitions</span>
+<span class='r-in'>      ind60 =~ x1 + x2 + x3</span>
+<span class='r-in'>      dem60 =~ y1 + a*y2 + b*y3 + c*y4</span>
+<span class='r-in'>      dem65 =~ y5 + a*y6 + b*y7 + c*y8</span>
+<span class='r-in'>    # regressions</span>
+<span class='r-in'>      dem60 ~ ind60</span>
+<span class='r-in'>      dem65 ~ ind60 + dem60</span>
+<span class='r-in'>    # residual correlations</span>
+<span class='r-in'>      y1 ~~ y5</span>
+<span class='r-in'>      y2 ~~ y4 + y6</span>
+<span class='r-in'>      y3 ~~ y7</span>
+<span class='r-in'>      y4 ~~ y8</span>
+<span class='r-in'>      y6 ~~ y8</span>
+<span class='r-in'>  "</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>lavaan</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/lavaan/man/sem.html'>sem</a></span><span class='op'>(</span><span class='va'>structure</span>, data <span class='op'>=</span> <span class='va'>PoliticalDemocracy</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Loading </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Link            | Coefficient |   SE |       95% CI |     z |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind60 =~ x1     |        0.92 | 0.02 | [0.88, 0.97] | 40.08 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind60 =~ x2     |        0.97 | 0.02 | [0.94, 1.01] | 59.14 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind60 =~ x3     |        0.87 | 0.03 | [0.81, 0.93] | 28.09 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem60 =~ y1     |        0.85 | 0.04 | [0.77, 0.93] | 20.92 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem60 =~ y2 (a) |        0.69 | 0.06 | [0.57, 0.81] | 11.58 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem60 =~ y3 (b) |        0.76 | 0.05 | [0.66, 0.86] | 14.70 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem60 =~ y4 (c) |        0.84 | 0.04 | [0.76, 0.92] | 20.11 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 =~ y5     |        0.82 | 0.04 | [0.73, 0.90] | 18.52 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 =~ y6 (a) |        0.75 | 0.05 | [0.65, 0.86] | 14.01 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 =~ y7 (b) |        0.80 | 0.05 | [0.71, 0.89] | 17.40 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 =~ y8 (c) |        0.83 | 0.04 | [0.75, 0.91] | 19.79 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Regression </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Link          | Coefficient |   SE |       95% CI |     z |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem60 ~ ind60 |        0.45 | 0.10 | [0.25, 0.65] |  4.33 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 ~ ind60 |        0.19 | 0.07 | [0.05, 0.33] |  2.64 | 0.008 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dem65 ~ dem60 |        0.88 | 0.05 | [0.78, 0.98] | 17.24 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Correlation </span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Link     | Coefficient |   SE |        95% CI |    z |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y1 ~~ y5 |        0.28 | 0.14 | [ 0.00, 0.56] | 1.97 | 0.049 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y2 ~~ y4 |        0.29 | 0.11 | [ 0.07, 0.52] | 2.55 | 0.011 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y2 ~~ y6 |        0.36 | 0.10 | [ 0.17, 0.54] | 3.71 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y3 ~~ y7 |        0.17 | 0.13 | [-0.09, 0.43] | 1.26 | 0.208 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y4 ~~ y8 |        0.11 | 0.13 | [-0.14, 0.36] | 0.86 | 0.388 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y6 ~~ y8 |        0.34 | 0.11 | [ 0.12, 0.55] | 3.08 | 0.002 </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
