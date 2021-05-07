@@ -109,13 +109,16 @@ parameters <- model_parameters
 #'   Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
 #'   works when \code{standardize="refit"}.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
-#'   the coefficients (and related confidence intervals). This is typical for,
-#'   say, logistic regressions, or more generally speaking: for models with log
-#'   or logit link. \strong{Note:} standard errors are also transformed (by
-#'   multiplying the standard errors with the exponentiated coefficients), to
-#'   mimic behaviour of other software packages, such as Stata. For
-#'   \code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
-#'   exponentiate coefficients for all models except those from Gaussian family.
+#'   the coefficients (and related confidence intervals). This is typical for
+#'   logistic regression, or more generally speaking, for models with log
+#'   or logit links. \strong{Note:} Delta-method standard errors are also
+#'   computed (by multiplying the standard errors by the transformed
+#'   coefficients). This is to mimic behaviour of other software packages, such
+#'   as Stata, but these standard errors poorly estimate uncertainty for the
+#'   transformed coefficient. The transformed confidence interval more clearly
+#'   captures this uncertainty. For \code{compare_parameters()},
+#'   \code{exponentiate = "nongaussian"} will only exponentiate coefficients
+#'   from non-Gaussian families.
 #' @param robust Logical, if \code{TRUE}, robust standard errors are calculated
 #'   (if possible), and confidence intervals and p-values are based on these
 #'   robust standard errors. Additional arguments like \code{vcov_estimation} or
