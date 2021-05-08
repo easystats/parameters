@@ -79,6 +79,7 @@
   ci_brackets = NULL,
   zap_small = FALSE,
   format = NULL,
+  group = NULL,
   ...
 )
 
@@ -200,6 +201,8 @@ structure).}
 intervals. If not \code{NULL} and width is larger than the string's length,
 leading whitespaces are added to the string. If \code{width="auto"}, width
 will be set to the length of the longest string.}
+
+\item{group}{to do...}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

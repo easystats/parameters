@@ -14,6 +14,7 @@ format.parameters_model <- function(x,
                                     ci_brackets = NULL,
                                     zap_small = FALSE,
                                     format = NULL,
+                                    group = NULL,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name

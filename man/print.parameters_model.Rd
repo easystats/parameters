@@ -17,6 +17,7 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  group = NULL,
   ...
 )
 }
@@ -55,6 +56,8 @@ standard deviation.}
 \item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
+
+\item{group}{to do...}
 
 \item{...}{Arguments passed to or from other methods.}
 }

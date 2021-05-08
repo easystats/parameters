@@ -10,7 +10,6 @@
 #'   with zero-inflated component. \code{component} may be one of
 #'   \code{"conditional"} (default), \code{"zi"} or \code{"zero-inflated"}.
 #'   May be abbreviated.
-#' @inheritParams simulate_model
 #'
 #' @return A data frame with random effects statistics for the variance components,
 #'   including number of levels per random effect group, as well as complete

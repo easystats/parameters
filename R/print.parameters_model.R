@@ -17,6 +17,7 @@
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
 #' @param caption Table caption as string. If \code{NULL}, no table caption is printed.
 #' @param footer_digits Number of decimal places for values in the footer summary.
+#' @param group to do...
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
@@ -61,6 +62,7 @@ print.parameters_model <- function(x,
                                    show_sigma = FALSE,
                                    show_formula = FALSE,
                                    zap_small = FALSE,
+                                   group = NULL,
                                    ...) {
   # save original input
   orig_x <- x
@@ -97,6 +99,7 @@ print.parameters_model <- function(x,
     ci_width = "auto",
     ci_brackets = TRUE,
     format = "text",
+    group = group,
     ...
   )
 
@@ -151,6 +154,7 @@ print.parameters_brms_meta <- print.parameters_model
                         ci_width = "auto",
                         ci_brackets = TRUE,
                         format = "text",
+                        group = NULL,
                         ...) {
   format(
     x,
@@ -164,6 +168,7 @@ print.parameters_brms_meta <- print.parameters_model
     ci_brackets = ci_brackets,
     zap_small = zap_small,
     format = format,
+    group = group,
     ...
   )
 }
