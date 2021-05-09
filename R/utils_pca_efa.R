@@ -135,6 +135,7 @@ print.parameters_efa_summary <- function(x, digits = 3, ...) {
 print.parameters_pca_summary <- print.parameters_efa_summary
 
 
+#' @rdname principal_components
 #' @export
 print.parameters_efa <- function(x,
                                  digits = 2,
@@ -313,7 +314,7 @@ print.parameters_omega_summary <- function(x, ...) {
 
 # sort --------------------------------------------------------------------
 
-
+#' @rdname principal_components
 #' @export
 sort.parameters_efa <- function(x, ...) {
   .sort_loadings(x)

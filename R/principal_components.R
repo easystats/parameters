@@ -1,7 +1,6 @@
-#' Principal Component Analysis (PCA)
+#' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' This function performs a principal component analysis (PCA) and returns the
-#' loadings as a data frame.
+#' The functions \code{principal_components()} and \code{factor_analysis()} can be used to perform a principal component analysis (PCA) or a factor analysis (FA). They return the loadings as a data frame, and various methods and functions are available to access / display other information (see the Details section).
 #'
 #' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If \code{n="all"}, then \code{n} is
@@ -36,6 +35,21 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
+#'  \subsection{Methods and Utilities}{
+#'  \itemize{
+#'    \item \code{\link{n_components}} and \code{\link{n_factors}} automatically estimate the optimal number of dimensions to retain.
+#'    \item \code{\link{check_factorstructure}} checks the suitability of the data for factor analysis using the \code{\link[=check_sphericity]{sphericity}} and the \code{\link[=check_kmo]{sphericity}} KMO measure.
+#'    \item{\code{\link[performance]{check_itemscale}} computes various measures of internal consistencies applied to the (sub)scales (i.e., components) extracted from the PCA.}
+#'    \item{Running \code{summary} returns information related to each component/factor, such as the explained variance and the Eivenvalues.}
+#'    \item{Running \code{\link{get_scores}} computes scores for each subscale.}
+#'    \item{Running \code{\link{closest_component}} will return a numeric vector with the assigned
+#'   component index for each column from the original data frame.}
+#'    \item{Running \code{\link{rotated_data}} will return the rotated data, including missing
+#'   values, so it matches the original data frame.}
+#'    \item{Running \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}} visually displays the loadings (that requires the \href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
+#' }
+#' }
+#'
 #'  \subsection{Complexity}{
 #'    Complexity represents the number of latent components needed to account
 #'    for the observed variables. Whereas a perfect simple structure solution
@@ -89,24 +103,17 @@
 #'    components.
 #'  }
 #'
-#' @note There is a \code{summary()}-method that prints the Eigenvalues and
-#'   (explained) variance for each extracted component.
-#'   \code{closest_component()} will return a numeric vector with the assigned
-#'   component index for each column from the original data frame.
-#'   \code{rotated_data()} will return the rotated data, including missing
-#'   values, so it matches the original data frame. There is also a
-#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
-#'   implemented in the
-#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'  \subsection{Explained Variance and Eingenvalues}{
+#'     Use \code{summary()} to get the Eigenvalues and the explained variance for each extracted component. The eigenvectors and eigenvalues represent the "core" of a PCA: The eigenvectors (the principal components) determine the directions of the new feature space, and the eigenvalues determine their magnitude. In other words, the eigenvalues explain the variance of the data along the new feature axes.
+#'  }
 #'
-#' @seealso \code{\link[performance]{check_itemscale}} to compute various
-#'   measures of internal consistencies applied to the (sub)scales (i.e.
-#'   components) extracted from the PCA. Use \code{\link{get_scores}} to compute
-#'   scores for each subscale.
 #'
 #' @examples
-#' \donttest{
+#'
 #' library(parameters)
+#'
+#' \donttest{
+#' # Principal Component Analysis (PCA) -------------------
 #' if (require("psych")) {
 #'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'   principal_components(mtcars[, 1:7],
@@ -122,10 +129,28 @@
 #'
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
+#'   # rotated_data(pca)  # TODO: doesn't work
 #' }
 #'
 #' # Automated number of components
 #' principal_components(mtcars[, 1:4], n = "auto")
+#' }
+#'
+#'
+#'
+#' # Factor Analysis (FA) ------------------------
+#' if (require("psych")) {
+#'   factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'   factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+#'   factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#'
+#'   efa <- factor_analysis(mtcars[, 1:5], n = 2)
+#'   summary(efa)
+#'   predict(efa)
+#' \donttest{
+#'   # Automated number of components
+#'   factor_analysis(mtcars[, 1:4], n = "auto")
+#' }
 #' }
 #' @return A data frame of loadings.
 #' @references \itemize{
@@ -156,21 +181,21 @@ principal_components <- function(x,
 
 #' @rdname principal_components
 #' @export
-closest_component <- function(x) {
-  attributes(x)$closest_component
+closest_component <- function(pca_results) {
+  attributes(pca_results)$closest_component
 }
 
 
 
 #' @rdname principal_components
 #' @export
-rotated_data <- function(x) {
-  original_data <- attributes(x)$data_set
-  rotated_matrix <- as.data.frame(attributes(x)$model$x)
+rotated_data <- function(pca_results) {
+  original_data <- attributes(pca_results)$data_set
+  rotated_matrix <- as.data.frame(attributes(pca_results)$model$x)
   out <- NULL
 
   if (!is.null(original_data) && !is.null(rotated_matrix)) {
-    compl_cases <- attributes(x)$complete_cases
+    compl_cases <- attributes(pca_results)$complete_cases
     if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
       warning("Could not retrieve information about missing data.", call. = FALSE)
       return(NULL)
