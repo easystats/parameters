@@ -33,10 +33,15 @@
 parameters_groupspecific <- function(model, ...) {
   # Extract params
   params <- model_parameters(model, effects = "random", group_level = TRUE)
+  params <- as.data.frame(params)  # TODO: improve / add new printing that groups by group/level?
 
-  as.data.frame(params)
+  # Reorganize columns
   params$Effects <- NULL
-  summary(as.factor(params$Group))
+  params <- params[c("Group", "Level", names(params)[!names(params) %in% c("Group", "Level")])]
+  params <- params[order(params$Group, params$Level, params$Parameter), ]
+
+  # Clean
+  row.names(params) <- NULL
 
   # Assign new class
   class(params) <- c("parmaeters_groupspecific", class(params))
