@@ -38,7 +38,7 @@
 #'
 #' }
 #' @export
-parameters_groupspecific <- function(model, ...) {
+parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ...) {
   # Extract params
   params <- model_parameters(model, effects = "random", group_level = TRUE)
   params <- as.data.frame(params)  # TODO: improve / add new printing that groups by group/level?
