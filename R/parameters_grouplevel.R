@@ -18,12 +18,12 @@
 #'   parameters_groupspecific(model)
 #'
 #'   # Nested random factors
-#'   set.seed(12345)
-#'   data$grp <- sample(1:5, size = 180, replace = TRUE)
+#'   set.seed(33)
+#'   data$grp <- sample(letters[1:5], size = 180, replace = TRUE)
 #'   data$subgrp <- NA
-#'   for (i in 1:5) {
+#'   for (i in letters[1:5]) {
 #'     filter_group <- data$grp == i
-#'     data$subgrp[filter_group] <- sample(1:30, size = sum(filter_group), replace = TRUE)
+#'     data$subgrp[filter_group] <- sample(LETTERS, size = sum(filter_group), replace = TRUE)
 #'   }
 #'   model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = data)
 #'   parameters_groupspecific(model)
@@ -32,9 +32,13 @@
 #' @export
 parameters_groupspecific <- function(model, ...) {
   # Extract params
-  out <- model_parameters(model, effects = "random", group_level = TRUE)
+  params <- model_parameters(model, effects = "random", group_level = TRUE)
+
+  as.data.frame(params)
+  params$Effects <- NULL
+  summary(as.factor(params$Group))
 
   # Assign new class
-  class(out) <- c("parmaeters_groupspecific", class(out))
-  out
+  class(params) <- c("parmaeters_groupspecific", class(params))
+  params
 }
