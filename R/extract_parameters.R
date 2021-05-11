@@ -347,7 +347,14 @@
       column <- 1
     }
   }
-  params[!grepl(filter_params, params[[column]], perl = TRUE), ]
+  out <- params[!grepl(filter_params, params[[column]], perl = TRUE), ]
+
+  if (nrow(out) == 0) {
+    warning(insight::format_message("The pattern defined in the 'parameters' argument would remove all parameters from the output. Thus, filtering will be ignored."), call. = FALSE)
+    return(params)
+  }
+
+  out
 }
 
 
