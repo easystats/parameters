@@ -261,8 +261,18 @@ standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).</p></td>
     </tr>
     <tr>
+      <th>cor</th>
+      <td><p>An optional correlation matrix that can be used (note that the
+data must still be passed as the first argument). If <code>NULL</code>, will
+compute it by running <code><a href='https://rdrr.io/r/stats/cor.html'>cor()</a></code> on the passed data.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>pca_results</th>
+      <td><p>The output of the <code><a href='principal_components.html'>principal_components()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>object</th>
@@ -284,6 +294,10 @@ frame.</p></td>
       <td><p>Logical, if <code>TRUE</code>, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.</p></td>
+    </tr>
+    <tr>
+      <th>digits, labels</th>
+      <td><p>Arguments for <code><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print()</a></code>.</p></td>
     </tr>
     </table>
 
