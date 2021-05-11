@@ -16,7 +16,8 @@
 ## Changes to functions
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
-  expression as string, to filter parameters from the returned data frame.
+  expression as string, to select specific parameters from the returned data 
+  frame.
 
 * `ci()` for `svyglm` gains a `method` argument.
 

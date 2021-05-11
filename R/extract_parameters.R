@@ -340,6 +340,14 @@
 
 
 .filter_parameters_vector <- function(params, filter_params, column = NULL, verbose = TRUE) {
+  # check pattern
+  if (length(filter_params) > 1) {
+    filter_params <- paste0("(", paste0(filter_params, collapse = "|"), ")")
+    if (verbose) {
+      message(insight::format_message(sprintf("The 'parameters' argument has more than 1 element. Merging into following regular expression: '%s'.", filter_params)))
+    }
+  }
+
   if (is.null(column) || !column %in% colnames(params)) {
     if ("Parameter" %in% colnames(params)) {
       column <- "Parameter"
@@ -347,11 +355,11 @@
       column <- 1
     }
   }
-  out <- params[!grepl(filter_params, params[[column]], perl = TRUE), ]
+  out <- params[grepl(filter_params, params[[column]], perl = TRUE), ]
 
   if (nrow(out) == 0) {
     if (verbose) {
-      warning(insight::format_message("The pattern defined in the 'parameters' argument would remove all parameters from the output. Thus, filtering will be ignored."), call. = FALSE)
+      warning(insight::format_message("The pattern defined in the 'parameters' argument would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
     }
     return(params)
   }
