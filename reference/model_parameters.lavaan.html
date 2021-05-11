@@ -224,13 +224,16 @@ exogenous covariates. See <code><a href='https://rdrr.io/pkg/lavaan/man/standard
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Character vector with a regular expression pattern that
-describes the parameters that should be filtered from the data frame, or
-a named list of regular expressions. In the first case, every parameter
-in the <em>"Parameters"</em> column that matches the regular expression in
-<code>parameters</code> will be removed from the returned data frame. If
+      <td><p>Character vector of length 1 with a regular expression pattern
+that describes the parameters that should be returned from the data frame, or
+a named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>parameters</code> is a character vector, every
+parameter in the <em>"Parameters"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame. Furthermore,
+if <code>parameters</code> has more than one element, these will be merged into
+a regular expression pattern like this: <code>"(one|two|three)"</code>. If
 <code>parameters</code> is a named list of regular expression patterns, the
-names of the list-element should equal the column name where filtering
+names of the list-element should equal the column name where selection
 should be applied. This is useful for model objects where
 <code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
 like in <code>model_parameters.lavaan</code>.</p></td>
@@ -308,8 +311,6 @@ like in <code>model_parameters.lavaan</code>.</p></td>
 <span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, standardize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>The pattern defined in the 'parameters' argument would remove all parameters</span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span>   from the output. Thus, filtering will be ignored.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Loading </span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Link            | Coefficient |   SE |       95% CI |     z |      p</span>
