@@ -33,6 +33,9 @@
 #'   with missing values from the original data, hence the number of rows of
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
+#' @param pca_results The output of the \code{principal_components()} function.
+#' @param digits,labels Arguments for \code{print()}.
+#' @inheritParams n_factors
 #'
 #' @details
 #'  \subsection{Methods and Utilities}{

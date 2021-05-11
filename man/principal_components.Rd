@@ -70,7 +70,13 @@ structure).}
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).}
 
+\item{cor}{An optional correlation matrix that can be used (note that the
+data must still be passed as the first argument). If \code{NULL}, will
+compute it by running \code{cor()} on the passed data.}
+
 \item{...}{Arguments passed to or from other methods.}
+
+\item{pca_results}{The output of the \code{principal_components()} function.}
 
 \item{object}{An object of class \code{parameters_pca} or
 \code{parameters_efa}}
@@ -84,6 +90,8 @@ frame.}
 \item{keep_na}{Logical, if \code{TRUE}, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.}
+
+\item{digits, labels}{Arguments for \code{print()}.}
 }
 \value{
 A data frame of loadings.
