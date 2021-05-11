@@ -45,7 +45,7 @@ model_parameters.ggeffects <- function(model, parameters = NULL, verbose = TRUE,
 
   # filter parameters
   if (!is.null(parameters)) {
-    model <- .filter_parameters(model, parameters)
+    model <- .filter_parameters(model, parameters, verbose = verbose)
   }
 
   model <- .add_model_parameters_attributes(model, model, ci = ci, verbose = verbose)

@@ -91,7 +91,7 @@ model_parameters.emmGrid <- function(model,
 
   # filter parameters
   if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters)
+    params <- .filter_parameters(params, parameters, verbose = verbose)
   }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
