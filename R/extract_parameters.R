@@ -347,7 +347,7 @@
       column <- 1
     }
   }
-  params[grepl(filter_params, params[[column]], perl = TRUE), ]
+  params[!grepl(filter_params, params[[column]], perl = TRUE), ]
 }
 
 
