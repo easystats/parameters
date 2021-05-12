@@ -16,14 +16,42 @@
   x <- x[row_index, ]
 
   att <- attributes(x)
+  indent_rows <- NULL
+  indent_parameters <- NULL
 
-  # find parameter names and replace by rowindex
-  group_names <- names(group)
-  group <- match(group, x$Parameter)
-  names(group) <- group_names
+  if (is.list(group)) {
 
-  # order groups
-  group <- group[order(group)]
+    # find parameter names and replace by rowindex
+    group_rows <- lapply(group, function(i) {
+      if (is.character(i)) {
+        i <- match(i, x$Parameter)
+      }
+      i
+    })
+
+    # sort parameters according to grouping
+    selected_rows <- unlist(group_rows)
+    indent_parameters <- x$Parameter[selected_rows]
+    x <- rbind(x[selected_rows, ], x[-selected_rows, ])
+
+    # set back correct indices
+    group <- 1
+    for (i in 2:length(group_rows)) {
+      group <- c(group, group[i - 1] + length(group_rows[[i - 1]]))
+    }
+    names(group) <- names(group_rows)
+
+  } else {
+
+    # find parameter names and replace by rowindex
+    group_names <- names(group)
+    group <- match(group, x$Parameter)
+    names(group) <- group_names
+
+    # order groups
+    group <- group[order(group)]
+  }
+
 
   empty_row <- x[1, ]
   for (i in 1:ncol(empty_row)) {
@@ -36,7 +64,19 @@
     x$Parameter[group[i]] <- paste0("# ", names(group[i]))
   }
 
+  # find row indices of indented parameters
+  if (!is.null(indent_parameters)) {
+    indent_rows <- match(indent_parameters, x$Parameter)
+  }
+
+  # add other rows back
+  if (nrow(x_other) > 0) {
+    x <- rbind(x, x_other)
+  }
+
   attributes(x) <- utils::modifyList(att, attributes(x))
+  attr(x, "indent_rows") <- indent_rows
+  attr(x, "indent_groups") <- "# "
   x
 }
 

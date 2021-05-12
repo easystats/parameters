@@ -18,6 +18,7 @@ print_md.parameters_model <- function(x,
                                       show_sigma = FALSE,
                                       show_formula = FALSE,
                                       zap_small = FALSE,
+                                      group = NULL,
                                       verbose = TRUE,
                                       ...) {
   # check if user supplied digits attributes
@@ -50,6 +51,7 @@ print_md.parameters_model <- function(x,
     ci_width = NULL,
     ci_brackets = ci_brackets,
     format = "markdown",
+    group = group,
     ...
   )
 

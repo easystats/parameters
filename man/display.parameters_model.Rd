@@ -121,6 +121,7 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  group = NULL,
   verbose = TRUE,
   ...
 )
