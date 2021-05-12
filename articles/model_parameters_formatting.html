@@ -461,6 +461,7 @@
 <p>A similar option is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>, which is a convenient wrapper for <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and <code>export_table(format = "html")</code>. Using HTML in markdown has the advantage that it will be properly rendered when exporting to PDF.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div id="niwbgbfclw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -794,18 +795,14 @@
 
 #niwbgbfclw .gt_footnote_marks {
   font-style: italic;
+  font-weight: normal;
   font-size: 65%;
 }
 </style>
-<div id="niwbgbfclw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
-<thead class="gt_header">
-<tr>
-<th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model Summary</th>
-    </tr>
-<tr>
-<th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
-    </tr>
-</thead>
+<table class="table gt_table">
+<thead class="gt_header"><tr>
+<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Model Summary</th>
+    </tr></thead>
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
@@ -817,58 +814,60 @@
 <tbody class="gt_table_body">
 <tr>
 <td class="gt_row gt_left">(Intercept)</td>
-      <td class="gt_row gt_center">3.81</td>
-      <td class="gt_row gt_center">0.06</td>
-      <td class="gt_row gt_center">(3.70, 3.93)</td>
-      <td class="gt_row gt_center">65.50</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">3.81</td>
+<td class="gt_row gt_center">0.06</td>
+<td class="gt_row gt_center">(3.70, 3.93)</td>
+<td class="gt_row gt_center">65.50</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Sepal.Length (1st degree)</td>
-      <td class="gt_row gt_center">4.06</td>
-      <td class="gt_row gt_center">0.47</td>
-      <td class="gt_row gt_center">(3.14, 4.98)</td>
-      <td class="gt_row gt_center">8.70</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">4.06</td>
+<td class="gt_row gt_center">0.47</td>
+<td class="gt_row gt_center">(3.14, 4.98)</td>
+<td class="gt_row gt_center">8.70</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Sepal.Length (2nd degree)</td>
-      <td class="gt_row gt_center">-1.30</td>
-      <td class="gt_row gt_center">0.31</td>
-      <td class="gt_row gt_center">(-1.92, -0.68)</td>
-      <td class="gt_row gt_center">-4.14</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-1.30</td>
+<td class="gt_row gt_center">0.31</td>
+<td class="gt_row gt_center">(-1.92, -0.68)</td>
+<td class="gt_row gt_center">-4.14</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Species (versicolor)</td>
-      <td class="gt_row gt_center">-1.01</td>
-      <td class="gt_row gt_center">0.28</td>
-      <td class="gt_row gt_center">(-1.56, -0.46)</td>
-      <td class="gt_row gt_center">-3.62</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-1.01</td>
+<td class="gt_row gt_center">0.28</td>
+<td class="gt_row gt_center">(-1.56, -0.46)</td>
+<td class="gt_row gt_center">-3.62</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Species (virginica)</td>
-      <td class="gt_row gt_center">-0.99</td>
-      <td class="gt_row gt_center">0.29</td>
-      <td class="gt_row gt_center">(-1.55, -0.43)</td>
-      <td class="gt_row gt_center">-3.48</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-0.99</td>
+<td class="gt_row gt_center">0.29</td>
+<td class="gt_row gt_center">(-1.55, -0.43)</td>
+<td class="gt_row gt_center">-3.48</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Petlen (4-7)</td>
-      <td class="gt_row gt_center">-0.14</td>
-      <td class="gt_row gt_center">0.28</td>
-      <td class="gt_row gt_center">(-0.69, 0.42)</td>
-      <td class="gt_row gt_center">-0.48</td>
-      <td class="gt_row gt_center">0.630 </td>
-    </tr>
+<td class="gt_row gt_center">-0.14</td>
+<td class="gt_row gt_center">0.28</td>
+<td class="gt_row gt_center">(-0.69, 0.42)</td>
+<td class="gt_row gt_center">-0.48</td>
+<td class="gt_row gt_center">0.630 </td>
+</tr>
 </tbody>
 <tfoot class="gt_sourcenotes"></tfoot>
-</table></div>
+</table>
+</div>
 <p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> are considered as main functions for users who want to generate nicely rendered tables inside markdown-documents. A wrapper around these both is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, which either calls <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></code></pre></div>
+<div id="ghawkzfndf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
@@ -1202,18 +1201,14 @@
 
 #ghawkzfndf .gt_footnote_marks {
   font-style: italic;
+  font-weight: normal;
   font-size: 65%;
 }
 </style>
-<div id="ghawkzfndf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="table gt_table">
-<thead class="gt_header">
-<tr>
-<th colspan="6" class="gt_heading gt_title gt_font_normal" style>Model Summary</th>
-    </tr>
-<tr>
-<th colspan="6" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style></th>
-    </tr>
-</thead>
+<table class="table gt_table">
+<thead class="gt_header"><tr>
+<th colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Model Summary</th>
+    </tr></thead>
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Parameter</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Coefficient</th>
@@ -1225,55 +1220,56 @@
 <tbody class="gt_table_body">
 <tr>
 <td class="gt_row gt_left">(Intercept)</td>
-      <td class="gt_row gt_center">3.81</td>
-      <td class="gt_row gt_center">0.06</td>
-      <td class="gt_row gt_center">(3.70, 3.93)</td>
-      <td class="gt_row gt_center">65.50</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">3.81</td>
+<td class="gt_row gt_center">0.06</td>
+<td class="gt_row gt_center">(3.70, 3.93)</td>
+<td class="gt_row gt_center">65.50</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Sepal.Length (1st degree)</td>
-      <td class="gt_row gt_center">4.06</td>
-      <td class="gt_row gt_center">0.47</td>
-      <td class="gt_row gt_center">(3.14, 4.98)</td>
-      <td class="gt_row gt_center">8.70</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">4.06</td>
+<td class="gt_row gt_center">0.47</td>
+<td class="gt_row gt_center">(3.14, 4.98)</td>
+<td class="gt_row gt_center">8.70</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Sepal.Length (2nd degree)</td>
-      <td class="gt_row gt_center">-1.30</td>
-      <td class="gt_row gt_center">0.31</td>
-      <td class="gt_row gt_center">(-1.92, -0.68)</td>
-      <td class="gt_row gt_center">-4.14</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-1.30</td>
+<td class="gt_row gt_center">0.31</td>
+<td class="gt_row gt_center">(-1.92, -0.68)</td>
+<td class="gt_row gt_center">-4.14</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Species (versicolor)</td>
-      <td class="gt_row gt_center">-1.01</td>
-      <td class="gt_row gt_center">0.28</td>
-      <td class="gt_row gt_center">(-1.56, -0.46)</td>
-      <td class="gt_row gt_center">-3.62</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-1.01</td>
+<td class="gt_row gt_center">0.28</td>
+<td class="gt_row gt_center">(-1.56, -0.46)</td>
+<td class="gt_row gt_center">-3.62</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Species (virginica)</td>
-      <td class="gt_row gt_center">-0.99</td>
-      <td class="gt_row gt_center">0.29</td>
-      <td class="gt_row gt_center">(-1.55, -0.43)</td>
-      <td class="gt_row gt_center">-3.48</td>
-      <td class="gt_row gt_center">&lt; .001</td>
-    </tr>
+<td class="gt_row gt_center">-0.99</td>
+<td class="gt_row gt_center">0.29</td>
+<td class="gt_row gt_center">(-1.55, -0.43)</td>
+<td class="gt_row gt_center">-3.48</td>
+<td class="gt_row gt_center">&lt; .001</td>
+</tr>
 <tr>
 <td class="gt_row gt_left">Petlen (4-7)</td>
-      <td class="gt_row gt_center">-0.14</td>
-      <td class="gt_row gt_center">0.28</td>
-      <td class="gt_row gt_center">(-0.69, 0.42)</td>
-      <td class="gt_row gt_center">-0.48</td>
-      <td class="gt_row gt_center">0.630 </td>
-    </tr>
+<td class="gt_row gt_center">-0.14</td>
+<td class="gt_row gt_center">0.28</td>
+<td class="gt_row gt_center">(-0.69, 0.42)</td>
+<td class="gt_row gt_center">-0.48</td>
+<td class="gt_row gt_center">0.630 </td>
+</tr>
 </tbody>
 <tfoot class="gt_sourcenotes"></tfoot>
-</table></div>
+</table>
+</div>
 </div>
   </div>
 
