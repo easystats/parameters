@@ -205,7 +205,9 @@ will be set to the length of the longest string.}
 \item{group}{Named character vector, can be used to group parameters in the
 printed output. The lefthand-side (names) indicate the names of a group,
 which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. See 'Examples'.}
+should match the name of a parameter where the group starts. A possible
+use case might be to emphasize focal predictors and control variables,
+see 'Examples'.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

@@ -60,7 +60,9 @@ places than \code{digits} are printed in scientific notation.}
 \item{group}{Named character vector, can be used to group parameters in the
 printed output. The lefthand-side (names) indicate the names of a group,
 which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. See 'Examples'.}
+should match the name of a parameter where the group starts. A possible
+use case might be to emphasize focal predictors and control variables,
+see 'Examples'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -124,14 +126,17 @@ if (require("glmmTMB", quietly = TRUE)) {
 
 data(iris)
 model <- lm(
-  Sepal.Width ~ Petal.Length + Species + Sepal.Length,
+  Sepal.Width ~ Species + Sepal.Length + Petal.Length,
   data = iris
 )
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
-print(mp, group = c("Group Petal" = "Petal.Length",
-                    "Group Species" = "Speciesversicolor",
-                    "Group Sepal" = "Sepal.Length"))
+print(mp, group = c("Focal Predictors" = "Speciesversicolor",
+                    "Controls" = "Sepal.Length"))
+
+# only show coefficients, CI and p
+print(mp, group = c("Focal Predictors" = "Speciesversicolor",
+                    "Controls" = "Sepal.Length"), select = "minimal")
 }
 }
 \seealso{
