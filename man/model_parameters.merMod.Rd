@@ -145,8 +145,10 @@ standard errors and confidence intervals (CI). May be \code{"wald"}
 \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect
 confidence intervals; in this case, bootstrapped resp. profiled confidence
 intervals are computed. \code{"uniroot"} only applies to models of class
-\code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"},
-robust standard errors etc. cannot be computed.}
+\code{glmmTMB}. For models of class \code{lmerMod}, when
+\code{df_method = "wald"}, residual degrees of freedom are returned.
+Note that when \code{df_method} is not \code{"wald"}, robust standard
+errors etc. cannot be computed.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further

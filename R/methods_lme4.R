@@ -71,8 +71,10 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect
 #'   confidence intervals; in this case, bootstrapped resp. profiled confidence
 #'   intervals are computed. \code{"uniroot"} only applies to models of class
-#'   \code{glmmTMB}. Note that when \code{df_method} is not \code{"wald"},
-#'   robust standard errors etc. cannot be computed.
+#'   \code{glmmTMB}. For models of class \code{lmerMod}, when
+#'   \code{df_method = "wald"}, residual degrees of freedom are returned.
+#'   Note that when \code{df_method} is not \code{"wald"}, robust standard
+#'   errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and
 #'   between-effects (see \code{\link{demean}}), the \code{Component} column
 #'   will indicate which variables belong to the within-effects,
