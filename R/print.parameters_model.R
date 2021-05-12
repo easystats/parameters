@@ -17,7 +17,10 @@
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
 #' @param caption Table caption as string. If \code{NULL}, no table caption is printed.
 #' @param footer_digits Number of decimal places for values in the footer summary.
-#' @param group to do...
+#' @param group Named character vector, can be used to group parameters in the
+#'   printed output. The lefthand-side (names) indicate the names of a group,
+#'   which will be inserted as "header row", while the righthand-side (values)
+#'   should match the name of a parameter where the group starts. See 'Examples'.
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
@@ -48,6 +51,19 @@
 #'
 #'   print(mp, select = "minimal")
 #' }
+#'
+#' # group parameters ------
+#'
+#' data(iris)
+#' model <- lm(
+#'   Sepal.Width ~ Petal.Length + Species + Sepal.Length,
+#'   data = iris
+#' )
+#' # don't select "Intercept" parameter
+#' mp <- model_parameters(m, parameters = "^(?!\\(Intercept)")
+#' print(mp, group = c("Group Petal" = "Petal.Length",
+#'                     "Group Sepal" = "Sepal.Length",
+#'                     "Group Species = "Species"))
 #' }
 #' @export
 print.parameters_model <- function(x,

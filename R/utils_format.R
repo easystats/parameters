@@ -17,12 +17,10 @@
 
   att <- attributes(x)
 
-  # if character, find parameter names and replace by rowindex
-  if (anyNA(suppressWarnings(as.numeric(group)))) {
-    group_names <- group
-    group <- match(names(group), x$Parameter)
-    names(group) <- group_names
-  }
+  # find parameter names and replace by rowindex
+  group_names <- names(group)
+  group <- match(group, x$Parameter)
+  names(group) <- group_names
 
   empty_row <- x[1, ]
   for (i in 1:ncol(empty_row)) {
