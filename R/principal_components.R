@@ -194,7 +194,7 @@ closest_component <- function(pca_results) {
 #' @export
 rotated_data <- function(pca_results) {
   original_data <- attributes(pca_results)$data_set
-  rotated_matrix <- as.data.frame(attributes(pca_results)$model$x)
+  rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
 
   if (!is.null(original_data) && !is.null(rotated_matrix)) {
