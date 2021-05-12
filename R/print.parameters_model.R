@@ -60,10 +60,10 @@
 #'   data = iris
 #' )
 #' # don't select "Intercept" parameter
-#' mp <- model_parameters(m, parameters = "^(?!\\(Intercept)")
+#' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
 #' print(mp, group = c("Group Petal" = "Petal.Length",
-#'                     "Group Sepal" = "Sepal.Length",
-#'                     "Group Species" = "Species"))
+#'                     "Group Species" = "Speciesversicolor",
+#'                     "Group Sepal" = "Sepal.Length"))
 #' }
 #' @export
 print.parameters_model <- function(x,
