@@ -133,7 +133,7 @@ model_parameters.glmmTMB <- function(model,
 
   # filter parameters
   if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters)
+    params <- .filter_parameters(params, parameters, verbose = verbose)
   }
 
 

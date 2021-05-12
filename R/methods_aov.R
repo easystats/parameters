@@ -143,7 +143,7 @@ model_parameters.aov <- function(model,
 
   # filter parameters
   if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters)
+    params <- .filter_parameters(params, parameters, verbose = verbose)
   }
 
   # add attributes
@@ -277,7 +277,7 @@ model_parameters.afex_aov <- function(model,
 
   # filter parameters
   if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters)
+    params <- .filter_parameters(params, parameters, verbose = verbose)
   }
 
   if (!"Method" %in% names(out)) {

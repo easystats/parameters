@@ -288,7 +288,7 @@
   # ==== filter parameters, if requested
 
   if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters)
+    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
   }
 
 
@@ -327,19 +327,27 @@
 
 
 
-.filter_parameters <- function(params, filter_params) {
+.filter_parameters <- function(params, filter_params, verbose = TRUE) {
   if (is.list(filter_params)) {
     for (i in names(filter_params)) {
-      params <- .filter_parameters_vector(params, filter_params[[i]], column = i)
+      params <- .filter_parameters_vector(params, filter_params[[i]], column = i, verbose = verbose)
     }
   } else {
-    params <- .filter_parameters_vector(params, filter_params, column = NULL)
+    params <- .filter_parameters_vector(params, filter_params, column = NULL, verbose = verbose)
   }
   params
 }
 
 
-.filter_parameters_vector <- function(params, filter_params, column = NULL) {
+.filter_parameters_vector <- function(params, filter_params, column = NULL, verbose = TRUE) {
+  # check pattern
+  if (length(filter_params) > 1) {
+    filter_params <- paste0("(", paste0(filter_params, collapse = "|"), ")")
+    if (verbose) {
+      message(insight::format_message(sprintf("The 'parameters' argument has more than 1 element. Merging into following regular expression: '%s'.", filter_params)))
+    }
+  }
+
   if (is.null(column) || !column %in% colnames(params)) {
     if ("Parameter" %in% colnames(params)) {
       column <- "Parameter"
@@ -347,7 +355,16 @@
       column <- 1
     }
   }
-  params[grepl(filter_params, params[[column]], perl = TRUE), ]
+  out <- params[grepl(filter_params, params[[column]], perl = TRUE), ]
+
+  if (nrow(out) == 0) {
+    if (verbose) {
+      warning(insight::format_message("The pattern defined in the 'parameters' argument would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
+    }
+    return(params)
+  }
+
+  out
 }
 
 
@@ -550,7 +567,7 @@
 
   # filter parameters, if requested
   if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters)
+    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
   }
 
   rownames(parameters) <- NULL
@@ -739,7 +756,7 @@
 
   # filter parameters, if requested
   if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters)
+    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
   }
 
   rownames(parameters) <- NULL
@@ -875,7 +892,7 @@
 
   # filter parameters, if requested
   if (!is.null(filter_parameters)) {
-    params <- .filter_parameters(params, filter_parameters)
+    params <- .filter_parameters(params, filter_parameters, verbose = verbose)
   }
 
   params

@@ -69,6 +69,11 @@ format.parameters_model <- function(x,
     }
   }
 
+  # group parameters
+  if (!is.null(group)) {
+    x <- .parameter_groups(x, group)
+  }
+
   # prepare output, to have in shape for printing
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
@@ -92,6 +97,9 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
+  if (!is.null(group)) {
+    attr(formatted_table, "indent_groups") <- "# "
+  }
   formatted_table
 }
 

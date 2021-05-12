@@ -175,13 +175,16 @@ conditional or zero-inflated component of the model.}
 model (model formula, number of observations, residual standard deviation
 and more).}
 
-\item{parameters}{Character vector with a regular expression pattern that
-describes the parameters that should be filtered from the data frame, or
-a named list of regular expressions. In the first case, every parameter
-in the \emph{"Parameters"} column that matches the regular expression in
-\code{parameters} will be removed from the returned data frame. If
+\item{parameters}{Character vector of length 1 with a regular expression pattern
+that describes the parameters that should be returned from the data frame, or
+a named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{parameters} is a character vector, every
+parameter in the \emph{"Parameters"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame. Furthermore,
+if \code{parameters} has more than one element, these will be merged into
+a regular expression pattern like this: \code{"(one|two|three)"}. If
 \code{parameters} is a named list of regular expression patterns, the
-names of the list-element should equal the column name where filtering
+names of the list-element should equal the column name where selection
 should be applied. This is useful for model objects where
 \code{model_parameters()} returns multiple columns with parameter components,
 like in \code{\link{model_parameters.lavaan}}.}

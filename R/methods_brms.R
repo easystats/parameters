@@ -180,7 +180,7 @@ model_parameters.brmsfit <- function(model,
   params <- params[, c(first_cols, seq_len(ncol(params))[-first_cols])]
 
   if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters)
+    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
   }
 
   # add attributes

@@ -33,6 +33,9 @@
 #'   with missing values from the original data, hence the number of rows of
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
+#' @param pca_results The output of the \code{principal_components()} function.
+#' @param digits,labels Arguments for \code{print()}.
+#' @inheritParams n_factors
 #'
 #' @details
 #'  \subsection{Methods and Utilities}{
@@ -191,7 +194,7 @@ closest_component <- function(pca_results) {
 #' @export
 rotated_data <- function(pca_results) {
   original_data <- attributes(pca_results)$data_set
-  rotated_matrix <- as.data.frame(attributes(pca_results)$model$x)
+  rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
 
   if (!is.null(original_data) && !is.null(rotated_matrix)) {

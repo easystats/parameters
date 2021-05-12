@@ -1,5 +1,51 @@
 # helper ------------------------
 
+
+.parameter_groups <- function(x, group) {
+  # only apply to conditional component for now
+  if ("Component" %in% colnames(x) && sum(x$Component == "conditional") == 0) {
+    return(x)
+  }
+  if ("Component" %in% colnames(x)) {
+    row_index <- which(x$Component == "conditional")
+  } else {
+    row_index <- 1:nrow(x)
+  }
+
+  x_other <- x[-row_index, ]
+  x <- x[row_index, ]
+
+  att <- attributes(x)
+
+  # if character, find parameter names and replace by rowindex
+  if (anyNA(suppressWarnings(as.numeric(group)))) {
+    group_names <- group
+    group <- match(names(group), x$Parameter)
+    names(group) <- group_names
+  }
+
+  empty_row <- x[1, ]
+  for (i in 1:ncol(empty_row)) {
+    empty_row[[i]] <- NA
+  }
+
+  for (i in length(group):1) {
+    x[seq(group[i] + 1, nrow(x) + 1), ] <- x[seq(group[i], nrow(x)), ]
+    x[group[i], ] <- empty_row
+    x$Parameter[group[i]] <- paste0("# ", names(group[i]))
+  }
+
+  attributes(x) <- utils::modifyList(att, attributes(x))
+  x
+}
+
+
+# .insert_row <- function(x, newrow, r) {
+#   existingDF[seq(r+1,nrow(existingDF)+1),] <- existingDF[seq(r,nrow(existingDF)),]
+#   existingDF[r,] <- newrow
+#   existingDF
+# }
+
 .prepare_x_for_print <- function(x, select, coef_name, s_value) {
   # minor fix for nested Anovas
   if ("Group" %in% colnames(x) && sum(x$Parameter == "Residuals") > 1) {
