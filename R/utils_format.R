@@ -22,6 +22,9 @@
   group <- match(group, x$Parameter)
   names(group) <- group_names
 
+  # order groups
+  group <- group[order(group)]
+
   empty_row <- x[1, ]
   for (i in 1:ncol(empty_row)) {
     empty_row[[i]] <- NA
