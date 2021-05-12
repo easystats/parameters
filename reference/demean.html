@@ -189,20 +189,20 @@
     </div>
 
     <div class="ref-description">
-    <p><code><a href='demean.html'>demean()</a></code> computes group- and de-meaned versions of a
+    <p><code>demean()</code> computes group- and de-meaned versions of a
    variable that can be used in regression analysis to model the between-
-   and within-subject effect. <code><a href='demean.html'>check_heterogeneity()</a></code> checks if model
+   and within-subject effect. <code>check_heterogeneity()</code> checks if model
    predictors or variables may cause a heterogeneity bias, i.e. if variables
    have a within- and/or between-effect.
    <br /> <br />
-   <code><a href='demean.html'>degroup()</a></code> is more generic in terms of the centering-operation.
-   While <code><a href='demean.html'>demean()</a></code> always uses mean-centering, <code><a href='demean.html'>degroup()</a></code> can
+   <code>degroup()</code> is more generic in terms of the centering-operation.
+   While <code>demean()</code> always uses mean-centering, <code>degroup()</code> can
    also use the mode or median for centering.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='demean.html'>check_heterogeneity</a></span><span class='op'>(</span><span class='va'>x</span>, select <span class='op'>=</span> <span class='cn'>NULL</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>check_heterogeneity</span><span class='op'>(</span><span class='va'>x</span>, select <span class='op'>=</span> <span class='cn'>NULL</span>, group <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span>
+<span class='fu'>demean</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>select</span>,
   <span class='va'>group</span>,
@@ -212,7 +212,7 @@
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='demean.html'>degroup</a></span><span class='op'>(</span>
+<span class='fu'>degroup</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>select</span>,
   <span class='va'>group</span>,
@@ -223,7 +223,7 @@
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='demean.html'>detrend</a></span><span class='op'>(</span>
+<span class='fu'>detrend</span><span class='op'>(</span>
   <span class='va'>x</span>,
   <span class='va'>select</span>,
   <span class='va'>group</span>,
@@ -239,15 +239,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A data frame. For <code><a href='demean.html'>check_heterogeneity()</a></code>, may also be a mixed model object.</p></td>
+      <td><p>A data frame. For <code>check_heterogeneity()</code>, may also be a mixed model object.</p></td>
     </tr>
     <tr>
       <th>select</th>
-      <td><p>Character vector (or formula) with names of variables to select that should be group- and de-meaned. For <code><a href='demean.html'>check_heterogeneity()</a></code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
+      <td><p>Character vector (or formula) with names of variables to select that should be group- and de-meaned. For <code>check_heterogeneity()</code>, if <code>x</code> is a mixed model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>group</th>
-      <td><p>Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For <code><a href='demean.html'>check_heterogeneity()</a></code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
+      <td><p>Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. For <code>check_heterogeneity()</code>, if <code>x</code> is a model object, this argument be ignored.</p></td>
     </tr>
     <tr>
       <th>suffix_demean, suffix_groupmean</th>
@@ -269,7 +269,7 @@ between-effects are printed in separated blocks.</p></td>
     </tr>
     <tr>
       <th>center</th>
-      <td><p>Method for centering. <code><a href='demean.html'>demean()</a></code> always performs mean-centering, while <code><a href='demean.html'>degroup()</a></code> can use <code>center = "median"</code> or <code>center = "mode"</code> for median- or mode-centering, and also <code>"min"</code> or <code>"max"</code>.</p></td>
+      <td><p>Method for centering. <code>demean()</code> always performs mean-centering, while <code>degroup()</code> can use <code>center = "median"</code> or <code>center = "mode"</code> for median- or mode-centering, and also <code>"min"</code> or <code>"max"</code>.</p></td>
     </tr>
     </table>
 
@@ -302,7 +302,7 @@ between-effects are printed in separated blocks.</p></td>
     higher level, the mean term is no longer constrained by Level 1 effects,
     so it is free to account for all the higher-level variance associated
     with that variable&#8221; (<cite>Bell et al. 2015</cite>).</p><p></p><h3 class='hasAnchor' id='panel-data-and-correlating-fixed-and-group-effects'><a class='anchor' aria-hidden='true' href='#panel-data-and-correlating-fixed-and-group-effects'></a>Panel data and correlating fixed and group effects</h3>
-<p><code><a href='demean.html'>demean()</a></code> is intended to create group- and de-meaned variables
+<p><code>demean()</code> is intended to create group- and de-meaned variables
     for panel regression models (fixed effects models), or for complex
     random-effect-within-between models (see <cite>Bell et al. 2015, 2018</cite>),
     where group-effects (random effects) and fixed effects correlate (see
@@ -348,7 +348,7 @@ between-effects are printed in separated blocks.</p></td>
     adding it as random slope). Centering time-varying binary variables to
     obtain within-effects (level 1) isn't necessary. They have a sensible
     interpretation when left in the typical 0/1 format (<cite>Hoffmann 2015,
-    chapter 8-2.I</cite>). <code><a href='demean.html'>demean()</a></code> will thus coerce categorical time-varying
+    chapter 8-2.I</cite>). <code>demean()</code> will thus coerce categorical time-varying
     predictors to numeric to compute the de- and group-meaned versions for
     these variables, where the raw (untransformed) binary predictor and the
     de-meaned version should be added to the model.</p><p></p><h3 class='hasAnchor' id='de-meaning-of-factors-with-more-than-levels'><a class='anchor' aria-hidden='true' href='#de-meaning-of-factors-with-more-than-levels'></a>De-meaning of factors with more than 2 levels</h3>
@@ -372,7 +372,7 @@ between-effects are printed in separated blocks.</p></td>
     A third option, when the interaction should result in a genuine within
     estimator, is to "double de-mean" the interaction terms
     (<cite>Giesselmann &amp; Schmidt-Catran 2018</cite>), however, this is currently
-    not supported by <code><a href='demean.html'>demean()</a></code>. If this is required, the <code>wmb()</code>
+    not supported by <code>demean()</code>. If this is required, the <code>wmb()</code>
     function from the <span class="pkg">panelr</span> package should be used. <br /> <br />
     To de-mean interaction terms for within-between models, simply specify
     the term as interaction for the <code>select</code>-argument, e.g.
@@ -405,7 +405,7 @@ between-effects are printed in separated blocks.</p></td>
 <span class='r-in'><span class='va'>iris</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># fake-ID</span></span>
 <span class='r-in'><span class='va'>iris</span><span class='op'>$</span><span class='va'>binary</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>150</span>, <span class='fl'>1</span>, <span class='fl'>.35</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># binary variable</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>demean</span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length_between Petal.Length_between Sepal.Length_within</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1             5.890698             3.927907          -0.7906977</span>
@@ -422,7 +422,7 @@ between-effects are printed in separated blocks.</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5           -1.982051</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 6           -2.429032</span>
 <span class='r-in'></span>
-<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>demean</span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"binary"</span>, <span class='st'>"Species"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>Categorical predictors (Species, binary) have been coerced to numeric values to compute de- and group-meaned variables.</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'></span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
@@ -455,7 +455,7 @@ between-effects are printed in separated blocks.</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 5               -0.2307692</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 6               -0.4193548</span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'><a href='demean.html'>check_heterogeneity</a></span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>check_heterogeneity</span><span class='op'>(</span><span class='va'>iris</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Possible heterogeneity bias due to following predictors: <span style='color: #BB0000;'>Sepal.Length, Petal.Length</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># demean interaction term x*y</span></span>
@@ -465,7 +465,7 @@ between-effects are printed in separated blocks.</p></td>
 <span class='r-in'>  y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
 <span class='r-in'>  ID <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"x*y"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>demean</span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"x*y"</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   a_between x_y_between   a_within x_y_within</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2.666667    4.666667 -1.6666667 -0.6666667</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2.333333    4.000000 -0.3333333  2.0000000</span>
@@ -477,7 +477,7 @@ between-effects are printed in separated blocks.</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2.333333    4.000000  1.6666667 -2.0000000</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># or in formula-notation</span></span>
-<span class='r-in'><span class='fu'><a href='demean.html'>demean</a></span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>demean</span><span class='op'>(</span><span class='va'>dat</span>, select <span class='op'>=</span> <span class='op'>~</span> <span class='va'>a</span> <span class='op'>+</span> <span class='va'>x</span> <span class='op'>*</span> <span class='va'>y</span>, group <span class='op'>=</span> <span class='op'>~</span><span class='va'>ID</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   a_between x_y_between   a_within x_y_within</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2.666667    4.666667 -1.6666667 -0.6666667</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2.333333    4.000000 -0.3333333  2.0000000</span>

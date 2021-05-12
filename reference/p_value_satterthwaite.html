@@ -184,13 +184,13 @@
     <p>An approximate F-test based on the Satterthwaite (1946) approach.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='p_value_satterthwaite.html'>ci_satterthwaite</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ci_satterthwaite</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 
-<span class='fu'><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'>dof_satterthwaite</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>p_value_satterthwaite</span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'><a href='p_value_satterthwaite.html'>se_satterthwaite</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
+<span class='fu'>se_satterthwaite</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,7 +228,7 @@ Kenward-Roger or Satterthwaite are limited to linear mixed models only.</p>
     <p>Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code> and <code><a href='p_value_satterthwaite.html'>se_satterthwaite()</a></code> are small helper-functions
+    <div class='dont-index'><p><code>dof_satterthwaite()</code> and <code>se_satterthwaite()</code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Satterthwaite (1946) approach.
 <br /> <br />
@@ -239,7 +239,7 @@ approximate degrees of freedom based on Kenward-Roger's method or the "m-l-1" ru
     <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='p_value_satterthwaite.html'>p_value_satterthwaite</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>p_value_satterthwaite</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>      Parameter            p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1  (Intercept) 9.605145e-01</span>

@@ -185,7 +185,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for glmmTMB</span>
-<span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span>
   <span class='va'>model</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   centrality <span class='op'>=</span> <span class='st'>"median"</span>,
@@ -195,10 +195,10 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span>
+<span class='fu'>simulate_parameters</span><span class='op'>(</span>
   <span class='va'>model</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   centrality <span class='op'>=</span> <span class='st'>"median"</span>,
@@ -258,7 +258,7 @@ included in the summary output.</p></td>
 
     
 <h3 class='hasAnchor' id='technical-details'><a class='anchor' aria-hidden='true' href='#technical-details'></a>Technical Details</h3>
-<p><code><a href='simulate_parameters.html'>simulate_parameters()</a></code> is a computationally faster alternative
+<p><code>simulate_parameters()</code> is a computationally faster alternative
     to <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
     on a multivariate normal distribution (<code><a href='https://rdrr.io/pkg/MASS/man/mvrnorm.html'>MASS::mvrnorm()</a></code>) with mean
     <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p><p></p><h3 class='hasAnchor' id='models-with-zero-inflation-component'><a class='anchor' aria-hidden='true' href='#models-with-zero-inflation-component'></a>Models with Zero-Inflation Component</h3>
@@ -282,7 +282,7 @@ included in the summary output.</p></td>
     <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Width</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter                     | Coefficient |         95% CI |      p</span>
@@ -302,8 +302,8 @@ included in the summary output.</p></td>
 <span class='r-in'>    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
 <span class='r-in'>    data <span class='op'>=</span> <span class='va'>Salamanders</span></span>
 <span class='r-in'>  <span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='simulate_parameters.html'>simulate_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.8</span>, <span class='fl'>.95</span><span class='op'>)</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>simulate_parameters</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.8</span>, <span class='fl'>.95</span><span class='op'>)</span>, component <span class='op'>=</span> <span class='st'>"zero_inflated"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 </pre>

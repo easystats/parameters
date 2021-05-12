@@ -184,7 +184,7 @@
     <p>The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='p_value_wald.html'>ci_wald</a></span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>ci_wald</span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   dof <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -195,10 +195,10 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='p_value_wald.html'>p_value_wald</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_value_wald</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for merMod</span>
-<span class='fu'><a href='p_value_wald.html'>p_value_wald</a></span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>Inf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>p_value_wald</span><span class='op'>(</span><span class='va'>model</span>, dof <span class='op'>=</span> <span class='cn'>Inf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +213,7 @@
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom. If not specified, for <code><a href='p_value_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='p_value_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
+      <td><p>Degrees of Freedom. If not specified, for <code>ci_wald()</code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code>p_value_wald()</code>, defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -258,8 +258,8 @@ for working examples.</p></td>
     <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='p_value_wald.html'>p_value_wald</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
-<span class='r-in'>  <span class='fu'><a href='p_value_wald.html'>ci_wald</a></span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>p_value_wald</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>ci_wald</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.90</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>      Parameter   CI     CI_low   CI_high</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 1  (Intercept) 0.90 -1.5296038 1.6346530</span>
