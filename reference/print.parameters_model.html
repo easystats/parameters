@@ -269,7 +269,9 @@ places than <code>digits</code> are printed in scientific notation.</p></td>
       <td><p>Named character vector, can be used to group parameters in the
 printed output. The lefthand-side (names) indicate the names of a group,
 which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. See 'Examples'.</p></td>
+should match the name of a parameter where the group starts. A possible
+use case might be to emphasize focal predictors and control variables,
+see 'Examples'.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -455,23 +457,33 @@ freedom.</p>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span></span>
-<span class='r-in'>  <span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Sepal.Length</span>,</span>
+<span class='r-in'>  <span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>,</span>
 <span class='r-in'>  data <span class='op'>=</span> <span class='va'>iris</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># don't select "Intercept" parameter</span></span>
 <span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, parameters <span class='op'>=</span> <span class='st'>"^(?!\\(Intercept)"</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Group Petal"</span> <span class='op'>=</span> <span class='st'>"Petal.Length"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Group Species"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Group Sepal"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
+<span class='r-in'>                    <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |   SE |         95% CI | t(145) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Petal            |             |      |                |        |       </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | 0.08 | [-0.21,  0.13] |  -0.50 | 0.618 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Species          |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Focal Predictors       |             |      |                |        |       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [versicolor] |       -0.89 | 0.20 | [-1.29, -0.49] |  -4.43 | &lt; .001</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [virginica]  |       -0.88 | 0.28 | [-1.43, -0.33] |  -3.15 | 0.002 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Sepal            |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Controls               |             |      |                |        |       </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | 0.07 | [ 0.24,  0.52] |   5.31 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | 0.08 | [-0.21,  0.13] |  -0.50 | 0.618 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># only show coefficients, CI and p</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
+<span class='r-in'>                    <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span>, select <span class='op'>=</span> <span class='st'>"minimal"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |         95% CI |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Focal Predictors       |             |                |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [versicolor] |       -0.89 | [-1.29, -0.49] | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [virginica]  |       -0.88 | [-1.43, -0.33] | 0.002 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Controls               |             |                |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | [ 0.24,  0.52] | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | [-0.21,  0.13] | 0.618 </span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
