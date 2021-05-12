@@ -4,7 +4,7 @@
 \alias{parameters_groupspecific}
 \title{Extract group-specific parameters of mixed models}
 \usage{
-parameters_groupspecific(model, ...)
+parameters_groupspecific(model, indices = c("Coefficient", "SE"), ...)
 }
 \arguments{
 \item{model}{A mixed model.}
