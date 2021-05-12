@@ -345,8 +345,10 @@ standard errors and confidence intervals (CI). May be <code>"wald"</code>
 <code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect
 confidence intervals; in this case, bootstrapped resp. profiled confidence
 intervals are computed. <code>"uniroot"</code> only applies to models of class
-<code>glmmTMB</code>. Note that when <code>df_method</code> is not <code>"wald"</code>,
-robust standard errors etc. cannot be computed.</p></td>
+<code>glmmTMB</code>. For models of class <code>lmerMod</code>, when
+<code>df_method = "wald"</code>, residual degrees of freedom are returned.
+Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard
+errors etc. cannot be computed.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
