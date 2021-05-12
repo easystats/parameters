@@ -57,7 +57,10 @@ standard deviation.}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{group}{to do...}
+\item{group}{Named character vector, can be used to group parameters in the
+printed output. The lefthand-side (names) indicate the names of a group,
+which will be inserted as "header row", while the righthand-side (values)
+should match the name of a parameter where the group starts. See 'Examples'.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -116,6 +119,19 @@ if (require("glmmTMB", quietly = TRUE)) {
 
   print(mp, select = "minimal")
 }
+
+# group parameters ------
+
+data(iris)
+model <- lm(
+  Sepal.Width ~ Petal.Length + Species + Sepal.Length,
+  data = iris
+)
+# don't select "Intercept" parameter
+mp <- model_parameters(m, parameters = "^(?!\\\\(Intercept)")
+print(mp, group = c("Group Petal" = "Petal.Length",
+                    "Group Sepal" = "Sepal.Length",
+                    "Group Species" = "Species"))
 }
 }
 \seealso{
