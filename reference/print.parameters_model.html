@@ -459,12 +459,19 @@ freedom.</p>
 <span class='r-in'>  data <span class='op'>=</span> <span class='va'>iris</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># don't select "Intercept" parameter</span></span>
-<span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>m</span>, parameters <span class='op'>=</span> <span class='st'>"^(?!\\(Intercept)"</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in model_parameters(m, parameters = "^(?!\\(Intercept)")</span> object 'm' not found</span>
+<span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, parameters <span class='op'>=</span> <span class='st'>"^(?!\\(Intercept)"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Group Petal"</span> <span class='op'>=</span> <span class='st'>"Petal.Length"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Group Sepal"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Group Species"</span> <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in seq.default(group[i], nrow(x))</span> 'from' must be a finite number</span>
+<span class='r-in'>                    <span class='st'>"Group Species"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
+<span class='r-in'>                    <span class='st'>"Group Sepal"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |   SE |         95% CI | t(145) |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Petal            |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | 0.08 | [-0.21,  0.13] |  -0.50 | 0.618 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Species          |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [versicolor] |       -0.89 | 0.20 | [-1.29, -0.49] |  -4.43 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [virginica]  |       -0.88 | 0.28 | [-1.43, -0.33] |  -3.15 | 0.002 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Group Sepal            |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | 0.07 | [ 0.24,  0.52] |   5.31 | &lt; .001</span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>
