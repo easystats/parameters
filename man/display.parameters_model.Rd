@@ -100,6 +100,7 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  groups = NULL,
   verbose = TRUE,
   ...
 )
