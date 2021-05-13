@@ -79,7 +79,7 @@
   ci_brackets = NULL,
   zap_small = FALSE,
   format = NULL,
-  group = NULL,
+  groups = NULL,
   ...
 )
 
@@ -121,7 +121,7 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
-  group = NULL,
+  groups = NULL,
   verbose = TRUE,
   ...
 )
@@ -203,12 +203,15 @@ intervals. If not \code{NULL} and width is larger than the string's length,
 leading whitespaces are added to the string. If \code{width="auto"}, width
 will be set to the length of the longest string.}
 
-\item{group}{Named character vector, can be used to group parameters in the
-printed output. The lefthand-side (names) indicate the names of a group,
-which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. A possible
-use case might be to emphasize focal predictors and control variables,
-see 'Examples'.}
+\item{groups}{Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in \code{groups}, while all non-matching parameters will be added
+to the end.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

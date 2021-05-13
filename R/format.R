@@ -14,7 +14,7 @@ format.parameters_model <- function(x,
                                     ci_brackets = NULL,
                                     zap_small = FALSE,
                                     format = NULL,
-                                    group = NULL,
+                                    groups = NULL,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -70,8 +70,8 @@ format.parameters_model <- function(x,
   }
 
   # group parameters
-  if (!is.null(group)) {
-    x <- .parameter_groups(x, group)
+  if (!is.null(groups)) {
+    x <- .parameter_groups(x, groups)
   }
   indent_groups <- attributes(x)$indent_groups
   indent_rows <- attributes(x)$indent_rows

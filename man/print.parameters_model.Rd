@@ -17,7 +17,7 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
-  group = NULL,
+  groups = NULL,
   ...
 )
 }
@@ -57,12 +57,15 @@ standard deviation.}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{group}{Named character vector, can be used to group parameters in the
-printed output. The lefthand-side (names) indicate the names of a group,
-which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. A possible
-use case might be to emphasize focal predictors and control variables,
-see 'Examples'.}
+\item{groups}{Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in \code{groups}, while all non-matching parameters will be added
+to the end.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -122,21 +125,38 @@ if (require("glmmTMB", quietly = TRUE)) {
   print(mp, select = "minimal")
 }
 
+
 # group parameters ------
 
 data(iris)
 model <- lm(
-  Sepal.Width ~ Species + Sepal.Length + Petal.Length,
+  Sepal.Width ~ Sepal.Length + Species + Petal.Length,
   data = iris
 )
 # don't select "Intercept" parameter
 mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
-print(mp, group = c("Focal Predictors" = "Speciesversicolor",
-                    "Controls" = "Sepal.Length"))
+groups <- list(
+  "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
+  "Controls" = c("Sepal.Length", "Petal.Length")
+)
+print(mp, groups = groups)
 
-# only show coefficients, CI and p
-print(mp, group = c("Focal Predictors" = "Speciesversicolor",
-                    "Controls" = "Sepal.Length"), select = "minimal")
+# or use row indices
+print(mp, groups = list("Focal Predictors" = c(1, 4),
+                        "Controls" = c(2, 3)))
+
+# only show coefficients, CI and p,
+# put non-matched parameters to the end
+
+data(mtcars)
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$gear <- as.factor(mtcars$gear)
+model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
+
+# don't select "Intercept" parameter
+mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
+print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
+                        "Interactions" = c("gear4:vs", "gear5:vs")))
 }
 }
 \seealso{

@@ -1,7 +1,7 @@
 # helper ------------------------
 
 
-.parameter_groups <- function(x, group) {
+.parameter_groups <- function(x, groups) {
   # only apply to conditional component for now
   if ("Component" %in% colnames(x) && sum(x$Component == "conditional") == 0) {
     return(x)
@@ -19,10 +19,10 @@
   indent_rows <- NULL
   indent_parameters <- NULL
 
-  if (is.list(group)) {
+  if (is.list(groups)) {
 
     # find parameter names and replace by rowindex
-    group_rows <- lapply(group, function(i) {
+    group_rows <- lapply(groups, function(i) {
       if (is.character(i)) {
         i <- match(i, x$Parameter)
       }
@@ -35,21 +35,21 @@
     x <- rbind(x[selected_rows, ], x[-selected_rows, ])
 
     # set back correct indices
-    group <- 1
+    groups <- 1
     for (i in 2:length(group_rows)) {
-      group <- c(group, group[i - 1] + length(group_rows[[i - 1]]))
+      groups <- c(groups, groups[i - 1] + length(group_rows[[i - 1]]))
     }
-    names(group) <- names(group_rows)
+    names(groups) <- names(group_rows)
 
   } else {
 
     # find parameter names and replace by rowindex
-    group_names <- names(group)
-    group <- match(group, x$Parameter)
-    names(group) <- group_names
+    group_names <- names(groups)
+    groups <- match(groups, x$Parameter)
+    names(groups) <- group_names
 
     # order groups
-    group <- group[order(group)]
+    groups <- groups[order(groups)]
   }
 
 
@@ -58,10 +58,10 @@
     empty_row[[i]] <- NA
   }
 
-  for (i in length(group):1) {
-    x[seq(group[i] + 1, nrow(x) + 1), ] <- x[seq(group[i], nrow(x)), ]
-    x[group[i], ] <- empty_row
-    x$Parameter[group[i]] <- paste0("# ", names(group[i]))
+  for (i in length(groups):1) {
+    x[seq(groups[i] + 1, nrow(x) + 1), ] <- x[seq(groups[i], nrow(x)), ]
+    x[groups[i], ] <- empty_row
+    x$Parameter[groups[i]] <- paste0("# ", names(groups[i]))
   }
 
   # find row indices of indented parameters

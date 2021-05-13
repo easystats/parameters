@@ -21,6 +21,9 @@
 
 * `ci()` for `svyglm` gains a `method` argument.
 
+* `print()` for `model_parameters()` gains a `groups` argument, to group
+  parameters in the output.
+
 ## Bug fixes
 
 * Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
