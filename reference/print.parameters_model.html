@@ -198,7 +198,7 @@
   show_sigma <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show_formula <span class='op'>=</span> <span class='cn'>FALSE</span>,
   zap_small <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -265,13 +265,16 @@ standard deviation.</p></td>
 places than <code>digits</code> are printed in scientific notation.</p></td>
     </tr>
     <tr>
-      <th>group</th>
-      <td><p>Named character vector, can be used to group parameters in the
-printed output. The lefthand-side (names) indicate the names of a group,
-which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. A possible
-use case might be to emphasize focal predictors and control variables,
-see 'Examples'.</p></td>
+      <th>groups</th>
+      <td><p>Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in <code>groups</code>, while all non-matching parameters will be added
+to the end.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -453,17 +456,21 @@ freedom.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> SD (Residual) |        1.00</span>
 <span class='r-in'></span>
+<span class='r-in'></span>
 <span class='r-in'><span class='co'># group parameters ------</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span></span>
-<span class='r-in'>  <span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>,</span>
+<span class='r-in'>  <span class='va'>Sepal.Width</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>+</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>,</span>
 <span class='r-in'>  data <span class='op'>=</span> <span class='va'>iris</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># don't select "Intercept" parameter</span></span>
 <span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, parameters <span class='op'>=</span> <span class='st'>"^(?!\\(Intercept)"</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Speciesversicolor"</span>, <span class='st'>"Speciesvirginica"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Petal.Length"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, groups <span class='op'>=</span> <span class='va'>groups</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |   SE |         95% CI | t(145) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Focal Predictors       |             |      |                |        |       </span>
@@ -473,17 +480,43 @@ freedom.</p>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | 0.07 | [ 0.24,  0.52] |   5.31 | &lt; .001</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | 0.08 | [-0.21,  0.13] |  -0.50 | 0.618 </span>
 <span class='r-in'></span>
-<span class='r-in'><span class='co'># only show coefficients, CI and p</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, group <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='st'>"Speciesversicolor"</span>,</span>
-<span class='r-in'>                    <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='st'>"Sepal.Length"</span><span class='op'>)</span>, select <span class='op'>=</span> <span class='st'>"minimal"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |         95% CI |      p</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Focal Predictors       |             |                |       </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [versicolor] |       -0.89 | [-1.29, -0.49] | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [virginica]  |       -0.88 | [-1.43, -0.33] | 0.002 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Controls               |             |                |       </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | [ 0.24,  0.52] | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | [-0.21,  0.13] | 0.618 </span>
+<span class='r-in'><span class='co'># or use row indices</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, groups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Focal Predictors"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span class='r-in'>                        <span class='st'>"Controls"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter              | Coefficient |   SE |         95% CI | t(145) |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Focal Predictors       |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Sepal.Length         |        0.38 | 0.07 | [ 0.24,  0.52] |   5.31 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Petal.Length         |       -0.04 | 0.08 | [-0.21,  0.13] |  -0.50 | 0.618 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Controls               |             |      |                |        |       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [versicolor] |       -0.89 | 0.20 | [-1.29, -0.49] |  -4.43 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   Species [virginica]  |       -0.88 | 0.28 | [-1.43, -0.33] |  -3.15 | 0.002 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># only show coefficients, CI and p,</span></span>
+<span class='r-in'><span class='co'># put non-matched parameters to the end</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>gear</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>gear</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>hp</span> <span class='op'>+</span> <span class='va'>gear</span> <span class='op'>*</span> <span class='va'>vs</span> <span class='op'>+</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>drat</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># don't select "Intercept" parameter</span></span>
+<span class='r-in'><span class='va'>mp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, parameters <span class='op'>=</span> <span class='st'>"^(?!\\(Intercept)"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>mp</span>, groups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Engine"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cyl6"</span>, <span class='st'>"cyl8"</span>, <span class='st'>"vs"</span>, <span class='st'>"hp"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                        <span class='st'>"Interactions"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"gear4:vs"</span>, <span class='st'>"gear5:vs"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter        | Coefficient |   SE |          95% CI | t(22) |     p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Engine           |             |      |                 |       |      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   cyl [6]        |       -2.47 | 2.21 | [ -7.05,  2.12] | -1.12 | 0.276</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   cyl [8]        |        1.97 | 5.11 | [ -8.63, 12.58] |  0.39 | 0.703</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   vs             |        3.18 | 3.79 | [ -4.68, 11.04] |  0.84 | 0.410</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   hp             |       -0.06 | 0.02 | [ -0.11, -0.02] | -2.91 | 0.008</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Interactions     |             |      |                 |       |      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   gear [4] * vs  |       -2.90 | 4.67 | [-12.57,  6.78] | -0.62 | 0.541</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   gear [5] * vs  |        2.59 | 4.54 | [ -6.82, 12.00] |  0.57 | 0.574</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gear [4]         |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> gear [5]         |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> drat             |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198</span>
 <span class='r-in'><span class='co'># }</span></span>
 </pre>
   </div>

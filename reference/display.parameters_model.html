@@ -259,7 +259,7 @@
   ci_brackets <span class='op'>=</span> <span class='cn'>NULL</span>,
   zap_small <span class='op'>=</span> <span class='cn'>FALSE</span>,
   format <span class='op'>=</span> <span class='cn'>NULL</span>,
-  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -303,7 +303,7 @@
   show_sigma <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show_formula <span class='op'>=</span> <span class='cn'>FALSE</span>,
   zap_small <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  group <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -436,13 +436,16 @@ leading whitespaces are added to the string. If <code>width="auto"</code>, width
 will be set to the length of the longest string.</p></td>
     </tr>
     <tr>
-      <th>group</th>
-      <td><p>Named character vector, can be used to group parameters in the
-printed output. The lefthand-side (names) indicate the names of a group,
-which will be inserted as "header row", while the righthand-side (values)
-should match the name of a parameter where the group starts. A possible
-use case might be to emphasize focal predictors and control variables,
-see 'Examples'.</p></td>
+      <th>groups</th>
+      <td><p>Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in <code>groups</code>, while all non-matching parameters will be added
+to the end.</p></td>
     </tr>
     </table>
 
