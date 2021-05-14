@@ -92,7 +92,7 @@ model_parameters.BFBayesFactor <- function(model,
     {
       bfm <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])
       if (!is.null(bfm$log_BF)) {
-        out$BF <- bfm$log_BF
+        out$BF <- exp(bfm$log_BF)
       } else {
         out$BF <- bfm$BF
       }
