@@ -317,7 +317,13 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
     NextMethod()
   } else {
     if (!is.null(select)) {
-      if (is.numeric(select)) select <- colnames(x)[select]
+      if (all(select == "minimal")) {
+        select <- c("Parameter", "Coefficient", "Median", "Mean", "CI", "CI_low", "CI_high", "pd")
+      } else if (all(select == "short")) {
+        select <- c("Parameter", "Coefficient", "Median", "Mean", "MAD", "SD", "pd")
+      } else {
+        if (is.numeric(select)) select <- colnames(x)[select]
+      }
       select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup"))
       to_remove <- setdiff(colnames(x), select)
       x[to_remove] <- NULL
