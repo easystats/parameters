@@ -67,8 +67,6 @@ updating and returning the &quot;best&quot; model." />
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -186,7 +184,7 @@ updating and returning the &quot;best&quot; model." />
 updating and returning the "best" model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for lm</span>
 <span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, direction <span class='op'>=</span> <span class='st'>"both"</span>, steps <span class='op'>=</span> <span class='fl'>1000</span>, k <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -195,7 +193,7 @@ updating and returning the "best" model.</p>
 <span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, direction <span class='op'>=</span> <span class='st'>"backward"</span>, steps <span class='op'>=</span> <span class='fl'>1000</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, cross_validation <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='cn'>NULL</span>, cross_validation <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -260,7 +258,7 @@ updating and returning the "best" model.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'>select_parameters</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
@@ -336,7 +334,7 @@ updating and returning the "best" model.</p>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

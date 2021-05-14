@@ -67,8 +67,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -186,7 +184,7 @@
   <span class="pkg">cplm</span> or <span class="pkg">countreg</span>).</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for zcpglm</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for zcpglm</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
@@ -200,7 +198,7 @@
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,7 +314,7 @@ like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a>
   columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://github.com/atahk/pscl'>"pscl"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"bioChemists"</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pscl/man/zeroinfl.html'>zeroinfl</a></span><span class='op'>(</span><span class='va'>art</span> <span class='op'>~</span> <span class='va'>fem</span> <span class='op'>+</span> <span class='va'>mar</span> <span class='op'>+</span> <span class='va'>kid5</span> <span class='op'>+</span> <span class='va'>ment</span> <span class='op'>|</span> <span class='va'>kid5</span> <span class='op'>+</span> <span class='va'>phd</span>, data <span class='op'>=</span> <span class='va'>bioChemists</span><span class='op'>)</span></span>
@@ -346,7 +344,7 @@ like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |    -0.93 | 0.43 | [-1.78, -0.08] | -2.14 | 0.032</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> kid5        |     0.05 | 0.22 | [-0.38,  0.47] |  0.21 | 0.831</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> phd         |    -0.25 | 0.14 | [-0.51,  0.02] | -1.84 | 0.065</span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

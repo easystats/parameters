@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -184,7 +182,7 @@
     <p>Creates a training and a test set based on a dataframe. Can also be stratified (i.e., evenly spread a given factor) using the <code>group</code> argument.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>x</span>, training_proportion <span class='op'>=</span> <span class='fl'>0.7</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>x</span>, training_proportion <span class='op'>=</span> <span class='fl'>0.7</span>, group <span class='op'>=</span> <span class='cn'>NULL</span>, seed <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,7 +210,7 @@
     <p>A list of two data frames, named <code>test</code> and <code>training</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>iris</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='va'>iris</span></span>
 <span class='r-in'><span class='va'>df</span><span class='op'>$</span><span class='va'>Smell</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Strong"</span>, <span class='st'>"Light"</span><span class='op'>)</span>, <span class='fl'>75</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>data_partition</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span></span>
@@ -686,7 +684,7 @@
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 143          5.8         2.7          5.1         1.9  virginica Strong</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> 145          6.7         3.3          5.7         2.5  virginica Strong</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

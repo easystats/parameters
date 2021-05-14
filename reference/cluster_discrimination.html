@@ -67,8 +67,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -186,7 +184,7 @@
   and determines the goodness of classification for each cluster group.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cluster_discrimination</span><span class='op'>(</span><span class='va'>x</span>, cluster_groups <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>cluster_discrimination</span><span class='op'>(</span><span class='va'>x</span>, cluster_groups <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,14 +205,14 @@ be retrieved from the <code><a href='cluster_analysis.html'>cluster_analysis</a>
     <div class='dont-index'><p><code><a href='n_clusters.html'>n_clusters</a></code> to determine the number of clusters to extract, <code><a href='cluster_analysis.html'>cluster_analysis</a></code> to compute a cluster analysis and <code><a href='check_clusterstructure.html'>check_clusterstructure</a></code> to check suitability of data for clustering.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='co'># retrieve group classification from hierarchical cluster analysis</span></span>
 <span class='r-in'><span class='va'>groups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cluster_analysis.html'>cluster_analysis</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># goodness of group classificatoin</span></span>
 <span class='r-in'><span class='fu'>cluster_discrimination</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, cluster_groups <span class='op'>=</span> <span class='va'>groups</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

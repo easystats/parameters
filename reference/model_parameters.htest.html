@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -184,7 +182,7 @@
     <p>Parameters of h-tests (correlations, t-tests, chi-squared, ...).</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for htest</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for htest</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   cramers_v <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -205,7 +203,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for pairwise.htest</span>
-<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -283,7 +281,7 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
     <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span>, <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, method <span class='op'>=</span> <span class='st'>"pearson"</span><span class='op'>)</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.test.html'>cor.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span>, <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>cyl</span>, method <span class='op'>=</span> <span class='st'>"pearson"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Pearson's product-moment correlation</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
@@ -357,7 +355,7 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>p-value adjustment method: Holm (1979)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

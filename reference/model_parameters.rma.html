@@ -66,8 +66,6 @@
 
 
 
-<!-- dependencies from examples -->
-
 
   
 
@@ -184,7 +182,7 @@
     <p>Extract and compute indices and measures to describe parameters of meta-analysis models.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for rma</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for rma</span>
 <span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span>
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
@@ -195,7 +193,7 @@
   include_studies <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -270,7 +268,7 @@ for all studies. Else, only parameters for overall-effects are shown.</p></td>
     <p>A data frame of indices related to the model's parameters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>mydat</span> <span class='op'>&lt;&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
 <span class='r-in'>  effectsize <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.393</span>, <span class='fl'>0.675</span>, <span class='fl'>0.282</span>, <span class='op'>-</span><span class='fl'>1.398</span><span class='op'>)</span>,</span>
 <span class='r-in'>  stderr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.317</span>, <span class='fl'>0.317</span>, <span class='fl'>0.13</span>, <span class='fl'>0.36</span><span class='op'>)</span></span>
@@ -319,7 +317,7 @@ for all studies. Else, only parameters for overall-effects are shown.</p></td>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'></span>
-</pre>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
