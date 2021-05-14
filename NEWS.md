@@ -4,6 +4,9 @@
 
 * Removed deprecated arguments.
 
+* `dispersion` in `model_parameters()` for Bayesian models now defaults
+  to `TRUE`.
+
 ## New supported model classes
 
 * `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the 
