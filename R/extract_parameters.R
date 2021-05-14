@@ -645,7 +645,7 @@
 #' @keywords internal
 .extract_parameters_bayesian <- function(model,
                                          centrality = "median",
-                                         dispersion = FALSE,
+                                         dispersion = TRUE,
                                          ci = .89,
                                          ci_method = "hdi",
                                          test = c("pd", "rope"),

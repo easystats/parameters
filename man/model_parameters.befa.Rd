@@ -8,7 +8,7 @@
   model,
   sort = FALSE,
   centrality = "median",
-  dispersion = FALSE,
+  dispersion = TRUE,
   ci = 0.89,
   ci_method = "hdi",
   test = NULL,

@@ -2,7 +2,7 @@
 #' @export
 model_parameters.bamlss <- function(model,
                                     centrality = "median",
-                                    dispersion = FALSE,
+                                    dispersion = TRUE,
                                     ci = .89,
                                     ci_method = "hdi",
                                     test = c("pd", "rope"),

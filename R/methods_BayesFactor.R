@@ -36,7 +36,7 @@
 #' @export
 model_parameters.BFBayesFactor <- function(model,
                                            centrality = "median",
-                                           dispersion = FALSE,
+                                           dispersion = TRUE,
                                            ci = 0.89,
                                            ci_method = "hdi",
                                            test = c("pd", "rope"),

@@ -23,7 +23,7 @@
 model_parameters.befa <- function(model,
                                   sort = FALSE,
                                   centrality = "median",
-                                  dispersion = FALSE,
+                                  dispersion = TRUE,
                                   ci = .89,
                                   ci_method = "hdi",
                                   test = NULL,

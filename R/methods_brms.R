@@ -3,7 +3,7 @@
 #' @export
 model_parameters.brmsfit <- function(model,
                                      centrality = "median",
-                                     dispersion = FALSE,
+                                     dispersion = TRUE,
                                      ci = .89,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
@@ -97,7 +97,7 @@ model_parameters.brmsfit <- function(model,
 
 .model_parameters_brms_meta <- function(model,
                                         centrality = "median",
-                                        dispersion = FALSE,
+                                        dispersion = TRUE,
                                         ci = .89,
                                         ci_method = "hdi",
                                         test = c("pd", "rope"),
