@@ -31,6 +31,9 @@
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
 #'
+#' @details \code{summary()} is a convenient shortcut for
+#'   \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
+#'
 #' @return Invisibly returns the original input object.
 #'
 #' @seealso There is a dedicated method to use inside rmarkdown files,

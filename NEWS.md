@@ -16,6 +16,11 @@
 
 * Performance improvements for models from package *survey*.
 
+## New functions
+
+* Added a `summary()` method for `model_parameters()`, which is a convenient
+  shortcut for `print(..., select = "minimal")`.
+
 ## Changes to functions
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular

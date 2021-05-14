@@ -78,6 +78,10 @@ Invisibly returns the original input object.
 \description{
 A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 }
+\details{
+\code{summary()} is a convenient shortcut for
+  \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
+}
 \section{Interpretation of Interaction Terms}{
 
 Note that the \emph{interpretation} of interaction terms depends on many
