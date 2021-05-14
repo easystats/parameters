@@ -2,6 +2,7 @@
 % Please edit documentation in R/print.parameters_model.R
 \name{print.parameters_model}
 \alias{print.parameters_model}
+\alias{summary.parameters_model}
 \title{Print model parameters}
 \usage{
 \method{print}{parameters_model}(
@@ -20,9 +21,11 @@
   groups = NULL,
   ...
 )
+
+\method{summary}{parameters_model}(object, ...)
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
+\item{x, object}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{pretty_names}{Return "pretty" (i.e. more human readable) parameter
 names.}

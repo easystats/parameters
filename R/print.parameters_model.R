@@ -3,7 +3,7 @@
 #'
 #' @description A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 #'
-#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}}.
+#' @param x,object An object returned by \code{\link[=model_parameters]{model_parameters()}}.
 #' @param split_components Logical, if \code{TRUE} (default), For models with
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
@@ -171,6 +171,12 @@ print.parameters_model <- function(x,
   }
 
   invisible(orig_x)
+}
+
+#' @rdname print.parameters_model
+#' @export
+summary.parameters_model <- function(object, ...) {
+  print(x = object, select = "minimal", show_sigma = TRUE, show_formula = TRUE, ...)
 }
 
 #' @export
@@ -356,7 +362,10 @@ print.parameters_stan <- function(x,
   invisible(orig_x)
 }
 
-
+#' @export
+summary.parameters_stan <- function(object, ...) {
+  print(x = object, select = "minimal", ...)
+}
 
 
 
