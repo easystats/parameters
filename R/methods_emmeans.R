@@ -35,10 +35,11 @@ model_parameters.emmGrid <- function(model,
   params <- as.data.frame(s)
 
   # Bayesian model?
-  ci_names <- attributes(s)$clNames
+  is_frq <- all.equal(dim(model@post.beta), c(1, 1)) &&
+            is.na(model@post.beta) && is.null(model@misc$is_boot)
 
   # we assume frequentist here...
-  if (!all(grepl("HPD", ci_names, ignore.case = FALSE, fixed = TRUE))) {
+  if (is_frq) {
 
     # get statistic, se and p
     statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
@@ -56,6 +57,7 @@ model_parameters.emmGrid <- function(model,
     }
 
   } else {
+
     # Bayesian models go here...
     params <- bayestestR::describe_posterior(
       model,
@@ -72,7 +74,9 @@ model_parameters.emmGrid <- function(model,
       verbose = verbose,
       ...
     )
+
     statistic <- NULL
+
   }
 
 
