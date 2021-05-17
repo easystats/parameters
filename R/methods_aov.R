@@ -126,8 +126,8 @@ model_parameters.aov <- function(model,
   }
 
   # inform user
-  if (type == 3 && verbose) {
-    message(insight::format_message("Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."))
+  if (verbose) {
+    .check_anova_contrasts(model, type)
   }
 
   # extract standard parameters
@@ -302,6 +302,29 @@ model_parameters.afex_aov <- function(model,
 
 
 # helper ------------------------------
+
+
+.check_anova_contrasts <- function(model, type) {
+  if (type == 3) {
+    treatment_contrasts_and_mean_centered <- sapply(insight::get_predictors(model), function(i) {
+      if (is.factor(i)) {
+        cn <- contrasts(i)
+        if (is.null(cn) || (all(cn %in% c(0, 1)))) {
+          return(TRUE)
+        }
+      } else {
+        if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
+          return(TRUE)
+        }
+      }
+      return(FALSE)
+    })
+
+    if (any(treatment_contrasts_and_mean_centered)) {
+      message(insight::format_message("Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."))
+    }
+  }
+}
 
 
 .effectsizes_for_aov <- function(model,
