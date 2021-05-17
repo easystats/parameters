@@ -452,6 +452,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   p_adjust <- attributes(x)$p_adjust
   model_formula <- attributes(x)$model_formula
   anova_test <- attributes(x)$anova_test
+  anova_type <- attributes(x)$anova_type
   footer_text <- attributes(x)$footer_text
   n_obs <- attributes(x)$n_obs
 
@@ -478,6 +479,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   # footer: anova test
   if (!is.null(anova_test)) {
     footer <- .add_footer_anova_test(footer, anova_test, type)
+  }
+
+  # footer: anova test
+  if (!is.null(anova_type)) {
+    footer <- .add_footer_anova_type(footer, anova_type, type)
   }
 
   # footer: generic text
@@ -567,6 +573,24 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       } else if (type == "html") {
         footer <- c(footer, rsq)
       }
+    }
+  }
+  footer
+}
+
+
+# footer: anova type
+.add_footer_anova_type <- function(footer = NULL, aov_type, type = "text") {
+  if (!is.null(aov_type)) {
+    if (type == "text") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%s Type %s tests\n", fill, aov_type))
+    } else if (type == "html") {
+      footer <- c(footer, sprintf("Type %s tests", aov_type))
     }
   }
   footer

@@ -305,7 +305,7 @@ model_parameters.afex_aov <- function(model,
 
 
 .check_anova_contrasts <- function(model, type) {
-  if (type == 3) {
+  if (!is.null(type) && type == 3) {
     treatment_contrasts_and_mean_centered <- sapply(insight::get_predictors(model), function(i) {
       if (is.factor(i)) {
         cn <- contrasts(i)
