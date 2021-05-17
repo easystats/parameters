@@ -125,7 +125,7 @@ model_parameters.aov <- function(model,
     return(model_parameters.htest(model, ...))
   }
 
-  # inform user
+  # check contrasts
   if (verbose) {
     .check_anova_contrasts(model, type)
   }

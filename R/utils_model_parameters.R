@@ -248,6 +248,24 @@
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
 
+  if (!is.null(attr(model, "type", exact = TRUE))) {
+    type <- attr(model, "type", exact = TRUE)
+  } else if (!is.null(attr(model, "heading"))) {
+    type <- switch(
+      trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading"))),
+      "1" = ,
+      "I" = 1,
+      "2" = ,
+      "II" = 2,
+      "3" = ,
+      "III" = 3,
+      1
+    )
+  } else {
+    type <- 1
+  }
+  attr(params, "anova_type") <- type
+
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test
   }
