@@ -4,8 +4,7 @@ if (.runThisTest &&
   require("testthat") &&
   require("parameters") &&
   require("emmeans") &&
-  require("lme4") &&
-  packageVersion("insight") > "0.13.2") {
+  require("lme4")) {
   data(sleep)
   data(fiber)
 

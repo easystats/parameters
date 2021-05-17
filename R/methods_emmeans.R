@@ -35,7 +35,7 @@ model_parameters.emmGrid <- function(model,
   params <- as.data.frame(s)
 
   # we assume frequentist here...
-  if (.is_bayesian_emmeans(model)) {
+  if (!.is_bayesian_emmeans(model)) {
 
     # get statistic, se and p
     statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
