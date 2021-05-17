@@ -252,7 +252,7 @@
     type <- attr(model, "type", exact = TRUE)
   } else if (!is.null(attr(model, "heading"))) {
     type <- switch(
-      trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading"))),
+      trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading")[1])),
       "1" = ,
       "I" = 1,
       "2" = ,
