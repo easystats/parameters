@@ -34,7 +34,7 @@
 
 ## Bug fixes
 
-* Fixed issue in `model_parameters()´ for *emmGrid* objects with Bayesian models.
+* Fixed issue in `model_parameters()` for *emmGrid* objects with Bayesian models.
 
 * Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
   and only worked when used in the call to `model_parameters()` directly.
