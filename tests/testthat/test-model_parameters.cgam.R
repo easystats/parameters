@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("testthat") && require("cgam") && packageVersion("insight") > "0.13.2") {
+if (.runThisTest && require("testthat") && require("cgam")) {
   test_that("model_parameters - cgam", {
     # cgam -----------------------
 
