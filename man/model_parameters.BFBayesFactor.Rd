@@ -50,7 +50,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{verbose}{Toggle warnings and messages.}
+\item{verbose}{Toggle off warnings.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
