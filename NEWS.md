@@ -5,7 +5,16 @@
 * Removed deprecated arguments.
 
 * `dispersion` in `model_parameters()` for Bayesian models now defaults
-  to `TRUE`.
+  to `TRUE`.  This change was made to be in line with the default `summary()`
+  output from most packages.
+
+* `centrality` in `model_parameters()` for Bayesian models now defaults
+  to `"mean"`. This change was made to be in line with the default `summary()`
+  output from most packages.
+
+* `model_parameters()` for bootstrapped samples used in *emmeans* now treats
+  the bootstrap samples as samples from posterior distributions (Bayesian
+  models).
 
 ## New supported model classes
 

@@ -1,7 +1,7 @@
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.bamlss <- function(model,
-                                    centrality = "median",
+                                    centrality = "mean",
                                     dispersion = TRUE,
                                     ci = .89,
                                     ci_method = "hdi",

@@ -35,7 +35,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.BFBayesFactor <- function(model,
-                                           centrality = "median",
+                                           centrality = "mean",
                                            dispersion = TRUE,
                                            ci = 0.89,
                                            ci_method = "hdi",

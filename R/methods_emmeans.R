@@ -6,7 +6,7 @@
 #' @export
 model_parameters.emmGrid <- function(model,
                                      ci = .95,
-                                     centrality = "median",
+                                     centrality = "mean",
                                      dispersion = TRUE,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
@@ -110,9 +110,9 @@ model_parameters.emmGrid <- function(model,
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
   parameter_names <- colnames(params)[1:(estimate_pos - 1)]
-  order <- c(parameter_names, "Estimate", "Median", "Mean", "SE", "CI_low", "CI_high",
-             "F", "t", "z", "df", "df_error", "p", "pd", "ROPE_CI", "ROPE_low",
-             "ROPE_high", "ROPE_Percentage")
+  order <- c(parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
+             "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
+             "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage")
   params <- params[order[order %in% names(params)]]
 
   # rename
@@ -152,7 +152,7 @@ model_parameters.emm_list <- function(model,
       p_adjust = p_adjust,
       verbose = verbose
     )
-    estimate_pos <- which(colnames(pars) == "Coefficient")
+    estimate_pos <- which(colnames(pars) %in% c("Coefficient", "Median", "Mean"))[1]
     pars[1:(estimate_pos - 1)] <- NULL
     cbind(
       Parameter = .pretty_emmeans_Parameter_names(model[[i]]),

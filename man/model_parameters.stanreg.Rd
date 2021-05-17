@@ -9,7 +9,7 @@
 \usage{
 \method{model_parameters}{data.frame}(
   model,
-  centrality = "median",
+  centrality = "mean",
   dispersion = TRUE,
   ci = 0.89,
   ci_method = "hdi",
@@ -23,7 +23,7 @@
 
 \method{model_parameters}{brmsfit}(
   model,
-  centrality = "median",
+  centrality = "mean",
   dispersion = TRUE,
   ci = 0.89,
   ci_method = "hdi",
@@ -45,7 +45,7 @@
 
 \method{model_parameters}{stanreg}(
   model,
-  centrality = "median",
+  centrality = "mean",
   dispersion = TRUE,
   ci = 0.89,
   ci_method = "hdi",

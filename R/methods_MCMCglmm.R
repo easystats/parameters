@@ -23,7 +23,7 @@ p_value.MCMCglmm <- function(model, ...) {
 
 #' @export
 model_parameters.MCMCglmm <- function(model,
-                                      centrality = "median",
+                                      centrality = "mean",
                                       dispersion = TRUE,
                                       ci = .89,
                                       ci_method = "hdi",

@@ -1,6 +1,6 @@
 #' @export
 model_parameters.stanfit <- function(model,
-                                     centrality = "median",
+                                     centrality = "mean",
                                      dispersion = TRUE,
                                      ci = .89,
                                      ci_method = "hdi",

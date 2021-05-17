@@ -40,7 +40,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.stanreg <- function(model,
-                                     centrality = "median",
+                                     centrality = "mean",
                                      dispersion = TRUE,
                                      ci = .89,
                                      ci_method = "hdi",

@@ -112,7 +112,7 @@ model_parameters.lavaan <- function(model,
 
 #' @export
 model_parameters.blavaan <- function(model,
-                                     centrality = "median",
+                                     centrality = "mean",
                                      dispersion = TRUE,
                                      ci = .89,
                                      ci_method = "hdi",
