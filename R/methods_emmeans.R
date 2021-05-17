@@ -34,12 +34,8 @@ model_parameters.emmGrid <- function(model,
   s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
-  # Bayesian model?
-  is_frq <- isTRUE(all.equal(dim(model@post.beta), c(1, 1))) &&
-            isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
-
   # we assume frequentist here...
-  if (is_frq) {
+  if (.is_bayesian_emmeans(model)) {
 
     # get statistic, se and p
     statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
@@ -418,4 +414,10 @@ format_parameters.emm_list <- function(model, ...) {
     rep(names(s)[[i]], nrow(s[[i]]))
   })
   Component <- unlist(Component)
+}
+
+.is_bayesian_emmeans <- function(model) {
+  is_frq <- isTRUE(all.equal(dim(model@post.beta), c(1, 1))) &&
+            isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
+  isFALSE(is_frq)
 }
