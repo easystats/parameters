@@ -35,8 +35,8 @@ model_parameters.emmGrid <- function(model,
   params <- as.data.frame(s)
 
   # Bayesian model?
-  is_frq <- all.equal(dim(model@post.beta), c(1, 1)) &&
-            is.na(model@post.beta) && is.null(model@misc$is_boot)
+  is_frq <- isTRUE(all.equal(dim(model@post.beta), c(1, 1))) &&
+            isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
 
   # we assume frequentist here...
   if (is_frq) {
