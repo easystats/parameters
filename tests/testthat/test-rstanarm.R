@@ -27,10 +27,18 @@ if (.runThisTest && !osx &&
     family = "binomial"
   )
 
-  mp <- model_parameters(model)
+  mp <- model_parameters(model, centrality = "median")
 
   test_that("mp", {
     expect_equal(mp$Median, c(9.50343, 0.00294, -1.65762), tolerance = 1e-2)
+    expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-2)
+  })
+
+
+  mp <- model_parameters(model)
+
+  test_that("mp", {
+    expect_equal(mp$Mean, c(9.92451, 0.00791, -1.70966), tolerance = 1e-2)
     expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-2)
   })
 
@@ -47,7 +55,7 @@ if (.runThisTest && !osx &&
     seed = 123
   )
 
-  mp <- suppressWarnings(model_parameters(model))
+  mp <- suppressWarnings(model_parameters(model, centrality = "median"))
 
   test_that("mp2", {
     expect_equal(mp$Median, c(0.48125, 0.03037, 3.44494, 0.07625, -0.12925), tolerance = 1e-2)
