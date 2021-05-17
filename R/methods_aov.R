@@ -41,7 +41,11 @@
 #' @return A data frame of indices related to the model's parameters.
 #'
 #' @note For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only
-#'   partial or adjusted effect sizes can be computed.
+#'   partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
+#'   only give sensible and informative results when covariates are mean-centred
+#'   and factors are coded with orthogonal contrasts (such as those produced by
+#'   \code{contr.sum}, \code{contr.poly}, or \code{contr.helmert}, but \emph{not}
+#'   by the default \code{contr.treatment}).
 #'
 #' @examples
 #' if (requireNamespace("effectsize", quietly = TRUE)) {
@@ -119,6 +123,11 @@ model_parameters.aov <- function(model,
   # exceptions
   if (.is_levenetest(model)) {
     return(model_parameters.htest(model, ...))
+  }
+
+  # inform user
+  if (type == 3 && verbose) {
+    message(insight::format_message("Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."))
   }
 
   # extract standard parameters
