@@ -268,9 +268,10 @@ model_parameters.afex_aov <- function(model,
     with_df_and_p <- summary(model$Anova)$univariate.tests
     params$`Sum Sq` <- with_df_and_p[-1, 1]
     params$`Error SS` <- with_df_and_p[-1, 3]
-    out <- model_parameters(params, df_error = NULL, type = NULL, ...)
+    out <- .extract_parameters_anova(params, test = NULL)
   } else {
-    out <- model_parameters(model$Anova, df_error = NULL, type = attr(model, "type"), ...)
+    type <- attr(model, "type")
+    out <- .extract_parameters_anova(model$Anova, test = NULL)
   }
 
   out <- .effectsizes_for_aov(
@@ -284,9 +285,12 @@ model_parameters.afex_aov <- function(model,
     ...
   )
 
+  # add attributes
+  out <- .add_anova_attributes(out, model, ci, test = NULL, ...)
+
   # filter parameters
   if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters, verbose = verbose)
+    out <- .filter_parameters(out, parameters, verbose = verbose)
   }
 
   if (!"Method" %in% names(out)) {
@@ -294,6 +298,7 @@ model_parameters.afex_aov <- function(model,
   }
 
   attr(out, "title") <- unique(out$Method)
+  class(out) <- unique(c("parameters_model", "see_parameters_model", class(out)))
 
   out
 }
