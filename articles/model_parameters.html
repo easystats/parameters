@@ -153,7 +153,9 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter1        |       Parameter2 |     r |        95% CI | t(148) |     p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------</span>
-<span class="co">#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | [-0.27, 0.04] |  -1.44 | 0.152</span></code></pre></div>
+<span class="co">#&gt; iris$Sepal.Length | iris$Sepal.Width | -0.12 | [-0.27, 0.04] |  -1.44 | 0.152</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Alternative hypothesis: true correlation is not equal to 0</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
@@ -161,7 +163,9 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter | Group | vs = 0 | vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; mpg       |    vs |  16.62 |  24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span></code></pre></div>
+<span class="co">#&gt; mpg       |    vs |  16.62 |  24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Alternative hypothesis: true difference in means is not equal to 0</span></code></pre></div>
 </div>
 <div id="bayesian" class="section level3">
 <h3 class="hasAnchor">

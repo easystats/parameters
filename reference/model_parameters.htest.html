@@ -288,6 +288,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter1 | Parameter2 |     r |         95% CI | t(30) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> mtcars$mpg | mtcars$cyl | -0.85 | [-0.93, -0.72] | -8.92 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Alternative hypothesis: true correlation is not equal to 0</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, <span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
@@ -296,6 +299,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | t(225.68) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------------------------------------------------------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -36.46 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>mtcars</span><span class='op'>$</span><span class='va'>vs</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
@@ -304,6 +310,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter  |     Group | mtcars$vs = 0 | mtcars$vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------------------------------------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> mtcars$mpg | mtcars$vs |         16.62 |         24.56 |       7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span>, mu <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'><a href='model_parameters.html'>model_parameters</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
@@ -312,6 +321,9 @@ only applies to objects from <code><a href='https://rdrr.io/r/stats/chisq.test.h
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter        | Mean |   mu | Difference |       95% CI | t(149) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------------------------</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> iris$Sepal.Width | 3.06 | 1.00 |       2.06 | [2.99, 3.13] |  57.81 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Alternative hypothesis: true mean is not equal to 1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Month</span>, labels <span class='op'>=</span> <span class='va'>month.abb</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span></span>
