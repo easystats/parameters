@@ -588,7 +588,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       } else {
         fill <- ""
       }
-      footer <- paste0(footer, sprintf("%s Anova Table (Type %s tests)\n", fill, aov_type))
+      footer <- paste0(footer, sprintf("%sAnova Table (Type %s tests)\n", fill, aov_type))
     } else if (type == "html") {
       footer <- c(footer, sprintf("Anova Table (Type %s tests)", aov_type))
     }

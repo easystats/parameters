@@ -27,7 +27,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
         "hp          |  1 |    10.44 |         29 |            19.23 | 0.001 ",
         "factor(cyl) |  2 |     8.75 |         27 |            10.49 | 0.013 ",
         "",
-        " Anova Table (Type 1 tests)"
+        "Anova Table (Type 1 tests)"
       )
     )
   })
@@ -53,7 +53,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
           "factor(cyl) |        8.75 |  2 |        4.37 | 13.97 | < .001",
           "Residuals   |        8.45 | 27 |        0.31 |       |       ",
           "",
-          " Anova Table (Type 3 tests)"
+          "Anova Table (Type 3 tests)"
         )
       )
     })
@@ -131,8 +131,6 @@ if (.runThisTest && require("parameters") && require("testthat")) {
     a3 <- car::Anova(m, type = 3)
     expect_equal(attr(model_parameters(a2), "anova_type"), 2)
     expect_equal(attr(model_parameters(a3), "anova_type"), 3)
-
-    expect_warning(model_parameters(a3)) # factors are treatment, covs are not centered
 
     m <- lm(mpg ~ factor(cyl) + hp + disp, mtcars)
     expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
