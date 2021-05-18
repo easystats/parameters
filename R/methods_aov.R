@@ -340,6 +340,8 @@ model_parameters.afex_aov <- function(model,
         type <- type_to_numeric(trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", heading)))
       } else if (grepl("Type (.*) Analysis(.*)", heading)) {
         type <- type_to_numeric(trimws(gsub("Type (.*) Analysis(.*)", "\\1", heading)))
+      } else if (grepl("(.*)Type (.*) Wald(.*)", heading)) {
+        type <- type_to_numeric(trimws(gsub("(.*)Type (.*) Wald(.*)", "\\2", heading)))
       } else {
         type <- 1
       }
