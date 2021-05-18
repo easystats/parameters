@@ -357,7 +357,22 @@ model_parameters.afex_aov <- function(model,
 
 
 .check_anova_contrasts <- function(model, type) {
-  if (!is.null(type) && type == 3) {
+  interaction_terms <- tryCatch(
+    {
+      insight::find_interactions(model, flatten = TRUE)
+    },
+    error = function(e) {
+      if (is.data.frame(model)) {
+        if (!grepl(":", row.names(model), fixed = TRUE)) {
+          TRUE
+        } else {
+          NULL
+        }
+      }
+    }
+  )
+
+  if (!is.null(interaction_terms) && !is.null(type) && type == 3) {
     predictors <- tryCatch(
       {
         insight::get_predictors(model)
@@ -367,7 +382,7 @@ model_parameters.afex_aov <- function(model,
       }
     )
     if (!is.null(predictors)) {
-      treatment_contrasts_and_mean_centered <- sapply(predictors, function(i) {
+      treatment_contrasts_or_not_centered <- sapply(predictors, function(i) {
         if (is.factor(i)) {
           cn <- contrasts(i)
           if (is.null(cn) || (all(cn %in% c(0, 1)))) {
@@ -381,7 +396,7 @@ model_parameters.afex_aov <- function(model,
         return(FALSE)
       })
 
-      if (any(treatment_contrasts_and_mean_centered)) {
+      if (any(treatment_contrasts_or_not_centered)) {
         message(insight::format_message("Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."))
       }
     }
