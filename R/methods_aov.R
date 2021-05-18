@@ -363,7 +363,7 @@ model_parameters.afex_aov <- function(model,
     },
     error = function(e) {
       if (is.data.frame(model)) {
-        if (!grepl(":", row.names(model), fixed = TRUE)) {
+        if (grepl(":", row.names(model), fixed = TRUE)) {
           TRUE
         } else {
           NULL
