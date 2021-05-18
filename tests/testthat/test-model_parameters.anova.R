@@ -154,7 +154,7 @@ if (.runThisTest && require("parameters") && require("testthat")) {
     a2 <- car::Anova(m, type = 2)
     a3 <- car::Anova(m, type = 3)
     expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+    expect_equal(attr(model_parameters(a3, verbose = FALSE), "anova_type"), 3)
   })
 
   test_that("anova type | glm", {
