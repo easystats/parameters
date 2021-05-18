@@ -120,6 +120,11 @@ model_parameters.aov <- function(model,
     }
   }
 
+  # try to extract type of anova table
+  if (is.null(type)) {
+    type <- .anova_type(model)
+  }
+
   # exceptions
   if (.is_levenetest(model)) {
     return(model_parameters.htest(model, ...))
@@ -270,7 +275,6 @@ model_parameters.afex_aov <- function(model,
     params$`Error SS` <- with_df_and_p[-1, 3]
     out <- .extract_parameters_anova(params, test = NULL)
   } else {
-    type <- attr(model, "type")
     out <- .extract_parameters_anova(model$Anova, test = NULL)
   }
 
@@ -307,6 +311,29 @@ model_parameters.afex_aov <- function(model,
 
 
 # helper ------------------------------
+
+
+.anova_type <- function(model, type = NULL) {
+  if (is.null(type)) {
+    if (!is.null(attr(model, "type", exact = TRUE))) {
+      type <- attr(model, "type", exact = TRUE)
+    } else if (!is.null(attr(model, "heading"))) {
+      type <- switch(
+        trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading")[1])),
+        "1" = ,
+        "I" = 1,
+        "2" = ,
+        "II" = 2,
+        "3" = ,
+        "III" = 3,
+        1
+      )
+    } else {
+      type <- 1
+    }
+  }
+  type
+}
 
 
 .check_anova_contrasts <- function(model, type) {

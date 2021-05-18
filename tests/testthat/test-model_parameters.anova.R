@@ -115,7 +115,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
 
 # XXX -----
 
-if (require(parameters) && require(testthat)) {
+if (.runThisTest && require("parameters") && require("testthat")) {
   test_that("anova type | lm", {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
