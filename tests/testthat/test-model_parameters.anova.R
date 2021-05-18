@@ -111,3 +111,104 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     })
   }
 }
+
+
+# XXX -----
+
+if (require(parameters) && require(testthat)) {
+  test_that("anova type | lm", {
+    m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
+
+    a1 <- aov(m)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    a1 <- anova(m)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    skip_if_not_installed("car")
+
+    a2 <- car::Anova(m, type = 2)
+    a3 <- car::Anova(m, type = 3)
+    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+
+    expect_warning(model_parameters(a3)) # factors are treatment, covs are not centered
+
+    m <- lm(mpg ~ factor(cyl) + hp + disp, mtcars)
+    expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
+
+    m <- lm(mpg ~ factor(cyl) * scale(disp, TRUE, FALSE) + scale(disp, TRUE, FALSE),
+            mtcars, contrasts = list("factor(cyl)" = contr.helmert))
+    a3 <- car::Anova(m, type = 3)
+    expect_warning(model_parameters(a3), regexp = NA) # expect no warning
+  })
+
+  test_that("anova type | mlm", {
+    m <- lm(cbind(mpg, drat) ~ factor(cyl) * hp + disp, mtcars)
+
+    a1 <- aov(m)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    a1 <- anova(m)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    skip_if_not_installed("car")
+    a2 <- car::Anova(m, type = 2)
+    a3 <- car::Anova(m, type = 3)
+    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  })
+
+  test_that("anova type | glm", {
+    m <- suppressWarnings(glm(am ~ factor(cyl) * hp + disp, mtcars, family = binomial()))
+
+    a1 <- anova(m)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    skip_if_not_installed("car")
+    a2 <- suppressWarnings(car::Anova(m, type = 2))
+    a3 <- suppressWarnings(car::Anova(m, type = 3))
+    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  })
+
+  test_that("anova type | lme4", {
+    skip_if_not_installed("lmerTest")
+    m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1|gear), mtcars)
+    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1|gear), mtcars,
+                      family = poisson())
+
+    a1 <- anova(m1)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    a1 <- anova(m2)
+    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+
+    a3 <- anova(lmerTest::as_lmerModLmerTest(m1))
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+
+    skip_if_not_installed("car")
+    a2 <- car::Anova(m1, type = 2)
+    a3 <- car::Anova(m1, type = 3)
+    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+
+    a2 <- car::Anova(m2, type = 2)
+    a3 <- car::Anova(m2, type = 3)
+    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  })
+
+  test_that("anova type | afex + Anova.mlm", {
+    skip_if_not_installed("afex")
+
+    data(obk.long, package = "afex")
+
+    m <- afex::aov_ez("id", "value", obk.long,
+                      between = c("treatment", "gender"),
+                      within = c("phase", "hour"), observed = "gender")
+
+    expect_equal(attr(model_parameters(m), "anova_type"), 3)
+    expect_equal(attr(model_parameters(m$Anova), "anova_type"), 3)
+  })
+}
