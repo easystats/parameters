@@ -28,14 +28,6 @@ if (.runThisTest && !osx &&
     seed = 123
   )
 
-  mp <- model_parameters(model, centrality = "median")
-
-  test_that("mp", {
-    expect_equal(mp$Median, c(9.4246, 0.0043, -1.6375), tolerance = 0.01)
-    expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-2)
-  })
-
-
   mp <- model_parameters(model)
   s <- summary(model)
 
