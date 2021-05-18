@@ -206,7 +206,7 @@
 <span class="co">#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |   0.61 | 0.62 |     0.61</span>
 <span class="co">#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |        |      |         </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  Anova Table (Type 1 tests)</span></code></pre></div>
+<span class="co">#&gt; Anova Table (Type 1 tests)</span></code></pre></div>
 <p>Let’s complicate things further with an interaction term:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -222,7 +222,7 @@
 <span class="co">#&gt; Species:Sepal.Width |        0.16 |   2 |        0.08 |   0.41 | 0.667  |        -7.98e-03 |  [0.00, 0.00] |       5.61e-03 | [0.00, 0.02]</span>
 <span class="co">#&gt; Residuals           |       27.85 | 144 |        0.19 |        |        |                  |               |                |             </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  Anova Table (Type 1 tests)</span></code></pre></div>
+<span class="co">#&gt; Anova Table (Type 1 tests)</span></code></pre></div>
 </div>
 <div id="repeated-measures" class="section level3">
 <h3 class="hasAnchor">
@@ -244,7 +244,7 @@
 <span class="co">#&gt; am        |      145.45 |  1 |      145.45 | 5.85 | 0.022</span>
 <span class="co">#&gt; Residuals |      720.85 | 29 |       24.86 |      |      </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  Anova Table (Type 1 tests)</span></code></pre></div>
+<span class="co">#&gt; Anova Table (Type 1 tests)</span></code></pre></div>
 </div>
 </div>
 <div id="regressions-glms-mixed-models-gams" class="section level2">
