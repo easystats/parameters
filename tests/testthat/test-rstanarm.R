@@ -24,21 +24,23 @@ if (.runThisTest && !osx &&
     vs ~ mpg + cyl,
     data = mtcars,
     refresh = 0,
-    family = "binomial"
+    family = "binomial",
+    seed = 123
   )
 
   mp <- model_parameters(model, centrality = "median")
 
   test_that("mp", {
-    expect_equal(mp$Median, c(9.50343, 0.00294, -1.65762), tolerance = 1e-2)
+    expect_equal(mp$Median, c(9.4246, 0.0043, -1.6375), tolerance = 0.01)
     expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-2)
   })
 
 
   mp <- model_parameters(model)
+  s <- summary(model)
 
   test_that("mp", {
-    expect_equal(mp$Mean, c(9.92451, 0.00791, -1.70966), tolerance = 1e-2)
+    expect_equal(mp$Mean, unname(s[1:3, 1]), tolerance = 1e-2, ignore_attr = TRUE)
     expect_equal(mp$Prior_Scale, c(2.5, 0.4148, 1.39984), tolerance = 1e-2)
   })
 
@@ -55,10 +57,11 @@ if (.runThisTest && !osx &&
     seed = 123
   )
 
-  mp <- suppressWarnings(model_parameters(model, centrality = "median"))
+  mp <- suppressWarnings(model_parameters(model, centrality = "mean"))
+  s <- summary(model)
 
   test_that("mp2", {
-    expect_equal(mp$Median, c(0.48125, 0.03037, 3.44494, 0.07625, -0.12925), tolerance = 1e-2)
+    expect_equal(mp$Mean, unname(s[c("y1|(Intercept)", "y1|year", "y2|(Intercept)", "y2|sexf", "y2|year"), 1]), tolerance = 1e-2, ignore_attr = TRUE)
     expect_equal(mp$Response, c("y1", "y1", "y2", "y2", "y2"))
     expect_equal(mp$Prior_Scale, c(4.9647, 0.3465, 5.57448, 1.39362, 0.38906), tolerance = 1e-2)
   })
