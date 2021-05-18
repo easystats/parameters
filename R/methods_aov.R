@@ -315,11 +315,13 @@ model_parameters.afex_aov <- function(model,
 
 .anova_type <- function(model, type = NULL) {
   if (is.null(type)) {
-    if (!is.null(attr(model, "type", exact = TRUE))) {
-      type <- attr(model, "type", exact = TRUE)
-    } else if (!is.null(attr(model, "heading"))) {
-      type <- switch(
-        trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading")[1])),
+
+    type_to_numeric <- function(type) {
+      if (is.numeric(type)) {
+        return(type)
+      }
+      switch(
+        type,
         "1" = ,
         "I" = 1,
         "2" = ,
@@ -328,10 +330,19 @@ model_parameters.afex_aov <- function(model,
         "III" = 3,
         1
       )
+    }
+
+    if (!is.null(attr(model, "type", exact = TRUE))) {
+      type <- type_to_numeric(attr(model, "type", exact = TRUE))
+    } else if (!is.null(attr(model, "heading"))) {
+      type <- type_to_numeric(trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", attr(model, "heading")[1])))
+    } else if (!is.null(model$type)) {
+      type <- type_to_numeric(model$type)
     } else {
       type <- 1
     }
   }
+
   type
 }
 
