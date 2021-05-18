@@ -32,14 +32,21 @@
 
 ## Changes to functions
 
+### `model_parameters()`
+
 * `model_parameters()` gains a `parameters` argument, which takes a regular
   expression as string, to select specific parameters from the returned data 
   frame.
 
-* `ci()` for `svyglm` gains a `method` argument.
-
 * `print()` for `model_parameters()` gains a `groups` argument, to group
   parameters in the output.
+
+* `model_parameters()` for ANOVAs now saves the type as attribute and prints
+  this information as footer in the output as well.
+
+### other
+
+* `ci()` for `svyglm` gains a `method` argument.
 
 ## Bug fixes
 
