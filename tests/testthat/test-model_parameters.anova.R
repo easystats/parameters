@@ -207,6 +207,6 @@ if (.runThisTest && require("parameters") && require("testthat")) {
                       within = c("phase", "hour"), observed = "gender")
 
     expect_equal(attr(model_parameters(m), "anova_type"), 3)
-    expect_equal(attr(model_parameters(m$Anova), "anova_type"), 3)
+    expect_equal(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3)
   })
 }
