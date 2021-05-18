@@ -206,10 +206,21 @@
 <div id="changes-to-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
+<div id="model_parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model_parameters" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
+</h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>parameters</code> argument, which takes a regular expression as string, to select specific parameters from the returned data frame.</p></li>
-<li><p><code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <code>svyglm</code> gains a <code>method</code> argument.</p></li>
 <li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>groups</code> argument, to group parameters in the output.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for ANOVAs now saves the type as attribute and prints this information as footer in the output as well.</p></li>
 </ul></div>
+<div id="other" class="section level3">
+<h3 class="hasAnchor">
+<a href="#other" class="anchor" aria-hidden="true"></a>other</h3>
+<ul><li>
+<code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <code>svyglm</code> gains a <code>method</code> argument.</li>
+</ul></div>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
@@ -234,9 +245,9 @@
 <div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-1" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
-<div id="model_parameters" class="section level3">
+<div id="model_parameters-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
+<a href="#model_parameters-1" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
 </h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>blavaan</code> models is now fully treated as Bayesian model and thus relies on the functions from <em>bayestestR</em> (i.e. ROPE, Rhat or ESS are reported) .</p></li>
 <li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
@@ -397,9 +408,9 @@
 <div id="changes-to-functions-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-4" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
-<div id="model_parameters-1" class="section level3">
+<div id="model_parameters-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-1" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
+<a href="#model_parameters-2" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
 </h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (of class <code>aov</code>, <code>anova</code> etc.) gains a <code>ci</code>-argument, to add confidence intervals to effect size parameters.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects gains a <code>cramers_v</code> and <code>phi</code> argument, to compute effect size parameters for objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>, and a <code>standardized_D</code> argument, to compute effect size parameters for objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>.</p></li>
@@ -612,9 +623,9 @@
 <li><p>gains a <code>iqr</code> argument, to compute the interquartile range.</p></li>
 <li><p><code>SE</code> column was removed.</p></li>
 </ul></div>
-<div id="model_parameters-2" class="section level3">
+<div id="model_parameters-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-2" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
+<a href="#model_parameters-3" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
 </h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Stan-models (<em>brms</em>, <em>rstanarm</em>) gains a <code>group_level</code> argument to show or hide parameters for group levels of random effects.</p></li>
 <li><p>Improved accuracy of confidence intervals in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>standardize = "basic"</code> or <code>standardize = "posthoc"</code>.</p></li>
@@ -649,9 +660,9 @@
 <div id="changes-to-functions-10" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-10" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
-<div id="model_parameters-3" class="section level3">
+<div id="model_parameters-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-3" class="anchor" aria-hidden="true"></a>model_parameters()</h3>
+<a href="#model_parameters-4" class="anchor" aria-hidden="true"></a>model_parameters()</h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also transforms standard errors when <code>exponentiate = TRUE</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> from mixed models can now also compute effect sizes like eta squared.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> gains a <code>type</code>-argument to compute type-1, type-2 or type-3 sums of squares.</p></li>
@@ -689,9 +700,9 @@
 <div id="changes-to-functions-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-11" class="anchor" aria-hidden="true"></a>Changes to functions</h2>
-<div id="model_parameters-4" class="section level3">
+<div id="model_parameters-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#model_parameters-4" class="anchor" aria-hidden="true"></a>model_parameters()</h3>
+<a href="#model_parameters-5" class="anchor" aria-hidden="true"></a>model_parameters()</h3>
 <ul><li><p>Improved print-method for <code><a href="../reference/model_parameters.stanreg.html">model_parameters.brmsfit()</a></code>.</p></li>
 <li><p>Improved print-method for <code><a href="../reference/model_parameters.merMod.html">model_parameters.merMod()</a></code> when fitting REWB-Models (see <code><a href="../reference/demean.html">demean()</a></code>).</p></li>
 <li><p>Improved efficiency for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> (for linear mixed models) when <code>df_method = "kenward"</code>.</p></li>
