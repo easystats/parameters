@@ -34,6 +34,7 @@ format.parameters_model <- function(x,
   # remove method for htest
   if (!is.null(m_class) && any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen", "PMCMR", "osrt", "trendPMCMR", "anova"))) {
     x$Method <- NULL
+    x$Alternative <- NULL
   }
 
   # remove response for mvord
@@ -454,6 +455,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   anova_test <- attributes(x)$anova_test
   anova_type <- attributes(x)$anova_type
   footer_text <- attributes(x)$footer_text
+  text_alternative <- attributes(x)$text_alternative
   n_obs <- attributes(x)$n_obs
 
   # footer: model formula
@@ -484,6 +486,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   # footer: anova test
   if (!is.null(anova_type)) {
     footer <- .add_footer_anova_type(footer, anova_type, type)
+  }
+
+  # footer: htest alternative
+  if (!is.null(text_alternative)) {
+    footer <- .add_footer_alternative(footer, text_alternative, type)
   }
 
   # footer: generic text
@@ -609,6 +616,24 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       footer <- paste0(footer, sprintf("%s%s test statistic\n", fill, test))
     } else if (type == "html") {
       footer <- c(footer, sprintf("%s test statistic", test))
+    }
+  }
+  footer
+}
+
+
+# footer: htest alternative
+.add_footer_alternative <- function(footer = NULL, text_alternative, type = "text") {
+  if (!is.null(text_alternative)) {
+    if (type == "text") {
+      if (is.null(footer)) {
+        fill <- "\n"
+      } else {
+        fill <- ""
+      }
+      footer <- paste0(footer, sprintf("%s%s\n", fill, text_alternative))
+    } else if (type == "html") {
+      footer <- c(footer, text_alternative)
     }
   }
   footer

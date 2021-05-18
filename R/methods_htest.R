@@ -96,6 +96,9 @@ model_parameters.htest <- function(model,
     parameters$Method <- trimws(gsub("with continuity correction", "", parameters$Method))
   }
 
+  # save alternative
+  parameters$Alternative <- model$alternative
+
   parameters <- .add_htest_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
@@ -882,6 +885,25 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
   attr(params, "title") <- unique(params$Method)
   attr(params, "model_class") <- class(model)
+  attr(params, "alternative") <- model$alternative
+
+  if (!is.null(model$alternative)) {
+    h1_text <- "Alternative hypothesis: "
+    if (!is.null(model$null.value)) {
+      if (length(model$null.value) == 1L) {
+        alt.char <- switch(model$alternative,
+                           two.sided = "not equal to",
+                           less = "less than",
+                           greater = "greater than")
+        h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
+      } else {
+        h1_text <- paste0(h1_text, model$alternative)
+      }
+    } else {
+      h1_text <- paste0(h1_text, model$alternative)
+    }
+    attr(params, "text_alternative") <- h1_text
+  }
 
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   if ("digits" %in% names(dot.arguments)) {
