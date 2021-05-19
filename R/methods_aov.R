@@ -332,6 +332,9 @@ model_parameters.afex_aov <- function(model,
       )
     }
 
+    # default to 1
+    type <- 1
+
     if (!is.null(attr(model, "type", exact = TRUE))) {
       type <- type_to_numeric(attr(model, "type", exact = TRUE))
     } else if (!is.null(attr(model, "heading"))) {
@@ -342,13 +345,9 @@ model_parameters.afex_aov <- function(model,
         type <- type_to_numeric(trimws(gsub("Type (.*) Analysis(.*)", "\\1", heading)))
       } else if (grepl("(.*)Type (.*) tests(.*)", heading)) {
         type <- type_to_numeric(trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", heading)))
-      } else {
-        type <- 1
       }
-    } else if (!is.null(model$type)) {
+    } else if ("type" %in% names(model) && !is.null(model$type)) {
       type <- type_to_numeric(model$type)
-    } else {
-      type <- 1
     }
   }
 
