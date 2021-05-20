@@ -102,7 +102,7 @@ reference:
   contents:
   - check_factorstructure
   - check_kmo
-  - check_sphericity
+  - check_sphericity.data.frame
   - convert_efa_to_cfa
   - factor_analysis
   - get_scores

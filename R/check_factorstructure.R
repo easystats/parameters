@@ -5,7 +5,7 @@
 #' \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
 #' (MSA)}.
 #'
-#' @inheritParams check_sphericity
+#' @inheritParams check_sphericity.data.frame
 #' @examples
 #' library(parameters)
 #' check_factorstructure(mtcars)
@@ -59,7 +59,7 @@ check_factorstructure <- function(x, ...) {
 #' accepting a value > 0.5. Values between 0.5 and 0.7 are mediocre, and values
 #' between 0.7 and 0.8 are good.
 #'
-#' @inheritParams check_sphericity
+#' @inheritParams check_sphericity.data.frame
 #'
 #' @examples
 #' library(parameters)
@@ -145,7 +145,7 @@ check_kmo <- function(x, ...) {
 #'   approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #' }
 #' @export
-check_sphericity <- function(x, ...) {
+check_sphericity.data.frame <- function(x, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
@@ -175,3 +175,8 @@ check_sphericity <- function(x, ...) {
 
   out
 }
+
+#' @export
+#' @importFrom performance check_sphericity
+performance::check_sphericity
+
