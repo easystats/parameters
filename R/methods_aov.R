@@ -389,7 +389,7 @@ model_parameters.afex_aov <- function(model,
     if (!is.null(predictors)) {
       treatment_contrasts_or_not_centered <- sapply(predictors, function(i) {
         if (is.factor(i)) {
-          cn <- contrasts(i)
+          cn <- stats::contrasts(i)
           if (is.null(cn) || (all(cn %in% c(0, 1)))) {
             return(TRUE)
           }
