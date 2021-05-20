@@ -15,7 +15,7 @@
 #' }
 #' @return The H statistic (numeric)
 #'
-#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_factorstructure}}.
+#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_factorstructure}}.
 #'
 #' @references \itemize{
 #'   \item Lawson, R. G., & Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.

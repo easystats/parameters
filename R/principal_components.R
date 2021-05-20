@@ -41,7 +41,7 @@
 #'  \subsection{Methods and Utilities}{
 #'  \itemize{
 #'    \item \code{\link{n_components}} and \code{\link{n_factors}} automatically estimate the optimal number of dimensions to retain.
-#'    \item \code{\link{check_factorstructure}} checks the suitability of the data for factor analysis using the \code{\link[=check_sphericity]{sphericity}} and the \code{\link[=check_kmo]{sphericity}} KMO measure.
+#'    \item \code{\link{check_factorstructure}} checks the suitability of the data for factor analysis using the \code{\link[=check_sphericity_bartlett]{sphericity}} and the \code{\link[=check_kmo]{sphericity}} KMO measure.
 #'    \item{\code{\link[performance]{check_itemscale}} computes various measures of internal consistencies applied to the (sub)scales (i.e., components) extracted from the PCA.}
 #'    \item{Running \code{summary} returns information related to each component/factor, such as the explained variance and the Eivenvalues.}
 #'    \item{Running \code{\link{get_scores}} computes scores for each subscale.}
