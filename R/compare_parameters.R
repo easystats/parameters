@@ -45,11 +45,13 @@
 #' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' compare_parameters(m1, m2)
 #'
+#' \dontrun{
 #' # exponentiate coefficients, but not for lm
 #' compare_parameters(m1, m2, exponentiate = "nongaussian")
 #'
 #' # change column names
 #' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
+#' }
 #' @export
 compare_parameters <- function(...,
                                ci = .95,
