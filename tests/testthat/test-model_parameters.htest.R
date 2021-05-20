@@ -5,7 +5,7 @@ if (require("testthat") && require("parameters")) {
       colnames(params),
       c(
         "Parameter1", "Parameter2", "r", "CI", "CI_low", "CI_high",
-        "t", "df_error", "p", "Method", "Alternative"
+        "t", "df_error", "p", "Method"
       )
     )
     expect_equal(params$r, -0.852, tolerance = 0.05)
@@ -69,7 +69,7 @@ if (require("testthat") && require("parameters")) {
         c(
           "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
           "Difference", "CI", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
-          "d_CI_high", "p", "Method", "Alternative"
+          "d_CI_high", "p", "Method"
         )
       )
     })
@@ -82,7 +82,7 @@ if (require("testthat") && require("parameters")) {
         c(
           "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
           "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
-          "p", "Method", "Alternative"
+          "p", "Method"
         )
       )
     })

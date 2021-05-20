@@ -44,6 +44,9 @@
 * `model_parameters()` for ANOVAs now saves the type as attribute and prints
   this information as footer in the output as well.
 
+* `model_parameters()` for *htest*-objects now saves the alternative hypothesis
+  as attribute and prints this information as footer in the output as well.
+
 ### other
 
 * `ci()` for `svyglm` gains a `method` argument.

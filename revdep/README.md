@@ -10,26 +10,29 @@
 |collate  |German_Germany.1252          |
 |ctype    |German_Germany.1252          |
 |tz       |Europe/Berlin                |
-|date     |2021-04-08                   |
+|date     |2021-05-20                   |
 
 # Dependencies
 
 |package    |old    |new      |<U+0394>  |
 |:----------|:------|:--------|:--|
-|parameters |0.12.0 |0.12.0.1 |*  |
+|parameters |0.13.0 |0.13.0.1 |*  |
 |bayestestR |0.9.0  |0.9.0    |   |
-|insight    |0.13.2 |0.13.2   |   |
+|insight    |0.14.0 |0.14.0   |   |
 
 # Revdeps
 
-## Failed to check (6)
+## Failed to check (2)
 
-|package     |version |error |warning |note |
-|:-----------|:-------|:-----|:-------|:----|
-|bayestestR  |?       |      |        |     |
-|broomExtra  |?       |      |        |     |
-|correlation |?       |      |        |     |
-|effectsize  |?       |      |        |     |
-|gtsummary   |1.3.7   |1     |        |     |
-|insight     |?       |      |        |     |
+|package |version |error |warning |note |
+|:-------|:-------|:-----|:-------|:----|
+|sjPlot  |2.8.7   |1     |        |     |
+|sjstats |0.18.1  |1     |        |     |
+
+## New problems (2)
+
+|package                                          |version |error  |warning |note |
+|:------------------------------------------------|:-------|:------|:-------|:----|
+|[insight](problems.md#insight)                   |0.14.0  |__+1__ |        |     |
+|[statsExpressions](problems.md#statsexpressions) |1.0.1   |__+1__ |        |     |
 
