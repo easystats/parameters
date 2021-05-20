@@ -35,5 +35,5 @@ plot(check_clusterstructure(iris[, 1:4]))
 }
 }
 \seealso{
-\code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_factorstructure}}.
+\code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_factorstructure}}.
 }

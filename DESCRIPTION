@@ -129,7 +129,7 @@ Suggests:
     nFactors,
     nlme,
     panelr,
-    performance (>= 0.7.1),
+    performance (>= 0.7.2),
     plm,
     PMCMRplus,
     pbkrtest,

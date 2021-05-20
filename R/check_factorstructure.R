@@ -1,16 +1,16 @@
 #' Check suitability of data for Factor Analysis (FA)
 #'
 #' This checks whether the data is appropriate for Factor Analysis (FA) by
-#' running the \link[=check_sphericity]{Bartlett's Test of Sphericity} and the
+#' running the \link[=check_sphericity_bartlett]{Bartlett's Test of Sphericity} and the
 #' \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
 #' (MSA)}.
 #'
-#' @inheritParams check_sphericity
+#' @inheritParams check_sphericity_bartlett
 #' @examples
 #' library(parameters)
 #' check_factorstructure(mtcars)
 #' @return A list of lists of indices related to sphericity and KMO.
-#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_clusterstructure}}.
+#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_clusterstructure}}.
 #' @export
 check_factorstructure <- function(x, ...) {
 
@@ -18,7 +18,7 @@ check_factorstructure <- function(x, ...) {
   # TODO: This could be improved using the correlation package to use different correlation methods
 
   kmo <- check_kmo(x, ...)
-  sphericity <- check_sphericity(x, ...)
+  sphericity <- check_sphericity_bartlett(x, ...)
 
   text <- paste0("  - KMO: ", attributes(kmo)$text, "\n  - Sphericity: ", attributes(sphericity)$text)
 
@@ -59,7 +59,7 @@ check_factorstructure <- function(x, ...) {
 #' accepting a value > 0.5. Values between 0.5 and 0.7 are mediocre, and values
 #' between 0.7 and 0.8 are good.
 #'
-#' @inheritParams check_sphericity
+#' @inheritParams check_sphericity_bartlett
 #'
 #' @examples
 #' library(parameters)
@@ -130,7 +130,7 @@ check_kmo <- function(x, ...) {
 #'
 #' @examples
 #' library(parameters)
-#' check_sphericity(mtcars)
+#' check_sphericity_bartlett(mtcars)
 #' @details This function is strongly inspired by the \code{cortest.bartlett}
 #'   function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
 #'   author.
@@ -145,7 +145,7 @@ check_kmo <- function(x, ...) {
 #'   approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #' }
 #' @export
-check_sphericity <- function(x, ...) {
+check_sphericity_bartlett <- function(x, ...) {
 
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
@@ -175,3 +175,4 @@ check_sphericity <- function(x, ...) {
 
   out
 }
+

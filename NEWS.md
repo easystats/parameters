@@ -2,6 +2,8 @@
 
 ## Breaking changes
 
+* `check_sphericity()` has been renamed `check_sphericity_bartlett()`.
+
 * Removed deprecated arguments.
 
 * `dispersion` in `model_parameters()` for Bayesian models now defaults
