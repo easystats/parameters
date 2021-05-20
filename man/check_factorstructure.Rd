@@ -25,5 +25,5 @@ library(parameters)
 check_factorstructure(mtcars)
 }
 \seealso{
-\code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_clusterstructure}}.
+\code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_clusterstructure}}.
 }
