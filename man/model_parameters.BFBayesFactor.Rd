@@ -6,8 +6,8 @@
 \usage{
 \method{model_parameters}{BFBayesFactor}(
   model,
-  centrality = "mean",
-  dispersion = TRUE,
+  centrality = "median",
+  dispersion = FALSE,
   ci = 0.89,
   ci_method = "hdi",
   test = c("pd", "rope"),

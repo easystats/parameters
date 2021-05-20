@@ -2,8 +2,8 @@
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.brmsfit <- function(model,
-                                     centrality = "mean",
-                                     dispersion = TRUE,
+                                     centrality = "median",
+                                     dispersion = FALSE,
                                      ci = .89,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
@@ -96,8 +96,8 @@ model_parameters.brmsfit <- function(model,
 # brms meta analysis -------
 
 .model_parameters_brms_meta <- function(model,
-                                        centrality = "mean",
-                                        dispersion = TRUE,
+                                        centrality = "median",
+                                        dispersion = FALSE,
                                         ci = .89,
                                         ci_method = "hdi",
                                         test = c("pd", "rope"),

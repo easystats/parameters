@@ -39,7 +39,7 @@ if (require("testthat") &&
 
   test_that("model_parameters", {
     expect_equal(
-      model_parameters(m1)$Mean,
+      model_parameters(m1, centrality = "mean")$Mean,
       c(1.0132, 0.04232),
       tolerance = 0.01
     )

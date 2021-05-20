@@ -2,17 +2,9 @@
 
 ## Breaking changes
 
-* `check_sphericity()` has been renamed `check_sphericity_bartlett()`.
+* `check_sphericity()` has been renamed into `check_sphericity_bartlett()`.
 
 * Removed deprecated arguments.
-
-* `dispersion` in `model_parameters()` for Bayesian models now defaults
-  to `TRUE`.  This change was made to be in line with the default `summary()`
-  output from most packages.
-
-* `centrality` in `model_parameters()` for Bayesian models now defaults
-  to `"mean"`. This change was made to be in line with the default `summary()`
-  output from most packages.
 
 * `model_parameters()` for bootstrapped samples used in *emmeans* now treats
   the bootstrap samples as samples from posterior distributions (Bayesian

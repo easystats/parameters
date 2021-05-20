@@ -40,8 +40,8 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.stanreg <- function(model,
-                                     centrality = "mean",
-                                     dispersion = TRUE,
+                                     centrality = "median",
+                                     dispersion = FALSE,
                                      ci = .89,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
@@ -110,7 +110,7 @@ model_parameters.stanreg <- function(model,
 #' @export
 model_parameters.stanmvreg <- function(model,
                                        centrality = "median",
-                                       dispersion = TRUE,
+                                       dispersion = FALSE,
                                        ci = .89,
                                        ci_method = "hdi",
                                        test = "pd",

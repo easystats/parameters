@@ -22,8 +22,8 @@
 #' @export
 model_parameters.befa <- function(model,
                                   sort = FALSE,
-                                  centrality = "mean",
-                                  dispersion = TRUE,
+                                  centrality = "median",
+                                  dispersion = FALSE,
                                   ci = .89,
                                   ci_method = "hdi",
                                   test = NULL,

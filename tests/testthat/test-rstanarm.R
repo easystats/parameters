@@ -28,7 +28,7 @@ if (.runThisTest && !osx &&
     seed = 123
   )
 
-  mp <- model_parameters(model)
+  mp <- model_parameters(model, centrality = "mean")
   s <- summary(model)
 
   test_that("mp", {

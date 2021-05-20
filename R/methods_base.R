@@ -1,8 +1,8 @@
 #' @rdname model_parameters.stanreg
 #' @export
 model_parameters.data.frame <- function(model,
-                                        centrality = "mean",
-                                        dispersion = TRUE,
+                                        centrality = "median",
+                                        dispersion = FALSE,
                                         ci = .89,
                                         ci_method = "hdi",
                                         test = c("pd", "rope"),

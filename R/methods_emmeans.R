@@ -6,8 +6,8 @@
 #' @export
 model_parameters.emmGrid <- function(model,
                                      ci = .95,
-                                     centrality = "mean",
-                                     dispersion = TRUE,
+                                     centrality = "median",
+                                     dispersion = FALSE,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
                                      rope_range = "default",

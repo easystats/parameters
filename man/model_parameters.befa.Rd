@@ -7,8 +7,8 @@
 \method{model_parameters}{befa}(
   model,
   sort = FALSE,
-  centrality = "mean",
-  dispersion = TRUE,
+  centrality = "median",
+  dispersion = FALSE,
   ci = 0.89,
   ci_method = "hdi",
   test = NULL,
