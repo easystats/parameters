@@ -32,8 +32,10 @@
   expression as string, to select specific parameters from the returned data 
   frame.
 
-* `print()` for `model_parameters()` gains a `groups` argument, to group
-  parameters in the output.
+* `print()` for `model_parameters()` and `compare_parameters()` gains a `groups`
+  argument, to group parameters in the output. Furthermore, `groups` can be
+  used directly as argument in `model_parameters()` and `compare_parameters()`
+  and will be passed to the `print()` method.
 
 * `model_parameters()` for ANOVAs now saves the type as attribute and prints
   this information as footer in the output as well.

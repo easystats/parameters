@@ -4,6 +4,7 @@ print.compare_parameters <- function(x,
                                      ci_digits = 2,
                                      p_digits = 3,
                                      style = NULL,
+                                     groups = NULL,
                                      ...) {
   # save original input
   orig_x <- x
@@ -33,7 +34,8 @@ print.compare_parameters <- function(x,
     p_digits = p_digits,
     ci_width = "auto",
     ci_brackets = c("(", ")"),
-    format = "text"
+    format = "text",
+    groups = groups,
   )
 
   cat(insight::export_table(formatted_table, format = "text", footer = NULL, empty_line = "-"))

@@ -16,6 +16,7 @@ compare_parameters(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
+  groups = NULL,
   verbose = TRUE
 )
 
@@ -30,6 +31,7 @@ compare_models(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
+  groups = NULL,
   verbose = TRUE
 )
 }
@@ -94,6 +96,16 @@ templates are possible:
 
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
+
+\item{groups}{Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in \code{groups}, while all non-matching parameters will be added
+to the end.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

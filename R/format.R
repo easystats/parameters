@@ -25,6 +25,11 @@ format.parameters_model <- function(x,
   random_variances <- isTRUE(attributes(x)$ran_pars)
   mean_group_values <- attributes(x)$mean_group_values
 
+  # is information about grouped parameters stored as attribute?
+  if (is.null(groups) && !is.null(attributes(x)$coef_groups)) {
+    groups <- attributes(x)$coef_groups
+  }
+
   if (identical(format, "html")) {
     coef_name <- NULL
     attr(x, "coefficient_name") <- NULL
@@ -145,7 +150,18 @@ format.parameters_brms_meta <- format.parameters_model
 
 #' @inheritParams print.parameters_model
 #' @export
-format.compare_parameters <- function(x, style = NULL, split_components = TRUE, digits = 2, ci_digits = 2, p_digits = 3, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
+format.compare_parameters <- function(x,
+                                      style = NULL,
+                                      split_components = TRUE,
+                                      digits = 2,
+                                      ci_digits = 2,
+                                      p_digits = 3,
+                                      ci_width = NULL,
+                                      ci_brackets = NULL,
+                                      zap_small = FALSE,
+                                      format = NULL,
+                                      groups = NULL,
+                                      ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL
 
@@ -166,6 +182,11 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
   # save model parameters attributes
   parameters_attributes <- attributes(x)$all_attributes
 
+  # is information about grouped parameters stored as attribute?
+  if (is.null(groups) && !is.null(parameters_attributes[[1]]$coef_groups)) {
+    groups <- parameters_attributes[[1]]$coef_groups
+  }
+
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
@@ -179,6 +200,14 @@ format.compare_parameters <- function(x, style = NULL, split_components = TRUE, 
     cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small)
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
+
+  # group parameters
+  if (!is.null(groups)) {
+    out <- .parameter_groups(out, groups)
+  }
+  indent_groups <- attributes(x)$indent_groups
+  indent_rows <- attributes(x)$indent_rows
+
 
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)
