@@ -195,6 +195,7 @@
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   style <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
@@ -209,6 +210,7 @@
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
   style <span class='op'>=</span> <span class='cn'>NULL</span>,
   column_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  groups <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></code></pre></div>
 
@@ -294,6 +296,18 @@ templates are possible:</p><ul>
       <th>column_names</th>
       <td><p>Character vector with strings that should be used as
 column headers. Must be of same length as number of models in <code>...</code>.</p></td>
+    </tr>
+    <tr>
+      <th>groups</th>
+      <td><p>Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in <code>groups</code>, while all non-matching parameters will be added
+to the end.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
