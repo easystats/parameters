@@ -26,6 +26,7 @@
 #'   }
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
+#' @inheritParams print.parameters_model
 #'
 #' @note This function is in an early stage and does not yet cope with more
 #'   complex models, and probably does not yet properly render all model
@@ -63,6 +64,7 @@ compare_parameters <- function(...,
                                p_adjust = NULL,
                                style = NULL,
                                column_names = NULL,
+                               groups = NULL,
                                verbose = TRUE) {
   models <- list(...)
   model_names <- match.call(expand.dots = FALSE)$`...`
