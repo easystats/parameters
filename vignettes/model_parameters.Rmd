@@ -169,11 +169,11 @@ lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
   parameters()
 ```
 
-### Mixed Models, including Random Effects Variances
+### Mixed Models, without Random Effects Variances
 
 ```{r}
 lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
-  parameters(effects = "all")
+  parameters(effects = "fixed")
 ```
 
 ### Mixed Model with Zero-Inflation Model
