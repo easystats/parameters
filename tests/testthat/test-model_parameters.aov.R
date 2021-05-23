@@ -3,6 +3,7 @@
 if (.runThisTest) {
   if (require("insight") && require("testthat") && require("lme4") && require("parameters")) {
     if (requireNamespace("effectsize")) {
+      unloadNamespace("afex")
       unloadNamespace("lmerTest")
       data(iris)
       iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))

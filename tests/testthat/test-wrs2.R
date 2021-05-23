@@ -1,4 +1,6 @@
-if (require("testthat") && require("parameters") && require("WRS2") && getRversion() >= "3.6.0") {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && require("testthat") && require("parameters") && require("WRS2") && getRversion() >= "3.6.0") {
 
   # model_parameters.t1way ---------------------------------------------------
 

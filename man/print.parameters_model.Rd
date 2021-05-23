@@ -2,6 +2,7 @@
 % Please edit documentation in R/print.parameters_model.R
 \name{print.parameters_model}
 \alias{print.parameters_model}
+\alias{summary.parameters_model}
 \title{Print model parameters}
 \usage{
 \method{print}{parameters_model}(
@@ -17,12 +18,14 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
-  group = NULL,
+  groups = NULL,
   ...
 )
+
+\method{summary}{parameters_model}(object, ...)
 }
 \arguments{
-\item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
+\item{x, object}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{pretty_names}{Return "pretty" (i.e. more human readable) parameter
 names.}
@@ -57,7 +60,15 @@ standard deviation.}
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
 
-\item{group}{to do...}
+\item{groups}{Named list, can be used to group parameters in the printed output.
+List elements may either be character vectors that match the name of those
+parameters that belong to one group, or list elements can be row numbers
+of those parameter rows that should belong to one group. The names of the
+list elements will be used as group names, which will be inserted as "header
+row". A possible use case might be to emphasize focal predictors and control
+variables, see 'Examples'. Parameters will be re-ordered according to the
+order used in \code{groups}, while all non-matching parameters will be added
+to the end.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -66,6 +77,10 @@ Invisibly returns the original input object.
 }
 \description{
 A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
+}
+\details{
+\code{summary()} is a convenient shortcut for
+  \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
 }
 \section{Interpretation of Interaction Terms}{
 
@@ -116,6 +131,39 @@ if (require("glmmTMB", quietly = TRUE)) {
 
   print(mp, select = "minimal")
 }
+
+
+# group parameters ------
+
+data(iris)
+model <- lm(
+  Sepal.Width ~ Sepal.Length + Species + Petal.Length,
+  data = iris
+)
+# don't select "Intercept" parameter
+mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
+groups <- list(
+  "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
+  "Controls" = c("Sepal.Length", "Petal.Length")
+)
+print(mp, groups = groups)
+
+# or use row indices
+print(mp, groups = list("Focal Predictors" = c(1, 4),
+                        "Controls" = c(2, 3)))
+
+# only show coefficients, CI and p,
+# put non-matched parameters to the end
+
+data(mtcars)
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$gear <- as.factor(mtcars$gear)
+model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
+
+# don't select "Intercept" parameter
+mp <- model_parameters(model, parameters = "^(?!\\\\(Intercept)")
+print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
+                        "Interactions" = c("gear4:vs", "gear5:vs")))
 }
 }
 \seealso{

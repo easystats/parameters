@@ -7,7 +7,7 @@ if (.runThisTest &&
   data("WageData")
   wages <- panel_data(WageData, id = id, wave = t)
   m1 <- wbm(lwage ~ lag(union) + wks | blk + fem | blk * lag(union), data = wages)
-  m2 <- wbm(lwage ~ lag(union) + wks | blk + fem | blk * (t | id), data = wages)
+  m2 <- suppressWarnings(wbm(lwage ~ lag(union) + wks | blk + fem | blk * (t | id), data = wages))
 
   test_that("ci", {
     expect_equal(

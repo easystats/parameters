@@ -22,8 +22,9 @@ if (.runThisTest && require("testthat") && require("parameters")) {
     )
 
     mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl), verbose = FALSE)
-    expect_true("p" %in% colnames(mp))
-    expect_true("SE" %in% colnames(mp))
+    expect_equal(colnames(mp),
+                 c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
+                   "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component"))
     expect_equal(nrow(mp), 5)
   })
 
@@ -50,8 +51,9 @@ if (.runThisTest && require("testthat") && require("parameters")) {
     )
 
     mp <- suppressWarnings(model_parameters(emmeans::emmeans(b, consec ~ cyl)))
-    expect_true("p" %in% colnames(mp))
-    expect_true("SE" %in% colnames(mp))
+    expect_equal(colnames(mp),
+                 c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
+                   "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component"))
     expect_equal(nrow(mp), 5)
   })
 }

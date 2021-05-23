@@ -3,7 +3,7 @@
 #'
 #' @description A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
 #'
-#' @param x An object returned by \code{\link[=model_parameters]{model_parameters()}}.
+#' @param x,object An object returned by \code{\link[=model_parameters]{model_parameters()}}.
 #' @param split_components Logical, if \code{TRUE} (default), For models with
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If \code{FALSE}, model parameters are printed
@@ -17,11 +17,22 @@
 #' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
 #' @param caption Table caption as string. If \code{NULL}, no table caption is printed.
 #' @param footer_digits Number of decimal places for values in the footer summary.
-#' @param group to do...
+#' @param groups Named list, can be used to group parameters in the printed output.
+#'   List elements may either be character vectors that match the name of those
+#'   parameters that belong to one group, or list elements can be row numbers
+#'   of those parameter rows that should belong to one group. The names of the
+#'   list elements will be used as group names, which will be inserted as "header
+#'   row". A possible use case might be to emphasize focal predictors and control
+#'   variables, see 'Examples'. Parameters will be re-ordered according to the
+#'   order used in \code{groups}, while all non-matching parameters will be added
+#'   to the end.
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
+#'
+#' @details \code{summary()} is a convenient shortcut for
+#'   \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
 #'
 #' @return Invisibly returns the original input object.
 #'
@@ -48,6 +59,40 @@
 #'
 #'   print(mp, select = "minimal")
 #' }
+#'
+#'
+#' # group parameters ------
+#'
+#' data(iris)
+#' model <- lm(
+#'   Sepal.Width ~ Sepal.Length + Species + Petal.Length,
+#'   data = iris
+#' )
+#' # don't select "Intercept" parameter
+#' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
+#' groups <- list(
+#'   "Focal Predictors" = c("Speciesversicolor", "Speciesvirginica"),
+#'   "Controls" = c("Sepal.Length", "Petal.Length")
+#' )
+#' print(mp, groups = groups)
+#'
+#' # or use row indices
+#' print(mp, groups = list("Focal Predictors" = c(1, 4),
+#'                         "Controls" = c(2, 3)))
+#'
+#' # only show coefficients, CI and p,
+#' # put non-matched parameters to the end
+#'
+#' data(mtcars)
+#' mtcars$cyl <- as.factor(mtcars$cyl)
+#' mtcars$gear <- as.factor(mtcars$gear)
+#' model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
+#'
+#' # don't select "Intercept" parameter
+#' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
+
+#' print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
+#'                         "Interactions" = c("gear4:vs", "gear5:vs")))
 #' }
 #' @export
 print.parameters_model <- function(x,
@@ -62,7 +107,7 @@ print.parameters_model <- function(x,
                                    show_sigma = FALSE,
                                    show_formula = FALSE,
                                    zap_small = FALSE,
-                                   group = NULL,
+                                   groups = NULL,
                                    ...) {
   # save original input
   orig_x <- x
@@ -99,7 +144,7 @@ print.parameters_model <- function(x,
     ci_width = "auto",
     ci_brackets = TRUE,
     format = "text",
-    group = group,
+    groups = groups,
     ...
   )
 
@@ -129,6 +174,12 @@ print.parameters_model <- function(x,
   }
 
   invisible(orig_x)
+}
+
+#' @rdname print.parameters_model
+#' @export
+summary.parameters_model <- function(object, ...) {
+  print(x = object, select = "minimal", show_sigma = TRUE, show_formula = TRUE, ...)
 }
 
 #' @export
@@ -314,7 +365,10 @@ print.parameters_stan <- function(x,
   invisible(orig_x)
 }
 
-
+#' @export
+summary.parameters_stan <- function(object, ...) {
+  print(x = object, select = "minimal", ...)
+}
 
 
 

@@ -16,7 +16,7 @@ A list of lists of indices related to sphericity and KMO.
 }
 \description{
 This checks whether the data is appropriate for Factor Analysis (FA) by
-running the \link[=check_sphericity]{Bartlett's Test of Sphericity} and the
+running the \link[=check_sphericity_bartlett]{Bartlett's Test of Sphericity} and the
 \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
 (MSA)}.
 }
@@ -25,5 +25,5 @@ library(parameters)
 check_factorstructure(mtcars)
 }
 \seealso{
-\code{\link{check_kmo}}, \code{\link{check_sphericity}} and \code{\link{check_clusterstructure}}.
+\code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_clusterstructure}}.
 }

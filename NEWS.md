@@ -1,8 +1,14 @@
-# parameters 0.13.1
+# parameters 0.14.0
 
 ## Breaking changes
 
+* `check_sphericity()` has been renamed into `check_sphericity_bartlett()`.
+
 * Removed deprecated arguments.
+
+* `model_parameters()` for bootstrapped samples used in *emmeans* now treats
+  the bootstrap samples as samples from posterior distributions (Bayesian
+  models).
 
 ## New supported model classes
 
@@ -13,15 +19,37 @@
 
 * Performance improvements for models from package *survey*.
 
+## New functions
+
+* Added a `summary()` method for `model_parameters()`, which is a convenient
+  shortcut for `print(..., select = "minimal")`.
+
 ## Changes to functions
+
+### `model_parameters()`
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
   expression as string, to select specific parameters from the returned data 
   frame.
 
+* `print()` for `model_parameters()` and `compare_parameters()` gains a `groups`
+  argument, to group parameters in the output. Furthermore, `groups` can be
+  used directly as argument in `model_parameters()` and `compare_parameters()`
+  and will be passed to the `print()` method.
+
+* `model_parameters()` for ANOVAs now saves the type as attribute and prints
+  this information as footer in the output as well.
+
+* `model_parameters()` for *htest*-objects now saves the alternative hypothesis
+  as attribute and prints this information as footer in the output as well.
+
+### other
+
 * `ci()` for `svyglm` gains a `method` argument.
 
 ## Bug fixes
+
+* Fixed issue in `model_parameters()` for *emmGrid* objects with Bayesian models.
 
 * Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
   and only worked when used in the call to `model_parameters()` directly.

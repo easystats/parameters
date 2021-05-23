@@ -6,6 +6,12 @@
 #' @export
 model_parameters.emmGrid <- function(model,
                                      ci = .95,
+                                     centrality = "median",
+                                     dispersion = FALSE,
+                                     ci_method = "hdi",
+                                     test = c("pd", "rope"),
+                                     rope_range = "default",
+                                     rope_ci = 1.0,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      parameters = NULL,
@@ -25,23 +31,48 @@ model_parameters.emmGrid <- function(model,
     p_adjust <- emm_padjust
   }
 
-
   s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
-  # get statistic, se and p
-  statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
-  SE <- standard_error(model)
-  p <- p_value(model, ci = ci, adjust = "none")
+  # we assume frequentist here...
+  if (!.is_bayesian_emmeans(model)) {
 
-  params$Statistic <- statistic$Statistic
-  params$SE <- SE$SE
-  params$p <- p$p
+    # get statistic, se and p
+    statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
+    SE <- standard_error(model)
+    p <- p_value(model, ci = ci, adjust = "none")
 
-  # ==== adjust p-values?
+    params$Statistic <- statistic$Statistic
+    params$SE <- SE$SE
+    params$p <- p$p
 
-  if (!is.null(p_adjust)) {
-    params <- .p_adjust(params, p_adjust, model, verbose)
+    # ==== adjust p-values?
+
+    if (!is.null(p_adjust)) {
+      params <- .p_adjust(params, p_adjust, model, verbose)
+    }
+
+  } else {
+
+    # Bayesian models go here...
+    params <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = NULL,
+      diagnostic = NULL,
+      priors = NULL,
+      verbose = verbose,
+      ...
+    )
+
+    statistic <- NULL
+
   }
 
 
@@ -79,7 +110,9 @@ model_parameters.emmGrid <- function(model,
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
   parameter_names <- colnames(params)[1:(estimate_pos - 1)]
-  order <- c(parameter_names, "Estimate", "SE", "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p")
+  order <- c(parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
+             "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
+             "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage")
   params <- params[order[order %in% names(params)]]
 
   # rename
@@ -119,7 +152,7 @@ model_parameters.emm_list <- function(model,
       p_adjust = p_adjust,
       verbose = verbose
     )
-    estimate_pos <- which(colnames(pars) == "Coefficient")
+    estimate_pos <- which(colnames(pars) %in% c("Coefficient", "Median", "Mean"))[1]
     pars[1:(estimate_pos - 1)] <- NULL
     cbind(
       Parameter = .pretty_emmeans_Parameter_names(model[[i]]),
@@ -155,7 +188,7 @@ standard_error.emmGrid <- function(model, ...) {
   s <- summary(model)
   estimate_pos <- which(colnames(s) == model@misc$estName)
 
-  if (length(estimate_pos)) {
+  if (length(estimate_pos) && !is.null(s$SE)) {
     out <- .data_frame(
       Parameter = .pretty_emmeans_Parameter_names(model),
       SE = unname(s$SE)
@@ -381,4 +414,10 @@ format_parameters.emm_list <- function(model, ...) {
     rep(names(s)[[i]], nrow(s[[i]]))
   })
   Component <- unlist(Component)
+}
+
+.is_bayesian_emmeans <- function(model) {
+  is_frq <- isTRUE(all.equal(dim(model@post.beta), c(1, 1))) &&
+            isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
+  isFALSE(is_frq)
 }

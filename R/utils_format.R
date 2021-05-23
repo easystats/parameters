@@ -1,7 +1,7 @@
 # helper ------------------------
 
 
-.parameter_groups <- function(x, group) {
+.parameter_groups <- function(x, groups) {
   # only apply to conditional component for now
   if ("Component" %in% colnames(x) && sum(x$Component == "conditional") == 0) {
     return(x)
@@ -16,26 +16,67 @@
   x <- x[row_index, ]
 
   att <- attributes(x)
+  indent_rows <- NULL
+  indent_parameters <- NULL
 
-  # if character, find parameter names and replace by rowindex
-  if (anyNA(suppressWarnings(as.numeric(group)))) {
-    group_names <- group
-    group <- match(names(group), x$Parameter)
-    names(group) <- group_names
+  if (is.list(groups)) {
+
+    # find parameter names and replace by rowindex
+    group_rows <- lapply(groups, function(i) {
+      if (is.character(i)) {
+        i <- match(i, x$Parameter)
+      }
+      i
+    })
+
+    # sort parameters according to grouping
+    selected_rows <- unlist(group_rows)
+    indent_parameters <- x$Parameter[selected_rows]
+    x <- rbind(x[selected_rows, ], x[-selected_rows, ])
+
+    # set back correct indices
+    groups <- 1
+    for (i in 2:length(group_rows)) {
+      groups <- c(groups, groups[i - 1] + length(group_rows[[i - 1]]))
+    }
+    names(groups) <- names(group_rows)
+
+  } else {
+
+    # find parameter names and replace by rowindex
+    group_names <- names(groups)
+    groups <- match(groups, x$Parameter)
+    names(groups) <- group_names
+
+    # order groups
+    groups <- groups[order(groups)]
   }
+
 
   empty_row <- x[1, ]
   for (i in 1:ncol(empty_row)) {
     empty_row[[i]] <- NA
   }
 
-  for (i in length(group):1) {
-    x[seq(group[i] + 1, nrow(x) + 1), ] <- x[seq(group[i], nrow(x)), ]
-    x[group[i], ] <- empty_row
-    x$Parameter[group[i]] <- paste0("# ", names(group[i]))
+  for (i in length(groups):1) {
+    x[seq(groups[i] + 1, nrow(x) + 1), ] <- x[seq(groups[i], nrow(x)), ]
+    x[groups[i], ] <- empty_row
+    x$Parameter[groups[i]] <- paste0("# ", names(groups[i]))
+  }
+
+  # find row indices of indented parameters
+  if (!is.null(indent_parameters)) {
+    indent_rows <- match(indent_parameters, x$Parameter)
+  }
+
+  # add other rows back
+  if (nrow(x_other) > 0) {
+    x <- rbind(x, x_other)
   }
 
   attributes(x) <- utils::modifyList(att, attributes(x))
+  attr(x, "indent_rows") <- indent_rows
+  attr(x, "indent_groups") <- "# "
   x
 }
 

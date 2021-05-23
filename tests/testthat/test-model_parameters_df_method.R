@@ -56,5 +56,6 @@ if (require("testthat") &&
     expect_s3_class(model_parameters(model, df_method = "kenward"), "parameters_model")
   })
 
+  unloadNamespace("afex")
   unloadNamespace("lmerTest")
 }

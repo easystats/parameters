@@ -20,7 +20,7 @@ if (require("testthat")) {
     }
   )
 
-  if (!osx || (osx && getRversion() >= "4.0.0")) {
+  if (!osx) {
     test_check("parameters")
   }
 }

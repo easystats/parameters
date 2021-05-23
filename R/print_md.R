@@ -18,6 +18,7 @@ print_md.parameters_model <- function(x,
                                       show_sigma = FALSE,
                                       show_formula = FALSE,
                                       zap_small = FALSE,
+                                      groups = NULL,
                                       verbose = TRUE,
                                       ...) {
   # check if user supplied digits attributes
@@ -50,6 +51,7 @@ print_md.parameters_model <- function(x,
     ci_width = NULL,
     ci_brackets = ci_brackets,
     format = "markdown",
+    groups = groups,
     ...
   )
 
@@ -92,9 +94,6 @@ print_md.compare_parameters <- function(x,
                                         p_digits = 3,
                                         style = NULL,
                                         ...) {
-  # save original input
-  orig_x <- x
-
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
