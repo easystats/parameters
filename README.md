@@ -167,6 +167,13 @@ model_parameters(model, df_method = "kenward")
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal.Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | < .001
+#> 
+#> # Random Effects
+#> 
+#> Parameter               | Coefficient
+#> -------------------------------------
+#> SD (Intercept: Species) |        0.89
+#> SD (Residual)           |        0.56
 ```
 
 ### Structural Models
@@ -242,22 +249,26 @@ describe_distribution(iris)
 
 ### Citation
 
-In order to cite this package, please use the following citation:
+In order to cite this package, please use the following command:
 
--   Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters:
-    Extracting, Computing and Exploring the Parameters of Statistical
-    Models using R. *Journal of Open Source Software*, *5*(53), 2445.
-    doi: 10.21105/joss.02445
+``` r
+citation("parameters")
 
-Corresponding BibTeX entry:
+Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting,
+Computing and Exploring the Parameters of Statistical Models using R."
+_Journal of Open Source Software_, *5*(53), 2445. doi:
+10.21105/joss.02445 (URL: https://doi.org/10.21105/joss.02445).
 
-    @Article{,
-      title = {parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
-      volume = {5},
-      doi = {10.21105/joss.02445},
-      number = {53},
-      journal = {Journal of Open Source Software},
-      author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
-      year = {2020},
-      pages = {2445},
-    }
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
+    volume = {5},
+    doi = {10.21105/joss.02445},
+    number = {53},
+    journal = {Journal of Open Source Software},
+    author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
+    year = {2020},
+    pages = {2445},
+  }
+```
