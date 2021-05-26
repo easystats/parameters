@@ -200,7 +200,7 @@ ci_robust <- function(model,
   )
 
   if (!is.null(params$Component) && nrow(params) == nrow(out)) {
-    out <- Component = params$Component
+    out$Component <- params$Component
   }
   out
 }

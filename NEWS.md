@@ -13,7 +13,7 @@
 ## New supported model classes
 
 * `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the 
-  *survey* package.
+  *survey* package, `pgmm` (*plm*).
 
 ## General
 
