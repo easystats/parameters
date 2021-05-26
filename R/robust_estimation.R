@@ -72,7 +72,12 @@ standard_error_robust <- function(model,
     component = component
   )
 
-  robust[, c("Parameter", "SE")]
+  if ("Component" %in% colnames(robust) && .n_unique(robust$Component) > 1) {
+    cols <- c("Parameter", "SE", "Component")
+  } else {
+    cols <- c("Parameter", "SE")
+  }
+  robust[, cols]
 }
 
 
@@ -103,7 +108,12 @@ p_value_robust <- function(model,
     component = component
   )
 
-  robust[, c("Parameter", "p")]
+  if ("Component" %in% colnames(robust) && .n_unique(robust$Component) > 1) {
+    cols <- c("Parameter", "p", "Component")
+  } else {
+    cols <- c("Parameter", "p")
+  }
+  robust[, cols]
 }
 
 
@@ -118,7 +128,7 @@ ci_robust <- function(model,
                       vcov_args = NULL,
                       component = "conditional",
                       ...) {
-  ci_wald(
+  out <- ci_wald(
     model = model,
     ci = ci,
     component = component,
@@ -127,6 +137,11 @@ ci_robust <- function(model,
     vcov_type = vcov_type,
     vcov_args = vcov_args
   )
+
+  if ("Component" %in% colnames(out) && .n_unique(out$Component) == 1) {
+    out$Component <- NULL
+  }
+  out
 }
 
 
@@ -176,11 +191,16 @@ ci_robust <- function(model,
   }
 
 
-  .data_frame(
+  out <- .data_frame(
     Parameter = params$Parameter,
     Estimate = params$Estimate,
     SE = se,
     Statistic = t.stat,
     p = p.value
   )
+
+  if (!is.null(params$Component) && nrow(params) == nrow(out)) {
+    out <- Component = params$Component
+  }
+  out
 }
