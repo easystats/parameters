@@ -159,23 +159,8 @@ describe_distribution(iris)
 
 ### Citation
 
-In order to cite this package, please use the following citation:
+In order to cite this package, please use the following command:
 
-  * Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). parameters: Extracting,
-Computing and Exploring the Parameters of Statistical Models using R. _Journal of
-Open Source Software_, *5*(53), 2445. doi: 10.21105/joss.02445
-
-Corresponding BibTeX entry:
-
-```
-@Article{,
-  title = {parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},
-  volume = {5},
-  doi = {10.21105/joss.02445},
-  number = {53},
-  journal = {Journal of Open Source Software},
-  author = {Daniel Lüdecke and Mattan S. Ben-Shachar and Indrajeet Patil and Dominique Makowski},
-  year = {2020},
-  pages = {2445},
-}
+```{r, comment=""}
+citation("parameters")
 ```
