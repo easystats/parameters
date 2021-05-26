@@ -191,6 +191,7 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
   vcov_estimation <span class='op'>=</span> <span class='st'>"HC"</span>,
   vcov_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   vcov_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  component <span class='op'>=</span> <span class='st'>"conditional"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -199,6 +200,7 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
   vcov_estimation <span class='op'>=</span> <span class='st'>"HC"</span>,
   vcov_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   vcov_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  component <span class='op'>=</span> <span class='st'>"conditional"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -208,6 +210,7 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
   vcov_estimation <span class='op'>=</span> <span class='st'>"HC"</span>,
   vcov_type <span class='op'>=</span> <span class='cn'>NULL</span>,
   vcov_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  component <span class='op'>=</span> <span class='st'>"conditional"</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
 
@@ -237,6 +240,10 @@ or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>clubSandwich
       <th>vcov_args</th>
       <td><p>List of named vectors, used as additional arguments that
 are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should all parameters or parameters for specific model components be returned?</p></td>
     </tr>
     <tr>
       <th>...</th>
