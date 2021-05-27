@@ -43,6 +43,9 @@
 * `model_parameters()` for *htest*-objects now saves the alternative hypothesis
   as attribute and prints this information as footer in the output as well.
 
+* `model_parameters()` passes arguments `type`, `parallel` and `n_cpus` down
+  to `bootstrap_model()` when `bootstrap = TRUE`.
+
 ### other
 
 * `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further 

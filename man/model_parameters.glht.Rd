@@ -14,8 +14,9 @@
 or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-\code{\link[bayestestR]{describe_posterior}}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 

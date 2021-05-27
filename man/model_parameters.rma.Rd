@@ -59,8 +59,9 @@ for all studies. Else, only parameters for overall-effects are shown.}
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-\code{\link[bayestestR]{describe_posterior}}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

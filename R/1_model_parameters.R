@@ -159,8 +159,9 @@ parameters <- model_parameters
 #'   like in \code{\link{model_parameters.lavaan}}.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-#'   \code{\link[bayestestR]{describe_posterior}}.
+#'   \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+#'   passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+#'   are passed down to \code{\link[bayestestR]{describe_posterior}}.
 #'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
 #'   rename columns into a consistent, standardized naming scheme.
