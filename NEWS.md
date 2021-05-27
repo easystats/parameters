@@ -48,6 +48,9 @@
 * `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further 
   arguments to set the type of bootstrapping and to allow parallel computing.
 
+* `bootstrap_parameters()` gains the `ci_method` type `"bci"`, to compute
+  bias-corrected and accelerated bootstrapped intervals.
+
 * `ci()` for `svyglm` gains a `method` argument.
 
 ## Bug fixes
