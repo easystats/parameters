@@ -45,6 +45,9 @@
 
 ### other
 
+* `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further 
+  arguments to set the type of bootstrapping and to allow parallel computing.
+
 * `ci()` for `svyglm` gains a `method` argument.
 
 ## Bug fixes
