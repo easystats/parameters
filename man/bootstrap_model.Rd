@@ -2,10 +2,13 @@
 % Please edit documentation in R/bootstrap_model.R
 \name{bootstrap_model}
 \alias{bootstrap_model}
+\alias{bootstrap_model.default}
 \alias{bootstrap_model.merMod}
 \title{Model bootstrapping}
 \usage{
-bootstrap_model(model, iterations = 1000, verbose = FALSE, ...)
+bootstrap_model(model, iterations = 1000, ...)
+
+\method{bootstrap_model}{default}(model, iterations = 1000, verbose = FALSE, ...)
 
 \method{bootstrap_model}{merMod}(
   model,
@@ -22,9 +25,9 @@ bootstrap_model(model, iterations = 1000, verbose = FALSE, ...)
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{verbose}{Toggle warnings and messages.}
-
 \item{...}{Arguments passed to or from other methods.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{type}{Character string specifying the type of bootstrap, may be
 \code{"parametric"} or \code{"semiparametric"}; partial matching is allowed.

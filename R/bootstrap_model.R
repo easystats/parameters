@@ -52,7 +52,6 @@
 #' @export
 bootstrap_model <- function(model,
                             iterations = 1000,
-                            verbose = FALSE,
                             ...) {
   UseMethod("bootstrap_model")
 }
@@ -62,6 +61,7 @@ bootstrap_model <- function(model,
 
 
 
+#' @rdname bootstrap_model
 #' @export
 bootstrap_model.default <- function(model,
                                     iterations = 1000,
