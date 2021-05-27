@@ -182,7 +182,18 @@
     <p>Bootstrap a statistical model n times to return a data frame of estimates.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for merMod</span>
+<span class='fu'>bootstrap_model</span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1000</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"parametric"</span>, <span class='st'>"semiparametric"</span><span class='op'>)</span>,
+  parallel <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no"</span>, <span class='st'>"multicore"</span>, <span class='st'>"snow"</span><span class='op'>)</span>,
+  ncpus <span class='op'>=</span> <span class='fl'>1</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,6 +214,20 @@
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character string specifying the type of bootstrap, may be
+<code>"parametric"</code> or <code>"semiparametric"</code>; partial matching is allowed.
+See <code><a href='https://rdrr.io/pkg/lme4/man/bootMer.html'>?lme4::bootMer</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>parallel</th>
+      <td><p>The type of parallel operation to be used (if any).</p></td>
+    </tr>
+    <tr>
+      <th>ncpus</th>
+      <td><p>Number of processes to be used in parallel operation.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -213,15 +238,16 @@
     <p>By default, <code><a href='https://rdrr.io/pkg/boot/man/boot.html'>boot::boot()</a></code> is used to generate bootstraps from
 the model data, which are then used to <code><a href='https://rdrr.io/r/stats/update.html'>update()</a></code> the model, i.e. refit
 the model with the bootstrapped samples. For <code>merMod</code> objects (<span class="pkg">lme4</span>)
-the <code><a href='https://rdrr.io/pkg/lme4/man/bootMer.html'>lme4::bootMer()</a></code> function is used to obtain bootstrapped samples.
-<code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code> summarizes the bootstrapped model estimates.</p>
+or models from <span class="pkg">glmmTMB</span>, the <code><a href='https://rdrr.io/pkg/lme4/man/bootMer.html'>lme4::bootMer()</a></code> function is used to
+obtain bootstrapped samples. <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code> summarizes the
+bootstrapped model estimates.</p>
     <h2 class="hasAnchor" id="using-with-emmeans"><a class="anchor" href="#using-with-emmeans"></a>Using with <code>emmeans</code></h2>
 
     
 
 <p>The output can be passed directly to the various functions from the
 <code>emmeans</code> package, to obtain bootstrapped estimates, contrasts, simple
-slopes, etc, and their confidence intervals. These can then be passed to
+slopes, etc. and their confidence intervals. These can then be passed to
 <code>model_parameter()</code> to obtain standard errors, p-values, etc (see
 example).
 <br /><br />
