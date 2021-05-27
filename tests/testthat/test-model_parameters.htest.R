@@ -5,7 +5,7 @@ if (require("testthat") && require("parameters")) {
       colnames(params),
       c(
         "Parameter1", "Parameter2", "r", "CI", "CI_low", "CI_high",
-        "t", "df_error", "p", "Method"
+        "t", "df_error", "p", "Method", "Alternative"
       )
     )
     expect_equal(params$r, -0.852, tolerance = 0.05)
