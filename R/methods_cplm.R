@@ -225,7 +225,7 @@ model_parameters.cpglmm <- function(model,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
-                                    effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                    effects = "all",
                                     group_level = FALSE,
                                     exponentiate = FALSE,
                                     df_method = NULL,

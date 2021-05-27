@@ -96,10 +96,8 @@ model_parameters.htest <- function(model,
     parameters$Method <- trimws(gsub("with continuity correction", "", parameters$Method))
   }
 
-  ## TODO we first need to fix insight tests (see revdep check)
-
   # save alternative
-  # parameters$Alternative <- model$alternative
+  parameters$Alternative <- model$alternative
 
   parameters <- .add_htest_parameters_attributes(parameters, model, ci, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
