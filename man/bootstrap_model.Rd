@@ -8,12 +8,20 @@
 \usage{
 bootstrap_model(model, iterations = 1000, ...)
 
-\method{bootstrap_model}{default}(model, iterations = 1000, verbose = FALSE, ...)
+\method{bootstrap_model}{default}(
+  model,
+  iterations = 1000,
+  type = "ordinary",
+  parallel = c("no", "multicore", "snow"),
+  n_cpus = 1,
+  verbose = FALSE,
+  ...
+)
 
 \method{bootstrap_model}{merMod}(
   model,
   iterations = 1000,
-  type = c("parametric", "semiparametric"),
+  type = "parametric",
   parallel = c("no", "multicore", "snow"),
   n_cpus = 1,
   verbose = FALSE,
@@ -27,15 +35,17 @@ bootstrap_model(model, iterations = 1000, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{verbose}{Toggle warnings and messages.}
-
-\item{type}{Character string specifying the type of bootstrap, may be
-\code{"parametric"} or \code{"semiparametric"}; partial matching is allowed.
-See \code{?lme4::bootMer} for details.}
+\item{type}{Character string specifying the type of bootstrap. For mixed models
+of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default) or
+\code{"semiparametric"} (see \code{?lme4::bootMer} for details). For all
+other models, see argument \code{sim} in \code{?boot::boot} (defaults to
+\code{"ordinary"}).}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
 
 \item{n_cpus}{Number of processes to be used in parallel operation.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame of bootstrapped estimates.

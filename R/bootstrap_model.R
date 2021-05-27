@@ -4,9 +4,11 @@
 #'
 #' @param model Statistical model.
 #' @param iterations The number of draws to simulate/bootstrap.
-#' @param type Character string specifying the type of bootstrap, may be
-#'   \code{"parametric"} or \code{"semiparametric"}; partial matching is allowed.
-#'   See \code{?lme4::bootMer} for details.
+#' @param type Character string specifying the type of bootstrap. For mixed models
+#'   of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default) or
+#'   \code{"semiparametric"} (see \code{?lme4::bootMer} for details). For all
+#'   other models, see argument \code{sim} in \code{?boot::boot} (defaults to
+#'   \code{"ordinary"}).
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param ... Arguments passed to or from other methods.
@@ -65,11 +67,17 @@ bootstrap_model <- function(model,
 #' @export
 bootstrap_model.default <- function(model,
                                     iterations = 1000,
+                                    type = "ordinary",
+                                    parallel = c("no", "multicore", "snow"),
+                                    n_cpus = 1,
                                     verbose = FALSE,
                                     ...) {
   if (!requireNamespace("boot", quietly = TRUE)) {
     stop("Package 'boot' needed for this function to work. Please install it.")
   }
+
+  type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
+  parallel <- match.arg(parallel)
 
   data <- insight::get_data(model)
 
@@ -102,6 +110,9 @@ bootstrap_model.default <- function(model,
     data = data,
     statistic = boot_function,
     R = iterations,
+    sim = type,
+    parallel = parallel,
+    ncpus = n_cpus,
     model = model
   )
 
@@ -120,7 +131,7 @@ bootstrap_model.default <- function(model,
 #' @export
 bootstrap_model.merMod <- function(model,
                                    iterations = 1000,
-                                   type = c("parametric", "semiparametric"),
+                                   type = "parametric",
                                    parallel = c("no", "multicore", "snow"),
                                    n_cpus = 1,
                                    verbose = FALSE,
@@ -128,6 +139,9 @@ bootstrap_model.merMod <- function(model,
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
+
+  type <- match.arg(type, choices = c("parametric", "semiparametric"))
+  parallel = match.arg(parallel)
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)
