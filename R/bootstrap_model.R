@@ -8,7 +8,7 @@
 #'   \code{"parametric"} or \code{"semiparametric"}; partial matching is allowed.
 #'   See \code{?lme4::bootMer} for details.
 #' @param parallel The type of parallel operation to be used (if any).
-#' @param ncpus Number of processes to be used in parallel operation.
+#' @param n_cpus Number of processes to be used in parallel operation.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
@@ -122,7 +122,7 @@ bootstrap_model.merMod <- function(model,
                                    iterations = 1000,
                                    type = c("parametric", "semiparametric"),
                                    parallel = c("no", "multicore", "snow"),
-                                   ncpus = 1,
+                                   n_cpus = 1,
                                    verbose = FALSE,
                                    ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
@@ -145,14 +145,22 @@ bootstrap_model.merMod <- function(model,
     results <- lme4::bootMer(
       model,
       boot_function,
-      nsim = iterations
+      nsim = iterations,
+      type = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      ...
     )
   } else {
     results <- suppressMessages(lme4::bootMer(
       model,
       boot_function,
       nsim = iterations,
-      verbose = FALSE
+      verbose = FALSE,
+      type = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      ...
     ))
   }
 

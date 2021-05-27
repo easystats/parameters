@@ -15,7 +15,7 @@ bootstrap_model(model, iterations = 1000, ...)
   iterations = 1000,
   type = c("parametric", "semiparametric"),
   parallel = c("no", "multicore", "snow"),
-  ncpus = 1,
+  n_cpus = 1,
   verbose = FALSE,
   ...
 )
@@ -35,7 +35,7 @@ See \code{?lme4::bootMer} for details.}
 
 \item{parallel}{The type of parallel operation to be used (if any).}
 
-\item{ncpus}{Number of processes to be used in parallel operation.}
+\item{n_cpus}{Number of processes to be used in parallel operation.}
 }
 \value{
 A data frame of bootstrapped estimates.
