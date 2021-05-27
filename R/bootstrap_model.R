@@ -4,6 +4,11 @@
 #'
 #' @param model Statistical model.
 #' @param iterations The number of draws to simulate/bootstrap.
+#' @param type Character string specifying the type of bootstrap, may be
+#'   \code{"parametric"} or \code{"semiparametric"}; partial matching is allowed.
+#'   See \code{?lme4::bootMer} for details.
+#' @param parallel The type of parallel operation to be used (if any).
+#' @param ncpus Number of processes to be used in parallel operation.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
@@ -12,13 +17,14 @@
 #' @details By default, \code{boot::boot()} is used to generate bootstraps from
 #' the model data, which are then used to \code{update()} the model, i.e. refit
 #' the model with the bootstrapped samples. For \code{merMod} objects (\pkg{lme4})
-#' the \code{lme4::bootMer()} function is used to obtain bootstrapped samples.
-#' \code{bootstrap_parameters()} summarizes the bootstrapped model estimates.
+#' or models from \pkg{glmmTMB}, the \code{lme4::bootMer()} function is used to
+#' obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
+#' bootstrapped model estimates.
 #'
 #' @section Using with \code{emmeans}:
 #' The output can be passed directly to the various functions from the
 #' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
-#' slopes, etc, and their confidence intervals. These can then be passed to
+#' slopes, etc. and their confidence intervals. These can then be passed to
 #' \code{model_parameter()} to obtain standard errors, p-values, etc (see
 #' example).
 #' \cr\cr
@@ -110,9 +116,15 @@ bootstrap_model.default <- function(model,
 }
 
 
-
+#' @rdname bootstrap_model
 #' @export
-bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
+bootstrap_model.merMod <- function(model,
+                                   iterations = 1000,
+                                   type = c("parametric", "semiparametric"),
+                                   parallel = c("no", "multicore", "snow"),
+                                   ncpus = 1,
+                                   verbose = FALSE,
+                                   ...) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
   }
@@ -154,6 +166,8 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 }
 
 
+#' @export
+bootstrap_model.glmmTMB <- bootstrap_model.merMod
 
 
 
