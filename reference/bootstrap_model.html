@@ -182,7 +182,10 @@
     <p>Bootstrap a statistical model n times to return a data frame of estimates.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>bootstrap_model</span><span class='op'>(</span><span class='va'>model</span>, iterations <span class='op'>=</span> <span class='fl'>1000</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for merMod</span>
 <span class='fu'>bootstrap_model</span><span class='op'>(</span>
@@ -207,12 +210,12 @@
       <td><p>The number of draws to simulate/bootstrap.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>type</th>
