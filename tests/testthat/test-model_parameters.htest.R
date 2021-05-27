@@ -69,7 +69,7 @@ if (require("testthat") && require("parameters")) {
         c(
           "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
           "Difference", "CI", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
-          "d_CI_high", "p", "Method"
+          "d_CI_high", "p", "Method", "Alternative"
         )
       )
     })
@@ -82,7 +82,7 @@ if (require("testthat") && require("parameters")) {
         c(
           "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
           "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
-          "p", "Method"
+          "p", "Method", "Alternative"
         )
       )
     })
