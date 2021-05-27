@@ -35,7 +35,6 @@
 #'   }
 #'   model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = data)
 #'   # parameters_groupspecific(model)
-#'
 #' }
 #' @export
 parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ...) {
@@ -45,17 +44,21 @@ parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ..
   random_terms <- unique(params$Group)
 
   # Find info
-  if("Coefficient" %in% indices) indices <- c(indices, "Median", "Mean", "MAP")  # Accommodate Bayesian
-  if("SE" %in% indices) indices <- c(indices, "SD")  # Accommodate Bayesian
+  if ("Coefficient" %in% indices) {
+    indices <- c(indices, "Median", "Mean", "MAP")  # Accommodate Bayesian
+  }
+  if ("SE" %in% indices) {
+    indices <- c(indices, "SD")  # Accommodate Bayesian
+  }
   params_vars <- names(params)[names(params) %in% unique(indices)]
 
-  # Get original dataframe of random
+  # Get original data frame of random
   random_order <- insight::get_data(model)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)]
   df_random <- random_order
-  for(random_group in random_terms) {
+  for (random_group in random_terms) {
 
     params_subset <- params[params$Group == random_group, ]
-    if(nrow(params_subset) == 0) next
+    if (nrow(params_subset) == 0) next
 
     # Clean subset of random factors
     params_subset[[random_group]] <- params_subset$Level
@@ -74,7 +77,7 @@ parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ..
                                   sep = "_")
 
     # If nested, separate groups
-    if(grepl(":", random_group)) {
+    if (grepl(":", random_group)) {
       groups <- as.data.frame(t(sapply(strsplit(wide[[random_group]], ":"), function(x) as.data.frame(t(x)))))
       names(groups) <- unlist(strsplit(random_group, ":"))
       wide <- cbind(groups, wide)
@@ -82,7 +85,11 @@ parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ..
       random_group <- names(groups)
     }
 
+    # merge and sort
+    df_random[["__sort_id"]] <- 1:nrow(df_random)
     df_random <- merge(df_random, wide, by = random_group, sort = FALSE)
+    df_random <- df_random[order(df_random[["__sort_id"]]), ]
+    df_random[["__sort_id"]] <- NULL
   }
 
 
@@ -93,6 +100,7 @@ parameters_groupspecific <- function(model, indices = c("Coefficient", "SE"), ..
 
   # Clean
   row.names(params) <- NULL
+  row.names(df_random) <- NULL
 
 
   # Assign new class

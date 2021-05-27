@@ -45,6 +45,5 @@ if (require("lme4")) {
   }
   model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = data)
   # parameters_groupspecific(model)
-
 }
 }
