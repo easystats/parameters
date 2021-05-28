@@ -135,7 +135,14 @@
     
     
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function (also accessible via the shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>) can also be used to calculate standardized model parameters via the <code>standardize</code>-argument. Recall that standardizing data/variable (<em>z</em>-scoring), i.e. centering and scaling, involves expressing data in terms of standard deviation (i.e., mean = 0, SD = 1). That is, it the process of subtracting the mean and dividing the quantity by standard deviation. Standardization can help avoid multicollinearity issues when more complex (polynomial, for instance) terms are included in the model.</p>
-<p>There are different methods of standardizing model parameters (see also <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>?effectsize::standardize_parameters</code></a>): - <code>"refit"</code>, - <code>"posthoc"</code> - <code>"smart"</code> - <code>"basic"</code></p>
+<p>There are different methods of standardizing model parameters (see also <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>?effectsize::standardize_parameters</code></a>):</p>
+<ul>
+<li>
+<code>"refit"</code>,</li>
+<li><code>"posthoc"</code></li>
+<li><code>"smart"</code></li>
+<li><code>"basic"</code></li>
+</ul>
 <p>If you are interested in more statistical and technical details, and how standardization methods relate to different (standardized) effect size measures, read the following vignette from <em>effectsize</em> package, from whence this functionality comes: <a href="https://easystats.github.io/effectsize/articles/standardize_parameters.html" class="external-link uri">https://easystats.github.io/effectsize/articles/standardize_parameters.html</a></p>
 <div id="standardization-by-re-fitting-the-model" class="section level2">
 <h2 class="hasAnchor">
