@@ -45,10 +45,11 @@ one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, standardize the data with
-\code{effectsize::standardize(force = TRUE)} before fitting the model.
-Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
-works when \code{standardize="refit"}.}
+categorical predictors is desired, either use \code{standardize="basic"}
+to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
+the data with \code{effectsize::standardize(force=TRUE)} before fitting
+the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
+parameters only works when \code{standardize="refit"}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
