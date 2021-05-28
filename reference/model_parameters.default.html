@@ -292,10 +292,11 @@ case of bootstrapped frequentist models.</p></td>
 <strong>Important:</strong> Categorical predictors (i.e. factors) are <em>never</em>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, standardize the data with
-<code>effectsize::standardize(force = TRUE)</code> before fitting the model.
-Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
-works when <code>standardize="refit"</code>.</p></td>
+categorical predictors is desired, either use <code>standardize="basic"</code>
+to mimic behaviour of SPSS or packages such as <span class="pkg">lm.beta</span>, or standardize
+the data with <code>effectsize::standardize(force=TRUE)</code> before fitting
+the model. Robust estimation (i.e. <code>robust=TRUE</code>) of standardized
+parameters only works when <code>standardize="refit"</code>.</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
