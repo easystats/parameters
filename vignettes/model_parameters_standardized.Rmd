@@ -51,6 +51,7 @@ involves expressing data in terms of standard deviation (i.e., mean = 0, SD =
 standard deviation. Standardization can help avoid multicollinearity issues when more complex (polynomial, for instance) terms are included in the model.
 
 There are different methods of standardizing model parameters (see also [`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html)):
+
 - `"refit"`,
 - `"posthoc"`
 - `"smart"` 
