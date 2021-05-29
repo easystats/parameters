@@ -7,10 +7,11 @@ articles:
   model_parameters: model_parameters.html
   model_parameters_formatting: model_parameters_formatting.html
   model_parameters_mice: model_parameters_mice.html
+  model_parameters_print: model_parameters_print.html
   model_parameters_robust: model_parameters_robust.html
   model_parameters_standardized: model_parameters_standardized.html
   overview_of_vignettes: overview_of_vignettes.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2021-05-28T23:21Z
+last_built: 2021-05-29T09:41Z
 
