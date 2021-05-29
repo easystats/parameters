@@ -72,9 +72,7 @@ bootstrap_model.default <- function(model,
                                     n_cpus = 1,
                                     verbose = FALSE,
                                     ...) {
-  if (!requireNamespace("boot", quietly = TRUE)) {
-    stop("Package 'boot' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("boot")
 
   type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
@@ -136,9 +134,7 @@ bootstrap_model.merMod <- function(model,
                                    n_cpus = 1,
                                    verbose = FALSE,
                                    ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-  }
+  insight::check_if_installed("lme4")
 
   type <- match.arg(type, choices = c("parametric", "semiparametric"))
   parallel = match.arg(parallel)

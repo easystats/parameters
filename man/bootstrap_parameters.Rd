@@ -27,7 +27,7 @@ to be estimated. Default to \code{.95} (95\%).}
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
 (see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
-\code{bci}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).}
+\code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).}
 
 \item{test}{The indices to compute. Character (vector) with one or more of these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each "test", the corresponding \pkg{bayestestR} function is called (e.g. \code{\link[bayestestR]{rope}} or \code{\link[bayestestR]{p_direction}}) and its results included in the summary output.}
 
