@@ -153,8 +153,12 @@ navbar:
         href: articles/model_parameters_mice.html
       - text: Panel Data Analysis
         href: articles/demean.html
-  - text: Formatting Model Parameters
-    href: articles/model_parameters_formatting.html
+  - text: Formatting and Printing
+    menu:
+      - text: Formatting Model Parameters
+      - href: articles/model_parameters_formatting.html
+      - text: Printing Model Parameters
+      - href: articles/model_parameters_print.html
   - text: Dimension Reduction
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA...)'
