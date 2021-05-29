@@ -156,9 +156,9 @@ navbar:
   - text: Formatting and Printing
     menu:
       - text: Formatting Model Parameters
-      - href: articles/model_parameters_formatting.html
+        href: articles/model_parameters_formatting.html
       - text: Printing Model Parameters
-      - href: articles/model_parameters_print.html
+        href: articles/model_parameters_print.html
   - text: Dimension Reduction
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA...)'
