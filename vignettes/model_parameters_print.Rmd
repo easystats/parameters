@@ -1,0 +1,46 @@
+---
+title: "Formatting Model Parameters"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, parameters, table layout]
+vignette: >
+  %\VignetteIndexEntry{Printing Model Parameters}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+```{r , include=FALSE}
+library(knitr)
+options(knitr.kable.NA = "")
+options(digits = 2)
+
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  out.width = "100%",
+  tidy.opts = list(width.cutoff = 100)
+)
+
+if (!requireNamespace("gt", quietly = TRUE) ||
+  !requireNamespace("magrittr", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(gt)
+  library(magrittr)
+  library(insight)
+}
+
+set.seed(333)
+```
+
+The default [print-methods](https://easystats.github.io/parameters/reference/print.parameters_model.html) for `model_parameters()` and `compare_parameters()` allows the user to modify the layout and style of the output.
