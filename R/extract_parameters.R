@@ -19,8 +19,17 @@
 
   # ==== check if standardization is required and package available
 
+  if (isTRUE(standardize)) {
+    if (verbose) {
+      insight::format_message(warning("'standardize' must be on of 'refit', 'posthoc', 'basic', 'smart' or 'pseudo'.", call. = FALSE))
+    }
+    standardize <- NULL
+  }
+
   if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
-    insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
+    if (verbose) {
+      insight::format_message(warning("Package 'effectsize' required to calculate standardized coefficients. Please install it.", call. = FALSE))
+    }
     standardize <- NULL
   }
 
