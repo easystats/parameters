@@ -46,7 +46,13 @@ Authors@R:
            family = "Girard",
            role = c("ctb"),
            email = "me@jmgirard.com",
-           comment = c(ORCID = "0000-0002-7359-3746", Twitter = "@jeffreymgirard"))
+           comment = c(ORCID = "0000-0002-7359-3746", Twitter = "@jeffreymgirard")),
+    person(given = "Christina",
+           family = "Maimone",
+           role = c("rev"),
+           email = "christina.maimone@northwestern.edu"),
+    person(given = "Ohlsen",
+           role = c("rev"))
   )
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>  
 Description: Utilities for processing the parameters of various
