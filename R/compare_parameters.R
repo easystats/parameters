@@ -68,11 +68,22 @@ compare_parameters <- function(...,
                                verbose = TRUE) {
   if (tryCatch(inherits(..., "list"), error = function(e) FALSE)) {
     models <- identity(...)
+    model_names <- names(models)
+    if (length(model_names) == 0) {
+      model_names <- paste("model", seq_along(models), sep = "_")
+      names(models) <- model_names
+    }
   } else {
     models <- list(...)
-  }
-  model_names <- match.call(expand.dots = FALSE)$`...`
+    model_names <- match.call(expand.dots = FALSE)$`...`
+    if (any(sapply(model_names, is.call))) {
+      model_names <- paste("model", seq_along(models), sep = "_")
 
+    } else {
+      model_names <- sapply(model_names, as.character)
+      names(models) <- model_names
+    }
+  }
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
