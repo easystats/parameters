@@ -66,7 +66,7 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                groups = NULL,
                                verbose = TRUE) {
-  if (tryCatch(inherits(..., "list"), error = function(e) FALSE) {
+  if (tryCatch(inherits(..., "list"), error = function(e) FALSE)) {
     models <- identity(...)
   } else {
     models <- list(...)
