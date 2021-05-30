@@ -51,8 +51,10 @@ Authors@R:
            family = "Maimone",
            role = c("rev"),
            email = "christina.maimone@northwestern.edu"),
-    person(given = "Ohlsen",
-           role = c("rev"))
+    person(given = "Niels",
+           family = "Ohlsen",
+           role = c("rev"),
+           comment = c(Twitter = "@Niels_Bremen"))
   )
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>  
 Description: Utilities for processing the parameters of various
