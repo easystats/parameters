@@ -70,14 +70,14 @@ compare_parameters <- function(...,
     models <- identity(...)
     model_names <- names(models)
     if (length(model_names) == 0) {
-      model_names <- paste("model", seq_along(models), sep = "_")
+      model_names <- paste("Model", seq_along(models), sep = " ")
       names(models) <- model_names
     }
   } else {
     models <- list(...)
     model_names <- match.call(expand.dots = FALSE)$`...`
     if (any(sapply(model_names, is.call))) {
-      model_names <- paste("model", seq_along(models), sep = "_")
+      model_names <- paste("Model", seq_along(models), sep = " ")
 
     } else {
       model_names <- sapply(model_names, as.character)
