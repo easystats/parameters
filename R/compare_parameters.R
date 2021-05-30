@@ -66,7 +66,11 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                groups = NULL,
                                verbose = TRUE) {
-  models <- list(...)
+  if (tryCatch(inherits(..., "list"), error = function(e) FALSE) {
+    models <- identity(...)
+  } else {
+    models <- list(...)
+  }
   model_names <- match.call(expand.dots = FALSE)$`...`
 
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
