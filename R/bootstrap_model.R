@@ -4,6 +4,13 @@
 #'
 #' @param model Statistical model.
 #' @param iterations The number of draws to simulate/bootstrap.
+#' @param type Character string specifying the type of bootstrap. For mixed models
+#'   of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default) or
+#'   \code{"semiparametric"} (see \code{?lme4::bootMer} for details). For all
+#'   other models, see argument \code{sim} in \code{?boot::boot} (defaults to
+#'   \code{"ordinary"}).
+#' @param parallel The type of parallel operation to be used (if any).
+#' @param n_cpus Number of processes to be used in parallel operation.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
@@ -12,13 +19,14 @@
 #' @details By default, \code{boot::boot()} is used to generate bootstraps from
 #' the model data, which are then used to \code{update()} the model, i.e. refit
 #' the model with the bootstrapped samples. For \code{merMod} objects (\pkg{lme4})
-#' the \code{lme4::bootMer()} function is used to obtain bootstrapped samples.
-#' \code{bootstrap_parameters()} summarizes the bootstrapped model estimates.
+#' or models from \pkg{glmmTMB}, the \code{lme4::bootMer()} function is used to
+#' obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
+#' bootstrapped model estimates.
 #'
 #' @section Using with \code{emmeans}:
 #' The output can be passed directly to the various functions from the
 #' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
-#' slopes, etc, and their confidence intervals. These can then be passed to
+#' slopes, etc. and their confidence intervals. These can then be passed to
 #' \code{model_parameter()} to obtain standard errors, p-values, etc (see
 #' example).
 #' \cr\cr
@@ -46,7 +54,6 @@
 #' @export
 bootstrap_model <- function(model,
                             iterations = 1000,
-                            verbose = FALSE,
                             ...) {
   UseMethod("bootstrap_model")
 }
@@ -56,14 +63,19 @@ bootstrap_model <- function(model,
 
 
 
+#' @rdname bootstrap_model
 #' @export
 bootstrap_model.default <- function(model,
                                     iterations = 1000,
+                                    type = "ordinary",
+                                    parallel = c("no", "multicore", "snow"),
+                                    n_cpus = 1,
                                     verbose = FALSE,
                                     ...) {
-  if (!requireNamespace("boot", quietly = TRUE)) {
-    stop("Package 'boot' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("boot")
+
+  type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
+  parallel <- match.arg(parallel)
 
   data <- insight::get_data(model)
 
@@ -96,6 +108,9 @@ bootstrap_model.default <- function(model,
     data = data,
     statistic = boot_function,
     R = iterations,
+    sim = type,
+    parallel = parallel,
+    ncpus = n_cpus,
     model = model
   )
 
@@ -110,12 +125,19 @@ bootstrap_model.default <- function(model,
 }
 
 
-
+#' @rdname bootstrap_model
 #' @export
-bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-  }
+bootstrap_model.merMod <- function(model,
+                                   iterations = 1000,
+                                   type = "parametric",
+                                   parallel = c("no", "multicore", "snow"),
+                                   n_cpus = 1,
+                                   verbose = FALSE,
+                                   ...) {
+  insight::check_if_installed("lme4")
+
+  type <- match.arg(type, choices = c("parametric", "semiparametric"))
+  parallel = match.arg(parallel)
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)
@@ -133,14 +155,22 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
     results <- lme4::bootMer(
       model,
       boot_function,
-      nsim = iterations
+      nsim = iterations,
+      type = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      ...
     )
   } else {
     results <- suppressMessages(lme4::bootMer(
       model,
       boot_function,
       nsim = iterations,
-      verbose = FALSE
+      verbose = FALSE,
+      type = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      ...
     ))
   }
 
@@ -154,6 +184,8 @@ bootstrap_model.merMod <- function(model, iterations = 1000, verbose = FALSE, ..
 }
 
 
+#' @export
+bootstrap_model.glmmTMB <- bootstrap_model.merMod
 
 
 

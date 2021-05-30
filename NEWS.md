@@ -13,7 +13,7 @@
 ## New supported model classes
 
 * `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the 
-  *survey* package.
+  *survey* package, `pgmm` (*plm*).
 
 ## General
 
@@ -43,7 +43,16 @@
 * `model_parameters()` for *htest*-objects now saves the alternative hypothesis
   as attribute and prints this information as footer in the output as well.
 
+* `model_parameters()` passes arguments `type`, `parallel` and `n_cpus` down
+  to `bootstrap_model()` when `bootstrap = TRUE`.
+
 ### other
+
+* `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further 
+  arguments to set the type of bootstrapping and to allow parallel computing.
+
+* `bootstrap_parameters()` gains the `ci_method` type `"bci"`, to compute
+  bias-corrected and accelerated bootstrapped intervals.
 
 * `ci()` for `svyglm` gains a `method` argument.
 

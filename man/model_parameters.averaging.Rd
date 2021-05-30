@@ -75,8 +75,9 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-\code{\link[bayestestR]{describe_posterior}}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
@@ -93,10 +94,11 @@ case of bootstrapped frequentist models.}
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, standardize the data with
-\code{effectsize::standardize(force = TRUE)} before fitting the model.
-Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
-works when \code{standardize="refit"}.}
+categorical predictors is desired, either use \code{standardize="basic"}
+to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
+the data with \code{effectsize::standardize(force=TRUE)} before fitting
+the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
+parameters only works when \code{standardize="refit"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

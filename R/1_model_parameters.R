@@ -44,12 +44,74 @@
 #'   method for use inside rmarkdown files,
 #'   \code{\link[=print_md.parameters_model]{print_md()}}.
 #'
-#' @details Standardization is based on
-#'   \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
+#' @details
+#' \subsection{Standardization of model coefficients}{
+#'   Standardization is based on \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
 #'   In case of \code{standardize = "refit"}, the data used to fit the model
 #'   will be standardized and the model is completely refitted. In such cases,
 #'   standard errors and confidence intervals refer to the standardized
-#'   coefficient.
+#'   coefficient. The default, \code{standardize = "refit"}, never standardizes
+#'   categorical predictors (i.e. factors), which may be a different behaviour
+#'   compared to other R packages or other software packages (like SPSS).
+#'   To mimic behaviour of SPSS or packages such as \pkg{lm.beta}, use
+#'   \code{standardize = "basic"}.
+#'   }
+#' \subsection{Methods of standardization}{
+#'   For full details, please refer to \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
+#'   \describe{
+#'     \item{\strong{refit}}{
+#'       This method is based on a complete model re-fit with a standardized version
+#'       of the data. Hence, this method is equal to standardizing the variables
+#'       before fitting the model. It is the "purest" and the most accurate
+#'       (Neter et al., 1989), but it is also the most computationally costly and
+#'       long (especially for heavy models such as Bayesian models).The
+#'       \code{robust} argument (default to \code{FALSE}) enables a robust standardization
+#'       of data, i.e., based on the \code{median} and \code{MAD} instead of the
+#'       \code{mean} and \code{SD}.
+#'     }
+#'     \item{\strong{posthoc}}{
+#'       Post-hoc standardization of the parameters, aiming at emulating the
+#'       results obtained by \code{"refit"} without refitting the model. The coefficients
+#'       are divided by the standard deviation (or MAD if \code{robust=TRUE}) of
+#'       the outcome (which becomes their expression 'unit'). Then, the coefficients
+#'       related to numeric variables are additionally multiplied by the standard
+#'       deviation (or MAD) of the related terms, so that they correspond to
+#'       changes of 1 SD of the predictor. This does not apply to binary
+#'       variables or factors, so the coefficients are still related to changes in
+#'       levels. This method is not accurate and tend to give aberrant results when
+#'       interactions are specified.
+#'     }
+#'     \item{\strong{smart}}{
+#'       (Standardization of Model's parameters with Adjustment, Reconnaissance
+#'       and Transformation - \emph{experimental}): Similar to \code{method="posthoc"}
+#'       in that it does not involve model refitting. The difference is that the
+#'       SD (or MAD) of the response is computed on the relevant section of the
+#'       data. For instance, if a factor with 3 levels A (the intercept), B and C
+#'       is entered as a predictor, the effect corresponding to B vs. A will be
+#'       scaled by the variance of the response at the intercept only. As a results,
+#'       the coefficients for effects of factors are similar to a Glass' delta.
+#'     }
+#'     \item{\strong{basic}}{
+#'       This method is similar to \code{method="posthoc"}, but treats all
+#'       variables as continuous: it also scales the coefficient by the standard
+#'       deviation of model's matrix' parameter of factors levels (transformed to
+#'       integers) or binary predictors. Although being inappropriate for these cases,
+#'       this method is the one implemented by default in other software packages,
+#'       such as \code{lm.beta::lm.beta()}.
+#'     }
+#'     \item{\strong{pseudo} (\emph{for 2-level (G)LMMs only})}{
+#'       In this (post-hoc) method, the response and the predictor are standardized
+#'       based on the level of prediction (levels are detected with \code{\link{check_heterogeneity}}:
+#'       Predictors are standardized based on their SD at level of prediction
+#'       (see also \code{\link{demean}}). The outcome (in linear LMMs) is
+#'       standardized based on a fitted random-intercept-model, where
+#'       \code{sqrt(random-intercept-variance)} is used for level 2 predictors,
+#'       and \code{sqrt(residual-variance)} is used for level 1 predictors
+#'       (Hoffman 2015, page 342). A warning is given when a within-group variable
+#'       is found to have access between-group variance.
+#'     }
+#'   }
+#' }
 #'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
@@ -61,6 +123,12 @@
 #' freedom.
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
+#'
+#' @references
+#' \itemize{
+#'   \item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation and change. Routledge.
+#'   \item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
+#' }
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
@@ -106,10 +174,11 @@ parameters <- model_parameters
 #'   \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 #'   standardized by default, which may be a different behaviour compared to
 #'   other R packages or other software packages (like SPSS). If standardizing
-#'   categorical predictors is desired, standardize the data with
-#'   \code{effectsize::standardize(force = TRUE)} before fitting the model.
-#'   Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
-#'   works when \code{standardize="refit"}.
+#'   categorical predictors is desired, either use \code{standardize="basic"}
+#'   to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
+#'   the data with \code{effectsize::standardize(force=TRUE)} before fitting
+#'   the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
+#'   parameters only works when \code{standardize="refit"}.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log
@@ -159,8 +228,9 @@ parameters <- model_parameters
 #'   like in \code{\link{model_parameters.lavaan}}.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   \code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-#'   \code{\link[bayestestR]{describe_posterior}}.
+#'   \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+#'   passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+#'   are passed down to \code{\link[bayestestR]{describe_posterior}}.
 #'
 #' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
 #'   rename columns into a consistent, standardized naming scheme.

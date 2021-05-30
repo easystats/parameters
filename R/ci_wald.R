@@ -37,7 +37,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   # standard errors to save time...
   if (is.null(se)) {
     stderror <- if (isTRUE(robust)) {
-      standard_error_robust(model, ...)
+      standard_error_robust(model, component = component, ...)
     } else {
       switch(method,
         "wald" = standard_error(model, component = component),

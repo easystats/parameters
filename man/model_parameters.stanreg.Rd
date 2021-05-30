@@ -77,8 +77,8 @@ a data frame with posterior samples.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
-(see \code{\link[bayestestR:si]{si}}).}
+(see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
+\code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
@@ -147,10 +147,11 @@ from non-Gaussian families.}
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, standardize the data with
-\code{effectsize::standardize(force = TRUE)} before fitting the model.
-Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
-works when \code{standardize="refit"}.}
+categorical predictors is desired, either use \code{standardize="basic"}
+to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
+the data with \code{effectsize::standardize(force=TRUE)} before fitting
+the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
+parameters only works when \code{standardize="refit"}.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
 effects) and when \code{effects = "all"} or \code{effects = "random"},

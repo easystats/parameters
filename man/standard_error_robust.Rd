@@ -11,6 +11,7 @@ standard_error_robust(
   vcov_estimation = "HC",
   vcov_type = NULL,
   vcov_args = NULL,
+  component = "conditional",
   ...
 )
 
@@ -19,6 +20,7 @@ p_value_robust(
   vcov_estimation = "HC",
   vcov_type = NULL,
   vcov_args = NULL,
+  component = "conditional",
   ...
 )
 
@@ -28,6 +30,7 @@ ci_robust(
   vcov_estimation = "HC",
   vcov_type = NULL,
   vcov_args = NULL,
+  component = "conditional",
   ...
 )
 }
@@ -47,6 +50,8 @@ or \code{clubSandwich::vcovCR()} for details).}
 
 \item{vcov_args}{List of named vectors, used as additional arguments that
 are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.}
+
+\item{component}{Should all parameters or parameters for specific model components be returned?}
 
 \item{...}{Arguments passed to or from other methods. For \code{standard_error()},
 if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}

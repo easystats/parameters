@@ -99,10 +99,11 @@ case of bootstrapped frequentist models.}
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, standardize the data with
-\code{effectsize::standardize(force = TRUE)} before fitting the model.
-Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
-works when \code{standardize="refit"}.}
+categorical predictors is desired, either use \code{standardize="basic"}
+to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
+the data with \code{effectsize::standardize(force=TRUE)} before fitting
+the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
+parameters only works when \code{standardize="refit"}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
@@ -151,8 +152,9 @@ like in \code{\link{model_parameters.lavaan}}.}
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{ci_method} are passed down to
-\code{\link[bayestestR]{describe_posterior}}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+are passed down to \code{\link[bayestestR]{describe_posterior}}.}
 
 \item{df_method}{Method for computing degrees of freedom for confidence
 intervals (CI). Only applies to models of class \code{glm} or \code{polr}.

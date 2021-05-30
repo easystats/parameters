@@ -483,6 +483,7 @@
     "intercept" = "Intercept",
     "regression" = "Regression",
     "latent" = "Latent",
+    "time_dummies" = "Time Dummies",
     type
   )
 

@@ -17,6 +17,7 @@
 #'   or \code{clubSandwich::vcovCR()} for details).
 #' @param vcov_args List of named vectors, used as additional arguments that
 #'   are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.
+#' @param component Should all parameters or parameters for specific model components be returned?
 #' @param ... Arguments passed to or from other methods. For \code{standard_error()},
 #'   if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
 #'   and \code{vcov_args} can be passed down to \code{standard_error_robust()}.
@@ -51,6 +52,7 @@ standard_error_robust <- function(model,
                                   vcov_estimation = "HC",
                                   vcov_type = NULL,
                                   vcov_args = NULL,
+                                  component = "conditional",
                                   ...) {
   # exceptions
   if (inherits(model, "gee")) {
@@ -66,10 +68,16 @@ standard_error_robust <- function(model,
     model,
     vcov_fun = vcov_estimation,
     vcov_type = vcov_type,
-    vcov_args = vcov_args
+    vcov_args = vcov_args,
+    component = component
   )
 
-  robust[, c("Parameter", "SE")]
+  if ("Component" %in% colnames(robust) && .n_unique(robust$Component) > 1) {
+    cols <- c("Parameter", "SE", "Component")
+  } else {
+    cols <- c("Parameter", "SE")
+  }
+  robust[, cols]
 }
 
 
@@ -80,6 +88,7 @@ p_value_robust <- function(model,
                            vcov_estimation = "HC",
                            vcov_type = NULL,
                            vcov_args = NULL,
+                           component = "conditional",
                            ...) {
   # exceptions
   if (inherits(model, "gee")) {
@@ -95,10 +104,16 @@ p_value_robust <- function(model,
     model,
     vcov_fun = vcov_estimation,
     vcov_type = vcov_type,
-    vcov_args = vcov_args
+    vcov_args = vcov_args,
+    component = component
   )
 
-  robust[, c("Parameter", "p")]
+  if ("Component" %in% colnames(robust) && .n_unique(robust$Component) > 1) {
+    cols <- c("Parameter", "p", "Component")
+  } else {
+    cols <- c("Parameter", "p")
+  }
+  robust[, cols]
 }
 
 
@@ -111,22 +126,28 @@ ci_robust <- function(model,
                       vcov_estimation = "HC",
                       vcov_type = NULL,
                       vcov_args = NULL,
+                      component = "conditional",
                       ...) {
-  ci_wald(
+  out <- ci_wald(
     model = model,
     ci = ci,
-    component = "conditional",
+    component = component,
     robust = TRUE,
     vcov_estimation = vcov_estimation,
     vcov_type = vcov_type,
     vcov_args = vcov_args
   )
+
+  if ("Component" %in% colnames(out) && .n_unique(out$Component) == 1) {
+    out$Component <- NULL
+  }
+  out
 }
 
 
 
 
-.robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL) {
+.robust_covariance_matrix <- function(x, vcov_fun = "vcovHC", vcov_type = NULL, vcov_args = NULL, component = "conditional") {
   # fix default, if necessary
   if (!is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
     vcov_fun <- "vcovCR"
@@ -152,7 +173,12 @@ ci_robust <- function(model,
   }
 
   # get coefficients
-  params <- insight::get_parameters(x)
+  params <- insight::get_parameters(x, component = component)
+
+  if (!is.null(component) && component != "all" && nrow(.vcov) > nrow(params)) {
+    keep <- match(insight::find_parameters(x)[[component]], rownames(.vcov))
+    .vcov <- .vcov[keep, keep, drop = FALSE]
+  }
 
   se <- sqrt(diag(.vcov))
   dendf <- degrees_of_freedom(x, method = "any")
@@ -165,11 +191,16 @@ ci_robust <- function(model,
   }
 
 
-  .data_frame(
+  out <- .data_frame(
     Parameter = params$Parameter,
     Estimate = params$Estimate,
     SE = se,
     Statistic = t.stat,
     p = p.value
   )
+
+  if (!is.null(params$Component) && nrow(params) == nrow(out)) {
+    out$Component <- params$Component
+  }
+  out
 }

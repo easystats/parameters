@@ -11,7 +11,7 @@ model_parameters.glmmTMB <- function(model,
                                      ci = .95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
-                                     effects = "all", ## TODO change to "all" after effectsize > 0.4.4-1 on CRAN
+                                     effects = "all",
                                      component = "all",
                                      group_level = FALSE,
                                      standardize = NULL,

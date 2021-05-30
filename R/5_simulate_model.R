@@ -221,10 +221,7 @@ simulate_model.bracl <- simulate_model.default
 
 
 .simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
-  if (!requireNamespace("MASS", quietly = TRUE)) {
-    stop("Package 'MASS' needed for this function to work. Please install it.", call. = FALSE)
-  }
-
+  insight::check_if_installed("MASS")
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component)

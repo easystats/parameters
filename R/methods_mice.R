@@ -6,9 +6,7 @@ ci.mipo <- ci.gam
 
 #' @export
 ci.mira <- function(x, ci = .95, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("mice")
   ci(mice::pool(x), ci = ci, ...)
 }
 
@@ -17,9 +15,7 @@ ci.mira <- function(x, ci = .95, ...) {
 
 #' @export
 degrees_of_freedom.mira <- function(model, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("mice")
   degrees_of_freedom(mice::pool(model), ...)
 }
 
@@ -43,9 +39,7 @@ p_value.mipo <- function(model, ...) {
 
 #' @export
 p_value.mira <- function(model, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("mice")
   p_value(mice::pool(model), ...)
 }
 
@@ -63,9 +57,7 @@ standard_error.mipo <- function(model, ...) {
 
 #' @export
 standard_error.mira <- function(model, ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("mice")
   standard_error(mice::pool(model), ...)
 }
 
@@ -136,9 +128,7 @@ model_parameters.mira <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-  if (!requireNamespace("mice", quietly = TRUE)) {
-    stop("Package 'mice' needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("mice")
   out <- .model_parameters_generic(
     model = mice::pool(model),
     ci = ci,

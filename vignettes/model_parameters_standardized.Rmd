@@ -30,7 +30,8 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
-  !requireNamespace("lme4", quietly = TRUE)) {
+  !requireNamespace("lme4", quietly = TRUE) ||
+  !requireNamespace("lm.beta", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -50,6 +51,7 @@ involves expressing data in terms of standard deviation (i.e., mean = 0, SD =
 standard deviation. Standardization can help avoid multicollinearity issues when more complex (polynomial, for instance) terms are included in the model.
 
 There are different methods of standardizing model parameters (see also [`?effectsize::standardize_parameters`](https://easystats.github.io/effectsize/reference/standardize_parameters.html)):
+
 - `"refit"`,
 - `"posthoc"`
 - `"smart"` 
@@ -147,6 +149,19 @@ Compare the two outputs above and notice how coefficient estimates, standard
 errors, confidence intervals, and *p*-values change for main effect and
 interaction effect terms containing `Species` variable, the only factor variable
 in our model.
+
+This method is the one implemented by default in other software packages, such as `lm.beta::lm.beta()`:
+
+```{r}
+library(lm.beta)
+data(iris)
+model3 <- lm(Sepal.Length ~ Species * Sepal.Width + Petal.Length, data = iris)
+mp <- model_parameters(model3, standardize = "basic")
+out <- lm.beta(model3)
+
+data.frame(model_parameters = mp$Std_Coefficient, lm.beta = coef(out))
+```
+
 
 ## Smart standardization
 
