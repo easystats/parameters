@@ -37,7 +37,7 @@ format.parameters_model <- function(x,
   }
 
   # remove method for htest
-  if (!is.null(m_class) && any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen", "PMCMR", "osrt", "trendPMCMR", "anova"))) {
+  if (!is.null(m_class) && any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen", "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {
     x$Method <- NULL
     x$Alternative <- NULL
   }
