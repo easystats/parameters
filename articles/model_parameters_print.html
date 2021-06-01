@@ -147,11 +147,41 @@
     
     
 <p>The default <a href="https://easystats.github.io/parameters/reference/print.parameters_model.html" class="external-link">print-methods</a> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> allows the user to modify the layout and style of the output.</p>
+<div id="pretty-parameter-names-formatting" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pretty-parameter-names-formatting" class="anchor" aria-hidden="true"></a>Pretty parameter names formatting</h2>
+<p>By default, the argument <code>pretty_names</code> is <code>TRUE</code>, meaning that parameter names are formatted to make them more “human readable”, i.e. factor levels are separated from the variable names, interactions are denoted by <code>*</code> etc.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(144) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)                         |        4.21 | 0.41 | [ 3.41,  5.02] |  10.34 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]                |       -1.81 | 0.60 | [-2.99, -0.62] |  -3.02 | 0.003 </span>
+<span class="co">#&gt; Species [virginica]                 |       -3.15 | 0.63 | [-4.41, -1.90] |  -4.97 | &lt; .001</span>
+<span class="co">#&gt; Petal.Length                        |        0.54 | 0.28 | [ 0.00,  1.09] |   1.96 | 0.052 </span>
+<span class="co">#&gt; Species [versicolor] * Petal.Length |        0.29 | 0.30 | [-0.30,  0.87] |   0.97 | 0.334 </span>
+<span class="co">#&gt; Species [virginica] * Petal.Length  |        0.45 | 0.29 | [-0.12,  1.03] |   1.56 | 0.120</span>
+
+<span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, pretty_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                      | Coefficient |   SE |         95% CI | t(144) |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)                    |        4.21 | 0.41 | [ 3.41,  5.02] |  10.34 | &lt; .001</span>
+<span class="co">#&gt; Speciesversicolor              |       -1.81 | 0.60 | [-2.99, -0.62] |  -3.02 | 0.003 </span>
+<span class="co">#&gt; Speciesvirginica               |       -3.15 | 0.63 | [-4.41, -1.90] |  -4.97 | &lt; .001</span>
+<span class="co">#&gt; Petal.Length                   |        0.54 | 0.28 | [ 0.00,  1.09] |   1.96 | 0.052 </span>
+<span class="co">#&gt; Speciesversicolor:Petal.Length |        0.29 | 0.30 | [-0.30,  0.87] |   0.97 | 0.334 </span>
+<span class="co">#&gt; Speciesvirginica:Petal.Length  |        0.45 | 0.29 | [-0.12,  1.03] |   1.56 | 0.120</span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
