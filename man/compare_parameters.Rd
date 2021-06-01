@@ -16,7 +16,7 @@ compare_parameters(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
-  groups = NULL,
+  parameters = NULL,
   verbose = TRUE
 )
 
@@ -31,7 +31,7 @@ compare_models(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
-  groups = NULL,
+  parameters = NULL,
   verbose = TRUE
 )
 }
@@ -98,15 +98,19 @@ templates are possible:
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
 
-\item{groups}{Named list, can be used to group parameters in the printed output.
-List elements may either be character vectors that match the name of those
-parameters that belong to one group, or list elements can be row numbers
-of those parameter rows that should belong to one group. The names of the
-list elements will be used as group names, which will be inserted as "header
-row". A possible use case might be to emphasize focal predictors and control
-variables, see 'Examples'. Parameters will be re-ordered according to the
-order used in \code{groups}, while all non-matching parameters will be added
-to the end.}
+\item{parameters}{Character vector of length 1 with a regular expression pattern
+that describes the parameters that should be returned from the data frame, or
+a named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{parameters} is a character vector, every
+parameter in the \emph{"Parameters"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame. Furthermore,
+if \code{parameters} has more than one element, these will be merged into
+a regular expression pattern like this: \code{"(one|two|three)"}. If
+\code{parameters} is a named list of regular expression patterns, the
+names of the list-element should equal the column name where selection
+should be applied. This is useful for model objects where
+\code{model_parameters()} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

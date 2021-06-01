@@ -64,7 +64,7 @@ compare_parameters <- function(...,
                                p_adjust = NULL,
                                style = NULL,
                                column_names = NULL,
-                               groups = NULL,
+                               parameters = NULL,
                                verbose = TRUE) {
   if (tryCatch(inherits(..., "list"), error = function(e) FALSE)) {
     models <- identity(...)
@@ -78,7 +78,6 @@ compare_parameters <- function(...,
     model_names <- match.call(expand.dots = FALSE)$`...`
     if (any(sapply(model_names, is.call))) {
       model_names <- paste("Model", seq_along(models), sep = " ")
-
     } else {
       model_names <- sapply(model_names, as.character)
       names(models) <- model_names
@@ -87,7 +86,7 @@ compare_parameters <- function(...,
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
-    warning(sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")))
+    warning(sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")), call. = FALSE)
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }
@@ -125,6 +124,7 @@ compare_parameters <- function(...,
         exponentiate = exponentiate,
         df_method = df_method,
         p_adjust = p_adjust,
+        parameters = parameters,
         verbose = verbose
       )
     }

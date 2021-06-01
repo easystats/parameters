@@ -46,6 +46,10 @@ set.seed(333)
 
 The default [print-methods](https://easystats.github.io/parameters/reference/print.parameters_model.html) for `model_parameters()` and `compare_parameters()` allows the user to modify the layout and style of the output.
 
+# Summaries for a single model
+
+In the following examples for `model_parameters()`, which returns tabular output for single models, are shown.
+
 ## Pretty parameter names formatting
 
 By default, the argument `pretty_names` is `TRUE`, meaning that parameter names are formatted to make them more "human readable", i.e. factor levels are separated from the variable names, interactions are denoted by `*` etc.
@@ -90,7 +94,26 @@ model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 model_parameters(model, summary = TRUE)
 ```
 
+## Changing number of digits
+
+`digits` changes the digits for coefficients, standard errors and statistics. `ci_digits` and `p_digits` are especially for the confidence intervals and p-values.
+
+```{r}
+model <- lm(Sepal.Length ~ Species, data = iris)
+model_parameters(model, digits = 4)
+```
+
+p-values can be displayed in exact, scientific notation if required.
+
+```{r}
+model_parameters(model, p_digits = "scientific")
+```
+
 ## Group parameters
+
+The `groups` argument can be used to group parameters in the table. `groups` must be a named list, where the names of the list elements equal the header of each group, while the values of the list elements equal the parameter names, or the position of the parameters in the table (data frame).
+
+In the following example, we see the names of the parameters in the `Parameter` column, while the rownumbers indicate their position.
 
 ```{r}
 data(mtcars)
@@ -103,9 +126,54 @@ mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
 
 # inspect data frame
 as.data.frame(mp)
+```
 
+Now we create a group named `"Engine"`, which encompasses the parameters `"cyl6"`, `"cyl8"`, `"vs"` and `"hp"`. The `"Interactions"` group includes `"gear4:vs"` and `"gear5:vs"`. The group `"controls"` has the parameters from rows 2, 3 and 7.
+
+Note that the parameters in the table summary are re-ordered according to the order specified in `groups`.
+
+```{r}
 # group parameters, either by parameter name or position
 print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
                         "Interactions" = c("gear4:vs", "gear5:vs"), 
                         "Controls" = c(2, 3, 7))) # gear 4 and 5, drat
+```
+
+# Summaries for multiple models
+
+`compare_parameters()` (or its alias `compare_models()`) allows to create tables for multiple models, aligned side by side.
+
+By default, estimates and confidence intervals are shown.
+
+```{r}
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+compare_parameters(lm1, lm2, lm3)
+```
+
+## Changing style of column output
+
+By default, estimates and confidence intervals are shown. Using `style` allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.
+
+```{r}
+compare_parameters(lm1, lm2, lm3, style = "se_p")
+```
+
+## Defining column headers
+
+## Group parameters of multiple model tables
+
+```{r}
+lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
+
+# remove intercept
+cp <- compare_parameters(lm1, lm2, parameters = "^(?!\\(Intercept)")
+
+# create groups. Interactions only present in 2nd model
+print(cp, groups = list(Species = c("Species (versicolor)", "Species (virginica)"),
+                        Interactions = c("Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length"),
+                        Controls = "Petal.Length"))
 ```
