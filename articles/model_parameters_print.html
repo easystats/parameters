@@ -147,6 +147,10 @@
     
     
 <p>The default <a href="https://easystats.github.io/parameters/reference/print.parameters_model.html" class="external-link">print-methods</a> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> allows the user to modify the layout and style of the output.</p>
+<div id="summaries-for-a-single-model" class="section level1">
+<h1 class="hasAnchor">
+<a href="#summaries-for-a-single-model" class="anchor" aria-hidden="true"></a>Summaries for a single model</h1>
+<p>In the following examples for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which returns tabular output for single models, are shown.</p>
 <div id="pretty-parameter-names-formatting" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pretty-parameter-names-formatting" class="anchor" aria-hidden="true"></a>Pretty parameter names formatting</h2>
@@ -281,10 +285,33 @@
 <span class="co">#&gt; Residual standard deviation: 0.336 (df = 144)</span>
 <span class="co">#&gt; R2: 0.840; adjusted R2: 0.835</span></code></pre></div>
 </div>
+<div id="changing-number-of-digits" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changing-number-of-digits" class="anchor" aria-hidden="true"></a>Changing number of digits</h2>
+<p><code>digits</code> changes the digits for coefficients, standard errors and statistics. <code>ci_digits</code> and <code>p_digits</code> are especially for the confidence intervals and p-values.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#&gt; Parameter            | Coefficient |     SE |       95% CI |  t(147) |      p</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)          |      5.0060 | 0.0728 | [4.86, 5.15] | 68.7616 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor] |      0.9300 | 0.1030 | [0.73, 1.13] |  9.0328 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]  |      1.5820 | 0.1030 | [1.38, 1.79] | 15.3655 | &lt; .001</span></code></pre></div>
+<p>p-values can be displayed in exact, scientific notation if required.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter            | Coefficient |   SE |       95% CI | t(147) |            p</span>
+<span class="co">#&gt; --------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)          |        5.01 | 0.07 | [4.86, 5.15] |  68.76 | 1.13429e-113</span>
+<span class="co">#&gt; Species [versicolor] |        0.93 | 0.10 | [0.73, 1.13] |   9.03 | 8.77019e-16 </span>
+<span class="co">#&gt; Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] |  15.37 | 2.21482e-32</span></code></pre></div>
+</div>
 <div id="group-parameters" class="section level2">
 <h2 class="hasAnchor">
 <a href="#group-parameters" class="anchor" aria-hidden="true"></a>Group parameters</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>The <code>groups</code> argument can be used to group parameters in the table. <code>groups</code> must be a named list, where the names of the list elements equal the header of each group, while the values of the list elements equal the parameter names, or the position of the parameters in the table (data frame).</p>
+<p>In the following example, we see the names of the parameters in the <code>Parameter</code> column, while the rownumbers indicate their position.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span>
@@ -304,9 +331,11 @@
 <span class="co">#&gt; 6      cyl8       1.975 5.111 0.95  -8.63  12.575  0.39       22 0.7029</span>
 <span class="co">#&gt; 7      drat       2.697 2.033 0.95  -1.52   6.913  1.33       22 0.1983</span>
 <span class="co">#&gt; 8  gear4:vs      -2.897 4.665 0.95 -12.57   6.778 -0.62       22 0.5410</span>
-<span class="co">#&gt; 9  gear5:vs       2.588 4.537 0.95  -6.82  11.998  0.57       22 0.5741</span>
-
-<span class="co"># group parameters, either by parameter name or position</span>
+<span class="co">#&gt; 9  gear5:vs       2.588 4.537 0.95  -6.82  11.998  0.57       22 0.5741</span></code></pre></div>
+<p>Now we create a group named <code>"Engine"</code>, which encompasses the parameters <code>"cyl6"</code>, <code>"cyl8"</code>, <code>"vs"</code> and <code>"hp"</code>. The <code>"Interactions"</code> group includes <code>"gear4:vs"</code> and <code>"gear5:vs"</code>. The group <code>"controls"</code> has the parameters from rows 2, 3 and 7.</p>
+<p>Note that the parameters in the table summary are re-ordered according to the order specified in <code>groups</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># group parameters, either by parameter name or position</span>
 <span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,
                         <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>, 
                         <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># gear 4 and 5, drat</span>
@@ -324,6 +353,77 @@
 <span class="co">#&gt;   gear [4]       |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482</span>
 <span class="co">#&gt;   gear [5]       |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182</span>
 <span class="co">#&gt;   drat           |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198</span></code></pre></div>
+</div>
+</div>
+<div id="summaries-for-multiple-models" class="section level1">
+<h1 class="hasAnchor">
+<a href="#summaries-for-multiple-models" class="anchor" aria-hidden="true"></a>Summaries for multiple models</h1>
+<p><code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> (or its alias <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) allows to create tables for multiple models, aligned side by side.</p>
+<p>By default, estimates and confidence intervals are shown.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="va">lm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                           |               lm1 |                  lm2 |                  lm3</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89) |  4.21 ( 3.41,  5.02)</span>
+<span class="co">#&gt; Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span>
+<span class="co">#&gt; Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span>
+<span class="co">#&gt; Petal.Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09)</span>
+<span class="co">#&gt; Species (versicolor) * Petal.Length |                   |                      |  0.29 (-0.30,  0.87)</span>
+<span class="co">#&gt; Species (virginica) * Petal.Length  |                   |                      |  0.45 (-0.12,  1.03)</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; Observations                        |               150 |                  150 |                  150</span></code></pre></div>
+<div id="changing-style-of-column-output" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changing-style-of-column-output" class="anchor" aria-hidden="true"></a>Changing style of column output</h2>
+<p>By default, estimates and confidence intervals are shown. Using <code>style</code> allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, style <span class="op">=</span> <span class="st">"se_p"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span>
+<span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)                         | 5.01*** (0.07) |  3.68*** (0.11) |  4.21*** (0.41)</span>
+<span class="co">#&gt; Species (versicolor)                | 0.93*** (0.10) | -1.60*** (0.19) |  -1.81** (0.60)</span>
+<span class="co">#&gt; Species (virginica)                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)</span>
+<span class="co">#&gt; Petal.Length                        |                |  0.90*** (0.06) |     0.54 (0.28)</span>
+<span class="co">#&gt; Species (versicolor) * Petal.Length |                |                 |     0.29 (0.30)</span>
+<span class="co">#&gt; Species (virginica) * Petal.Length  |                |                 |     0.45 (0.29)</span>
+<span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; Observations                        |            150 |             150 |             150</span></code></pre></div>
+</div>
+<div id="defining-column-headers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#defining-column-headers" class="anchor" aria-hidden="true"></a>Defining column headers</h2>
+</div>
+<div id="group-parameters-of-multiple-model-tables" class="section level2">
+<h2 class="hasAnchor">
+<a href="#group-parameters-of-multiple-model-tables" class="anchor" aria-hidden="true"></a>Group parameters of multiple model tables</h2>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+
+<span class="co"># remove intercept</span>
+<span class="va">cp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, parameters <span class="op">=</span> <span class="st">"^(?!\\(Intercept)"</span><span class="op">)</span>
+
+<span class="co"># create groups. Interactions only present in 2nd model</span>
+<span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species (versicolor)"</span>, <span class="st">"Species (virginica)"</span><span class="op">)</span>,
+                        Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species (versicolor) * Petal.Length"</span>, <span class="st">"Species (virginica) * Petal.Length"</span><span class="op">)</span>,
+                        Controls <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Parameter                             |                  lm1 |                  lm2</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------------</span>
+<span class="co">#&gt; Species                               |                      |                     </span>
+<span class="co">#&gt;   Species (versicolor)                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)</span>
+<span class="co">#&gt;   Species (virginica)                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)</span>
+<span class="co">#&gt; Interactions                          |                      |                     </span>
+<span class="co">#&gt;   Species (versicolor) * Petal.Length |                      | -0.01 (-0.56,  0.53)</span>
+<span class="co">#&gt;   Species (virginica) * Petal.Length  |                      | -0.15 (-0.69,  0.39)</span>
+<span class="co">#&gt; Controls                              |                      |                     </span>
+<span class="co">#&gt;   Petal.Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------------</span>
+<span class="co">#&gt;   Observations                        |                  150 |                  150</span></code></pre></div>
+</div>
 </div>
   </div>
 
