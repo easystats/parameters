@@ -31,7 +31,8 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("gt", quietly = TRUE) ||
-  !requireNamespace("magrittr", quietly = TRUE)) {
+  !requireNamespace("magrittr", quietly = TRUE) ||
+  !requireNamespace("glmmTMB", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -50,6 +51,7 @@ The default [print-methods](https://easystats.github.io/parameters/reference/pri
 By default, the argument `pretty_names` is `TRUE`, meaning that parameter names are formatted to make them more "human readable", i.e. factor levels are separated from the variable names, interactions are denoted by `*` etc.
 
 ```{r}
+library(parameters)
 data(iris)
 model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 model_parameters(model)
@@ -58,3 +60,52 @@ mp <- model_parameters(model)
 print(mp, pretty_names = FALSE)
 ```
 
+## Splitting model components
+
+Again by default, the argument `split_components` is `TRUE`, which means that models with multiple components like fixed and random effects, count and zero-inflated part etc. are split into separate tables in the output.
+
+```{r}
+library(glmmTMB)
+data("Salamanders")
+model <- glmmTMB(count ~ spp + mined + (1 | site),
+                 ziformula = ~spp + mined,
+                 family = nbinom2(), 
+                 data = Salamanders)
+model_parameters(model)
+```
+
+Redundant columns are removed. The related model component is shown as table header. However, you can also return a single table:
+
+```{r}
+mp <- model_parameters(model)
+print(mp, split_component = FALSE)
+```
+
+## Adding model summaries
+
+A model summary can be added to the table when `summary = TRUE` in the call to `model_parameters()`:
+
+```{r}
+model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+model_parameters(model, summary = TRUE)
+```
+
+## Group parameters
+
+```{r}
+data(mtcars)
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$gear <- as.factor(mtcars$gear)
+model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
+
+# don't select "Intercept" parameter
+mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
+
+# inspect data frame
+as.data.frame(mp)
+
+# group parameters, either by parameter name or position
+print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
+                        "Interactions" = c("gear4:vs", "gear5:vs"), 
+                        "Controls" = c(2, 3, 7))) # gear 4 and 5, drat
+```
