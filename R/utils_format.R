@@ -325,6 +325,11 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
     }
 
+    # rename columns for dispersion part
+    if (grepl("^dispersion", type) && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
+    }
+
     # rename columns for random part
     if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
       colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
@@ -356,6 +361,11 @@
     # remove non-necessary columns
     if (.n_unique(formatted_table$Component) == 1) {
       formatted_table$Component <- NULL
+    }
+
+    # no column with CI-level in output
+    if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+      formatted_table$CI <- NULL
     }
 
     table_caption <- NULL

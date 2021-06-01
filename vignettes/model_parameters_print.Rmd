@@ -44,3 +44,17 @@ set.seed(333)
 ```
 
 The default [print-methods](https://easystats.github.io/parameters/reference/print.parameters_model.html) for `model_parameters()` and `compare_parameters()` allows the user to modify the layout and style of the output.
+
+## Pretty parameter names formatting
+
+By default, the argument `pretty_names` is `TRUE`, meaning that parameter names are formatted to make them more "human readable", i.e. factor levels are separated from the variable names, interactions are denoted by `*` etc.
+
+```{r}
+data(iris)
+model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+model_parameters(model)
+
+mp <- model_parameters(model)
+print(mp, pretty_names = FALSE)
+```
+

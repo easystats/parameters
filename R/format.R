@@ -116,7 +116,17 @@ format.parameters_model <- function(x,
 }
 
 
-.format_columns_single_component <- function(x, pretty_names, digits = 2, ci_digits = 2, p_digits = 3, ci_width = "auto", ci_brackets = TRUE, format = NULL, coef_name = NULL, zap_small = FALSE, ...) {
+.format_columns_single_component <- function(x,
+                                             pretty_names,
+                                             digits = 2,
+                                             ci_digits = 2,
+                                             p_digits = 3,
+                                             ci_width = "auto",
+                                             ci_brackets = TRUE,
+                                             format = NULL,
+                                             coef_name = NULL,
+                                             zap_small = FALSE,
+                                             ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
     brackets <- c("(", ")")
@@ -128,6 +138,11 @@ format.parameters_model <- function(x,
 
   # fix coefficient column name for random effects
   if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  }
+
+  # fix coefficient column name for mixed count and zi pars
+  if (!is.null(x$Component) && sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 && any(colnames(x) %in% .all_coefficient_types())) {
     colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
