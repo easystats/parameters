@@ -48,9 +48,7 @@ check_multimodal <- function(x, ...) {
 
 #' @export
 check_multimodal.data.frame <- function(x, ...) {
-  if (!requireNamespace("mclust", quietly = TRUE)) {
-    stop("Package 'mclust' required for this function to work. Please install it by running `install.packages('mclust')`.")
-  }
+  insight::check_if_installed("mcust")
 
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following functions
   model <- mclust::Mclust(x, verbose = FALSE)
