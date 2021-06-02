@@ -4,6 +4,8 @@
 
 * Minor changes to `print()` for *glmmTMB* with dispersion parameter.
 
+* Added vignette on printing options for model parameters.
+
 ## Changes to functions
 
 * `compare_parameters()` now also accepts a list of model objects.
