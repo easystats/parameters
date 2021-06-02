@@ -77,7 +77,8 @@ bootstrap_model.default <- function(model,
   type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
-  data <- insight::get_data(model)
+  model_data <- data <- insight::get_data(model)
+  model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {
     d <- data[indices, ] # allows boot to select sample
@@ -104,15 +105,34 @@ bootstrap_model.default <- function(model,
     return(params)
   }
 
-  results <- boot::boot(
-    data = data,
-    statistic = boot_function,
-    R = iterations,
-    sim = type,
-    parallel = parallel,
-    ncpus = n_cpus,
-    model = model
-  )
+  if (type == "parametric") {
+    f <- function(x, mle) {
+      out <- model_data
+      resp <- simulate(x, nsim = 1)
+      out[[model_response]] <- resp
+      return(out)
+    }
+    results <- boot::boot(
+      data = data,
+      statistic = boot_function,
+      R = iterations,
+      sim = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      model = model,
+      ran.gen = f
+    )
+  } else {
+    results <- boot::boot(
+      data = data,
+      statistic = boot_function,
+      R = iterations,
+      sim = type,
+      parallel = parallel,
+      ncpus = n_cpus,
+      model = model
+    )
+  }
 
   out <- as.data.frame(results$t)
   out <- out[stats::complete.cases(out), ]
