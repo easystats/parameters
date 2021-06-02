@@ -161,9 +161,20 @@ By default, estimates and confidence intervals are shown. Using `style` allows u
 compare_parameters(lm1, lm2, lm3, style = "se_p")
 ```
 
-## Defining column headers
+## Defining column names
+
+The column names for the models are by default the objects' names. You can define own names using the `column_names` argument.
+
+```{r}
+compare_parameters(
+  lm1, lm2, lm3,
+  column_names = c("First Model", "Second Model", "Third Model")
+)
+```
 
 ## Group parameters of multiple model tables
+
+Grouping parameters works for `compare_models()` in the same way as shown above for `model_parameters()`.
 
 ```{r}
 lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -172,8 +183,19 @@ lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
 # remove intercept
 cp <- compare_parameters(lm1, lm2, parameters = "^(?!\\(Intercept)")
 
+# look at parameters names, to know their names for "groups" argument
+as.data.frame(cp)$Parameter
+
 # create groups. Interactions only present in 2nd model
-print(cp, groups = list(Species = c("Species (versicolor)", "Species (virginica)"),
-                        Interactions = c("Species (versicolor) * Petal.Length", "Species (virginica) * Petal.Length"),
+print(cp, groups = list(Species = c("Species (versicolor)", 
+                                    "Species (virginica)"),
+                        Interactions = c("Species (versicolor) * Petal.Length",
+                                         "Species (virginica) * Petal.Length"),
                         Controls = "Petal.Length"))
 ```
+
+## More advances tables and markdown / HTML formatting
+
+The `print_md()` as well as `print_html()` functions can be used to create markdown (for knitting to PDF or Word) and HTML tables. 
+
+Meanwhile, there are a lot of additional packages that allow users to have even more flexibility regarding table layouts. One package we can recommend is the [*modelsummary* package](https://vincentarelbundock.github.io/modelsummary/).
