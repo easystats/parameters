@@ -157,7 +157,7 @@ bootstrap_model.merMod <- function(model,
   insight::check_if_installed("lme4")
 
   type <- match.arg(type, choices = c("parametric", "semiparametric"))
-  parallel = match.arg(parallel)
+  parallel <- match.arg(parallel)
 
   boot_function <- function(model) {
     params <- insight::get_parameters(model)

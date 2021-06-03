@@ -892,9 +892,10 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     if (!is.null(model$null.value)) {
       if (length(model$null.value) == 1L) {
         alt.char <- switch(model$alternative,
-                           two.sided = "not equal to",
-                           less = "less than",
-                           greater = "greater than")
+          two.sided = "not equal to",
+          less = "less than",
+          greater = "greater than"
+        )
         h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
       } else {
         h1_text <- paste0(h1_text, model$alternative)

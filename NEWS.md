@@ -10,6 +10,10 @@
 
 * `compare_parameters()` now also accepts a list of model objects.
 
+* `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
+  can be helpful for users who may wish to report ANOVA table in wide format
+  (i.e., with numerator and denominator degrees of freedom on the same row).
+
 # parameters 0.14.0
 
 ## Breaking changes
@@ -18,13 +22,12 @@
 
 * Removed deprecated arguments.
 
-* `model_parameters()` for bootstrapped samples used in *emmeans* now treats
-  the bootstrap samples as samples from posterior distributions (Bayesian
-  models).
+* `model_parameters()` for bootstrapped samples used in *emmeans* now treats the
+  bootstrap samples as samples from posterior distributions (Bayesian models).
 
 ## New supported model classes
 
-* `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the 
+* `SemiParBIV` (*GJRM*), `selection` (*sampleSelection*), `htest` from the
   *survey* package, `pgmm` (*plm*).
 
 ## General
@@ -41,13 +44,13 @@
 ### `model_parameters()`
 
 * `model_parameters()` gains a `parameters` argument, which takes a regular
-  expression as string, to select specific parameters from the returned data 
+  expression as string, to select specific parameters from the returned data
   frame.
 
 * `print()` for `model_parameters()` and `compare_parameters()` gains a `groups`
-  argument, to group parameters in the output. Furthermore, `groups` can be
-  used directly as argument in `model_parameters()` and `compare_parameters()`
-  and will be passed to the `print()` method.
+  argument, to group parameters in the output. Furthermore, `groups` can be used
+  directly as argument in `model_parameters()` and `compare_parameters()` and
+  will be passed to the `print()` method.
 
 * `model_parameters()` for ANOVAs now saves the type as attribute and prints
   this information as footer in the output as well.
@@ -55,12 +58,12 @@
 * `model_parameters()` for *htest*-objects now saves the alternative hypothesis
   as attribute and prints this information as footer in the output as well.
 
-* `model_parameters()` passes arguments `type`, `parallel` and `n_cpus` down
-  to `bootstrap_model()` when `bootstrap = TRUE`.
+* `model_parameters()` passes arguments `type`, `parallel` and `n_cpus` down to
+  `bootstrap_model()` when `bootstrap = TRUE`.
 
 ### other
 
-* `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further 
+* `bootstrap_models()` for *merMod* and *glmmTMB* objects gains further
   arguments to set the type of bootstrapping and to allow parallel computing.
 
 * `bootstrap_parameters()` gains the `ci_method` type `"bci"`, to compute
@@ -70,10 +73,11 @@
 
 ## Bug fixes
 
-* Fixed issue in `model_parameters()` for *emmGrid* objects with Bayesian models.
+* Fixed issue in `model_parameters()` for *emmGrid* objects with Bayesian
+  models.
 
-* Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()`
-  and only worked when used in the call to `model_parameters()` directly.
+* Arguments `digits`, `ci_digits` and `p_digits` were ignored for `print()` and
+  only worked when used in the call to `model_parameters()` directly.
 
 # parameters 0.13.0
 
@@ -115,7 +119,7 @@
 * To be internally consistent, the degrees of freedom column for `lqm(m)` and
   `cgam(m)` objects (with *t*-statistic) is called `df_error`.
 
-* `model_parameters()` gains a `summary` argument to add summary information 
+* `model_parameters()` gains a `summary` argument to add summary information
   about the model to printed outputs.
 
 * Minor improvements for models from *quantreg*.

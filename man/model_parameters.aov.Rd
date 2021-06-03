@@ -15,6 +15,7 @@
   test = NULL,
   power = FALSE,
   parameters = NULL,
+  table_wide = FALSE,
   verbose = TRUE,
   ...
 )
@@ -71,6 +72,10 @@ names of the list-element should equal the column name where selection
 should be applied. This is useful for model objects where
 \code{model_parameters()} returns multiple columns with parameter components,
 like in \code{\link{model_parameters.lavaan}}.}
+
+\item{table_wide}{Logical that decides whether the ANOVA table should be in
+wide format, i.e. should the numerator and denominator degrees of freedom
+be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

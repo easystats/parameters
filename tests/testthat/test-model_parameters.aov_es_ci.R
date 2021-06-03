@@ -1,4 +1,4 @@
-if (require("insight") && require("effectsize") && require("testthat") && require("lme4") && require("parameters") && packageVersion("effectsize") >= "0.4.3") {
+if (require("insight") && require("effectsize") && require("testthat") && require("lme4") && require("parameters")) {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)

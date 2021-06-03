@@ -45,7 +45,6 @@
 #' m1 <- lm(mpg ~ wt, data = mtcars)
 #' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' compare_parameters(m1, m2)
-#'
 #' \dontrun{
 #' # exponentiate coefficients, but not for lm
 #' compare_parameters(m1, m2, exponentiate = "nongaussian")

@@ -51,7 +51,6 @@ model_parameters.emmGrid <- function(model,
     if (!is.null(p_adjust)) {
       params <- .p_adjust(params, p_adjust, model, verbose)
     }
-
   } else {
 
     # Bayesian models go here...
@@ -72,7 +71,6 @@ model_parameters.emmGrid <- function(model,
     )
 
     statistic <- NULL
-
   }
 
 
@@ -110,9 +108,11 @@ model_parameters.emmGrid <- function(model,
   # Reorder
   estimate_pos <- which(colnames(s) == model@misc$estName)
   parameter_names <- colnames(params)[1:(estimate_pos - 1)]
-  order <- c(parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
-             "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
-             "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage")
+  order <- c(
+    parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
+    "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
+    "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+  )
   params <- params[order[order %in% names(params)]]
 
   # rename
@@ -418,6 +418,6 @@ format_parameters.emm_list <- function(model, ...) {
 
 .is_bayesian_emmeans <- function(model) {
   is_frq <- isTRUE(all.equal(dim(model@post.beta), c(1, 1))) &&
-            isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
+    isTRUE(is.na(model@post.beta)) && is.null(model@misc$is_boot)
   isFALSE(is_frq)
 }
