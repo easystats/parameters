@@ -1,5 +1,5 @@
 ---
-title: "Formatting Model Parameters"
+title: "Printing Model Parameters"
 output: 
   rmarkdown::html_vignette:
     toc: true
