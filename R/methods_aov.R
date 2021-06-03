@@ -1,8 +1,6 @@
 # classes: .aov, .anova, aovlist, anova.rms, maov, afex_aov
 
-
-#################### .aov ------
-
+# .aov ------
 
 #' Parameters from ANOVAs
 #'
@@ -35,6 +33,9 @@
 #'   \code{test = "univariate"}, returns the summary of the univariate test.
 #' @param power Logical, if \code{TRUE}, adds a column with power for each
 #'   parameter.
+#' @param table_wide Logical that decides whether the ANOVA table should be in
+#'   wide format, i.e. should the numerator and denominator degrees of freedom
+#'   be in the same row. Default: \code{FALSE}.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -110,6 +111,7 @@ model_parameters.aov <- function(model,
                                  test = NULL,
                                  power = FALSE,
                                  parameters = NULL,
+                                 table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
@@ -160,6 +162,11 @@ model_parameters.aov <- function(model,
     params <- .filter_parameters(params, parameters, verbose = verbose)
   }
 
+  # wide or long?
+  if (table_wide) {
+    params <- .anova_table_wide(params)
+  }
+
   # add attributes
   params <- .add_anova_attributes(params, model, ci, test = test, ...)
 
@@ -207,56 +214,33 @@ p_value.aov <- function(model, ...) {
 
 
 
-
-#################### .anova ------
-
+# .anova ------
 
 #' @export
 standard_error.anova <- standard_error.aov
 
-
 #' @export
 p_value.anova <- p_value.aov
-
 
 #' @export
 model_parameters.anova <- model_parameters.aov
 
 
 
-
-
-#################### .aov.list  ------
-
+# .aov.list  ------
 
 #' @export
 standard_error.aovlist <- standard_error.aov
 
-
 #' @export
 p_value.aovlist <- p_value.aov
-
 
 #' @export
 model_parameters.aovlist <- model_parameters.aov
 
 
 
-
-#################### others  ------
-
-
-#' @export
-model_parameters.anova.rms <- model_parameters.aov
-
-
-#' @export
-model_parameters.Anova.mlm <- model_parameters.aov
-
-
-#' @export
-model_parameters.maov <- model_parameters.aov
-
+# .afex_aov  ------
 
 #' @export
 model_parameters.afex_aov <- function(model,
@@ -309,9 +293,19 @@ model_parameters.afex_aov <- function(model,
 
 
 
+# others  ------
+
+#' @export
+model_parameters.anova.rms <- model_parameters.aov
+
+#' @export
+model_parameters.Anova.mlm <- model_parameters.aov
+
+#' @export
+model_parameters.maov <- model_parameters.aov
+
 
 # helper ------------------------------
-
 
 .anova_type <- function(model, type = NULL) {
   if (is.null(type)) {
@@ -539,4 +533,30 @@ model_parameters.afex_aov <- function(model,
 
 .is_levenetest <- function(x) {
   inherits(x, "anova") && !is.null(attributes(x)$heading) && all(isTRUE(grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)))
+}
+
+# TODO: decide whether to move to `datawizard`?
+#' @param data A dataframe from `model_parameters`.
+#' @param ... Currently ignored
+
+.anova_table_wide <- function(data, ...) {
+  wide_anova <- function(x) {
+    # creating numerator and denominator degrees of freedom
+    if (length(idxResid <- x$Parameter == "Residuals")) {
+      x$data_error <- x$data[idxResid]
+      x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
+      x <- x[!idxResid, ]
+    }
+    x
+  }
+
+  if ("Group" %in% colnames(data)) {
+    data <- split(data, data$Group)
+    data <- lapply(data, wide_anova)
+    data <- do.call(rbind, data)
+  } else {
+    data <- wide_anova(data)
+  }
+
+  data
 }

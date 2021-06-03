@@ -39,6 +39,7 @@ model_parameters.Gam <- function(model,
                                  epsilon_squared = NULL,
                                  df_error = NULL,
                                  type = NULL,
+                                 table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
   model_parameters(
@@ -48,6 +49,8 @@ model_parameters.Gam <- function(model,
     epsilon_squared = epsilon_squared,
     df_error = df_error,
     type = type,
+    table_wide = table_wide,
+    verbose = verbose,
     ...
   )
 }

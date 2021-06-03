@@ -82,7 +82,9 @@
       w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)
       round(sum(w))
     },
-    error = function(e) { NULL }
+    error = function(e) {
+      NULL
+    }
   )
   attr(params, "weighted_nobs") <- weighted_nobs
 
@@ -91,7 +93,9 @@
     {
       .safe_deparse(insight::find_formula(model)$conditional)
     },
-    error = function(e) { NULL }
+    error = function(e) {
+      NULL
+    }
   )
   attr(params, "model_formula") <- model_formula
 

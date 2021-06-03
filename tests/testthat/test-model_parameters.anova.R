@@ -136,7 +136,9 @@ if (.runThisTest && require("parameters") && require("testthat")) {
     expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
 
     m <- lm(mpg ~ factor(cyl) * scale(disp, TRUE, FALSE) + scale(disp, TRUE, FALSE),
-            mtcars, contrasts = list("factor(cyl)" = contr.helmert))
+      mtcars,
+      contrasts = list("factor(cyl)" = contr.helmert)
+    )
     a3 <- car::Anova(m, type = 3)
     expect_warning(model_parameters(a3), regexp = NA) # expect no warning
   })
@@ -172,9 +174,10 @@ if (.runThisTest && require("parameters") && require("testthat")) {
 
   test_that("anova type | lme4", {
     skip_if_not_installed("lmerTest")
-    m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1|gear), mtcars)
-    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1|gear), mtcars,
-                      family = poisson())
+    m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1 | gear), mtcars)
+    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
+      family = poisson()
+    )
 
     a1 <- anova(m1)
     expect_equal(attr(model_parameters(a1), "anova_type"), 1)
@@ -203,8 +206,9 @@ if (.runThisTest && require("parameters") && require("testthat")) {
     data(obk.long, package = "afex")
 
     m <- afex::aov_ez("id", "value", obk.long,
-                      between = c("treatment", "gender"),
-                      within = c("phase", "hour"), observed = "gender")
+      between = c("treatment", "gender"),
+      within = c("phase", "hour"), observed = "gender"
+    )
 
     expect_equal(attr(model_parameters(m), "anova_type"), 3)
     expect_equal(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3)

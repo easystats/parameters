@@ -77,8 +77,10 @@
 #' print(mp, groups = groups)
 #'
 #' # or use row indices
-#' print(mp, groups = list("Focal Predictors" = c(1, 4),
-#'                         "Controls" = c(2, 3)))
+#' print(mp, groups = list(
+#'   "Focal Predictors" = c(1, 4),
+#'   "Controls" = c(2, 3)
+#' ))
 #'
 #' # only show coefficients, CI and p,
 #' # put non-matched parameters to the end
@@ -90,9 +92,10 @@
 #'
 #' # don't select "Intercept" parameter
 #' mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
-
-#' print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
-#'                         "Interactions" = c("gear4:vs", "gear5:vs")))
+#' print(mp, groups = list(
+#'   "Engine" = c("cyl6", "cyl8", "vs", "hp"),
+#'   "Interactions" = c("gear4:vs", "gear5:vs")
+#' ))
 #' }
 #' @export
 print.parameters_model <- function(x,

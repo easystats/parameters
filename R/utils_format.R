@@ -40,7 +40,6 @@
       groups <- c(groups, groups[i - 1] + length(group_rows[[i - 1]]))
     }
     names(groups) <- names(group_rows)
-
   } else {
 
     # find parameter names and replace by rowindex
