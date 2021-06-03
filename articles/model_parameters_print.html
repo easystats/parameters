@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formatting Model Parameters • parameters</title>
+<title>Printing Model Parameters • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Formatting Model Parameters">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Printing Model Parameters">
 <meta property="og:description" content="parameters">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -136,7 +136,7 @@
       </header><script src="model_parameters_print_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Formatting Model Parameters</h1>
+      <h1 data-toc-skip>Printing Model Parameters</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/vignettes/model_parameters_print.Rmd" class="external-link"><code>vignettes/model_parameters_print.Rmd</code></a></small>
@@ -146,6 +146,7 @@
 
     
     
+<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> are functions that return a data frame of model summaries in a consistent way. The printed table of those summaries is formatted to make the output more readable and removes or collapses redundant columns, to get a compact and yet comprehensive summary table. <em>(N.B. for developers: the function <a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link"><code>standardize_names()</code></a> standardizes the column names, so column names are consistent and the same for any model object, also in <strong>broom</strong> style, which makes it easy to build your packages on top of the <strong>parameters</strong> package.)</em></p>
 <p>The default <a href="https://easystats.github.io/parameters/reference/print.parameters_model.html" class="external-link">print-methods</a> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> allows the user to modify the layout and style of the output.</p>
 <div id="summaries-for-a-single-model" class="section level1">
 <h1 class="hasAnchor">
