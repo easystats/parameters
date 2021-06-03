@@ -48,7 +48,7 @@ check_multimodal <- function(x, ...) {
 
 #' @export
 check_multimodal.data.frame <- function(x, ...) {
-  insight::check_if_installed("mcust")
+  insight::check_if_installed("mclust")
 
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following functions
   model <- mclust::Mclust(x, verbose = FALSE)
