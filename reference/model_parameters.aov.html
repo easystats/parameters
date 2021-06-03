@@ -206,6 +206,7 @@
   test <span class='op'>=</span> <span class='cn'>NULL</span>,
   power <span class='op'>=</span> <span class='cn'>FALSE</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  table_wide <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -284,6 +285,12 @@ names of the list-element should equal the column name where selection
 should be applied. This is useful for model objects where
 <code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
 like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>table_wide</th>
+      <td><p>Logical that decides whether the ANOVA table should be in
+wide format, i.e. should the numerator and denominator degrees of freedom
+be in the same row. Default: <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
