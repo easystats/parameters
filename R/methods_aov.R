@@ -543,8 +543,9 @@ model_parameters.maov <- model_parameters.aov
   wide_anova <- function(x) {
     # creating numerator and denominator degrees of freedom
     if (length(idxResid <- x$Parameter == "Residuals")) {
-      x$data_error <- x$data[idxResid]
+      x$df_error <- x$df[idxResid]
       x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
+      x$Mean_Square_Error <- x$Sum_Squares[idxResid]
       x <- x[!idxResid, ]
     }
     x
