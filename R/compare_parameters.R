@@ -6,8 +6,9 @@
 #'
 #' @param ... One or more regression model objects, or objects returned by
 #'   \code{model_parameters()}. Regression models may be of different model
-#'   types. Model objects may be passed comma separated, or as a (named) list.
-#'   If the list has named elements, element names will be used as column names.
+#'   types. Model objects may be passed comma separated, or as a list.
+#'   If model objects are passed with names or the list has named elements,
+#'   these names will be used as column names.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
 #' @param column_names Character vector with strings that should be used as
@@ -51,10 +52,12 @@
 #' compare_parameters(m1, m2, exponentiate = "nongaussian")
 #'
 #' # change column names
+#' compare_parameters("linear model" = m1, "logistic reg." = m2)
 #' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 #'
-#' # or as named list
-#' compare_parameters(list(`linar model` = m1, `logistic reg.` = m2))
+#' # or as list
+#' compare_parameters(list(m1, m2))
+#' compare_parameters(list("linear model" = m1, "logistic reg." = m2))
 #' }
 #' @export
 compare_parameters <- function(...,
@@ -69,17 +72,28 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                parameters = NULL,
                                verbose = TRUE) {
-  if (tryCatch(length(...), error = function(e) FALSE)) {
-    models <- identity(...)
+  models <- list(...)
+  if (length(models) == 1) {
+    if (insight::is_model_supported(models[[1]]) || inherits(models[[1]], "parameters_model")) {
+      modellist <- FALSE
+    } else {
+      models <- models[[1]]
+      modellist <- TRUE
+    }
+  } else {
+    modellist <- FALSE
+  }
+  if (isTRUE(modellist)) {
     model_names <- names(models)
     if (length(model_names) == 0) {
       model_names <- paste("Model", seq_along(models), sep = " ")
       names(models) <- model_names
     }
   } else {
-    models <- list(...)
     model_names <- match.call(expand.dots = FALSE)$`...`
-    if (any(sapply(model_names, is.call))) {
+    if (length(names(model_names)) > 0) {
+      model_names <- names(model_names)
+    } else if (any(sapply(model_names, is.call))) {
       model_names <- paste("Model", seq_along(models), sep = " ")
     } else {
       model_names <- sapply(model_names, as.character)
