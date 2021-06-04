@@ -146,6 +146,6 @@ compare_parameters(m1, m2, exponentiate = "nongaussian")
 compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 
 # or as named list
-compare_parameters(list(`linar model`= m1, `logistic reg.` = m2))
+compare_parameters(list(`linear model`= m1, `logistic reg.` = m2))
 }
 }

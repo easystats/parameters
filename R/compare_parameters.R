@@ -54,7 +54,7 @@
 #' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 #'
 #' # or as named list
-#' compare_parameters(list(`linar model`= m1, `logistic reg.` = m2))
+#' compare_parameters(list(`linear model`= m1, `logistic reg.` = m2))
 #' }
 #' @export
 compare_parameters <- function(...,
@@ -69,7 +69,8 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                parameters = NULL,
                                verbose = TRUE) {
-  if (tryCatch(length(...), error = function(e) FALSE)) {
+  check_models <- sapply(list(...), insight::is_model)
+  if (length(check_models) == 1 && !all(check_models)) {
     models <- identity(...)
     model_names <- names(models)
     if (length(model_names) == 0) {
@@ -86,10 +87,14 @@ compare_parameters <- function(...,
       names(models) <- model_names
     }
   }
+
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
-    warning(sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")), call. = FALSE)
+    warning(insight::format_message(
+      sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")),
+      "Dropping unsupported models now."
+    ), call. = FALSE)
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }
