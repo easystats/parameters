@@ -74,7 +74,7 @@ compare_parameters <- function(...,
                                verbose = TRUE) {
   models <- list(...)
   if (length(models) == 1) {
-    if (insight::is_model_supported(models[[1]]) || inherits(models[[1]], "parameters_model")) {
+    if (insight::is_model(models[[1]]) || inherits(models[[1]], "parameters_model")) {
       modellist <- FALSE
     } else {
       models <- models[[1]]
@@ -100,10 +100,14 @@ compare_parameters <- function(...,
       names(models) <- model_names
     }
   }
+
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
-    warning(sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")), call. = FALSE)
+    warning(insight::format_message(
+      sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")),
+      "Dropping unsupported models now."
+    ), call. = FALSE)
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }

@@ -38,8 +38,9 @@ compare_models(
 \arguments{
 \item{...}{One or more regression model objects, or objects returned by
 \code{model_parameters()}. Regression models may be of different model
-types. Model objects may be passed comma separated, or as a (named) list.
-If the list has named elements, element names will be used as column names.}
+types. Model objects may be passed comma separated, or as a list.
+If model objects are passed with names or the list has named elements,
+these names will be used as column names.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
@@ -143,9 +144,11 @@ compare_parameters(m1, m2)
 compare_parameters(m1, m2, exponentiate = "nongaussian")
 
 # change column names
+compare_parameters("linear model" = m1, "logistic reg." = m2)
 compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 
-# or as named list
-compare_parameters(list(`linar model`= m1, `logistic reg.` = m2))
+# or as list
+compare_parameters(list(m1, m2))
+compare_parameters(list("linear model" = m1, "logistic reg." = m2))
 }
 }
