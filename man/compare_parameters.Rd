@@ -38,7 +38,8 @@ compare_models(
 \arguments{
 \item{...}{One or more regression model objects, or objects returned by
 \code{model_parameters()}. Regression models may be of different model
-types.}
+types. Model objects may be passed comma separated, or as a (named) list.
+If the list has named elements, element names will be used as column names.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 
@@ -137,12 +138,14 @@ data(mtcars)
 m1 <- lm(mpg ~ wt, data = mtcars)
 m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 compare_parameters(m1, m2)
-
 \dontrun{
 # exponentiate coefficients, but not for lm
 compare_parameters(m1, m2, exponentiate = "nongaussian")
 
 # change column names
 compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
+
+# or as named list
+compare_parameters(list(`linar model`= m1, `logistic reg.` = m2))
 }
 }

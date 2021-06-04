@@ -6,7 +6,8 @@
 #'
 #' @param ... One or more regression model objects, or objects returned by
 #'   \code{model_parameters()}. Regression models may be of different model
-#'   types.
+#'   types. Model objects may be passed comma separated, or as a (named) list.
+#'   If the list has named elements, element names will be used as column names.
 #' @param component Model component for which parameters should be shown. See
 #'   documentation for related model class in \code{\link{model_parameters}}.
 #' @param column_names Character vector with strings that should be used as
@@ -51,6 +52,9 @@
 #'
 #' # change column names
 #' compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
+#'
+#' # or as named list
+#' compare_parameters(list(`linar model`= m1, `logistic reg.` = m2))
 #' }
 #' @export
 compare_parameters <- function(...,
@@ -65,7 +69,7 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                parameters = NULL,
                                verbose = TRUE) {
-  if (tryCatch(inherits(..., "list"), error = function(e) FALSE)) {
+  if (tryCatch(length(...), error = function(e) FALSE)) {
     models <- identity(...)
     model_names <- names(models)
     if (length(model_names) == 0) {

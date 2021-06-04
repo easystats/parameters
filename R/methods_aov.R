@@ -536,8 +536,8 @@ model_parameters.maov <- model_parameters.aov
 }
 
 # TODO: decide whether to move to `datawizard`?
-#' @param data A dataframe from `model_parameters`.
-#' @param ... Currently ignored
+# data: A dataframe from `model_parameters`.
+# ... Currently ignored
 
 .anova_table_wide <- function(data, ...) {
   wide_anova <- function(x) {
