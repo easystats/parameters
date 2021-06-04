@@ -560,7 +560,7 @@ model_parameters.maov <- model_parameters.aov
   }
 
   # reorder columns
-  col_order <- union(c('Parameter', 'F', 'df', 'df_error', 'p', 'Sum_Squares', 'Sum_Squares_Error', 'Mean_Square', 'Mean_Square_Error'), names(data))
+  col_order <- union(c('Parameter', 'F', 'df', 'df_error', 'p'), names(data))
 
   data[, col_order]
 }
