@@ -536,7 +536,7 @@ model_parameters.maov <- model_parameters.aov
 }
 
 # TODO: decide whether to move to `datawizard`?
-# data: A dataframe from `model_parameters`.
+# data: A dataframe from `model_parameters`
 # ... Currently ignored
 
 .anova_table_wide <- function(data, ...) {
@@ -559,5 +559,8 @@ model_parameters.maov <- model_parameters.aov
     data <- wide_anova(data)
   }
 
-  data
+  # reorder columns
+  col_order <- union(c('Parameter', 'F', 'df', 'df_error', 'p', 'Sum_Squares', 'Sum_Squares_Error', 'Mean_Square', 'Mean_Square_Error'), names(data))
+
+  data[, col_order]
 }

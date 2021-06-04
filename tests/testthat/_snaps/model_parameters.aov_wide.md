@@ -4,9 +4,9 @@
       model_parameters(model, omega_squared = "partial", eta_squared = "partial",
         epsilon_squared = TRUE, ci = 0.9, table_wide = TRUE, verbose = FALSE)
     Output
-      Parameter | Sum_Squares | df | Mean_Square |     F |      p | Omega2 | Omega2 90% CI | Eta2 |  Eta2 90% CI | Epsilon2 | Epsilon2 90% CI | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter |     F | df | df (error) |      p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 | Omega2 90% CI | Eta2 |  Eta2 90% CI | Epsilon2 | Epsilon2 90% CI
       --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      Species   |       11.34 |  2 |        5.67 | 49.16 | < .001 |   0.39 |  [0.29, 0.48] | 0.40 | [0.30, 0.48] |     0.39 |    [0.29, 0.48] |        147 |             16.96 |             16.96
+      Species   | 49.16 |  2 |        147 | < .001 |       11.34 |             16.96 |        5.67 |             16.96 |   0.39 |  [0.29, 0.48] | 0.40 | [0.30, 0.48] |     0.39 |    [0.29, 0.48]
       
       Anova Table (Type 1 tests)
 
@@ -18,20 +18,20 @@
     Output
       # Within
       
-      Parameter | Sum_Squares | df | Mean_Square |     F |     p | Omega2 (partial) | Eta2 (partial) | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter |     F | df | df (error) |     p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 (partial) | Eta2 (partial)
       ---------------------------------------------------------------------------------------------------------------------------------------------------
-      N         |      189.28 |  1 |      189.28 | 12.26 | 0.004 |             0.23 |           0.51 |         12 |            185.29 |            185.29
-      P         |        8.40 |  1 |        8.40 |  0.54 | 0.475 |            -0.01 |           0.04 |         12 |            185.29 |            185.29
-      K         |       95.20 |  1 |       95.20 |  6.17 | 0.029 |             0.12 |           0.34 |         12 |            185.29 |            185.29
-      N:P       |       21.28 |  1 |       21.28 |  1.38 | 0.263 |         9.91e-03 |           0.10 |         12 |            185.29 |            185.29
-      N:K       |       33.14 |  1 |       33.14 |  2.15 | 0.169 |             0.03 |           0.15 |         12 |            185.29 |            185.29
-      P:K       |        0.48 |  1 |        0.48 |  0.03 | 0.863 |            -0.03 |       2.59e-03 |         12 |            185.29 |            185.29
+      N         | 12.26 |  1 |         12 | 0.004 |      189.28 |            185.29 |      189.28 |            185.29 |             0.23 |           0.51
+      P         |  0.54 |  1 |         12 | 0.475 |        8.40 |            185.29 |        8.40 |            185.29 |            -0.01 |           0.04
+      K         |  6.17 |  1 |         12 | 0.029 |       95.20 |            185.29 |       95.20 |            185.29 |             0.12 |           0.34
+      N:P       |  1.38 |  1 |         12 | 0.263 |       21.28 |            185.29 |       21.28 |            185.29 |         9.91e-03 |           0.10
+      N:K       |  2.15 |  1 |         12 | 0.169 |       33.14 |            185.29 |       33.14 |            185.29 |             0.03 |           0.15
+      P:K       |  0.03 |  1 |         12 | 0.863 |        0.48 |            185.29 |        0.48 |            185.29 |            -0.03 |       2.59e-03
       
       # block
       
-      Parameter | Sum_Squares | df | Mean_Square |    F |     p | Omega2 (partial) | Eta2 (partial) | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter |    F | df | df (error) |     p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 (partial) | Eta2 (partial)
       --------------------------------------------------------------------------------------------------------------------------------------------------
-      N:P:K     |       37.00 |  1 |       37.00 | 0.48 | 0.525 |            -0.09 |           0.11 |          4 |            306.29 |            306.29
+      N:P:K     | 0.48 |  1 |          4 | 0.525 |       37.00 |            306.29 |       37.00 |            306.29 |            -0.09 |           0.11
       
       Anova Table (Type 1 tests)
 
@@ -40,18 +40,8 @@
     Code
       model_parameters(m_manova, omega_squared = "raw", eta_squared = "partial",
         epsilon_squared = "raw", ci = 0.99, table_wide = TRUE, verbose = FALSE)
-    Output
-      Parameter |   Pillai | df |    F |     p | Omega2 (partial) | Omega2 99% CI | Eta2 (partial) |  Eta2 99% CI | Epsilon2 (partial) | Epsilon2 99% CI | df (error)
-      ---------------------------------------------------------------------------------------------------------------------------------------------------------------
-      block     |     0.88 |  5 | 1.90 | 0.096 |             0.20 |  [0.00, 0.38] |           0.44 | [0.00, 0.64] |               0.21 |    [0.00, 0.37] |         12
-      N         |     0.61 |  1 | 8.52 | 0.006 |             0.52 |  [0.00, 0.79] |           0.61 | [0.00, 0.83] |               0.54 |    [0.00, 0.80] |         12
-      P         |     0.07 |  1 | 0.39 | 0.686 |            -0.10 |  [0.00, 0.00] |           0.07 | [0.00, 0.48] |              -0.10 |    [0.00, 0.00] |         12
-      K         |     0.39 |  1 | 3.49 | 0.067 |             0.26 |  [0.00, 0.66] |           0.39 | [0.00, 0.73] |               0.28 |    [0.00, 0.67] |         12
-      N:P       |     0.11 |  1 | 0.65 | 0.541 |            -0.05 |  [0.00, 0.00] |           0.11 | [0.00, 0.53] |              -0.06 |    [0.00, 0.00] |         12
-      N:K       |     0.17 |  1 | 1.16 | 0.350 |             0.02 |  [0.00, 0.38] |           0.17 | [0.00, 0.59] |               0.02 |    [0.00, 0.39] |         12
-      P:K       | 3.19e-03 |  1 | 0.02 | 0.983 |            -0.16 |  [0.00, 0.00] |       3.19e-03 | [0.00, 0.19] |              -0.18 |    [0.00, 0.00] |         12
-      
-      Anova Table (Type 1 tests)
+    Error <simpleError>
+      undefined columns selected
 
 # anova wide table - Gam
 
@@ -59,11 +49,11 @@
       model_parameters(mod_gam, eta_squared = "raw", epsilon_squared = "partial", ci = 0.9,
         table_wide = TRUE, verbose = FALSE)
     Output
-      Parameter | Sum_Squares | df | Mean_Square |        F |      p |     Eta2 |  Eta2 90% CI | Epsilon2 (partial) | Epsilon2 90% CI | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter |        F | df | df (error) |      p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error |     Eta2 |  Eta2 90% CI | Epsilon2 (partial) | Epsilon2 90% CI
       ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      s(hp, 4)  |      678.37 |  1 |      678.37 |    94.38 | < .001 |     0.70 | [0.52, 0.80] |               0.78 |    [0.64, 0.86] |      25.00 |            179.68 |            179.68
-      am        |      112.58 |  1 |      112.58 |    15.66 | < .001 |     0.12 | [0.00, 0.33] |               0.36 |    [0.12, 0.55] |      25.00 |            179.68 |            179.68
-      qsec      |        0.03 |  1 |        0.03 | 3.66e-03 | 0.952  | 2.71e-05 | [0.00, 0.00] |              -0.04 |    [0.00, 0.00] |      25.00 |            179.68 |            179.68
+      s(hp, 4)  |    94.38 |  1 |      25.00 | < .001 |      678.37 |            179.68 |      678.37 |            179.68 |     0.70 | [0.52, 0.80] |               0.78 |    [0.64, 0.86]
+      am        |    15.66 |  1 |      25.00 | < .001 |      112.58 |            179.68 |      112.58 |            179.68 |     0.12 | [0.00, 0.33] |               0.36 |    [0.12, 0.55]
+      qsec      | 3.66e-03 |  1 |      25.00 | 0.952  |        0.03 |            179.68 |        0.03 |            179.68 | 2.71e-05 | [0.00, 0.00] |              -0.04 |    [0.00, 0.00]
       
       Anova Table (Type 1 tests)
 
@@ -75,21 +65,21 @@
     Output
       # mpg response
       
-      Parameter   | Sum_Squares | df | Mean_Square |     F |      p | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter   |     F | df | df (error) |      p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI
       ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      factor(cyl) |      824.78 |  2 |      412.39 | 39.70 | < .001 |   0.82 |  [0.78, 0.85] | 0.84 | [0.80, 0.86] |     0.83 |    [0.79, 0.85] |         29 |            301.26 |            301.26
+      factor(cyl) | 39.70 |  2 |         29 | < .001 |      824.78 |            301.26 |      412.39 |            301.26 |   0.82 |  [0.78, 0.85] | 0.84 | [0.80, 0.86] |     0.83 |    [0.79, 0.85]
       
       # disp response
       
-      Parameter   | Sum_Squares | df | Mean_Square |     F |      p | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter   |     F | df | df (error) |      p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI
       ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      factor(cyl) |    3.99e+05 |  2 |    1.99e+05 | 74.83 | < .001 |   0.69 |  [0.62, 0.73] | 0.71 | [0.65, 0.75] |     0.69 |    [0.63, 0.73] |         29 |          41696.33 |          41696.33
+      factor(cyl) | 74.83 |  2 |         29 | < .001 |    3.99e+05 |          41696.33 |    1.99e+05 |          41696.33 |   0.69 |  [0.62, 0.73] | 0.71 | [0.65, 0.75] |     0.69 |    [0.63, 0.73]
       
       # hp response
       
-      Parameter   | Sum_Squares | df | Mean_Square |     F |      p | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI | df (error) | Sum_Squares_Error | Mean_Square_Error
+      Parameter   |     F | df | df (error) |      p | Sum_Squares | Sum_Squares_Error | Mean_Square | Mean_Square_Error | Omega2 | Omega2 50% CI | Eta2 |  Eta2 50% CI | Epsilon2 | Epsilon2 50% CI
       ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-      factor(cyl) |    1.04e+05 |  2 |    52015.27 | 36.18 | < .001 |   0.71 |  [0.64, 0.75] | 0.73 | [0.67, 0.77] |     0.71 |    [0.65, 0.75] |         29 |          77293.83 |          77293.83
+      factor(cyl) | 36.18 |  2 |         29 | < .001 |    1.04e+05 |          77293.83 |    52015.27 |          77293.83 |   0.71 |  [0.64, 0.75] | 0.73 | [0.67, 0.77] |     0.71 |    [0.65, 0.75]
       
       Anova Table (Type 1 tests)
 
