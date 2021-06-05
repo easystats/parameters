@@ -419,9 +419,7 @@ model_parameters.maov <- model_parameters.aov
     return(parameters)
   }
 
-  if (!requireNamespace("effectsize", quietly = TRUE)) {
-    stop("Package 'effectsize' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("effectsize")
 
   # set error-df, when provided.
   if (!is.null(df_error) && is.data.frame(model) && !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
@@ -447,9 +445,15 @@ model_parameters.maov <- model_parameters.aov
   # Omega squared
   if (!is.null(omega_squared)) {
     if (omega_squared == "partial") {
-      fx <- effectsize::omega_squared(model, partial = TRUE, ci = ci, verbose = verbose)
+      fx <- effectsize::omega_squared(model,
+                                  partial = TRUE,
+                                  ci = ci,
+                                  verbose = verbose)
     } else {
-      fx <- effectsize::omega_squared(model, partial = FALSE, ci = ci, verbose = verbose)
+      fx <- effectsize::omega_squared(model,
+                                  partial = FALSE,
+                                  ci = ci,
+                                  verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
@@ -457,9 +461,15 @@ model_parameters.maov <- model_parameters.aov
   # Eta squared
   if (!is.null(eta_squared)) {
     if (eta_squared == "partial") {
-      fx <- effectsize::eta_squared(model, partial = TRUE, ci = ci, verbose = verbose)
+      fx <- effectsize::eta_squared(model,
+                                partial = TRUE,
+                                ci = ci,
+                                verbose = verbose)
     } else {
-      fx <- effectsize::eta_squared(model, partial = FALSE, ci = ci, verbose = verbose)
+      fx <- effectsize::eta_squared(model,
+                                partial = FALSE,
+                                ci = ci,
+                                verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
@@ -467,9 +477,15 @@ model_parameters.maov <- model_parameters.aov
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
     if (epsilon_squared == "partial") {
-      fx <- effectsize::epsilon_squared(model, partial = TRUE, ci = ci, verbose = verbose)
+      fx <- effectsize::epsilon_squared(model,
+                                    partial = TRUE,
+                                    ci = ci,
+                                    verbose = verbose)
     } else {
-      fx <- effectsize::epsilon_squared(model, partial = FALSE, ci = ci, verbose = verbose)
+      fx <- effectsize::epsilon_squared(model,
+                                    partial = FALSE,
+                                    ci = ci,
+                                    verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }

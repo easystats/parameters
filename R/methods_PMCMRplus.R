@@ -1,11 +1,10 @@
 #' @rdname model_parameters.glht
 #' @export
 model_parameters.PMCMR <- function(model, ...) {
-  if (!requireNamespace("PMCMRplus", quietly = TRUE)) {
-    stop("Package 'PMCMRplus' needed. Please install it by running `install.packages('PMCMRplus')`.")
-  }
+  insight::check_if_installed("PMCMRplus")
 
   parameters <- PMCMRplus::toTidy(model)
+
   names(parameters) <- c(
     "Group1", "Group2", "Statistic", "p", "alternative", "Method",
     "Distribution", "p_adjustment"

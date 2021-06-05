@@ -1,6 +1,10 @@
 #' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' The functions \code{principal_components()} and \code{factor_analysis()} can be used to perform a principal component analysis (PCA) or a factor analysis (FA). They return the loadings as a data frame, and various methods and functions are available to access / display other information (see the Details section).
+#' The functions \code{principal_components()} and \code{factor_analysis()} can
+#' be used to perform a principal component analysis (PCA) or a factor analysis
+#' (FA). They return the loadings as a data frame, and various methods and
+#' functions are available to access / display other information (see the
+#' Details section).
 #'
 #' @param x A data frame or a statistical model.
 #' @param n Number of components to extract. If \code{n="all"}, then \code{n} is
@@ -40,16 +44,34 @@
 #' @details
 #'  \subsection{Methods and Utilities}{
 #'  \itemize{
-#'    \item \code{\link{n_components}} and \code{\link{n_factors}} automatically estimate the optimal number of dimensions to retain.
-#'    \item \code{\link{check_factorstructure}} checks the suitability of the data for factor analysis using the \code{\link[=check_sphericity_bartlett]{sphericity}} and the \code{\link[=check_kmo]{sphericity}} KMO measure.
-#'    \item{\code{\link[performance]{check_itemscale}} computes various measures of internal consistencies applied to the (sub)scales (i.e., components) extracted from the PCA.}
-#'    \item{Running \code{summary} returns information related to each component/factor, such as the explained variance and the Eivenvalues.}
+#'    \item \code{\link{n_components}} and \code{\link{n_factors}} automatically
+#'    estimate the optimal number of dimensions to retain.
+#'
+#'    \item \code{\link{check_factorstructure}} checks the suitability of the
+#'    data for factor analysis using the
+#'    \code{\link[=check_sphericity_bartlett]{sphericity}} and the
+#'    \code{\link[=check_kmo]{sphericity}} KMO measure.
+#'
+#'    \item{\code{\link[performance]{check_itemscale}} computes various measures
+#'    of internal consistencies applied to the (sub)scales (i.e., components)
+#'    extracted from the PCA.}
+#'
+#'    \item{Running \code{summary} returns information related to each
+#'    component/factor, such as the explained variance and the Eivenvalues.}
+#'
 #'    \item{Running \code{\link{get_scores}} computes scores for each subscale.}
-#'    \item{Running \code{\link{closest_component}} will return a numeric vector with the assigned
-#'   component index for each column from the original data frame.}
-#'    \item{Running \code{\link{rotated_data}} will return the rotated data, including missing
-#'   values, so it matches the original data frame.}
-#'    \item{Running \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}} visually displays the loadings (that requires the \href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
+#'
+#'   \item{Running \code{\link{closest_component}} will return a numeric vector
+#'   with the assigned component index for each column from the original data
+#'   frame.}
+#'
+#'   \item{Running \code{\link{rotated_data}} will return the rotated data,
+#'   including missing values, so it matches the original data frame.}
+#'
+#'    \item{Running
+#'    \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}}
+#'    visually displays the loadings (that requires the
+#'    \href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
 #' }
 #' }
 #'
@@ -107,7 +129,12 @@
 #'  }
 #'
 #'  \subsection{Explained Variance and Eingenvalues}{
-#'     Use \code{summary()} to get the Eigenvalues and the explained variance for each extracted component. The eigenvectors and eigenvalues represent the "core" of a PCA: The eigenvectors (the principal components) determine the directions of the new feature space, and the eigenvalues determine their magnitude. In other words, the eigenvalues explain the variance of the data along the new feature axes.
+#'     Use \code{summary()} to get the Eigenvalues and the explained variance
+#'     for each extracted component. The eigenvectors and eigenvalues represent
+#'     the "core" of a PCA: The eigenvectors (the principal components)
+#'     determine the directions of the new feature space, and the eigenvalues
+#'     determine their magnitude. In other words, the eigenvalues explain the
+#'     variance of the data along the new feature axes.
 #'  }
 #'
 #'
@@ -234,7 +261,11 @@ principal_components.data.frame <- function(x,
   x <- stats::na.omit(x)
 
   # PCA
-  model <- stats::prcomp(x, retx = TRUE, center = TRUE, scale. = standardize, ...)
+  model <- stats::prcomp(x,
+                  retx = TRUE,
+                  center = TRUE,
+                  scale. = standardize,
+                  ...)
 
 
   # N factors
@@ -336,9 +367,6 @@ principal_components.data.frame <- function(x,
 
   loadings
 }
-
-
-
 
 
 #' @keywords internal

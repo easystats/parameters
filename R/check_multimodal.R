@@ -97,14 +97,13 @@ check_multimodal.data.frame <- function(x, ...) {
 
 #' @export
 check_multimodal.numeric <- function(x, ...) {
-  if (!requireNamespace("multimode", quietly = TRUE)) {
-    stop("Package 'multimode' required for this function to work. Please install it by running `install.packages('multimode')`.")
-  }
+  insight::check_if_installed("multimode")
 
   rez <- multimode::modetest(x, mod0 = 1, method = "ACR")
   rez <- list(p = rez$p.value, excess_mass = rez$statistic)
 
   text <- "The Ameijeiras-Alonso et al. (2018) excess mass test suggests that "
+
   if (rez$p < .05) {
     text <- paste0(
       text,

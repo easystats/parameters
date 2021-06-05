@@ -653,16 +653,11 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
 }
 
 
-
 #' @export
 plot.equivalence_test_lm <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot results from equivalence-test. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see")
   NextMethod()
 }
-
-
 
 
 # method-helper ----------------------

@@ -345,9 +345,7 @@ standard_error.merMod <- function(model,
   robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
-    if (!requireNamespace("lme4", quietly = TRUE)) {
-      stop("Package 'lme4' required to calculate standard errors for random effects. Please install it.")
-    }
+    insight::check_if_installed("lme4")
 
     rand.se <- lme4::ranef(model, condVar = TRUE)
     n.groupings <- length(rand.se)

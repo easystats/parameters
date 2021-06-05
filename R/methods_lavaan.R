@@ -246,9 +246,12 @@ print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...
 
 #' @export
 predict.parameters_sem <- function(object, newdata = NULL, ...) {
-  if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  }
+  insight::check_if_installed("lavaan")
 
-  as.data.frame(lavaan::lavPredict(attributes(object)$model, newdata = newdata, method = "EBM", ...))
+  as.data.frame(lavaan::lavPredict(
+    attributes(object)$model,
+    newdata = newdata,
+    method = "EBM",
+    ...
+  ))
 }

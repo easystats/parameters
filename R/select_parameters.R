@@ -95,12 +95,7 @@ select_parameters.merMod <- function(model,
                                      direction = "backward",
                                      steps = 1000,
                                      ...) {
-
-
-  # Using cAIC4's stepcAIC()
-  if (!requireNamespace("cAIC4", quietly = TRUE)) {
-    stop("Package 'cAIC4' required for this function to work. Please install it by running `install.packages('cAIC4')`.")
-  }
+  insight::check_if_installed("cAIC4")
 
   # Find slope and group candidates
   # data <- insight::get_data(model)
@@ -131,9 +126,7 @@ select_parameters.merMod <- function(model,
 
   # Using MuMIn's dredge(): works nicely BUT throws unnecessary warnings and requires to set global options for na.action even tho no NaNs.
   # The code is here: https://github.com/cran/MuMIn/blob/master/R/dredge.R Maybe it could be reimplemented?
-  # if (!requireNamespace("MuMIn", quietly = TRUE)) {
-  #   stop("Package 'MuMIn' required for this function to work. Please install it by running `install.packages('MuMIn')`.")
-  # }
+  # insight::check_if_installed("MuMIn")
   # model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris, na.action = na.fail)
   # summary(MuMIn::get.models(MuMIn::dredge(model), 1)[[1]])
 
