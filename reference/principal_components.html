@@ -47,7 +47,11 @@
 
 
 <meta property="og:title" content="Principal Component Analysis (PCA) and Factor Analysis (FA) — factor_analysis" />
-<meta property="og:description" content="The functions principal_components() and factor_analysis() can be used to perform a principal component analysis (PCA) or a factor analysis (FA). They return the loadings as a data frame, and various methods and functions are available to access / display other information (see the Details section)." />
+<meta property="og:description" content="The functions principal_components() and factor_analysis() can
+be used to perform a principal component analysis (PCA) or a factor analysis
+(FA). They return the loadings as a data frame, and various methods and
+functions are available to access / display other information (see the
+Details section)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -190,7 +194,11 @@
     </div>
 
     <div class="ref-description">
-    <p>The functions <code>principal_components()</code> and <code>factor_analysis()</code> can be used to perform a principal component analysis (PCA) or a factor analysis (FA). They return the loadings as a data frame, and various methods and functions are available to access / display other information (see the Details section).</p>
+    <p>The functions <code>principal_components()</code> and <code>factor_analysis()</code> can
+be used to perform a principal component analysis (PCA) or a factor analysis
+(FA). They return the loadings as a data frame, and various methods and
+functions are available to access / display other information (see the
+Details section).</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>factor_analysis</span><span class='op'>(</span>
@@ -318,16 +326,27 @@ predicted data and original data is equal.</p></td>
     
 <h3 class='hasAnchor' id='methods-and-utilities'><a class='anchor' aria-hidden='true' href='#methods-and-utilities'></a>Methods and Utilities</h3>
 <p></p><ul>
-<li><p><code><a href='n_factors.html'>n_components</a></code> and <code><a href='n_factors.html'>n_factors</a></code> automatically estimate the optimal number of dimensions to retain.</p></li>
-<li><p><code><a href='check_factorstructure.html'>check_factorstructure</a></code> checks the suitability of the data for factor analysis using the <code><a href='check_sphericity_bartlett.html'>sphericity</a></code> and the <code><a href='check_kmo.html'>sphericity</a></code> KMO measure.</p></li>
-<li><p><code><a href='https://easystats.github.io/performance/reference/check_itemscale.html'>check_itemscale</a></code> computes various measures of internal consistencies applied to the (sub)scales (i.e., components) extracted from the PCA.</p></li>
-<li><p>Running <code>summary</code> returns information related to each component/factor, such as the explained variance and the Eivenvalues.</p></li>
+<li><p><code><a href='n_factors.html'>n_components</a></code> and <code><a href='n_factors.html'>n_factors</a></code> automatically
+   estimate the optimal number of dimensions to retain.</p></li>
+<li><p><code><a href='check_factorstructure.html'>check_factorstructure</a></code> checks the suitability of the
+   data for factor analysis using the
+   <code><a href='check_sphericity_bartlett.html'>sphericity</a></code> and the
+   <code><a href='check_kmo.html'>sphericity</a></code> KMO measure.</p></li>
+<li><p><code><a href='https://easystats.github.io/performance/reference/check_itemscale.html'>check_itemscale</a></code> computes various measures
+   of internal consistencies applied to the (sub)scales (i.e., components)
+   extracted from the PCA.</p></li>
+<li><p>Running <code>summary</code> returns information related to each
+   component/factor, such as the explained variance and the Eivenvalues.</p></li>
 <li><p>Running <code><a href='get_scores.html'>get_scores</a></code> computes scores for each subscale.</p></li>
-<li><p>Running <code>closest_component</code> will return a numeric vector with the assigned
-  component index for each column from the original data frame.</p></li>
-<li><p>Running <code>rotated_data</code> will return the rotated data, including missing
-  values, so it matches the original data frame.</p></li>
-<li><p>Running <a href='https://easystats.github.io/see/articles/parameters.html#principal-component-analysis'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></a> visually displays the loadings (that requires the <a href='https://easystats.github.io/see/'><span class="pkg">see</span> package</a> to work).</p></li>
+<li><p>Running <code>closest_component</code> will return a numeric vector
+  with the assigned component index for each column from the original data
+  frame.</p></li>
+<li><p>Running <code>rotated_data</code> will return the rotated data,
+  including missing values, so it matches the original data frame.</p></li>
+<li><p>Running
+   <a href='https://easystats.github.io/see/articles/parameters.html#principal-component-analysis'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code></a>
+   visually displays the loadings (that requires the
+   <a href='https://easystats.github.io/see/'><span class="pkg">see</span> package</a> to work).</p></li>
 </ul>
 
 
@@ -377,7 +396,12 @@ predicted data and original data is equal.</p></td>
    components.</p>
 
 <p></p><h3 class='hasAnchor' id='explained-variance-and-eingenvalues'><a class='anchor' aria-hidden='true' href='#explained-variance-and-eingenvalues'></a>Explained Variance and Eingenvalues</h3>
-<p>Use <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> to get the Eigenvalues and the explained variance for each extracted component. The eigenvectors and eigenvalues represent the "core" of a PCA: The eigenvectors (the principal components) determine the directions of the new feature space, and the eigenvalues determine their magnitude. In other words, the eigenvalues explain the variance of the data along the new feature axes.</p>
+<p>Use <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> to get the Eigenvalues and the explained variance
+    for each extracted component. The eigenvectors and eigenvalues represent
+    the "core" of a PCA: The eigenvectors (the principal components)
+    determine the directions of the new feature space, and the eigenvalues
+    determine their magnitude. In other words, the eigenvalues explain the
+    variance of the data along the new feature axes.</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

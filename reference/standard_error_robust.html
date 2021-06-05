@@ -234,33 +234,38 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
     </tr>
     <tr>
       <th>vcov_estimation</th>
-      <td><p>String, indicating the suffix of the <code>vcov*()</code>-function
-from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package, e.g. <code>vcov_estimation = "CL"</code>
-(which calls <code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
+      <td><p>String, indicating the suffix of the
+<code>vcov*()</code>-function from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span>
+package, e.g. <code>vcov_estimation = "CL"</code> (which calls
+<code><a href='https://rdrr.io/pkg/sandwich/man/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
 estimators), or <code>vcov_estimation = "HC"</code> (which calls
-<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> to compute heteroskedasticity-consistent
-covariance matrix estimators).</p></td>
+<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> to compute
+heteroskedasticity-consistent covariance matrix estimators).</p></td>
     </tr>
     <tr>
       <th>vcov_type</th>
       <td><p>Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see <code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code>
-or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>clubSandwich::vcovCR()</a></code> for details).</p></td>
+robust covariance matrix estimation (see
+<code><a href='https://rdrr.io/pkg/sandwich/man/vcovHC.html'>vcovHC()</a></code> or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>clubSandwich::vcovCR()</a></code>
+for details).</p></td>
     </tr>
     <tr>
       <th>vcov_args</th>
-      <td><p>List of named vectors, used as additional arguments that
-are passed down to the <span class="pkg">sandwich</span>-function specified in <code>vcov_estimation</code>.</p></td>
+      <td><p>List of named vectors, used as additional arguments that are
+passed down to the <span class="pkg">sandwich</span>-function specified in
+<code>vcov_estimation</code>.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should all parameters or parameters for specific model components be returned?</p></td>
+      <td><p>Should all parameters or parameters for specific model
+components be returned?</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods. For <code><a href='standard_error.html'>standard_error()</a></code>,
-if <code>method = "robust"</code>, arguments <code>vcov_estimation</code>, <code>vcov_type</code>
-and <code>vcov_args</code> can be passed down to <code>standard_error_robust()</code>.</p></td>
+      <td><p>Arguments passed to or from other methods. For
+<code><a href='standard_error.html'>standard_error()</a></code>, if <code>method = "robust"</code>, arguments
+<code>vcov_estimation</code>, <code>vcov_type</code> and <code>vcov_args</code> can be passed
+down to <code>standard_error_robust()</code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
