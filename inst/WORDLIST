@@ -36,6 +36,8 @@ DoFs
 Dupont
 EFA
 ESS
+Eingenvalues
+Eivenvalues
 Elff
 Epskamp
 Fairbrother
@@ -68,6 +70,8 @@ Jurs
 KMO
 Kenward
 Kruschke
+Kutner
+LMMs
 Lakens
 Laparra
 Lawley
@@ -114,7 +118,6 @@ Sadana
 Satterthwaite
 Satterthwaite's
 Schaeffer
-Shachar
 Shi
 Shikano
 Sphericity
@@ -130,6 +133,7 @@ Valls
 Velicer
 WRS
 Waggoner
+Wasserman
 Wisenbaker
 Zoski
 afex
@@ -150,6 +154,7 @@ btergm
 cAIC
 cMDS
 canberra
+centred
 ci
 clubSandwich
 clusterable
@@ -178,6 +183,7 @@ glmm
 glmmTMB
 heteroskedasticity
 homoscedasticity
+htest
 http
 https
 hyperspectral
@@ -201,6 +207,7 @@ loadings
 logistf
 lqmm
 meaned
+merMod
 merTools
 mesokurtic
 metaBMA
@@ -212,6 +219,7 @@ minkowski
 mira
 mlm
 modelling
+modelsummary
 multcomp
 multicollinearity
 mvord
@@ -234,6 +242,7 @@ rmarkdown
 rms
 rmsb
 robmixglm
+rownumbers
 rstanarm
 sampleSelection
 smicd
