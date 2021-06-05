@@ -130,9 +130,7 @@ n_factors <- function(x,
 
   # nFactors -------------------------------------------
   if ("nFactors" %in% package) {
-    if (!requireNamespace("nFactors", quietly = TRUE)) {
-      stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('nFactors')`.")
-    }
+    insight::check_if_installed("nFactors")
 
     # Model
     if (tolower(type) %in% c("fa", "factor", "efa")) {
@@ -215,9 +213,7 @@ n_factors <- function(x,
 
   # EGAnet -------------------------------------------
   if ("EGAnet" %in% c(package)) {
-    if (!requireNamespace("EGAnet", quietly = TRUE)) {
-      stop("Package 'EGAnet' required for this function to work. Please install it by running `install.packages('EGAnet')`.")
-    }
+    insight::check_if_installed("EGAnet")
 
     if (safe) {
       out <- rbind(
@@ -238,9 +234,7 @@ n_factors <- function(x,
 
   # psych -------------------------------------------
   if ("psych" %in% c(package)) {
-    if (!requireNamespace("psych", quietly = TRUE)) {
-      stop("Package 'psych' required for this function to work. Please install it by running `install.packages('psych')`.")
-    }
+    insight::check_if_installed("psych")
 
     if (safe) {
       out <- rbind(
@@ -368,8 +362,6 @@ as.numeric.n_factors <- function(x, ...) {
 #' @export
 as.double.n_factors <- as.numeric.n_factors
 
-
-
 #' @export
 summary.n_clusters <- summary.n_factors
 
@@ -381,8 +373,6 @@ as.double.n_clusters <- as.double.n_factors
 
 #' @export
 print.n_clusters <- print.n_factors
-
-
 
 
 #' Bartlett, Anderson and Lawley Procedures
@@ -647,9 +637,7 @@ print.n_clusters <- print.n_factors
                       cor = TRUE,
                       details = TRUE,
                       ...) {
-  if (!requireNamespace("nFactors", quietly = TRUE)) {
-    stop("Package 'nFactors' required for this function to work. Please install it by running `install.packages('lattice')`.")
-  }
+  insight::check_if_installed("nFactors")
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
   if (length(which(lambda < 0)) > 0) {

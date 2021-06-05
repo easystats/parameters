@@ -29,9 +29,7 @@ cluster_discrimination <- function(x, cluster_groups = NULL) {
   cluster_groups <- stats::na.omit(cluster_groups)
 
   # compute discriminant analysis of groups on original data frame
-  if (!requireNamespace("MASS", quietly = TRUE)) {
-    stop("Package 'MASS' required for this function to work. Please install it by running `install.packages('MASS')`.")
-  }
+  insight::check_if_installed("MASS")
   disc <- MASS::lda(cluster_groups ~ ., data = x, na.action = "na.omit", CV = TRUE)
 
   # Assess the accuracy of the prediction

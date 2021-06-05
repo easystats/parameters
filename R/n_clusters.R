@@ -102,9 +102,7 @@ n_clusters <- function(x,
 
 #' @keywords internal
 .n_clusters_mclust <- function(x, ...) {
-  if (!requireNamespace("mclust", quietly = TRUE)) {
-    stop("Package 'mclust' required for this function to work. Please install it by running `install.packages('mclust')`.")
-  }
+  insight::check_if_installed("mclust")
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following function
   BIC <- mclust::mclustBIC(x, verbose = FALSE)
   out <- data.frame(unclass(BIC))
@@ -115,15 +113,17 @@ n_clusters <- function(x,
 
 #' @keywords internal
 .n_clusters_cluster <- function(x, ...) {
-  if (!requireNamespace("cluster", quietly = TRUE)) {
-    stop("Package 'cluster' required for this function to work. Please install it by running `install.packages('cluster')`.")
-  }
+  insight::check_if_installed("cluster")
 
   # listwise deletion of missing
   x <- stats::na.omit(x)
 
   # Gap Statistic for Estimating the Number of Clusters
-  junk <- utils::capture.output(gap <- cluster::clusGap(x, stats::kmeans, K.max = 10, B = 100)$Tab)
+  junk <- utils::capture.output(gap <- cluster::clusGap(x,
+    stats::kmeans,
+    K.max = 10,
+    B = 100
+  )$Tab)
 
   # Gap Statistic for Estimating the Number of Clusters
   n <- cluster::maxSE(
@@ -140,9 +140,7 @@ n_clusters <- function(x,
 
 #' @keywords internal
 .n_clusters_NbClust <- function(x, fast = TRUE, ...) {
-  if (!requireNamespace("NbClust", quietly = TRUE)) {
-    stop("Package 'NbClust' required for this function to work. Please install it by running `install.packages('NbClust')`.")
-  }
+  insight::check_if_installed("NbClust")
 
   # Run the function and suppress output and automatic plotting
   ff <- tempfile()

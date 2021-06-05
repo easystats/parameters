@@ -37,25 +37,30 @@ ci_robust(
 \arguments{
 \item{model}{A model.}
 
-\item{vcov_estimation}{String, indicating the suffix of the \code{vcov*()}-function
-from the \pkg{sandwich} or \pkg{clubSandwich} package, e.g. \code{vcov_estimation = "CL"}
-(which calls \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
+\item{vcov_estimation}{String, indicating the suffix of the
+\code{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
+package, e.g. \code{vcov_estimation = "CL"} (which calls
+\code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
 estimators), or \code{vcov_estimation = "HC"} (which calls
-\code{\link[sandwich:vcovHC]{vcovHC()}} to compute heteroskedasticity-consistent
-covariance matrix estimators).}
+\code{\link[sandwich:vcovHC]{vcovHC()}} to compute
+heteroskedasticity-consistent covariance matrix estimators).}
 
 \item{vcov_type}{Character vector, specifying the estimation type for the
-robust covariance matrix estimation (see \code{\link[sandwich:vcovHC]{vcovHC()}}
-or \code{clubSandwich::vcovCR()} for details).}
+robust covariance matrix estimation (see
+\code{\link[sandwich:vcovHC]{vcovHC()}} or \code{clubSandwich::vcovCR()}
+for details).}
 
-\item{vcov_args}{List of named vectors, used as additional arguments that
-are passed down to the \pkg{sandwich}-function specified in \code{vcov_estimation}.}
+\item{vcov_args}{List of named vectors, used as additional arguments that are
+passed down to the \pkg{sandwich}-function specified in
+\code{vcov_estimation}.}
 
-\item{component}{Should all parameters or parameters for specific model components be returned?}
+\item{component}{Should all parameters or parameters for specific model
+components be returned?}
 
-\item{...}{Arguments passed to or from other methods. For \code{standard_error()},
-if \code{method = "robust"}, arguments \code{vcov_estimation}, \code{vcov_type}
-and \code{vcov_args} can be passed down to \code{standard_error_robust()}.}
+\item{...}{Arguments passed to or from other methods. For
+\code{standard_error()}, if \code{method = "robust"}, arguments
+\code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
+down to \code{standard_error_robust()}.}
 
 \item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
 }

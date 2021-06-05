@@ -47,7 +47,11 @@
     standardize <- NULL
   }
 
-  parameters <- insight::get_parameters(model, effects = effects, component = component, verbose = verbose)
+  parameters <- insight::get_parameters(model,
+    effects = effects,
+    component = component,
+    verbose = verbose
+  )
   statistic <- insight::get_statistic(model, component = component)
 
   # check if all estimates are non-NA
@@ -90,7 +94,13 @@
 
   if (!is.null(ci)) {
     if (isTRUE(robust)) {
-      ci_df <- suppressMessages(ci_robust(model, ci = ci, component = component, verbose = verbose, ...))
+      ci_df <- suppressMessages(ci_robust(
+        model,
+        ci = ci,
+        component = component,
+        verbose = verbose,
+        ...
+      ))
     } else if (!is.null(df_method)) {
       ci_df <- suppressMessages(
         ci(
@@ -339,16 +349,28 @@
 .filter_parameters <- function(params, filter_params, verbose = TRUE) {
   if (is.list(filter_params)) {
     for (i in names(filter_params)) {
-      params <- .filter_parameters_vector(params, filter_params[[i]], column = i, verbose = verbose)
+      params <- .filter_parameters_vector(params,
+        filter_params[[i]],
+        column = i,
+        verbose = verbose
+      )
     }
   } else {
-    params <- .filter_parameters_vector(params, filter_params, column = NULL, verbose = verbose)
+    params <- .filter_parameters_vector(params,
+      filter_params,
+      column = NULL,
+      verbose = verbose
+    )
   }
   params
 }
 
 
-.filter_parameters_vector <- function(params, filter_params, column = NULL, verbose = TRUE) {
+.filter_parameters_vector <- function(params,
+                                      filter_params,
+                                      column = NULL,
+                                      verbose = TRUE) {
+
   # check pattern
   if (length(filter_params) > 1) {
     filter_params <- paste0("(", paste0(filter_params, collapse = "|"), ")")
@@ -375,10 +397,6 @@
 
   out
 }
-
-
-
-
 
 
 # mixed models function ------------------------------------------------------
@@ -786,9 +804,7 @@
                                        filter_parameters = NULL,
                                        verbose = TRUE,
                                        ...) {
-  if (!requireNamespace("lavaan", quietly = TRUE)) {
-    stop("Package 'lavaan' required for this function to work. Please install it by running `install.packages('lavaan')`.")
-  }
+  insight::check_if_installed("lavaan")
 
   # set proper default
   if (is.null(standardize)) {
@@ -842,6 +858,7 @@
     list(object = model, se = TRUE, ci = TRUE, level = ci),
     dot_args
   ))
+
   label <- data$label
 
   # check if standardized estimates are requested, and if so, which type
@@ -858,7 +875,14 @@
       "std.nox" = "std.nox",
       "std.all"
     )
-    data <- lavaan::standardizedsolution(model, se = TRUE, level = ci, type = type, ...)
+
+    data <- lavaan::standardizedsolution(model,
+      se = TRUE,
+      level = ci,
+      type = type,
+      ...
+    )
+
     names(data)[names(data) == "est.std"] <- "est"
   }
 
@@ -906,9 +930,6 @@
 
   params
 }
-
-
-
 
 
 

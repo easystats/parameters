@@ -4,10 +4,12 @@
 }
 
 
-.extract_random_parameters.merMod <- function(model, ci = .95, effects = "random", ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required. Please install it.", call. = FALSE)
-  }
+.extract_random_parameters.merMod <- function(model,
+                                              ci = .95,
+                                              effects = "random",
+                                              ...) {
+  insight::check_if_installed("lme4")
+
   out <- as.data.frame(lme4::ranef(model, condVar = TRUE), stringsAsFactors = FALSE)
   colnames(out) <- c("Group", "Parameter", "Level", "Coefficient", "SE")
 
@@ -46,15 +48,18 @@
   if (effects == "random") {
     out[c(stat_column, "df_error", "p")] <- NULL
   }
+
   out
 }
 
 
 
-.extract_random_parameters.glmmTMB <- function(model, ci = .95, effects = "random", component = "conditional", ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required. Please install it.", call. = FALSE)
-  }
+.extract_random_parameters.glmmTMB <- function(model,
+                                               ci = .95,
+                                               effects = "random",
+                                               component = "conditional",
+                                               ...) {
+  insight::check_if_installed("lme4")
   out <- as.data.frame(lme4::ranef(model, condVar = TRUE))
   colnames(out) <- c("Component", "Group", "Parameter", "Level", "Coefficient", "SE")
 

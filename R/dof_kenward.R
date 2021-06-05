@@ -22,9 +22,8 @@ dof_kenward <- function(model) {
 
 
 .adjusted_ddf <- function(adjusted_vcov, linear_coef, unadjusted_vcov = adjusted_vcov) {
-  if (!requireNamespace("Matrix", quietly = TRUE)) {
-    stop("Package 'Matrix' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("Matrix")
+
   if (!is.matrix(linear_coef)) {
     linear_coef <- matrix(linear_coef, ncol = 1)
   }
@@ -78,9 +77,8 @@ dof_kenward <- function(model) {
 
 
 .vcov_kenward_ajusted <- function(model) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("lme4")
+
   if (!(lme4::getME(model, "is_REML"))) {
     model <- stats::update(model, . ~ ., REML = TRUE)
   }
@@ -89,20 +87,15 @@ dof_kenward <- function(model) {
 
 
 
-
 .get_SigmaG <- function(model) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it.")
-  }
-  if (!requireNamespace("Matrix", quietly = TRUE)) {
-    stop("Package 'Matrix' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("lme4")
+  insight::check_if_installed("Matrix")
 
   GGamma <- lme4::VarCorr(model)
   SS <- .shgetME(model)
 
   ## Put covariance parameters for the random effects into a vector:
-  ## Fixme: It is a bit ugly to throw everything into one long vector here; a list would be more elegant
+  ## TODO: It is a bit ugly to throw everything into one long vector here; a list would be more elegant
   ggamma <- NULL
   for (ii in 1:(SS$n.RT)) {
     Lii <- GGamma[[ii]]
@@ -169,12 +162,8 @@ dof_kenward <- function(model) {
 
 
 .vcovAdj16_internal <- function(Phi, SigmaG, X) {
-  if (!requireNamespace("MASS", quietly = TRUE)) {
-    stop("Package 'MASS' required for this function to work. Please install it.")
-  }
-  if (!requireNamespace("Matrix", quietly = TRUE)) {
-    stop("Package 'Matrix' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("MASS")
+  insight::check_if_installed("Matrix")
 
   SigmaInv <- chol2inv(chol(Matrix::forceSymmetric(as.matrix(SigmaG$Sigma))))
   n.ggamma <- SigmaG$n.ggamma
@@ -345,12 +334,8 @@ dof_kenward <- function(model) {
 }
 
 
-
-
 .shgetME <- function(model) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("lme4")
 
   Gp <- lme4::getME(model, "Gp")
   n.RT <- length(Gp) - 1 ## Number of random terms (i.e. of (|)'s)
@@ -383,9 +368,8 @@ dof_kenward <- function(model) {
 
 
 .get.RT.dim.by.RT <- function(model) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("lme4")
+
   ## output: dimension (no of columns) of covariance matrix for random term ii
   if (inherits(model, "mer")) {
     sapply(model@ST, function(X) nrow(X))

@@ -117,9 +117,7 @@
 
 #' @keywords internal
 .ci_boot_merMod <- function(x, ci, ...) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-  }
+  insight::check_if_installed("lme4")
 
   # Compute
   out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", ...))

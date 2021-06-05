@@ -51,9 +51,6 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 }
 
 
-
-
-
 # helper ------------------------------
 
 .p_value_dof <- function(model, dof, method, statistic = NULL, se = NULL) {
@@ -98,15 +95,11 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 }
 
 
-
-
-
 # helper -------------------------
 
 .check_REML_fit <- function(model) {
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("lme4")
+
   if (!(lme4::getME(model, "is_REML"))) {
     warning(insight::format_message("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable."), call. = FALSE)
   }

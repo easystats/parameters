@@ -31,16 +31,27 @@ factor_analysis.data.frame <- function(x,
   # N factors
   n <- .get_n_factors(x, n = n, type = "FA", rotation = rotation, cor = cor)
 
-  .factor_analysis_rotate(x, n, rotation = rotation, sort = sort, threshold = threshold, cor = cor, ...)
+  .factor_analysis_rotate(
+    x,
+    n,
+    rotation = rotation,
+    sort = sort,
+    threshold = threshold,
+    cor = cor,
+    ...
+  )
 }
 
 
 
-
-
-
 #' @keywords internal
-.factor_analysis_rotate <- function(x, n, rotation, sort = FALSE, threshold = NULL, cor = NULL, ...) {
+.factor_analysis_rotate <- function(x,
+                                    n,
+                                    rotation,
+                                    sort = FALSE,
+                                    threshold = NULL,
+                                    cor = NULL,
+                                    ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
     stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }

@@ -30,9 +30,7 @@ model_parameters.befa <- function(model,
                                   verbose = TRUE,
                                   ...) {
   if (!attr(model, "post.column.switch") | !attr(model, "post.sign.switch")) {
-    if (!requireNamespace("BayesFM", quietly = TRUE)) {
-      stop("Package 'BayesFM' required for this function to work. Please install it by running `install.packages('BayesFM')`.")
-    }
+    insight::check_if_installed("BayesFM")
     if (!attr(model, "post.column.switch")) model <- BayesFM::post.column.switch(model)
     if (!attr(model, "post.sign.switch")) model <- BayesFM::post.sign.switch(model)
   }

@@ -41,7 +41,8 @@ select_parameters(model, ...)
     referred to as BIC or SBC.
   }
 
-\item{method}{The method used in the variable selection. Can be \code{NULL} (default), \code{"forward"} or \code{"L1"}. See \code{projpred::varsel}.}
+\item{method}{The method used in the variable selection. Can be \code{NULL}
+(default), \code{"forward"} or \code{"L1"}. See \code{projpred::varsel}.}
 
 \item{cross_validation}{Select with cross-validation.}
 }

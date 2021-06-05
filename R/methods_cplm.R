@@ -85,10 +85,10 @@ model_parameters.zcpglm <- function(model,
 
 
 #' @export
-standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+standard_error.zcpglm <- function(model,
+                                  component = c("all", "conditional", "zi", "zero_inflated"),
+                                  ...) {
+  insight::check_if_installed("cplm")
 
   component <- match.arg(component)
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
@@ -133,10 +133,10 @@ standard_error.zcpglm <- function(model, component = c("all", "conditional", "zi
 #'   p_value(model, component = "zi")
 #' }
 #' @export
-p_value.zcpglm <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+p_value.zcpglm <- function(model,
+                           component = c("all", "conditional", "zi", "zero_inflated"),
+                           ...) {
+  insight::check_if_installed("cplm")
 
   component <- match.arg(component)
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
@@ -179,9 +179,7 @@ p_value.bcplm <- p_value.brmsfit
 
 #' @export
 p_value.cpglm <- function(model, ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+  insight::check_if_installed("cplm")
 
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
   params <- insight::get_parameters(model)
@@ -195,9 +193,7 @@ p_value.cpglm <- function(model, ...) {
 
 #' @export
 standard_error.cpglm <- function(model, ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+  insight::check_if_installed("cplm")
 
   junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
   params <- insight::get_parameters(model)
@@ -280,9 +276,7 @@ ci.cpglmm <- ci.tobit
 
 #' @export
 standard_error.cpglmm <- function(model, ...) {
-  if (!requireNamespace("cplm", quietly = TRUE)) {
-    stop("To use this function, please install package 'cplm'.")
-  }
+  insight::check_if_installed("cplm")
 
   stats <- cplm::summary(model)$coefs
   params <- insight::get_parameters(model)

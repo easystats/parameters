@@ -50,9 +50,7 @@ model_parameters.glimML <- function(model,
 
 #' @export
 standard_error.glimML <- function(model, ...) {
-  if (!requireNamespace("aod", quietly = TRUE)) {
-    stop("Package 'aod' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("aod")
 
   s <- methods::slot(aod::summary(model), "Coef")
   se <- s[, 2]
@@ -66,9 +64,7 @@ standard_error.glimML <- function(model, ...) {
 
 #' @export
 p_value.glimML <- function(model, ...) {
-  if (!requireNamespace("aod", quietly = TRUE)) {
-    stop("Package 'aod' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("aod")
 
   s <- methods::slot(aod::summary(model), "Coef")
   p <- s[, 4]
