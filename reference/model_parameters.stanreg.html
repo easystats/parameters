@@ -308,15 +308,20 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
 that describes the parameters that should be returned from the data frame, or
 a named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>parameters</code> is a character vector, every
-parameter in the <em>"Parameters"</em> column that matches the regular expression
+parameter in the <em>"Parameter"</em> column that matches the regular expression
 in <code>parameters</code> will be selected from the returned data frame. Furthermore,
-if <code>parameters</code> has more than
-one element, these will be merged with an <code>OR</code> operator into a regular
-expression pattern like this: <code>"(one|two|three)"</code>. If <code>parameters</code>
-is a named list of regular expression patterns, the names of the list-element
-should equal the column name where selection should be applied. This is useful
-for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns
-with parameter components, like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.</p></td>
+if <code>parameters</code> has more than one element, these will be merged with an
+<code>OR</code> operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>parameters</code> is a named list of regular expression patterns, the names
+of the list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. For <strong>Bayesian models</strong> from
+packages like <span class="pkg">brms</span> or <code>rstanarm</code>, please note that the regular
+expression pattern should match the parameter names as they are stored in
+the returned data frame, which probably is different from how the parameter
+names are actually printed! To find out the exact parameter names, look at
+the <code>$Parameter</code> column from object returned by <code><a href='model_parameters.html'>model_parameters()</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
