@@ -349,19 +349,21 @@ and more).</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Character vector of length 1 with a regular expression pattern
+      <td><p>Character containing a regular expression pattern
 that describes the parameters that should be returned from the data frame, or
 a named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>parameters</code> is a character vector, every
-parameter in the <em>"Parameters"</em> column that matches the regular expression in
-<code>parameters</code> will be selected from the returned data frame. Furthermore,
-if <code>parameters</code> has more than one element, these will be merged into
-a regular expression pattern like this: <code>"(one|two|three)"</code>. If
-<code>parameters</code> is a named list of regular expression patterns, the
-names of the list-element should equal the column name where selection
-should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.</p></td>
+parameter in the <em>"Parameters"</em> column that matches the regular expression
+in <code>parameters</code> will be selected from the returned data frame. For
+instance, in order to include all parametres that do <em>NOT</em> start with
+"Sepal", one can write <code>"^Sepal"</code> (the caret symbol <code>^</code> being used
+to omit certain patterns). Furthermore, if <code>parameters</code> has more than
+one element, these will be merged with an <code>OR</code> operator into a regular
+expression pattern like this: <code>"(one|two|three)"</code>. If <code>parameters</code>
+is a named list of regular expression patterns, the names of the list-element
+should equal the column name where selection should be applied. This is useful
+for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns
+with parameter components, like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
