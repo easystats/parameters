@@ -193,9 +193,9 @@
     <p>Compute Skewness and (Excess) Kurtosis</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>skewness</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>skewness</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>kurtosis</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>kurtosis</span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>, type <span class='op'>=</span> <span class='st'>"2"</span>, iterations <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for parameters_kurtosis</span>
 <span class='fu'><a href='https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, digits <span class='op'>=</span> <span class='fl'>3</span>, test <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -232,6 +232,10 @@
       <td><p>The number of bootstrap replicates for computing standard
 errors. If <code>NULL</code> (default), parametric standard errors are computed.
 See 'Details'.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle warnings and messages.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -272,9 +276,13 @@ for the relationship of skewness and distributions are:</p><ul>
 </ul><p>(<cite>https://en.wikipedia.org/wiki/Skewness</cite>)</p>
 <h3 class='hasAnchor' id='types-of-skewness'><a class='anchor' aria-hidden='true' href='#types-of-skewness'></a>Types of Skewness</h3>
 <p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
-<li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
-<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result: <code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS usually return</p></li>
-<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result: <code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
+<li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x -
+mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
+<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result:
+<code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS
+usually return</p></li>
+<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result:
+<code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
 <h3 class='hasAnchor' id='kurtosis'><a class='anchor' aria-hidden='true' href='#kurtosis'></a>Kurtosis</h3>
@@ -284,21 +292,32 @@ larger than zero indicates a "leptokurtic" distribution with <em>fatter</em> tai
 A kurtosis value below zero indicates a "platykurtic" distribution with <em>thinner</em>
 tails (<cite>https://en.wikipedia.org/wiki/Kurtosis</cite>).</p>
 <h3 class='hasAnchor' id='types-of-kurtosis'><a class='anchor' aria-hidden='true' href='#types-of-kurtosis'></a>Types of Kurtosis</h3>
-<p><code>kurtosis()</code> supports three different methods for estimating kurtosis, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
-<li><p>Type "1" is the "classical" method, which is <code>g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
-<li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result: <code>G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what SAS and SPSS usually return</p></li>
-<li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result: <code>b2 = (g2 + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually returns.</p></li>
+<p><code>kurtosis()</code> supports three different methods for estimating kurtosis,
+as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
+<li><p>Type "1" is the "classical" method, which is <code>g2 = n * sum((x -
+mean(x))^4) / (sum((x - mean(x))^2)^2) - 3</code>.</p></li>
+<li><p>Type "2" first calculates the type-1 kurtosis, than adjusts the result:
+<code>G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))</code>. This is what
+SAS and SPSS usually return</p></li>
+<li><p>Type "3" first calculates the type-1 kurtosis, than adjusts the result:
+<code>b2 = (g2 + 3) * (1 - 1 / n)^2 - 3</code>. This is what Minitab usually
+returns.</p></li>
 </ul>
 
 <h3 class='hasAnchor' id='standard-errors'><a class='anchor' aria-hidden='true' href='#standard-errors'></a>Standard Errors</h3>
-<p>It is recommended to compute empirical (bootstrapped) standard errors (via the <code>iterations</code> argument) than relying on analytic standard errors (<cite>Wright &amp; Herrington, 2011</cite>).</p>
+<p>It is recommended to compute empirical (bootstrapped) standard errors (via
+the <code>iterations</code> argument) than relying on analytic standard errors
+(<cite>Wright &amp; Herrington, 2011</cite>).</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p>D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.</p></li>
-<li><p>Wright, D. B., &amp; Herrington, J. A. (2011). Problematic standard errors and confidence intervals for skewness and kurtosis. Behavior research methods, 43(1), 8-17.</p></li>
+<li><p>D. N. Joanes and C. A. Gill (1998). Comparing measures of sample
+  skewness and kurtosis. The Statistician, 47, 183–189.</p></li>
+<li><p>Wright, D. B., &amp; Herrington, J. A. (2011). Problematic standard
+  errors and confidence intervals for skewness and kurtosis. Behavior
+  research methods, 43(1), 8-17.</p></li>
 </ul>
 
 
