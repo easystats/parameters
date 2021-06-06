@@ -309,10 +309,8 @@ that describes the parameters that should be returned from the data frame, or
 a named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>parameters</code> is a character vector, every
 parameter in the <em>"Parameters"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame. For
-instance, in order to include all parametres that do <em>NOT</em> start with
-"Sepal", one can write <code>"^Sepal"</code> (the caret symbol <code>^</code> being used
-to omit certain patterns). Furthermore, if <code>parameters</code> has more than
+in <code>parameters</code> will be selected from the returned data frame. Furthermore,
+if <code>parameters</code> has more than
 one element, these will be merged with an <code>OR</code> operator into a regular
 expression pattern like this: <code>"(one|two|three)"</code>. If <code>parameters</code>
 is a named list of regular expression patterns, the names of the list-element
