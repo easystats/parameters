@@ -59,19 +59,21 @@ the multivariate test (that is also given by the \code{print}-method). If
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
 
-\item{parameters}{Character vector of length 1 with a regular expression pattern
+\item{parameters}{Character containing a regular expression pattern
 that describes the parameters that should be returned from the data frame, or
 a named list of regular expressions. All non-matching parameters will be
 removed from the output. If \code{parameters} is a character vector, every
-parameter in the \emph{"Parameters"} column that matches the regular expression in
-\code{parameters} will be selected from the returned data frame. Furthermore,
-if \code{parameters} has more than one element, these will be merged into
-a regular expression pattern like this: \code{"(one|two|three)"}. If
-\code{parameters} is a named list of regular expression patterns, the
-names of the list-element should equal the column name where selection
-should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}.}
+parameter in the \emph{"Parameters"} column that matches the regular expression
+in \code{parameters} will be selected from the returned data frame. For
+instance, in order to include all parametres that do \emph{NOT} start with
+"Sepal", one can write \code{"^Sepal"} (the caret symbol \code{^} being used
+to omit certain patterns). Furthermore, if \code{parameters} has more than
+one element, these will be merged with an \code{OR} operator into a regular
+expression pattern like this: \code{"(one|two|three)"}. If \code{parameters}
+is a named list of regular expression patterns, the names of the list-element
+should equal the column name where selection should be applied. This is useful
+for model objects where \code{model_parameters()} returns multiple columns
+with parameter components, like in \code{\link{model_parameters.lavaan}}.}
 
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
