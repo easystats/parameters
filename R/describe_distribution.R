@@ -5,7 +5,8 @@
 #'
 #' @param x A numeric vector.
 #' @param range Return the range (min and max).
-#' @param quartiles Return the first and third quartiles (25th and 75pth percentiles).
+#' @param quartiles Return the first and third quartiles (25th and 75pth
+#'   percentiles).
 #' @param include_factors Logical, if \code{TRUE}, factors are included in the
 #'   output, however, only columns for range (first and last factor levels) as
 #'   well as n and missing will contain information.
@@ -18,6 +19,7 @@
 #'   intervals. Only applies when \code{ci} is not \code{NULL}.
 #' @param iqr Logical, if \code{TRUE}, the interquartile range is calculated
 #'   (based on \code{\link[stats]{IQR}}, using \code{type = 6}).
+#' @param verbose Toggle warnings and messages.
 #' @inheritParams bayestestR::point_estimate
 #'
 #' @note There is also a
@@ -49,13 +51,13 @@ describe_distribution.numeric <- function(x,
                                           ci = NULL,
                                           iterations = 100,
                                           threshold = .1,
+                                          verbose = TRUE,
                                           ...) {
   out <- data.frame(.temp = 0)
 
   # Missing
   n_missing <- sum(is.na(x))
   x <- stats::na.omit(x)
-
 
   # Point estimates
   out <- cbind(
@@ -78,18 +80,15 @@ describe_distribution.numeric <- function(x,
 
   # Confidence Intervals
   if (!is.null(ci)) {
-    if (!requireNamespace("boot", quietly = TRUE)) {
-      warning("Package 'boot' needed for bootstrapping confidence intervals.", call. = FALSE)
-    } else {
-      results <- boot::boot(
-        data = x,
-        statistic = .boot_distribution,
-        R = iterations,
-        centrality = centrality
-      )
-      out_ci <- bayestestR::ci(results$t, ci = ci, verbose = FALSE)
-      out <- cbind(out, data.frame(CI_low = out_ci$CI_low[1], CI_high = out_ci$CI_high[1]))
-    }
+    insight::check_if_installed("boot")
+    results <- boot::boot(
+      data = x,
+      statistic = .boot_distribution,
+      R = iterations,
+      centrality = centrality
+    )
+    out_ci <- bayestestR::ci(results$t, ci = ci, verbose = FALSE)
+    out <- cbind(out, data.frame(CI_low = out_ci$CI_low[1], CI_high = out_ci$CI_high[1]))
   }
 
 
@@ -119,8 +118,8 @@ describe_distribution.numeric <- function(x,
   out <- cbind(
     out,
     data.frame(
-      Skewness = as.numeric(skewness(x)),
-      Kurtosis = as.numeric(kurtosis(x))
+      Skewness = as.numeric(skewness(x, verbose = verbose)),
+      Kurtosis = as.numeric(kurtosis(x, verbose = verbose))
     )
   )
 
@@ -137,12 +136,14 @@ describe_distribution.numeric <- function(x,
 }
 
 
-
-
-
 #' @rdname describe_distribution
 #' @export
-describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...) {
+describe_distribution.factor <- function(x,
+                                         dispersion = TRUE,
+                                         range = TRUE,
+                                         verbose = TRUE,
+                                         ...) {
+
   # Missing
   n_missing <- sum(is.na(x))
   x <- stats::na.omit(x)
@@ -157,8 +158,8 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
     Max = levels(x)[nlevels(x)],
     Q1 = NA,
     Q3 = NA,
-    Skewness = as.numeric(skewness(x)),
-    Kurtosis = as.numeric(kurtosis(x)),
+    Skewness = as.numeric(skewness(x, verbose = verbose)),
+    Kurtosis = as.numeric(kurtosis(x, verbose = verbose)),
     n = length(x),
     n_Missing = n_missing,
     stringsAsFactors = FALSE
@@ -171,17 +172,21 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
 
 
   dot.arguments <- list(...)
+
   if (is.null(dot.arguments[["ci"]])) {
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
+
   if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
+
   if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
     out$Q1 <- NULL
     out$Q3 <- NULL
   }
+
   if (!range) {
     out$Min <- NULL
     out$Max <- NULL
@@ -195,7 +200,12 @@ describe_distribution.factor <- function(x, dispersion = TRUE, range = TRUE, ...
 
 
 #' @export
-describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, ...) {
+describe_distribution.character <- function(x,
+                                            dispersion = TRUE,
+                                            range = TRUE,
+                                            verbose = TRUE,
+                                            ...) {
+
   # Missing
   n_missing <- sum(is.na(x))
   x <- stats::na.omit(x)
@@ -211,8 +221,8 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     Max = values[length(values)],
     Q1 = NA,
     Q3 = NA,
-    Skewness = as.numeric(skewness(x)),
-    Kurtosis = as.numeric(kurtosis(x)),
+    Skewness = as.numeric(skewness(x, verbose = verbose)),
+    Kurtosis = as.numeric(kurtosis(x, verbose = verbose)),
     n = length(x),
     n_Missing = n_missing,
     stringsAsFactors = FALSE
@@ -229,9 +239,11 @@ describe_distribution.character <- function(x, dispersion = TRUE, range = TRUE, 
     out$CI_low <- NULL
     out$CI_high <- NULL
   }
+
   if (is.null(dot.arguments[["iqr"]]) || isFALSE(dot.arguments[["iqr"]])) {
     out$IQR <- NULL
   }
+
   if (is.null(dot.arguments[["quartiles"]]) || isFALSE(dot.arguments[["quartiles"]])) {
     out$Q1 <- NULL
     out$Q3 <- NULL
@@ -261,6 +273,7 @@ describe_distribution.data.frame <- function(x,
                                              ci = NULL,
                                              iterations = 100,
                                              threshold = .1,
+                                             verbose = TRUE,
                                              ...) {
   out <- do.call(rbind, lapply(x, function(i) {
     if ((include_factors && is.factor(i)) || (!is.character(i) && !is.factor(i))) {
@@ -273,7 +286,8 @@ describe_distribution.data.frame <- function(x,
         quartiles = quartiles,
         ci = ci,
         iterations = iterations,
-        threshold = threshold
+        threshold = threshold,
+        verbose = verbose
       )
     }
   }))
@@ -304,6 +318,7 @@ describe_distribution.grouped_df <- function(x,
                                              ci = NULL,
                                              iterations = 100,
                                              threshold = .1,
+                                             verbose = TRUE,
                                              ...) {
   group_vars <- setdiff(colnames(attributes(x)$groups), ".rows")
   group_data <- expand.grid(lapply(x[group_vars], function(i) unique(sort(i))))
@@ -337,9 +352,6 @@ describe_distribution.grouped_df <- function(x,
 
 
 
-
-
-
 #' @export
 print.parameters_distribution <- function(x, digits = 2, ...) {
   formatted_table <- format(
@@ -353,9 +365,6 @@ print.parameters_distribution <- function(x, digits = 2, ...) {
   cat(insight::export_table(formatted_table, format = "text", digits = digits))
   invisible(x)
 }
-
-
-
 
 
 # bootstrapping CIs ----------------------------------

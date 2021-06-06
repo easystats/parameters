@@ -19,10 +19,11 @@ describe_distribution(x, ...)
   ci = NULL,
   iterations = 100,
   threshold = 0.1,
+  verbose = TRUE,
   ...
 )
 
-\method{describe_distribution}{factor}(x, dispersion = TRUE, range = TRUE, ...)
+\method{describe_distribution}{factor}(x, dispersion = TRUE, range = TRUE, verbose = TRUE, ...)
 
 \method{describe_distribution}{data.frame}(
   x,
@@ -35,6 +36,7 @@ describe_distribution(x, ...)
   ci = NULL,
   iterations = 100,
   threshold = 0.1,
+  verbose = TRUE,
   ...
 )
 }
@@ -52,7 +54,8 @@ describe_distribution(x, ...)
 
 \item{range}{Return the range (min and max).}
 
-\item{quartiles}{Return the first and third quartiles (25th and 75pth percentiles).}
+\item{quartiles}{Return the first and third quartiles (25th and 75pth
+percentiles).}
 
 \item{ci}{Confidence Interval (CI) level. Default is \code{NULL}, i.e. no
 confidence intervals are computed. If not \code{NULL}, confidence intervals
@@ -64,6 +67,8 @@ the first centrality index (which is typically the median).}
 intervals. Only applies when \code{ci} is not \code{NULL}.}
 
 \item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
+
+\item{verbose}{Toggle warnings and messages.}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are included in the
 output, however, only columns for range (first and last factor levels) as

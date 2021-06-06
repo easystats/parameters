@@ -13,6 +13,7 @@
 #'   significantly different from zero.
 #' @param digits Number of decimal places.
 #' @param object An object returned by \code{skewness()} or \code{kurtosis()}.
+#' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details \subsection{Skewness}{
@@ -33,9 +34,15 @@
 #' \subsection{Types of Skewness}{
 #' \code{skewness()} supports three different methods for estimating skewness, as discussed in \cite{Joanes and Gill (1988)}:
 #' \itemize{
-#' \item Type "1" is the "classical" method, which is \code{g1 = (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
-#' \item Type "2" first calculates the type-1 skewness, than adjusts the result: \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS usually return
-#' \item Type "3" first calculates the type-1 skewness, than adjusts the result: \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
+#' \item Type "1" is the "classical" method, which is \code{g1 = (sum((x -
+#' mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
+#'
+#' \item Type "2" first calculates the type-1 skewness, than adjusts the result:
+#' \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS
+#' usually return
+#'
+#' \item Type "3" first calculates the type-1 skewness, than adjusts the result:
+#' \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
 #' }
 #' }
 #' \subsection{Kurtosis}{
@@ -46,21 +53,35 @@
 #' tails (\cite{https://en.wikipedia.org/wiki/Kurtosis}).
 #' }
 #' \subsection{Types of Kurtosis}{
-#' \code{kurtosis()} supports three different methods for estimating kurtosis, as discussed in \cite{Joanes and Gill (1988)}:
+#' \code{kurtosis()} supports three different methods for estimating kurtosis,
+#' as discussed in \cite{Joanes and Gill (1988)}:
 #' \itemize{
-#' \item Type "1" is the "classical" method, which is \code{g2 = n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
-#' \item Type "2" first calculates the type-1 kurtosis, than adjusts the result: \code{G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what SAS and SPSS usually return
-#' \item Type "3" first calculates the type-1 kurtosis, than adjusts the result: \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually returns.
+#' \item Type "1" is the "classical" method, which is \code{g2 = n * sum((x -
+#' mean(x))^4) / (sum((x - mean(x))^2)^2) - 3}.
+#'
+#' \item Type "2" first calculates the type-1 kurtosis, than adjusts the result:
+#' \code{G2 = ((n + 1) * g2 + 6) * (n - 1)/((n - 2) * (n - 3))}. This is what
+#' SAS and SPSS usually return
+#'
+#' \item Type "3" first calculates the type-1 kurtosis, than adjusts the result:
+#' \code{b2 = (g2 + 3) * (1 - 1 / n)^2 - 3}. This is what Minitab usually
+#' returns.
 #' }
 #' }
 #' \subsection{Standard Errors}{
-#' It is recommended to compute empirical (bootstrapped) standard errors (via the \code{iterations} argument) than relying on analytic standard errors (\cite{Wright & Herrington, 2011}).
+#' It is recommended to compute empirical (bootstrapped) standard errors (via
+#' the \code{iterations} argument) than relying on analytic standard errors
+#' (\cite{Wright & Herrington, 2011}).
 #' }
 #'
 #' @references
 #' \itemize{
-#'   \item D. N. Joanes and C. A. Gill (1998). Comparing measures of sample skewness and kurtosis. The Statistician, 47, 183–189.
-#'   \item Wright, D. B., & Herrington, J. A. (2011). Problematic standard errors and confidence intervals for skewness and kurtosis. Behavior research methods, 43(1), 8-17.
+#'   \item D. N. Joanes and C. A. Gill (1998). Comparing measures of sample
+#'   skewness and kurtosis. The Statistician, 47, 183–189.
+#'
+#'   \item Wright, D. B., & Herrington, J. A. (2011). Problematic standard
+#'   errors and confidence intervals for skewness and kurtosis. Behavior
+#'   research methods, 43(1), 8-17.
 #' }
 #'
 #'
@@ -70,7 +91,12 @@
 #' skewness(rnorm(1000))
 #' kurtosis(rnorm(1000))
 #' @export
-skewness <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
+skewness <- function(x,
+                     na.rm = TRUE,
+                     type = "2",
+                     iterations = NULL,
+                     verbose = TRUE,
+                     ...) {
   UseMethod("skewness")
 }
 
@@ -79,7 +105,12 @@ skewness <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
 
 
 #' @export
-skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
+skewness.numeric <- function(x,
+                             na.rm = TRUE,
+                             type = "2",
+                             iterations = NULL,
+                             verbose = TRUE,
+                             ...) {
   if (na.rm) x <- x[!is.na(x)]
   n <- length(x)
   out <- (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5
@@ -87,7 +118,9 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   type <- .check_skewness_type(type)
 
   if (type == "2" && n < 3) {
-    warning(insight::format_message("Need at least 3 complete observations for type-2-skewness. Using 'type=\"1\"' now."), call. = FALSE)
+    if (verbose) {
+      warning(insight::format_message("Need at least 3 complete observations for type-2-skewness. Using 'type=\"1\"' now."), call. = FALSE)
+    }
     type <- "1"
   }
 
@@ -131,13 +164,28 @@ skewness.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 
 
 #' @export
-skewness.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  .skewness <- apply(x, 2, skewness, na.rm = na.rm, type = type, iterations = iterations)
+skewness.matrix <- function(x,
+                            na.rm = TRUE,
+                            type = "2",
+                            iterations = NULL,
+                            ...) {
+  .skewness <- apply(
+    x,
+    2,
+    skewness,
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
+
   .names <- colnames(x)
+
   if (length(.names) == 0) {
     .names <- paste0("X", seq_len(ncol(x)))
   }
+
   .skewness <- cbind(Parameter = .names, do.call(rbind, .skewness))
+
   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
   .skewness
 }
@@ -145,9 +193,20 @@ skewness.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
 
 #' @export
-skewness.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  .skewness <- lapply(x, skewness, na.rm = na.rm, type = type, iterations = iterations)
+skewness.data.frame <- function(x,
+                                na.rm = TRUE,
+                                type = "2",
+                                iterations = NULL,
+                                ...) {
+  .skewness <- lapply(x,
+    skewness,
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
+
   .skewness <- cbind(Parameter = names(.skewness), do.call(rbind, .skewness))
+
   class(.skewness) <- unique(c("parameters_skewness", class(.skewness)))
   .skewness
 }
@@ -155,14 +214,18 @@ skewness.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, 
 
 
 #' @export
-skewness.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  skewness(.factor_to_numeric(x), na.rm = na.rm, type = type, iterations = iterations)
+skewness.default <- function(x,
+                             na.rm = TRUE,
+                             type = "2",
+                             iterations = NULL,
+                             ...) {
+  skewness(
+    .factor_to_numeric(x),
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
 }
-
-
-
-
-
 
 
 
@@ -171,14 +234,23 @@ skewness.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 
 #' @rdname skewness
 #' @export
-kurtosis <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
+kurtosis <- function(x,
+                     na.rm = TRUE,
+                     type = "2",
+                     iterations = NULL,
+                     verbose = TRUE,
+                     ...) {
   UseMethod("kurtosis")
 }
 
 
-
 #' @export
-kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
+kurtosis.numeric <- function(x,
+                             na.rm = TRUE,
+                             type = "2",
+                             iterations = NULL,
+                             verbose = TRUE,
+                             ...) {
   if (na.rm) x <- x[!is.na(x)]
   n <- length(x)
   out <- n * sum((x - mean(x))^4) / (sum((x - mean(x))^2)^2)
@@ -186,7 +258,9 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   type <- .check_skewness_type(type)
 
   if (type == "2" && n < 4) {
-    warning(insight::format_message("Need at least 4 complete observations for type-2-kurtosis Using 'type=\"1\"' now."), call. = FALSE)
+    if (verbose) {
+      warning(insight::format_message("Need at least 4 complete observations for type-2-kurtosis Using 'type=\"1\"' now."), call. = FALSE)
+    }
     type <- "1"
   }
 
@@ -205,18 +279,16 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
   )
 
   if (!is.null(iterations)) {
-    if (!requireNamespace("boot", quietly = TRUE)) {
-      warning("Package 'boot' needed for bootstrapping SEs.", call. = FALSE)
-    } else {
-      results <- boot::boot(
-        data = x,
-        statistic = .boot_kurtosis,
-        R = iterations,
-        na.rm = na.rm,
-        type = type
-      )
-      out_se <- stats::sd(results$t, na.rm = TRUE)
-    }
+    insight::check_if_installed("boot")
+
+    results <- boot::boot(
+      data = x,
+      statistic = .boot_kurtosis,
+      R = iterations,
+      na.rm = na.rm,
+      type = type
+    )
+    out_se <- stats::sd(results$t, na.rm = TRUE)
   }
 
   .kurtosis <- data.frame(
@@ -228,10 +300,20 @@ kurtosis.numeric <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...
 }
 
 
-
 #' @export
-kurtosis.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  .kurtosis <- apply(x, 2, kurtosis, na.rm = na.rm, type = type, iterations = iterations)
+kurtosis.matrix <- function(x,
+                            na.rm = TRUE,
+                            type = "2",
+                            iterations = NULL,
+                            ...) {
+  .kurtosis <- apply(
+    x,
+    2,
+    kurtosis,
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
   .names <- colnames(x)
   if (length(.names) == 0) {
     .names <- paste0("X", seq_len(ncol(x)))
@@ -244,8 +326,17 @@ kurtosis.matrix <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...)
 
 
 #' @export
-kurtosis.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  .kurtosis <- lapply(x, kurtosis, na.rm = na.rm, type = type, iterations = iterations)
+kurtosis.data.frame <- function(x,
+                                na.rm = TRUE,
+                                type = "2",
+                                iterations = NULL,
+                                ...) {
+  .kurtosis <- lapply(x,
+    kurtosis,
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
   .kurtosis <- cbind(Parameter = names(.kurtosis), do.call(rbind, .kurtosis))
   class(.kurtosis) <- unique(c("parameters_kurtosis", class(.kurtosis)))
   .kurtosis
@@ -254,12 +345,18 @@ kurtosis.data.frame <- function(x, na.rm = TRUE, type = "2", iterations = NULL, 
 
 
 #' @export
-kurtosis.default <- function(x, na.rm = TRUE, type = "2", iterations = NULL, ...) {
-  kurtosis(.factor_to_numeric(x), na.rm = na.rm, type = type, iterations = iterations)
+kurtosis.default <- function(x,
+                             na.rm = TRUE,
+                             type = "2",
+                             iterations = NULL,
+                             ...) {
+  kurtosis(
+    .factor_to_numeric(x),
+    na.rm = na.rm,
+    type = type,
+    iterations = iterations
+  )
 }
-
-
-
 
 
 # methods -----------------------------------------
@@ -312,12 +409,7 @@ summary.parameters_kurtosis <- function(object, test = FALSE, ...) {
   object
 }
 
-
-
-
-
 # helper ------------------------------------------
-
 
 .check_skewness_type <- function(type) {
   # convenience
