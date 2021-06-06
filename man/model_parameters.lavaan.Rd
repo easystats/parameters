@@ -35,7 +35,7 @@ exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 that describes the parameters that should be returned from the data frame, or
 a named list of regular expressions. All non-matching parameters will be
 removed from the output. If \code{parameters} is a character vector, every
-parameter in the \emph{"Parameters"} column that matches the regular expression
+parameter in the \emph{"Parameter"} column that matches the regular expression
 in \code{parameters} will be selected from the returned data frame. Furthermore,
 if \code{parameters} has more than
 one element, these will be merged with an \code{OR} operator into a regular
