@@ -14,6 +14,9 @@
   can be helpful for users who may wish to report ANOVA table in wide format
   (i.e., with numerator and denominator degrees of freedom on the same row).
 
+* `describe_distribution()` gets `verbose` argument to toggle warnings and
+  messages.
+
 # parameters 0.14.0
 
 ## Breaking changes
