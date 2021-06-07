@@ -107,13 +107,16 @@ a named list of regular expressions. All non-matching parameters will be
 removed from the output. If \code{parameters} is a character vector, every
 parameter in the \emph{"Parameter"} column that matches the regular expression
 in \code{parameters} will be selected from the returned data frame. Furthermore,
-if \code{parameters} has more than
-one element, these will be merged with an \code{OR} operator into a regular
-expression pattern like this: \code{"(one|two|three)"}. If \code{parameters}
-is a named list of regular expression patterns, the names of the list-element
-should equal the column name where selection should be applied. This is useful
-for model objects where \code{model_parameters()} returns multiple columns
-with parameter components, like in \code{\link{model_parameters.lavaan}}.}
+if \code{parameters} has more than one element, these will be merged with an
+\code{OR} operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{parameters} is a named list of regular expression patterns, the names
+of the list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in \code{\link{model_parameters.lavaan}}.
+Note that the regular expression pattern should match the parameter names as
+they are stored in the returned data frame, which can be different from how
+they are printed. Inspect the \code{$Parameter} column of the parameters table
+to get the exact parameter names.}
 
 \item{verbose}{Toggle warnings and messages.}
 

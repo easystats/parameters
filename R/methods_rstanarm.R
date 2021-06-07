@@ -11,24 +11,7 @@
 #'   include the parameters for each group level from random effects. If
 #'   \code{group_level = FALSE} (the default), only information on SD and COR
 #'   are shown.
-#' @param parameters Character containing a regular expression pattern
-#'   that describes the parameters that should be returned from the data frame, or
-#'   a named list of regular expressions. All non-matching parameters will be
-#'   removed from the output. If \code{parameters} is a character vector, every
-#'   parameter in the \emph{"Parameter"} column that matches the regular expression
-#'   in \code{parameters} will be selected from the returned data frame. Furthermore,
-#'   if \code{parameters} has more than one element, these will be merged with an
-#'   \code{OR} operator into a regular expression pattern like this: \code{"(one|two|three)"}.
-#'   If \code{parameters} is a named list of regular expression patterns, the names
-#'   of the list-element should equal the column name where selection should be
-#'   applied. This is useful for model objects where \code{model_parameters()}
-#'   returns multiple columns with parameter components, like in
-#'   \code{\link{model_parameters.lavaan}}. For \strong{Bayesian models} from
-#'   packages like \pkg{brms} or \pkg{rstanarm}, please note that the regular
-#'   expression pattern should match the parameter names as they are stored in
-#'   the returned data frame, which probably is different from how the parameter
-#'   names are actually printed! To find out the exact parameter names, look at
-#'   the \code{$Parameter} column from object returned by \code{model_parameters()}.
+#'
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams insight::get_parameters
