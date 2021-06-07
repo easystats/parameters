@@ -227,7 +227,9 @@ mixed_2 <- lmer(
   QoL ~ time + phq4_within + phq4_between + education + (1 + time | ID),
   data = qol_cancer
 )
-model_parameters(mixed_2)
+# effects = "fixed" will not display random effects, but split the
+# fixed effects into its between- and within-effects components.
+model_parameters(mixed_2, effects = "fixed")
 ```
 
 For more complex models, within-effects will naturally change slightly and are
@@ -282,7 +284,7 @@ between- and other time-constant (i.e. between) effects or group-level
 predictors...
 
 ```{r}
-model_parameters(rewb)
+model_parameters(rewb, effects = "fixed")
 ```
 
 ... but you can also model the variation of (group) effects across time (and
