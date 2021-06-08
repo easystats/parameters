@@ -40,7 +40,8 @@ model_parameters.brmsfit <- function(model,
       priors = priors,
       exponentiate = exponentiate,
       standardize = standardize,
-      filter_parameters = parameters,
+      keep_parameters = keep,
+      drop_parameters = drop,
       ...
     )
   } else {
@@ -110,7 +111,8 @@ model_parameters.brmsfit <- function(model,
                                         priors = FALSE,
                                         exponentiate = FALSE,
                                         standardize = NULL,
-                                        filter_parameters = NULL,
+                                        keep_parameters = NULL,
+                                        drop_parameters = NULL,
                                         verbose = TRUE,
                                         ...) {
 
@@ -182,8 +184,12 @@ model_parameters.brmsfit <- function(model,
   first_cols <- c(1:ci_column, weight_column)
   params <- params[, c(first_cols, seq_len(ncol(params))[-first_cols])]
 
-  if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
+  # filter parameters, if requested
+  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+    params <- .filter_parameters(params,
+                                 keep = keep_parameters,
+                                 drop = drop_parameters,
+                                 verbose = verbose)
   }
 
   # add attributes

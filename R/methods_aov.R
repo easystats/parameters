@@ -110,7 +110,9 @@ model_parameters.aov <- function(model,
                                  ci = NULL,
                                  test = NULL,
                                  power = FALSE,
-                                 parameters = NULL,
+                                 keep = NULL,
+                                 drop = NULL,
+                                 parameters = keep,
                                  table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
@@ -158,8 +160,11 @@ model_parameters.aov <- function(model,
   }
 
   # filter parameters
-  if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters, verbose = verbose)
+  if (!is.null(keep) || !is.null(drop)) {
+    params <- .filter_parameters(params,
+                                 keep = keep,
+                                 drop = drop,
+                                 verbose = verbose)
   }
 
   # wide or long?
@@ -249,7 +254,9 @@ model_parameters.afex_aov <- function(model,
                                       epsilon_squared = NULL,
                                       df_error = NULL,
                                       type = NULL,
-                                      parameters = NULL,
+                                      keep = NULL,
+                                      drop = NULL,
+                                      parameters = keep,
                                       verbose = TRUE,
                                       ...) {
   if (inherits(model$Anova, "Anova.mlm")) {
@@ -277,8 +284,11 @@ model_parameters.afex_aov <- function(model,
   out <- .add_anova_attributes(out, model, ci, test = NULL, ...)
 
   # filter parameters
-  if (!is.null(parameters)) {
-    out <- .filter_parameters(out, parameters, verbose = verbose)
+  if (!is.null(keep) || !is.null(drop)) {
+    out <- .filter_parameters(out,
+                              keep = keep,
+                              drop = drop,
+                              verbose = verbose)
   }
 
   if (!"Method" %in% names(out)) {

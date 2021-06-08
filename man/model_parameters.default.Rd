@@ -18,7 +18,9 @@
   robust = FALSE,
   p_adjust = NULL,
   summary = FALSE,
-  parameters = NULL,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -135,25 +137,6 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 model (model formula, number of observations, residual standard deviation
 and more).}
 
-\item{parameters}{Deprecated, alias for \code{keep}.}
-
-\item{verbose}{Toggle warnings and messages.}
-
-\item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR]{describe_posterior}}.}
-
-\item{df_method}{Method for computing degrees of freedom for confidence
-intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
-May be \code{"profile"} or \code{"wald"}.}
-
-\item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
-
 \item{keep, drop}{Character containing a regular expression pattern
 that describes the parameters that should be included in the returned data
 frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
@@ -173,6 +156,25 @@ pattern should match the parameter names as they are stored in the returned
 data frame, which can be different from how they are printed. Inspect the
 \code{$Parameter} column of the parameters table to get the exact parameter
 names.}
+
+\item{parameters}{Deprecated, alias for \code{keep}.}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
+are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+
+\item{df_method}{Method for computing degrees of freedom for confidence
+intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
+May be \code{"profile"} or \code{"wald"}.}
+
+\item{component}{Model component for which parameters should be shown. May be
+one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
+\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
+\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+\code{MuMIn::model.avg()}) or \code{"all"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

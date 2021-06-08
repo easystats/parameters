@@ -9,7 +9,9 @@
   ci = 0.95,
   standardize = FALSE,
   component = c("regression", "correlation", "loading", "defined"),
-  parameters = NULL,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -30,6 +32,46 @@ variances of observed and latent variables, but not the variances of
 exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{component}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
+
+\item{keep}{Character containing a regular expression pattern
+that describes the parameters that should be included in the returned data
+frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
+may also be a named list of regular expressions. All non-matching parameters
+will be removed from the output. If \code{keep} is a character vector, every
+parameter name in the \emph{"Parameter"} column that matches the regular expression
+in \code{parameters} will be selected from the returned data frame (and vice
+versa, all parameter names matching \code{drop} will be excluded). Furthermore,
+if \code{keep} has more than one element, these will be merged with an
+\code{OR} operator into a regular expression pattern like this:
+\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
+patterns, the names of the list-element should equal the column name where
+selection should be applied. This is useful for model objects where
+\code{model_parameters()} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+pattern should match the parameter names as they are stored in the returned
+data frame, which can be different from how they are printed. Inspect the
+\code{$Parameter} column of the parameters table to get the exact parameter
+names.}
+
+\item{drop}{Character containing a regular expression pattern
+that describes the parameters that should be included in the returned data
+frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
+may also be a named list of regular expressions. All non-matching parameters
+will be removed from the output. If \code{keep} is a character vector, every
+parameter name in the \emph{"Parameter"} column that matches the regular expression
+in \code{parameters} will be selected from the returned data frame (and vice
+versa, all parameter names matching \code{drop} will be excluded). Furthermore,
+if \code{keep} has more than one element, these will be merged with an
+\code{OR} operator into a regular expression pattern like this:
+\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
+patterns, the names of the list-element should equal the column name where
+selection should be applied. This is useful for model objects where
+\code{model_parameters()} returns multiple columns with parameter components,
+like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+pattern should match the parameter names as they are stored in the returned
+data frame, which can be different from how they are printed. Inspect the
+\code{$Parameter} column of the parameters table to get the exact parameter
+names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 

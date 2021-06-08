@@ -275,7 +275,9 @@ model_parameters.default <- function(model,
                                      robust = FALSE,
                                      p_adjust = NULL,
                                      summary = FALSE,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
+                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   out <- tryCatch(
@@ -291,7 +293,8 @@ model_parameters.default <- function(model,
         robust = robust,
         p_adjust = p_adjust,
         summary = summary,
-        filter_parameters = parameters,
+        keep_parameters = keep,
+        drop_parameters = drop,
         verbose = verbose,
         ...
       )

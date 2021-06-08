@@ -965,9 +965,9 @@
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
     params <- .filter_parameters(params,
-                                     keep = keep_parameters,
-                                     drop = drop_parameters,
-                                     verbose = verbose)
+                                 keep = keep_parameters,
+                                 drop = drop_parameters,
+                                 verbose = verbose)
   }
 
   params

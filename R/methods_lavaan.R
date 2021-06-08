@@ -84,13 +84,16 @@ model_parameters.lavaan <- function(model,
                                     ci = 0.95,
                                     standardize = FALSE,
                                     component = c("regression", "correlation", "loading", "defined"),
-                                    parameters = NULL,
+                                    keep = NULL,
+                                    drop = NULL,
+                                    parameters = keep,
                                     verbose = TRUE,
                                     ...) {
   params <- .extract_parameters_lavaan(model,
     ci = ci,
     standardize = standardize,
-    filter_parameters = parameters,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
