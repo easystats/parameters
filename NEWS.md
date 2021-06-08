@@ -8,11 +8,21 @@
 
 ## Changes to functions
 
-* `compare_parameters()` now also accepts a list of model objects.
+### `model_parameters()`
 
 * `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
   can be helpful for users who may wish to report ANOVA table in wide format
   (i.e., with numerator and denominator degrees of freedom on the same row).
+
+* `model_parameters()` gains two new arguments, `keep` and `omit`. `keep` is
+  the new names for the former `parameters` argument and can be used to filter
+  parameters. While `keep` keeps those parameters whose names match the regular
+  expression pattern defined in `keep`, `omit` is the counterpart and excludes 
+  matching parameter names.
+
+### Other functions
+
+* `compare_parameters()` now also accepts a list of model objects.
 
 * `describe_distribution()` gets `verbose` argument to toggle warnings and
   messages.
