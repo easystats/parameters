@@ -37,7 +37,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -47,8 +48,9 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c(
-        "(Intercept)", "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length"
+        "(Intercept)", "Species [setosa] * Petal Length",
+        "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -59,8 +61,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length"
+        "Species [setosa] * Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -71,7 +73,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -82,8 +85,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length"
+        "Species [setosa] * Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -94,8 +97,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Species [setosa] * Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length"
+        "Species [setosa] * Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -106,7 +109,7 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"
       )
     )
   })
@@ -116,8 +119,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c(
-        "(Intercept)", "Petal.Length", "Species [versicolor] * Petal.Length",
-        "Species [virginica] * Petal.Length"
+        "(Intercept)", "Petal Length", "Species [versicolor] * Petal Length",
+        "Species [virginica] * Petal Length"
       )
     )
   })
@@ -128,7 +131,7 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"
       )
     )
   })
@@ -139,7 +142,7 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"
       )
     )
   })
@@ -149,8 +152,8 @@ if (require("testthat") && require("parameters") && require("splines")) {
     expect_equal(
       unname(format_parameters(m)),
       c(
-        "(Intercept)", "Petal.Length", "Species [versicolor]", "Species [virginica]",
-        "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "(Intercept)", "Petal Length", "Species [versicolor]", "Species [virginica]",
+        "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"
       )
     )
   })
@@ -161,7 +164,7 @@ if (require("testthat") && require("parameters") && require("splines")) {
       unname(format_parameters(m)),
       c(
         "(Intercept)", "Species [versicolor]", "Species [virginica]",
-        "Petal.Length", "Species [versicolor] * Petal.Length", "Species [virginica] * Petal.Length"
+        "Petal Length", "Species [versicolor] * Petal Length", "Species [virginica] * Petal Length"
       )
     )
   })
