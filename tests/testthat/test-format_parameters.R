@@ -177,10 +177,10 @@ if (require("testthat") && require("parameters") && require("splines")) {
       `bs(Petal.Width, degree = 4)2` = "Petal Width [2nd degree]",
       `bs(Petal.Width, degree = 4)3` = "Petal Width [3rd degree]",
       `bs(Petal.Width, degree = 4)4` = "Petal Width [4th degree]",
-      `Petal.Length:bs(Petal.Width, degree = 4)1` = "Petal Length * Petal.Width [1st degree]",
-      `Petal.Length:bs(Petal.Width, degree = 4)2` = "Petal Length * Petal.Width [2nd degree]",
-      `Petal.Length:bs(Petal.Width, degree = 4)3` = "Petal Length * Petal.Width [3rd degree]",
-      `Petal.Length:bs(Petal.Width, degree = 4)4` = "Petal Length * Petal.Width [4th degree]"
+      `Petal.Length:bs(Petal.Width, degree = 4)1` = "Petal Length * Petal Width [1st degree]",
+      `Petal.Length:bs(Petal.Width, degree = 4)2` = "Petal Length * Petal Width [2nd degree]",
+      `Petal.Length:bs(Petal.Width, degree = 4)3` = "Petal Length * Petal Width [3rd degree]",
+      `Petal.Length:bs(Petal.Width, degree = 4)4` = "Petal Length * Petal Width [4th degree]"
     ))
   })
 
