@@ -17,6 +17,9 @@
 * `describe_distribution()` gets `verbose` argument to toggle warnings and
   messages.
 
+* `format_parameters()` removes dots and underscores from parameter names,
+  to make these more "human readable".
+
 # parameters 0.14.0
 
 ## Breaking changes
