@@ -205,7 +205,9 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep <span class='op'>=</span> <span class='cn'>NULL</span>,
+  drop <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parameters <span class='op'>=</span> <span class='va'>keep</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -220,7 +222,9 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep <span class='op'>=</span> <span class='cn'>NULL</span>,
+  drop <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parameters <span class='op'>=</span> <span class='va'>keep</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
@@ -235,7 +239,9 @@
   exponentiate <span class='op'>=</span> <span class='cn'>FALSE</span>,
   robust <span class='op'>=</span> <span class='cn'>FALSE</span>,
   p_adjust <span class='op'>=</span> <span class='cn'>NULL</span>,
-  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  keep <span class='op'>=</span> <span class='cn'>NULL</span>,
+  drop <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parameters <span class='op'>=</span> <span class='va'>keep</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -311,23 +317,52 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
     </tr>
     <tr>
-      <th>parameters</th>
+      <th>keep</th>
       <td><p>Character containing a regular expression pattern
-that describes the parameters that should be returned from the data frame, or
-a named list of regular expressions. All non-matching parameters will be
-removed from the output. If <code>parameters</code> is a character vector, every
-parameter in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame. Furthermore,
-if <code>parameters</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
-If <code>parameters</code> is a named list of regular expression patterns, the names
-of the list-element should equal the column name where selection should be
-applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
-returns multiple columns with parameter components, like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>.
-Note that the regular expression pattern should match the parameter names as
-they are stored in the returned data frame, which can be different from how
-they are printed. Inspect the <code>$Parameter</code> column of the parameters table
-to get the exact parameter names.</p></td>
+that describes the parameters that should be included in the returned data
+frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
+may also be a named list of regular expressions. All non-matching parameters
+will be removed from the output. If <code>keep</code> is a character vector, every
+parameter name in the <em>"Parameter"</em> column that matches the regular expression
+in <code>parameters</code> will be selected from the returned data frame (and vice
+versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
+if <code>keep</code> has more than one element, these will be merged with an
+<code>OR</code> operator into a regular expression pattern like this:
+<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
+patterns, the names of the list-element should equal the column name where
+selection should be applied. This is useful for model objects where
+<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
+like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
+pattern should match the parameter names as they are stored in the returned
+data frame, which can be different from how they are printed. Inspect the
+<code>$Parameter</code> column of the parameters table to get the exact parameter
+names.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>Character containing a regular expression pattern
+that describes the parameters that should be included in the returned data
+frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
+may also be a named list of regular expressions. All non-matching parameters
+will be removed from the output. If <code>keep</code> is a character vector, every
+parameter name in the <em>"Parameter"</em> column that matches the regular expression
+in <code>parameters</code> will be selected from the returned data frame (and vice
+versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
+if <code>keep</code> has more than one element, these will be merged with an
+<code>OR</code> operator into a regular expression pattern like this:
+<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
+patterns, the names of the list-element should equal the column name where
+selection should be applied. This is useful for model objects where
+<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
+like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
+pattern should match the parameter names as they are stored in the returned
+data frame, which can be different from how they are printed. Inspect the
+<code>$Parameter</code> column of the parameters table to get the exact parameter
+names.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Deprecated, alias for <code>keep</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

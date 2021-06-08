@@ -170,8 +170,8 @@
 <span class="co">#&gt; Parameter                                                              | Coefficient |   SE |         95% CI | t(27) |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001</span>
-<span class="co">#&gt; raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001</span>
-<span class="co">#&gt; critical_0.80                                                          |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 0.041</span></code></pre></div>
+<span class="co">#&gt; raises 0 88/learning 0 82/complaints 0 78/privileges 0 70/advance 0 68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001</span>
+<span class="co">#&gt; critical 0 80                                                          |       -3.41 | 1.59 | [-6.67, -0.14] | -2.14 | 0.041</span></code></pre></div>
 <p>This output <em>hints</em> at the fact that the model could be represented via <strong>two “latent” dimensions</strong>, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.</p>
 <blockquote>
 <p>What does <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> exactly do?</p>
@@ -183,9 +183,9 @@
 <span class="co">#&gt; Parameter                                                 | Coefficient |   SE |         95% CI | t(26) |      p</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | &lt; .001</span>
-<span class="co">#&gt; raises_0.85/complaints_0.84/learning_0.83/privileges_0.74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001</span>
-<span class="co">#&gt; advance_-0.60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 0.026 </span>
-<span class="co">#&gt; critical_-0.65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 0.120</span></code></pre></div>
+<span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001</span>
+<span class="co">#&gt; advance -0 60                                             |        0.32 | 0.13 | [ 0.04,  0.59] |  2.36 | 0.026 </span>
+<span class="co">#&gt; critical -0 65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 0.120</span></code></pre></div>
 <p>A different method (<strong>Classical Multidimensional Scaling - cMDS</strong>) suggests that negative critiques do not have a significant impact on the rating, and that the lack of opportunities of career advancement is a separate dimension with an importance on its own.</p>
 <p>Although <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function can be useful in exploratory data analysis, it’s best to perform the dimension reduction step in a <strong>separate and dedicated stage</strong>, as this is a very important process in the data analysis workflow.</p>
 </div>
