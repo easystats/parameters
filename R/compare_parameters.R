@@ -70,7 +70,9 @@ compare_parameters <- function(...,
                                p_adjust = NULL,
                                style = NULL,
                                column_names = NULL,
-                               parameters = NULL,
+                               keep = NULL,
+                               drop = NULL,
+                               parameters = keep,
                                verbose = TRUE) {
   models <- list(...)
   if (length(models) == 1) {
@@ -145,7 +147,8 @@ compare_parameters <- function(...,
         exponentiate = exponentiate,
         df_method = df_method,
         p_adjust = p_adjust,
-        parameters = parameters,
+        keep = keep,
+        drop = drop,
         verbose = verbose
       )
     }

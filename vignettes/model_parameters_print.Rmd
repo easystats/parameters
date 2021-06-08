@@ -183,7 +183,7 @@ lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
 
 # remove intercept
-cp <- compare_parameters(lm1, lm2, parameters = "^(?!\\(Intercept)")
+cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept")
 
 # look at parameters names, to know their names for "groups" argument
 as.data.frame(cp)$Parameter
