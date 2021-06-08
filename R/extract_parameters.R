@@ -14,7 +14,8 @@
                                         wb_component = FALSE,
                                         verbose = TRUE,
                                         keep_component_column = FALSE,
-                                        filter_parameters = NULL,
+                                        keep_parameters = NULL,
+                                        omit_parameters = NULL,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -306,8 +307,11 @@
 
   # ==== filter parameters, if requested
 
-  if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(omit_parameters)) {
+    parameters <- .filter_parameters(parameters,
+                                     keep = keep_parameters,
+                                     omit = omit_parameters,
+                                     verbose = verbose)
   }
 
 
@@ -346,18 +350,20 @@
 
 
 
-.filter_parameters <- function(params, filter_params, verbose = TRUE) {
-  if (is.list(filter_params)) {
-    for (i in names(filter_params)) {
+.filter_parameters <- function(params, keep = NULL, omit = NULL, verbose = TRUE) {
+  if (!is.null(keep) && is.list(keep)) {
+    for (i in names(keep)) {
       params <- .filter_parameters_vector(params,
-        filter_params[[i]],
+        keep[[i]],
+        omit = NULL,
         column = i,
         verbose = verbose
       )
     }
   } else {
     params <- .filter_parameters_vector(params,
-      filter_params,
+      keep,
+      omit,
       column = NULL,
       verbose = verbose
     )
@@ -367,15 +373,24 @@
 
 
 .filter_parameters_vector <- function(params,
-                                      filter_params,
+                                      keep = NULL,
+                                      omit = NULL,
                                       column = NULL,
                                       verbose = TRUE) {
 
   # check pattern
-  if (length(filter_params) > 1) {
-    filter_params <- paste0("(", paste0(filter_params, collapse = "|"), ")")
+  if (!is.null(keep) && length(keep) > 1) {
+    keep <- paste0("(", paste0(keep, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(sprintf("The 'parameters' argument has more than 1 element. Merging into following regular expression: '%s'.", filter_params)))
+      message(insight::format_message(sprintf("The 'keep' argument has more than 1 element. Merging into following regular expression: '%s'.", keep)))
+    }
+  }
+
+  # check pattern
+  if (!is.null(omit) && length(omit) > 1) {
+    omit <- paste0("(", paste0(omit, collapse = "|"), ")")
+    if (verbose) {
+      message(insight::format_message(sprintf("The 'omit' argument has more than 1 element. Merging into following regular expression: '%s'.", omit)))
     }
   }
 
@@ -386,11 +401,26 @@
       column <- 1
     }
   }
-  out <- params[grepl(filter_params, params[[column]], perl = TRUE), ]
+
+  # row to keep and omit
+  if (!is.null(keep)) {
+    rows_to_keep <- grepl(keep, params[[column]], perl = TRUE)
+  } else {
+    rows_to_keep <- rep_len(TRUE, nrow(params))
+  }
+
+  if (!is.null(omit)) {
+    rows_to_omit <- !grepl(omit, params[[column]], perl = TRUE)
+  } else {
+    rows_to_omit <- rep_len(TRUE, nrow(params))
+  }
+
+
+  out <- params[rows_to_keep & rows_to_omit, ]
 
   if (nrow(out) == 0) {
     if (verbose) {
-      warning(insight::format_message("The pattern defined in the 'parameters' argument would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
+      warning(insight::format_message("The pattern defined in the 'keep' (and 'omit') arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
     }
     return(params)
   }
@@ -410,7 +440,8 @@
                                       robust = FALSE,
                                       p_adjust = NULL,
                                       wb_component = FALSE,
-                                      filter_parameters = NULL,
+                                      keep_parameters = NULL,
+                                      omit_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
   # check if standardization is required and package available
@@ -593,8 +624,11 @@
 
 
   # filter parameters, if requested
-  if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(omit_parameters)) {
+    parameters <- .filter_parameters(parameters,
+                                     keep = keep_parameters,
+                                     omit = omit_parameters,
+                                     verbose = verbose)
   }
 
   rownames(parameters) <- NULL
@@ -682,7 +716,8 @@
                                          diagnostic = c("ESS", "Rhat"),
                                          priors = FALSE,
                                          standardize = NULL,
-                                         filter_parameters = NULL,
+                                         keep_parameters = NULL,
+                                         omit_parameters = NULL,
                                          verbose = TRUE,
                                          ...) {
   # check if standardization is required and package available
@@ -782,8 +817,11 @@
   }
 
   # filter parameters, if requested
-  if (!is.null(filter_parameters)) {
-    parameters <- .filter_parameters(parameters, filter_parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(omit_parameters)) {
+    parameters <- .filter_parameters(parameters,
+                                     keep = keep_parameters,
+                                     omit = omit_parameters,
+                                     verbose = verbose)
   }
 
   rownames(parameters) <- NULL
@@ -801,7 +839,8 @@
 .extract_parameters_lavaan <- function(model,
                                        ci = 0.95,
                                        standardize = FALSE,
-                                       filter_parameters = NULL,
+                                       keep_parameters = NULL,
+                                       omit_parameters = NULL,
                                        verbose = TRUE,
                                        ...) {
   insight::check_if_installed("lavaan")
@@ -924,8 +963,11 @@
   }
 
   # filter parameters, if requested
-  if (!is.null(filter_parameters)) {
-    params <- .filter_parameters(params, filter_parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(omit_parameters)) {
+    params <- .filter_parameters(params,
+                                     keep = keep_parameters,
+                                     omit = omit_parameters,
+                                     verbose = verbose)
   }
 
   params

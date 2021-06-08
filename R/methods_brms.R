@@ -17,7 +17,9 @@ model_parameters.brmsfit <- function(model,
                                      exponentiate = FALSE,
                                      standardize = NULL,
                                      group_level = FALSE,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     omit = NULL,
+                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   modelinfo <- insight::model_info(model)
@@ -59,7 +61,8 @@ model_parameters.brmsfit <- function(model,
       effects = effects,
       component = component,
       standardize = standardize,
-      filter_parameters = parameters,
+      keep_parameters = keep,
+      omit_parameters = omit,
       verbose = verbose,
       ...
     )

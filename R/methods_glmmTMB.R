@@ -20,7 +20,9 @@ model_parameters.glmmTMB <- function(model,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = FALSE,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     omit = NULL,
+                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   # p-values, CI and se might be based on different df-methods
@@ -74,7 +76,8 @@ model_parameters.glmmTMB <- function(model,
         df_method = df_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
-        filter_parameters = NULL,
+        keep = NULL,
+        omit = NULL,
         keep_component_column = component != "conditional",
         ...
       )
@@ -132,8 +135,8 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # filter parameters
-  if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters, verbose = verbose)
+  if (!is.null(keep) || !is.null(omit)) {
+    params <- .filter_parameters(params, keep, omit, verbose = verbose)
   }
 
 

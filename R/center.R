@@ -60,7 +60,7 @@ center.numeric <- function(x, weights = NULL, robust = FALSE, verbose = TRUE, ..
     valid_x <- !is.na(x)
     x <- x[valid_x]
   }
-  centered_x <- rep(NA, length(x))
+  centered_x <- rep_len(NA, length(x))
 
 
   # Sanity checks

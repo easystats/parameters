@@ -5,7 +5,9 @@ model_parameters.mjoint <- function(model,
                                     component = c("all", "conditional", "survival"),
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
-                                    parameters = NULL,
+                                    keep = NULL,
+                                    omit = NULL,
+                                    parameters = keep,
                                     verbose = TRUE,
                                     ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -23,7 +25,8 @@ model_parameters.mjoint <- function(model,
       robust = FALSE,
       df_method = NULL,
       p_adjust = p_adjust,
-      filter_parameters = parameters,
+      keep_parameters = keep,
+      omit_parameters = omit,
       ...
     )
 

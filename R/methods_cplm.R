@@ -36,7 +36,9 @@ model_parameters.zcpglm <- function(model,
                                     exponentiate = FALSE,
                                     robust = FALSE,
                                     p_adjust = NULL,
-                                    parameters = NULL,
+                                    keep = NULL,
+                                    omit = NULL,
+                                    parameters = keep,
                                     verbose = TRUE,
                                     ...) {
   component <- match.arg(component)
@@ -58,7 +60,8 @@ model_parameters.zcpglm <- function(model,
       standardize = standardize,
       robust = robust,
       p_adjust = p_adjust,
-      filter_parameters = parameters,
+      keep_parameters = keep,
+      omit_parameters = omit,
       ...
     )
   }

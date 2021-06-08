@@ -55,7 +55,9 @@ model_parameters.stanreg <- function(model,
                                      exponentiate = FALSE,
                                      standardize = NULL,
                                      group_level = FALSE,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     omit = NULL,
+                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
 
@@ -75,7 +77,8 @@ model_parameters.stanreg <- function(model,
     priors = priors,
     effects = effects,
     standardize = standardize,
-    filter_parameters = parameters,
+    keep_parameters = keep,
+    omit_parameters = omit,
     verbose = verbose,
     ...
   )
@@ -122,7 +125,9 @@ model_parameters.stanmvreg <- function(model,
                                        priors = TRUE,
                                        effects = "fixed",
                                        standardize = NULL,
-                                       parameters = NULL,
+                                       keep = NULL,
+                                       omit = NULL,
+                                       parameters = keep,
                                        verbose = TRUE,
                                        ...) {
 
@@ -142,7 +147,8 @@ model_parameters.stanmvreg <- function(model,
     priors = priors,
     effects = effects,
     standardize = standardize,
-    filter_parameters = parameters,
+    keep_parameters = keep,
+    omit_parameters = omit,
     verbose = verbose,
     ...
   )
