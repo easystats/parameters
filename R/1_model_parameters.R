@@ -213,14 +213,14 @@ parameters <- model_parameters
 #' @param summary Logical, if \code{TRUE}, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
-#' @param keep,omit Character containing a regular expression pattern
+#' @param keep,drop Character containing a regular expression pattern
 #'   that describes the parameters that should be included in the returned data
-#'   frame (for \code{keep}), resp. parameters to exclude (\code{omit}). \code{keep}
+#'   frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
 #'   may also be a named list of regular expressions. All non-matching parameters
 #'   will be removed from the output. If \code{keep} is a character vector, every
 #'   parameter name in the \emph{"Parameter"} column that matches the regular expression
 #'   in \code{parameters} will be selected from the returned data frame (and vice
-#'   versa, all parameter names matching \code{omit} will be excluded). Furthermore,
+#'   versa, all parameter names matching \code{drop} will be excluded). Furthermore,
 #'   if \code{keep} has more than one element, these will be merged with an
 #'   \code{OR} operator into a regular expression pattern like this:
 #'   \code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
@@ -324,7 +324,7 @@ model_parameters.default <- function(model,
                                       p_adjust = NULL,
                                       summary = FALSE,
                                       keep_parameters = NULL,
-                                      omit_parameters = NULL,
+                                      drop_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
 
@@ -353,7 +353,7 @@ model_parameters.default <- function(model,
       df_method = df_method,
       p_adjust = p_adjust,
       keep_parameters = keep_parameters,
-      omit_parameters = omit_parameters,
+      drop_parameters = drop_parameters,
       verbose = verbose,
       ...
     )

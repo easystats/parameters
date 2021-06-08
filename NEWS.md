@@ -14,10 +14,10 @@
   can be helpful for users who may wish to report ANOVA table in wide format
   (i.e., with numerator and denominator degrees of freedom on the same row).
 
-* `model_parameters()` gains two new arguments, `keep` and `omit`. `keep` is
+* `model_parameters()` gains two new arguments, `keep` and `drop`. `keep` is
   the new names for the former `parameters` argument and can be used to filter
-  parameters. While `keep` keeps those parameters whose names match the regular
-  expression pattern defined in `keep`, `omit` is the counterpart and excludes 
+  parameters. While `keep` selects those parameters whose names match the regular
+  expression pattern defined in `keep`, `drop` is the counterpart and excludes 
   matching parameter names.
 
 ### Other functions

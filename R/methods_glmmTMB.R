@@ -21,7 +21,7 @@ model_parameters.glmmTMB <- function(model,
                                      wb_component = TRUE,
                                      summary = FALSE,
                                      keep = NULL,
-                                     omit = NULL,
+                                     drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
@@ -77,7 +77,7 @@ model_parameters.glmmTMB <- function(model,
         p_adjust = p_adjust,
         wb_component = wb_component,
         keep = NULL,
-        omit = NULL,
+        drop = NULL,
         keep_component_column = component != "conditional",
         ...
       )
@@ -135,8 +135,8 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # filter parameters
-  if (!is.null(keep) || !is.null(omit)) {
-    params <- .filter_parameters(params, keep, omit, verbose = verbose)
+  if (!is.null(keep) || !is.null(drop)) {
+    params <- .filter_parameters(params, keep, drop, verbose = verbose)
   }
 
 

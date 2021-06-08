@@ -40,7 +40,7 @@ model_parameters.cgam <- function(model,
                                   robust = FALSE,
                                   p_adjust = NULL,
                                   keep = NULL,
-                                  omit = NULL,
+                                  drop = NULL,
                                   parameters = keep,
                                   verbose = TRUE,
                                   ...) {
@@ -63,7 +63,7 @@ model_parameters.cgam <- function(model,
         robust = robust,
         p_adjust = p_adjust,
         keep_parameters = keep,
-        omit_parameters = omit,
+        drop_parameters = drop,
       )
   }
 

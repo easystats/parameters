@@ -6,7 +6,7 @@ model_parameters.mjoint <- function(model,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
                                     keep = NULL,
-                                    omit = NULL,
+                                    drop = NULL,
                                     parameters = keep,
                                     verbose = TRUE,
                                     ...) {
@@ -26,7 +26,7 @@ model_parameters.mjoint <- function(model,
       df_method = NULL,
       p_adjust = p_adjust,
       keep_parameters = keep,
-      omit_parameters = omit,
+      drop_parameters = drop,
       ...
     )
 

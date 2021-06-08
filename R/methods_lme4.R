@@ -129,7 +129,7 @@ model_parameters.merMod <- function(model,
                                     wb_component = TRUE,
                                     summary = FALSE,
                                     keep = NULL,
-                                    omit = NULL,
+                                    drop = NULL,
                                     parameters = keep,
                                     verbose = TRUE,
                                     ...) {
@@ -175,7 +175,7 @@ model_parameters.merMod <- function(model,
         p_adjust = p_adjust,
         wb_component = wb_component,
         keep_parameters = keep,
-        omit_parameters = omit,
+        drop_parameters = drop,
         verbose = verbose,
         ...
       )

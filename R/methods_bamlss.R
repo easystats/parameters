@@ -12,7 +12,7 @@ model_parameters.bamlss <- function(model,
                                     exponentiate = FALSE,
                                     standardize = NULL,
                                     keep = NULL,
-                                    omit = NULL,
+                                    drop = NULL,
                                     parameters = keep,
                                     verbose = TRUE,
                                     ...) {
@@ -35,7 +35,7 @@ model_parameters.bamlss <- function(model,
     component = component,
     standardize = standardize,
     keep_parameters = keep,
-    omit_parameters = omit,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

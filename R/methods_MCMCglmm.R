@@ -34,7 +34,7 @@ model_parameters.MCMCglmm <- function(model,
                                       diagnostic = c("ESS", "Rhat"),
                                       priors = TRUE,
                                       keep = NULL,
-                                      omit = NULL,
+                                      drop = NULL,
                                       parameters = keep,
                                       verbose = TRUE,
                                       ...) {
@@ -54,7 +54,7 @@ model_parameters.MCMCglmm <- function(model,
       diagnostic = diagnostic,
       priors = priors,
       keep_parameters = keep,
-      omit_parameters = omit,
+      drop_parameters = drop,
       verbose = verbose,
       ...
     )

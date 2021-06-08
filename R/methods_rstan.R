@@ -13,7 +13,7 @@ model_parameters.stanfit <- function(model,
                                      standardize = NULL,
                                      group_level = FALSE,
                                      keep = NULL,
-                                     omit = NULL,
+                                     drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
@@ -34,7 +34,7 @@ model_parameters.stanfit <- function(model,
     effects = effects,
     standardize = standardize,
     keep_parameters = keep,
-    omit_parameters = omit,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

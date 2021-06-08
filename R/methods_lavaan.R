@@ -123,7 +123,7 @@ model_parameters.blavaan <- function(model,
                                      component = "all",
                                      standardize = NULL,
                                      keep = NULL,
-                                     omit = NULL,
+                                     drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
@@ -143,7 +143,7 @@ model_parameters.blavaan <- function(model,
     effects = "all",
     standardize = standardize,
     keep_parameters = keep,
-    omit_parameters = omit,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

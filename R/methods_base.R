@@ -9,7 +9,7 @@ model_parameters.data.frame <- function(model,
                                         rope_range = "default",
                                         rope_ci = 1.0,
                                         keep = NULL,
-                                        omit = NULL,
+                                        drop = NULL,
                                         parameters = keep,
                                         verbose = TRUE,
                                         ...) {
@@ -27,7 +27,7 @@ model_parameters.data.frame <- function(model,
     diagnostic = NULL,
     priors = FALSE,
     keep_parameters = keep,
-    omit_parameters = omit,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

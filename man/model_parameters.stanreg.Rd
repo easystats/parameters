@@ -17,7 +17,7 @@
   rope_range = "default",
   rope_ci = 1,
   keep = NULL,
-  omit = NULL,
+  drop = NULL,
   parameters = keep,
   verbose = TRUE,
   ...
@@ -41,7 +41,7 @@
   standardize = NULL,
   group_level = FALSE,
   keep = NULL,
-  omit = NULL,
+  drop = NULL,
   parameters = keep,
   verbose = TRUE,
   ...
@@ -64,7 +64,7 @@
   standardize = NULL,
   group_level = FALSE,
   keep = NULL,
-  omit = NULL,
+  drop = NULL,
   parameters = keep,
   verbose = TRUE,
   ...
@@ -103,12 +103,12 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{keep}{Character containing a regular expression pattern
 that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{omit}). \code{keep}
+frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
 may also be a named list of regular expressions. All non-matching parameters
 will be removed from the output. If \code{keep} is a character vector, every
 parameter name in the \emph{"Parameter"} column that matches the regular expression
 in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{omit} will be excluded). Furthermore,
+versa, all parameter names matching \code{drop} will be excluded). Furthermore,
 if \code{keep} has more than one element, these will be merged with an
 \code{OR} operator into a regular expression pattern like this:
 \code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
@@ -121,14 +121,14 @@ data frame, which can be different from how they are printed. Inspect the
 \code{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{omit}{Character containing a regular expression pattern
+\item{drop}{Character containing a regular expression pattern
 that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{omit}). \code{keep}
+frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
 may also be a named list of regular expressions. All non-matching parameters
 will be removed from the output. If \code{keep} is a character vector, every
 parameter name in the \emph{"Parameter"} column that matches the regular expression
 in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{omit} will be excluded). Furthermore,
+versa, all parameter names matching \code{drop} will be excluded). Furthermore,
 if \code{keep} has more than one element, these will be merged with an
 \code{OR} operator into a regular expression pattern like this:
 \code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
