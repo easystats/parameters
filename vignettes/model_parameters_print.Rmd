@@ -124,7 +124,7 @@ mtcars$gear <- as.factor(mtcars$gear)
 model <- lm(mpg ~ hp + gear * vs + cyl + drat, data = mtcars)
 
 # don't select "Intercept" parameter
-mp <- model_parameters(model, parameters = "^(?!\\(Intercept)")
+mp <- model_parameters(model, drop = "^\\(Intercept")
 
 # inspect data frame
 as.data.frame(mp)
@@ -191,9 +191,9 @@ as.data.frame(cp)$Parameter
 # create groups. Interactions only present in 2nd model
 print(cp, groups = list(Species = c("Species (versicolor)", 
                                     "Species (virginica)"),
-                        Interactions = c("Species (versicolor) * Petal.Length",
-                                         "Species (virginica) * Petal.Length"),
-                        Controls = "Petal.Length"))
+                        Interactions = c("Species (versicolor) * Petal Length",
+                                         "Species (virginica) * Petal Length"),
+                        Controls = "Petal Length"))
 ```
 
 ## More advances tables and markdown / HTML formatting
