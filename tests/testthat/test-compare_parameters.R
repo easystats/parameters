@@ -27,8 +27,8 @@ if (require("testthat") && require("parameters") && require("insight")) {
       out$Parameter,
       c(
         "(Intercept)", "Species (versicolor)", "Species (virginica)",
-        "Petal.Length", "Species (versicolor) * Petal.Length",
-        "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
+        "Petal Length", "Species (versicolor) * Petal Length",
+        "Species (virginica) * Petal Length", "outcome (2)", "outcome (3)",
         "treatment (2)", "treatment (3)", NA, "Observations"
       )
     )
@@ -61,8 +61,8 @@ if (require("testthat") && require("parameters") && require("insight")) {
       out$Parameter,
       c(
         "(Intercept)", "Species (versicolor)", "Species (virginica)",
-        "Petal.Length", "Species (versicolor) * Petal.Length",
-        "Species (virginica) * Petal.Length", "outcome (2)", "outcome (3)",
+        "Petal Length", "Species (versicolor) * Petal Length",
+        "Species (virginica) * Petal Length", "outcome (2)", "outcome (3)",
         "treatment (2)", "treatment (3)", NA, "Observations"
       )
     )
