@@ -122,7 +122,9 @@ model_parameters.blavaan <- function(model,
                                      diagnostic = c("ESS", "Rhat"),
                                      component = "all",
                                      standardize = NULL,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     omit = NULL,
+                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
 
@@ -140,7 +142,8 @@ model_parameters.blavaan <- function(model,
     diagnostic = diagnostic,
     effects = "all",
     standardize = standardize,
-    filter_parameters = parameters,
+    keep_parameters = keep,
+    omit_parameters = omit,
     verbose = verbose,
     ...
   )
