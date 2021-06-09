@@ -230,13 +230,13 @@
 <span class="co">#&gt; Parameter            | Coefficient</span>
 <span class="co">#&gt; ----------------------------------</span>
 <span class="co">#&gt; SD (Intercept: site) |        0.38</span>
-<span class="co">#&gt; SD (Residual)        |        1.23</span>
+<span class="co">#&gt; SD (Residual)        |        1.51</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects (Zero-Inflated Model)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter     | Coefficient</span>
 <span class="co">#&gt; ---------------------------</span>
-<span class="co">#&gt; SD (Residual) |        1.23</span></code></pre></div>
+<span class="co">#&gt; SD (Residual) |        1.51</span></code></pre></div>
 <p>Redundant columns are removed. The related model component is shown as table header. However, you can also return a single table:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
@@ -263,8 +263,8 @@
 <span class="co">#&gt; minedno              |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | &lt; .001 |   fixed | zero_inflated</span>
 <span class="co">#&gt; (Intercept)          |        0.41 |      |                |       |        |   fixed |    dispersion</span>
 <span class="co">#&gt; SD (Intercept: site) |        0.38 |      |                |       |        |  random |   conditional</span>
-<span class="co">#&gt; SD (Residual)        |        1.23 |      |                |       |        |  random |   conditional</span>
-<span class="co">#&gt; SD (Residual)        |        1.23 |      |                |       |        |  random | zero_inflated</span></code></pre></div>
+<span class="co">#&gt; SD (Residual)        |        1.51 |      |                |       |        |  random |   conditional</span>
+<span class="co">#&gt; SD (Residual)        |        1.51 |      |                |       |        |  random | zero_inflated</span></code></pre></div>
 </div>
 <div id="adding-model-summaries" class="section level2">
 <h2 class="hasAnchor">
