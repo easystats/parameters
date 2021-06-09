@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Type of model parameters — parameters_type" />
-<meta property="og:description" content="Type of model parameters" />
+<meta property="og:description" content="In a regression model, the parameters do not all have the meaning. For instance, the intercept has to be interpreted as theoretical outcome value under some conditions (when predictors are set to 0), whereas other coefficients are to be interpreted as amounts of change. Others, such as interactions, represent changes in another of the parameter. The parameters_type function attempts to retrieve information and meaning of parameters. It outputs a dataframe of information for each parameters, such as the Type (wether the parameter corresponds to a factor or a numeric predictor, or whether it is a (regular) interacation or a nested one), the Link (whether the parameter can be interpreted as a mean value, the slope of an association or a difference between two levels) and, in the case of interactions, which other parameters is impacted by which parameter." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -190,7 +190,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Type of model parameters</p>
+    <p>In a regression model, the parameters do not all have the meaning. For instance, the intercept has to be interpreted as theoretical outcome value under some conditions (when predictors are set to 0), whereas other coefficients are to be interpreted as amounts of change. Others, such as interactions, represent changes in another of the parameter. The <code>parameters_type</code> function attempts to retrieve information and meaning of parameters. It outputs a dataframe of information for each parameters, such as the <code>Type</code> (wether the parameter corresponds to a factor or a numeric predictor, or whether it is a (regular) interacation or a nested one), the <code>Link</code> (whether the parameter can be interpreted as a mean value, the slope of an association or a difference between two levels) and, in the case of interactions, which other parameters is impacted by which parameter.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>parameters_type</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span></code></pre></div>
