@@ -30,6 +30,11 @@
 * `format_parameters()` removes dots and underscores from parameter names,
   to make these more "human readable".
 
+## Bug fixes
+
+* The random effects returned by `model_parameters()` mistakenly displayed
+  the residuals standard deviation as square-root of the residual SD.
+
 # parameters 0.14.0
 
 ## Breaking changes

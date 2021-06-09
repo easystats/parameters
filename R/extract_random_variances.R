@@ -154,9 +154,10 @@
   out <- rbind(ran_intercept, ran_slope, ran_corr, ran_sigma)
   rownames(out) <- NULL
 
-  # variances to SD (sqrt)
+  # variances to SD (sqrt), except correlations and Sigma
   corr_param <- grepl("Cor (Intercept~", out$Parameter, fixed = TRUE)
-  out$Coefficient[!corr_param] <- sqrt(out$Coefficient[!corr_param])
+  sigma_param <- out$Parameter == "SD (Observations)"
+  out$Coefficient[!corr_param & !sigma_param] <- sqrt(out$Coefficient[!corr_param])
 
   stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
 
