@@ -353,7 +353,16 @@ format.compare_parameters <- function(x,
 # stan models ----------------------------
 
 #' @export
-format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci_width = NULL, ci_brackets = NULL, zap_small = FALSE, format = NULL, ...) {
+format.parameters_stan <- function(x,
+                                   split_components = TRUE,
+                                   select = NULL,
+                                   ci_width = NULL,
+                                   ci_brackets = NULL,
+                                   zap_small = FALSE,
+                                   format = NULL,
+                                   table_caption = NULL,
+                                   ...) {
+
   cp <- attributes(x)$parameter_info
   att <- attributes(x)
   final_table <- list()
@@ -389,7 +398,14 @@ format.parameters_stan <- function(x, split_components = TRUE, select = NULL, ci
     })
   }
 
-  .compact_list(final_table)
+  final_table <- .compact_list(final_table)
+
+  # modify table title, if requested
+  if (length(final_table) == 1 && !is.null(table_caption)) {
+    attr(final_table[[1]], "table_caption") <- table_caption
+  }
+
+  final_table
 }
 
 

@@ -358,14 +358,12 @@ print.parameters_stan <- function(x,
     format = "text",
     ci_width = "auto",
     ci_brackets = TRUE,
+    table_caption = caption,
     ...
   )
 
-  # table caption
-  table_caption <- .print_caption(x, caption, format = "text")
-
   # print table
-  cat(insight::export_table(formatted_table, caption = table_caption, format = "text"))
+  cat(insight::export_table(formatted_table, format = "text"))
 
   if (isTRUE(verbose)) {
     .print_footer_cimethod(ci_method)
