@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.6.1.9001
-pkgdown_sha: 900ef5471576f8f29508a7e7d94fae51390f2d96
+pkgdown_sha: 9ce6af43b55cd21e9563526e12a12d1243657bf6
 articles:
   demean: demean.html
   efa_cfa: efa_cfa.html
@@ -13,5 +13,5 @@ articles:
   overview_of_vignettes: overview_of_vignettes.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2021-06-09T07:11Z
+last_built: 2021-06-11T07:32Z
 
