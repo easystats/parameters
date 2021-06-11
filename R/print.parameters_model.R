@@ -326,6 +326,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
 print.parameters_stan <- function(x,
                                   split_components = TRUE,
                                   select = NULL,
+                                  caption = NULL,
                                   digits = 2,
                                   ci_digits = 2,
                                   p_digits = 3,
@@ -359,7 +360,12 @@ print.parameters_stan <- function(x,
     ci_brackets = TRUE,
     ...
   )
-  cat(insight::export_table(formatted_table, format = "text"))
+
+  # table caption
+  table_caption <- .print_caption(x, caption, format = "text")
+
+  # print table
+  cat(insight::export_table(formatted_table, caption = table_caption, format = "text"))
 
   if (isTRUE(verbose)) {
     .print_footer_cimethod(ci_method)
