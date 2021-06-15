@@ -75,6 +75,7 @@ compare_parameters <- function(...,
                                parameters = keep,
                                verbose = TRUE) {
   models <- list(...)
+
   if (length(models) == 1) {
     if (insight::is_model(models[[1]]) || inherits(models[[1]], "parameters_model")) {
       modellist <- FALSE
@@ -85,6 +86,7 @@ compare_parameters <- function(...,
   } else {
     modellist <- FALSE
   }
+
   if (isTRUE(modellist)) {
     model_names <- names(models)
     if (length(model_names) == 0) {
