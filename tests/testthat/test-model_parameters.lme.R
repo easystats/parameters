@@ -16,7 +16,7 @@ if (require("testthat") && require("insight") && require("parameters") && requir
 
   test_that("model_parameters.lme", {
     params <- model_parameters(model, effects = "all")
-    expect_equal(params$Coefficient, c(251.4051, 10.46729, 24.74024, 5.9221, 0.066, 5.05884), tolerance = 1e-3)
+    expect_equal(params$Coefficient, c(251.4051, 10.46729, 24.74024, 5.9221, 0.066, 25.59184), tolerance = 1e-3)
     expect_equal(params$SE, c(6.82452, 1.54578, NA, NA, NA, NA), tolerance = 1e-3)
     expect_equal(
       colnames(params),
