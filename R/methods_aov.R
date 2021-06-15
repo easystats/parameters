@@ -116,6 +116,9 @@ model_parameters.aov <- function(model,
                                  table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
+  # save model object, for later checks
+  original_model <- model
+
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
       warning(insight::format_message("Package 'car' required for type-2 or type-3 anova. Defaulting to type-1."), call. = FALSE)
@@ -136,7 +139,7 @@ model_parameters.aov <- function(model,
 
   # check contrasts
   if (verbose) {
-    .check_anova_contrasts(model, type)
+    .check_anova_contrasts(original_model, type)
   }
 
   # extract standard parameters
@@ -144,15 +147,15 @@ model_parameters.aov <- function(model,
 
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
-      model,
-      parameters = params,
-      omega_squared = omega_squared,
-      eta_squared = eta_squared,
-      epsilon_squared = epsilon_squared,
-      df_error = df_error,
-      ci = ci,
-      verbose = verbose
-    )
+    model,
+    parameters = params,
+    omega_squared = omega_squared,
+    eta_squared = eta_squared,
+    epsilon_squared = epsilon_squared,
+    df_error = df_error,
+    ci = ci,
+    verbose = verbose
+  )
 
   # add power, if possible
   if (isTRUE(power)) {
