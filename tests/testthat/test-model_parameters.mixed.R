@@ -50,7 +50,7 @@ if (.runThisTest &&
       as.vector(params$Parameter),
       c("SD (Intercept)", "SD (Observations)")
     )
-    expect_equal(params$Coefficient, c(0.27049, 0.77061), tolerance = 1e-2)
+    expect_equal(params$Coefficient, c(0.27049, 0.59385), tolerance = 1e-2)
   })
 
   test_that("model_parameters.mixed-all", {
@@ -60,7 +60,7 @@ if (.runThisTest &&
       as.vector(params$Parameter),
       c("(Intercept)", "cyl", "SD (Intercept)", "SD (Observations)")
     )
-    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.27049, 0.77617), tolerance = 1e-2)
+    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.27049, 0.59385), tolerance = 1e-2)
   })
 
   test_that("model_parameters.mixed-all_pars", {
@@ -133,7 +133,7 @@ if (.runThisTest &&
         "Parameter            | Coefficient",
         "----------------------------------",
         "SD (Intercept: gear) |        0.27",
-        "SD (Residual)        |        0.77"
+        "SD (Residual)        |        0.59"
       )
     )
 
