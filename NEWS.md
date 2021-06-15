@@ -35,6 +35,9 @@
 * The random effects returned by `model_parameters()` mistakenly displayed
   the residuals standard deviation as square-root of the residual SD.
 
+* Fixed issue with `model_parameters()` for *brmsfit* objects that model
+  standard errors (i.e. for meta-analysis).
+
 # parameters 0.14.0
 
 ## Breaking changes
