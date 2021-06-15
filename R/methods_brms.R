@@ -118,7 +118,7 @@ model_parameters.brmsfit <- function(model,
 
 
   # parameters
-  smd <- insight::get_parameters(model, effects = "fixed")
+  smd <- insight::get_parameters(model, effects = "fixed", component = "conditional")
   studies <- insight::get_parameters(model, effects = "random", parameters = "^(?!sd_)")
   studies[] <- lapply(studies, function(i) i + smd[[1]])
   tau <- insight::get_parameters(model, effects = "random", parameters = "^sd_")
