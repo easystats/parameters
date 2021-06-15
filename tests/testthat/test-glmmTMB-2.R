@@ -2,12 +2,12 @@
 
 if (.runThisTest && require("testthat") && require("parameters") && require("glmmTMB")) {
   data(Salamanders)
-  model <- glmmTMB(
+  model <- suppressWarnings(glmmTMB(
     count ~ spp + mined + spp * mined,
     ziformula = ~ spp + mined + spp * mined,
     family = truncated_poisson,
     data = Salamanders
-  )
+  ))
 
   mp <- model_parameters(model, effects = "fixed", component = "conditional")
   test_that("model_parameters", {
@@ -50,7 +50,7 @@ if (.runThisTest && require("testthat") && require("parameters") && require("glm
   d2$sd <- "five"
   dat <- rbind(d1, d2)
 
-  model <- glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat)
+  model <- suppressWarnings(glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat))
   mp <- model_parameters(model, effects = "fixed")
 
   test_that("model_parameters", {
