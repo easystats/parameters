@@ -180,6 +180,7 @@
     }
   }
 
+  row.names(params) <- NULL
   params
 }
 
