@@ -51,7 +51,7 @@
   parameters <- insight::get_parameters(model,
     effects = effects,
     component = component,
-    verbose = verbose
+    verbose = FALSE
   )
   statistic <- insight::get_statistic(model, component = component)
 
@@ -462,7 +462,7 @@
   special_df_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
   # get parameters and statistic
-  parameters <- insight::get_parameters(model, effects = "fixed", component = "all")
+  parameters <- insight::get_parameters(model, effects = "fixed", component = "all", verbose = FALSE)
   statistic <- insight::get_statistic(model, component = "all")
 
   # check if all estimates are non-NA

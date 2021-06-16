@@ -93,7 +93,7 @@ bootstrap_model.default <- function(model,
       }
     }
 
-    params <- insight::get_parameters(fit)
+    params <- insight::get_parameters(fit, verbose = FALSE)
     n_params <- insight::n_parameters(model)
 
     if (nrow(params) != n_params) {
@@ -137,7 +137,7 @@ bootstrap_model.default <- function(model,
   out <- as.data.frame(results$t)
   out <- out[stats::complete.cases(out), ]
 
-  names(out) <- insight::get_parameters(model)$Parameter
+  names(out) <- insight::get_parameters(model, verbose = FALSE)$Parameter
 
   class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
   attr(out, "original_model") <- model
@@ -160,7 +160,7 @@ bootstrap_model.merMod <- function(model,
   parallel <- match.arg(parallel)
 
   boot_function <- function(model) {
-    params <- insight::get_parameters(model)
+    params <- insight::get_parameters(model, verbose = FALSE)
     n_params <- insight::n_parameters(model)
 
     if (nrow(params) != n_params) {

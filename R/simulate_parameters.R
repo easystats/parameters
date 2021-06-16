@@ -72,7 +72,7 @@ simulate_parameters.default <- function(model,
     ...
   )
 
-  params <- insight::get_parameters(model)
+  params <- insight::get_parameters(model, verbose = FALSE)
   if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }

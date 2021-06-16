@@ -25,7 +25,7 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(model, effects = effects, component = component, merge_parameters = TRUE)
   } else {
-    params <- insight::get_parameters(model, effects = effects, component = component)
+    params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
   }
 
   # check if all estimates are non-NA

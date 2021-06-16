@@ -186,7 +186,7 @@ ci_robust <- function(model,
   }
 
   # get coefficients
-  params <- insight::get_parameters(x, component = component)
+  params <- insight::get_parameters(x, component = component, verbose = FALSE)
 
   if (!is.null(component) && component != "all" && nrow(.vcov) > nrow(params)) {
     keep <- match(insight::find_parameters(x)[[component]], rownames(.vcov))

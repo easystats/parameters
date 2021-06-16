@@ -410,7 +410,7 @@ equivalence_test.parameters_simulate_model <- function(x,
     ci <- ci[1]
   }
 
-  params <- insight::get_parameters(x, effects = "random", component = "conditional")
+  params <- insight::get_parameters(x, effects = "random", component = "conditional", verbose = FALSE)
   se <- standard_error(x, effects = "random", component = "conditional")
 
   alpha <- (1 + ci) / 2
@@ -579,7 +579,7 @@ equivalence_test.parameters_simulate_model <- function(x,
       fac <- stats::qt((1 + ci) / 2, df = df)
       interval <- ci_wald(model, ci = ci)
       se <- abs((interval$CI_high - interval$CI_low) / (2 * fac))
-      est <- insight::get_parameters(model)$Estimate
+      est <- insight::get_parameters(model, verbose = FALSE)$Estimate
       r <- range[2]
       if (any(decision == "Undecided")) se[decision == "Undecided"] <- se[decision == "Undecided"] + (r / fac)
       if (any(decision == "Rejected")) est[decision == "Rejected"] <- ifelse(est[decision == "Rejected"] < 0, est[decision == "Rejected"] + r, est[decision == "Rejected"] - r)

@@ -224,7 +224,7 @@ simulate_model.bracl <- simulate_model.default
   insight::check_if_installed("MASS")
   if (is.null(iterations)) iterations <- 1000
 
-  params <- insight::get_parameters(model, effects = effects, component = component)
+  params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
   beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   varcov <- insight::get_varcov(model, component = component, effects = effects)
