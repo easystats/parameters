@@ -82,10 +82,20 @@ print_md.parameters_model <- function(x,
 }
 
 #' @export
+print_md.parameters_stan <- print_md.parameters_model
+
+#' @export
 print_md.parameters_brms_meta <- print_md.parameters_model
 
 #' @export
 print_md.parameters_simulate <- print_md.parameters_model
+
+
+
+
+
+# compare parameters -------------------------
+
 
 #' @export
 print_md.compare_parameters <- function(x,
@@ -138,7 +148,7 @@ print_md.compare_parameters <- function(x,
 
 
 
-# Stan / SEM print ----------------------------
+# SEM print ----------------------------
 
 #' @export
 print_md.parameters_sem <- function(x,
@@ -162,53 +172,6 @@ print_md.parameters_sem <- function(x,
   formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
-
-#' @export
-print_md.parameters_stan <- function(x,
-                                     split_components = TRUE,
-                                     select = NULL,
-                                     digits = 2,
-                                     ci_digits = 2,
-                                     p_digits = 3,
-                                     caption = NULL,
-                                     subtitle = NULL,
-                                     footer = NULL,
-                                     ...) {
-  # check if user supplied digits attributes
-  # check if user supplied digits attributes
-  if (missing(digits)) {
-    digits <- .additional_arguments(x, "digits", digits)
-  }
-  if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
-  }
-  if (missing(p_digits)) {
-    p_digits <- .additional_arguments(x, "p_digits", p_digits)
-  }
-
-  formatted_table <- format(
-    x = x,
-    split_components = split_components,
-    select = select,
-    format = "markdown",
-    digits = digits,
-    ci_digits,
-    p_digits = p_digits,
-    ci_width = NULL,
-    ci_brackets = c("(", ")"),
-    table_caption = caption,
-    ...
-  )
-
-  insight::export_table(
-    formatted_table,
-    format = "markdown",
-    caption = caption,
-    subtitle = subtitle,
-    footer = footer
-  )
-}
-
 
 
 

@@ -1,4 +1,276 @@
-# helper ------------------------
+# output-format helper  -------------------------
+
+# this function does the main composition of columns for the output
+
+.format_output_style <- function(x, style, format, modelname) {
+  linesep <- " "
+  if (style %in% c("se", "ci")) {
+    x$p_stars <- ""
+  }
+
+  if (style == "minimal") {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("ci_p", "ci")) {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
+    x <- x[param_col]
+    colnames(x) <- modelname
+  } else if (style %in% c("se_p", "se")) {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
+    x <- x[param_col]
+    colnames(x) <- modelname
+  } else if (style %in% c("ci_p2")) {
+    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("se_p2")) {
+    param_col <- colnames(x)[1]
+    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
+    x <- x[c(param_col, "p")]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  }
+  x[[1]][x[[1]] == "()"] <- ""
+  x
+}
+
+
+
+.add_obs_row <- function(x, att, style) {
+  observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$n_obs)) {
+      NA
+    } else {
+      i$n_obs
+    }
+  }))
+  weighted_observations <- unlist(lapply(att, function(i) {
+    if (is.null(i$weighted_nobs)) {
+      NA
+    } else {
+      i$weighted_nobs
+    }
+  }))
+
+  # check if model had weights, and if due to missing values n of weighted
+  # observations differs from "raw" observations
+  if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
+    if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
+      message(insight::format_message("Number of weighted observations differs from number of unweighted observations."))
+    }
+    observations <- weighted_observations
+  }
+
+  if (!all(is.na(observations))) {
+    # add empty row, as separator
+    empty_row <- do.call(data.frame, as.list(rep(NA, ncol(x))))
+    colnames(empty_row) <- colnames(x)
+    x <- rbind(x, empty_row)
+    # add observations
+    steps <- (ncol(x) - 1) / length(observations)
+    empty_row[[1]] <- "Observations"
+    insert_at <- seq(2, ncol(x), by = steps)
+    for (i in 1:length(insert_at)) {
+      empty_row[[insert_at[i]]] <- observations[i]
+    }
+    x <- rbind(x, empty_row)
+  }
+  x
+}
+
+
+
+
+
+# other helper ------------------------
+
+
+.format_columns_single_component <- function(x,
+                                             pretty_names,
+                                             digits = 2,
+                                             ci_digits = 2,
+                                             p_digits = 3,
+                                             ci_width = "auto",
+                                             ci_brackets = TRUE,
+                                             format = NULL,
+                                             coef_name = NULL,
+                                             zap_small = FALSE,
+                                             ...) {
+  # default brackets are parenthesis for HTML / MD
+  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+    brackets <- c("(", ")")
+  } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
+    brackets <- c("[", "]")
+  } else {
+    brackets <- ci_brackets
+  }
+
+  # fix coefficient column name for random effects
+  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  }
+
+  # fix coefficient column name for mixed count and zi pars
+  if (!is.null(x$Component) && sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 && any(colnames(x) %in% .all_coefficient_types())) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  }
+
+  # random pars with level? combine into parameter column
+  if (all(c("Parameter", "Level") %in% colnames(x))) {
+    x$Parameter <- paste0(x$Parameter, " ", brackets[1], x$Level, brackets[2])
+    x$Level <- NULL
+  }
+
+  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small, ...)
+}
+
+
+
+
+# helper to format the header / subheader of different model components --------------
+
+.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
+  component_name <- switch(type,
+                           "mu" = ,
+                           "fixed" = ,
+                           "fixed." = ,
+                           "conditional" = ,
+                           "conditional." = "Fixed Effects",
+                           "random." = ,
+                           "random" = "Random Effects",
+                           "conditional.fixed" = ,
+                           "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+                           "conditional.random" = ifelse(ran_pars,
+                                                         "Random Effects Variances",
+                                                         ifelse(is_zero_inflated,
+                                                                "Random Effects (Count Model)", "Random Effects"
+                                                         )
+                           ),
+                           "zero_inflated" = "Zero-Inflated",
+                           "zero_inflated.fixed" = ,
+                           "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
+                           "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+                           "survival" = ,
+                           "survival.fixed" = "Survival",
+                           "dispersion.fixed" = ,
+                           "dispersion.fixed." = ,
+                           "dispersion" = "Dispersion",
+                           "marginal" = "Marginal Effects",
+                           "emmeans" = "Estimated Marginal Means",
+                           "contrasts" = "Contrasts",
+                           "simplex.fixed" = ,
+                           "simplex" = "Monotonic Effects",
+                           "smooth_sd" = "Smooth Terms (SD)",
+                           "smooth_terms" = "Smooth Terms",
+                           "sigma.fixed" = ,
+                           "sigma.fixed." = ,
+                           "sigma" = "Sigma",
+                           "thresholds" = "Thresholds",
+                           "correlation" = "Correlation",
+                           "SD/Cor" = "SD / Correlation",
+                           "Loading" = "Loading",
+                           "scale" = ,
+                           "scale.fixed" = ,
+                           "scale.fixed." = "Scale Parameters",
+                           "extra" = ,
+                           "extra.fixed" = ,
+                           "extra.fixed." = "Extra Parameters",
+                           "nu" = "Nu",
+                           "tau" = "Tau",
+                           "meta" = "Meta-Parameters",
+                           "studies" = "Studies",
+                           "within" = "Within-Effects",
+                           "between" = "Between-Effects",
+                           "interactions" = "(Cross-Level) Interactions",
+                           "precision" = ,
+                           "precision." = "Precision",
+                           "infrequent_purchase" = "Infrequent Purchase",
+                           "auxiliary" = "Auxiliary",
+                           "residual" = "Residual",
+                           "intercept" = "Intercept",
+                           "regression" = "Regression",
+                           "latent" = "Latent",
+                           "time_dummies" = "Time Dummies",
+                           type
+  )
+
+  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
+    component_name <- trimws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
+    if (nchar(component_name) == 0) {
+      component_name <- "Random Effects Variances"
+    } else {
+      component_name <- paste0("Random Effects Variances: ", component_name)
+    }
+  }
+  if (grepl("^conditional\\.(r|R)andom", component_name)) {
+    component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
+    if (nchar(component_name) == 0) {
+      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
+    } else {
+      component_name <- paste0("Random Effects (Count Model): ", component_name)
+    }
+  }
+  if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
+    component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
+    if (nchar(component_name) == 0) {
+      component_name <- "Random Effects (Zero-Inflated Model)"
+    } else {
+      component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
+    }
+  }
+  if (grepl("^random\\.(.*)", component_name)) {
+    component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
+  }
+
+  # if we show ZI component only, make sure this appears in header
+  if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
+      !is.null(formatted_table$Component) &&
+      all(formatted_table$Component == "zero_inflated")) {
+    component_name <- paste0(component_name, " (Zero-Inflated Model)")
+  }
+
+  # tweaking of sub headers
+
+  if (isTRUE(attributes(x)$is_ggeffects)) {
+    s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
+    s2 <- ""
+  } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
+    if (grepl("^conditional\\.", component_name) || split_column == "Response") {
+      s1 <- "Response level:"
+      s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
+    } else {
+      s1 <- component_name
+      s2 <- ""
+    }
+  } else if (length(split_column) > 1 ||
+             split_column %in% c("Subgroup", "Type", "Group") ||
+             grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+             component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
+    s1 <- component_name
+    s2 <- ""
+  } else if (split_column == "Response" && is_ordinal_model) {
+    s1 <- "Response level:"
+    s2 <- component_name
+  } else {
+    s1 <- component_name
+    s2 <- ifelse(tolower(split_column) == "component", "", split_column)
+  }
+
+  list(name = component_name, subheader1 = s1, subheader2 = s2)
+}
+
+
+
+
+
+# helper grouping parameters -------------------
 
 
 .parameter_groups <- function(x, groups) {
@@ -80,6 +352,7 @@
 }
 
 
+
 # .insert_row <- function(x, newrow, r) {
 #   existingDF[seq(r+1,nrow(existingDF)+1),] <- existingDF[seq(r,nrow(existingDF)),]
 #   existingDF[r,] <- newrow
@@ -147,6 +420,7 @@
 
 
 
+
 .prepare_splitby_for_print <- function(x) {
   if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
     x$Response <- NULL
@@ -161,7 +435,6 @@
   split_by <- split_by[nchar(split_by) > 0]
   split_by
 }
-
 
 
 
@@ -426,137 +699,4 @@
     }
   }
   final_table
-}
-
-
-
-# helper to format the header / subheader of different model components
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
-  component_name <- switch(type,
-    "mu" = ,
-    "fixed" = ,
-    "fixed." = ,
-    "conditional" = ,
-    "conditional." = "Fixed Effects",
-    "random." = ,
-    "random" = "Random Effects",
-    "conditional.fixed" = ,
-    "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-    "conditional.random" = ifelse(ran_pars,
-      "Random Effects Variances",
-      ifelse(is_zero_inflated,
-        "Random Effects (Count Model)", "Random Effects"
-      )
-    ),
-    "zero_inflated" = "Zero-Inflated",
-    "zero_inflated.fixed" = ,
-    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
-    "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
-    "survival" = ,
-    "survival.fixed" = "Survival",
-    "dispersion.fixed" = ,
-    "dispersion.fixed." = ,
-    "dispersion" = "Dispersion",
-    "marginal" = "Marginal Effects",
-    "emmeans" = "Estimated Marginal Means",
-    "contrasts" = "Contrasts",
-    "simplex.fixed" = ,
-    "simplex" = "Monotonic Effects",
-    "smooth_sd" = "Smooth Terms (SD)",
-    "smooth_terms" = "Smooth Terms",
-    "sigma.fixed" = ,
-    "sigma.fixed." = ,
-    "sigma" = "Sigma",
-    "thresholds" = "Thresholds",
-    "correlation" = "Correlation",
-    "SD/Cor" = "SD / Correlation",
-    "Loading" = "Loading",
-    "scale" = ,
-    "scale.fixed" = ,
-    "scale.fixed." = "Scale Parameters",
-    "extra" = ,
-    "extra.fixed" = ,
-    "extra.fixed." = "Extra Parameters",
-    "nu" = "Nu",
-    "tau" = "Tau",
-    "meta" = "Meta-Parameters",
-    "studies" = "Studies",
-    "within" = "Within-Effects",
-    "between" = "Between-Effects",
-    "interactions" = "(Cross-Level) Interactions",
-    "precision" = ,
-    "precision." = "Precision",
-    "infrequent_purchase" = "Infrequent Purchase",
-    "auxiliary" = "Auxiliary",
-    "residual" = "Residual",
-    "intercept" = "Intercept",
-    "regression" = "Regression",
-    "latent" = "Latent",
-    "time_dummies" = "Time Dummies",
-    type
-  )
-
-  if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
-    component_name <- trimws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- "Random Effects Variances"
-    } else {
-      component_name <- paste0("Random Effects Variances: ", component_name)
-    }
-  }
-  if (grepl("^conditional\\.(r|R)andom", component_name)) {
-    component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
-    } else {
-      component_name <- paste0("Random Effects (Count Model): ", component_name)
-    }
-  }
-  if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
-    component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- "Random Effects (Zero-Inflated Model)"
-    } else {
-      component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
-    }
-  }
-  if (grepl("^random\\.(.*)", component_name)) {
-    component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
-  }
-
-  # if we show ZI component only, make sure this appears in header
-  if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
-    !is.null(formatted_table$Component) &&
-    all(formatted_table$Component == "zero_inflated")) {
-    component_name <- paste0(component_name, " (Zero-Inflated Model)")
-  }
-
-  # tweaking of sub headers
-
-  if (isTRUE(attributes(x)$is_ggeffects)) {
-    s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
-    s2 <- ""
-  } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
-    if (grepl("^conditional\\.", component_name) || split_column == "Response") {
-      s1 <- "Response level:"
-      s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
-    } else {
-      s1 <- component_name
-      s2 <- ""
-    }
-  } else if (length(split_column) > 1 ||
-    split_column %in% c("Subgroup", "Type", "Group") ||
-    grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
-    component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
-    s1 <- component_name
-    s2 <- ""
-  } else if (split_column == "Response" && is_ordinal_model) {
-    s1 <- "Response level:"
-    s2 <- component_name
-  } else {
-    s1 <- component_name
-    s2 <- ifelse(tolower(split_column) == "component", "", split_column)
-  }
-
-  list(name = component_name, subheader1 = s1, subheader2 = s2)
 }

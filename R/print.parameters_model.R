@@ -194,7 +194,32 @@ print.parameters_brms_meta <- print.parameters_model
 
 
 
-# helper ------------------
+# Random effects ------------------
+
+#' @export
+print.parameters_random <- function(x, digits = 2, ...) {
+  .print_random_parameters(x, digits = digits)
+  invisible(x)
+}
+
+
+
+
+# Stan models ------------------
+
+#' @export
+print.parameters_stan <- print.parameters_model
+
+#' @export
+summary.parameters_stan <- function(object, ...) {
+  print(x = object, select = "minimal", show_formula = TRUE, ...)
+}
+
+
+
+
+
+# helper --------------------
 
 
 .print_core <- function(x,
@@ -228,6 +253,8 @@ print.parameters_brms_meta <- print.parameters_model
 }
 
 
+
+
 .print_footer <- function(x,
                           digits = 3,
                           show_sigma = FALSE,
@@ -259,6 +286,7 @@ print.parameters_brms_meta <- print.parameters_model
     format = format
   )
 }
+
 
 
 
@@ -305,103 +333,6 @@ print.parameters_brms_meta <- print.parameters_model
 }
 
 
-
-
-
-# Random effects ------------------
-
-#' @export
-print.parameters_random <- function(x, digits = 2, ...) {
-  .print_random_parameters(x, digits = digits)
-  invisible(x)
-}
-
-
-
-
-
-# Stan models ------------------
-
-#' @export
-print.parameters_stan <- function(x,
-                                  split_components = TRUE,
-                                  select = NULL,
-                                  caption = NULL,
-                                  digits = 2,
-                                  ci_digits = 2,
-                                  p_digits = 3,
-                                  footer_digits = 3,
-                                  show_sigma = FALSE,
-                                  show_formula = FALSE,
-                                  zap_small = FALSE,
-                                  groups = NULL,
-                                  ...) {
-  orig_x <- x
-  ci_method <- .additional_arguments(x, "ci_method", NULL)
-  verbose <- .additional_arguments(x, "verbose", TRUE)
-
-  # check if user supplied digits attributes
-  # check if user supplied digits attributes
-  if (missing(digits)) {
-    digits <- .additional_arguments(x, "digits", digits)
-  }
-  if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
-  }
-  if (missing(p_digits)) {
-    p_digits <- .additional_arguments(x, "p_digits", p_digits)
-  }
-
-
-  # footer
-  footer <- .print_footer(
-    x,
-    digits = footer_digits,
-    show_sigma = show_sigma,
-    show_formula = show_formula
-  )
-
-  # table
-  formatted_table <- format(
-    x,
-    split_components = split_components,
-    select = select,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    format = "text",
-    ci_width = "auto",
-    ci_brackets = TRUE,
-    table_caption = caption,
-    zap_small = zap_small,
-    groups = groups,
-    ...
-  )
-
-  # print table
-  cat(insight::export_table(
-    formatted_table,
-    caption = caption,
-    footer = footer,
-    format = "text")
-  )
-
-  if (isTRUE(verbose)) {
-    .print_footer_cimethod(ci_method)
-  }
-
-  invisible(orig_x)
-}
-
-#' @export
-summary.parameters_stan <- function(object, ...) {
-  print(x = object, select = "minimal", ...)
-}
-
-
-
-
-# helper --------------------
 
 
 #' @keywords internal

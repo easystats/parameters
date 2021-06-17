@@ -59,10 +59,20 @@ display.parameters_model <- function(object,
 }
 
 #' @export
+display.parameters_stan <- display.parameters_model
+
+#' @export
 display.parameters_simulate <- display.parameters_model
 
 #' @export
 display.parameters_brms_meta <- display.parameters_model
+
+
+
+
+
+# Compare Parameters ------------------------
+
 
 #' @export
 display.compare_parameters <- function(object,
@@ -79,17 +89,6 @@ display.compare_parameters <- function(object,
   }
 }
 
-
-
-
-# Stan models ------------------------
-
-
-#' @rdname display.parameters_model
-#' @export
-display.parameters_stan <- function(object, split_components = TRUE, select = NULL, format = "markdown", ...) {
-  print_md(x = object, split_components = split_components, select = select, ...)
-}
 
 
 

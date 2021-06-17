@@ -3,7 +3,6 @@
 %   R/print_md.R
 \name{display.parameters_model}
 \alias{display.parameters_model}
-\alias{display.parameters_stan}
 \alias{display.parameters_sem}
 \alias{display.parameters_efa_summary}
 \alias{display.parameters_efa}
@@ -32,14 +31,6 @@
   show_formula = FALSE,
   zap_small = FALSE,
   verbose = TRUE,
-  ...
-)
-
-\method{display}{parameters_stan}(
-  object,
-  split_components = TRUE,
-  select = NULL,
-  format = "markdown",
   ...
 )
 
