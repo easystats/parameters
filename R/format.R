@@ -383,7 +383,7 @@ format.parameters_stan <- function(x,
       x[to_remove] <- NULL
     }
 
-    out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE)
+    out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE, format = format)
 
     final_table <- lapply(out, function(i) {
       if (identical(format, "markdown")) {
