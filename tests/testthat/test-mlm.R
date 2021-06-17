@@ -17,6 +17,7 @@ if (require("testthat") && require("parameters") && getRversion() >= "3.6.0") {
       )
     )
     expect_equal(mp$Response, c("mpg", "mpg", "disp", "disp"))
+    expect_equal(mp$Parameter, c("(Intercept)", "wt", "(Intercept)", "wt"))
   })
 
   model <- lm(cbind(mpg, hp) ~ cyl * disp, mtcars)
