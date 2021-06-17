@@ -30,6 +30,8 @@
 * `format_parameters()` removes dots and underscores from parameter names,
   to make these more "human readable".
 
+* Minor improvements to `print()`, `print_html()` and `print_md()`.
+
 ## Bug fixes
 
 * The random effects returned by `model_parameters()` mistakenly displayed
