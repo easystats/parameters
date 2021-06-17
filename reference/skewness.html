@@ -278,10 +278,10 @@ for the relationship of skewness and distributions are:</p><ul>
 <p><code>skewness()</code> supports three different methods for estimating skewness, as discussed in <cite>Joanes and Gill (1988)</cite>:</p><ul>
 <li><p>Type "1" is the "classical" method, which is <code>g1 = (sum((x -
 mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5</code></p></li>
-<li><p>Type "2" first calculates the type-1 skewness, than adjusts the result:
+<li><p>Type "2" first calculates the type-1 skewness, then adjusts the result:
 <code>G1 = g1 * sqrt(n * (n - 1)) / (n - 2)</code>. This is what SAS and SPSS
 usually return</p></li>
-<li><p>Type "3" first calculates the type-1 skewness, than adjusts the result:
+<li><p>Type "3" first calculates the type-1 skewness, then adjusts the result:
 <code>b1 = g1 * ((1 - 1 / n))^1.5</code>. This is what Minitab usually returns.</p></li>
 </ul>
 
