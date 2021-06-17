@@ -40,6 +40,8 @@
 * Fixed issue with `model_parameters()` for *brmsfit* objects that model
   standard errors (i.e. for meta-analysis).
 
+* Fix issue in `model_parameters.mlm()` when model contained interaction terms.
+
 # parameters 0.14.0
 
 ## Breaking changes

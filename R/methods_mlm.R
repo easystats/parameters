@@ -99,11 +99,11 @@ ci.mlm <- function(x, ci = .95, ...) {
       .ci <- stats::confint(x, level = i, ...)
       rn <- rownames(.ci)
       .data_frame(
-        Parameter = gsub("^(.*):(.*)", "\\2", rn),
+        Parameter = gsub("([^\\:]+)(\\:)(.*)", "\\3", rn),
         CI = i,
         CI_low = .ci[, 1],
         CI_high = .ci[, 2],
-        Response = gsub("^(.*):(.*)", "\\1", rn)
+        Response = gsub("([^\\:]+)(\\:)(.*)", "\\1", rn)
       )
     })
     out <- .remove_backticks_from_parameter_names(do.call(rbind, out))
