@@ -92,6 +92,9 @@ print_html.compare_parameters <- function(x,
                                           digits = 2,
                                           ci_digits = 2,
                                           p_digits = 3,
+                                          caption = NULL,
+                                          subtitle = NULL,
+                                          footer = NULL,
                                           style = NULL,
                                           ...) {
   # save original input
@@ -125,7 +128,14 @@ print_html.compare_parameters <- function(x,
     format = "html"
   )
 
-  insight::export_table(formatted_table, format = "html", footer = NULL)
+  insight::export_table(
+    formatted_table,
+    format = "html",
+    caption = table_caption,
+    subtitle = subtitle,
+    footer = footer,
+    ...
+  )
 }
 
 

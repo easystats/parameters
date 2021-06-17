@@ -330,6 +330,11 @@ print.parameters_stan <- function(x,
                                   digits = 2,
                                   ci_digits = 2,
                                   p_digits = 3,
+                                  footer_digits = 3,
+                                  show_sigma = FALSE,
+                                  show_formula = FALSE,
+                                  zap_small = FALSE,
+                                  groups = NULL,
                                   ...) {
   orig_x <- x
   ci_method <- .additional_arguments(x, "ci_method", NULL)
@@ -348,6 +353,15 @@ print.parameters_stan <- function(x,
   }
 
 
+  # footer
+  footer <- .print_footer(
+    x,
+    digits = footer_digits,
+    show_sigma = show_sigma,
+    show_formula = show_formula
+  )
+
+  # table
   formatted_table <- format(
     x,
     split_components = split_components,
@@ -359,11 +373,18 @@ print.parameters_stan <- function(x,
     ci_width = "auto",
     ci_brackets = TRUE,
     table_caption = caption,
+    zap_small = zap_small,
+    groups = groups,
     ...
   )
 
   # print table
-  cat(insight::export_table(formatted_table, format = "text"))
+  cat(insight::export_table(
+    formatted_table,
+    caption = caption,
+    footer = footer,
+    format = "text")
+  )
 
   if (isTRUE(verbose)) {
     .print_footer_cimethod(ci_method)

@@ -92,6 +92,9 @@ print_md.compare_parameters <- function(x,
                                         digits = 2,
                                         ci_digits = 2,
                                         p_digits = 3,
+                                        caption = NULL,
+                                        subtitle = NULL,
+                                        footer = NULL,
                                         style = NULL,
                                         ...) {
   # check if user supplied digits attributes
@@ -122,7 +125,13 @@ print_md.compare_parameters <- function(x,
     format = "markdown"
   )
 
-  insight::export_table(formatted_table, format = "markdown", footer = NULL)
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = caption,
+    subtitle = subtitle,
+    footer = footer
+  )
 }
 
 
@@ -155,7 +164,16 @@ print_md.parameters_sem <- function(x,
 }
 
 #' @export
-print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+print_md.parameters_stan <- function(x,
+                                     split_components = TRUE,
+                                     select = NULL,
+                                     digits = 2,
+                                     ci_digits = 2,
+                                     p_digits = 3,
+                                     caption = NULL,
+                                     subtitle = NULL,
+                                     footer = NULL,
+                                     ...) {
   # check if user supplied digits attributes
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -168,8 +186,27 @@ print_md.parameters_stan <- function(x, split_components = TRUE, select = NULL, 
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
   }
 
-  formatted_table <- format(x = x, split_components = split_components, select = select, format = "markdown", digits = digits, ci_digits, p_digits = p_digits, ci_width = NULL, ci_brackets = c("(", ")"), ...)
-  insight::export_table(formatted_table, format = "markdown")
+  formatted_table <- format(
+    x = x,
+    split_components = split_components,
+    select = select,
+    format = "markdown",
+    digits = digits,
+    ci_digits,
+    p_digits = p_digits,
+    ci_width = NULL,
+    ci_brackets = c("(", ")"),
+    table_caption = caption,
+    ...
+  )
+
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = caption,
+    subtitle = subtitle,
+    footer = footer
+  )
 }
 
 

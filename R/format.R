@@ -356,6 +356,9 @@ format.compare_parameters <- function(x,
 format.parameters_stan <- function(x,
                                    split_components = TRUE,
                                    select = NULL,
+                                   digits = 2,
+                                   ci_digits = 2,
+                                   p_digits = 3,
                                    ci_width = NULL,
                                    ci_brackets = NULL,
                                    zap_small = FALSE,
@@ -390,7 +393,16 @@ format.parameters_stan <- function(x,
         attr(i, "table_caption") <- attributes(i)$main_title
       }
       attributes(i) <- utils::modifyList(att, attributes(i))
-      param_table <- insight::format_table(i, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, preserve_attributes = TRUE)
+      param_table <- insight::format_table(
+        i,
+        ci_width = ci_width,
+        ci_brackets = ci_brackets,
+        zap_small = zap_small,
+        digits = digits,
+        ci_digits = ci_digits,
+        p_digits = p_digits,
+        preserve_attributes = TRUE
+      )
       param_table$Group <- NULL
       param_table$Response <- NULL
       param_table$Function <- NULL

@@ -74,11 +74,11 @@ for the relationship of skewness and distributions are:
 \item Type "1" is the "classical" method, which is \code{g1 = (sum((x -
 mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5}
 
-\item Type "2" first calculates the type-1 skewness, than adjusts the result:
+\item Type "2" first calculates the type-1 skewness, then adjusts the result:
 \code{G1 = g1 * sqrt(n * (n - 1)) / (n - 2)}. This is what SAS and SPSS
 usually return
 
-\item Type "3" first calculates the type-1 skewness, than adjusts the result:
+\item Type "3" first calculates the type-1 skewness, then adjusts the result:
 \code{b1 = g1 * ((1 - 1 / n))^1.5}. This is what Minitab usually returns.
 }
 }
