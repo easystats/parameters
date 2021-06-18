@@ -10,16 +10,13 @@ insight::supported_models
 #' @export
 datawizard::demean
 
-
-## TODO remove once it is fixed in correlation
-
 #' @importFrom datawizard data_to_numeric
 #' @export
 datawizard::data_to_numeric
 
-
-
-## TODO remove once report is updated on CRAN
+#' @importFrom datawizard convert_data_to_numeric
+#' @export
+datawizard::convert_data_to_numeric
 
 #' @importFrom datawizard skewness
 #' @export
@@ -28,3 +25,7 @@ datawizard::skewness
 #' @importFrom datawizard kurtosis
 #' @export
 datawizard::kurtosis
+
+#' @importFrom datawizard describe_distribution
+#' @export
+datawizard::describe_distribution
