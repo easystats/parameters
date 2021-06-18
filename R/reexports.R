@@ -16,3 +16,15 @@ datawizard::demean
 #' @importFrom datawizard data_to_numeric
 #' @export
 datawizard::data_to_numeric
+
+
+
+## TODO remove once report is updated on CRAN
+
+#' @importFrom datawizard skewness
+#' @export
+datawizard::skewness
+
+#' @importFrom datawizard kurtosis
+#' @export
+datawizard::kurtosis

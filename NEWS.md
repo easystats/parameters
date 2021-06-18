@@ -7,7 +7,9 @@
   - `convert_data_to_numeric()`
   - `data_partition()`
   - `demean()` (and its aliases `degroup()` and `detrend()`)
+  - `kurtosis()`
   - `rescale_weights()`
+  - `skewness()`
 
 ## General
 
