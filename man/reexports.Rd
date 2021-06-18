@@ -15,6 +15,7 @@
 \alias{supported_models}
 \alias{demean}
 \alias{data_to_numeric}
+\alias{convert_data_to_numeric}
 \alias{skewness}
 \alias{kurtosis}
 \alias{describe_distribution}
@@ -27,7 +28,7 @@ below to see their documentation.
 \describe{
   \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
 
-  \item{datawizard}{\code{\link[datawizard:convert_data_to_numeric]{data_to_numeric}}, \code{\link[datawizard]{demean}}, \code{\link[datawizard]{describe_distribution}}, \code{\link[datawizard:skewness]{kurtosis}}, \code{\link[datawizard]{skewness}}}
+  \item{datawizard}{\code{\link[datawizard]{convert_data_to_numeric}}, \code{\link[datawizard:convert_data_to_numeric]{data_to_numeric}}, \code{\link[datawizard]{demean}}, \code{\link[datawizard]{describe_distribution}}, \code{\link[datawizard:skewness]{kurtosis}}, \code{\link[datawizard]{skewness}}}
 
   \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{n_parameters}}, \code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}, \code{\link[insight:is_model_supported]{supported_models}}}
 }}
