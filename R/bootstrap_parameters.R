@@ -90,7 +90,7 @@ bootstrap_parameters <- function(model,
   if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
   } else if ("CI" %in% names(parameters) && .n_unique(parameters$CI) > 1) {
-    parameters <- insight::reshape_ci(parameters)
+    parameters <- datawizard::reshape_ci(parameters)
   }
 
   # Coef

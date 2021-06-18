@@ -123,7 +123,7 @@
       ))
     }
     if (!is.null(ci_df)) {
-      if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
+      if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
@@ -508,7 +508,7 @@
     } else {
       ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- insight::reshape_ci(ci_df)
+    if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   } else {
@@ -801,7 +801,7 @@
   }
 
   if (length(ci) > 1) {
-    parameters <- insight::reshape_ci(parameters)
+    parameters <- datawizard::reshape_ci(parameters)
   }
 
   # Remove unnecessary columns
