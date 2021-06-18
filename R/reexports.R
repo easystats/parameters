@@ -29,3 +29,11 @@ datawizard::kurtosis
 #' @importFrom datawizard describe_distribution
 #' @export
 datawizard::describe_distribution
+
+#' @importFrom datawizard smoothness
+#' @export
+datawizard::smoothness
+
+#' @importFrom datawizard center
+#' @export
+datawizard::center
