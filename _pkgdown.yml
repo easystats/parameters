@@ -105,11 +105,8 @@ reference:
 
 - title: "Data Properties"
   contents:
-  - describe_distribution
   - check_heterogeneity
   - check_multimodal
-  - skewness
-  - smoothness
 
 - title: "Table and Value Formatting"
   contents:
