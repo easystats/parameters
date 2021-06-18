@@ -86,7 +86,7 @@ reduce_data <- function(x, method = "PCA", n = "max", distance = "euclidean", ..
 
 #' @export
 reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  x <- convert_data_to_numeric(x)
+  x <- datawizard::convert_data_to_numeric(x)
 
   # N factors
   if (n == "max") {
@@ -143,7 +143,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  data <- reduce_parameters(convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n, distance = distance)
+  data <- reduce_parameters(datawizard::convert_data_to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n, distance = distance)
 
   y <- data.frame(.row = 1:length(insight::get_response(x)))
   y[insight::find_response(x)] <- insight::get_response(x)

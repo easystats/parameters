@@ -76,7 +76,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   Note that when \code{df_method} is not \code{"wald"}, robust standard
 #'   errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and
-#'   between-effects (see \code{\link{demean}}), the \code{Component} column
+#'   between-effects (see \code{datawizard::demean()}), the \code{Component} column
 #'   will indicate which variables belong to the within-effects,
 #'   between-effects, and cross-level interactions. By default, the
 #'   \code{Component} column indicates, which parameters belong to the

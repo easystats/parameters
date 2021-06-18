@@ -17,6 +17,6 @@ A data frame with 564 rows and 7 variables:
 }
 }
 \description{
-A sample data set with longitudinal data, used in the vignette describing the \code{demean()} function. Health-related quality of life from cancer-patients was measured at three time points (pre-surgery, 6 and 12 months after surgery).
+A sample data set with longitudinal data, used in the vignette describing the \code{datawizard::demean()} function. Health-related quality of life from cancer-patients was measured at three time points (pre-surgery, 6 and 12 months after surgery).
 }
 \keyword{data}

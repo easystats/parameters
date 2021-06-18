@@ -1,5 +1,14 @@
 # parameters 0.14.1
 
+## Breaking changes
+
+* Following functions were moved to the new *datawizard* package:
+  - `center()`
+  - `convert_data_to_numeric()`
+  - `data_partition()`
+  - `demean()` (and its aliases `degroup()` and `detrend()`)
+  - `rescale_weights()`
+
 ## General
 
 * Minor changes to `print()` for *glmmTMB* with dispersion parameter.

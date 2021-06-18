@@ -78,14 +78,6 @@ reference:
   - simulate_model
   - simulate_parameters
 
-- title: "Variable Preparation"
-  contents:
-  - center
-  - demean
-  - rescale_weights
-  - data_partition
-  - convert_data_to_numeric
-
 - title: "Feature Reduction"
   contents:
   - reduce_parameters
@@ -114,6 +106,7 @@ reference:
 - title: "Data Properties"
   contents:
   - describe_distribution
+  - check_heterogeneity
   - check_multimodal
   - skewness
   - smoothness

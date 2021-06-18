@@ -103,7 +103,7 @@
 #'       In this (post-hoc) method, the response and the predictor are standardized
 #'       based on the level of prediction (levels are detected with \code{\link{check_heterogeneity}}:
 #'       Predictors are standardized based on their SD at level of prediction
-#'       (see also \code{\link{demean}}). The outcome (in linear LMMs) is
+#'       (see also \code{datawizard::demean()}). The outcome (in linear LMMs) is
 #'       standardized based on a fitted random-intercept-model, where
 #'       \code{sqrt(random-intercept-variance)} is used for level 2 predictors,
 #'       and \code{sqrt(residual-variance)} is used for level 1 predictors
