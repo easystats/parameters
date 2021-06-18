@@ -297,13 +297,13 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       19.33 | 4.64 | [  8.43, 30.24] |      4.16 |  7.26 | 0.004</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -5.35 | 2.12 | [-10.13, -0.57] |     -2.53 |  9.10 | 0.032</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -7.06 | 2.17 | [-11.79, -2.34] |     -3.25 | 12.33 | 0.007</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        2.62 | 2.51 | [ -3.52,  8.75] |      1.04 |  6.04 | 0.337</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.05 | 0.03 | [ -0.01,  0.11] |      2.01 |  6.61 | 0.087</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       19.20 | 3.60 | [ 11.51, 26.89] |      5.33 | 14.67 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -5.06 | 2.22 | [-10.23,  0.11] |     -2.28 |  7.59 | 0.054 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -7.49 | 2.09 | [-11.91, -3.07] |     -3.59 | 16.18 | 0.002 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        2.21 | 1.83 | [ -1.69,  6.12] |      1.21 | 14.94 | 0.245 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.05 | 0.02 | [  0.01,  0.09] |      2.72 | 16.19 | 0.015 </span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='co'># model_parameters() also works for models that have no "tidy"-method in mice</span></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/amices/mice'>"mice"</a></span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"gee"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
@@ -360,13 +360,13 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   5   5  bmi  hyp  chl</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |   df |     p</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       18.05 | 4.23 | [  8.15, 27.94] |      4.27 | 7.38 | 0.003</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -5.90 | 2.13 | [-10.73, -1.07] |     -2.78 | 8.76 | 0.022</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -7.32 | 2.25 | [-12.45, -2.19] |     -3.25 | 8.62 | 0.011</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        1.50 | 2.10 | [ -3.21,  6.21] |      0.71 | 9.70 | 0.492</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.06 | 0.02 | [  0.01,  0.11] |      2.71 | 7.66 | 0.028</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -------------------------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       19.49 | 3.99 | [ 10.43, 28.54] |      4.88 |  8.88 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age40-59    |       -6.36 | 2.07 | [-11.08, -1.64] |     -3.07 |  8.60 | 0.014 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> age60-99    |       -8.13 | 2.68 | [-14.45, -1.81] |     -3.03 |  7.08 | 0.019 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> hypyes      |        2.43 | 2.47 | [ -3.61,  8.47] |      0.98 |  6.04 | 0.364 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> chl         |        0.05 | 0.02 | [  0.01,  0.10] |      2.64 | 12.01 | 0.021 </span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

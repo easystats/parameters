@@ -306,11 +306,11 @@
 <div id="partition-the-data" class="section level3">
 <h3 class="hasAnchor">
 <a href="#partition-the-data" class="anchor" aria-hidden="true"></a>Partition the data</h3>
-<p>The data can be easily split into two sets with the <code><a href="../reference/data_partition.html">data_partition()</a></code> function, through which we will use 70% of the sample as training and the rest as test.</p>
+<p>The data can be easily split into two sets with the <code>data_partition()</code> function, through which we will use 70% of the sample as training and the rest as test.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to have reproducible result, we will also set seed here so that similar</span>
 <span class="co"># portions of the data are used each time we run the following code</span>
-<span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/data_partition.html">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span>
+<span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_partition.html" class="external-link">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span>
 <span class="va">training</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">training</span>
 <span class="va">test</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">test</span></code></pre></div>
 </div>

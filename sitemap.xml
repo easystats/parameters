@@ -64,13 +64,13 @@
     <loc>/reference/bootstrap_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/center.html</loc>
-  </url>
-  <url>
     <loc>/reference/check_clusterstructure.html</loc>
   </url>
   <url>
     <loc>/reference/check_factorstructure.html</loc>
+  </url>
+  <url>
+    <loc>/reference/check_heterogeneity.html</loc>
   </url>
   <url>
     <loc>/reference/check_kmo.html</loc>
@@ -94,22 +94,10 @@
     <loc>/reference/compare_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_data_to_numeric.html</loc>
-  </url>
-  <url>
     <loc>/reference/convert_efa_to_cfa.html</loc>
   </url>
   <url>
-    <loc>/reference/data_partition.html</loc>
-  </url>
-  <url>
     <loc>/reference/degrees_of_freedom.html</loc>
-  </url>
-  <url>
-    <loc>/reference/demean.html</loc>
-  </url>
-  <url>
-    <loc>/reference/describe_distribution.html</loc>
   </url>
   <url>
     <loc>/reference/display.parameters_model.html</loc>
@@ -304,9 +292,6 @@
     <loc>/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>/reference/rescale_weights.html</loc>
-  </url>
-  <url>
     <loc>/reference/reshape_loadings.html</loc>
   </url>
   <url>
@@ -317,12 +302,6 @@
   </url>
   <url>
     <loc>/reference/simulate_parameters.html</loc>
-  </url>
-  <url>
-    <loc>/reference/skewness.html</loc>
-  </url>
-  <url>
-    <loc>/reference/smoothness.html</loc>
   </url>
   <url>
     <loc>/reference/standard_error.html</loc>
