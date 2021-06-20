@@ -161,13 +161,13 @@
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Fixed Effects
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001
-#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 
-#&gt; age60-99    |       -7.87 | 2.17 | [-12.99, -2.76] |     -3.63 |  7.05 | 0.008 
-#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,  5.86] |      1.33 | 12.84 | 0.208 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.09] |      3.51 | 17.27 | 0.003</code></pre>
+#&gt; Parameter   | Coefficient |   SE |             95% CI | Statistic |    df |      p
+#&gt; ----------------------------------------------------------------------------------
+#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82,    25.03] |      6.54 | 16.91 | &lt; .001
+#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74,    -2.58] |     -3.73 | 12.59 | 0.003 
+#&gt; age60-99    |       -7.87 | 2.17 | [-12.99,    -2.76] |     -3.63 |  7.05 | 0.008 
+#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,     5.86] |      1.33 | 12.84 | 0.208 
+#&gt; chl         |        0.06 | 0.02 | [  0.02,     0.09] |      3.51 | 17.27 | 0.003</code></pre>
 <p>Not all packages work with <code><a href="https://amices.org/mice/reference/with.mids.html" class="external-link">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadaptive</em> package here.</p>
 <p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -237,13 +237,13 @@
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Fixed Effects
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       19.67 | 3.37 | [ 12.21, 27.13] |      5.83 | 10.62 | &lt; .001
-#&gt; age [40-59] |       -5.71 | 1.71 | [ -9.37, -2.04] |     -3.33 | 14.41 | 0.005 
-#&gt; age [60-99] |       -7.01 | 1.78 | [-10.76, -3.26] |     -3.93 | 17.88 | &lt; .001
-#&gt; hyp [yes]   |        2.71 | 1.83 | [ -1.30,  6.73] |      1.48 | 11.24 | 0.165 
-#&gt; chl         |        0.05 | 0.02 | [  0.01,  0.09] |      2.90 | 12.34 | 0.013</code></pre>
+#&gt; Parameter   | Coefficient |   SE |             95% CI | Statistic |    df |      p
+#&gt; ----------------------------------------------------------------------------------
+#&gt; (Intercept) |       19.67 | 3.37 | [ 12.21,    27.13] |      5.83 | 10.62 | &lt; .001
+#&gt; age [40-59] |       -5.71 | 1.71 | [ -9.37,    -2.04] |     -3.33 | 14.41 | 0.005 
+#&gt; age [60-99] |       -7.01 | 1.78 | [-10.76,    -3.26] |     -3.93 | 17.88 | &lt; .001
+#&gt; hyp [yes]   |        2.71 | 1.83 | [ -1.30,     6.73] |      1.48 | 11.24 | 0.165 
+#&gt; chl         |        0.05 | 0.02 | [  0.01,     0.09] |      2.90 | 12.34 | 0.013</code></pre>
 </div>
 <div id="model-parameters-from-mipo-objects" class="section level2">
 <h2 class="hasAnchor">
@@ -258,13 +258,13 @@
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></code></pre></div>
 <pre><code>#&gt; # Fixed Effects
 #&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
-#&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept) |       17.10 | 3.87 | [  8.63, 25.58] |  4.42 | 11.51 | &lt; .001
-#&gt; age [40-59] |       -5.03 | 2.55 | [-11.44,  1.38] | -1.97 |  5.42 | 0.101 
-#&gt; age [60-99] |       -7.39 | 2.70 | [-13.87, -0.92] | -2.73 |  6.59 | 0.031 
-#&gt; hyp [yes]   |        1.36 | 2.44 | [ -4.27,  6.99] |  0.56 |  8.03 | 0.593 
-#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.12] |  2.68 |  8.34 | 0.027</code></pre>
+#&gt; Parameter   | Coefficient |   SE |               95% CI |     t |    df |      p
+#&gt; --------------------------------------------------------------------------------
+#&gt; (Intercept) |       17.10 | 3.87 | [    8.63,    25.58] |  4.42 | 11.51 | &lt; .001
+#&gt; age [40-59] |       -5.03 | 2.55 | [  -11.44,     1.38] | -1.97 |  5.42 | 0.101 
+#&gt; age [60-99] |       -7.39 | 2.70 | [  -13.87,    -0.92] | -2.73 |  6.59 | 0.031 
+#&gt; hyp [yes]   |        1.36 | 2.44 | [   -4.27,     6.99] |  0.56 |  8.03 | 0.593 
+#&gt; chl         |        0.06 | 0.02 | [9.36e-03,     0.12] |  2.68 |  8.34 | 0.027</code></pre>
 </div>
   </div>
 
