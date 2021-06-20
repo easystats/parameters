@@ -505,6 +505,10 @@
     x$Label <- NULL
   }
 
+  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
+    parameter_column <- colnames(x)[1]
+  }
+
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
@@ -652,8 +656,10 @@
         table_caption <- sprintf("%s %s", component_header$subheader1, tolower(component_header$subheader2))
       }
       # replace brackets by parenthesis
-      formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
-      formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
+      if (!is.null(parameter_column) && parameter_column %in% colnames(formatted_table)) {
+        formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
+        formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
+      }
     }
 
     if (identical(format, "html")) {
@@ -671,7 +677,7 @@
 
   if (identical(format, "html")) {
     # fix non-equal length of columns
-    final_table <- .fix_nonmatching_columns(final_table)
+    final_table <- .fix_nonmatching_columns(final_table, is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan")))
     do.call(rbind, final_table)
   } else {
     .compact_list(final_table)
@@ -684,7 +690,7 @@
 # helper to fix unequal number of columns for list of data frames,
 # when used for HTML printing
 
-.fix_nonmatching_columns <- function(final_table) {
+.fix_nonmatching_columns <- function(final_table, is_lavaan = FALSE) {
   col_len <- sapply(final_table, function(i) length(colnames(i)))
   if (!all(col_len) == max(col_len)) {
     all_columns <- unique(unlist(lapply(final_table, colnames)))
@@ -696,6 +702,18 @@
         final_table[[i]] <- final_table[[i]][match(all_columns, colnames(final_table[[i]]))]
         attributes(final_table[[i]]) <- utils::modifyList(a, attributes(final_table[[i]]))
       }
+    }
+  }
+  # fix for lavaan here
+  if (is_lavaan) {
+    for (i in 1:length(final_table)) {
+      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To)) {
+        if (all(is.na(final_table[[i]]$Link))) {
+          final_table[[i]]$Link <- final_table[[i]]$To
+          final_table[[i]]$To <- NA
+        }
+      }
+      colnames(final_table[[i]])[1] <- "Parameter"
     }
   }
   final_table

@@ -88,6 +88,9 @@ print_html.parameters_brms_meta <- print_html.parameters_model
 print_html.parameters_simulate <- print_html.parameters_model
 
 #' @export
+print_html.parameters_sem <- print_html.parameters_model
+
+#' @export
 print_html.compare_parameters <- function(x,
                                           digits = 2,
                                           ci_digits = 2,

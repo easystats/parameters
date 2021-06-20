@@ -299,7 +299,15 @@ format.parameters_stan <- function(x,
 # sem-models ---------------------------------
 
 #' @export
-format.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, format = NULL, ci_width = NULL, ci_brackets = TRUE, ...) {
+format.parameters_sem <- function(x,
+                                  digits = 2,
+                                  ci_digits = 2,
+                                  p_digits = 3,
+                                  format = NULL,
+                                  ci_width = NULL,
+                                  ci_brackets = TRUE,
+                                  pretty_names = TRUE,
+                                  ...) {
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
