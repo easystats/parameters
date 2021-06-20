@@ -691,7 +691,26 @@
 # when used for HTML printing
 
 .fix_nonmatching_columns <- function(final_table, is_lavaan = FALSE) {
+  # fix for lavaan here
+  if (is_lavaan) {
+    for (i in 1:length(final_table)) {
+      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To)) {
+        if (all(is.na(final_table[[i]]$Link))) {
+          final_table[[i]]$Link <- final_table[[i]]$To
+          final_table[[i]]$To <- NA
+        }
+      }
+      colnames(final_table[[i]])[1] <- "Parameter"
+      if (!is.null(final_table[[i]]$To) && all(is.na(final_table[[i]]$To))) {
+        final_table[[i]]$To <- NULL
+      }
+    }
+  }
+
+  # then check for correct column length
   col_len <- sapply(final_table, function(i) length(colnames(i)))
+
+  # remove non matching columns
   if (!all(col_len) == max(col_len)) {
     all_columns <- unique(unlist(lapply(final_table, colnames)))
     for (i in 1:length(final_table)) {
@@ -704,17 +723,6 @@
       }
     }
   }
-  # fix for lavaan here
-  if (is_lavaan) {
-    for (i in 1:length(final_table)) {
-      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To)) {
-        if (all(is.na(final_table[[i]]$Link))) {
-          final_table[[i]]$Link <- final_table[[i]]$To
-          final_table[[i]]$To <- NA
-        }
-      }
-      colnames(final_table[[i]])[1] <- "Parameter"
-    }
-  }
+
   final_table
 }
