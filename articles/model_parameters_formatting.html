@@ -270,32 +270,25 @@
 <code class="sourceCode R"><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;                     term estimate std.error statistic p.value</span>
-<span class="co">#&gt; 1            (Intercept)     3.81      0.06     65.50  &lt; .001</span>
-<span class="co">#&gt; 2 poly(Sepal.Length, 2)1     4.06      0.47      8.70  &lt; .001</span>
-<span class="co">#&gt; 3 poly(Sepal.Length, 2)2    -1.30      0.31     -4.14  &lt; .001</span>
-<span class="co">#&gt; 4      Speciesversicolor    -1.01      0.28     -3.62  &lt; .001</span>
-<span class="co">#&gt; 5       Speciesvirginica    -0.99      0.29     -3.48  &lt; .001</span>
-<span class="co">#&gt; 6            Petlen(3,7]    -0.14      0.28     -0.48  0.630 </span>
-<span class="co">#&gt;               conf.int</span>
-<span class="co">#&gt; 1 [    3.70,     3.93]</span>
-<span class="co">#&gt; 2 [    3.14,     4.98]</span>
-<span class="co">#&gt; 3 [   -1.92,    -0.68]</span>
-<span class="co">#&gt; 4 [   -1.56,    -0.46]</span>
-<span class="co">#&gt; 5 [   -1.55,    -0.43]</span>
-<span class="co">#&gt; 6 [   -0.69,     0.42]</span></code></pre></div>
+<span class="co">#&gt;                     term estimate std.error statistic p.value       conf.int</span>
+<span class="co">#&gt; 1            (Intercept)     3.81      0.06     65.50  &lt; .001 [ 3.70,  3.93]</span>
+<span class="co">#&gt; 2 poly(Sepal.Length, 2)1     4.06      0.47      8.70  &lt; .001 [ 3.14,  4.98]</span>
+<span class="co">#&gt; 3 poly(Sepal.Length, 2)2    -1.30      0.31     -4.14  &lt; .001 [-1.92, -0.68]</span>
+<span class="co">#&gt; 4      Speciesversicolor    -1.01      0.28     -3.62  &lt; .001 [-1.56, -0.46]</span>
+<span class="co">#&gt; 5       Speciesvirginica    -0.99      0.29     -3.48  &lt; .001 [-1.55, -0.43]</span>
+<span class="co">#&gt; 6            Petlen(3,7]    -0.14      0.28     -0.48  0.630  [-0.69,  0.42]</span></code></pre></div>
 <p>When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;                   Parameter Coefficient   SE               95% CI t(144)      p</span>
-<span class="co">#&gt; 1               (Intercept)        3.81 0.06 [    3.70,     3.93]  65.50 &lt; .001</span>
-<span class="co">#&gt; 2 Sepal Length [1st degree]        4.06 0.47 [    3.14,     4.98]   8.70 &lt; .001</span>
-<span class="co">#&gt; 3 Sepal Length [2nd degree]       -1.30 0.31 [   -1.92,    -0.68]  -4.14 &lt; .001</span>
-<span class="co">#&gt; 4      Species [versicolor]       -1.01 0.28 [   -1.56,    -0.46]  -3.62 &lt; .001</span>
-<span class="co">#&gt; 5       Species [virginica]       -0.99 0.29 [   -1.55,    -0.43]  -3.48 &lt; .001</span>
-<span class="co">#&gt; 6              Petlen [4-7]       -0.14 0.28 [   -0.69,     0.42]  -0.48 0.630</span></code></pre></div>
+<span class="co">#&gt;                   Parameter Coefficient   SE         95% CI t(144)      p</span>
+<span class="co">#&gt; 1               (Intercept)        3.81 0.06 [ 3.70,  3.93]  65.50 &lt; .001</span>
+<span class="co">#&gt; 2 Sepal Length [1st degree]        4.06 0.47 [ 3.14,  4.98]   8.70 &lt; .001</span>
+<span class="co">#&gt; 3 Sepal Length [2nd degree]       -1.30 0.31 [-1.92, -0.68]  -4.14 &lt; .001</span>
+<span class="co">#&gt; 4      Species [versicolor]       -1.01 0.28 [-1.56, -0.46]  -3.62 &lt; .001</span>
+<span class="co">#&gt; 5       Species [virginica]       -0.99 0.29 [-1.55, -0.43]  -3.48 &lt; .001</span>
+<span class="co">#&gt; 6              Petlen [4-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</span></code></pre></div>
 </div>
 <div id="exporting-the-parameters-table" class="section level2">
 <h2 class="hasAnchor">
@@ -321,25 +314,25 @@
   <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; term                   | estimate | std.error | statistic | p.value |             conf.int</span>
-<span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)            |     3.81 |      0.06 |     65.50 |  &lt; .001 | [    3.70,     3.93]</span>
-<span class="co">#&gt; poly(Sepal.Length, 2)1 |     4.06 |      0.47 |      8.70 |  &lt; .001 | [    3.14,     4.98]</span>
-<span class="co">#&gt; poly(Sepal.Length, 2)2 |    -1.30 |      0.31 |     -4.14 |  &lt; .001 | [   -1.92,    -0.68]</span>
-<span class="co">#&gt; Speciesversicolor      |    -1.01 |      0.28 |     -3.62 |  &lt; .001 | [   -1.56,    -0.46]</span>
-<span class="co">#&gt; Speciesvirginica       |    -0.99 |      0.29 |     -3.48 |  &lt; .001 | [   -1.55,    -0.43]</span>
-<span class="co">#&gt; Petlen(3,7]            |    -0.14 |      0.28 |     -0.48 |  0.630  | [   -0.69,     0.42]</span></code></pre></div>
+<span class="co">#&gt; term                   | estimate | std.error | statistic | p.value |       conf.int</span>
+<span class="co">#&gt; ------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)            |     3.81 |      0.06 |     65.50 |  &lt; .001 | [ 3.70,  3.93]</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)1 |     4.06 |      0.47 |      8.70 |  &lt; .001 | [ 3.14,  4.98]</span>
+<span class="co">#&gt; poly(Sepal.Length, 2)2 |    -1.30 |      0.31 |     -4.14 |  &lt; .001 | [-1.92, -0.68]</span>
+<span class="co">#&gt; Speciesversicolor      |    -1.01 |      0.28 |     -3.62 |  &lt; .001 | [-1.56, -0.46]</span>
+<span class="co">#&gt; Speciesvirginica       |    -0.99 |      0.29 |     -3.48 |  &lt; .001 | [-1.55, -0.43]</span>
+<span class="co">#&gt; Petlen(3,7]            |    -0.14 |      0.28 |     -0.48 |  0.630  | [-0.69,  0.42]</span></code></pre></div>
 <p>Or, in a simpler way and with much more options (like standardizing, robust standard errors, bootstrapping, …) using <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>-method does all these steps automatically:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; Parameter                 | Coefficient |   SE |               95% CI | t(144) |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)               |        3.81 | 0.06 | [    3.70,     3.93] |  65.50 | &lt; .001</span>
-<span class="co">#&gt; Sepal Length [1st degree] |        4.06 | 0.47 | [    3.14,     4.98] |   8.70 | &lt; .001</span>
-<span class="co">#&gt; Sepal Length [2nd degree] |       -1.30 | 0.31 | [   -1.92,    -0.68] |  -4.14 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor]      |       -1.01 | 0.28 | [   -1.56,    -0.46] |  -3.62 | &lt; .001</span>
-<span class="co">#&gt; Species [virginica]       |       -0.99 | 0.29 | [   -1.55,    -0.43] |  -3.48 | &lt; .001</span>
-<span class="co">#&gt; Petlen [4-7]              |       -0.14 | 0.28 | [   -0.69,     0.42] |  -0.48 | 0.630</span></code></pre></div>
+<span class="co">#&gt; Parameter                 | Coefficient |   SE |         95% CI | t(144) |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)               |        3.81 | 0.06 | [ 3.70,  3.93] |  65.50 | &lt; .001</span>
+<span class="co">#&gt; Sepal Length [1st degree] |        4.06 | 0.47 | [ 3.14,  4.98] |   8.70 | &lt; .001</span>
+<span class="co">#&gt; Sepal Length [2nd degree] |       -1.30 | 0.31 | [-1.92, -0.68] |  -4.14 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]      |       -1.01 | 0.28 | [-1.56, -0.46] |  -3.62 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]       |       -0.99 | 0.29 | [-1.55, -0.43] |  -3.48 | &lt; .001</span>
+<span class="co">#&gt; Petlen [4-7]              |       -0.14 | 0.28 | [-0.69,  0.42] |  -0.48 | 0.630</span></code></pre></div>
 </div>
 <div id="formatting-the-parameters-table-in-markdown" class="section level2">
 <h2 class="hasAnchor">
@@ -385,7 +378,7 @@
 <td align="center">0.31</td>
 <td align="center">-4.14</td>
 <td align="right">&lt; .001</td>
-<td align="right">( -1.92, -0.68)</td>
+<td align="right">(-1.92, -0.68)</td>
 </tr>
 <tr class="even">
 <td align="left">Speciesversicolor</td>
@@ -393,7 +386,7 @@
 <td align="center">0.28</td>
 <td align="center">-3.62</td>
 <td align="right">&lt; .001</td>
-<td align="right">( -1.56, -0.46)</td>
+<td align="right">(-1.56, -0.46)</td>
 </tr>
 <tr class="odd">
 <td align="left">Speciesvirginica</td>
@@ -401,7 +394,7 @@
 <td align="center">0.29</td>
 <td align="center">-3.48</td>
 <td align="right">&lt; .001</td>
-<td align="right">( -1.55, -0.43)</td>
+<td align="right">(-1.55, -0.43)</td>
 </tr>
 <tr class="even">
 <td align="left">Petlen(3,7]</td>
@@ -409,7 +402,7 @@
 <td align="center">0.28</td>
 <td align="center">-0.48</td>
 <td align="right">0.630</td>
-<td align="right">( -0.69, 0.42)</td>
+<td align="right">(-0.69, 0.42)</td>
 </tr>
 </tbody>
 </table>
