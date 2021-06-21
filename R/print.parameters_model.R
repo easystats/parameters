@@ -291,6 +291,11 @@ summary.parameters_stan <- function(object, ...) {
 
 
 .print_caption <- function(x, caption = NULL, format = "text") {
+  no_caption <- attributes(x)$no_caption
+  if (isTRUE(no_caption)) {
+    return(NULL)
+  }
+
   title_attribute <- attributes(x)$title[1]
 
   # check effects and component parts

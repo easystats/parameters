@@ -34,6 +34,7 @@ model_parameters.epi.2by2 <- function(model, verbose = TRUE, ...) {
   stats <- model$massoc.detail$chi2.strata.uncor
   attr(params, "footer_text") <- paste0("Test that Odds Ratio = 1: Chi2(", stats[["df"]], ") = ", insight::format_value(stats[["test.statistic"]]), ", ", insight::format_p(stats[["p.value.2s"]]))
   attr(params, "pretty_names") <- stats::setNames(pretty_names, params$Parameter)
+  attr(params, "no_caption") <- TRUE
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   params
 }
