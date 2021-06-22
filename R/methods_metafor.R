@@ -100,6 +100,11 @@ model_parameters.rma <- function(model,
     sprintf("Study %i", 1:model[["k"]])
   }
 
+  # find missing
+  if (!is.null(model$yi.f) && anyNA(model$yi.f)) {
+    rma_parameters <- rma_parameters[match(model$yi, model$yi.f)]
+  }
+
   rma_coeffients <- as.vector(model$yi)
   rma_se <- as.vector(sqrt(model$vi))
   rma_ci_low <- rma_coeffients - rma_se * stats::qt(alpha, df = Inf)
