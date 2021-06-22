@@ -245,17 +245,13 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
       <td><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></td>
     </tr>
     <tr>
-      <th>digits</th>
-      <td><p>Number of decimal places for numeric values (except confidence
-intervals and p-values).</p></td>
-    </tr>
-    <tr>
-      <th>ci_digits</th>
-      <td><p>Number of decimal places for confidence intervals.</p></td>
-    </tr>
-    <tr>
-      <th>p_digits</th>
-      <td><p>Number of decimal places for p-values. May also be <code>"scientific"</code> for scientific notation of p-values.</p></td>
+      <th>digits, ci_digits, p_digits</th>
+      <td><p>Number of digits for rounding or
+significant figures. May also be <code>"signif"</code> to return significant
+figures or <code>"scientific"</code> to return scientific notation. Control the
+number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
+to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
+for 5 significant figures (see also <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>).</p></td>
     </tr>
     <tr>
       <th>footer_digits</th>
