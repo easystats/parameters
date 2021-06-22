@@ -12,6 +12,12 @@
 #'   or \code{"html"}.
 #' @param align Only applies to HTML tables. May be one of \code{"left"},
 #'   \code{"right"} or \code{"center"}.
+#' @param digits,ci_digits,p_digits Number of digits for rounding or
+#'   significant figures. May also be \code{"signif"} to return significant
+#'   figures or \code{"scientific"} to return scientific notation. Control the
+#'   number of digits by adding the value as suffix, e.g. \code{digits = "scientific4"}
+#'   to have scientific notation with 4 decimal places, or \code{digits = "signif5"}
+#'   for 5 significant figures (see also \code{\link{signif}}).
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table

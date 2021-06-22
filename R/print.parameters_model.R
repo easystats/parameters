@@ -26,6 +26,12 @@
 #'   variables, see 'Examples'. Parameters will be re-ordered according to the
 #'   order used in \code{groups}, while all non-matching parameters will be added
 #'   to the end.
+#' @param digits,ci_digits,p_digits Number of digits for rounding or
+#'   significant figures. May also be \code{"signif"} to return significant
+#'   figures or \code{"scientific"} to return scientific notation. Control the
+#'   number of digits by adding the value as suffix, e.g. \code{digits = "scientific4"}
+#'   to have scientific notation with 4 decimal places, or \code{digits = "signif5"}
+#'   for 5 significant figures (see also \code{\link{signif}}).
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms

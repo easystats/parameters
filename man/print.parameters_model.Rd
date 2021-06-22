@@ -42,12 +42,12 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
 \item{caption}{Table caption as string. If \code{NULL}, no table caption is printed.}
 
-\item{digits}{Number of decimal places for numeric values (except confidence
-intervals and p-values).}
-
-\item{ci_digits}{Number of decimal places for confidence intervals.}
-
-\item{p_digits}{Number of decimal places for p-values. May also be \code{"scientific"} for scientific notation of p-values.}
+\item{digits, ci_digits, p_digits}{Number of digits for rounding or
+significant figures. May also be \code{"signif"} to return significant
+figures or \code{"scientific"} to return scientific notation. Control the
+number of digits by adding the value as suffix, e.g. \code{digits = "scientific4"}
+to have scientific notation with 4 decimal places, or \code{digits = "signif5"}
+for 5 significant figures (see also \code{\link{signif}}).}
 
 \item{footer_digits}{Number of decimal places for values in the footer summary.}
 
