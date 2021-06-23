@@ -128,7 +128,17 @@
     x$Level <- NULL
   }
 
-  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small, ...)
+  insight::format_table(
+    x,
+    pretty_names = pretty_names,
+    digits = digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    zap_small = zap_small,
+    ...
+  )
 }
 
 
@@ -136,69 +146,76 @@
 
 # helper to format the header / subheader of different model components --------------
 
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
+.format_model_component_header <- function(x,
+           type,
+           split_column,
+           is_zero_inflated,
+           is_ordinal_model,
+           ran_pars,
+           formatted_table = NULL) {
+
   component_name <- switch(type,
-    "mu" = ,
-    "fixed" = ,
-    "fixed." = ,
-    "conditional" = ,
-    "conditional." = "Fixed Effects",
-    "random." = ,
-    "random" = "Random Effects",
-    "conditional.fixed" = ,
-    "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-    "conditional.random" = ifelse(ran_pars,
-      "Random Effects Variances",
-      ifelse(is_zero_inflated,
-        "Random Effects (Count Model)", "Random Effects"
-      )
-    ),
-    "zero_inflated" = "Zero-Inflated",
-    "zero_inflated.fixed" = ,
-    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
-    "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
-    "survival" = ,
-    "survival.fixed" = "Survival",
-    "dispersion.fixed" = ,
-    "dispersion.fixed." = ,
-    "dispersion" = "Dispersion",
-    "marginal" = "Marginal Effects",
-    "emmeans" = "Estimated Marginal Means",
-    "contrasts" = "Contrasts",
-    "simplex.fixed" = ,
-    "simplex" = "Monotonic Effects",
-    "smooth_sd" = "Smooth Terms (SD)",
-    "smooth_terms" = "Smooth Terms",
-    "sigma.fixed" = ,
-    "sigma.fixed." = ,
-    "sigma" = "Sigma",
-    "thresholds" = "Thresholds",
-    "correlation" = "Correlation",
-    "SD/Cor" = "SD / Correlation",
-    "Loading" = "Loading",
-    "scale" = ,
-    "scale.fixed" = ,
-    "scale.fixed." = "Scale Parameters",
-    "extra" = ,
-    "extra.fixed" = ,
-    "extra.fixed." = "Extra Parameters",
-    "nu" = "Nu",
-    "tau" = "Tau",
-    "meta" = "Meta-Parameters",
-    "studies" = "Studies",
-    "within" = "Within-Effects",
-    "between" = "Between-Effects",
-    "interactions" = "(Cross-Level) Interactions",
-    "precision" = ,
-    "precision." = "Precision",
-    "infrequent_purchase" = "Infrequent Purchase",
-    "auxiliary" = "Auxiliary",
-    "residual" = "Residual",
-    "intercept" = "Intercept",
-    "regression" = "Regression",
-    "latent" = "Latent",
-    "time_dummies" = "Time Dummies",
-    type
+                           "mu" = ,
+                           "fixed" = ,
+                           "fixed." = ,
+                           "conditional" = ,
+                           "conditional." = "Fixed Effects",
+                           "random." = ,
+                           "random" = "Random Effects",
+                           "conditional.fixed" = ,
+                           "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
+                           "conditional.random" = ifelse(ran_pars,
+                                                         "Random Effects Variances",
+                                                         ifelse(is_zero_inflated,
+                                                                "Random Effects (Count Model)", "Random Effects"
+                                                         )
+                           ),
+                           "zero_inflated" = "Zero-Inflated",
+                           "zero_inflated.fixed" = ,
+                           "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
+                           "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+                           "survival" = ,
+                           "survival.fixed" = "Survival",
+                           "dispersion.fixed" = ,
+                           "dispersion.fixed." = ,
+                           "dispersion" = "Dispersion",
+                           "marginal" = "Marginal Effects",
+                           "emmeans" = "Estimated Marginal Means",
+                           "contrasts" = "Contrasts",
+                           "simplex.fixed" = ,
+                           "simplex" = "Monotonic Effects",
+                           "smooth_sd" = "Smooth Terms (SD)",
+                           "smooth_terms" = "Smooth Terms",
+                           "sigma.fixed" = ,
+                           "sigma.fixed." = ,
+                           "sigma" = "Sigma",
+                           "thresholds" = "Thresholds",
+                           "correlation" = "Correlation",
+                           "SD/Cor" = "SD / Correlation",
+                           "Loading" = "Loading",
+                           "scale" = ,
+                           "scale.fixed" = ,
+                           "scale.fixed." = "Scale Parameters",
+                           "extra" = ,
+                           "extra.fixed" = ,
+                           "extra.fixed." = "Extra Parameters",
+                           "nu" = "Nu",
+                           "tau" = "Tau",
+                           "meta" = "Meta-Parameters",
+                           "studies" = "Studies",
+                           "within" = "Within-Effects",
+                           "between" = "Between-Effects",
+                           "interactions" = "(Cross-Level) Interactions",
+                           "precision" = ,
+                           "precision." = "Precision",
+                           "infrequent_purchase" = "Infrequent Purchase",
+                           "auxiliary" = "Auxiliary",
+                           "residual" = "Residual",
+                           "intercept" = "Intercept",
+                           "regression" = "Regression",
+                           "latent" = "Latent",
+                           "time_dummies" = "Time Dummies",
+                           type
   )
 
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
@@ -231,8 +248,8 @@
 
   # if we show ZI component only, make sure this appears in header
   if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
-    !is.null(formatted_table$Component) &&
-    all(formatted_table$Component == "zero_inflated")) {
+      !is.null(formatted_table$Component) &&
+      all(formatted_table$Component == "zero_inflated")) {
     component_name <- paste0(component_name, " (Zero-Inflated Model)")
   }
 
@@ -250,9 +267,9 @@
       s2 <- ""
     }
   } else if (length(split_column) > 1 ||
-    split_column %in% c("Subgroup", "Type", "Group") ||
-    grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
-    component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
+             split_column %in% c("Subgroup", "Type", "Group") ||
+             grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
+             component_name %in% c("Within-Effects", "Between-Effects", "(Cross-Level) Interactions")) {
     s1 <- component_name
     s2 <- ""
   } else if (split_column == "Response" && is_ordinal_model) {
