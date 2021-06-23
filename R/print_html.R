@@ -103,16 +103,16 @@ print_html.compare_parameters <- function(x,
                                           footer = NULL,
                                           style = NULL,
                                           ...) {
-  # save original input
-  orig_x <- x
 
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
   }
+
   if (missing(ci_digits)) {
     ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
   }
+
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
   }
@@ -137,7 +137,7 @@ print_html.compare_parameters <- function(x,
   insight::export_table(
     formatted_table,
     format = "html",
-    caption = table_caption,
+    caption = table_caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
     ...
