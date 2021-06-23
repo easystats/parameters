@@ -41,7 +41,7 @@ set.seed(333)
 ```
 
 This vignette explains the rational behind the
-[`demean()`](https://easystats.github.io/parameters/reference/demean.html)
+[`demean()`](https://easystats.github.io/parameters/reference/datawizard::demean.html)
 function. We give recommendations how to analyze multilevel or hierarchical data
 structures, when macro-indicators (or level-2 predictors, or higher-level units,
 or more general: _group-level predictors_) are used as covariates and the model
@@ -108,7 +108,7 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ```{r}
 qol_cancer <- cbind(
   qol_cancer,
-  demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
 )
 ```
 
@@ -349,7 +349,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
 ```
 
 Let's look at the raw data...
@@ -521,7 +521,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)

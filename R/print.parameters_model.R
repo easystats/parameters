@@ -121,7 +121,6 @@ print.parameters_model <- function(x,
   # save original input
   orig_x <- x
 
-
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
@@ -188,7 +187,13 @@ print.parameters_model <- function(x,
 #' @rdname print.parameters_model
 #' @export
 summary.parameters_model <- function(object, ...) {
-  print(x = object, select = "minimal", show_sigma = TRUE, show_formula = TRUE, ...)
+  print(
+    x = object,
+    select = "minimal",
+    show_sigma = TRUE,
+    show_formula = TRUE,
+    ...
+  )
 }
 
 #' @export
@@ -226,7 +231,6 @@ summary.parameters_stan <- function(object, ...) {
 
 
 # helper --------------------
-
 
 .print_core <- function(x,
                         pretty_names = TRUE,

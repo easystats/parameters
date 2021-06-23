@@ -238,7 +238,6 @@ format.parameters_stan <- function(x,
                                    format = NULL,
                                    table_caption = NULL,
                                    ...) {
-
   cp <- attributes(x)$parameter_info
   att <- attributes(x)
   final_table <- list()

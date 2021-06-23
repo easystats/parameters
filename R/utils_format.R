@@ -128,7 +128,17 @@
     x$Level <- NULL
   }
 
-  insight::format_table(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small, ...)
+  insight::format_table(
+    x,
+    pretty_names = pretty_names,
+    digits = digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    zap_small = zap_small,
+    ...
+  )
 }
 
 
@@ -136,7 +146,14 @@
 
 # helper to format the header / subheader of different model components --------------
 
-.format_model_component_header <- function(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table = NULL) {
+.format_model_component_header <- function(x,
+           type,
+           split_column,
+           is_zero_inflated,
+           is_ordinal_model,
+           ran_pars,
+           formatted_table = NULL) {
+
   component_name <- switch(type,
                            "mu" = ,
                            "fixed" = ,

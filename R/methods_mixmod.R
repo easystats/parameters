@@ -11,10 +11,17 @@ ci.MixMod <- function(x,
                       verbose = TRUE,
                       ...) {
   component <- match.arg(component)
+
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
   }
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+
+  ci_wald(
+    model = x,
+    ci = ci,
+    dof = Inf,
+    component = component
+  )
 }
 
 
@@ -91,7 +98,11 @@ p_value.MixMod <- function(model,
   cs <- .compact_list(cs)
   x <- lapply(names(cs), function(i) {
     .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
+      Parameter = insight::find_parameters(model,
+        effects = "fixed",
+        component = i,
+        flatten = TRUE
+      ),
       p = as.vector(cs[[i]][, 4]),
       Component = i
     )

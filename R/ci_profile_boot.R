@@ -6,9 +6,10 @@
 
       out$CI <- ci
       out$Parameter <- insight::get_parameters(model,
-                                               effects = "fixed",
-                                               component = "conditional",
-                                               verbose = FALSE)$Parameter
+        effects = "fixed",
+        component = "conditional",
+        verbose = FALSE
+      )$Parameter
 
       out <- out[c("Parameter", "CI", "CI_low", "CI_high")]
       rownames(out) <- NULL
@@ -94,9 +95,10 @@
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
 
   pars <- insight::get_parameters(x,
-                                  effects = "fixed",
-                                  component = component,
-                                  verbose = FALSE)
+    effects = "fixed",
+    component = component,
+    verbose = FALSE
+  )
 
   param_names <- switch(component,
     "conditional" = pars$Parameter,

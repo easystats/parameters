@@ -108,7 +108,7 @@ bootstrap_model.default <- function(model,
   if (type == "parametric") {
     f <- function(x, mle) {
       out <- model_data
-      resp <- simulate(x, nsim = 1)
+      resp <- stats::simulate(x, nsim = 1)
       out[[model_response]] <- resp
       return(out)
     }

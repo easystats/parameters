@@ -309,9 +309,10 @@
 
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
     parameters <- .filter_parameters(parameters,
-                                     keep = keep_parameters,
-                                     drop = drop_parameters,
-                                     verbose = verbose)
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
 
@@ -626,9 +627,10 @@
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
     parameters <- .filter_parameters(parameters,
-                                     keep = keep_parameters,
-                                     drop = drop_parameters,
-                                     verbose = verbose)
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
   rownames(parameters) <- NULL
@@ -819,9 +821,10 @@
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
     parameters <- .filter_parameters(parameters,
-                                     keep = keep_parameters,
-                                     drop = drop_parameters,
-                                     verbose = verbose)
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
   rownames(parameters) <- NULL
@@ -965,9 +968,10 @@
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
     params <- .filter_parameters(params,
-                                 keep = keep_parameters,
-                                 drop = drop_parameters,
-                                 verbose = verbose)
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
   params
