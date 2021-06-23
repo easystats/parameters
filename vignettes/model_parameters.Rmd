@@ -30,6 +30,7 @@ knitr::opts_chunk$set(
 )
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("effectsize", quietly = TRUE) ||
   !requireNamespace("BayesFactor", quietly = TRUE) ||
   !requireNamespace("lme4", quietly = TRUE) ||
   !requireNamespace("metafor", quietly = TRUE) ||
@@ -44,6 +45,7 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 } else {
   library(parameters)
   library(dplyr)
+  library(effectsize)
 }
 
 set.seed(333)
@@ -62,7 +64,7 @@ notable differences:
   [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
 
 - It is able to compute or extract indices not available by default, such as
-  ***p*-values**, **CIs**, etc.
+  **p*-values**, **CIs**, etc.
 
 - It includes **feature engineering** capabilities, including parameters
   [**bootstrapping**](https://easystats.github.io/parameters/reference/bootstrap_model.html).
