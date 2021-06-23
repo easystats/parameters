@@ -25,12 +25,15 @@ print_html.parameters_model <- function(x,
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)
   }
+
   if (missing(ci_digits)) {
     ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
   }
+
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
   }
+
   if (missing(footer_digits)) {
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
   }
@@ -140,14 +143,3 @@ print_html.compare_parameters <- function(x,
     ...
   )
 }
-
-
-
-
-
-
-# Reexports models ------------------------
-
-#' @importFrom insight print_html
-#' @export
-insight::print_html
