@@ -10,6 +10,7 @@
   - `kurtosis()`
   - `rescale_weights()`
   - `skewness()`
+  - `smoothness()`
 
 ## General
 
