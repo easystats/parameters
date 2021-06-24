@@ -2,7 +2,9 @@
 
 ## Breaking changes
 
-* Following functions were moved to the new *datawizard* package:
+* Following functions were moved to the new *datawizard* package and are now
+  re-exported from *parameters* package:
+
   - `center()`
   - `convert_data_to_numeric()`
   - `data_partition()`
@@ -26,11 +28,11 @@
   can be helpful for users who may wish to report ANOVA table in wide format
   (i.e., with numerator and denominator degrees of freedom on the same row).
 
-* `model_parameters()` gains two new arguments, `keep` and `drop`. `keep` is
-  the new names for the former `parameters` argument and can be used to filter
-  parameters. While `keep` selects those parameters whose names match the regular
-  expression pattern defined in `keep`, `drop` is the counterpart and excludes 
-  matching parameter names.
+* `model_parameters()` gains two new arguments, `keep` and `drop`. `keep` is the
+  new names for the former `parameters` argument and can be used to filter
+  parameters. While `keep` selects those parameters whose names match the
+  regular expression pattern defined in `keep`, `drop` is the counterpart and
+  excludes matching parameter names.
 
 ### Other functions
 
@@ -39,22 +41,24 @@
 * `describe_distribution()` gets `verbose` argument to toggle warnings and
   messages.
 
-* `format_parameters()` removes dots and underscores from parameter names,
-  to make these more "human readable".
+* `format_parameters()` removes dots and underscores from parameter names, to
+  make these more "human readable".
 
 * Minor improvements to `print()`, `print_html()` and `print_md()`.
 
 ## Bug fixes
 
-* The random effects returned by `model_parameters()` mistakenly displayed
-  the residuals standard deviation as square-root of the residual SD.
+* The random effects returned by `model_parameters()` mistakenly displayed the
+  residuals standard deviation as square-root of the residual SD.
 
 * Fixed issue with `model_parameters()` for *brmsfit* objects that model
   standard errors (i.e. for meta-analysis).
 
-* Fixed issue in `model_parameters.mlm()` when model contained interaction terms.
+* Fixed issue in `model_parameters.mlm()` when model contained interaction
+  terms.
 
-* Fixed issue in `model_parameters.rma()` when model contained interaction terms.
+* Fixed issue in `model_parameters.rma()` when model contained interaction
+  terms.
 
 # parameters 0.14.0
 
