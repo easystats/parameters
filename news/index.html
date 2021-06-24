@@ -193,7 +193,8 @@
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking changes</h2>
-<ul><li>Following functions were moved to the new <em>datawizard</em> package:
+<ul><li>
+<p>Following functions were moved to the new <em>datawizard</em> package and are now re-exported from <em>parameters</em> package:</p>
 <ul><li><code><a href="https://easystats.github.io/datawizard/reference/center.html" class="external-link">center()</a></code></li>
 <li><code><a href="https://easystats.github.io/datawizard/reference/convert_data_to_numeric.html" class="external-link">convert_data_to_numeric()</a></code></li>
 <li><code>data_partition()</code></li>
@@ -201,7 +202,8 @@
 <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean()</a></code> (and its aliases <code>degroup()</code> and <code>detrend()</code>)</li>
 <li><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code></li>
 <li><code>rescale_weights()</code></li>
-<li><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">skewness()</a></code></li>
+<li><code>skewness()</code></li>
+<li><code><a href="https://easystats.github.io/datawizard/reference/smoothness.html" class="external-link">smoothness()</a></code></li>
 </ul></li>
 </ul></div>
 <div id="general" class="section level2">
@@ -754,7 +756,7 @@
 <li><p>Alias <code>parameters_selection()</code> was removed, please use <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.</p></li>
 <li><p>Alias <code>parameters_reduction()</code> was removed, please use <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>.</p></li>
 <li><p>Functions <code>DDR()</code>, <code>ICA()</code> and <code>cmds()</code> are no longer exported, as these were intended to be used internally by <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> only.</p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">skewness()</a></code> and <code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code> always return a data frame.</p></li>
+<li><p><code>skewness()</code> and <code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code> always return a data frame.</p></li>
 </ul></div>
 <div id="new-supported-models-3" class="section level2">
 <h2 class="hasAnchor">
@@ -784,7 +786,7 @@
 <h3 class="hasAnchor">
 <a href="#other-changes-2" class="anchor" aria-hidden="true"></a>Other changes</h3>
 <ul><li><p>Run certain tests only locally, to reduce duration of CRAN checks.</p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">skewness()</a></code>, <code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code> and <code><a href="https://easystats.github.io/datawizard/reference/smoothness.html" class="external-link">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</p></li>
+<li><p><code>skewness()</code>, <code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code> and <code><a href="https://easystats.github.io/datawizard/reference/smoothness.html" class="external-link">smoothness()</a></code> get an <code>iteration</code> argument, to set the numbers of bootstrap replicates for computing standard errors.</p></li>
 <li><p>Improved print-method for <code><a href="../reference/principal_components.html">factor_analysis()</a></code>.</p></li>
 <li><p><code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean()</a></code> now additionally converts factors with more than 2 levels to dummy-variables (binary), to mimic <em>panelr</em>-behaviour.</p></li>
 </ul></div>
