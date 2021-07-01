@@ -11,15 +11,15 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
+
+# anova ----------------------
+
 model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
-
-
-# WRS2 anova ----------------------
 
 .extract_wrs2_t1way <- function(model) {
   fcall <- .safe_deparse(model$call)
@@ -31,7 +31,7 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
       "df_error" = model$df2,
       "p" = model$p.value,
       "Estimate" = model$effsize,
-      "CI" = .95,
+      "CI" = 0.95,
       "CI_low" =  model$effsize_ci[1],
       "CI_high" = model$effsize_ci[2],
       "Effectsize" = "Explanatory measure of effect size",
@@ -50,6 +50,58 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
   }
 }
 
+#' @export
+model_parameters.med1way <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_med1way(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+.extract_wrs2_med1way <- function(model) {
+  data.frame(
+    "F" = model$test,
+    "Critical value" = model$crit.val,
+    "p" = model$p.value,
+    "Method" = "Heteroscedastic one-way ANOVA for medians",
+    stringsAsFactors = FALSE
+  )
+}
+
+#' @export
+model_parameters.dep.effect <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_dep.effect(model)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+.extract_wrs2_dep.effect <- function(model) {
+  out <- as.data.frame(model)
+
+  out$Effectsize <- c(attributes(out)$row.names)
+
+  names(out) <- c(
+    "Mu", "Estimate", "Small", "Medium", "Large",
+    "CI_low", "CI_high", "Effectsize"
+  )
+
+  # CI column
+  out$CI <- 0.95
+
+  # reorder
+  col_order <- c(
+    "Estimate", "CI", "CI_low", "CI_high", "Effectsize",
+    "Mu", "Small", "Medium", "Large"
+  )
+  out <- out[col_order[col_order %in% names(out)]]
+
+  # remove rownames
+  rownames(out) <- NULL
+
+  out
+}
+
+# t-test ----------------------
 
 #' @export
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
@@ -59,16 +111,13 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
-# WRS2 ttest ----------------------
-
 .extract_wrs2_yuen <- function(model) {
   fcall <- .safe_deparse(model$call)
 
   if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall)) {
     data.frame(
       "Difference" = model$diff,
-      "CI" = .95,
+      "CI" = 0.95,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
       "t" = model$test,
@@ -82,7 +131,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   } else if (grepl("^(yuend|WRS2::yuend)", fcall)) {
     data.frame(
       "Difference" = model$diff,
-      "CI" = .95,
+      "CI" = 0.95,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
       "t" = model$test,
@@ -96,6 +145,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   }
 }
 
+# pairwise comparisons ----------------------
 
 #' @export
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
@@ -105,19 +155,8 @@ model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
 #' @export
 model_parameters.mcp2 <- model_parameters.mcp1
-
-#' @export
-model_parameters.robtab <- function(model, verbose = TRUE, ...) {
-  parameters <- .extract_wrs2_robtab(model)
-  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
-  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  parameters
-}
-
-# WRS2 post hoc comparisons ----------------------
 
 .extract_wrs2_mcp12 <- function(model) {
   # component of the object containing results from multiple comparisons
@@ -131,15 +170,25 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
   out$Group2 <- model$fnames[model$comp[, 2]]
 
   # CI column
-  out$CI <- .95
+  out$CI <- 0.95
 
   # reorder
   col_order <- c("Group1", "Group2", "Psihat", "CI", "CI_low", "CI_high", "p", "p.crit")
   out <- out[col_order[col_order %in% names(out)]]
-  out
 
   out
 }
+
+# comparison of discrete distributions ----------------------
+
+#' @export
+model_parameters.robtab <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_robtab(model)
+  parameters <- .add_htest_parameters_attributes(parameters, model, ...)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
 
 .extract_wrs2_robtab <- function(model) {
   fcall <- .safe_deparse(model$call)
@@ -167,6 +216,7 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
   out
 }
 
+# one-sample percentile bootstrap ----------------------
 
 #' @export
 model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
@@ -176,13 +226,10 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
-# WRS2 one-sample percentile bootstrap ----------------------
-
 .extract_wrs2_onesampb <- function(model) {
   data.frame(
     "Estimate" = model$estimate,
-    "CI" = .95,
+    "CI" = 0.95,
     "CI_low" =  model$ci[1],
     "CI_high" =  model$ci[2],
     "p" = model$p.value,
@@ -194,24 +241,30 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
 }
 
 #' @export
-model_parameters.med1way <- function(model, verbose = TRUE, ...) {
-  parameters <- .extract_wrs2_med1way(model)
+model_parameters.trimcibt <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_trimcibt(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
-.extract_wrs2_med1way <- function(model) {
+.extract_wrs2_trimcibt <- function(model) {
   data.frame(
-    "F" = model$test,
-    "Critical value" = model$crit.val,
+    "t" = model$test.stat,
     "p" = model$p.value,
-    "Method" = "Heteroscedastic one-way ANOVA for medians",
+    "n_Obs" = model$n,
+    "Method" = "Bootstrap-t method for one-sample test",
+    "Estimate" = model$estimate[[1]],
+    "CI" = 0.95,
+    "CI_low" =  model$ci[1],
+    "CI_high" =  model$ci[2],
+    "Effectsize" = "Trimmed mean",
     stringsAsFactors = FALSE
   )
 }
 
-# WRS2 one-sample percentile bootstrap ----------------------
+
+# AKP effect sizes ----------------------
 
 #' @export
 model_parameters.AKP <- function(model, verbose = TRUE, ...) {
@@ -221,16 +274,31 @@ model_parameters.AKP <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
-# AKP effect size ----------------------
-
 .extract_wrs2_AKP <- function(model) {
   data.frame(
     "Estimate" = model$AKPeffect,
-    "CI" = .95,
+    "CI" = 0.95,
     "CI_low" =  model$AKPci[1],
     "CI_high" =  model$AKPci[2],
     "Effectsize" = "Algina-Keselman-Penfield robust standardized difference",
+    stringsAsFactors = FALSE
+  )
+}
+
+#' @export
+model_parameters.wmcpAKP <- function(model, verbose = TRUE, ...) {
+  parameters <- .extract_wrs2_wmcpAKP(model)
+  class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
+  parameters
+}
+
+.extract_wrs2_wmcpAKP <- function(model) {
+  data.frame(
+    "Estimate" = model[[1]],
+    "CI" = 0.95,
+    "CI_low" =  model[[2]],
+    "CI_high" =  model[[3]],
+    "Effectsize" = "Algina-Keselman-Penfield robust standardized difference average",
     stringsAsFactors = FALSE
   )
 }
