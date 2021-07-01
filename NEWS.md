@@ -24,6 +24,9 @@
 
 ### `model_parameters()`
 
+* `model_parameters()` supports following new objects in *WRS2* package: 
+  `trimcibt`, `wmcpAKP`, `dep.effect`.
+
 * `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
   can be helpful for users who may wish to report ANOVA table in wide format
   (i.e., with numerator and denominator degrees of freedom on the same row).
