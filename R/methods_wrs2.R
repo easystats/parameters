@@ -30,12 +30,12 @@ model_parameters.t1way <- function(model, verbose = TRUE, ...) {
       "df" = model$df1,
       "df_error" = model$df2,
       "p" = model$p.value,
+      "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
       "Estimate" = model$effsize,
       "CI" = 0.95,
       "CI_low" =  model$effsize_ci[1],
       "CI_high" = model$effsize_ci[2],
       "Effectsize" = "Explanatory measure of effect size",
-      "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
       stringsAsFactors = FALSE
     )
   } else if (grepl("^(rmanova|WRS2::rmanova)", fcall)) {
@@ -116,30 +116,30 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 
   if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall)) {
     data.frame(
+      "t" = model$test,
+      "df_error" = model$df,
+      "p" = model$p.value,
+      "Method" = "Yuen's test on trimmed means for independent samples",
       "Difference" = model$diff,
       "CI" = 0.95,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
-      "t" = model$test,
-      "df_error" = model$df,
-      "p" = model$p.value,
       "Estimate" = model$effsize,
       "Effectsize" = "Explanatory measure of effect size",
-      "Method" = "Yuen's test on trimmed means for independent samples",
       stringsAsFactors = FALSE
     )
   } else if (grepl("^(yuend|WRS2::yuend)", fcall)) {
     data.frame(
+      "t" = model$test,
+      "df_error" = model$df,
+      "p" = model$p.value,
+      "Method" = "Yuen's test on trimmed means for dependent samples",
       "Difference" = model$diff,
       "CI" = 0.95,
       "Difference_CI_low" =  model$conf.int[1],
       "Difference_CI_high" =  model$conf.int[2],
-      "t" = model$test,
-      "df_error" = model$df,
-      "p" = model$p.value,
       "Estimate" = model$effsize,
       "Effectsize" = "Explanatory measure of effect size",
-      "Method" = "Yuen's test on trimmed means for dependent samples",
       stringsAsFactors = FALSE
     )
   }
