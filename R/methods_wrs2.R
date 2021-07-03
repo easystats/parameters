@@ -114,8 +114,12 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 .extract_wrs2_yuen <- function(model) {
   fcall <- .safe_deparse(model$call)
 
-  if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall)) {
-    data.frame(
+  # the latter regexe covers `rlang::exec` or `do.call` instances
+
+  # between-subjects
+  if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall) ||
+    grepl("function (formula, data, tr = 0.2, ...)", fcall, fixed = TRUE)) {
+    out <- data.frame(
       "t" = model$test,
       "df_error" = model$df,
       "p" = model$p.value,
@@ -128,8 +132,9 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "Effectsize" = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
     )
-  } else if (grepl("^(yuend|WRS2::yuend)", fcall)) {
-    data.frame(
+  } else {
+    # within-subjects
+    out <- data.frame(
       "t" = model$test,
       "df_error" = model$df,
       "p" = model$p.value,
@@ -143,6 +148,8 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       stringsAsFactors = FALSE
     )
   }
+
+  out
 }
 
 # pairwise comparisons ----------------------
