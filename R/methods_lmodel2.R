@@ -3,13 +3,21 @@
 
 #' @export
 model_parameters.lmodel2 <- function(model,
+                                     ci = .95,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
+  if (!missing(ci)) {
+    if (isTRUE(verbose)) {
+      message(insight::format_message("'lmodel2' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."))
+    }
+    ci <- .95
+  }
+
   out <- .model_parameters_generic(
     model = model,
-    ci = .95,
+    ci = ci,
     bootstrap = FALSE,
     iterations = 10,
     merge_by = c("Parameter", "Component"),
