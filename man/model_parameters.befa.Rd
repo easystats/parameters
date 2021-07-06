@@ -2,7 +2,7 @@
 % Please edit documentation in R/methods_BayesFM.R
 \name{model_parameters.befa}
 \alias{model_parameters.befa}
-\title{Parameters from PCA/FA}
+\title{Parameters from Bayesian Exploratory Factor Analysis}
 \usage{
 \method{model_parameters}{befa}(
   model,
@@ -49,7 +49,7 @@ included in the summary output.}
 A data frame of loadings.
 }
 \description{
-Format PCA/FA objects from the psych package (Revelle, 2016).
+Format Bayesian Exploratory Factor Analysis objects from the BayesFM package.
 }
 \examples{
 library(parameters)

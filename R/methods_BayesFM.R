@@ -1,6 +1,6 @@
-#' Parameters from PCA/FA
+#' Parameters from Bayesian Exploratory Factor Analysis
 #'
-#' Format PCA/FA objects from the psych package (Revelle, 2016).
+#' Format Bayesian Exploratory Factor Analysis objects from the BayesFM package.
 #'
 #' @param model Bayesian EFA created by the \code{BayesFM::befa}.
 #' @inheritParams principal_components
