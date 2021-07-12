@@ -40,6 +40,8 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
   !requireNamespace("brms", quietly = TRUE) ||
   !requireNamespace("psych", quietly = TRUE) ||
   !requireNamespace("rstanarm", quietly = TRUE) ||
+  !requireNamespace("glmmTMB", quietly = TRUE) ||
+  !requireNamespace("GLMMadaptive", quietly = TRUE) ||
   !requireNamespace("FactoMineR", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
