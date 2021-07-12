@@ -63,6 +63,8 @@
 * Fixed issue in `model_parameters.rma()` when model contained interaction
   terms.
 
+* Fixed sign error for `model_parameters.htest()` for objects created with `t.test.formula()` (issue #552)
+
 # parameters 0.14.0
 
 ## Breaking changes

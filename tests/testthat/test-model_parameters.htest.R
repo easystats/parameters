@@ -20,7 +20,7 @@ if (require("testthat") && require("parameters")) {
     expect_equal(params$Difference, -2.786, tolerance = 0.05)
 
     params <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs))
-    expect_equal(params$Difference, 7.940, tolerance = 0.05)
+    expect_equal(params$Difference, -7.940, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
     expect_equal(params$Difference, 2.0573, tolerance = 0.05)
@@ -85,6 +85,16 @@ if (require("testthat") && require("parameters")) {
           "p", "Method", "Alternative"
         )
       )
+    })
+
+    test_that("model_parameters-t-test reports the same unregarding of interface", {
+      g1 <- 1:10
+      g2 <- 7:20
+      df <- data.frame(y = c(g1, g2), x = rep(c(0, 1), c(length(g1), length(g2))))
+      compare_only <- c("Difference", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Method")
+      default_ttest <- model_parameters(t.test(x = g1, y = g2))[compare_only]
+      formula_ttest <- model_parameters(t.test(y ~ x, df))[compare_only]
+      expect_equal(default_ttest, formula_ttest)
     })
   }
 }
