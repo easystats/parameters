@@ -173,7 +173,8 @@
 <p>Heterogeneity bias occurs when group-level predictors vary within and across groups, and hence fixed effects may correlate with group (or random) effects. This is a typical situation when analyzing longitudinal or panel data: Due to the repeated measurements of persons, the “person” (or subject-ID) is now a level-2 variable. Predictors at level-1 (“fixed effects”), e.g. self-rated health or income, now have an effect at level-1 (“within”-effect) and at higher-level units (level-2, the subject-level, which is the “between”-effect) (see also <a href="https://shouldbewriting.netlify.app/posts/2019-10-21-accounting-for-within-and-between-subject-effect/" class="external-link">this posting</a>). This inevitably leads to correlating fixed effects and error terms - which, in turn, results in biased estimates, because both the within- <em>and</em> between-effect are captured in <em>one</em> estimate.</p>
 <p>You can check if your model may suffer from heterogeneity bias using the <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/check_heterogeneity.html">check_heterogeneity</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"education"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/check_heterogeneity.html">check_heterogeneity</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"education"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span>
+<span class="co">#&gt; Possible heterogeneity bias due to following predictors: phq4</span></code></pre></div>
 </div>
 <div id="adressing-heterogeneity-bias-the-fixed-effects-regression-fe-approach" class="section level1">
 <h1 class="hasAnchor">
@@ -208,6 +209,10 @@
 <span class="co"># we use only the first two rows, because the remaining rows are</span>
 <span class="co"># the estimates for "ID", which is not of interest here...</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
+<span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
 
 
 <span class="co"># instead of removing the intercept, we could also use the</span>
@@ -217,14 +222,24 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model2</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="op">]</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
+<span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
 
 <span class="co"># we compare the results with those from the "lfe"-package for panel data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lfe</span><span class="op">)</span>
-<span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu">felm</span><span class="op">(</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sgaure/lfe" class="external-link">lfe</a></span><span class="op">)</span>
+<span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html" class="external-link">felm</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">|</span> <span class="va">ID</span>,
    data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model3</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model3</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; -----------------------------------------------------------------</span>
+<span class="co">#&gt; time      |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.089 </span>
+<span class="co">#&gt; phq4      |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></code></pre></div>
 <p>As we can see, the <em>within-effect</em> of PHQ-4 is <code>-3.66</code>, hence the mean of the change for an average individual case in our sample (or, the “net” effect), is <code>-3.66</code>.</p>
 <p>But what about the between-effect? How do people with higher PHQ-4 score differ from people with lower PHQ-4 score? Or what about educational inequalities? Do higher educated people have a higher PHQ-4 score than lower educated people?</p>
 <p>This question cannot be answered with FE regression. But: “Can one fit a multilevel model with varying intercepts (or coefficients) when the units and predictors correlate? The answer is yes. And the solution is simple.” <span class="citation">(Bafumi and Gelman 2006)</span></p>
@@ -249,9 +264,28 @@
   data <span class="op">=</span> <span class="va">qol_cancer</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_1</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI | t(558) |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)  |       71.53 | 1.56 | [68.48, 74.58] |  45.98 | &lt; .001</span>
+<span class="co">#&gt; time         |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.088 </span>
+<span class="co">#&gt; phq4 within  |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
+<span class="co">#&gt; phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter          | Coefficient</span>
+<span class="co">#&gt; --------------------------------</span>
+<span class="co">#&gt; SD (Intercept: ID) |        9.88</span>
+<span class="co">#&gt; SD (Residual)      |       12.37</span>
 
 <span class="co"># compare to FE-model</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fe_model1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, <span class="op">]</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(374) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 </span>
+<span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></code></pre></div>
 <p>As we can see, the estimates and standard errors are identical. The argument <em>against</em> the use of mixed models, i.e. that using mixed models for panel data will yield biased estimates and standard errors, is based on an incorrect model specification <span class="citation">(Mundlak 1978)</span>. As such, when the (mixed) model is properly specified, the estimator of the mixed model is identical to the ‘within’ (i.e. FE) estimator.</p>
 <p>As a consequence, we cannot only use the above specified mixed model for panel data, we can even specify more complex models including within-effects, between-effects or random effects variation. A mixed models approach can model the causes of endogeneity explicitly by including the (separated) within- and between-effects of time-varying fixed effects and including time-constant fixed effects.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -261,13 +295,49 @@
 <span class="op">)</span>
 <span class="co"># effects = "fixed" will not display random effects, but split the</span>
 <span class="co"># fixed effects into its between- and within-effects components.</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mixed_2</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(554) |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)      |       67.36 | 2.48 | [62.49, 72.22] |  27.15 | &lt; .001</span>
+<span class="co">#&gt; time             |        1.09 | 0.66 | [-0.20,  2.38] |   1.65 | 0.098 </span>
+<span class="co">#&gt; education [mid]  |        5.01 | 2.35 | [ 0.41,  9.61] |   2.14 | 0.033 </span>
+<span class="co">#&gt; education [high] |        5.52 | 2.75 | [ 0.12, 10.91] |   2.00 | 0.045 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Within-Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(554) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; phq4 within |       -3.72 | 0.41 | [-4.52, -2.92] |  -9.10 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Between-Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI | t(554) |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; phq4 between |       -6.13 | 0.52 | [-7.14, -5.11] | -11.84 | &lt; .001</span></code></pre></div>
 <p>For more complex models, within-effects will naturally change slightly and are no longer identical to simpler FE models. This is no “bias”, but rather the result of building more complex models: FE models lack information of variation in the group-effects or between-subject effects. Furthermore, FE models cannot include random slopes, which means that fixed effects regressions are neglecting “cross-cluster differences in the effects of lower-level controls (which) reduces the precision of estimated context effects, resulting in (…) low statistical power” <span class="citation">(Heisig, Schaeffer, and Giesecke 2017)</span>.</p>
 </div>
 <div id="conclusion-complex-random-effects-within-between-models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#conclusion-complex-random-effects-within-between-models" class="anchor" aria-hidden="true"></a>Conclusion: Complex Random Effects Within-Between Models</h1>
 <p>Depending on the structure of the data, the best approach to analyzing panel data would be a so called “complex random effects within-between” model <span class="citation">(Bell, Fairbrother, and Jones 2019)</span>:</p>
+<p>y<sub>it</sub> = β<sub>0</sub> + β<sub>1W</sub> (x<sub>it</sub> - ͞x<sub>i</sub>) + β<sub>2B</sub> ͞x<sub>i</sub> + β<sub>3</sub> z<sub>i</sub> + υ<sub>i0</sub> + υ<sub>i1</sub> (x<sub>it</sub> - ͞x<sub>i</sub>) + ε<sub>it</sub></p>
+<ul>
+<li>
+x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em>
+</li>
+<li>
+͞x<sub>i</sub> is the group-meaned predictor, <em>phq4_between</em>
+</li>
+<li>
+β<sub>1W</sub> is the coefficient for phq4_within (within-subject)
+</li>
+<li>
+β<sub>2B</sub> is the coefficient for phq4_between (bewteen-subject)
+</li>
+<li>
+β<sub>3</sub> is the coefficient for time-constant predictors, such as <code>hospital</code> or <code>education</code> (bewteen-subject)
+</li>
+</ul>
 <p>In R-code, the model is written down like this:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rewb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
@@ -280,10 +350,42 @@
 <p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, Chap. 12.6.)</span>.</p>
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter        | Coefficient |   SE |         95% CI | t(551) |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)      |       67.18 | 2.39 | [62.50, 71.86] |  28.13 | &lt; .001</span>
+<span class="co">#&gt; time             |        1.18 | 0.60 | [ 0.00,  2.37] |   1.95 | 0.051 </span>
+<span class="co">#&gt; education [mid]  |        4.95 | 2.35 | [ 0.35,  9.55] |   2.11 | 0.035 </span>
+<span class="co">#&gt; education [high] |        5.62 | 2.76 | [ 0.21, 11.02] |   2.04 | 0.042 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Within-Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(551) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; phq4 within |       -4.50 | 0.58 | [-5.63, -3.37] |  -7.78 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Between-Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter    | Coefficient |   SE |         95% CI | t(551) |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; phq4 between |       -6.11 | 0.52 | [-7.13, -5.10] | -11.81 | &lt; .001</span></code></pre></div>
 <p>… but you can also model the variation of (group) effects across time (and probably space), and you can even include more higher-level units (e.g. nested design or cross-classified design with more than two levels):</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">rewb</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">rewb</span><span class="op">)</span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Within-Group Variance              119.47 (10.93)</span>
+<span class="co">#&gt; Between-Group Variance</span>
+<span class="co">#&gt;   Random Intercept (ID)             107.5 (10.37)</span>
+<span class="co">#&gt;   Random Intercept (ID.1)           25.76  (5.08)</span>
+<span class="co">#&gt;   Random Slope (ID.time)             0.49   (0.7)</span>
+<span class="co">#&gt;   Random Slope (ID.1.phq4_within)   14.37  (3.79)</span>
+<span class="co">#&gt; Correlations</span>
+<span class="co">#&gt;   ID.time                           -0.99</span>
+<span class="co">#&gt;   ID.phq4_within                     0.44</span>
+<span class="co">#&gt; N (groups per factor)</span>
+<span class="co">#&gt;   ID                                  188</span>
+<span class="co">#&gt; Observations                          564</span></code></pre></div>
 <p><strong>What about imbalanced groups, i.e. large differences in N per group?</strong></p>
 <p>See little example after this visual example…</p>
 </div>
@@ -320,42 +422,73 @@
 
 <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean</a></span><span class="op">(</span><span class="va">d</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"grp"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s look at the raw data…</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <div id="model-1-linear-relationship-between-typing-errors-and-typing-speed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-1-linear-relationship-between-typing-errors-and-typing-speed" class="anchor" aria-hidden="true"></a>Model 1: Linear relationship between typing errors and typing speed</h2>
 <p>We can now assume a (linear) relationship between typing errors and typing speed.</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
 <p>Looking at the coefficients, we have following model with a coefficient of <code>-1.92</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       30.20 | 1.42 | [27.39, 33.00] |  21.34 | &lt; .001</span>
+<span class="co">#&gt; x           |       -1.92 | 0.18 | [-2.27, -1.56] | -10.69 | &lt; .001</span></code></pre></div>
 <p>However, we have ignored the clustered structure in our data, in this example due to repeated measurements.</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-17-1.png" width="100%"></p>
 </div>
 <div id="model-2-within-subject-effect-of-typing-speed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-2-within-subject-effect-of-typing-speed" class="anchor" aria-hidden="true"></a>Model 2: Within-subject effect of typing speed</h2>
 <p>A fixed effects regression (FE-regression) would now remove all between-effects and include only the within-effects as well as the group-level indicator.</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-18-1.png" width="100%"></p>
 <p>This returns the coefficient of the “within”-effect, which is <code>1.2</code>, with a standard error of <code>0.07</code>. Note that the FE-model does <em>not</em> take the variation <em>between</em> subjects into account, thus resulting in (possibly) biased estimates, and biased standard errors.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="va">grp</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |       95% CI | t(99) |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------</span>
+<span class="co">#&gt; x within  |        1.20 | 0.07 | [1.06, 1.35] | 16.08 | &lt; .001</span></code></pre></div>
 </div>
 <div id="model-3-between-subject-effect-of-typing-speed" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-3-between-subject-effect-of-typing-speed" class="anchor" aria-hidden="true"></a>Model 3: Between-subject effect of typing speed</h2>
 <p>To understand, why the above model 1 (<code>m1</code>) returns a biased estimate, which is a “weighted average” of the within- and between-effects, let us look at the between-effect now.</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 <p>As we can see, the between-effect is <code>-2.93</code>, which is different from the <code>-1.92</code> estimated in the model <code>m1</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.83 | 0.62 | [36.59, 39.06] |  60.79 | &lt; .001</span>
+<span class="co">#&gt; x between   |       -2.93 | 0.08 | [-3.09, -2.78] | -36.76 | &lt; .001</span></code></pre></div>
 </div>
 <div id="model-4-mixed-model-with-within--and-between-subjects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#model-4-mixed-model-with-within--and-between-subjects" class="anchor" aria-hidden="true"></a>Model 4: Mixed model with within- and between-subjects</h2>
 <p>Since FE-models can only model within-effects, we now use a mixed model with within- and between-effects.</p>
+<p><img src="demean_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
 <p>We see, the estimate for the within-effects is <em>not</em> biased. Furthermore, we get the correct between-effect as well (standard errors differ, because the variance in the grouping structure is more accurately taken into account).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(100) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.83 | 0.33 | [37.18, 38.48] | 114.46 | &lt; .001</span>
+<span class="co">#&gt; x between   |       -2.93 | 0.04 | [-3.02, -2.85] | -69.22 | &lt; .001</span>
+<span class="co">#&gt; x within    |        1.20 | 0.07 | [ 1.06,  1.35] |  16.22 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter           | Coefficient</span>
+<span class="co">#&gt; ---------------------------------</span>
+<span class="co">#&gt; SD (Intercept: grp) |        0.00</span>
+<span class="co">#&gt; SD (Residual)       |        0.92</span></code></pre></div>
 </div>
 <div id="model-5-complex-random-effects-within-between-model" class="section level2">
 <h2 class="hasAnchor">
@@ -363,7 +496,23 @@
 <p>Finally, we can also take the variation between subjects into account by adding a random slope. This model can be called a complex “REWB” (random-effects within-between) model. Due to the variation between subjects, we get larger standard errors for the within-effect.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">x_within</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |  t(98) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.95 | 0.34 | [37.29, 38.62] | 111.15 | &lt; .001</span>
+<span class="co">#&gt; x between   |       -2.95 | 0.04 | [-3.04, -2.87] | -67.57 | &lt; .001</span>
+<span class="co">#&gt; x within    |        1.20 | 0.10 | [ 1.01,  1.40] |  12.16 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter           | Coefficient</span>
+<span class="co">#&gt; ---------------------------------</span>
+<span class="co">#&gt; SD (Intercept: grp) |        0.09</span>
+<span class="co">#&gt; SD (x_within: grp)  |        0.15</span>
+<span class="co">#&gt; Cor (Intercept~grp) |       -1.00</span>
+<span class="co">#&gt; SD (Residual)       |        0.90</span></code></pre></div>
 </div>
 </div>
 <div id="balanced-versus-imbalanced-groups" class="section level1">
@@ -404,10 +553,27 @@
 <span class="co"># Between-subject effect of typing speed</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(103) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       38.32 | 1.33 | [35.69, 40.95] |  28.87 | &lt; .001</span>
+<span class="co">#&gt; x between   |       -2.81 | 0.16 | [-3.13, -2.49] | -17.47 | &lt; .001</span>
 
 <span class="co"># Between-subject effect of typing speed, accounting for group structure</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x_between</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">grp</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">d</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(101) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       37.02 | 2.73 | [31.66, 42.38] |  13.54 | &lt; .001</span>
+<span class="co">#&gt; x between   |       -2.71 | 0.35 | [-3.39, -2.03] |  -7.81 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter           | Coefficient</span>
+<span class="co">#&gt; ---------------------------------</span>
+<span class="co">#&gt; SD (Intercept: grp) |        1.54</span>
+<span class="co">#&gt; SD (Residual)       |        2.98</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
