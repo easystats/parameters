@@ -20,7 +20,7 @@ if (require("testthat") && require("parameters")) {
     expect_equal(params$Difference, -2.786, tolerance = 0.05)
 
     params <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs))
-    expect_equal(params$Difference, 7.940, tolerance = 0.05)
+    expect_equal(params$Difference, -7.940, tolerance = 0.05)
 
     params <- model_parameters(t.test(iris$Sepal.Width, mu = 1))
     expect_equal(params$Difference, 2.0573, tolerance = 0.05)
