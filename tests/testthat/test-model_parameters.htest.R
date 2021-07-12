@@ -86,5 +86,15 @@ if (require("testthat") && require("parameters")) {
         )
       )
     })
+
+    test_that("model_parameters-t-test reports the same unregarding of interface", {
+      g1 <- 1:10
+      g2 <- 7:20
+      df <- data.frame(y = c(g1, g2), x = rep(c(0, 1), c(length(g1), length(g2))))
+      compare_only <- c("Difference", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Method")
+      default_ttest <- model_parameters(t.test(x = g1, y = g2))[compare_only]
+      formula_ttest <- model_parameters(t.test(y ~ x, df))[compare_only]
+      expect_equal(default_ttest, formula_ttest)
+    })
   }
 }
