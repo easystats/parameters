@@ -8,12 +8,6 @@ if (require("testthat") && require("WRS2") && getRversion() >= "3.6.0") {
 
     set.seed(123)
     df_w <- model_parameters(rmanova(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
-
-    # between-subjects
-    expect_snapshot(as.data.frame(df_b))
-
-    # within-subjects
-    expect_snapshot(as.data.frame(df_w))
   })
 
   # model_parameters.yuen ---------------------------------------------------
@@ -26,12 +20,6 @@ if (require("testthat") && require("WRS2") && getRversion() >= "3.6.0") {
     after <- c(210, 210, 340, 190, 260, 180, 200, 220, 230, 200)
     set.seed(123)
     df_w <- model_parameters(yuend(before, after))
-
-    # between-subjects
-    expect_snapshot(as.data.frame(df_b))
-
-    # within-subjects
-    expect_snapshot(as.data.frame(df_w))
   })
 
   # model_parameters.mcp and robtab ---------------------------------------
@@ -45,15 +33,6 @@ if (require("testthat") && require("WRS2") && getRversion() >= "3.6.0") {
 
     set.seed(123)
     df <- model_parameters(discmcp(libido ~ dose, viagra, nboot = 100))
-
-    # between-subjects
-    expect_snapshot(as.data.frame(df_b))
-
-    # within-subjects
-    expect_snapshot(as.data.frame(df_w))
-
-
-    expect_snapshot(as.data.frame(df))
   })
 
   # model_parameters.akp.effect -----------------------------------------------
@@ -65,8 +44,6 @@ if (require("testthat") && require("WRS2") && getRversion() >= "3.6.0") {
       data = mtcars,
       EQVAR = FALSE
     )
-
-    expect_snapshot(as.data.frame(model_parameters(mod)))
   })
 
 
@@ -78,7 +55,5 @@ if (require("testthat") && require("WRS2") && getRversion() >= "3.6.0") {
 
     set.seed(123)
     mod <- onesampb(x, nboot = 100)
-
-    expect_snapshot(as.data.frame(model_parameters(mod)))
   })
 }
