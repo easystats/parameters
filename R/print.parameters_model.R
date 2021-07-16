@@ -166,6 +166,7 @@ print.parameters_model <- function(x,
 
   # get attributes
   ci_method <- .additional_arguments(x, "ci_method", NULL)
+  df_method <- .additional_arguments(x, "df_method", NULL)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print main table
@@ -179,6 +180,11 @@ print.parameters_model <- function(x,
   # for Bayesian models
   if (isTRUE(verbose)) {
     .print_footer_cimethod(ci_method)
+  }
+
+  # for Bayesian models
+  if (isTRUE(verbose)) {
+    .print_footer_dfmethod(df_method)
   }
 
   invisible(orig_x)
