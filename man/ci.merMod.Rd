@@ -44,7 +44,8 @@
 \method{ci}{merMod}(
   x,
   ci = 0.95,
-  method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile"),
+  method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile",
+    "residual"),
   ...
 )
 

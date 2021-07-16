@@ -62,9 +62,11 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 #'   to mixed models. May be abbreviated.
 #' @param df_method Method for computing degrees of freedom for p values,
-#'   standard errors and confidence intervals (CI). May be \code{"wald"}
-#'   (default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see
-#'   \code{\link{dof_ml1}}), \code{"betwithin"} (see
+#'   standard errors and confidence intervals (CI). By default (\code{NULL}),
+#'   returns residual degrees of freedom for linear mixed models, or \code{Inf}
+#'   for all other distributional families. May be \code{"wald"},
+#'   \code{"residual"} (for both see \code{\link{degrees_of_freedom}}),
+#'   \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see
 #'   \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see
 #'   \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see
 #'   \code{\link{dof_kenward}}). The options \code{df_method = "boot"},
@@ -73,8 +75,8 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   intervals are computed. \code{"uniroot"} only applies to models of class
 #'   \code{glmmTMB}. For models of class \code{lmerMod}, when
 #'   \code{df_method = "wald"}, residual degrees of freedom are returned.
-#'   Note that when \code{df_method} is not \code{"wald"}, robust standard
-#'   errors etc. cannot be computed.
+#'   Note that when \code{df_method} is not \code{NULL}, \code{"wald"} or
+#'   \code{"residual"}, robust standard errors etc. cannot be computed.
 #' @param wb_component Logical, if \code{TRUE} and models contains within- and
 #'   between-effects (see \code{datawizard::demean()}), the \code{Component} column
 #'   will indicate which variables belong to the within-effects,
@@ -118,7 +120,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 model_parameters.merMod <- function(model,
                                     ci = .95,
                                     bootstrap = FALSE,
-                                    df_method = "wald",
+                                    df_method = NULL,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "all",
@@ -134,9 +136,18 @@ model_parameters.merMod <- function(model,
                                     verbose = TRUE,
                                     ...) {
 
+  # set default
+  if (is.null(df_method)) {
+    df_method <- switch(
+      insight::find_statistic(model),
+      "t-statistic" = "residual",
+      "wald"
+    )
+  }
+
   # p-values, CI and se might be based of wald, or KR
   df_method <- tolower(df_method)
-  df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
+  df_method <- match.arg(df_method, choices = c("wald", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
 
   # which component to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -295,7 +306,7 @@ model_parameters.merMod <- function(model,
 #' @export
 ci.merMod <- function(x,
                       ci = 0.95,
-                      method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile"),
+                      method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "residual"),
                       ...) {
   method <- tolower(method)
   method <- match.arg(method)
@@ -303,6 +314,10 @@ ci.merMod <- function(x,
   # Wald approx
   if (method == "wald") {
     out <- ci_wald(model = x, ci = ci, dof = Inf)
+
+    # residual df
+  } else if (method == "residual") {
+    out <- ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x, method = "residual"))
 
     # ml1 approx
   } else if (method == "ml1") {
@@ -344,44 +359,19 @@ standard_error.merMod <- function(model,
                                   method = NULL,
                                   ...) {
   effects <- match.arg(effects)
-  if (is.null(method)) method <- "wald"
-  robust <- !is.null(method) && method == "robust"
 
   if (effects == "random") {
-    insight::check_if_installed("lme4")
-
-    rand.se <- lme4::ranef(model, condVar = TRUE)
-    n.groupings <- length(rand.se)
-
-    for (m in 1:n.groupings) {
-      vars.m <- attr(rand.se[[m]], "postVar")
-
-      K <- dim(vars.m)[1]
-      J <- dim(vars.m)[3]
-
-      names.full <- dimnames(rand.se[[m]])
-      rand.se[[m]] <- array(NA, c(J, K))
-
-      for (j in 1:J) {
-        rand.se[[m]][j, ] <- sqrt(diag(as.matrix(vars.m[, , j])))
-      }
-      dimnames(rand.se[[m]]) <- list(names.full[[1]], names.full[[2]])
-    }
-    rand.se
+    .standard_errors_random(model)
   } else {
+    if (is.null(method)) method <- "wald"
+    robust <- !is.null(method) && method == "robust"
+
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
       # Classic and Satterthwaite SE
-      if (method %in% c("wald", "satterthwaite")) {
-        .data_frame(
-          Parameter = insight::find_parameters(model,
-            effects = "fixed",
-            component = "conditional",
-            flatten = TRUE
-          ),
-          SE = .get_se_from_summary(model)
-        )
+      if (method %in% c("wald", "satterthwaite", "residual")) {
+        se_mixed_default(model)
         # ml1 approx
       } else if (method == "ml1") {
         se_ml1(model)
@@ -394,6 +384,45 @@ standard_error.merMod <- function(model,
     }
   }
 }
+
+
+
+# helpers --------------
+
+.standard_errors_random <- function(model) {
+  insight::check_if_installed("lme4")
+
+  rand.se <- lme4::ranef(model, condVar = TRUE)
+  n.groupings <- length(rand.se)
+
+  for (m in 1:n.groupings) {
+    vars.m <- attr(rand.se[[m]], "postVar")
+
+    K <- dim(vars.m)[1]
+    J <- dim(vars.m)[3]
+
+    names.full <- dimnames(rand.se[[m]])
+    rand.se[[m]] <- array(NA, c(J, K))
+
+    for (j in 1:J) {
+      rand.se[[m]][j, ] <- sqrt(diag(as.matrix(vars.m[, , j])))
+    }
+    dimnames(rand.se[[m]]) <- list(names.full[[1]], names.full[[2]])
+  }
+  rand.se
+}
+
+
+
+se_mixed_default <- function(model) {
+  params <- insight::find_parameters(model,
+                                     effects = "fixed",
+                                     component = "conditional",
+                                     flatten = TRUE)
+  .data_frame(Parameter = params, SE = .get_se_from_summary(model))
+}
+
+
 
 
 #' @rdname p_value.lmerMod

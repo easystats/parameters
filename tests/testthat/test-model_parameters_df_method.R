@@ -8,9 +8,17 @@ if (require("testthat") &&
   model <- suppressMessages(lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
   model2 <- suppressMessages(lmerTest::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))
 
-  mp1 <- model_parameters(model, digits = 5, effects = "fixed")
+  mp0 <- model_parameters(model, digits = 5, effects = "fixed")
+  mp1 <- model_parameters(model, digits = 5, df_method = "w", effects = "fixed")
   mp2 <- model_parameters(model, digits = 5, df_method = "s", effects = "fixed")
   mp3 <- model_parameters(model, digits = 5, df_method = "k", effects = "fixed")
+
+  test_that("model_parameters, df_method default (residual)", {
+    expect_equal(mp0$SE, c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668), tolerance = 1e-3)
+    expect_equal(mp0$df, c(22, 22, 22, 22, 22, 22, 22, 22), tolerance = 1e-3)
+    expect_equal(mp0$p, c(0, 0.00258, 0.14297, 0.17095, 0.84778, 0.00578, 0.00151, 0.32653), tolerance = 1e-3)
+    expect_equal(mp0$CI_low, c(24.54722, 4.89698, -1.95317, -0.05493, -2.97949, -4.42848, -0.16933, -0.05133), tolerance = 1e-3)
+  })
 
   test_that("model_parameters, df_method wald", {
     expect_equal(mp1$SE, c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668), tolerance = 1e-3)
@@ -41,7 +49,7 @@ if (require("testthat") &&
     expect_equal(mp2$SE, as.vector(s$coefficients[, "Std. Error"]), tolerance = 1e-4)
   })
 
-  test_that("model_parameters, satterthwaite compare", {
+  test_that("model_parameters, Kenward-Roger compare", {
     s <- summary(model2, ddf = "Kenward-Roger")
     expect_equal(mp3$df, as.vector(s$coefficients[, "df"]), tolerance = 1e-4)
     expect_equal(mp3$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)

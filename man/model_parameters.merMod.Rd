@@ -49,7 +49,7 @@
   model,
   ci = 0.95,
   bootstrap = FALSE,
-  df_method = "wald",
+  df_method = NULL,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
@@ -141,9 +141,11 @@ captures this uncertainty. For \code{compare_parameters()},
 from non-Gaussian families.}
 
 \item{df_method}{Method for computing degrees of freedom for p values,
-standard errors and confidence intervals (CI). May be \code{"wald"}
-(default, see \code{\link{degrees_of_freedom}}), \code{"ml1"} (see
-\code{\link{dof_ml1}}), \code{"betwithin"} (see
+standard errors and confidence intervals (CI). By default (\code{NULL}),
+returns residual degrees of freedom for linear mixed models, or \code{Inf}
+for all other distributional families. May be \code{"wald"},
+\code{"residual"} (for both see \code{\link{degrees_of_freedom}}),
+\code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see
 \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see
 \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see
 \code{\link{dof_kenward}}). The options \code{df_method = "boot"},
@@ -152,8 +154,8 @@ confidence intervals; in this case, bootstrapped resp. profiled confidence
 intervals are computed. \code{"uniroot"} only applies to models of class
 \code{glmmTMB}. For models of class \code{lmerMod}, when
 \code{df_method = "wald"}, residual degrees of freedom are returned.
-Note that when \code{df_method} is not \code{"wald"}, robust standard
-errors etc. cannot be computed.}
+Note that when \code{df_method} is not \code{NULL}, \code{"wald"} or
+\code{"residual"}, robust standard errors etc. cannot be computed.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
