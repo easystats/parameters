@@ -236,7 +236,7 @@
   <span class='va'>model</span>,
   ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   bootstrap <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  df_method <span class='op'>=</span> <span class='st'>"wald"</span>,
+  df_method <span class='op'>=</span> <span class='cn'>NULL</span>,
   iterations <span class='op'>=</span> <span class='fl'>1000</span>,
   standardize <span class='op'>=</span> <span class='cn'>NULL</span>,
   effects <span class='op'>=</span> <span class='st'>"all"</span>,
@@ -350,9 +350,11 @@ from non-Gaussian families.</p></td>
     <tr>
       <th>df_method</th>
       <td><p>Method for computing degrees of freedom for p values,
-standard errors and confidence intervals (CI). May be <code>"wald"</code>
-(default, see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>), <code>"ml1"</code> (see
-<code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see
+standard errors and confidence intervals (CI). By default (<code>NULL</code>),
+returns residual degrees of freedom for linear mixed models, or <code>Inf</code>
+for all other distributional families. May be <code>"wald"</code>,
+<code>"residual"</code> (for both see <code><a href='degrees_of_freedom.html'>degrees_of_freedom</a></code>),
+<code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see
 <code><a href='p_value_betwithin.html'>dof_betwithin</a></code>), <code>"satterthwaite"</code> (see
 <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>) or <code>"kenward"</code> (see
 <code><a href='p_value_kenward.html'>dof_kenward</a></code>). The options <code>df_method = "boot"</code>,
@@ -361,8 +363,8 @@ confidence intervals; in this case, bootstrapped resp. profiled confidence
 intervals are computed. <code>"uniroot"</code> only applies to models of class
 <code>glmmTMB</code>. For models of class <code>lmerMod</code>, when
 <code>df_method = "wald"</code>, residual degrees of freedom are returned.
-Note that when <code>df_method</code> is not <code>"wald"</code>, robust standard
-errors etc. cannot be computed.</p></td>
+Note that when <code>df_method</code> is not <code>NULL</code>, <code>"wald"</code> or
+<code>"residual"</code>, robust standard errors etc. cannot be computed.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
@@ -491,8 +493,8 @@ for working examples.</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(28) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       36.19 | 2.19 | [31.90, 40.48] | 16.52 | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -5.05 | 0.64 | [-6.30, -3.79] | -7.89 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |       36.19 | 2.19 | [31.70, 40.68] | 16.52 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> wt          |       -5.05 | 0.64 | [-6.36, -3.73] | -7.89 | &lt; .001</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Random Effects </span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
