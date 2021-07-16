@@ -41,6 +41,10 @@
   regular expression pattern defined in `keep`, `drop` is the counterpart and
   excludes matching parameter names.
 
+* When `model_parameters()` is called with `verbose = TRUE`, and `df_method` is
+  not the default value, the printed output includes a message indicating which
+  approximation-method for degrees of freedom was used.
+
 ### Other functions
 
 * `compare_parameters()` now also accepts a list of model objects.
