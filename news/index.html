@@ -219,7 +219,8 @@
 <h3 class="hasAnchor">
 <a href="#model_parameters" class="anchor" aria-hidden="true"></a><code>model_parameters()</code>
 </h3>
-<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports following new objects in <em>WRS2</em> package: <code>trimcibt</code>, <code>wmcpAKP</code>, <code>dep.effect</code>.</p></li>
+<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <code>lmerMod</code> models gain a <code>"residuals"</code> option for the <code>df_method</code> (resp. <code>method</code>) argument, to explicitly calculate confidence intervals based on the residual degrees of freedom, when present.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports following new objects in <em>WRS2</em> package: <code>trimcibt</code>, <code>wmcpAKP</code>, <code>dep.effect</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a new argument <code>table_wide</code> for ANOVA tables. This can be helpful for users who may wish to report ANOVA table in wide format (i.e., with numerator and denominator degrees of freedom on the same row).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains two new arguments, <code>keep</code> and <code>drop</code>. <code>keep</code> is the new names for the former <code>parameters</code> argument and can be used to filter parameters. While <code>keep</code> selects those parameters whose names match the regular expression pattern defined in <code>keep</code>, <code>drop</code> is the counterpart and excludes matching parameter names.</p></li>
 </ul></div>
@@ -237,6 +238,7 @@
 <a href="#bug-fixes" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
 <ul><li><p>The random effects returned by <code><a href="../reference/model_parameters.html">model_parameters()</a></code> mistakenly displayed the residuals standard deviation as square-root of the residual SD.</p></li>
 <li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>brmsfit</em> objects that model standard errors (i.e. for meta-analysis).</p></li>
+<li><p>Fixed issue in <code>model_parameters</code> for <code>lmerMod</code> models that, by default, returned residual degrees of freedom in the statistic column, but confidence intervals were based on <code>Inf</code> degrees of freedom instead.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.mlm.html">model_parameters.mlm()</a></code> when model contained interaction terms.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.rma.html">model_parameters.rma()</a></code> when model contained interaction terms.</p></li>
 <li><p>Fixed sign error for <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code> for objects created with <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test.formula()</a></code> (issue <a href='https://github.com/easystats/parameters/issues/552'>#552</a>)</p></li>
