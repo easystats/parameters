@@ -24,6 +24,10 @@
 
 ### `model_parameters()`
 
+* `model_parameters()` and `ci()` for `lmerMod` models gain a `"residuals"`
+  option for the `df_method` (resp. `method`) argument, to explicitly calculate
+  confidence intervals based on the residual degrees of freedom, when present.
+
 * `model_parameters()` supports following new objects in *WRS2* package: 
   `trimcibt`, `wmcpAKP`, `dep.effect`.
 
@@ -56,6 +60,10 @@
 
 * Fixed issue with `model_parameters()` for *brmsfit* objects that model
   standard errors (i.e. for meta-analysis).
+
+* Fixed issue in `model_parameters` for `lmerMod` models that, by default,
+  returned residual degrees of freedom in the statistic column, but confidence
+  intervals were based on `Inf` degrees of freedom instead.
 
 * Fixed issue in `model_parameters.mlm()` when model contained interaction
   terms.
