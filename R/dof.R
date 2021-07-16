@@ -3,13 +3,22 @@
 #' Estimate or extract degrees of freedom of models parameters.
 #'
 #' @param model A statistical model.
-#' @param method Can be \code{"analytical"} (default, DoFs are estimated based on the model type), \code{"fit"}, in which case they are directly taken from the model if available (for Bayesian models, the goal (looking for help to make it happen) would be to refit the model as a frequentist one before extracting the DoFs), \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"} (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF by any of those methods, whichever succeeds.
+#' @param method Can be \code{"analytical"} (default, DoFs are estimated based
+#'   on the model type), \code{"residual"} (or \code{"fit"}), in which case they
+#'   are directly taken from the model if available (for Bayesian models, the
+#'   goal (looking for help to make it happen) would be to refit the model as a
+#'   frequentist one before extracting the DoFs), \code{"ml1"} (see
+#'   \code{\link{dof_ml1}}), \code{"betwithin"} (see \code{\link{dof_betwithin}}),
+#'   \code{"satterthwaite"} (see \code{\link{dof_satterthwaite}}), \code{"kenward"}
+#'   (see \code{\link{dof_kenward}}) or \code{"any"}, which tries to extract DoF
+#'   by any of those methods, whichever succeeds.
 #' @param ... Currently not used.
 #'
 #' @details Methods for calculating degrees of freedom:
 #' \itemize{
 #' \item \code{"analytical"} for models of class \code{lmerMod}, Kenward-Roger approximated degrees of freedoms are calculated, for other models, \code{n-k} (number of observations minus number of parameters).
-#' \item \code{"fit"} tries to extract residual degrees of freedom, and returns \code{Inf} if residual degrees of freedom could not be extracted.
+#' \item \code{"residual"} tries to extract residual degrees of freedom, and returns \code{Inf} if residual degrees of freedom could not be extracted.
+#' \item \code{"fit"} is an alias for \code{"residual"}.
 #' \item \code{"any"} first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 #' \item \code{"nokr"} same as \code{"analytical"}, but does not Kenward-Roger approximation for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df for any model.
 #' \item \code{"wald"} returns \code{Inf}.
@@ -198,7 +207,7 @@ dof <- degrees_of_freedom
     if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr", "likelihood")) {
       return(TRUE)
     } else {
-      warning("'df_method' must be one of 'wald' or 'profile'. Using 'wald' now.", call. = FALSE)
+      warning(insight::format_message("'df_method' must be one of 'wald' or 'profile'. Using 'wald' now."), call. = FALSE)
       return(FALSE)
     }
   }
@@ -209,7 +218,7 @@ dof <- degrees_of_freedom
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual"))) {
-    warning(insight::format_message("'df_method' must be one of 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now."), call. = FALSE)
+    warning(insight::format_message("'df_method' must be one of 'residual', 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now."), call. = FALSE)
     return(FALSE)
   }
 
