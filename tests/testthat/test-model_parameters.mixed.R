@@ -9,14 +9,23 @@ if (.runThisTest &&
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
   test_that("model_parameters.mixed", {
-    params <- model_parameters(m1, effects = "fixed")
+    params <- model_parameters(m1, df_method = "wald", effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
     expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
-    params <- model_parameters(m1, ci = c(0.8, 0.9), effects = "fixed")
+    params <- model_parameters(m1, effects = "fixed")
+    expect_equal(c(nrow(params), ncol(params)), c(2, 10))
+    expect_equal(params$CI_high, c(1.68181, 0.56083), tolerance = 1e-3)
+
+    params <- model_parameters(m1, ci = c(0.8, 0.9), df_method = "wald", effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 12))
     expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
+
+    params <- model_parameters(m1, ci = c(0.8, 0.9), effects = "fixed")
+    expect_equal(c(nrow(params), ncol(params)), c(2, 12))
+    expect_equal(params$CI_high_0.8, c(1.31154, 0.50455), tolerance = 1e-3)
+    expect_equal(params$CI_high_0.9, c(1.50707, 0.53427), tolerance = 1e-3)
 
     params <- model_parameters(m2, effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
@@ -98,8 +107,8 @@ if (.runThisTest &&
       c(
         "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
         "-------------------------------------------------------------------",
-        "(Intercept) |       71.53 | 1.56 | [68.48, 74.58] |  45.98 | < .001",
-        "time        |        1.09 | 0.64 | [-0.16,  2.34] |   1.70 | 0.088 ",
+        "(Intercept) |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001",
+        "time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 ",
         "",
         "# Within-Effects",
         "",

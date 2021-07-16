@@ -653,6 +653,10 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 # footer: type of degrees of freedom approximation
 .print_footer_dfmethod <- function(df_method = NULL) {
   if (!is.null(df_method)) {
-    message(paste0("\nDegrees of freedom based on ", format_df_adjust(df_method, approx_string = " approximation.", dof_string = "")))
+    if (tolower(df_method) == "residual") {
+      message("\nUsing residual degrees of freedom for CI/p-values.")
+    } else {
+      message(paste0("\nDegrees of freedom based on ", format_df_adjust(df_method, approx_string = " approximation.", dof_string = "")))
+    }
   }
 }

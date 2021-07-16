@@ -77,7 +77,7 @@
 
 \method{ci}{mixor}(x, ci = 0.95, effects = "all", ...)
 
-\method{ci}{lme}(x, ci = 0.95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...)
+\method{ci}{lme}(x, ci = 0.95, method = "wald", ...)
 
 \method{ci}{clm2}(x, ci = 0.95, component = c("all", "conditional", "scale"), ...)
 

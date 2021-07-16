@@ -8,13 +8,13 @@ model_parameters.lme <- model_parameters.merMod
 
 #' @rdname ci.merMod
 #' @export
-ci.lme <- function(x, ci = .95, method = c("wald", "betwithin", "ml1", "satterthwaite"), ...) {
+ci.lme <- function(x, ci = .95, method = "wald", ...) {
   method <- tolower(method)
-  method <- match.arg(method)
+  method <- match.arg(method, choices = c("wald", "residual", "betwithin", "ml1", "satterthwaite"))
 
-  if (method == "wald") {
+  if (method %in% c("wald", "residual")) {
     if (!requireNamespace("nlme", quietly = TRUE)) {
-      ci_wald(model = x, ci = ci)
+      ci_wald(model = x, ci = ci, dof = degrees_of_freedom(model, method = method))
     } else {
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(
