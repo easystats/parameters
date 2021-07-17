@@ -175,4 +175,3 @@ check_sphericity_bartlett <- function(x, ...) {
 
   out
 }
-

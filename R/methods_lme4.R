@@ -138,8 +138,7 @@ model_parameters.merMod <- function(model,
 
   # set default
   if (is.null(df_method)) {
-    df_method <- switch(
-      insight::find_statistic(model),
+    df_method <- switch(insight::find_statistic(model),
       "t-statistic" = "residual",
       "wald"
     )
@@ -416,9 +415,10 @@ standard_error.merMod <- function(model,
 
 se_mixed_default <- function(model) {
   params <- insight::find_parameters(model,
-                                     effects = "fixed",
-                                     component = "conditional",
-                                     flatten = TRUE)
+    effects = "fixed",
+    component = "conditional",
+    flatten = TRUE
+  )
   .data_frame(Parameter = params, SE = .get_se_from_summary(model))
 }
 

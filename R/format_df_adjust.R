@@ -18,15 +18,15 @@ format_df_adjust <- function(method,
   method <- tolower(method)
 
   out <- switch(method,
-         "kr" = ,
-         "kenward-roger" = ,
-         "kenward" = "Kenward-Roger",
-         "ml1" = "m-l-1",
-         "betwithin" = ,
-         "bw" = "Between-within",
-         "fit" = "Residual",
-         "boot" = "Bootstrapped",
-         .capitalize(method)
+    "kr" = ,
+    "kenward-roger" = ,
+    "kenward" = "Kenward-Roger",
+    "ml1" = "m-l-1",
+    "betwithin" = ,
+    "bw" = "Between-within",
+    "fit" = "Residual",
+    "boot" = "Bootstrapped",
+    .capitalize(method)
   )
 
   paste0(out, approx_string, dof_string)
