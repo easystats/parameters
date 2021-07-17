@@ -63,17 +63,16 @@ model_parameters.rma <- function(model,
     ci <- ci_level / 100
   }
 
-  meta_analysis_overall <-
-    .model_parameters_generic(
-      model = model,
-      ci = ci,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      merge_by = "Parameter",
-      standardize = standardize,
-      exponentiate = exponentiate,
-      ...
-    )
+  meta_analysis_overall <- .model_parameters_generic(
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    ...
+  )
 
   subgroups <- NULL
   group_variable <- NULL

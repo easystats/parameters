@@ -14,7 +14,7 @@ ci.lme <- function(x, ci = .95, method = "wald", ...) {
 
   if (method %in% c("wald", "residual")) {
     if (!requireNamespace("nlme", quietly = TRUE)) {
-      ci_wald(model = x, ci = ci, dof = degrees_of_freedom(model, method = method))
+      ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x, method = method))
     } else {
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(

@@ -13,7 +13,8 @@ format_df_adjust(
 \arguments{
 \item{method}{Name of the method.}
 
-\item{approx_string}{Suffix added to the name of the method in the returned string.}
+\item{approx_string, dof_string}{Suffix added to the name of the method in
+the returned string.}
 }
 \value{
 A formatted string.

@@ -3,7 +3,8 @@
 #' Format the name of the degrees-of-freedom adjustment methods.
 #'
 #' @param method Name of the method.
-#' @param approx_string Suffix added to the name of the method in the returned string.
+#' @param approx_string,dof_string Suffix added to the name of the method in
+#'   the returned string.
 #'
 #' @examples
 #' library(parameters)

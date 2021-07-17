@@ -137,7 +137,7 @@ print_html.compare_parameters <- function(x,
   insight::export_table(
     formatted_table,
     format = "html",
-    caption = table_caption, # TODO: get rid of NOTE
+    caption = caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
     ...
