@@ -1,13 +1,21 @@
 #' Check model predictor for heterogeneity bias
 #'
 #' \code{check_heterogeneity()} checks if model predictors or variables may
-#' cause a heterogeneity bias, i.e. if variables have a within- and/or between-effect.
+#' cause a heterogeneity bias, i.e. if variables have a within- and/or
+#' between-effect.
 #'
 #' @param x A data frame or a mixed model object.
-#' @param select Character vector (or formula) with names of variables to select that should be checked. If \code{x} is a mixed model object, this argument will be ignored.
-#' @param group Character vector (or formula) with the name of the variable that indicates the group- or cluster-ID. If \code{x} is a model object, this argument will be ignored.
+#' @param select Character vector (or formula) with names of variables to select
+#'   that should be checked. If \code{x} is a mixed model object, this argument
+#'   will be ignored.
+#' @param group Character vector (or formula) with the name of the variable that
+#'   indicates the group- or cluster-ID. If \code{x} is a model object, this
+#'   argument will be ignored.
 #'
-#' @seealso See \code{?datawizard::demean} for further details.
+#' @seealso
+#' For further details, read the vignette
+#' \url{https://easystats.github.io/parameters/articles/demean.html} and also
+#' see documentation for \code{?datawizard::demean}.
 #'
 #' @examples
 #' data(iris)
