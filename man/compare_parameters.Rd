@@ -152,20 +152,23 @@ names.}
 A data frame of indices related to the model's parameters.
 }
 \description{
-Compute and extract model parameters of multiple regression models.
-  See \code{\link{model_parameters}} for further details.
+Compute and extract model parameters of multiple regression
+  models. See \code{\link{model_parameters}} for further details.
 }
-\note{
-This function is in an early stage and does not yet cope with more
-  complex models, and probably does not yet properly render all model
-  components.
+\details{
+This function is in an early stage and does not yet cope with more complex
+models, and probably does not yet properly render all model components. It
+should also be noted that when including models with interaction terms, not
+only do the values of the parameters change, but so does their meaning (from
+main effects, to simple slopes), thereby making such comparisons hard.
+Therefore, you should not use this function to compare models with
+interaction terms with models without interaction terms.
 }
 \examples{
 data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
-lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-compare_parameters(lm1, lm2, lm3)
+compare_parameters(lm1, lm2)
 
 data(mtcars)
 m1 <- lm(mpg ~ wt, data = mtcars)
