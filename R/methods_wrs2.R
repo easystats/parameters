@@ -302,7 +302,7 @@ model_parameters.wmcpAKP <- function(model, verbose = TRUE, ...) {
 .extract_wrs2_wmcpAKP <- function(model) {
   data.frame(
     "Estimate" = model[[1]],
-    "CI" = 1 - model$alpha,
+    "CI" = 0.95,
     "CI_low" =  model[[2]],
     "CI_high" =  model[[3]],
     "Effectsize" = "Algina-Keselman-Penfield robust standardized difference average",
