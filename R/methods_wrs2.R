@@ -5,7 +5,7 @@
 #' @inheritParams model_parameters.default
 #'
 #' @examples
-#' if (require("WRS2")) {
+#' if (require("WRS2") && packageVersion("WRS2") >= "1.1.3") {
 #'   model <- t1way(libido ~ dose, data = viagra)
 #'   model_parameters(model)
 #' }
