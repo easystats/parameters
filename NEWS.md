@@ -6,13 +6,31 @@
   re-exported from *parameters* package:
 
   - `center()`
+
   - `convert_data_to_numeric()`
+
   - `data_partition()`
+
   - `demean()` (and its aliases `degroup()` and `detrend()`)
+
   - `kurtosis()`
+
   - `rescale_weights()`
+
   - `skewness()`
+
   - `smoothness()`
+
+Note that these functions will be removed in the next release of *parameters*
+package and they are currently being re-exported only as a convenience for the
+package developers. This release should provide them with time to make the
+necessary changes before this breaking change is implemented.
+
+* Following functions were moved to the *performance* package:
+
+  - `check_heterogeneity()`
+
+  - `check_multimodal()`
 
 ## General
 
@@ -28,7 +46,7 @@
   option for the `df_method` (resp. `method`) argument, to explicitly calculate
   confidence intervals based on the residual degrees of freedom, when present.
 
-* `model_parameters()` supports following new objects in *WRS2* package: 
+* `model_parameters()` supports following new objects in *WRS2* package:
   `trimcibt`, `wmcpAKP`, `dep.effect`.
 
 * `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
@@ -75,7 +93,8 @@
 * Fixed issue in `model_parameters.rma()` when model contained interaction
   terms.
 
-* Fixed sign error for `model_parameters.htest()` for objects created with `t.test.formula()` (issue #552)
+* Fixed sign error for `model_parameters.htest()` for objects created with
+  `t.test.formula()` (issue #552)
 
 # parameters 0.14.0
 
