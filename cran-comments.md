@@ -12,5 +12,7 @@
 We checked 19 reverse dependencies, comparing R CMD check results across CRAN
 and dev versions of this package.
 
- * We saw 0 new problems
+ * We saw 1 new problems: *effectsize*
  * We failed to check 0 packages
+ 
+We have already informed the maintainer of this breaking change and the new version of *effectsize* on GitHub should soon be submitted to CRAN.

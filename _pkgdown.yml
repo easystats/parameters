@@ -103,11 +103,6 @@ reference:
   - reduce_data
   - reshape_loadings
 
-- title: "Data Properties"
-  contents:
-  - check_heterogeneity
-  - check_multimodal
-
 - title: "Table and Value Formatting"
   contents:
   - display.parameters_model
@@ -141,8 +136,6 @@ navbar:
         href: articles/model_parameters_robust.html
       - text: Model Parameters and Missing Data
         href: articles/model_parameters_mice.html
-      - text: Panel Data Analysis
-        href: articles/demean.html
   - text: Formatting and Printing
     menu:
       - text: Formatting Model Parameters

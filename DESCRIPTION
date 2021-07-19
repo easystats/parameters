@@ -132,7 +132,6 @@ Suggests:
     mgcv,
     mice,
     multcomp,
-    multimode,
     MuMIn,
     NbClust,
     nFactors,
