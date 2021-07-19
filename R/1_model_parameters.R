@@ -101,7 +101,7 @@
 #'     }
 #'     \item{\strong{pseudo} (\emph{for 2-level (G)LMMs only})}{
 #'       In this (post-hoc) method, the response and the predictor are standardized
-#'       based on the level of prediction (levels are detected with \code{\link{check_heterogeneity}}:
+#'       based on the level of prediction:
 #'       Predictors are standardized based on their SD at level of prediction
 #'       (see also \code{datawizard::demean()}). The outcome (in linear LMMs) is
 #'       standardized based on a fitted random-intercept-model, where

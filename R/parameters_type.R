@@ -1,6 +1,18 @@
 #' Type of model parameters
 #'
-#' In a regression model, the parameters do not all have the meaning. For instance, the intercept has to be interpreted as theoretical outcome value under some conditions (when predictors are set to 0), whereas other coefficients are to be interpreted as amounts of change. Others, such as interactions, represent changes in another of the parameter. The \code{parameters_type} function attempts to retrieve information and meaning of parameters. It outputs a dataframe of information for each parameters, such as the \code{Type} (wether the parameter corresponds to a factor or a numeric predictor, or whether it is a (regular) interacation or a nested one), the \code{Link} (whether the parameter can be interpreted as a mean value, the slope of an association or a difference between two levels) and, in the case of interactions, which other parameters is impacted by which parameter.
+#' In a regression model, the parameters do not all have the meaning. For
+#' instance, the intercept has to be interpreted as theoretical outcome value
+#' under some conditions (when predictors are set to 0), whereas other
+#' coefficients are to be interpreted as amounts of change. Others, such as
+#' interactions, represent changes in another of the parameter. The
+#' \code{parameters_type} function attempts to retrieve information and meaning
+#' of parameters. It outputs a dataframe of information for each parameters,
+#' such as the \code{Type} (whether the parameter corresponds to a factor or a
+#' numeric predictor, or whether it is a (regular) interaction or a nested
+#' one), the \code{Link} (whether the parameter can be interpreted as a mean
+#' value, the slope of an association or a difference between two levels) and,
+#' in the case of interactions, which other parameters is impacted by which
+#' parameter.
 #'
 #' @param model A statistical model.
 #' @param ... Arguments passed to or from other methods.
