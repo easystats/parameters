@@ -109,6 +109,7 @@ reference:
   - format_order
   - format_parameters
   - format_p_adjust
+  - format_df_adjust
   - parameters_type
   - print_md
 
