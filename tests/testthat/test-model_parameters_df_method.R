@@ -31,7 +31,7 @@ if (require("testthat") &&
     expect_equal(mp2$SE, c(2.77457, 3.69574, 3.521, 0.01574, 1.58514, 0.86316, 0.02973, 0.01668), tolerance = 1e-3)
     expect_equal(mp2$df, c(24, 24, 24, 24, 24, 24, 24, 24), tolerance = 1e-3)
     expect_equal(mp2$p, c(0, 0.00236, 0.14179, 0.16979, 0.84763, 0.00542, 0.00136, 0.32563), tolerance = 1e-3)
-    expect_equal(mp2$CI_low, c(24.86326, 5.31796, -1.5521, -0.05313, -2.79893, -4.33015, -0.16595, -0.04943), tolerance = 1e-3)
+    expect_equal(mp2$CI_low, c(24.57489, 4.93385, -1.91805, -0.05477, -2.96368, -4.41987, -0.16904, -0.05117), tolerance = 1e-3)
   })
 
   test_that("model_parameters, df_method kenward", {
