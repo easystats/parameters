@@ -49,11 +49,20 @@ if (require("testthat") &&
     expect_equal(mp2$SE, as.vector(s$coefficients[, "Std. Error"]), tolerance = 1e-4)
   })
 
-  test_that("model_parameters, satterthwaite compare", {
+  test_that("model_parameters, satterthwaite Conf Int-1", {
     ci1 <- ci_satterthwaite(model)
     expect_equal(mp2$CI_low, ci1$CI_low, tolerance = 1e-4)
     ci2 <- ci_satterthwaite(model2)
     expect_equal(mp2$CI_low, ci2$CI_low, tolerance = 1e-4)
+  })
+
+  test_that("model_parameters, satterthwaite Conf Int-2", {
+    coef.table <- as.data.frame(summary(model2)$coefficients)
+    coef.table$CI_low <- coef.table$Estimate - (coef.table$'Std. Error' * qt(.975, df = coef.table$df))
+    coef.table$CI_high <- coef.table$Estimate + (coef.table$'Std. Error' * qt(.975, df = coef.table$df))
+
+    expect_equal(mp2$CI_low, coef.table$CI_low, tolerance = 1e-4)
+    expect_equal(mp2$CI_high, coef.table$CI_high, tolerance = 1e-4)
   })
 
   test_that("model_parameters, Kenward-Roger compare", {
