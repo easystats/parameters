@@ -51,7 +51,13 @@ Run the following to install the stable release of **parameters** from CRAN:
 install.packages("parameters")
 ```
 
-Or this one to install the latest development version:
+Or this one to install the latest development version from R-universe...
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+install.packages("parameters", repos = "https://easystats.r-universe.dev")
+```
+
+...or from GitHub:
 
 ```{r, warning=FALSE, message=FALSE, eval=FALSE}
 install.packages("remotes")

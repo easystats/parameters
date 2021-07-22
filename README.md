@@ -36,7 +36,13 @@ CRAN:
 install.packages("parameters")
 ```
 
-Or this one to install the latest development version:
+Or this one to install the latest development version from R-universe…
+
+``` r
+install.packages("parameters", repos = "https://easystats.r-universe.dev")
+```
+
+…or from GitHub:
 
 ``` r
 install.packages("remotes")
@@ -149,15 +155,15 @@ model_parameters(model, effects = "all")
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
 #> ------------------------------------------------------------------
-#> (Intercept)  |        2.00 | 0.56 | [0.90, 3.10] |   3.56 | < .001
-#> Petal Length |        0.28 | 0.06 | [0.17, 0.40] |   4.75 | < .001
+#> (Intercept)  |        2.00 | 0.56 | [0.89, 3.11] |   3.56 | < .001
+#> Petal Length |        0.28 | 0.06 | [0.16, 0.40] |   4.75 | < .001
 #> 
 #> # Random Effects
 #> 
 #> Parameter               | Coefficient
 #> -------------------------------------
 #> SD (Intercept: Species) |        0.89
-#> SD (Residual)           |        0.56
+#> SD (Residual)           |        0.32
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
@@ -173,7 +179,7 @@ model_parameters(model, df_method = "kenward")
 #> Parameter               | Coefficient
 #> -------------------------------------
 #> SD (Intercept: Species) |        0.89
-#> SD (Residual)           |        0.56
+#> SD (Residual)           |        0.32
 ```
 
 ### Structural Models
