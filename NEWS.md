@@ -87,6 +87,9 @@ necessary changes before this breaking change is implemented.
   returned residual degrees of freedom in the statistic column, but confidence
   intervals were based on `Inf` degrees of freedom instead.
 
+* Fixed issue in `ci_satterthwaite()`, which used `Inf` degrees of freedom 
+  instead of the Satterthwaite approximation.
+
 * Fixed issue in `model_parameters.mlm()` when model contained interaction
   terms.
 
