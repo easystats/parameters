@@ -12,9 +12,19 @@ insight::supported_models
 #' @export
 insight::print_html
 
+# ----------------------- datawizard -------------------------------------
+
+#' @importFrom datawizard describe_distribution
+#' @export
+datawizard::describe_distribution
+
 #' @importFrom datawizard demean
 #' @export
 datawizard::demean
+
+#' @importFrom datawizard rescale_weights
+#' @export
+datawizard::rescale_weights
 
 #' @importFrom datawizard data_to_numeric
 #' @export
@@ -38,9 +48,3 @@ datawizard::smoothness
 #' @importFrom datawizard center
 #' @export
 datawizard::center
-
-# ----------------------- datawizard -------------------------------------
-
-#' @importFrom datawizard describe_distribution
-#' @export
-datawizard::describe_distribution
