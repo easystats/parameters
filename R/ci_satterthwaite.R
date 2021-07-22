@@ -5,7 +5,7 @@ ci_satterthwaite <- function(model, ci = .95) {
     .ci_wald(
       model = model,
       ci = i,
-      dof = Inf,
+      dof = dof_satterthwaite(model),
       effects = "fixed",
       component = "all",
       method = "satterthwaite"
