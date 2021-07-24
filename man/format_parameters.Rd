@@ -21,7 +21,7 @@ A (names) character vector with formatted parameter names. The value names refer
 }
 \description{
 This functions formats the names of model parameters (coefficients)
-  to make them more human-readable.
+to make them more human-readable.
 }
 \section{Interpretation of Interaction Terms}{
 

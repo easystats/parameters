@@ -5,25 +5,25 @@
 #' @param model Bayesian model (including SEM from \pkg{blavaan}. May also be
 #'   a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See
-#'   \code{\link[bayestestR]{ci}} for further details.
+#'   [bayestestR::ci()] for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
-#'   effects) and when \code{effects = "all"} or \code{effects = "random"},
+#'   effects) and when `effects = "all"` or `effects = "random"`,
 #'   include the parameters for each group level from random effects. If
-#'   \code{group_level = FALSE} (the default), only information on SD and COR
+#'   `group_level = FALSE` (the default), only information on SD and COR
 #'   are shown.
 #'
 #' @inheritParams model_parameters.default
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams insight::get_parameters
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'
-#' @note When \code{standardize = "refit"}, columns \code{diagnostic},
-#'   \code{bf_prior} and \code{priors} refer to the \emph{original}
-#'   \code{model}. If \code{model} is a data frame, arguments \code{diagnostic},
-#'   \code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
-#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#' @note When `standardize = "refit"`, columns `diagnostic`,
+#'   `bf_prior` and `priors` refer to the *original*
+#'   `model`. If `model` is a data frame, arguments `diagnostic`,
+#'   `bf_prior` and `priors` are ignored. \cr \cr There is also a
+#'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'

@@ -20,7 +20,7 @@
 \item{model}{CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem}
 functions.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
 
 \item{standardize}{Return standardized parameters (standardized coefficients).
 Can be \code{TRUE} (or \code{"all"} or \code{"std.all"}) for standardized
@@ -47,10 +47,10 @@ if \code{keep} has more than one element, these will be merged with an
 patterns, the names of the list-element should equal the column name where
 selection should be applied. This is useful for model objects where
 \code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+like in \code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression
 pattern should match the parameter names as they are stored in the returned
 data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{drop}{Character containing a regular expression pattern
@@ -67,10 +67,10 @@ if \code{keep} has more than one element, these will be merged with an
 patterns, the names of the list-element should equal the column name where
 selection should be applied. This is useful for model objects where
 \code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+like in \code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression
 pattern should match the parameter names as they are stored in the returned
 data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
@@ -136,11 +136,11 @@ if (require("lavaan", quietly = TRUE)) {
 }
 \references{
 \itemize{
-  \item Rosseel Y (2012). lavaan: An R Package for Structural Equation
-  Modeling. Journal of Statistical Software, 48(2), 1-36.
+\item Rosseel Y (2012). lavaan: An R Package for Structural Equation
+Modeling. Journal of Statistical Software, 48(2), 1-36.
 
-  \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
-  Models via Parameter Expansion. Journal of Statistical Software, 85(4),
-  1-30. http://www.jstatsoft.org/v85/i04/
+\item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
+Models via Parameter Expansion. Journal of Statistical Software, 85(4),
+1-30. http://www.jstatsoft.org/v85/i04/
 }
 }

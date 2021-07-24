@@ -35,7 +35,7 @@
 \arguments{
 \item{model}{A statistical model.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}} (default), \code{\link[=p_value_ml1]{"ml1"()}}, \code{\link[=p_value_betwithin]{"betwithin"()}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"()}} or \code{\link[=p_value_kenward]{"kenward"()}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
 
@@ -60,13 +60,13 @@ A data frame with at least two columns: the parameter names and the p-values. De
 This function attempts to return, or compute, p-values of mixed models.
 }
 \details{
-By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
+By default, p-values are based on Wald-test approximations (see \code{\link[=p_value_wald]{p_value_wald()}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link[=p_value_ml1]{p_value_ml1()}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link[=p_value_kenward]{p_value_kenward()}} is called, and \code{method = "satterthwaite"} calls \code{\link[=p_value_satterthwaite]{p_value_satterthwaite()}}.
 }
 \note{
 \code{p_value_robust()} resp. \code{p_value(method = "robust")}
-  rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-  \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-  thus only work for those models supported by those packages.
+rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+\code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+thus only work for those models supported by those packages.
 }
 \examples{
 if (require("lme4")) {

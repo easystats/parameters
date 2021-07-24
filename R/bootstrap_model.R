@@ -5,10 +5,10 @@
 #' @param model Statistical model.
 #' @param iterations The number of draws to simulate/bootstrap.
 #' @param type Character string specifying the type of bootstrap. For mixed models
-#'   of class \code{merMod} or \code{glmmTMB}, may be \code{"parametric"} (default) or
-#'   \code{"semiparametric"} (see \code{?lme4::bootMer} for details). For all
-#'   other models, see argument \code{sim} in \code{?boot::boot} (defaults to
-#'   \code{"ordinary"}).
+#'   of class `merMod` or `glmmTMB`, may be `"parametric"` (default) or
+#'   `"semiparametric"` (see `?lme4::bootMer` for details). For all
+#'   other models, see argument `sim` in `?boot::boot` (defaults to
+#'   `"ordinary"`).
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
 #' @param ... Arguments passed to or from other methods.
@@ -16,27 +16,27 @@
 #'
 #' @return A data frame of bootstrapped estimates.
 #'
-#' @details By default, \code{boot::boot()} is used to generate bootstraps from
-#' the model data, which are then used to \code{update()} the model, i.e. refit
-#' the model with the bootstrapped samples. For \code{merMod} objects (\pkg{lme4})
-#' or models from \pkg{glmmTMB}, the \code{lme4::bootMer()} function is used to
-#' obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
+#' @details By default, `boot::boot()` is used to generate bootstraps from
+#' the model data, which are then used to `update()` the model, i.e. refit
+#' the model with the bootstrapped samples. For `merMod` objects (\pkg{lme4})
+#' or models from \pkg{glmmTMB}, the `lme4::bootMer()` function is used to
+#' obtain bootstrapped samples. `bootstrap_parameters()` summarizes the
 #' bootstrapped model estimates.
 #'
-#' @section Using with \code{emmeans}:
+#' @section Using with `emmeans`:
 #' The output can be passed directly to the various functions from the
-#' \code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
+#' `emmeans` package, to obtain bootstrapped estimates, contrasts, simple
 #' slopes, etc. and their confidence intervals. These can then be passed to
-#' \code{model_parameter()} to obtain standard errors, p-values, etc (see
+#' `model_parameter()` to obtain standard errors, p-values, etc (see
 #' example).
 #' \cr\cr
 #' Note that that p-values returned here are estimated under the assumption of
-#' \emph{translation equivariance}: that shape of the sampling distribution is
+#' *translation equivariance*: that shape of the sampling distribution is
 #' unaffected by the null being true or not. If this assumption does not hold,
 #' p-values can be biased, and it is suggested to use proper permutation tests
 #' to obtain non-parametric p-values.
 #'
-#' @seealso \code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
+#' @seealso [bootstrap_parameters()], [simulate_model()], [simulate_parameters()]
 #'
 #' @examples
 #' \dontrun{

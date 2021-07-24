@@ -1,75 +1,75 @@
 #' Principal Component Analysis (PCA) and Factor Analysis (FA)
 #'
-#' The functions \code{principal_components()} and \code{factor_analysis()} can
+#' The functions `principal_components()` and `factor_analysis()` can
 #' be used to perform a principal component analysis (PCA) or a factor analysis
 #' (FA). They return the loadings as a data frame, and various methods and
 #' functions are available to access / display other information (see the
 #' Details section).
 #'
 #' @param x A data frame or a statistical model.
-#' @param n Number of components to extract. If \code{n="all"}, then \code{n} is
-#'   set as the number of variables minus 1 (\code{ncol(x)-1}). If
-#'   \code{n="auto"} (default) or \code{n=NULL}, the number of components is
-#'   selected through \code{\link{n_factors}} resp. \code{\link{n_components}}.
-#'   In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case
+#' @param n Number of components to extract. If `n="all"`, then `n` is
+#'   set as the number of variables minus 1 (`ncol(x)-1`). If
+#'   `n="auto"` (default) or `n=NULL`, the number of components is
+#'   selected through [n_factors()] resp. [n_components()].
+#'   In [reduce_parameters()], can also be `"max"`, in which case
 #'   it will select all the components that are maximally pseudo-loaded (i.e.,
 #'   correlated) by at least one variable.
-#' @param rotation If not \code{"none"}, the PCA / FA will be computed using the
-#'   \pkg{psych} package. Possible options include \code{"varimax"},
-#'   \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
-#'   or \code{"cluster"} (and more). See \code{\link[psych]{fa}} for details.
+#' @param rotation If not `"none"`, the PCA / FA will be computed using the
+#'   \pkg{psych} package. Possible options include `"varimax"`,
+#'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
+#'   or `"cluster"` (and more). See [psych::fa()] for details.
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
-#'   n strongest loadings to retain. Can also be \code{"max"}, in which case it
+#'   n strongest loadings to retain. Can also be `"max"`, in which case it
 #'   will only display the maximum loading per variable (the most simple
 #'   structure).
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
 #'   analysis (in general, such scaling is advisable).
-#' @param object An object of class \code{parameters_pca} or
-#'   \code{parameters_efa}
+#' @param object An object of class `parameters_pca` or
+#'   `parameters_efa`
 #' @param newdata An optional data frame in which to look for variables with
 #'   which to predict. If omitted, the fitted values are used.
 #' @param names Optional character vector to name columns of the returned data
 #'   frame.
-#' @param keep_na Logical, if \code{TRUE}, predictions also return observations
+#' @param keep_na Logical, if `TRUE`, predictions also return observations
 #'   with missing values from the original data, hence the number of rows of
 #'   predicted data and original data is equal.
 #' @param ... Arguments passed to or from other methods.
-#' @param pca_results The output of the \code{principal_components()} function.
-#' @param digits,labels Arguments for \code{print()}.
+#' @param pca_results The output of the `principal_components()` function.
+#' @param digits,labels Arguments for `print()`.
 #' @inheritParams n_factors
 #'
 #' @details
 #'  \subsection{Methods and Utilities}{
 #'  \itemize{
-#'    \item \code{\link{n_components}} and \code{\link{n_factors}} automatically
+#'    \item [n_components()] and [n_factors()] automatically
 #'    estimate the optimal number of dimensions to retain.
 #'
-#'    \item \code{\link{check_factorstructure}} checks the suitability of the
+#'    \item [check_factorstructure()] checks the suitability of the
 #'    data for factor analysis using the
-#'    \code{\link[=check_sphericity_bartlett]{sphericity}} and the
-#'    \code{\link[=check_kmo]{sphericity}} KMO measure.
+#'    [`sphericity()`][check_sphericity_bartlett] and the
+#'    [`sphericity()`][check_kmo] KMO measure.
 #'
-#'    \item{\code{\link[performance]{check_itemscale}} computes various measures
+#'    \item{[performance::check_itemscale()] computes various measures
 #'    of internal consistencies applied to the (sub)scales (i.e., components)
 #'    extracted from the PCA.}
 #'
-#'    \item{Running \code{summary} returns information related to each
+#'    \item{Running `summary` returns information related to each
 #'    component/factor, such as the explained variance and the Eivenvalues.}
 #'
-#'    \item{Running \code{\link{get_scores}} computes scores for each subscale.}
+#'    \item{Running [get_scores()] computes scores for each subscale.}
 #'
-#'   \item{Running \code{\link{closest_component}} will return a numeric vector
+#'   \item{Running [closest_component()] will return a numeric vector
 #'   with the assigned component index for each column from the original data
 #'   frame.}
 #'
-#'   \item{Running \code{\link{rotated_data}} will return the rotated data,
+#'   \item{Running [rotated_data()] will return the rotated data,
 #'   including missing values, so it matches the original data frame.}
 #'
 #'    \item{Running
-#'    \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}}
+#'    [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
 #'    visually displays the loadings (that requires the
 #'    \href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
 #' }
@@ -85,8 +85,8 @@
 #'
 #'  \subsection{Uniqueness}{
 #'    Uniqueness represents the variance that is 'unique' to the variable and
-#'    not shared with other variables. It is equal to \code{1 – communality}
-#'    (variance that is shared with other variables). A uniqueness of \code{0.20}
+#'    not shared with other variables. It is equal to `1 – communality`
+#'    (variance that is shared with other variables). A uniqueness of `0.20`
 #'    suggests that 20\% or that variable's variance is not shared with other
 #'    variables in the overall factor model. The greater 'uniqueness' the lower
 #'    the relevance of the variable in the factor model.
@@ -104,32 +104,32 @@
 #'  There is a simplified rule of thumb that may help do decide whether to run
 #'  a factor analysis or a principal component analysis:
 #'  \itemize{
-#'    \item Run \emph{factor analysis} if you assume or wish to test a
-#'    theoretical model of \emph{latent factors} causing observed variables.
+#'    \item Run *factor analysis* if you assume or wish to test a
+#'    theoretical model of *latent factors* causing observed variables.
 #'
-#'    \item Run \emph{principal component analysis} If you want to simply
-#'    \emph{reduce} your correlated observed variables to a smaller set of
+#'    \item Run *principal component analysis* If you want to simply
+#'    *reduce* your correlated observed variables to a smaller set of
 #'    important independent composite variables.
 #'  }
-#'  (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
+#'  (Source: [CrossValidated](https://stats.stackexchange.com/q/1576/54740))
 #'  }
 #'
 #'  \subsection{Computing Item Scores}{
-#'    Use \code{\link{get_scores}} to compute scores for the "subscales"
-#'    represented by the extracted principal components. \code{get_scores()}
-#'    takes the results from \code{principal_components()} and extracts the
+#'    Use [get_scores()] to compute scores for the "subscales"
+#'    represented by the extracted principal components. `get_scores()`
+#'    takes the results from `principal_components()` and extracts the
 #'    variables for each component found by the PCA. Then, for each of these
 #'    "subscales", raw means are calculated (which equals adding up the single
 #'    items and dividing by the number of items). This results in a sum score
 #'    for each component from the PCA, which is on the same scale as the
 #'    original, single items that were used to compute the PCA.
-#'    One can also use \code{predict()} to back-predict scores for each component,
-#'    to which one can provide \code{newdata} or a vector of \code{names} for the
+#'    One can also use `predict()` to back-predict scores for each component,
+#'    to which one can provide `newdata` or a vector of `names` for the
 #'    components.
 #'  }
 #'
 #'  \subsection{Explained Variance and Eingenvalues}{
-#'     Use \code{summary()} to get the Eigenvalues and the explained variance
+#'     Use `summary()` to get the Eigenvalues and the explained variance
 #'     for each extracted component. The eigenvectors and eigenvalues represent
 #'     the "core" of a PCA: The eigenvectors (the principal components)
 #'     determine the directions of the new feature space, and the eigenvalues

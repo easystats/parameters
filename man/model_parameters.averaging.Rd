@@ -46,7 +46,7 @@
 \arguments{
 \item{model}{Model object.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
 
 \item{component}{Model component for which parameters should be shown. May be
 one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
@@ -67,7 +67,7 @@ captures this uncertainty. For \code{compare_parameters()},
 from non-Gaussian families.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
@@ -77,11 +77,10 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
-\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
-regressions} apply (see also
+\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
 \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the
@@ -90,7 +89,7 @@ case of bootstrapped frequentist models.}
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
 \code{"pseudo"} or \code{NULL} (default) for no standardization. See
-'Details' in \code{\link[effectsize]{standardize_parameters}}.
+'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -120,6 +119,6 @@ if (require("brglm2", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to rename
-  columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to rename
+columns into a consistent, standardized naming scheme.
 }

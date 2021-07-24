@@ -38,18 +38,18 @@ Simulate draws from a statistical model to return a data frame of estimates.
 }
 \details{
 \subsection{Technical Details}{
-    \code{simulate_model()} is a computationally faster alternative
-    to \code{bootstrap_model()}. Simulated draws for coefficients are based
-    on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
-    \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
-  }
-  \subsection{Models with Zero-Inflation Component}{
-    For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
-    \pkg{countreg}, the \code{component} argument can be used to specify
-    which parameters should be simulated. For all other models, parameters
-    from the conditional component (fixed effects) are simulated. This may
-    include smooth terms, but not random effects.
-  }
+\code{simulate_model()} is a computationally faster alternative
+to \code{bootstrap_model()}. Simulated draws for coefficients are based
+on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
+\code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
+}
+\subsection{Models with Zero-Inflation Component}{
+For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
+\pkg{countreg}, the \code{component} argument can be used to specify
+which parameters should be simulated. For all other models, parameters
+from the conditional component (fixed effects) are simulated. This may
+include smooth terms, but not random effects.
+}
 }
 \examples{
 library(parameters)

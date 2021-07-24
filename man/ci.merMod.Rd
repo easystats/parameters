@@ -112,15 +112,15 @@
 \arguments{
 \item{x}{A statistical model.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
 
-\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"}}
-(default), \code{\link[=p_value_ml1]{"ml1"}} or
-\code{\link[=p_value_betwithin]{"betwithin"}}. For linear mixed model, can
-also be \code{\link[=p_value_satterthwaite]{"satterthwaite"}},
-\code{\link[=p_value_kenward]{"kenward"}} or \code{"boot"} (see
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}}
+(default), \code{\link[=p_value_ml1]{"ml1"()}} or
+\code{\link[=p_value_betwithin]{"betwithin"()}}. For linear mixed model, can
+also be \code{\link[=p_value_satterthwaite]{"satterthwaite"()}},
+\code{\link[=p_value_kenward]{"kenward"()}} or \code{"boot"} (see
 \code{lme4::confint.merMod}). For (generalized) linear models, can be
 \code{"robust"} to compute confidence intervals based on robust covariance
 matrix estimation, and for generalized linear models and models from
@@ -155,9 +155,9 @@ Compute confidence intervals (CI) for frequentist models.
 }
 \note{
 \code{ci_robust()} resp. \code{ci(method = "robust")}
-  rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-  \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-  thus only work for those models supported by those packages.
+rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
+\code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+thus only work for those models supported by those packages.
 }
 \examples{
 \donttest{

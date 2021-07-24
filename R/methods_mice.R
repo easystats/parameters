@@ -76,14 +76,14 @@ model_parameters.mipo <- model_parameters.default
 
 #' Parameters from multiply imputed repeated analyses
 #'
-#' Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
+#' Format models of class `mira`, obtained from `mice::width.mids()`.
 #'
-#' @param model An object of class \code{mira}.
+#' @param model An object of class `mira`.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details \code{model_parameters()} for objects of class \code{mira} works
-#'   similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
+#' @details `model_parameters()` for objects of class `mira` works
+#'   similar to `summary(mice::pool())`, i.e. it generates the pooled summary
 #'   of multiple imputed repeated regression analyses.
 #'
 #' @examples

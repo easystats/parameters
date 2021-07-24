@@ -5,28 +5,28 @@
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,
 #'   or for the zero-inflated part of the model be returned? Applies to models
-#'   with zero-inflated component. \code{component} may be one of \code{"conditional"},
-#'   \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+#'   with zero-inflated component. `component` may be one of `"conditional"`,
+#'   `"zi"`, `"zero-inflated"`, `"dispersion"` or `"all"`
 #'   (default). May be abbreviated.
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
 #' @return A data frame.
 #'
-#' @seealso \code{\link[=simulate_parameters]{simulate_parameters()}},
-#' \code{\link[=bootstrap_model]{bootstrap_model()}},
-#' \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
+#' @seealso [`simulate_parameters()`][simulate_parameters],
+#' [`bootstrap_model()`][bootstrap_model],
+#' [`bootstrap_parameters()`][bootstrap_parameters]
 #'
 #' @details
 #'   \subsection{Technical Details}{
-#'     \code{simulate_model()} is a computationally faster alternative
-#'     to \code{bootstrap_model()}. Simulated draws for coefficients are based
-#'     on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
-#'     \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
+#'     `simulate_model()` is a computationally faster alternative
+#'     to `bootstrap_model()`. Simulated draws for coefficients are based
+#'     on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
+#'     `mu = coef(model)` and variance `Sigma = vcov(model)`.
 #'   }
 #'   \subsection{Models with Zero-Inflation Component}{
 #'     For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
-#'     \pkg{countreg}, the \code{component} argument can be used to specify
+#'     \pkg{countreg}, the `component` argument can be used to specify
 #'     which parameters should be simulated. For all other models, parameters
 #'     from the conditional component (fixed effects) are simulated. This may
 #'     include smooth terms, but not random effects.

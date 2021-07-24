@@ -8,7 +8,7 @@
 #'
 #' Extract and compute indices and measures to describe parameters of meta-analysis models.
 #'
-#' @param include_studies Logical, if \code{TRUE} (default), includes parameters
+#' @param include_studies Logical, if `TRUE` (default), includes parameters
 #'   for all studies. Else, only parameters for overall-effects are shown.
 #' @inheritParams model_parameters.default
 #'

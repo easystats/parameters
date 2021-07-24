@@ -14,7 +14,7 @@
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Format cluster models obtained for example by \code{\link{kmeans}}.
+Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
 library(parameters)

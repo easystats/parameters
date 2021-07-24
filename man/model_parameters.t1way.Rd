@@ -23,10 +23,10 @@ if \code{keep} has more than one element, these will be merged with an
 patterns, the names of the list-element should equal the column name where
 selection should be applied. This is useful for model objects where
 \code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+like in \code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression
 pattern should match the parameter names as they are stored in the returned
 data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{verbose}{Toggle warnings and messages.}

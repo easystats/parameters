@@ -4,7 +4,7 @@
 #'
 #' @param x A data frame.
 #' @param standardize Standardize the dataframe before clustering (default).
-#' @param distance Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See \code{\link[stats:dist]{dist()}} for list of available methods.
+#' @param distance Distance method used. Other methods than "euclidean" (default) are exploratory in the context of clustering tendency. See [stats::dist()] for list of available methods.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -15,7 +15,7 @@
 #' }
 #' @return The H statistic (numeric)
 #'
-#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_factorstructure}}.
+#' @seealso [check_kmo()], [check_sphericity_bartlett()] and [check_factorstructure()].
 #'
 #' @references \itemize{
 #'   \item Lawson, R. G., & Jurs, P. C. (1990). New index for clustering tendency and its application to chemical problems. Journal of chemical information and computer sciences, 30(1), 36-41.

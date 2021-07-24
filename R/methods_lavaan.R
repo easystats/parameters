@@ -8,21 +8,21 @@
 #'
 #' Format CFA/SEM objects from the lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 #'
-#' @param model CFA or SEM created by the \code{lavaan::cfa} or \code{lavaan::sem}
+#' @param model CFA or SEM created by the `lavaan::cfa` or `lavaan::sem`
 #'   functions.
 #' @param standardize Return standardized parameters (standardized coefficients).
-#'   Can be \code{TRUE} (or \code{"all"} or \code{"std.all"}) for standardized
+#'   Can be `TRUE` (or `"all"` or `"std.all"`) for standardized
 #'   estimates based on both the variances of observed and latent variables;
-#'   \code{"latent"} (or \code{"std.lv"}) for standardized estimates based
-#'   on the variances of the latent variables only; or \code{"no_exogenous"}
-#'   (or \code{"std.nox"}) for standardized estimates based on both the
+#'   `"latent"` (or `"std.lv"`) for standardized estimates based
+#'   on the variances of the latent variables only; or `"no_exogenous"`
+#'   (or `"std.nox"`) for standardized estimates based on both the
 #'   variances of observed and latent variables, but not the variances of
-#'   exogenous covariates. See \code{lavaan::standardizedsolution} for details.
+#'   exogenous covariates. See `lavaan::standardizedsolution` for details.
 #' @inheritParams model_parameters.default
-#' @param component What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.
+#' @param component What type of links to return. Can be `"all"` or some of `c("regression", "correlation", "loading", "variance", "mean")`.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(parameters)

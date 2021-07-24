@@ -34,5 +34,5 @@ The p-values.
 }
 \description{
 This function attempts to return, or compute, p-values of models
-  with special model components.
+with special model components.
 }

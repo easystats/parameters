@@ -2,31 +2,31 @@
 #'
 #' Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 #'
-#' @param model Object of class \code{htest} or \code{pairwise.htest}.
+#' @param model Object of class `htest` or `pairwise.htest`.
 #' @param bootstrap Should estimates be bootstrapped?
 #' @param cramers_v,phi Compute Cramer's V or phi as index of effect size.
-#'   Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
-#'   Only applies to objects from \code{chisq.test()}.
-#' @param cohens_g If \code{TRUE}, compute Cohen's g as index of effect size.
-#'   Only applies to objects from \code{mcnemar.test()}.
-#' @param standardized_d If \code{TRUE}, compute standardized d as index of
-#'   effect size. Only applies to objects from \code{t.test()}. Calculation of
-#'   \code{d} is based on the t-value (see \code{\link[effectsize]{t_to_d}})
+#'   Can be `"raw"` or `"adjusted"` (effect size will be bias-corrected).
+#'   Only applies to objects from `chisq.test()`.
+#' @param cohens_g If `TRUE`, compute Cohen's g as index of effect size.
+#'   Only applies to objects from `mcnemar.test()`.
+#' @param standardized_d If `TRUE`, compute standardized d as index of
+#'   effect size. Only applies to objects from `t.test()`. Calculation of
+#'   `d` is based on the t-value (see [effectsize::t_to_d()])
 #'   for details.
-#' @param hedges_g If \code{TRUE}, compute Hedge's g as index of effect size.
-#'   Only applies to objects from \code{t.test()}.
-#' @param omega_squared,eta_squared,epsilon_squared Logical, if \code{TRUE},
+#' @param hedges_g If `TRUE`, compute Hedge's g as index of effect size.
+#'   Only applies to objects from `t.test()`.
+#' @param omega_squared,eta_squared,epsilon_squared Logical, if `TRUE`,
 #'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
-#'   applies to objects from \code{oneway.test()}.
-#' @param rank_biserial If \code{TRUE}, compute the rank-biserial correlation as
-#'   effect size measure. Only applies to objects from \code{wilcox.test()}.
-#' @param rank_epsilon_squared If \code{TRUE}, compute the rank epsilon squared
-#'   as effect size measure. Only applies to objects from \code{kruskal.test()}.
-#' @param kendalls_w If \code{TRUE}, compute the Kendall's coefficient of
+#'   applies to objects from `oneway.test()`.
+#' @param rank_biserial If `TRUE`, compute the rank-biserial correlation as
+#'   effect size measure. Only applies to objects from `wilcox.test()`.
+#' @param rank_epsilon_squared If `TRUE`, compute the rank epsilon squared
+#'   as effect size measure. Only applies to objects from `kruskal.test()`.
+#' @param kendalls_w If `TRUE`, compute the Kendall's coefficient of
 #'   concordance as effect size measure. Only applies to objects from
-#'   \code{friedman.test()}.
+#'   `friedman.test()`.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
-#'   only applies to objects from \code{chisq.test()} or \code{oneway.test()}.
+#'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'

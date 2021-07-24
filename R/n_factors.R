@@ -7,41 +7,41 @@
 #' with the fewer factors.
 #'
 #' @param x A data frame.
-#' @param type Can be \code{"FA"} or \code{"PCA"}, depending on what you want to
+#' @param type Can be `"FA"` or `"PCA"`, depending on what you want to
 #'   do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see
-#'   \code{\link[psych]{VSS}}). The rotation to apply. Can be \code{"none"},
-#'   \code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"},
-#'   \code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal
-#'   rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
-#'   \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and
-#'   \code{"cluster"} for oblique transformations.
-#' @param algorithm Factoring method used by VSS. Can be \code{"pa"} for
-#'   Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS)
-#'   factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for
-#'   Principal Components. \code{"default"} will select \code{"minres"} if
-#'   \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.
+#'   [psych::VSS()]). The rotation to apply. Can be `"none"`,
+#'   `"varimax"`, `"quartimax"`, `"bentlerT"`, `"equamax"`,
+#'   `"varimin"`, `"geominT"` and `"bifactor"` for orthogonal
+#'   rotations, and `"promax"`, `"oblimin"`, `"simplimax"`,
+#'   `"bentlerQ"`, `"geominQ"`, `"biquartimin"` and
+#'   `"cluster"` for oblique transformations.
+#' @param algorithm Factoring method used by VSS. Can be `"pa"` for
+#'   Principal Axis Factor Analysis, `"minres"` for minimum residual (OLS)
+#'   factoring, `"mle"` for Maximum Likelihood FA and `"pc"` for
+#'   Principal Components. `"default"` will select `"minres"` if
+#'   `type = "FA"` and `"pc"` if `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
-#'   \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and
-#'   \code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger
-#'   datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.
-#' @param safe If \code{TRUE}, the function will run all the procedures in try
+#'   `"all"` or a vector containing `"nFactors"`, `"psych"` and
+#'   `"EGAnet"`. However, `"EGAnet"` can be very slow for bigger
+#'   datasets. Thus, by default, `c("nFactors", "psych")` are selected.
+#' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
 #' @param cor An optional correlation matrix that can be used (note that the
-#'   data must still be passed as the first argument). If \code{NULL}, will
-#'   compute it by running \code{cor()} on the passed data.
+#'   data must still be passed as the first argument). If `NULL`, will
+#'   compute it by running `cor()` on the passed data.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details \code{n_components} is actually an alias for \code{n_factors}, with
+#' @details `n_components` is actually an alias for `n_factors`, with
 #'   different defaults for the function arguments.
 #'
 #' @note There is also a
-#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-#'   \code{n_components()} is a convenient short for \code{n_factors(type =
-#'   "PCA")}.
+#'   `n_components()` is a convenient short for `n_factors(type =
+#'   "PCA")`.
 #'
 #' @examples
 #' library(parameters)

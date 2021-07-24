@@ -1,29 +1,29 @@
 #' Standard Errors
 #'
-#' \code{standard_error()} attempts to return standard errors of model
-#' parameters, while \code{standard_error_robust()} attempts to return robust
+#' `standard_error()` attempts to return standard errors of model
+#' parameters, while `standard_error_robust()` attempts to return robust
 #' standard errors.
 #'
 #' @param model A model.
-#' @param force Logical, if \code{TRUE}, factors are converted to numerical
+#' @param force Logical, if `TRUE`, factors are converted to numerical
 #'   values to calculate the standard error, with the lowest level being the
-#'   value \code{1} (unless the factor has numeric levels, which are converted
-#'   to the corresponding numeric value). By default, \code{NA} is returned for
+#'   value `1` (unless the factor has numeric levels, which are converted
+#'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
-#' @param method If \code{"robust"}, robust standard errors are computed by
-#'   calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
-#'   \code{standard_error_robust()}, in turn, calls one of the
-#'   \code{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
+#' @param method If `"robust"`, robust standard errors are computed by
+#'   calling [`standard_error_robust()`][standard_error_robust].
+#'   `standard_error_robust()`, in turn, calls one of the
+#'   `vcov*()`-functions from the \pkg{sandwich} or \pkg{clubSandwich}
 #'   package for robust covariance matrix estimators. For certain mixed models,
-#'   \code{method} may also be one of \code{"wald"},
-#'   \code{\link[=p_value_ml1]{"ml1"}},
-#'   \code{\link[=p_value_betwithin]{"betwithin"}},
-#'   \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or
-#'   \code{\link[=p_value_kenward]{"kenward"}}.
+#'   `method` may also be one of `"wald"`,
+#'   [`"ml1"()`][p_value_ml1],
+#'   [`"betwithin"()`][p_value_betwithin],
+#'   [`"satterthwaite"()`][p_value_satterthwaite] or
+#'   [`"kenward"()`][p_value_kenward].
 #' @param ... Arguments passed to or from other methods. For
-#'   \code{standard_error()}, if \code{method = "robust"}, arguments
-#'   \code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
-#'   down to \code{\link[=standard_error_robust]{standard_error_robust()}}.
+#'   `standard_error()`, if `method = "robust"`, arguments
+#'   `vcov_estimation`, `vcov_type` and `vcov_args` can be passed
+#'   down to [`standard_error_robust()`][standard_error_robust].
 #' @param effects Should standard errors for fixed effects or random effects be
 #'   returned? Only applies to mixed models. May be abbreviated. When standard
 #'   errors for random effects are requested, for each grouping factor a list of

@@ -5,18 +5,18 @@
 #' consensus. In case of ties, it will select the solution with fewer clusters.
 #'
 #' @inheritParams check_clusterstructure
-#' @param force Logical, if \code{TRUE}, factors are converted to numerical
+#' @param force Logical, if `TRUE`, factors are converted to numerical
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that
 #'   determine the number of clusters need numeric input only.
 #' @param package Package from which methods are to be called to determine the
-#'   number of clusters. Can be \code{"all"} or a vector containing
-#'   \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.
-#' @param fast If \code{FALSE}, will compute 4 more indices (sets \code{index =
-#'   "allong"} in \code{NbClust}). This has been deactivated by default as it is
+#'   number of clusters. Can be `"all"` or a vector containing
+#'   `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
+#' @param fast If `FALSE`, will compute 4 more indices (sets `index =
+#'   "allong"` in `NbClust`). This has been deactivated by default as it is
 #'   computationally heavy.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(parameters)

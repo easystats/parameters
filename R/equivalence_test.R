@@ -9,20 +9,20 @@ bayestestR::equivalence_test
 #' @description Compute the (conditional) equivalence test for frequentist models.
 #'
 #' @param x A statistical model.
-#' @param range The range of practical equivalence of an effect. May be \code{"default"},
+#' @param range The range of practical equivalence of an effect. May be `"default"`,
 #'   to automatically define this range based on properties of the model's data.
 #' @param ci Confidence Interval (CI+) level. Default to 0.95 (95\%).
 #' @param rule Character, indicating the rules when testing for practical
-#'   equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
+#'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.
-#' @param p_values Logical, if \code{TRUE}, adjusted p-values for equivalence
+#' @param p_values Logical, if `TRUE`, adjusted p-values for equivalence
 #'   testing are calculated.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
 #' @inheritParams p_value
 #'
-#' @seealso For more details, see \code{\link[bayestestR:equivalence_test]{equivalence_test()}}.
+#' @seealso For more details, see [bayestestR::equivalence_test()].
 #'   Further readings can be found in the references.
 #'
 #' @details
@@ -34,9 +34,9 @@ bayestestR::equivalence_test
 #' hypothesis. In the latter case, all we can say is that no significant effect
 #' was observed, but one cannot conclude that the null hypothesis is true.}
 #' (\cite{Pernet 2017}). One way to address this issues without Bayesian methods
-#' is \emph{Equivalence Testing}, as implemented in \code{equivalence_test()}.
+#' is *Equivalence Testing*, as implemented in `equivalence_test()`.
 #' While you either can reject the null hypothesis or claim an inconclusive result
-#' in NHST, the equivalence test adds a third category, \emph{"accept"}. Roughly
+#' in NHST, the equivalence test adds a third category, *"accept"*. Roughly
 #' speaking, the idea behind equivalence testing in a frequentist framework is
 #' to check whether an estimate and its uncertainty (i.e. confidence interval)
 #' falls within a region of "practical equivalence". Depending on the rule for
@@ -50,7 +50,7 @@ bayestestR::equivalence_test
 #'     \item{"bayes" - Bayesian rule (Kruschke 2018)}{
 #'       This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke,
 #'       2014, 2018)} used for the
-#'       \code{\link[bayestestR:equivalence_test]{Bayesian counterpart}}. This
+#'       [`Bayesian counterpart()`][bayestestR::equivalence_test]. This
 #'       means, if the confidence intervals are completely outside the ROPE, the
 #'       "null hypothesis" for this parameter is "rejected". If the ROPE
 #'       completely covers the CI, the null hypothesis is accepted. Else, it's
@@ -61,10 +61,10 @@ bayestestR::equivalence_test
 #'     \item{"classic" - The TOST rule (Lakens 2017)}{
 #'       This rule follows the \dQuote{TOST rule}, i.e. a two one-sided test
 #'       procedure (\cite{Lakens 2017}). Following this rule, practical
-#'       equivalence of an effect (i.e. H0) is \emph{rejected}, when the
-#'       coefficient is statistically significant \emph{and} the narrow
-#'       confidence intervals (i.e. \code{1-2*alpha}) \emph{include} or
-#'       \emph{exceed} the ROPE boundaries. Practical equivalence is assumed
+#'       equivalence of an effect (i.e. H0) is *rejected*, when the
+#'       coefficient is statistically significant *and* the narrow
+#'       confidence intervals (i.e. `1-2*alpha`) *include* or
+#'       *exceed* the ROPE boundaries. Practical equivalence is assumed
 #'       (i.e. H0 accepted) when the narrow confidence intervals are completely
 #'       inside the ROPE, no matter if the effect is statistically significant
 #'       or not. Else, the decision whether to accept or reject H0 is undecided.
@@ -73,17 +73,17 @@ bayestestR::equivalence_test
 #'     The Conditional Equivalence Testing as described by \cite{Campbell and
 #'     Gustafson 2018}. According to this rule, practical equivalence is
 #'     rejected when the coefficient is statistically significant. When the
-#'     effect is \emph{not} significant and the narrow confidence intervals are
+#'     effect is *not* significant and the narrow confidence intervals are
 #'     completely inside the ROPE, we accept H0, else it is undecided.
 #'     }
 #'   }
 #' }
 #' \subsection{Levels of Confidence Intervals used for Equivalence Testing}{
-#'   For \code{rule = "classic"}, "narrow" confidence intervals are used for
+#'   For `rule = "classic"`, "narrow" confidence intervals are used for
 #'   equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
-#'   but 1 - 2 * alpha. Thus, if \code{ci = .95}, alpha is assumed to be 0.05
-#'   and internally a ci-level of 0.90 is used. \code{rule = "cet"} uses
-#'   both regular and narrow confidence intervals, while \code{rule = "bayes"}
+#'   but 1 - 2 * alpha. Thus, if `ci = .95`, alpha is assumed to be 0.05
+#'   and internally a ci-level of 0.90 is used. `rule = "cet"` uses
+#'   both regular and narrow confidence intervals, while `rule = "bayes"`
 #'   only uses the regular intervals.
 #' }
 #' \subsection{Second Generation p-Value (SGPV)}{
@@ -91,15 +91,15 @@ bayestestR::equivalence_test
 #'   that represents \dQuote{the proportion of data-supported hypotheses
 #'   that are also null hypotheses} \cite{(Blume et al. 2018)}. This statistic
 #'   is actually computed in the same way as the percentage inside the ROPE as
-#'   returned by \code{equivalence_test()} (see \cite{Lakens and Delacre 2020}
-#'   for details on computation of the SGPV). Thus, the \code{"inside ROPE"}
+#'   returned by `equivalence_test()` (see \cite{Lakens and Delacre 2020}
+#'   for details on computation of the SGPV). Thus, the `"inside ROPE"`
 #'   column reflects the SGPV.
 #' }
 #' \subsection{Adjustment for multiple testing}{
 #'   The calculation of p-values is somewhat "experimental". For parameters, where H0...
 #'   \itemize{
 #'     \item ... is rejected, the p-value equals a NHST as if the upper / lower
-#'     boundary of the ROPE (see \code{range}) would be the point-null to test
+#'     boundary of the ROPE (see `range`) would be the point-null to test
 #'     against.
 #'     \item ... is accepted, the p-value is set to 1.
 #'     \item ... is undecided, the p-value equals a NHST against the point-null,
@@ -108,15 +108,15 @@ bayestestR::equivalence_test
 #'     upper confidence interval limit + half the ROPE range).
 #'   }
 #'   All p-values are then adjusted for multiple testing (using
-#'   \code{\link[stats]{p.adjust}} with \code{method = "fdr"}).
+#'   [stats::p.adjust()] with `method = "fdr"`).
 #' }
 #' \subsection{ROPE range}{
 #'   Some attention is required for finding suitable values for the ROPE limits
-#'   (argument \code{range}). See 'Details' in \code{\link[bayestestR]{rope_range}}
+#'   (argument `range`). See 'Details' in [bayestestR::rope_range()]
 #'   for further information.
 #' }
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @references
 #' \itemize{

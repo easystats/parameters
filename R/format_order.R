@@ -3,7 +3,7 @@
 #' Format order.
 #'
 #' @param order value or vector of orders.
-#' @param textual Return number as words. If \code{FALSE}, will run \code{\link[insight:format_value]{format_value()}}.
+#' @param textual Return number as words. If `FALSE`, will run [insight::format_value()].
 #' @inherit insight::format_number
 #'
 #' @return A formatted string.

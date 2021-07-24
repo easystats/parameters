@@ -6,73 +6,73 @@
 #'
 #' Compute and extract model parameters. See the documentation for your object's class:
 #' \itemize{
-#'  \item{\link[=model_parameters.htest]{Correlations, t-tests, ...} (\code{htest}, \code{pairwise.htest})}
-#'  \item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \pkg{afex}, ...)}
-#'  \item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
-#'  \item{\link[=model_parameters.cgam]{Additive models} (\code{gam}, \code{gamm}, ...)}
-#'  \item{\link[=model_parameters.zcpglm]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
-#'  \item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, ...)}
-#'  \item{\link[=model_parameters.averaging]{Other special models} (\code{model.avg}, \code{betareg}, \code{glmx}, ...)}
-#'  \item{\link[=model_parameters.merMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, \pkg{afex}, ...)}
-#'  \item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\pkg{BayesFactor})}
-#'  \item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, \pkg{blavaan}, ...)}
-#'  \item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
-#'  \item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan})}
-#'  \item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
-#'  \item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma}, \code{metaplus}, \pkg{metaBMA}, ...)}
-#'  \item{\link[=model_parameters.glht]{Hypothesis testing} (\code{glht}, \pkg{PMCMRplus})}
-#'  \item{\link[=model_parameters.t1way]{Robust statistical tests} (\pkg{WRS2})}
-#'  \item{\link[=model_parameters.mira]{Multiply imputed repeated analyses} (\code{mira})}
+#'  \item{[Correlations, t-tests, ...][model_parameters.htest] (`htest`, `pairwise.htest`)}
+#'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, \pkg{afex}, ...)}
+#'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, \pkg{survey}, ...)}
+#'  \item{[Additive models][model_parameters.cgam] (`gam`, `gamm`, ...)}
+#'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
+#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, ...)}
+#'  \item{[Other special models][model_parameters.averaging] (`model.avg`, `betareg`, `glmx`, ...)}
+#'  \item{[Mixed models][model_parameters.merMod] (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, \pkg{afex}, ...)}
+#'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (\pkg{BayesFactor})}
+#'  \item{[Bayesian models][model_parameters.stanreg] (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, \pkg{blavaan}, ...)}
+#'  \item{[PCA and FA][model_parameters.principal] (\pkg{psych})}
+#'  \item{[CFA and SEM][model_parameters.lavaan] (\pkg{lavaan})}
+#'  \item{[Cluster models][model_parameters.kmeans] (k-means, ...)}
+#'  \item{[Meta-Analysis via linear (mixed) models][model_parameters.rma] (`rma`, `metaplus`, \pkg{metaBMA}, ...)}
+#'  \item{[Hypothesis testing][model_parameters.glht] (`glht`, \pkg{PMCMRplus})}
+#'  \item{[Robust statistical tests][model_parameters.t1way] (\pkg{WRS2})}
+#'  \item{[Multiply imputed repeated analyses][model_parameters.mira] (`mira`)}
 #'  }
 #'
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods. Non-documented
-#'   arguments are \code{digits}, \code{p_digits}, \code{ci_digits} and
-#'   \code{footer_digits} to set the number of digits for the output.
-#'   \code{group} can also be passed to the \code{print()} method. See details
-#'   in \code{\link{print.parameters_model}} and 'Examples' in
-#'   \code{\link{model_parameters.default}}.
+#'   arguments are `digits`, `p_digits`, `ci_digits` and
+#'   `footer_digits` to set the number of digits for the output.
+#'   `group` can also be passed to the `print()` method. See details
+#'   in [print.parameters_model()] and 'Examples' in
+#'   [model_parameters.default()].
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'
-#' @note The \code{\link[=print.parameters_model]{print()}} method has several
+#' @note The [`print()`][print.parameters_model] method has several
 #'   arguments to tweak the output. There is also a
-#'   \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+#'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
 #'   method for use inside rmarkdown files,
-#'   \code{\link[=print_md.parameters_model]{print_md()}}.
+#'   [`print_md()`][print_md.parameters_model].
 #'
 #' @details
 #' \subsection{Standardization of model coefficients}{
-#'   Standardization is based on \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
-#'   In case of \code{standardize = "refit"}, the data used to fit the model
+#'   Standardization is based on [effectsize::standardize_parameters()].
+#'   In case of `standardize = "refit"`, the data used to fit the model
 #'   will be standardized and the model is completely refitted. In such cases,
 #'   standard errors and confidence intervals refer to the standardized
-#'   coefficient. The default, \code{standardize = "refit"}, never standardizes
+#'   coefficient. The default, `standardize = "refit"`, never standardizes
 #'   categorical predictors (i.e. factors), which may be a different behaviour
 #'   compared to other R packages or other software packages (like SPSS).
 #'   To mimic behaviour of SPSS or packages such as \pkg{lm.beta}, use
-#'   \code{standardize = "basic"}.
+#'   `standardize = "basic"`.
 #'   }
 #' \subsection{Methods of standardization}{
-#'   For full details, please refer to \code{\link[effectsize:standardize_parameters]{standardize_parameters()}}.
+#'   For full details, please refer to [effectsize::standardize_parameters()].
 #'   \describe{
-#'     \item{\strong{refit}}{
+#'     \item{**refit**}{
 #'       This method is based on a complete model re-fit with a standardized version
 #'       of the data. Hence, this method is equal to standardizing the variables
 #'       before fitting the model. It is the "purest" and the most accurate
 #'       (Neter et al., 1989), but it is also the most computationally costly and
 #'       long (especially for heavy models such as Bayesian models).The
-#'       \code{robust} argument (default to \code{FALSE}) enables a robust standardization
-#'       of data, i.e., based on the \code{median} and \code{MAD} instead of the
-#'       \code{mean} and \code{SD}.
+#'       `robust` argument (default to `FALSE`) enables a robust standardization
+#'       of data, i.e., based on the `median` and `MAD` instead of the
+#'       `mean` and `SD`.
 #'     }
-#'     \item{\strong{posthoc}}{
+#'     \item{**posthoc**}{
 #'       Post-hoc standardization of the parameters, aiming at emulating the
-#'       results obtained by \code{"refit"} without refitting the model. The coefficients
-#'       are divided by the standard deviation (or MAD if \code{robust=TRUE}) of
+#'       results obtained by `"refit"` without refitting the model. The coefficients
+#'       are divided by the standard deviation (or MAD if `robust=TRUE`) of
 #'       the outcome (which becomes their expression 'unit'). Then, the coefficients
 #'       related to numeric variables are additionally multiplied by the standard
 #'       deviation (or MAD) of the related terms, so that they correspond to
@@ -81,9 +81,9 @@
 #'       levels. This method is not accurate and tend to give aberrant results when
 #'       interactions are specified.
 #'     }
-#'     \item{\strong{smart}}{
+#'     \item{**smart**}{
 #'       (Standardization of Model's parameters with Adjustment, Reconnaissance
-#'       and Transformation - \emph{experimental}): Similar to \code{method="posthoc"}
+#'       and Transformation - *experimental*): Similar to `method="posthoc"`
 #'       in that it does not involve model refitting. The difference is that the
 #'       SD (or MAD) of the response is computed on the relevant section of the
 #'       data. For instance, if a factor with 3 levels A (the intercept), B and C
@@ -91,22 +91,22 @@
 #'       scaled by the variance of the response at the intercept only. As a results,
 #'       the coefficients for effects of factors are similar to a Glass' delta.
 #'     }
-#'     \item{\strong{basic}}{
-#'       This method is similar to \code{method="posthoc"}, but treats all
+#'     \item{**basic**}{
+#'       This method is similar to `method="posthoc"`, but treats all
 #'       variables as continuous: it also scales the coefficient by the standard
 #'       deviation of model's matrix' parameter of factors levels (transformed to
 #'       integers) or binary predictors. Although being inappropriate for these cases,
 #'       this method is the one implemented by default in other software packages,
-#'       such as \code{lm.beta::lm.beta()}.
+#'       such as `lm.beta::lm.beta()`.
 #'     }
-#'     \item{\strong{pseudo} (\emph{for 2-level (G)LMMs only})}{
+#'     \item{**pseudo** (*for 2-level (G)LMMs only*)}{
 #'       In this (post-hoc) method, the response and the predictor are standardized
 #'       based on the level of prediction:
 #'       Predictors are standardized based on their SD at level of prediction
-#'       (see also \code{datawizard::demean()}). The outcome (in linear LMMs) is
+#'       (see also `datawizard::demean()`). The outcome (in linear LMMs) is
 #'       standardized based on a fitted random-intercept-model, where
-#'       \code{sqrt(random-intercept-variance)} is used for level 2 predictors,
-#'       and \code{sqrt(residual-variance)} is used for level 1 predictors
+#'       `sqrt(random-intercept-variance)` is used for level 2 predictors,
+#'       and `sqrt(residual-variance)` is used for level 1 predictors
 #'       (Hoffman 2015, page 342). A warning is given when a within-group variable
 #'       is found to have access between-group variance.
 #'     }
@@ -115,11 +115,11 @@
 #'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
-#' degrees of freedom \emph{df_error}. The reason for this is that these degrees
+#' degrees of freedom *df_error*. The reason for this is that these degrees
 #' of freedom not always refer to the residuals. For certain models, they refer
 #' to the estimate error - in a linear model these are the same, but in - for
 #' instance - any mixed effects model, this isn't strictly true. Hence, we
-#' think that \code{df_error} is the most generic label for these degrees of
+#' think that `df_error` is the most generic label for these degrees of
 #' freedom.
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
@@ -162,84 +162,84 @@ parameters <- model_parameters
 #' @param model Model object.
 #' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
 #' @param bootstrap Should estimates be based on bootstrapped model? If
-#'   \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
-#'   regressions} apply (see also
-#'   \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).
+#'   `TRUE`, then arguments of [Bayesian
+#'   regressions][model_parameters.stanreg] apply (see also
+#'   [`bootstrap_parameters()`][bootstrap_parameters]).
 #' @param iterations The number of bootstrap replicates. This only apply in the
 #'   case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be
-#'   \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
-#'   \code{"pseudo"} or \code{NULL} (default) for no standardization. See
-#'   'Details' in \code{\link[effectsize]{standardize_parameters}}.
-#'   \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
+#'   `"refit"`, `"posthoc"`, `"smart"`, `"basic"`,
+#'   `"pseudo"` or `NULL` (default) for no standardization. See
+#'   'Details' in [effectsize::standardize_parameters()].
+#'   **Important:** Categorical predictors (i.e. factors) are *never*
 #'   standardized by default, which may be a different behaviour compared to
 #'   other R packages or other software packages (like SPSS). If standardizing
-#'   categorical predictors is desired, either use \code{standardize="basic"}
+#'   categorical predictors is desired, either use `standardize="basic"`
 #'   to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
-#'   the data with \code{effectsize::standardize(force=TRUE)} before fitting
-#'   the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
-#'   parameters only works when \code{standardize="refit"}.
+#'   the data with `effectsize::standardize(force=TRUE)` before fitting
+#'   the model. Robust estimation (i.e. `robust=TRUE`) of standardized
+#'   parameters only works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log
-#'   or logit links. \strong{Note:} Delta-method standard errors are also
+#'   or logit links. **Note:** Delta-method standard errors are also
 #'   computed (by multiplying the standard errors by the transformed
 #'   coefficients). This is to mimic behaviour of other software packages, such
 #'   as Stata, but these standard errors poorly estimate uncertainty for the
 #'   transformed coefficient. The transformed confidence interval more clearly
-#'   captures this uncertainty. For \code{compare_parameters()},
-#'   \code{exponentiate = "nongaussian"} will only exponentiate coefficients
+#'   captures this uncertainty. For `compare_parameters()`,
+#'   `exponentiate = "nongaussian"` will only exponentiate coefficients
 #'   from non-Gaussian families.
-#' @param robust Logical, if \code{TRUE}, robust standard errors are calculated
+#' @param robust Logical, if `TRUE`, robust standard errors are calculated
 #'   (if possible), and confidence intervals and p-values are based on these
-#'   robust standard errors. Additional arguments like \code{vcov_estimation} or
-#'   \code{vcov_type} are passed down to other methods, see
-#'   \code{\link[=standard_error_robust]{standard_error_robust()}} for details
-#'   and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
+#'   robust standard errors. Additional arguments like `vcov_estimation` or
+#'   `vcov_type` are passed down to other methods, see
+#'   [`standard_error_robust()`][standard_error_robust] for details
+#'   and [this vignette](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
 #'   for working examples.
 #' @param component Model component for which parameters should be shown. May be
-#'   one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-#'   \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-#'   \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
-#'   \code{MuMIn::model.avg()}) or \code{"all"}.
-#' @param p_adjust Character vector, if not \code{NULL}, indicates the method to
-#'   adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
-#'   possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-#'   \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-#'   \code{emmGrid} objects (from \pkg{emmeans}).
+#'   one of `"conditional"`, `"precision"` (\pkg{betareg}),
+#'   `"scale"` (\pkg{ordinal}), `"extra"` (\pkg{glmx}),
+#'   `"marginal"` (\pkg{mfx}), `"conditional"` or `"full"` (for
+#'   `MuMIn::model.avg()`) or `"all"`.
+#' @param p_adjust Character vector, if not `NULL`, indicates the method to
+#'   adjust p-values. See [stats::p.adjust()] for details. Further
+#'   possible adjustment methods are `"tukey"`, `"scheffe"`,
+#'   `"sidak"` and `"none"` to explicitly disable adjustment for
+#'   `emmGrid` objects (from \pkg{emmeans}).
 #' @param df_method Method for computing degrees of freedom for confidence
-#'   intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
-#'   May be \code{"profile"} or \code{"wald"}.
-#' @param summary Logical, if \code{TRUE}, prints summary information about the
+#'   intervals (CI). Only applies to models of class `glm` or `polr`.
+#'   May be `"profile"` or `"wald"`.
+#' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
 #' @param keep,drop Character containing a regular expression pattern
 #'   that describes the parameters that should be included in the returned data
-#'   frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
+#'   frame (for `keep`), resp. parameters to exclude (`drop`). `keep`
 #'   may also be a named list of regular expressions. All non-matching parameters
-#'   will be removed from the output. If \code{keep} is a character vector, every
-#'   parameter name in the \emph{"Parameter"} column that matches the regular expression
-#'   in \code{parameters} will be selected from the returned data frame (and vice
-#'   versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-#'   if \code{keep} has more than one element, these will be merged with an
-#'   \code{OR} operator into a regular expression pattern like this:
-#'   \code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
+#'   will be removed from the output. If `keep` is a character vector, every
+#'   parameter name in the *"Parameter"* column that matches the regular expression
+#'   in `parameters` will be selected from the returned data frame (and vice
+#'   versa, all parameter names matching `drop` will be excluded). Furthermore,
+#'   if `keep` has more than one element, these will be merged with an
+#'   `OR` operator into a regular expression pattern like this:
+#'   `"(one|two|three)"`. If `keep` is a named list of regular expression
 #'   patterns, the names of the list-element should equal the column name where
 #'   selection should be applied. This is useful for model objects where
-#'   \code{model_parameters()} returns multiple columns with parameter components,
-#'   like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
+#'   `model_parameters()` returns multiple columns with parameter components,
+#'   like in [model_parameters.lavaan()]. Note that the regular expression
 #'   pattern should match the parameter names as they are stored in the returned
 #'   data frame, which can be different from how they are printed. Inspect the
-#'   \code{$Parameter} column of the parameters table to get the exact parameter
+#'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
-#' @param parameters Deprecated, alias for \code{keep}.
+#' @param parameters Deprecated, alias for `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-#'   passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-#'   are passed down to \code{\link[bayestestR]{describe_posterior}}.
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
+#'   passed down to `bootstrap_model()`, and arguments like `ci_method`
+#'   are passed down to [bayestestR::describe_posterior()].
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'
 #' @examples
