@@ -14,7 +14,7 @@
 
 # anova ----------------------
 
-model_parameters.t1way <- function(model, verbose = TRUE, ...) {
+model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -69,34 +69,51 @@ model_parameters.med1way <- function(model, verbose = TRUE, ...) {
 }
 
 #' @export
-model_parameters.dep.effect <- function(model, verbose = TRUE, ...) {
-  parameters <- .extract_wrs2_dep.effect(model)
+model_parameters.dep.effect <- function(model,
+                                        keep = NULL,
+                                        verbose = TRUE,
+                                        ...) {
+  parameters <- .extract_wrs2_dep.effect(model, keep = keep)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
 }
 
-.extract_wrs2_dep.effect <- function(model) {
+.extract_wrs2_dep.effect <- function(model, keep = NULL, ...) {
   out <- as.data.frame(model)
 
-  out$Effectsize <- c(attributes(out)$row.names)
+  out$Parameter <- c(attributes(out)$row.names)
 
-  names(out) <- c(
-    "Mu", "Estimate", "Small", "Medium", "Large",
-    "CI_low", "CI_high", "Effectsize"
+  # effectsize descriptions
+  out$Effectsize <- c(
+    "Algina-Keselman-Penfield robust standardized difference", # AKP
+    "Quantile shift based on the median of the distribution of difference scores", # QS (median)
+    "Quantile shift based on the trimmed mean of the distribution of X-Y", # QStr
+    "P(X<Y), Probability of first being less than second for a random pair" # SIGN
   )
 
-  # CI column
+  # column names
+  names(out) <- c(
+    "Mu", "Estimate", "Small", "Medium", "Large",
+    "CI_low", "CI_high", "Parameter", "Effectsize"
+  )
+
+  # add CI column
   out$CI <- 0.95
 
-  # reorder
+  # reorder columns
   col_order <- c(
-    "Estimate", "CI", "CI_low", "CI_high", "Effectsize",
+    "Parameter", "Estimate", "CI", "CI_low", "CI_high", "Effectsize",
     "Mu", "Small", "Medium", "Large"
   )
   out <- out[col_order[col_order %in% names(out)]]
 
   # remove rownames
   rownames(out) <- NULL
+
+  # select a specific effect size only
+  if (!is.null(keep)) {
+   out <- subset(out, Parameter == keep)
+  }
 
   out
 }
