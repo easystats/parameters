@@ -62,7 +62,7 @@ components be returned?}
 \code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
 down to \code{standard_error_robust()}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 }
 \value{
 A data frame.

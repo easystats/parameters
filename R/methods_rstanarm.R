@@ -4,7 +4,7 @@
 #'
 #' @param model Bayesian model (including SEM from \pkg{blavaan}. May also be
 #'   a data frame with posterior samples.
-#' @param ci Credible Interval (CI) level. Default to 0.89 (89\%). See
+#' @param ci Credible Interval (CI) level. Default to `0.89` (`89%`). See
 #'   [bayestestR::ci()] for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
 #'   effects) and when `effects = "all"` or `effects = "random"`,

@@ -60,7 +60,7 @@
 \arguments{
 \item{model}{A model with multinomial or categorical response value.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also

@@ -18,7 +18,7 @@ or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).}
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
 are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for

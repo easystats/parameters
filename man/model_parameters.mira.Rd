@@ -16,7 +16,7 @@
 \arguments{
 \item{model}{An object of class \code{mira}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for

@@ -261,7 +261,7 @@ model_parameters.merMod <- function(model,
 #' @description Compute confidence intervals (CI) for frequentist models.
 #'
 #' @param x A statistical model.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param method For mixed models, can be [`"wald"()`][p_value_wald]
 #'   (default), [`"ml1"()`][p_value_ml1] or
 #'   [`"betwithin"()`][p_value_betwithin]. For linear mixed model, can

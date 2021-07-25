@@ -160,7 +160,7 @@ parameters <- model_parameters
 #' linear models (GLMs).
 #'
 #' @param model Model object.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
+#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param bootstrap Should estimates be based on bootstrapped model? If
 #'   `TRUE`, then arguments of [Bayesian
 #'   regressions][model_parameters.stanreg] apply (see also
@@ -213,23 +213,23 @@ parameters <- model_parameters
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
-#' @param keep,drop Character containing a regular expression pattern
-#'   that describes the parameters that should be included in the returned data
-#'   frame (for `keep`), resp. parameters to exclude (`drop`). `keep`
-#'   may also be a named list of regular expressions. All non-matching parameters
-#'   will be removed from the output. If `keep` is a character vector, every
-#'   parameter name in the *"Parameter"* column that matches the regular expression
-#'   in `parameters` will be selected from the returned data frame (and vice
-#'   versa, all parameter names matching `drop` will be excluded). Furthermore,
-#'   if `keep` has more than one element, these will be merged with an
-#'   `OR` operator into a regular expression pattern like this:
-#'   `"(one|two|three)"`. If `keep` is a named list of regular expression
-#'   patterns, the names of the list-element should equal the column name where
-#'   selection should be applied. This is useful for model objects where
-#'   `model_parameters()` returns multiple columns with parameter components,
-#'   like in [model_parameters.lavaan()]. Note that the regular expression
-#'   pattern should match the parameter names as they are stored in the returned
-#'   data frame, which can be different from how they are printed. Inspect the
+#' @param keep,drop Character containing a regular expression pattern that
+#'   describes the parameters that should be included in the returned data frame
+#'   (for `keep`), resp. parameters to exclude (`drop`). `keep` may also be a
+#'   named list of regular expressions. All non-matching parameters will be
+#'   removed from the output. If `keep` is a character vector, every parameter
+#'   name in the *"Parameter"* column that matches the regular expression in
+#'   `parameters` will be selected from the returned data frame (and vice versa,
+#'   all parameter names matching `drop` will be excluded). Furthermore, if
+#'   `keep` has more than one element, these will be merged with an `OR`
+#'   operator into a regular expression pattern like this: `"(one|two|three)"`.
+#'   If `keep` is a named list of regular expression patterns, the names of the
+#'   list-element should equal the column name where selection should be
+#'   applied. This is useful for model objects where `model_parameters()`
+#'   returns multiple columns with parameter components, like in
+#'   [model_parameters.lavaan()]. Note that the regular expression pattern
+#'   should match the parameter names as they are stored in the returned data
+#'   frame, which can be different from how they are printed. Inspect the
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
 #' @param parameters Deprecated, alias for `keep`.

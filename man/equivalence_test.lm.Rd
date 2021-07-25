@@ -29,10 +29,11 @@
 \arguments{
 \item{x}{A statistical model.}
 
-\item{range}{The range of practical equivalence of an effect. May be \code{"default"},
-to automatically define this range based on properties of the model's data.}
+\item{range}{The range of practical equivalence of an effect. May be
+\code{"default"}, to automatically define this range based on properties of the
+model's data.}
 
-\item{ci}{Confidence Interval (CI+) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{rule}{Character, indicating the rules when testing for practical
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See

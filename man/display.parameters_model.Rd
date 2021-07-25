@@ -186,7 +186,8 @@ n strongest loadings to retain. Can also be \code{"max"}, in which case it
 will only display the maximum loading per variable (the most simple
 structure).}
 
-\item{labels}{A character vector containing labels to be added to the loadings data. Usually, the question related to the item.}
+\item{labels}{A character vector containing labels to be added to the
+loadings data. Usually, the question related to the item.}
 
 \item{x}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 

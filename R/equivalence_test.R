@@ -9,9 +9,10 @@ bayestestR::equivalence_test
 #' @description Compute the (conditional) equivalence test for frequentist models.
 #'
 #' @param x A statistical model.
-#' @param range The range of practical equivalence of an effect. May be `"default"`,
-#'   to automatically define this range based on properties of the model's data.
-#' @param ci Confidence Interval (CI+) level. Default to 0.95 (95\%).
+#' @param range The range of practical equivalence of an effect. May be
+#'   `"default"`, to automatically define this range based on properties of the
+#'   model's data.
+#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param rule Character, indicating the rules when testing for practical
 #'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.

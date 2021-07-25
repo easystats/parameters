@@ -112,9 +112,12 @@
 \arguments{
 \item{x}{A statistical model.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
-\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
+\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to
+model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of
+observations and \code{k} is the number of parameters). For \code{p_value_wald()},
+defaults to \code{Inf}.}
 
 \item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}}
 (default), \code{\link[=p_value_ml1]{"ml1"()}} or
