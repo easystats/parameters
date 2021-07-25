@@ -16,7 +16,7 @@
 \arguments{
 \item{model}{An object of class \code{mira}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
@@ -31,7 +31,7 @@ captures this uncertainty. For \code{compare_parameters()},
 from non-Gaussian families.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
@@ -45,8 +45,8 @@ Format models of class \code{mira}, obtained from \code{mice::width.mids()}.
 }
 \details{
 \code{model_parameters()} for objects of class \code{mira} works
-  similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
-  of multiple imputed repeated regression analyses.
+similar to \code{summary(mice::pool())}, i.e. it generates the pooled summary
+of multiple imputed repeated regression analyses.
 }
 \examples{
 library(parameters)

@@ -8,19 +8,19 @@
 #' This function attempts to return, or compute, p-values of mixed models.
 #'
 #' @param model A statistical model.
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}} (default), \code{\link[=p_value_ml1]{"ml1"}}, \code{\link[=p_value_betwithin]{"betwithin"}}, \code{\link[=p_value_satterthwaite]{"satterthwaite"}} or \code{\link[=p_value_kenward]{"kenward"}}. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be \code{method = "robust"} to compute p-values based ob robust standard errors.
+#' @param method For mixed models, can be [`"wald"()`][p_value_wald] (default), [`"ml1"()`][p_value_ml1], [`"betwithin"()`][p_value_betwithin], [`"satterthwaite"()`][p_value_satterthwaite] or [`"kenward"()`][p_value_kenward]. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be `method = "robust"` to compute p-values based ob robust standard errors.
 #' @inheritParams p_value
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod
 #'
-#' @details By default, p-values are based on Wald-test approximations (see \code{\link{p_value_wald}}). For certain situations, the "m-l-1" rule might be a better approximation. That is, for \code{method = "ml1"}, \code{\link{p_value_ml1}} is called. For \code{lmerMod} objects, if \code{method = "kenward"}, p-values are based on Kenward-Roger approximations, i.e. \code{\link{p_value_kenward}} is called, and \code{method = "satterthwaite"} calls \code{\link{p_value_satterthwaite}}.
+#' @details By default, p-values are based on Wald-test approximations (see [p_value_wald()]). For certain situations, the "m-l-1" rule might be a better approximation. That is, for `method = "ml1"`, [p_value_ml1()] is called. For `lmerMod` objects, if `method = "kenward"`, p-values are based on Kenward-Roger approximations, i.e. [p_value_kenward()] is called, and `method = "satterthwaite"` calls [p_value_satterthwaite()].
 #'
 #' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
 #'
-#' @note \code{p_value_robust()} resp. \code{p_value(method = "robust")}
+#' @note `p_value_robust()` resp. `p_value(method = "robust")`
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.
 #'
 #' @examples
@@ -58,38 +58,38 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @description Parameters from (linear) mixed models.
 #'
 #' @param model A mixed model.
-#' @param effects Should parameters for fixed effects (\code{"fixed"}), random
-#'   effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
+#' @param effects Should parameters for fixed effects (`"fixed"`), random
+#'   effects (`"random"`), or both (`"all"`) be returned? Only applies
 #'   to mixed models. May be abbreviated.
 #' @param df_method Method for computing degrees of freedom for p values,
-#'   standard errors and confidence intervals (CI). By default (\code{NULL}),
-#'   returns residual degrees of freedom for linear mixed models, or \code{Inf}
-#'   for all other distributional families. May be \code{"wald"},
-#'   \code{"residual"} (for both see \code{\link{degrees_of_freedom}}),
-#'   \code{"ml1"} (see \code{\link{dof_ml1}}), \code{"betwithin"} (see
-#'   \code{\link{dof_betwithin}}), \code{"satterthwaite"} (see
-#'   \code{\link{dof_satterthwaite}}) or \code{"kenward"} (see
-#'   \code{\link{dof_kenward}}). The options \code{df_method = "boot"},
-#'   \code{df_method = "profile"} and \code{df_method = "uniroot"} only affect
+#'   standard errors and confidence intervals (CI). By default (`NULL`),
+#'   returns residual degrees of freedom for linear mixed models, or `Inf`
+#'   for all other distributional families. May be `"wald"`,
+#'   `"residual"` (for both see [degrees_of_freedom()]),
+#'   `"ml1"` (see [dof_ml1()]), `"betwithin"` (see
+#'   [dof_betwithin()]), `"satterthwaite"` (see
+#'   [dof_satterthwaite()]) or `"kenward"` (see
+#'   [dof_kenward()]). The options `df_method = "boot"`,
+#'   `df_method = "profile"` and `df_method = "uniroot"` only affect
 #'   confidence intervals; in this case, bootstrapped resp. profiled confidence
-#'   intervals are computed. \code{"uniroot"} only applies to models of class
-#'   \code{glmmTMB}. For models of class \code{lmerMod}, when
-#'   \code{df_method = "wald"}, residual degrees of freedom are returned.
-#'   Note that when \code{df_method} is not \code{NULL}, \code{"wald"} or
-#'   \code{"residual"}, robust standard errors etc. cannot be computed.
-#' @param wb_component Logical, if \code{TRUE} and models contains within- and
-#'   between-effects (see \code{datawizard::demean()}), the \code{Component} column
+#'   intervals are computed. `"uniroot"` only applies to models of class
+#'   `glmmTMB`. For models of class `lmerMod`, when
+#'   `df_method = "wald"`, residual degrees of freedom are returned.
+#'   Note that when `df_method` is not `NULL`, `"wald"` or
+#'   `"residual"`, robust standard errors etc. cannot be computed.
+#' @param wb_component Logical, if `TRUE` and models contains within- and
+#'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
 #'   between-effects, and cross-level interactions. By default, the
-#'   \code{Component} column indicates, which parameters belong to the
+#'   `Component` column indicates, which parameters belong to the
 #'   conditional or zero-inflated component of the model.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to
+#' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(parameters)
@@ -261,18 +261,18 @@ model_parameters.merMod <- function(model,
 #' @description Compute confidence intervals (CI) for frequentist models.
 #'
 #' @param x A statistical model.
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param method For mixed models, can be \code{\link[=p_value_wald]{"wald"}}
-#'   (default), \code{\link[=p_value_ml1]{"ml1"}} or
-#'   \code{\link[=p_value_betwithin]{"betwithin"}}. For linear mixed model, can
-#'   also be \code{\link[=p_value_satterthwaite]{"satterthwaite"}},
-#'   \code{\link[=p_value_kenward]{"kenward"}} or \code{"boot"} (see
-#'   \code{lme4::confint.merMod}). For (generalized) linear models, can be
-#'   \code{"robust"} to compute confidence intervals based on robust covariance
+#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
+#' @param method For mixed models, can be [`"wald"()`][p_value_wald]
+#'   (default), [`"ml1"()`][p_value_ml1] or
+#'   [`"betwithin"()`][p_value_betwithin]. For linear mixed model, can
+#'   also be [`"satterthwaite"()`][p_value_satterthwaite],
+#'   [`"kenward"()`][p_value_kenward] or `"boot"` (see
+#'   `lme4::confint.merMod`). For (generalized) linear models, can be
+#'   `"robust"` to compute confidence intervals based on robust covariance
 #'   matrix estimation, and for generalized linear models and models from
-#'   packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"},
-#'   \code{"uniroot"} or \code{"wald"} (default).
-#' @param ... Arguments passed down to \code{standard_error_robust()} when
+#'   packages \pkg{lme4} or \pkg{glmmTMB}, may also be `"profile"`,
+#'   `"uniroot"` or `"wald"` (default).
+#' @param ... Arguments passed down to `standard_error_robust()` when
 #'   confidence intervals or p-values based on robust standard errors should be
 #'   computed.
 #' @inheritParams simulate_model
@@ -282,9 +282,9 @@ model_parameters.merMod <- function(model,
 #'
 #' @return A data frame containing the CI bounds.
 #'
-#' @note \code{ci_robust()} resp. \code{ci(method = "robust")}
+#' @note `ci_robust()` resp. `ci(method = "robust")`
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
+#'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.
 #'
 #' @examples

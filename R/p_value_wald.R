@@ -1,10 +1,17 @@
 #' @title Wald-test approximation for CIs and p-values
 #' @name p_value_wald
 #'
-#' @description The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
+#' @description The Wald-test approximation treats t-values as Wald z. Since the
+#'   t distribution converges to the z distribution as degrees of freedom
+#'   increase, this is like assuming infinite degrees of freedom. While this is
+#'   unambiguously anti-conservative, this approximation appears as reasonable
+#'   for reasonable sample sizes (Barr et al., 2013). That is, if we take the
+#'   p-value to measure the probability of a false positive, this approximation
+#'   produces a higher false positive rate than the nominal `5%` at `p = 0.05`.
 #'
 #' @param model A statistical model.
-#' @param ... Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.
+#' @param ... Arguments passed down to `standard_error_robust()` when confidence
+#'   intervals or p-values based on robust standard errors should be computed.
 #'
 #' @examples
 #' \donttest{
@@ -15,7 +22,9 @@
 #' }
 #' }
 #' @return A data frame.
-#' @references Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
+#' @references
+#' Barr, D. J. (2013). Random effects structure for testing interactions in
+#' linear mixed-effects models. Frontiers in psychology, 4, 328.
 #' @export
 p_value_wald <- function(model, ...) {
   UseMethod("p_value_wald")

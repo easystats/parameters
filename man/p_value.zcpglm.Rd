@@ -32,8 +32,8 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 }
 \value{
 A data frame with at least two columns: the parameter names and the
-  p-values. Depending on the model, may also include columns for model
-  components etc.
+p-values. Depending on the model, may also include columns for model
+components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of hurdle and zero-inflated models.

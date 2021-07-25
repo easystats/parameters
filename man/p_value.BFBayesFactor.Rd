@@ -18,7 +18,7 @@ The p-values.
 This function attempts to return, or compute, p-values of Bayesian models.
 }
 \details{
-For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
+For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
 }
 \examples{
 data(iris)

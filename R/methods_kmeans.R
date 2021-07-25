@@ -1,6 +1,6 @@
 #' Parameters from Cluster Models (k-means, ...)
 #'
-#' Format cluster models obtained for example by \code{\link{kmeans}}.
+#' Format cluster models obtained for example by [kmeans()].
 #'
 #' @param model Cluster model.
 #' @inheritParams model_parameters.default

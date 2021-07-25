@@ -7,28 +7,28 @@
 #'
 #' @param x A data frame.
 #' @param n_clusters Number of clusters used for the cluster solution. By default,
-#'   the number of clusters to extract is determined by calling \code{\link{n_clusters}}.
-#' @param method Method for computing the cluster analysis. By default (\code{"hclust"}), a
-#'   hierarchical cluster analysis, will be computed. Use \code{"kmeans"} to
+#'   the number of clusters to extract is determined by calling [n_clusters()].
+#' @param method Method for computing the cluster analysis. By default (`"hclust"`), a
+#'   hierarchical cluster analysis, will be computed. Use `"kmeans"` to
 #'   compute a kmeans cluster analysis. You can specify the initial letters only.
-#' @param distance Distance measure to be used when \code{method = "hclust"} (for hierarchical
-#'   clustering). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
-#'   \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
-#'   If is \code{method = "kmeans"} this argument will be ignored.
-#' @param agglomeration Agglomeration method to be used when \code{method = "hclust"} (for hierarchical
-#'   clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
-#'   \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
-#'   If \code{method = "kmeans"} this argument will be ignored.
+#' @param distance Distance measure to be used when `method = "hclust"` (for hierarchical
+#'   clustering). Must be one of `"euclidean"`, `"maximum"`, `"manhattan"`,
+#'   `"canberra"`, `"binary"` or `"minkowski"`. See [dist()].
+#'   If is `method = "kmeans"` this argument will be ignored.
+#' @param agglomeration Agglomeration method to be used when `method = "hclust"` (for hierarchical
+#'   clustering). This should be one of `"ward"`, `"single"`, `"complete"`, `"average"`,
+#'   `"mcquitty"`, `"median"` or `"centroid"`. Default is `"ward"` (see [hclust()]).
+#'   If `method = "kmeans"` this argument will be ignored.
 #' @param iterations Maximum number of iterations allowed. Only applies, if
-#'   \code{method = "kmeans"}. See \code{\link{kmeans}} for details on this argument.
+#'   `method = "kmeans"`. See [kmeans()] for details on this argument.
 #' @param algorithm Algorithm used for calculating kmeans cluster. Only applies, if
-#'   \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
-#'   \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
+#'   `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
+#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()]
 #'   for details on this argument.
-#' @param force Logical, if \code{TRUE}, ordered factors (ordinal variables) are
+#' @param force Logical, if `TRUE`, ordered factors (ordinal variables) are
 #'   converted to numeric values, while character vectors and factors are converted
 #'   to dummy-variables (numeric 0/1) and are included in the cluster analysis.
-#'   If \code{FALSE}, factors and character vectors are removed before computing
+#'   If `FALSE`, factors and character vectors are removed before computing
 #'   the cluster analysis.
 #'
 #' @inheritParams equivalence_test.lm
@@ -36,17 +36,17 @@
 #'
 #' @return The group classification for each observation as vector. The
 #'   returned vector includes missing values, so it has the same length
-#'   as \code{nrow(x)}.
+#'   as `nrow(x)`.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @details The \code{print()} and \code{plot()} methods show the (standardized)
+#' @details The `print()` and `plot()` methods show the (standardized)
 #'   mean value for each variable within each cluster. Thus, a higher absolute
 #'   value indicates that a certain variable characteristic is more pronounced
 #'   within that specific cluster (as compared to other cluster groups with lower
 #'   absolute mean values).
 #'
-#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification and \code{\link{check_clusterstructure}} to check suitability of data for clustering.
+#' @seealso [n_clusters()] to determine the number of clusters to extract, [cluster_discrimination()] to determine the accuracy of cluster group classification and [check_clusterstructure()] to check suitability of data for clustering.
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset

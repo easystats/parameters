@@ -19,7 +19,7 @@ se_kenward(model)
 \arguments{
 \item{model}{A statistical model.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{dof}{Degrees of Freedom.}
 }
@@ -51,7 +51,7 @@ if (require("lme4", quietly = TRUE)) {
 }
 \references{
 Kenward, M. G., & Roger, J. H. (1997). Small sample inference for
-  fixed effects from restricted maximum likelihood. Biometrics, 983-997.
+fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 }
 \seealso{
 \code{dof_kenward()} and \code{se_kenward()} are small helper-functions

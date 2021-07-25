@@ -352,7 +352,7 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 #' This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.
 #'
 #' @param model A statistical model.
-#' @param component Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).
+#' @param component Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? `component` may be one of `"conditional"`, `"precision"`, `"marginal"` or `"all"` (default).
 #' @param ... Currently not used.
 #'
 #' @return A data frame with at least two columns: the parameter names and the

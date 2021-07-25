@@ -2,7 +2,7 @@
 #'
 #' Format Bayesian Exploratory Factor Analysis objects from the BayesFM package.
 #'
-#' @param model Bayesian EFA created by the \code{BayesFM::befa}.
+#' @param model Bayesian EFA created by the `BayesFM::befa`.
 #' @inheritParams principal_components
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams model_parameters.default

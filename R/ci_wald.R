@@ -1,18 +1,36 @@
 #' @rdname p_value_wald
 #'
-#' @param ci Confidence Interval (CI) level. Default to 0.95 (95\%).
-#' @param dof Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.
+#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
+#' @param dof Degrees of Freedom. If not specified, for `ci_wald()`, defaults to
+#'   model's residual degrees of freedom (i.e. `n-k`, where `n` is the number of
+#'   observations and `k` is the number of parameters). For `p_value_wald()`,
+#'   defaults to `Inf`.
 #'
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
 #' @inheritParams model_parameters.default
 #'
 #' @export
-ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", "all"), component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"), robust = FALSE, ...) {
+ci_wald <- function(model,
+                    ci = .95,
+                    dof = NULL,
+                    effects = c("fixed", "random", "all"),
+                    component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
+                    robust = FALSE,
+                    ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   out <- lapply(ci, function(i) {
-    .ci_wald(model = model, ci = i, dof = dof, effects = effects, component = component, robust = robust, method = "wald", ...)
+    .ci_wald(
+      model = model,
+      ci = i,
+      dof = dof,
+      effects = effects,
+      component = component,
+      robust = robust,
+      method = "wald",
+      ...
+    )
   })
   out <- do.call(rbind, out)
   row.names(out) <- NULL
@@ -21,11 +39,28 @@ ci_wald <- function(model, ci = .95, dof = NULL, effects = c("fixed", "random", 
 
 
 #' @keywords internal
-.ci_wald <- function(model, ci, dof, effects, component, robust = FALSE, method = "wald", se = NULL, ...) {
+.ci_wald <- function(model,
+                     ci,
+                     dof,
+                     effects,
+                     component,
+                     robust = FALSE,
+                     method = "wald",
+                     se = NULL,
+                     ...) {
   if (inherits(model, "emmGrid")) {
-    params <- insight::get_parameters(model, effects = effects, component = component, merge_parameters = TRUE)
+    params <- insight::get_parameters(
+      model,
+      effects = effects,
+      component = component,
+      merge_parameters = TRUE
+    )
   } else {
-    params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
+    params <- insight::get_parameters(model,
+      effects = effects,
+      component = component,
+      verbose = FALSE
+    )
   }
 
   # check if all estimates are non-NA

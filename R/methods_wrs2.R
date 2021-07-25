@@ -1,6 +1,6 @@
-#' Parameters from robust statistical objects in \code{WRS2}
+#' Parameters from robust statistical objects in `WRS2`
 #'
-#' @param model Object from \code{WRS2} package.
+#' @param model Object from `WRS2` package.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.default
 #'
@@ -112,7 +112,7 @@ model_parameters.dep.effect <- function(model,
 
   # select a specific effect size only
   if (!is.null(keep)) {
-   out <- subset(out, Parameter == keep)
+    out <- subset(out, Parameter == keep)
   }
 
   out

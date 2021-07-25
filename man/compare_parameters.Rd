@@ -46,19 +46,19 @@ types. Model objects may be passed comma separated, or as a list.
 If model objects are passed with names or the list has named elements,
 these names will be used as column names.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 to mixed models. May be abbreviated.}
 
 \item{component}{Model component for which parameters should be shown. See
-documentation for related model class in \code{\link{model_parameters}}.}
+documentation for related model class in \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
 \code{"pseudo"} or \code{NULL} (default) for no standardization. See
-'Details' in \code{\link[effectsize]{standardize_parameters}}.
+'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -82,10 +82,10 @@ from non-Gaussian families.}
 
 \item{df_method}{Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). See documentation for
-related model class in \code{\link{model_parameters}}.}
+related model class in \code{\link[=model_parameters]{model_parameters()}}.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
@@ -93,55 +93,55 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \item{style}{String, indicating which style of output is requested. Following
 templates are possible:
 \itemize{
-  \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
-  \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
-  \item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
-  \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
-  \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
-  \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+\item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
+\item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
+\item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
+\item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
+\item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 }}
 
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
 
-\item{keep}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{keep}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{drop}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
@@ -153,7 +153,7 @@ A data frame of indices related to the model's parameters.
 }
 \description{
 Compute and extract model parameters of multiple regression
-  models. See \code{\link{model_parameters}} for further details.
+models. See \code{\link[=model_parameters]{model_parameters()}} for further details.
 }
 \details{
 This function is in an early stage and does not yet cope with more complex

@@ -2,29 +2,29 @@
 #' @name compare_parameters
 #'
 #' @description Compute and extract model parameters of multiple regression
-#'   models. See \code{\link{model_parameters}} for further details.
+#'   models. See [model_parameters()] for further details.
 #'
 #' @param ... One or more regression model objects, or objects returned by
-#'   \code{model_parameters()}. Regression models may be of different model
+#'   `model_parameters()`. Regression models may be of different model
 #'   types. Model objects may be passed comma separated, or as a list.
 #'   If model objects are passed with names or the list has named elements,
 #'   these names will be used as column names.
 #' @param component Model component for which parameters should be shown. See
-#'   documentation for related model class in \code{\link{model_parameters}}.
+#'   documentation for related model class in [model_parameters()].
 #' @param column_names Character vector with strings that should be used as
-#'   column headers. Must be of same length as number of models in \code{...}.
+#'   column headers. Must be of same length as number of models in `...`.
 #' @param df_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). See documentation for
-#'   related model class in \code{\link{model_parameters}}.
+#'   related model class in [model_parameters()].
 #' @param style String, indicating which style of output is requested. Following
 #'   templates are possible:
 #'   \itemize{
-#'     \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
-#'     \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
-#'     \item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
-#'     \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
-#'     \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
-#'     \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+#'     \item `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
+#'     \item `"se"`: Estimate and standard errors, no asterisks for p-values.
+#'     \item `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
+#'     \item `"se_p"`: Estimate, standard errors and asterisks for p-values.
+#'     \item `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
+#'     \item `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
 #'   }
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm

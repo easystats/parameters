@@ -7,13 +7,13 @@
 \format{
 A data frame with 564 rows and 7 variables:
 \describe{
-  \item{ID}{Patient ID}
-  \item{QoL}{Quality of Life Score}
-  \item{time}{Timepoint of measurement}
-  \item{age}{Age in years}
-  \item{phq4}{Patients' Health Questionnaire, 4-item version}
-  \item{hospital}{Hospital ID, where patient was treated}
-  \item{education}{Patients' educational level}
+\item{ID}{Patient ID}
+\item{QoL}{Quality of Life Score}
+\item{time}{Timepoint of measurement}
+\item{age}{Age in years}
+\item{phq4}{Patients' Health Questionnaire, 4-item version}
+\item{hospital}{Hospital ID, where patient was treated}
+\item{education}{Patients' educational level}
 }
 }
 \description{

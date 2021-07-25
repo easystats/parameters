@@ -1,8 +1,8 @@
 #' Conversion between EFA results and CFA structure
 #'
-#' Enables a conversion between Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
+#' Enables a conversion between Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) `lavaan`-ready structure.
 #'
-#' @param model An EFA model (e.g., a \code{psych::fa} object).
+#' @param model An EFA model (e.g., a `psych::fa` object).
 #' @inheritParams principal_components
 #' @param names Vector containing dimension names.
 #'

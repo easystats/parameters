@@ -15,7 +15,7 @@ pool_parameters(
 }
 \arguments{
 \item{x}{A list of \code{parameters_model} objects, as returned by
-\code{\link{model_parameters}}, or a list of model-objects that is
+\code{\link[=model_parameters]{model_parameters()}}, or a list of model-objects that is
 supported by \code{model_parameters()}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
@@ -51,21 +51,21 @@ A data frame of indices related to the model's parameters.
 This function "pools" (i.e. combines) model parameters in a similar fashion
 as \code{mice::pool()}. However, this function pools parameters from
 \code{parameters_model} objects, as returned by
-\code{\link{model_parameters}}.
+\code{\link[=model_parameters]{model_parameters()}}.
 }
 \details{
 Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
-  The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
-  small samples (\cite{Barnard and Rubin, 1999}).
+The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
+small samples (\cite{Barnard and Rubin, 1999}).
 }
 \note{
 Models with multiple components, (for instance, models with zero-inflation,
-  where predictors appear in the count and zero-inflated part) may fail in
-  case of identical names for coefficients in the different model components,
-  since the coefficient table is grouped by coefficient names for pooling. In
-  such cases, coefficients of count and zero-inflated model parts would be
-  combined. Therefore, the \code{component} argument defaults to
-  \code{"conditional"} to avoid this.
+where predictors appear in the count and zero-inflated part) may fail in
+case of identical names for coefficients in the different model components,
+since the coefficient table is grouped by coefficient names for pooling. In
+such cases, coefficients of count and zero-inflated model parts would be
+combined. Therefore, the \code{component} argument defaults to
+\code{"conditional"} to avoid this.
 }
 \examples{
 # example for multiple imputed datasets

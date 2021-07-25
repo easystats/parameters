@@ -78,8 +78,8 @@ a data frame with posterior samples.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{ci}{Credible Interval (CI) level. Default to 0.89 (89\%). See
-\code{\link[bayestestR]{ci}} for further details.}
+\item{ci}{Credible Interval (CI) level. Default to \code{0.89} (\verb{89\%}). See
+\code{\link[bayestestR:ci]{bayestestR::ci()}} for further details.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
@@ -101,44 +101,44 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
 
-\item{keep}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{keep}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{drop}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
@@ -177,7 +177,7 @@ from non-Gaussian families.}
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
 \code{"pseudo"} or \code{NULL} (default) for no standardization. See
-'Details' in \code{\link[effectsize]{standardize_parameters}}.
+'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -201,12 +201,12 @@ Parameters from Bayesian models.
 }
 \note{
 When \code{standardize = "refit"}, columns \code{diagnostic},
-  \code{bf_prior} and \code{priors} refer to the \emph{original}
-  \code{model}. If \code{model} is a data frame, arguments \code{diagnostic},
-  \code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
-  \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
-  implemented in the
-  \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+\code{bf_prior} and \code{priors} refer to the \emph{original}
+\code{model}. If \code{model} is a data frame, arguments \code{diagnostic},
+\code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
+\href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+implemented in the
+\href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 \dontrun{
@@ -221,6 +221,6 @@ if (require("rstanarm")) {
 }
 }
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to
-  rename columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to
+rename columns into a consistent, standardized naming scheme.
 }

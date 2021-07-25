@@ -25,8 +25,8 @@
 }
 \value{
 A data frame with at least two columns: the parameter names and the
-  p-values. Depending on the model, may also include columns for model
-  components etc.
+p-values. Depending on the model, may also include columns for model
+components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.

@@ -1,16 +1,16 @@
 #' Check suitability of data for Factor Analysis (FA)
 #'
 #' This checks whether the data is appropriate for Factor Analysis (FA) by
-#' running the \link[=check_sphericity_bartlett]{Bartlett's Test of Sphericity} and the
-#' \link[=check_kmo]{Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
-#' (MSA)}.
+#' running the [Bartlett's Test of Sphericity][check_sphericity_bartlett] and the
+#' [Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
+#' (MSA)][check_kmo].
 #'
 #' @inheritParams check_sphericity_bartlett
 #' @examples
 #' library(parameters)
 #' check_factorstructure(mtcars)
 #' @return A list of lists of indices related to sphericity and KMO.
-#' @seealso \code{\link{check_kmo}}, \code{\link{check_sphericity_bartlett}} and \code{\link{check_clusterstructure}}.
+#' @seealso [check_kmo()], [check_sphericity_bartlett()] and [check_clusterstructure()].
 #' @export
 check_factorstructure <- function(x, ...) {
 
@@ -66,8 +66,8 @@ check_factorstructure <- function(x, ...) {
 #' check_kmo(mtcars)
 #' @return A list of indices related to KMO.
 #'
-#' @details This function is strongly inspired by the \code{KMO} function in the
-#'   \code{psych} package (Revelle, 2016). All credit goes to its author.
+#' @details This function is strongly inspired by the `KMO` function in the
+#'   `psych` package (Revelle, 2016). All credit goes to its author.
 #'
 #' @references \itemize{
 #'   \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
@@ -131,7 +131,7 @@ check_kmo <- function(x, ...) {
 #' @examples
 #' library(parameters)
 #' check_sphericity_bartlett(mtcars)
-#' @details This function is strongly inspired by the \code{cortest.bartlett}
+#' @details This function is strongly inspired by the `cortest.bartlett`
 #'   function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
 #'   author.
 #'

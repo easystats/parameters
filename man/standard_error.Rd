@@ -85,13 +85,13 @@ down to \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 \item{method}{If \code{"robust"}, robust standard errors are computed by
 calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the
-\code{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
+\verb{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
 package for robust covariance matrix estimators. For certain mixed models,
 \code{method} may also be one of \code{"wald"},
-\code{\link[=p_value_ml1]{"ml1"}},
-\code{\link[=p_value_betwithin]{"betwithin"}},
-\code{\link[=p_value_satterthwaite]{"satterthwaite"}} or
-\code{\link[=p_value_kenward]{"kenward"}}.}
+\code{\link[=p_value_ml1]{"ml1"()}},
+\code{\link[=p_value_betwithin]{"betwithin"()}},
+\code{\link[=p_value_satterthwaite]{"satterthwaite"()}} or
+\code{\link[=p_value_kenward]{"kenward"()}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -115,8 +115,8 @@ returned.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the
-  standard errors. Depending on the model, may also include columns for model
-  components etc.
+standard errors. Depending on the model, may also include columns for model
+components etc.
 }
 \description{
 \code{standard_error()} attempts to return standard errors of model
@@ -125,7 +125,7 @@ standard errors.
 }
 \note{
 For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard
-  error is the SD of the posterior samples.
+error is the SD of the posterior samples.
 }
 \examples{
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)

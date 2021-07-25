@@ -1,21 +1,21 @@
 #' @title Print model parameters
 #' @name print.parameters_model
 #'
-#' @description A \code{print()}-method for objects from \code{\link[=model_parameters]{model_parameters()}}.
+#' @description A `print()`-method for objects from [`model_parameters()`][model_parameters].
 #'
-#' @param x,object An object returned by \code{\link[=model_parameters]{model_parameters()}}.
-#' @param split_components Logical, if \code{TRUE} (default), For models with
+#' @param x,object An object returned by [`model_parameters()`][model_parameters].
+#' @param split_components Logical, if `TRUE` (default), For models with
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
-#'   printed in a separate table. If \code{FALSE}, model parameters are printed
-#'   in a single table and a \code{Component} column is added to the output.
+#'   printed in a separate table. If `FALSE`, model parameters are printed
+#'   in a single table and a `Component` column is added to the output.
 #' @param select Character vector (or numeric index) of column names that should
-#'   be printed. If \code{NULL} (default), all columns are printed. The shortcut
-#'   \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-#'   while \code{select = "short"} prints coefficient, standard errors and p-values.
-#' @param show_sigma Logical, if \code{TRUE}, adds information about the residual
+#'   be printed. If `NULL` (default), all columns are printed. The shortcut
+#'   `select = "minimal"` prints coefficient, confidence intervals and p-values,
+#'   while `select = "short"` prints coefficient, standard errors and p-values.
+#' @param show_sigma Logical, if `TRUE`, adds information about the residual
 #'   standard deviation.
-#' @param show_formula Logical, if \code{TRUE}, adds the model formula to the output.
-#' @param caption Table caption as string. If \code{NULL}, no table caption is printed.
+#' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
+#' @param caption Table caption as string. If `NULL`, no table caption is printed.
 #' @param footer_digits Number of decimal places for values in the footer summary.
 #' @param groups Named list, can be used to group parameters in the printed output.
 #'   List elements may either be character vectors that match the name of those
@@ -24,26 +24,26 @@
 #'   list elements will be used as group names, which will be inserted as "header
 #'   row". A possible use case might be to emphasize focal predictors and control
 #'   variables, see 'Examples'. Parameters will be re-ordered according to the
-#'   order used in \code{groups}, while all non-matching parameters will be added
+#'   order used in `groups`, while all non-matching parameters will be added
 #'   to the end.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
-#'   significant figures. May also be \code{"signif"} to return significant
-#'   figures or \code{"scientific"} to return scientific notation. Control the
-#'   number of digits by adding the value as suffix, e.g. \code{digits = "scientific4"}
-#'   to have scientific notation with 4 decimal places, or \code{digits = "signif5"}
-#'   for 5 significant figures (see also \code{\link{signif}}).
+#'   significant figures. May also be `"signif"` to return significant
+#'   figures or `"scientific"` to return scientific notation. Control the
+#'   number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
+#'   to have scientific notation with 4 decimal places, or `digits = "signif5"`
+#'   for 5 significant figures (see also [signif()]).
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
 #'
-#' @details \code{summary()} is a convenient shortcut for
-#'   \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
+#' @details `summary()` is a convenient shortcut for
+#'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
 #' @return Invisibly returns the original input object.
 #'
 #' @seealso There is a dedicated method to use inside rmarkdown files,
-#'   \code{\link[=print_md.parameters_model]{print_md()}}.
+#'   [`print_md()`][print_md.parameters_model].
 #'
 #' @examples
 #' \donttest{

@@ -3,35 +3,35 @@
 #' This function performs a reduction in the parameter space (the number of
 #' variables). It starts by creating a new set of variables, based on the given
 #' method (the default method is "PCA", but other are available via the
-#' \code{method} argument, such as "cMDS", "DRR" or "ICA"). Then, it names this
+#' `method` argument, such as "cMDS", "DRR" or "ICA"). Then, it names this
 #' new dimensions using the original variables that correlates the most with it.
 #' For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the
 #' V4 variables correlate maximally (with respective coefficients of .97 and
 #' -.88) with this dimension. Although this function can be useful in
 #' exploratory data analysis, it's best to perform the dimension reduction step
 #' in a separate and dedicated stage, as this is a very important process in the
-#' data analysis workflow. \code{reduce_data()} is an alias for
-#' \code{reduce_parameters.data.frame()}.
+#' data analysis workflow. `reduce_data()` is an alias for
+#' `reduce_parameters.data.frame()`.
 #'
 #' @inheritParams principal_components
 #' @param method The feature reduction method. Can be one of 'PCA', 'cMDS',
 #'   'DRR', 'ICA' (see the Details section).
 #' @param distance The distance measure to be used. Only applies when
-#'   \code{method = "cMDS"}. This must be one of "euclidean", "maximum",
+#'   `method = "cMDS"`. This must be one of "euclidean", "maximum",
 #'   "manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring
 #'   can be given.
 #'
 #' @details The different methods available are described below:
 #' \subsection{Supervised Methods}{
 #' \itemize{
-#' \item \strong{PCA}: See \code{\link{principal_components}}.
+#' \item **PCA**: See [principal_components()].
 #'
-#' \item \strong{cMDS / PCoA}: Classical Multidimensional Scaling (cMDS) takes a
+#' \item **cMDS / PCoA**: Classical Multidimensional Scaling (cMDS) takes a
 #' set of dissimilarities (i.e., a distance matrix) and returns a set of points
 #' such that the distances between the points are approximately equal to the
 #' dissimilarities.
 #'
-#' \item \strong{DRR}: Dimensionality Reduction via Regression (DRR) is a very
+#' \item **DRR**: Dimensionality Reduction via Regression (DRR) is a very
 #' recent technique extending PCA (Laparra et al., 2015). Starting from a
 #' rotated PCA, it predicts redundant information from the remaining components
 #' using non-linear regression. Some of the most notable advantages of
@@ -40,7 +40,7 @@
 #' component is enough to explain most of the variation in the predictors.
 #' Requires the \pkg{DRR} package to be installed.
 #'
-#' \item \strong{ICA}: Performs an Independent Component Analysis using the
+#' \item **ICA**: Performs an Independent Component Analysis using the
 #' FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
 #' sources (through least squares minimization), ICA attempts to find
 #' independent sources, i.e., the source space that maximizes the
@@ -49,7 +49,7 @@
 #' \pkg{fastICA} package to be installed.
 #' }
 #' }
-#' See also \href{https://easystats.github.io/parameters/articles/parameters_reduction.html}{package vignette}.
+#' See also [package vignette](https://easystats.github.io/parameters/articles/parameters_reduction.html).
 #'
 #' @references \itemize{
 #'  \item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective

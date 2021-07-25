@@ -38,16 +38,16 @@ ci_robust(
 \item{model}{A model.}
 
 \item{vcov_estimation}{String, indicating the suffix of the
-\code{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
+\verb{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
 package, e.g. \code{vcov_estimation = "CL"} (which calls
-\code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
+\code{\link[sandwich:vcovCL]{sandwich::vcovCL()}} to compute clustered covariance matrix
 estimators), or \code{vcov_estimation = "HC"} (which calls
-\code{\link[sandwich:vcovHC]{vcovHC()}} to compute
+\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} to compute
 heteroskedasticity-consistent covariance matrix estimators).}
 
 \item{vcov_type}{Character vector, specifying the estimation type for the
 robust covariance matrix estimation (see
-\code{\link[sandwich:vcovHC]{vcovHC()}} or \code{clubSandwich::vcovCR()}
+\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} or \code{clubSandwich::vcovCR()}
 for details).}
 
 \item{vcov_args}{List of named vectors, used as additional arguments that are
@@ -62,7 +62,7 @@ components be returned?}
 \code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
 down to \code{standard_error_robust()}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 }
 \value{
 A data frame.
@@ -74,8 +74,8 @@ matrix, using the packages \pkg{sandwich} and \pkg{clubSandwich}.
 }
 \note{
 These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
-  (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
-  and will thus only work for those models supported by those packages.
+(the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
+and will thus only work for those models supported by those packages.
 }
 \examples{
 if (require("sandwich", quietly = TRUE)) {

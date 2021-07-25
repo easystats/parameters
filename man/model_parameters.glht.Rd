@@ -10,15 +10,15 @@
 \method{model_parameters}{glht}(model, ci = 0.95, exponentiate = FALSE, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{Object of class \code{\link[multcomp:glht]{glht}} (\pkg{multcomp})
+\item{model}{Object of class \code{\link[multcomp:glht]{multcomp::glht()}} (\pkg{multcomp})
 or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for

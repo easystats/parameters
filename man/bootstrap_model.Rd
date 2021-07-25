@@ -91,5 +91,5 @@ if (require("boot", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link{bootstrap_parameters}}, \code{\link{simulate_model}}, \code{\link{simulate_parameters}}
+\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}, \code{\link[=simulate_parameters]{simulate_parameters()}}
 }

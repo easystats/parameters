@@ -18,8 +18,8 @@ reduce_data(x, method = "PCA", n = "max", distance = "euclidean", ...)
 \item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is
 set as the number of variables minus 1 (\code{ncol(x)-1}). If
 \code{n="auto"} (default) or \code{n=NULL}, the number of components is
-selected through \code{\link{n_factors}} resp. \code{\link{n_components}}.
-In \code{\link{reduce_parameters}}, can also be \code{"max"}, in which case
+selected through \code{\link[=n_factors]{n_factors()}} resp. \code{\link[=n_components]{n_components()}}.
+In \code{\link[=reduce_parameters]{reduce_parameters()}}, can also be \code{"max"}, in which case
 it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.}
 
@@ -48,7 +48,7 @@ data analysis workflow. \code{reduce_data()} is an alias for
 The different methods available are described below:
 \subsection{Supervised Methods}{
 \itemize{
-\item \strong{PCA}: See \code{\link{principal_components}}.
+\item \strong{PCA}: See \code{\link[=principal_components]{principal_components()}}.
 
 \item \strong{cMDS / PCoA}: Classical Multidimensional Scaling (cMDS) takes a
 set of dissimilarities (i.e., a distance matrix) and returns a set of points
@@ -86,10 +86,10 @@ head(out)
 }
 \references{
 \itemize{
- \item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective
- dimensionality reduction. PLOS Computational Biology, 15(6).
- \item Laparra, V., Malo, J., & Camps-Valls, G. (2015). Dimensionality
- reduction via regression in hyperspectral imagery. IEEE Journal of Selected
- Topics in Signal Processing, 9(6), 1026-1036.
+\item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective
+dimensionality reduction. PLOS Computational Biology, 15(6).
+\item Laparra, V., Malo, J., & Camps-Valls, G. (2015). Dimensionality
+reduction via regression in hyperspectral imagery. IEEE Journal of Selected
+Topics in Signal Processing, 9(6), 1026-1036.
 }
 }

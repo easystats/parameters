@@ -13,20 +13,20 @@
 #' is small (even if the sample size of level-1 units is high). In such cases
 #' it is recommended to approximate a more accurate number of degrees of freedom
 #' for such inferential statistics (see \cite{Li and Redden 2015}). The
-#' \emph{Between-within} denominator degrees of freedom approximation is
+#' *Between-within* denominator degrees of freedom approximation is
 #' recommended in particular for (generalized) linear mixed models with repeated
-#' measurements (longitudinal design). \code{dof_betwithin}) implements a heuristic
-#' based on the between-within approach. \strong{Note} that this implementation
+#' measurements (longitudinal design). `dof_betwithin`) implements a heuristic
+#' based on the between-within approach. **Note** that this implementation
 #' does not return exactly the same results as shown in \cite{Li and Redden 2015},
 #' but similar.
 #' }
 #' \subsection{Degrees of Freedom for Longitudinal Designs (Repeated Measures)}{
 #' In particular for repeated measure designs (longitudinal data analysis),
-#' the \emph{between-within} heuristic is likely to be more accurate than simply
-#' using the residual or infinite degrees of freedom, because \code{dof_betwithin()}
+#' the *between-within* heuristic is likely to be more accurate than simply
+#' using the residual or infinite degrees of freedom, because `dof_betwithin()`
 #' returns different degrees of freedom for within-cluster and between-cluster effects.
 #' }
-#' @seealso \code{dof_betwithin()} and \code{se_betwithin()} are small helper-functions
+#' @seealso `dof_betwithin()` and `se_betwithin()` are small helper-functions
 #' to calculate approximated degrees of freedom and standard errors of model
 #' parameters, based on the "between-within" heuristic.
 #'

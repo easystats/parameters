@@ -24,8 +24,8 @@ check whether Bartlett’s test of sphericity is significant.
 }
 \details{
 This function is strongly inspired by the \code{cortest.bartlett}
-  function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
-  author.
+function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
+author.
 }
 \examples{
 library(parameters)
@@ -33,10 +33,10 @@ check_sphericity_bartlett(mtcars)
 }
 \references{
 \itemize{
-  \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
-  and data reduction.
+\item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
+and data reduction.
 
-  \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square
-  approximation in factor analysis. Biometrika, 38(3/4), 337-344.
+\item Bartlett, M. S. (1951). The effect of standardization on a Chi-square
+approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 }
 }

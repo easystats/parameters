@@ -2,8 +2,8 @@
 #'
 #' Parameters from Hypothesis Testing.
 #'
-#' @param model Object of class \code{\link[multcomp:glht]{glht}} (\pkg{multcomp})
-#'   or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).
+#' @param model Object of class [multcomp::glht()] (\pkg{multcomp})
+#'   or of class `PMCMR`, `trendPMCMR` or `osrt` (\pkg{PMCMRplus}).
 #' @inheritParams model_parameters.default
 #'
 #' @return A data frame of indices related to the model's parameters.

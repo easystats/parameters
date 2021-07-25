@@ -84,11 +84,10 @@
 \arguments{
 \item{model}{Model object.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
-\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian
-regressions} apply (see also
+\code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
 \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}).}
 
 \item{iterations}{The number of bootstrap replicates. This only apply in the
@@ -97,7 +96,7 @@ case of bootstrapped frequentist models.}
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
 \code{"pseudo"} or \code{NULL} (default) for no standardization. See
-'Details' in \code{\link[effectsize]{standardize_parameters}}.
+'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
 \strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -128,7 +127,7 @@ and \href{https://easystats.github.io/parameters/articles/model_parameters_robus
 for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats]{p.adjust}} for details. Further
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \pkg{emmeans}).}
@@ -137,24 +136,24 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 model (model formula, number of observations, residual standard deviation
 and more).}
 
-\item{keep, drop}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{keep, drop}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
@@ -164,7 +163,7 @@ names.}
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR]{describe_posterior}}.}
+are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{df_method}{Method for computing degrees of freedom for confidence
 intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
@@ -207,6 +206,6 @@ model_parameters(model)
 model_parameters(model, exponentiate = TRUE)
 }
 \seealso{
-\code{\link[insight:standardize_names]{standardize_names()}} to
-  rename columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to
+rename columns into a consistent, standardized naming scheme.
 }

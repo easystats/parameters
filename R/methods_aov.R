@@ -4,49 +4,49 @@
 
 #' Parameters from ANOVAs
 #'
-#' @param model Object of class \code{\link{aov}}, \code{\link{anova}},
-#'   \code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{Anova.mlm},
-#'   \code{afex_aov} or \code{maov}.
+#' @param model Object of class [aov()], [anova()],
+#'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
+#'   `afex_aov` or `maov`.
 #' @param omega_squared Compute omega squared as index of effect size. Can be
-#'   \code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.
+#'   `"partial"` (the default, adjusted for effect size) or `"raw"`.
 #' @param eta_squared Compute eta squared as index of effect size. Can be
-#'   \code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or
-#'   \code{"adjusted"} (the latter option only for ANOVA-tables from mixed
+#'   `"partial"` (the default, adjusted for effect size), `"raw"`  or
+#'   `"adjusted"` (the latter option only for ANOVA-tables from mixed
 #'   models).
 #' @param epsilon_squared Compute epsilon squared as index of effect size. Can
-#'   be \code{"partial"} (the default, adjusted for effect size) or
-#'   \code{"raw"}.
+#'   be `"partial"` (the default, adjusted for effect size) or
+#'   `"raw"`.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
 #'   error estimate, i.e., the residuals). This is used to compute effect sizes
 #'   for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-#'   \code{afex_aov}.)
+#'   `afex_aov`.)
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-#'   ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
-#'   \code{afex_aov}.)
+#'   ANOVA-tables using `car::Anova()` will be returned. (Ignored for
+#'   `afex_aov`.)
 #' @param ci Confidence Interval (CI) level for effect sizes
-#'   \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL},
-#'   will compute no confidence intervals. \code{ci} should be a scalar between
+#'   `omega_squared`, `eta_squared` etc. The default, `NULL`,
+#'   will compute no confidence intervals. `ci` should be a scalar between
 #'   0 and 1.
-#' @param test String, indicating the type of test for \code{Anova.mlm} to be
-#'   returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
-#'   the multivariate test (that is also given by the \code{print}-method). If
-#'   \code{test = "univariate"}, returns the summary of the univariate test.
-#' @param power Logical, if \code{TRUE}, adds a column with power for each
+#' @param test String, indicating the type of test for `Anova.mlm` to be
+#'   returned. If `"multivariate"` (or `NULL`), returns the summary of
+#'   the multivariate test (that is also given by the `print`-method). If
+#'   `test = "univariate"`, returns the summary of the univariate test.
+#' @param power Logical, if `TRUE`, adds a column with power for each
 #'   parameter.
 #' @param table_wide Logical that decides whether the ANOVA table should be in
 #'   wide format, i.e. should the numerator and denominator degrees of freedom
-#'   be in the same row. Default: \code{FALSE}.
+#'   be in the same row. Default: `FALSE`.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
-#' @note For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only
+#' @note For ANOVA-tables from mixed models (i.e. `anova(lmer())`), only
 #'   partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
 #'   with interactions involved only give sensible and informative results when
 #'   covariates are mean-centred and factors are coded with orthogonal contrasts
-#'   (such as those produced by \code{contr.sum}, \code{contr.poly}, or
-#'   \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
+#'   (such as those produced by `contr.sum`, `contr.poly`, or
+#'   `contr.helmert`, but *not* by the default `contr.treatment`).
 #'
 #' @examples
 #' if (requireNamespace("effectsize", quietly = TRUE)) {

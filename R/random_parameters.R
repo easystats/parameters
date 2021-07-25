@@ -4,11 +4,11 @@
 #' @description This function extracts the different variance components of a
 #'   mixed model and returns the result as a data frame.
 #'
-#' @param model A mixed effects model (including \code{stanreg} models).
+#' @param model A mixed effects model (including `stanreg` models).
 #' @param component Should all parameters, parameters for the conditional model,
 #'   or for the zero-inflated part of the model be returned? Applies to models
-#'   with zero-inflated component. \code{component} may be one of
-#'   \code{"conditional"} (default), \code{"zi"} or \code{"zero-inflated"}.
+#'   with zero-inflated component. `component` may be one of
+#'   `"conditional"` (default), `"zi"` or `"zero-inflated"`.
 #'   May be abbreviated.
 #'
 #' @return A data frame with random effects statistics for the variance components,
@@ -16,32 +16,32 @@
 #'   observations in the model.
 #'
 #' @details The variance components are obtained from
-#'   \code{\link[insight]{get_variance}} and are denoted as following:
+#'   [insight::get_variance()] and are denoted as following:
 #'   \subsection{Within-group (or residual) variance}{
 #'     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
 #'     is the sum of the distribution-specific variance and the variance due to additive dispersion.
-#'     It indicates the \emph{within-group variance}.
+#'     It indicates the *within-group variance*.
 #'   }
 #'   \subsection{Between-group random intercept variance}{
-#'     The random intercept variance, or \emph{between-group} variance
+#'     The random intercept variance, or *between-group* variance
 #'     for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
-#'     is obtained from \code{VarCorr()}. It indicates how much groups
+#'     is obtained from `VarCorr()`. It indicates how much groups
 #'     or subjects differ from each other.
 #'   }
 #'   \subsection{Between-group random slope variance}{
-#'     The random slope variance, or \emph{between-group} variance
+#'     The random slope variance, or *between-group* variance
 #'     for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
-#'     is obtained from \code{VarCorr()}. This measure is only available
+#'     is obtained from `VarCorr()`. This measure is only available
 #'     for mixed models with random slopes. It indicates how much groups
 #'     or subjects differ from each other according to their slopes.
 #'   }
 #'   \subsection{Random slope-intercept correlation}{
 #'     The random slope-intercept correlation
 #'     (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
-#'     is obtained from \code{VarCorr()}. This measure is only available
+#'     is obtained from `VarCorr()`. This measure is only available
 #'     for mixed models with random intercepts and slopes.
 #'   }
-#'   \strong{Note:} For the within-group and between-group variance, variance
+#'   **Note:** For the within-group and between-group variance, variance
 #'   and standard deviations (which are simply the square root of the variance)
 #'   are shown.
 #'

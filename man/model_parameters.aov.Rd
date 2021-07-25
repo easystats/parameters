@@ -23,8 +23,8 @@
 )
 }
 \arguments{
-\item{model}{Object of class \code{\link{aov}}, \code{\link{anova}},
-\code{aovlist}, \code{Gam}, \code{\link{manova}}, \code{Anova.mlm},
+\item{model}{Object of class \code{\link[=aov]{aov()}}, \code{\link[=anova]{anova()}},
+\code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
 \code{afex_aov} or \code{maov}.}
 
 \item{omega_squared}{Compute omega squared as index of effect size. Can be
@@ -61,44 +61,44 @@ the multivariate test (that is also given by the \code{print}-method). If
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
 
-\item{keep}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{keep}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep}
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If \code{keep} is a character vector, every
-parameter name in the \emph{"Parameter"} column that matches the regular expression
-in \code{parameters} will be selected from the returned data frame (and vice
-versa, all parameter names matching \code{drop} will be excluded). Furthermore,
-if \code{keep} has more than one element, these will be merged with an
-\code{OR} operator into a regular expression pattern like this:
-\code{"(one|two|three)"}. If \code{keep} is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-\code{model_parameters()} returns multiple columns with parameter components,
-like in \code{\link{model_parameters.lavaan}}. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
-\code{$Parameter} column of the parameters table to get the exact parameter
+\item{drop}{Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If \code{keep} is a character vector, every parameter
+name in the \emph{"Parameter"} column that matches the regular expression in
+\code{parameters} will be selected from the returned data frame (and vice versa,
+all parameter names matching \code{drop} will be excluded). Furthermore, if
+\code{keep} has more than one element, these will be merged with an \code{OR}
+operator into a regular expression pattern like this: \code{"(one|two|three)"}.
+If \code{keep} is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where \code{model_parameters()}
+returns multiple columns with parameter components, like in
+\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+\verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
@@ -119,11 +119,11 @@ Parameters from ANOVAs
 }
 \note{
 For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only
-  partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
-  with interactions involved only give sensible and informative results when
-  covariates are mean-centred and factors are coded with orthogonal contrasts
-  (such as those produced by \code{contr.sum}, \code{contr.poly}, or
-  \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
+partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
+with interactions involved only give sensible and informative results when
+covariates are mean-centred and factors are coded with orthogonal contrasts
+(such as those produced by \code{contr.sum}, \code{contr.poly}, or
+\code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
 }
 \examples{
 if (requireNamespace("effectsize", quietly = TRUE)) {

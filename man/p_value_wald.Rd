@@ -24,9 +24,12 @@ p_value_wald(model, ...)
 \arguments{
 \item{model}{A statistical model.}
 
-\item{ci}{Confidence Interval (CI) level. Default to 0.95 (95\%).}
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
-\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of observations and \code{k} is the number of parameters). For \code{p_value_wald()}, defaults to \code{Inf}.}
+\item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to
+model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of
+observations and \code{k} is the number of parameters). For \code{p_value_wald()},
+defaults to \code{Inf}.}
 
 \item{effects}{Should standard errors for fixed effects or random effects be
 returned? Only applies to mixed models. May be abbreviated. When standard
@@ -48,13 +51,20 @@ robust standard errors. Additional arguments like \code{vcov_estimation} or
 and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
 for working examples.}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed.}
+\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
+intervals or p-values based on robust standard errors should be computed.}
 }
 \value{
 A data frame.
 }
 \description{
-The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5\% at p = 0.05.
+The Wald-test approximation treats t-values as Wald z. Since the
+t distribution converges to the z distribution as degrees of freedom
+increase, this is like assuming infinite degrees of freedom. While this is
+unambiguously anti-conservative, this approximation appears as reasonable
+for reasonable sample sizes (Barr et al., 2013). That is, if we take the
+p-value to measure the probability of a false positive, this approximation
+produces a higher false positive rate than the nominal \verb{5\%} at \code{p = 0.05}.
 }
 \examples{
 \donttest{
@@ -66,5 +76,6 @@ if (require("lme4")) {
 }
 }
 \references{
-Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.
+Barr, D. J. (2013). Random effects structure for testing interactions in
+linear mixed-effects models. Frontiers in psychology, 4, 328.
 }

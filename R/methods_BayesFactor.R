@@ -5,23 +5,23 @@
 #'
 #' Parameters from BayesFactor objects.
 #'
-#' @param model Object of class \code{BFBayesFactor}.
+#' @param model Object of class `BFBayesFactor`.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #'
 #' @details
 #' The meaning of the extracted parameters:
 #' \itemize{
-#'   \item For \code{\link[BayesFactor]{ttestBF}}: \code{Difference} is the raw
+#'   \item For [BayesFactor::ttestBF()]: `Difference` is the raw
 #'   difference between the means. \item For
-#'   \code{\link[BayesFactor]{correlationBF}}: \code{rho} is the linear
-#'   correlation estimate (equivalent to Pearson's \emph{r}). \item For
-#'   \code{\link[BayesFactor]{lmBF}} / \code{\link[BayesFactor]{generalTestBF}}
-#'   / \code{\link[BayesFactor]{regressionBF}} /
-#'   \code{\link[BayesFactor]{anovaBF}}: in addition to parameters of the fixed
-#'   and random effects, there are: \code{mu} is the (mean-centered) intercept;
-#'   \code{sig2} is the model's sigma; \code{g} / \code{g_*} are the \emph{g}
-#'   parameters; See the \emph{Bayes Factors for ANOVAs} paper
+#'   [BayesFactor::correlationBF()]: `rho` is the linear
+#'   correlation estimate (equivalent to Pearson's *r*). \item For
+#'   [BayesFactor::lmBF()] / [BayesFactor::generalTestBF()]
+#'   / [BayesFactor::regressionBF()] /
+#'   [BayesFactor::anovaBF()]: in addition to parameters of the fixed
+#'   and random effects, there are: `mu` is the (mean-centered) intercept;
+#'   `sig2` is the model's sigma; `g` / `g_*` are the *g*
+#'   parameters; See the *Bayes Factors for ANOVAs* paper
 #'   (\doi{10.1016/j.jmp.2012.08.001}).
 #' }
 #'
@@ -181,7 +181,7 @@ model_parameters.BFBayesFactor <- function(model,
 #' @param model A statistical model.
 #' @inheritParams p_value
 #'
-#' @details For Bayesian models, the p-values corresponds to the \emph{probability of direction} (\code{\link[bayestestR]{p_direction}}), which is converted to a p-value using \code{bayestestR::convert_pd_to_p()}.
+#' @details For Bayesian models, the p-values corresponds to the *probability of direction* ([bayestestR::p_direction()]), which is converted to a p-value using `bayestestR::convert_pd_to_p()`.
 #'
 #' @return The p-values.
 #'

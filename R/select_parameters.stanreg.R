@@ -1,5 +1,5 @@
-#' @param method The method used in the variable selection. Can be \code{NULL}
-#'   (default), \code{"forward"} or \code{"L1"}. See \code{projpred::varsel}.
+#' @param method The method used in the variable selection. Can be `NULL`
+#'   (default), `"forward"` or `"L1"`. See `projpred::varsel`.
 #' @param cross_validation Select with cross-validation.
 #' @rdname select_parameters
 #' @export

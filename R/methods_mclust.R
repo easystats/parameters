@@ -1,6 +1,6 @@
 #' Parameters from Mixture Models
 #'
-#' Format mixture models obtained for example by \code{mclust::Mclust}.
+#' Format mixture models obtained for example by `mclust::Mclust`.
 #'
 #' @param model Mixture model.
 #' @param ... Arguments passed to or from other methods.

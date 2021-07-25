@@ -9,20 +9,20 @@
 #' @param ... Currently not used.
 #'
 #' @section Interpretation of Interaction Terms:
-#' Note that the \emph{interpretation} of interaction terms depends on many
+#' Note that the *interpretation* of interaction terms depends on many
 #' characteristics of the model. The number of parameters, and overall
-#' performance of the model, can differ \emph{or not} between \code{a * b}
-#' \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
+#' performance of the model, can differ *or not* between `a * b`
+#' `a : b`, and `a / b`, suggesting that sometimes interaction terms
 #' give different parameterizations of the same model, but other times it gives
-#' completely different models (depending on \code{a} or \code{b} being factors
+#' completely different models (depending on `a` or `b` being factors
 #' of covariates, included as main effects or not, etc.). Their interpretation
 #' depends of the full context of the model, which should not be inferred
 #' from the parameters table alone - rather, we recommend to use packages
 #' that calculate estimated marginal means or marginal effects, such as
 #' \CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
-#' awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
+#' awareness for this issue, you may use `print(...,show_formula=TRUE)`
 #' to add the model-specification to the output of the
-#' \code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
+#' [`print()`][print.parameters_model] method for `model_parameters()`.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species * Sepal.Width, data = iris)

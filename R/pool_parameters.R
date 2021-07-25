@@ -1,13 +1,13 @@
 #' Pool Model Parameters
 #'
 #' This function "pools" (i.e. combines) model parameters in a similar fashion
-#' as \code{mice::pool()}. However, this function pools parameters from
-#' \code{parameters_model} objects, as returned by
-#' \code{\link{model_parameters}}.
+#' as `mice::pool()`. However, this function pools parameters from
+#' `parameters_model` objects, as returned by
+#' [model_parameters()].
 #'
-#' @param x A list of \code{parameters_model} objects, as returned by
-#'   \code{\link{model_parameters}}, or a list of model-objects that is
-#'   supported by \code{model_parameters()}.
+#' @param x A list of `parameters_model` objects, as returned by
+#'   [model_parameters()], or a list of model-objects that is
+#'   supported by `model_parameters()`.
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
 #' @inheritParams bootstrap_model
@@ -18,8 +18,8 @@
 #'   case of identical names for coefficients in the different model components,
 #'   since the coefficient table is grouped by coefficient names for pooling. In
 #'   such cases, coefficients of count and zero-inflated model parts would be
-#'   combined. Therefore, the \code{component} argument defaults to
-#'   \code{"conditional"} to avoid this.
+#'   combined. Therefore, the `component` argument defaults to
+#'   `"conditional"` to avoid this.
 #'
 #' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
 #'   The pooled degrees of freedom is based on the Barnard-Rubin adjustment for

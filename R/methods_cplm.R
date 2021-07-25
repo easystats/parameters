@@ -14,7 +14,7 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams simulate_model
 #'
-#' @seealso \code{\link[insight:standardize_names]{standardize_names()}} to rename
+#' @seealso [insight::standardize_names()] to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
 #' @examples

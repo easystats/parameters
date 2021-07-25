@@ -1,38 +1,38 @@
 #' @title Robust estimation
 #' @name standard_error_robust
 #'
-#' @description \code{standard_error_robust()}, \code{ci_robust()} and \code{p_value_robust()}
+#' @description `standard_error_robust()`, `ci_robust()` and `p_value_robust()`
 #' attempt to return indices based on robust estimation of the variance-covariance
 #' matrix, using the packages \pkg{sandwich} and \pkg{clubSandwich}.
 #'
 #' @param model A model.
 #' @param vcov_estimation String, indicating the suffix of the
-#'   \code{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
-#'   package, e.g. \code{vcov_estimation = "CL"} (which calls
-#'   \code{\link[sandwich]{vcovCL}} to compute clustered covariance matrix
-#'   estimators), or \code{vcov_estimation = "HC"} (which calls
-#'   \code{\link[sandwich:vcovHC]{vcovHC()}} to compute
+#'   `vcov*()`-function from the \pkg{sandwich} or \pkg{clubSandwich}
+#'   package, e.g. `vcov_estimation = "CL"` (which calls
+#'   [sandwich::vcovCL()] to compute clustered covariance matrix
+#'   estimators), or `vcov_estimation = "HC"` (which calls
+#'   [sandwich::vcovHC()] to compute
 #'   heteroskedasticity-consistent covariance matrix estimators).
 #' @param vcov_type Character vector, specifying the estimation type for the
 #'   robust covariance matrix estimation (see
-#'   \code{\link[sandwich:vcovHC]{vcovHC()}} or \code{clubSandwich::vcovCR()}
+#'   [sandwich::vcovHC()] or `clubSandwich::vcovCR()`
 #'   for details).
 #' @param vcov_args List of named vectors, used as additional arguments that are
 #'   passed down to the \pkg{sandwich}-function specified in
-#'   \code{vcov_estimation}.
+#'   `vcov_estimation`.
 #' @param component Should all parameters or parameters for specific model
 #'   components be returned?
 #' @param ... Arguments passed to or from other methods. For
-#'   \code{standard_error()}, if \code{method = "robust"}, arguments
-#'   \code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
-#'   down to \code{standard_error_robust()}.
+#'   `standard_error()`, if `method = "robust"`, arguments
+#'   `vcov_estimation`, `vcov_type` and `vcov_args` can be passed
+#'   down to `standard_error_robust()`.
 #' @inheritParams ci.merMod
 #'
 #' @note These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
-#'   (the latter if \code{vcov_estimation = "CR"} for cluster-robust standard errors)
+#'   (the latter if `vcov_estimation = "CR"` for cluster-robust standard errors)
 #'   and will thus only work for those models supported by those packages.
 #'
-#' @seealso Working examples cam be found \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{in this vignette}.
+#' @seealso Working examples cam be found [in this vignette](https://easystats.github.io/parameters/articles/model_parameters_robust.html).
 #'
 #' @examples
 #' if (require("sandwich", quietly = TRUE)) {
