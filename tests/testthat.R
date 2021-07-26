@@ -6,9 +6,10 @@ if (require("testthat")) {
     Sys.setenv("RunAllparametersTests" = "no")
   }
 
+  si <- Sys.info()
+
   osx <- tryCatch(
     {
-      si <- Sys.info()
       if (!is.null(si["sysname"])) {
         si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
       } else {
@@ -20,7 +21,20 @@ if (require("testthat")) {
     }
   )
 
-  if (!osx) {
+  solaris <- tryCatch(
+    {
+      if (!is.null(si["sysname"])) {
+        grepl("SunOS", si["sysname"], ignore.case = TRUE)
+      } else {
+        FALSE
+      }
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
+
+  if (!osx && !solaris) {
     test_check("parameters")
   }
 }
