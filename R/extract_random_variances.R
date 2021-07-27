@@ -133,13 +133,19 @@
 
   # random slope-intercept correlation - rho01
   if (nrow(ran_corr) > 0) {
-    colnames(ran_corr) <- "Coefficient"
-    ran_corr$Group <- rownames(ran_corr)
-    for (i in unique(ran_intercept$Group)) {
-      corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
-      if (length(corrs)) {
-        ran_corr$Parameter[corrs] <- paste0("Cor (Intercept~", i, ")")
-        ran_corr$Group[corrs] <- i
+    if (colnames(ran_corr)[1] == ran_intercept$Group[1]) {
+      colnames(ran_corr)[1] <- "Coefficient"
+      ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ")")
+      ran_corr$Group <- ran_intercept$Group[1]
+    } else {
+      colnames(ran_corr) <- "Coefficient"
+      ran_corr$Group <- rownames(ran_corr)
+      for (i in unique(ran_intercept$Group)) {
+        corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
+        if (length(corrs)) {
+          ran_corr$Parameter[corrs] <- paste0("Cor (Intercept~", i, ")")
+          ran_corr$Group[corrs] <- i
+        }
       }
     }
   }
