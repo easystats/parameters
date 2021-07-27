@@ -1,4 +1,4 @@
-if (require("testthat") && packageVersion("WRS2") >= "1.1.3" && getRversion() >= "3.6.0") {
+if (require("testthat") && require("WRS2") && packageVersion("WRS2") >= "1.1.3" && getRversion() >= "3.6.0") {
 
   # model_parameters.t1way ---------------------------------------------------
 
