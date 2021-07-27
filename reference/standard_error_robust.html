@@ -127,9 +127,6 @@ matrix, using the packages sandwich and clubSandwich." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -237,16 +234,16 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
       <td><p>String, indicating the suffix of the
 <code>vcov*()</code>-function from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span>
 package, e.g. <code>vcov_estimation = "CL"</code> (which calls
-<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovCL.html'>vcovCL</a></code> to compute clustered covariance matrix
+<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovCL.html'>sandwich::vcovCL()</a></code> to compute clustered covariance matrix
 estimators), or <code>vcov_estimation = "HC"</code> (which calls
-<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovHC.html'>vcovHC()</a></code> to compute
+<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovHC.html'>sandwich::vcovHC()</a></code> to compute
 heteroskedasticity-consistent covariance matrix estimators).</p></td>
     </tr>
     <tr>
       <th>vcov_type</th>
       <td><p>Character vector, specifying the estimation type for the
 robust covariance matrix estimation (see
-<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovHC.html'>vcovHC()</a></code> or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>clubSandwich::vcovCR()</a></code>
+<code><a href='https://sandwich.R-Forge.R-project.org//reference/vcovHC.html'>sandwich::vcovHC()</a></code> or <code><a href='https://rdrr.io/pkg/clubSandwich/man/vcovCR.html'>clubSandwich::vcovCR()</a></code>
 for details).</p></td>
     </tr>
     <tr>
@@ -269,7 +266,7 @@ down to <code>standard_error_robust()</code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     </table>
 
@@ -279,8 +276,8 @@ down to <code>standard_error_robust()</code>.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>These functions rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package
-  (the latter if <code>vcov_estimation = "CR"</code> for cluster-robust standard errors)
-  and will thus only work for those models supported by those packages.</p>
+(the latter if <code>vcov_estimation = "CR"</code> for cluster-robust standard errors)
+and will thus only work for those models supported by those packages.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Working examples cam be found <a href='https://easystats.github.io/parameters/articles/model_parameters_robust.html'>in this vignette</a>.</p></div>

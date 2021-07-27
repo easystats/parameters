@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -258,7 +255,7 @@
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, effects <span class='op'>=</span> <span class='st'>"all"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for lme</span>
-<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wald"</span>, <span class='st'>"betwithin"</span>, <span class='st'>"ml1"</span>, <span class='st'>"satterthwaite"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, method <span class='op'>=</span> <span class='st'>"wald"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for clm2</span>
 <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"scale"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -304,19 +301,22 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom. If not specified, for <code><a href='p_value_wald.html'>ci_wald()</a></code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code><a href='p_value_wald.html'>p_value_wald()</a></code>, defaults to <code>Inf</code>.</p></td>
+      <td><p>Degrees of Freedom. If not specified, for <code><a href='p_value_wald.html'>ci_wald()</a></code>, defaults to
+model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of
+observations and <code>k</code> is the number of parameters). For <code><a href='p_value_wald.html'>p_value_wald()</a></code>,
+defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"</a></code>
-(default), <code><a href='p_value_ml1.html'>"ml1"</a></code> or
-<code><a href='p_value_betwithin.html'>"betwithin"</a></code>. For linear mixed model, can
-also be <code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code>,
-<code><a href='p_value_kenward.html'>"kenward"</a></code> or <code>"boot"</code> (see
+      <td><p>For mixed models, can be <code><a href='p_value_wald.html'>"wald"()</a></code>
+(default), <code><a href='p_value_ml1.html'>"ml1"()</a></code> or
+<code><a href='p_value_betwithin.html'>"betwithin"()</a></code>. For linear mixed model, can
+also be <code><a href='p_value_satterthwaite.html'>"satterthwaite"()</a></code>,
+<code><a href='p_value_kenward.html'>"kenward"()</a></code> or <code>"boot"</code> (see
 <code><a href='https://rdrr.io/pkg/lme4/man/confint.merMod.html'>lme4::confint.merMod</a></code>). For (generalized) linear models, can be
 <code>"robust"</code> to compute confidence intervals based on robust covariance
 matrix estimation, and for generalized linear models and models from
@@ -361,15 +361,15 @@ returned.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p><code><a href='standard_error_robust.html'>ci_robust()</a></code> resp. <code>ci(method = "robust")</code>
-  rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
-  <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
-  thus only work for those models supported by those packages.</p>
+rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
+<code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
+thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># \donttest{</span></span>
 <span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
-<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"glmmTMB"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
-<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>glmmTMB</span><span class='op'>(</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/glmmTMB/glmmTMB'>"glmmTMB"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html'>glmmTMB</a></span><span class='op'>(</span></span>
 <span class='r-in'>    <span class='va'>count</span> <span class='op'>~</span> <span class='va'>spp</span> <span class='op'>+</span> <span class='va'>mined</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>site</span><span class='op'>)</span>,</span>
 <span class='r-in'>    ziformula <span class='op'>=</span> <span class='op'>~</span><span class='va'>mined</span>,</span>
 <span class='r-in'>    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span>,</span>
@@ -380,7 +380,9 @@ returned.</p></td>
 <span class='r-in'>  <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"zi"</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: glmmTMB</span>
-<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>there is no package called ‘glmmTMB’</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     Parameter   CI     CI_low   CI_high     Component</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 (Intercept) 0.95  0.2552453  1.324754 zero_inflated</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     minedno 0.95 -2.4604492 -1.229369 zero_inflated</span>
 <span class='r-in'><span class='co'># }</span></span>
 </code></pre></div>
   </div>

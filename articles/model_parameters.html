@@ -77,9 +77,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -250,7 +247,7 @@
 <a href="#mixed-model-with-zero-inflation-model" class="anchor" aria-hidden="true"></a>Mixed Model with Zero-Inflation Model</h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://drizopoulos.github.io/GLMMadaptive/" class="external-link">GLMMadaptive</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">glmmTMB</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html" class="external-link">mixed_model</a></span><span class="op">(</span>
   <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span>,
@@ -265,7 +262,7 @@
 <h3 class="hasAnchor">
 <a href="#mixed-models-with-dispersion-model" class="anchor" aria-hidden="true"></a>Mixed Models with Dispersion Model</h3>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">glmmTMB</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span>
 
 <span class="va">sim1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">nfac</span> <span class="op">=</span> <span class="fl">40</span>, <span class="va">nt</span> <span class="op">=</span> <span class="fl">100</span>, <span class="va">facsd</span> <span class="op">=</span> <span class="fl">0.1</span>, <span class="va">tsd</span> <span class="op">=</span> <span class="fl">0.15</span>, <span class="va">mu</span> <span class="op">=</span> <span class="fl">0</span>, <span class="va">residsd</span> <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span>fac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nfac</span><span class="op">]</span><span class="op">)</span>, t <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="va">nt</span><span class="op">)</span>
@@ -282,7 +279,7 @@
 <span class="va">d1</span><span class="op">$</span><span class="va">sd</span> <span class="op">&lt;-</span> <span class="st">"ten"</span>
 <span class="va">d2</span><span class="op">$</span><span class="va">sd</span> <span class="op">&lt;-</span> <span class="st">"five"</span>
 <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">glmmTMB</span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span> <span class="op">~</span><span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span> <span class="op">~</span><span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 </div>

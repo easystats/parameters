@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -277,8 +274,8 @@ a data frame with posterior samples.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Credible Interval (CI) level. Default to 0.89 (89%). See
-<code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>ci</a></code> for further details.</p></td>
+      <td><p>Credible Interval (CI) level. Default to <code>0.89</code> (<code>89%</code>). See
+<code><a href='https://easystats.github.io/bayestestR/reference/ci.html'>bayestestR::ci()</a></code> for further details.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
@@ -310,45 +307,45 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
     <tr>
       <th>drop</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
@@ -408,7 +405,7 @@ from non-Gaussian families.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
 <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
-'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>.
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong> Categorical predictors (i.e. factors) are <em>never</em>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -434,16 +431,16 @@ are shown.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>,
-  <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em>
-  <code>model</code>. If <code>model</code> is a data frame, arguments <code>diagnostic</code>,
-  <code>bf_prior</code> and <code>priors</code> are ignored. <br /> <br /> There is also a
-  <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
-  implemented in the
-  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+<code>bf_prior</code> and <code>priors</code> refer to the <em>original</em>
+<code>model</code>. If <code>model</code> is a data frame, arguments <code>diagnostic</code>,
+<code>bf_prior</code> and <code>priors</code> are ignored. <br /> <br /> There is also a
+<a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+implemented in the
+<a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to
-  rename columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>insight::standardize_names()</a></code> to
+rename columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>

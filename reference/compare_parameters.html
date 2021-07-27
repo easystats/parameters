@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Compare model parameters of multiple models — compare_parameters" />
-<meta property="og:description" content="Compute and extract model parameters of multiple regression models.
-  See model_parameters for further details." />
+<meta property="og:description" content="Compute and extract model parameters of multiple regression
+models. See model_parameters() for further details." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -126,9 +126,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -191,8 +188,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute and extract model parameters of multiple regression models.
-  See <code><a href='model_parameters.html'>model_parameters</a></code> for further details.</p>
+    <p>Compute and extract model parameters of multiple regression
+models. See <code><a href='model_parameters.html'>model_parameters()</a></code> for further details.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>compare_parameters</span><span class='op'>(</span>
@@ -242,7 +239,7 @@ these names will be used as column names.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -253,14 +250,14 @@ to mixed models. May be abbreviated.</p></td>
     <tr>
       <th>component</th>
       <td><p>Model component for which parameters should be shown. See
-documentation for related model class in <code><a href='model_parameters.html'>model_parameters</a></code>.</p></td>
+documentation for related model class in <code><a href='model_parameters.html'>model_parameters()</a></code>.</p></td>
     </tr>
     <tr>
       <th>standardize</th>
       <td><p>The method used for standardizing the parameters. Can be
 <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
 <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
-'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>.
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong> Categorical predictors (i.e. factors) are <em>never</em>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -288,12 +285,12 @@ from non-Gaussian families.</p></td>
       <th>df_method</th>
       <td><p>Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). See documentation for
-related model class in <code><a href='model_parameters.html'>model_parameters</a></code>.</p></td>
+related model class in <code><a href='model_parameters.html'>model_parameters()</a></code>.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details. Further
+adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
@@ -317,45 +314,45 @@ column headers. Must be of same length as number of models in <code>...</code>.<
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
     <tr>
       <th>drop</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
@@ -372,28 +369,29 @@ names.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is in an early stage and does not yet cope with more
-  complex models, and probably does not yet properly render all model
-  components.</p>
+    <p>This function is in an early stage and does not yet cope with more complex
+models, and probably does not yet properly render all model components. It
+should also be noted that when including models with interaction terms, not
+only do the values of the parameters change, but so does their meaning (from
+main effects, to simple slopes), thereby making such comparisons hard.
+Therefore, you should not use this function to compare models with
+interaction terms with models without interaction terms.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>lm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>lm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
-<span class='r-in'><span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter                           |               lm1 |                  lm2 |                  lm3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)                         | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89) |  4.21 ( 3.41,  5.02)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Petal Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (versicolor) * Petal Length |                   |                      |  0.29 (-0.30,  0.87)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (virginica) * Petal Length  |                   |                      |  0.45 (-0.12,  1.03)</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations                        |               150 |                  150 |                  150</span>
+<span class='r-in'><span class='fu'>compare_parameters</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter            |               lm1 |                  lm2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          | 5.01 (4.86, 5.15) |  3.68 ( 3.47,  3.89)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (versicolor) | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Species (virginica)  | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Petal Length         |                   |  0.90 ( 0.78,  1.03)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Observations         |               150 |                  150</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>

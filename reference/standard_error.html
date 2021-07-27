@@ -127,9 +127,6 @@ standard errors." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -285,10 +282,10 @@ calling <code><a href='standard_error_robust.html'>standard_error_robust()</a></
 <code>vcov*()</code>-functions from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span>
 package for robust covariance matrix estimators. For certain mixed models,
 <code>method</code> may also be one of <code>"wald"</code>,
-<code><a href='p_value_ml1.html'>"ml1"</a></code>,
-<code><a href='p_value_betwithin.html'>"betwithin"</a></code>,
-<code><a href='p_value_satterthwaite.html'>"satterthwaite"</a></code> or
-<code><a href='p_value_kenward.html'>"kenward"</a></code>.</p></td>
+<code><a href='p_value_ml1.html'>"ml1"()</a></code>,
+<code><a href='p_value_betwithin.html'>"betwithin"()</a></code>,
+<code><a href='p_value_satterthwaite.html'>"satterthwaite"()</a></code> or
+<code><a href='p_value_kenward.html'>"kenward"()</a></code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -323,12 +320,12 @@ returned.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with at least two columns: the parameter names and the
-  standard errors. Depending on the model, may also include columns for model
-  components etc.</p>
+standard errors. Depending on the model, may also include columns for model
+components etc.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For Bayesian models (from <span class="pkg">rstanarm</span> or <span class="pkg">brms</span>), the standard
-  error is the SD of the posterior samples.</p>
+error is the SD of the posterior samples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>~</span> <span class='va'>Sepal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>

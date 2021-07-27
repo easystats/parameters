@@ -124,9 +124,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -195,15 +192,20 @@
 <a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking changes</h2>
 <ul><li>
 <p>Following functions were moved to the new <em>datawizard</em> package and are now re-exported from <em>parameters</em> package:</p>
-<ul><li><code><a href="https://easystats.github.io/datawizard/reference/center.html" class="external-link">center()</a></code></li>
-<li><code><a href="https://easystats.github.io/datawizard/reference/convert_data_to_numeric.html" class="external-link">convert_data_to_numeric()</a></code></li>
-<li><code>data_partition()</code></li>
-<li>
-<code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean()</a></code> (and its aliases <code>degroup()</code> and <code>detrend()</code>)</li>
-<li><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code></li>
-<li><code>rescale_weights()</code></li>
-<li><code>skewness()</code></li>
-<li><code><a href="https://easystats.github.io/datawizard/reference/smoothness.html" class="external-link">smoothness()</a></code></li>
+<ul><li><p><code><a href="https://easystats.github.io/datawizard/reference/center.html" class="external-link">center()</a></code></p></li>
+<li><p><code><a href="https://easystats.github.io/datawizard/reference/convert_data_to_numeric.html" class="external-link">convert_data_to_numeric()</a></code></p></li>
+<li><p><code>data_partition()</code></p></li>
+<li><p><code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean()</a></code> (and its aliases <code>degroup()</code> and <code>detrend()</code>)</p></li>
+<li><p><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code></p></li>
+<li><p><code><a href="https://easystats.github.io/datawizard/reference/rescale_weights.html" class="external-link">rescale_weights()</a></code></p></li>
+<li><p><code>skewness()</code></p></li>
+<li><p><code><a href="https://easystats.github.io/datawizard/reference/smoothness.html" class="external-link">smoothness()</a></code></p></li>
+</ul></li>
+</ul><p>Note that these functions will be removed in the next release of <em>parameters</em> package and they are currently being re-exported only as a convenience for the package developers. This release should provide them with time to make the necessary changes before this breaking change is implemented.</p>
+<ul><li>
+<p>Following functions were moved to the <em>performance</em> package:</p>
+<ul><li><p><code>check_heterogeneity()</code></p></li>
+<li><p><code>check_multimodal()</code></p></li>
 </ul></li>
 </ul></div>
 <div id="general" class="section level2">
@@ -223,6 +225,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports following new objects in <em>WRS2</em> package: <code>trimcibt</code>, <code>wmcpAKP</code>, <code>dep.effect</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a new argument <code>table_wide</code> for ANOVA tables. This can be helpful for users who may wish to report ANOVA table in wide format (i.e., with numerator and denominator degrees of freedom on the same row).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains two new arguments, <code>keep</code> and <code>drop</code>. <code>keep</code> is the new names for the former <code>parameters</code> argument and can be used to filter parameters. While <code>keep</code> selects those parameters whose names match the regular expression pattern defined in <code>keep</code>, <code>drop</code> is the counterpart and excludes matching parameter names.</p></li>
+<li><p>When <code><a href="../reference/model_parameters.html">model_parameters()</a></code> is called with <code>verbose = TRUE</code>, and <code>df_method</code> is not the default value, the printed output includes a message indicating which approximation-method for degrees of freedom was used.</p></li>
 </ul></div>
 <div id="other-functions" class="section level3">
 <h3 class="hasAnchor">
@@ -239,9 +242,11 @@
 <ul><li><p>The random effects returned by <code><a href="../reference/model_parameters.html">model_parameters()</a></code> mistakenly displayed the residuals standard deviation as square-root of the residual SD.</p></li>
 <li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>brmsfit</em> objects that model standard errors (i.e. for meta-analysis).</p></li>
 <li><p>Fixed issue in <code>model_parameters</code> for <code>lmerMod</code> models that, by default, returned residual degrees of freedom in the statistic column, but confidence intervals were based on <code>Inf</code> degrees of freedom instead.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/p_value_satterthwaite.html">ci_satterthwaite()</a></code>, which used <code>Inf</code> degrees of freedom instead of the Satterthwaite approximation.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.mlm.html">model_parameters.mlm()</a></code> when model contained interaction terms.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.rma.html">model_parameters.rma()</a></code> when model contained interaction terms.</p></li>
 <li><p>Fixed sign error for <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code> for objects created with <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test.formula()</a></code> (issue <a href='https://github.com/easystats/parameters/issues/552'>#552</a>)</p></li>
+<li><p>Fixed issue when computing random effect variances in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models with categorical random slopes.</p></li>
 </ul></div>
 </div>
     <div id="parameters-0140" class="section level1">
@@ -590,8 +595,8 @@
 <a href="#bug-fixes-9" class="anchor" aria-hidden="true"></a>Bug fixes</h2>
 <ul><li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>coxph.penal</code> models.</p></li>
 <li><p>Fix issue in <code>model_parameters.metaplus()</code> with random effects.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> when <code>x</code> was a mixed model.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> for data with missing values.</p></li>
+<li><p>Fix issue in <code>check_heterogeneity()</code> when <code>x</code> was a mixed model.</p></li>
+<li><p>Fix issue in <code>check_heterogeneity()</code> for data with missing values.</p></li>
 <li><p>Fix issue in <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> when random-effect terms where character vectors.</p></li>
 <li><p>Fix issue in <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> that printed empty lines for rows with complete missing values. Empty lines are now removed.</p></li>
 <li><p>Fix issue in <code><a href="../reference/parameters_type.html">parameters_type()</a></code> when <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code> was used in a model formula.</p></li>
@@ -621,7 +626,7 @@
 <li><p>Fix CRAN check issues.</p></li>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models with non-estimable parameters or statistics.</p></li>
 <li><p>Fix issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>plm</em> models with only one parameter.</p></li>
-<li><p>Fix issue in <code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> in case no predictor would cause heterogeneity bias.</p></li>
+<li><p>Fix issue in <code>check_heterogeneity()</code> in case no predictor would cause heterogeneity bias.</p></li>
 <li><p>Make sure <em>clubSandwich</em> is used conditionally in all places, to properly pass CRAN checks.</p></li>
 </ul></div>
 </div>
@@ -670,7 +675,7 @@
 <h2 class="hasAnchor">
 <a href="#new-functions-6" class="anchor" aria-hidden="true"></a>New functions</h2>
 <ul><li>
-<code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html" class="external-link">this vignette</a>).</li>
+<code>check_heterogeneity()</code> as a small helper to find variables that have a within- and between-effect related to a grouping variable (and thus, may result in heterogeneity bias, see <a href="https://easystats.github.io/parameters/articles/demean.html" class="external-link">this vignette</a>).</li>
 </ul></div>
 <div id="changes-to-functions-10" class="section level2">
 <h2 class="hasAnchor">

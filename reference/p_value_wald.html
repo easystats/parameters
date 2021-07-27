@@ -47,7 +47,13 @@
 
 
 <meta property="og:title" content="Wald-test approximation for CIs and p-values — ci_wald" />
-<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05." />
+<meta property="og:description" content="The Wald-test approximation treats t-values as Wald z. Since the
+t distribution converges to the z distribution as degrees of freedom
+increase, this is like assuming infinite degrees of freedom. While this is
+unambiguously anti-conservative, this approximation appears as reasonable
+for reasonable sample sizes (Barr et al., 2013). That is, if we take the
+p-value to measure the probability of a false positive, this approximation
+produces a higher false positive rate than the nominal 5% at p = 0.05." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -125,9 +131,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -190,7 +193,13 @@
     </div>
 
     <div class="ref-description">
-    <p>The Wald-test approximation treats t-values as Wald z. Since the t distribution converges to the z distribution as degrees of freedom increase, this is like assuming infinite degrees of freedom. While this is unambiguously anti-conservative, this approximation appears as reasonable for reasonable sample sizes (Barr et al., 2013). That is, if we take the p-value to measure the probability of a false positive, this approximation produces a higher false positive rate than the nominal 5% at p = 0.05.</p>
+    <p>The Wald-test approximation treats t-values as Wald z. Since the
+t distribution converges to the z distribution as degrees of freedom
+increase, this is like assuming infinite degrees of freedom. While this is
+unambiguously anti-conservative, this approximation appears as reasonable
+for reasonable sample sizes (Barr et al., 2013). That is, if we take the
+p-value to measure the probability of a false positive, this approximation
+produces a higher false positive rate than the nominal <code>5%</code> at <code>p = 0.05</code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>ci_wald</span><span class='op'>(</span>
@@ -218,11 +227,14 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>dof</th>
-      <td><p>Degrees of Freedom. If not specified, for <code>ci_wald()</code>, defaults to model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of observations and <code>k</code> is the number of parameters). For <code>p_value_wald()</code>, defaults to <code>Inf</code>.</p></td>
+      <td><p>Degrees of Freedom. If not specified, for <code>ci_wald()</code>, defaults to
+model's residual degrees of freedom (i.e. <code>n-k</code>, where <code>n</code> is the number of
+observations and <code>k</code> is the number of parameters). For <code>p_value_wald()</code>,
+defaults to <code>Inf</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -252,7 +264,8 @@ for working examples.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed.</p></td>
+      <td><p>Arguments passed down to <code><a href='standard_error_robust.html'>standard_error_robust()</a></code> when confidence
+intervals or p-values based on robust standard errors should be computed.</p></td>
     </tr>
     </table>
 
@@ -261,7 +274,8 @@ for working examples.</p></td>
     <p>A data frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Barr, D. J. (2013). Random effects structure for testing interactions in linear mixed-effects models. Frontiers in psychology, 4, 328.</p>
+    <p>Barr, D. J. (2013). Random effects structure for testing interactions in
+linear mixed-effects models. Frontiers in psychology, 4, 328.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='co'># \donttest{</span></span>

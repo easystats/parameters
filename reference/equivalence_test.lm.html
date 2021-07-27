@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -225,12 +222,13 @@
     </tr>
     <tr>
       <th>range</th>
-      <td><p>The range of practical equivalence of an effect. May be <code>"default"</code>,
-to automatically define this range based on properties of the model's data.</p></td>
+      <td><p>The range of practical equivalence of an effect. May be
+<code>"default"</code>, to automatically define this range based on properties of the
+model's data.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI+) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>rule</th>
@@ -267,7 +265,7 @@ to mixed models. May be abbreviated.</p></td>
     <p>In classical null hypothesis significance testing (NHST) within a frequentist
 framework, it is not possible to accept the null hypothesis, H0 - unlike
 in Bayesian statistics, where such probability statements are possible.
-&#8220;[...] one can only reject the null hypothesis if the test
+&#8220;<a href='https://rdrr.io/r/base/dots.html'>...</a> one can only reject the null hypothesis if the test
 statistics falls into the critical region(s), or fail to reject this
 hypothesis. In the latter case, all we can say is that no significant effect
 was observed, but one cannot conclude that the null hypothesis is true.&#8221;
@@ -283,64 +281,65 @@ whether the null hypothesis can be rejected or not, i.e. the classical
 interpretation of the p-value may differ from the results returned from
 the equivalence test.</p>
 <h3 class='hasAnchor' id='calculation-of-equivalence-testing'><a class='anchor' aria-hidden='true' href='#calculation-of-equivalence-testing'></a>Calculation of equivalence testing</h3>
-<p></p><dl>
-    <dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke,
-      2014, 2018)</cite> used for the
-      <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian counterpart</a></code>. This
-      means, if the confidence intervals are completely outside the ROPE, the
-      "null hypothesis" for this parameter is "rejected". If the ROPE
-      completely covers the CI, the null hypothesis is accepted. Else, it's
-      undecided whether to accept or reject the null hypothesis. Desirable
-      results are low proportions inside the ROPE (the closer to zero the
-      better).</p></dd>
-    <dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the &#8220;TOST rule&#8221;, i.e. a two one-sided test
-      procedure (<cite>Lakens 2017</cite>). Following this rule, practical
-      equivalence of an effect (i.e. H0) is <em>rejected</em>, when the
-      coefficient is statistically significant <em>and</em> the narrow
-      confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
-      <em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
-      (i.e. H0 accepted) when the narrow confidence intervals are completely
-      inside the ROPE, no matter if the effect is statistically significant
-      or not. Else, the decision whether to accept or reject H0 is undecided.</p></dd>
-    <dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
-    Gustafson 2018</cite>. According to this rule, practical equivalence is
-    rejected when the coefficient is statistically significant. When the
-    effect is <em>not</em> significant and the narrow confidence intervals are
-    completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
-  
+
+<dl>
+<dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the &#8220;HDI+ROPE decision rule&#8221; <cite>(Kruschke,
+2014, 2018)</cite> used for the
+<code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian counterpart()</a></code>. This
+means, if the confidence intervals are completely outside the ROPE, the
+"null hypothesis" for this parameter is "rejected". If the ROPE
+completely covers the CI, the null hypothesis is accepted. Else, it's
+undecided whether to accept or reject the null hypothesis. Desirable
+results are low proportions inside the ROPE (the closer to zero the
+better).</p></dd>
+<dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the &#8220;TOST rule&#8221;, i.e. a two one-sided test
+procedure (<cite>Lakens 2017</cite>). Following this rule, practical
+equivalence of an effect (i.e. H0) is <em>rejected</em>, when the
+coefficient is statistically significant <em>and</em> the narrow
+confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
+<em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
+(i.e. H0 accepted) when the narrow confidence intervals are completely
+inside the ROPE, no matter if the effect is statistically significant
+or not. Else, the decision whether to accept or reject H0 is undecided.</p></dd>
+<dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
+Gustafson 2018</cite>. According to this rule, practical equivalence is
+rejected when the coefficient is statistically significant. When the
+effect is <em>not</em> significant and the narrow confidence intervals are
+completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
+
 </dl>
 
 <h3 class='hasAnchor' id='levels-of-confidence-intervals-used-for-equivalence-testing'><a class='anchor' aria-hidden='true' href='#levels-of-confidence-intervals-used-for-equivalence-testing'></a>Levels of Confidence Intervals used for Equivalence Testing</h3>
 <p>For <code>rule = "classic"</code>, "narrow" confidence intervals are used for
-  equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
-  but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
-  and internally a ci-level of 0.90 is used. <code>rule = "cet"</code> uses
-  both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
-  only uses the regular intervals.</p>
+equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
+but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
+and internally a ci-level of 0.90 is used. <code>rule = "cet"</code> uses
+both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
+only uses the regular intervals.</p>
 <h3 class='hasAnchor' id='second-generation-p-value-sgpv-'><a class='anchor' aria-hidden='true' href='#second-generation-p-value-sgpv-'></a>Second Generation p-Value (SGPV)</h3>
 <p>Second generation p-values (SGPV) were proposed as a statistic
-  that represents &#8220;the proportion of data-supported hypotheses
-  that are also null hypotheses&#8221; <cite>(Blume et al. 2018)</cite>. This statistic
-  is actually computed in the same way as the percentage inside the ROPE as
-  returned by <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
-  for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
-  column reflects the SGPV.</p>
+that represents &#8220;the proportion of data-supported hypotheses
+that are also null hypotheses&#8221; <cite>(Blume et al. 2018)</cite>. This statistic
+is actually computed in the same way as the percentage inside the ROPE as
+returned by <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
+for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
+column reflects the SGPV.</p>
 <h3 class='hasAnchor' id='adjustment-for-multiple-testing'><a class='anchor' aria-hidden='true' href='#adjustment-for-multiple-testing'></a>Adjustment for multiple testing</h3>
 <p>The calculation of p-values is somewhat "experimental". For parameters, where H0...</p><ul>
 <li><p>... is rejected, the p-value equals a NHST as if the upper / lower
-    boundary of the ROPE (see <code>range</code>) would be the point-null to test
-    against.</p></li>
+boundary of the ROPE (see <code>range</code>) would be the point-null to test
+against.</p></li>
 <li><p>... is accepted, the p-value is set to 1.</p></li>
 <li><p>... is undecided, the p-value equals a NHST against the point-null,
-    however, the "uncertainty" (i.e. ROPE range) is added to the confidence
-    intervals (so the upper confidence interval limit equals the regular
-    upper confidence interval limit + half the ROPE range).</p></li>
+however, the "uncertainty" (i.e. ROPE range) is added to the confidence
+intervals (so the upper confidence interval limit equals the regular
+upper confidence interval limit + half the ROPE range).</p></li>
 </ul><p>All p-values are then adjusted for multiple testing (using
-  <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> with <code>method = "fdr"</code>).</p>
+<code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust()</a></code> with <code>method = "fdr"</code>).</p>
 <h3 class='hasAnchor' id='rope-range'><a class='anchor' aria-hidden='true' href='#rope-range'></a>ROPE range</h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
-  (argument <code>range</code>). See 'Details' in <code><a href='https://easystats.github.io/bayestestR/reference/rope_range.html'>rope_range</a></code>
-  for further information.</p>
+(argument <code>range</code>). See 'Details' in <code><a href='https://easystats.github.io/bayestestR/reference/rope_range.html'>bayestestR::rope_range()</a></code>
+for further information.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -350,32 +349,32 @@ the equivalence test.</p>
     
 <ul>
 <li><p>Blume, J. D., D'Agostino McGowan, L., Dupont, W. D., &amp; Greevy, R. A.
-  (2018). Second-generation p-values: Improved rigor, reproducibility, &amp;
-  transparency in statistical analyses. PLOS ONE, 13(3), e0188299.
-  https://doi.org/10.1371/journal.pone.0188299</p></li>
+(2018). Second-generation p-values: Improved rigor, reproducibility, &amp;
+transparency in statistical analyses. PLOS ONE, 13(3), e0188299.
+https://doi.org/10.1371/journal.pone.0188299</p></li>
 <li><p>Campbell, H., &amp; Gustafson, P. (2018). Conditional equivalence
-  testing: An alternative remedy for publication bias. PLOS ONE, 13(4),
-  e0195145. doi: 10.1371/journal.pone.0195145</p></li>
+testing: An alternative remedy for publication bias. PLOS ONE, 13(4),
+e0195145. doi: 10.1371/journal.pone.0195145</p></li>
 <li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with
-  R, JAGS, and Stan. Academic Press</p></li>
+R, JAGS, and Stan. Academic Press</p></li>
 <li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in
-  Bayesian estimation. Advances in Methods and Practices in Psychological
-  Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
+Bayesian estimation. Advances in Methods and Practices in Psychological
+Science, 1(2), 270-280. doi: 10.1177/2515245918771304</p></li>
 <li><p>Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests,
-  Correlations, and Meta-Analyses. Social Psychological and Personality
-  Science, 8(4), 355–362. doi: 10.1177/1948550617697177</p></li>
+Correlations, and Meta-Analyses. Social Psychological and Personality
+Science, 8(4), 355–362. doi: 10.1177/1948550617697177</p></li>
 <li><p>Lakens, D., &amp; Delacre, M. (2020). Equivalence Testing and the Second
-  Generation P-Value. Meta-Psychology, 4.
-  https://doi.org/10.15626/MP.2018.933</p></li>
+Generation P-Value. Meta-Psychology, 4.
+https://doi.org/10.15626/MP.2018.933</p></li>
 <li><p>Pernet, C. (2017). Null hypothesis significance testing: A guide to
-  commonly misunderstood concepts and recommendations for good practice.
-  F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5</p></li>
+commonly misunderstood concepts and recommendations for good practice.
+F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>For more details, see <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test()</a></code>.
-  Further readings can be found in the references.</p></div>
+    <div class='dont-index'><p>For more details, see <code><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>bayestestR::equivalence_test()</a></code>.
+Further readings can be found in the references.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>qol_cancer</span><span class='op'>)</span></span>
@@ -414,7 +413,8 @@ the equivalence test.</p>
 <span class='r-in'>  <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>equivalence_test</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>result</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
-<span class='r-plt'><img src='equivalence_test.lm-1.png' alt='' width='700' height='433' /></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Error: package or namespace load failed for ‘see’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  object ‘check_heterogeneity’ is not exported by 'namespace:parameters'</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

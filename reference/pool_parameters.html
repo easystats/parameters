@@ -50,7 +50,7 @@
 <meta property="og:description" content="This function &quot;pools&quot; (i.e. combines) model parameters in a similar fashion
 as mice::pool(). However, this function pools parameters from
 parameters_model objects, as returned by
-model_parameters." />
+model_parameters()." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -128,9 +128,6 @@ model_parameters." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -196,7 +193,7 @@ model_parameters." />
     <p>This function "pools" (i.e. combines) model parameters in a similar fashion
 as <code><a href='https://amices.org/mice/reference/pool.html'>mice::pool()</a></code>. However, this function pools parameters from
 <code>parameters_model</code> objects, as returned by
-<code><a href='model_parameters.html'>model_parameters</a></code>.</p>
+<code><a href='model_parameters.html'>model_parameters()</a></code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>pool_parameters</span><span class='op'>(</span>
@@ -214,7 +211,7 @@ as <code><a href='https://amices.org/mice/reference/pool.html'>mice::pool()</a><
     <tr>
       <th>x</th>
       <td><p>A list of <code>parameters_model</code> objects, as returned by
-<code><a href='model_parameters.html'>model_parameters</a></code>, or a list of model-objects that is
+<code><a href='model_parameters.html'>model_parameters()</a></code>, or a list of model-objects that is
 supported by <code><a href='model_parameters.html'>model_parameters()</a></code>.</p></td>
     </tr>
     <tr>
@@ -261,17 +258,17 @@ one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">b
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Averaging of parameters follows Rubin's rules (<cite>Rubin, 1987, p. 76</cite>).
-  The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
-  small samples (<cite>Barnard and Rubin, 1999</cite>).</p>
+The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
+small samples (<cite>Barnard and Rubin, 1999</cite>).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Models with multiple components, (for instance, models with zero-inflation,
-  where predictors appear in the count and zero-inflated part) may fail in
-  case of identical names for coefficients in the different model components,
-  since the coefficient table is grouped by coefficient names for pooling. In
-  such cases, coefficients of count and zero-inflated model parts would be
-  combined. Therefore, the <code>component</code> argument defaults to
-  <code>"conditional"</code> to avoid this.</p>
+where predictors appear in the count and zero-inflated part) may fail in
+case of identical names for coefficients in the different model components,
+since the coefficient table is grouped by coefficient names for pooling. In
+such cases, coefficients of count and zero-inflated model parts would be
+combined. Therefore, the <code>component</code> argument defaults to
+<code>"conditional"</code> to avoid this.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with

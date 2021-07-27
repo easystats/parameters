@@ -126,9 +126,6 @@ updating and returning the &quot;best&quot; model." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -256,16 +253,16 @@ updating and returning the "best" model.</p>
     
 <h3 class='hasAnchor' id='classical-lm-and-glm'><a class='anchor' aria-hidden='true' href='#classical-lm-and-glm'></a>Classical lm and glm</h3>
 <p>For frequentist GLMs, <code>select_parameters()</code> performs an AIC-based
-    stepwise selection.</p>
+stepwise selection.</p>
 
-<p></p><h3 class='hasAnchor' id='mixed-models'><a class='anchor' aria-hidden='true' href='#mixed-models'></a>Mixed models</h3>
+<h3 class='hasAnchor' id='mixed-models'><a class='anchor' aria-hidden='true' href='#mixed-models'></a>Mixed models</h3>
 <p>For mixed-effects models of class <code>merMod</code>, stepwise selection is
-    based on <code><a href='https://rdrr.io/pkg/cAIC4/man/stepcAIC.html'>stepcAIC()</a></code>. This step function
-    only searches the "best" model based on the random-effects structure,
-    i.e. <code>select_parameters()</code> adds or excludes random-effects until
-    the cAIC can't be improved further.</p>
+based on <code><a href='https://rdrr.io/pkg/cAIC4/man/stepcAIC.html'>cAIC4::stepcAIC()</a></code>. This step function
+only searches the "best" model based on the random-effects structure,
+i.e. <code>select_parameters()</code> adds or excludes random-effects until
+the cAIC can't be improved further.</p>
 
-<p></p><h3 class='hasAnchor' id='bayesian-models'><a class='anchor' aria-hidden='true' href='#bayesian-models'></a>Bayesian models</h3>
+<h3 class='hasAnchor' id='bayesian-models'><a class='anchor' aria-hidden='true' href='#bayesian-models'></a>Bayesian models</h3>
 <p>For Bayesian models, it uses the <span class="pkg">projpred</span> package.</p>
 
 

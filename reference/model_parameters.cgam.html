@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Parameters from Generalized Additive (Mixed) Models — model_parameters.cgam" />
 <meta property="og:description" content="Extract and compute indices and measures to describe parameters
-  of generalized additive models (GAM(M)s)." />
+of generalized additive models (GAM(M)s)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -126,9 +126,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -192,7 +189,7 @@
 
     <div class="ref-description">
     <p>Extract and compute indices and measures to describe parameters
-  of generalized additive models (GAM(M)s).</p>
+of generalized additive models (GAM(M)s).</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for cgam</span>
@@ -255,13 +252,12 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
       <td><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian
-regressions</a> apply (see also
+<code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also
 <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
@@ -274,7 +270,7 @@ case of bootstrapped frequentist models.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
 <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
-'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>.
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong> Categorical predictors (i.e. factors) are <em>never</em>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -311,52 +307,52 @@ for working examples.</p></td>
     <tr>
       <th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>p.adjust</a></code> for details. Further
+adjust p-values. See <code><a href='https://rdrr.io/r/stats/p.adjust.html'>stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
     <tr>
       <th>drop</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
@@ -373,7 +369,7 @@ names.</p></td>
       <td><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
+are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>bayestestR::describe_posterior()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -394,8 +390,8 @@ degrees of freedom &#8220;is not very interpretable&#8221;
 (<a href='https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html'>web</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to rename
-  columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>insight::standardize_names()</a></code> to rename
+columns into a consistent, standardized naming scheme.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/parameters/'>parameters</a></span><span class='op'>)</span></span>
@@ -415,18 +411,18 @@ degrees of freedom &#8220;is not very interpretable&#8221;
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Gu &amp; Wahba 4 term additive model</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Fixed Effects </span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(384.97) |      p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(378.14) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |        7.82 | 0.10 | [7.61, 8.02] |     75.74 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept) |        8.13 | 0.10 | [7.94, 8.33] |     80.92 | &lt; .001</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># Smooth Terms </span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter        |     F |   df |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x0) |  5.21 | 2.68 | 0.001 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x1) | 85.58 | 2.59 | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x2) | 88.32 | 7.77 | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x3) |  0.78 | 1.00 | 0.378 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x0) |  9.69 | 3.64 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x1) | 83.76 | 2.59 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x2) | 68.58 | 8.26 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Smooth term (x3) |  1.05 | 6.36 | 0.363 </span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

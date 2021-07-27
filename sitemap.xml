@@ -13,9 +13,6 @@
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/articles/demean.html</loc>
-  </url>
-  <url>
     <loc>/articles/efa_cfa.html</loc>
   </url>
   <url>
@@ -70,13 +67,7 @@
     <loc>/reference/check_factorstructure.html</loc>
   </url>
   <url>
-    <loc>/reference/check_heterogeneity.html</loc>
-  </url>
-  <url>
     <loc>/reference/check_kmo.html</loc>
-  </url>
-  <url>
-    <loc>/reference/check_multimodal.html</loc>
   </url>
   <url>
     <loc>/reference/check_sphericity_bartlett.html</loc>
@@ -152,6 +143,9 @@
   </url>
   <url>
     <loc>/reference/fish.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_df_adjust.html</loc>
   </url>
   <url>
     <loc>/reference/format_order.html</loc>

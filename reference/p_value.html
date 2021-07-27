@@ -132,9 +132,6 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -236,7 +233,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>adjust</th>
@@ -250,9 +247,9 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p><code><a href='standard_error_robust.html'>p_value_robust()</a></code> resp. <code>p_value(method = "robust")</code>
-  rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
-  <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
-  thus only work for those models supported by those packages.</p>
+rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
+<code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
+thus only work for those models supported by those packages.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>

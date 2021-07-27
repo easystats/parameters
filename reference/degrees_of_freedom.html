@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -218,9 +215,9 @@ on the model type), <code>"residual"</code> (or <code>"fit"</code>), in which ca
 are directly taken from the model if available (for Bayesian models, the
 goal (looking for help to make it happen) would be to refit the model as a
 frequentist one before extracting the DoFs), <code>"ml1"</code> (see
-<code><a href='p_value_ml1.html'>dof_ml1</a></code>), <code>"betwithin"</code> (see <code><a href='p_value_betwithin.html'>dof_betwithin</a></code>),
-<code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>), <code>"kenward"</code>
-(see <code><a href='p_value_kenward.html'>dof_kenward</a></code>) or <code>"any"</code>, which tries to extract DoF
+<code><a href='p_value_ml1.html'>dof_ml1()</a></code>), <code>"betwithin"</code> (see <code><a href='p_value_betwithin.html'>dof_betwithin()</a></code>),
+<code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code>), <code>"kenward"</code>
+(see <code><a href='p_value_kenward.html'>dof_kenward()</a></code>) or <code>"any"</code>, which tries to extract DoF
 by any of those methods, whichever succeeds.</p></td>
     </tr>
     </table>
@@ -234,10 +231,10 @@ by any of those methods, whichever succeeds.</p></td>
 <li><p><code>"any"</code> first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
 <li><p><code>"nokr"</code> same as <code>"analytical"</code>, but does not Kenward-Roger approximation for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df for any model.</p></li>
 <li><p><code>"wald"</code> returns <code>Inf</code>.</p></li>
-<li><p><code>"kenward"</code> calls <code><a href='p_value_kenward.html'>dof_kenward</a></code>.</p></li>
-<li><p><code>"satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>dof_satterthwaite</a></code>.</p></li>
-<li><p><code>"ml1"</code> calls <code><a href='p_value_ml1.html'>dof_ml1</a></code>.</p></li>
-<li><p><code>"betwithin"</code> calls <code><a href='p_value_betwithin.html'>dof_betwithin</a></code>.</p></li>
+<li><p><code>"kenward"</code> calls <code><a href='p_value_kenward.html'>dof_kenward()</a></code>.</p></li>
+<li><p><code>"satterthwaite"</code> calls <code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code>.</p></li>
+<li><p><code>"ml1"</code> calls <code><a href='p_value_ml1.html'>dof_ml1()</a></code>.</p></li>
+<li><p><code>"betwithin"</code> calls <code><a href='p_value_betwithin.html'>dof_betwithin()</a></code>.</p></li>
 </ul><p>For models with z-statistic, the returned degrees of freedom for model parameters is <code>Inf</code> (unless <code>method = "ml1"</code> or <code>method = "betwithin"</code>), because there is only one distribution for the related test statistic.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 

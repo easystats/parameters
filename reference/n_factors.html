@@ -129,9 +129,6 @@ with the fewer factors." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -238,7 +235,7 @@ do.</p></td>
     <tr>
       <th>rotation</th>
       <td><p>Only used for VSS (Very Simple Structure criterion, see
-<code><a href='https://rdrr.io/pkg/psych/man/VSS.html'>VSS</a></code>). The rotation to apply. Can be <code>"none"</code>,
+<code><a href='https://rdrr.io/pkg/psych/man/VSS.html'>psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>,
 <code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>,
 <code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal
 rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
@@ -284,51 +281,50 @@ that may fail.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>n_components</code> is actually an alias for <code>n_factors</code>, with
-  different defaults for the function arguments.</p>
+different defaults for the function arguments.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is also a
-  <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
-  implemented in the
-  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.
-  <code>n_components()</code> is a convenient short for <code>n_factors(type =
-  "PCA")</code>.</p>
+<a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+implemented in the
+<a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.
+<code>n_components()</code> is a convenient short for <code>n_factors(type = "PCA")</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
 <li><p>Bartlett, M. S. (1950). Tests of significance in factor analysis.
-  British Journal of statistical psychology, 3(2), 77-85.</p></li>
+British Journal of statistical psychology, 3(2), 77-85.</p></li>
 <li><p>Bentler, P. M., &amp; Yuan, K. H. (1996). Test of linear trend in
-  eigenvalues of a covariance matrix with application to data analysis.
-  British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
+eigenvalues of a covariance matrix with application to data analysis.
+British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.</p></li>
 <li><p>Cattell, R. B. (1966). The scree test for the number of factors.
-  Multivariate behavioral research, 1(2), 245-276.</p></li>
+Multivariate behavioral research, 1(2), 245-276.</p></li>
 <li><p>Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
-  Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
-  Educational and Psychological Measurement.</p></li>
+Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
+Educational and Psychological Measurement.</p></li>
 <li><p>Zoski, K. W., &amp; Jurs, S. (1996). An objective counterpart to the
-  visual scree test for factor analysis: The standard error scree.
-  Educational and Psychological Measurement, 56(3), 443-451.</p></li>
+visual scree test for factor analysis: The standard error scree.
+Educational and Psychological Measurement, 56(3), 443-451.</p></li>
 <li><p>Zoski, K., &amp; Jurs, S. (1993). Using multiple regression to determine
-  the number of factors to retain in factor analysis. Multiple Linear
-  Regression Viewpoints, 20(1), 5-9.</p></li>
+the number of factors to retain in factor analysis. Multiple Linear
+Regression Viewpoints, 20(1), 5-9.</p></li>
 <li><p>Nasser, F., Benson, J., &amp; Wisenbaker, J. (2002). The performance of
-  regression-based variations of the visual scree for determining the number
-  of common factors. Educational and psychological measurement, 62(3),
-  397-419.</p></li>
+regression-based variations of the visual scree for determining the number
+of common factors. Educational and psychological measurement, 62(3),
+397-419.</p></li>
 <li><p>Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
-  D., Sadana, R., &amp; Thiyagarajan, J. A. (2018). Investigating the performance
-  of Exploratory Graph Analysis and traditional techniques to identify the
-  number of latent factors: A simulation and tutorial.</p></li>
+D., Sadana, R., &amp; Thiyagarajan, J. A. (2018). Investigating the performance
+of Exploratory Graph Analysis and traditional techniques to identify the
+number of latent factors: A simulation and tutorial.</p></li>
 <li><p>Golino, H. F., &amp; Epskamp, S. (2017). Exploratory graph analysis: A
-  new approach for estimating the number of dimensions in psychological
-  research. PloS one, 12(6), e0174035.</p></li>
+new approach for estimating the number of dimensions in psychological
+research. PloS one, 12(6), e0174035.</p></li>
 <li><p>Revelle, W., &amp; Rocklin, T. (1979). Very simple structure: An
-  alternative procedure for estimating the optimal number of interpretable
-  factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
+alternative procedure for estimating the optimal number of interpretable
+factors. Multivariate Behavioral Research, 14(4), 403-414.</p></li>
 <li><p>Velicer, W. F. (1976). Determining the number of components from the
-  matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
+matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
 </ul>
 
 

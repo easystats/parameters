@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -215,13 +212,12 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>bootstrap</th>
       <td><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian
-regressions</a> apply (see also
+<code>TRUE</code>, then arguments of <a href='model_parameters.stanreg.html'>Bayesian regressions</a> apply (see also
 <code><a href='bootstrap_parameters.html'>bootstrap_parameters()</a></code>).</p></td>
     </tr>
     <tr>
@@ -234,7 +230,7 @@ case of bootstrapped frequentist models.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>"refit"</code>, <code>"posthoc"</code>, <code>"smart"</code>, <code>"basic"</code>,
 <code>"pseudo"</code> or <code>NULL</code> (default) for no standardization. See
-'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters</a></code>.
+'Details' in <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong> Categorical predictors (i.e. factors) are <em>never</em>
 standardized by default, which may be a different behaviour compared to
 other R packages or other software packages (like SPSS). If standardizing
@@ -272,7 +268,7 @@ for all studies. Else, only parameters for overall-effects are shown.</p></td>
       <td><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
+are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>bayestestR::describe_posterior()</a></code>.</p></td>
     </tr>
     </table>
 

@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -217,8 +214,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code><a href='https://rdrr.io/r/stats/aov.html'>aov</a></code>, <code><a href='https://rdrr.io/r/stats/anova.html'>anova</a></code>,
-<code>aovlist</code>, <code>Gam</code>, <code><a href='https://rdrr.io/r/stats/manova.html'>manova</a></code>, <code>Anova.mlm</code>,
+      <td><p>Object of class <code><a href='https://rdrr.io/r/stats/aov.html'>aov()</a></code>, <code><a href='https://rdrr.io/r/stats/anova.html'>anova()</a></code>,
+<code>aovlist</code>, <code>Gam</code>, <code><a href='https://rdrr.io/r/stats/manova.html'>manova()</a></code>, <code>Anova.mlm</code>,
 <code>afex_aov</code> or <code>maov</code>.</p></td>
     </tr>
     <tr>
@@ -273,45 +270,45 @@ parameter.</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
     <tr>
       <th>drop</th>
-      <td><p>Character containing a regular expression pattern
-that describes the parameters that should be included in the returned data
-frame (for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code>
-may also be a named list of regular expressions. All non-matching parameters
-will be removed from the output. If <code>keep</code> is a character vector, every
-parameter name in the <em>"Parameter"</em> column that matches the regular expression
-in <code>parameters</code> will be selected from the returned data frame (and vice
-versa, all parameter names matching <code>drop</code> will be excluded). Furthermore,
-if <code>keep</code> has more than one element, these will be merged with an
-<code>OR</code> operator into a regular expression pattern like this:
-<code>"(one|two|three)"</code>. If <code>keep</code> is a named list of regular expression
-patterns, the names of the list-element should equal the column name where
-selection should be applied. This is useful for model objects where
-<code><a href='model_parameters.html'>model_parameters()</a></code> returns multiple columns with parameter components,
-like in <code><a href='model_parameters.lavaan.html'>model_parameters.lavaan</a></code>. Note that the regular expression
-pattern should match the parameter names as they are stored in the returned
-data frame, which can be different from how they are printed. Inspect the
+      <td><p>Character containing a regular expression pattern that
+describes the parameters that should be included in the returned data frame
+(for <code>keep</code>), resp. parameters to exclude (<code>drop</code>). <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>parameters</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href='model_parameters.html'>model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href='model_parameters.lavaan.html'>model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></td>
     </tr>
@@ -341,11 +338,11 @@ be in the same row. Default: <code>FALSE</code>.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For ANOVA-tables from mixed models (i.e. <code>anova(lmer())</code>), only
-  partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
-  with interactions involved only give sensible and informative results when
-  covariates are mean-centred and factors are coded with orthogonal contrasts
-  (such as those produced by <code>contr.sum</code>, <code>contr.poly</code>, or
-  <code>contr.helmert</code>, but <em>not</em> by the default <code>contr.treatment</code>).</p>
+partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
+with interactions involved only give sensible and informative results when
+covariates are mean-centred and factors are coded with orthogonal contrasts
+(such as those produced by <code>contr.sum</code>, <code>contr.poly</code>, or
+<code>contr.helmert</code>, but <em>not</em> by the default <code>contr.treatment</code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"effectsize"</span>, quietly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
@@ -399,22 +396,6 @@ be in the same row. Default: <code>FALSE</code>.</p></td>
 <span class='r-in'>    <span class='op'>}</span></span>
 <span class='r-in'>  <span class='op'>}</span></span>
 <span class='r-in'><span class='op'>}</span></span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial omega squared is equivalent to omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial eta squared is equivalent to eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial epsilon squared is equivalent to epsilon squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning epsilon squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial omega squared is equivalent to omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial eta squared is equivalent to eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial omega squared is equivalent to omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning omega squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial eta squared is equivalent to eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning eta squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> For one-way between subjects designs, partial epsilon squared is equivalent to epsilon squared.</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Returning epsilon squared.</span>
 </code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

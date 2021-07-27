@@ -144,9 +144,6 @@ Multiply imputed repeated analyses (mira)
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -248,8 +245,8 @@ Multiply imputed repeated analyses (mira)
 arguments are <code>digits</code>, <code>p_digits</code>, <code>ci_digits</code> and
 <code>footer_digits</code> to set the number of digits for the output.
 <code>group</code> can also be passed to the <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code> method. See details
-in <code><a href='print.parameters_model.html'>print.parameters_model</a></code> and 'Examples' in
-<code><a href='model_parameters.default.html'>model_parameters.default</a></code>.</p></td>
+in <code><a href='print.parameters_model.html'>print.parameters_model()</a></code> and 'Examples' in
+<code><a href='model_parameters.default.html'>model_parameters.default()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -260,71 +257,71 @@ in <code><a href='print.parameters_model.html'>print.parameters_model</a></code>
 
     
 <h3 class='hasAnchor' id='standardization-of-model-coefficients'><a class='anchor' aria-hidden='true' href='#standardization-of-model-coefficients'></a>Standardization of model coefficients</h3>
-<p>Standardization is based on <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters()</a></code>.
-  In case of <code>standardize = "refit"</code>, the data used to fit the model
-  will be standardized and the model is completely refitted. In such cases,
-  standard errors and confidence intervals refer to the standardized
-  coefficient. The default, <code>standardize = "refit"</code>, never standardizes
-  categorical predictors (i.e. factors), which may be a different behaviour
-  compared to other R packages or other software packages (like SPSS).
-  To mimic behaviour of SPSS or packages such as <span class="pkg">lm.beta</span>, use
-  <code>standardize = "basic"</code>.</p>
+<p>Standardization is based on <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.
+In case of <code>standardize = "refit"</code>, the data used to fit the model
+will be standardized and the model is completely refitted. In such cases,
+standard errors and confidence intervals refer to the standardized
+coefficient. The default, <code>standardize = "refit"</code>, never standardizes
+categorical predictors (i.e. factors), which may be a different behaviour
+compared to other R packages or other software packages (like SPSS).
+To mimic behaviour of SPSS or packages such as <span class="pkg">lm.beta</span>, use
+<code>standardize = "basic"</code>.</p>
 <h3 class='hasAnchor' id='methods-of-standardization'><a class='anchor' aria-hidden='true' href='#methods-of-standardization'></a>Methods of standardization</h3>
-<p>For full details, please refer to <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>standardize_parameters()</a></code>.</p><dl>
-    <dt><strong>refit</strong></dt><dd><p>This method is based on a complete model re-fit with a standardized version
-      of the data. Hence, this method is equal to standardizing the variables
-      before fitting the model. It is the "purest" and the most accurate
-      (Neter et al., 1989), but it is also the most computationally costly and
-      long (especially for heavy models such as Bayesian models).The
-      <code>robust</code> argument (default to <code>FALSE</code>) enables a robust standardization
-      of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the
-      <code>mean</code> and <code>SD</code>.</p></dd>
-    <dt><strong>posthoc</strong></dt><dd><p>Post-hoc standardization of the parameters, aiming at emulating the
-      results obtained by <code>"refit"</code> without refitting the model. The coefficients
-      are divided by the standard deviation (or MAD if <code>robust=TRUE</code>) of
-      the outcome (which becomes their expression 'unit'). Then, the coefficients
-      related to numeric variables are additionally multiplied by the standard
-      deviation (or MAD) of the related terms, so that they correspond to
-      changes of 1 SD of the predictor. This does not apply to binary
-      variables or factors, so the coefficients are still related to changes in
-      levels. This method is not accurate and tend to give aberrant results when
-      interactions are specified.</p></dd>
-    <dt><strong>smart</strong></dt><dd><p>(Standardization of Model's parameters with Adjustment, Reconnaissance
-      and Transformation - <em>experimental</em>): Similar to <code>method="posthoc"</code>
-      in that it does not involve model refitting. The difference is that the
-      SD (or MAD) of the response is computed on the relevant section of the
-      data. For instance, if a factor with 3 levels A (the intercept), B and C
-      is entered as a predictor, the effect corresponding to B vs. A will be
-      scaled by the variance of the response at the intercept only. As a results,
-      the coefficients for effects of factors are similar to a Glass' delta.</p></dd>
-    <dt><strong>basic</strong></dt><dd><p>This method is similar to <code>method="posthoc"</code>, but treats all
-      variables as continuous: it also scales the coefficient by the standard
-      deviation of model's matrix' parameter of factors levels (transformed to
-      integers) or binary predictors. Although being inappropriate for these cases,
-      this method is the one implemented by default in other software packages,
-      such as <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></dd>
-    <dt><strong>pseudo</strong> (<em>for 2-level (G)LMMs only</em>)</dt><dd><p>In this (post-hoc) method, the response and the predictor are standardized
-      based on the level of prediction (levels are detected with <code><a href='check_heterogeneity.html'>check_heterogeneity</a></code>:
-      Predictors are standardized based on their SD at level of prediction
-      (see also <code><a href='https://easystats.github.io/datawizard/reference/demean.html'>datawizard::demean()</a></code>). The outcome (in linear LMMs) is
-      standardized based on a fitted random-intercept-model, where
-      <code>sqrt(random-intercept-variance)</code> is used for level 2 predictors,
-      and <code>sqrt(residual-variance)</code> is used for level 1 predictors
-      (Hoffman 2015, page 342). A warning is given when a within-group variable
-      is found to have access between-group variance.</p></dd>
-  
+<p>For full details, please refer to <code><a href='https://easystats.github.io/effectsize/reference/standardize_parameters.html'>effectsize::standardize_parameters()</a></code>.</p><dl>
+<dt><strong>refit</strong></dt><dd><p>This method is based on a complete model re-fit with a standardized version
+of the data. Hence, this method is equal to standardizing the variables
+before fitting the model. It is the "purest" and the most accurate
+(Neter et al., 1989), but it is also the most computationally costly and
+long (especially for heavy models such as Bayesian models).The
+<code>robust</code> argument (default to <code>FALSE</code>) enables a robust standardization
+of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the
+<code>mean</code> and <code>SD</code>.</p></dd>
+<dt><strong>posthoc</strong></dt><dd><p>Post-hoc standardization of the parameters, aiming at emulating the
+results obtained by <code>"refit"</code> without refitting the model. The coefficients
+are divided by the standard deviation (or MAD if <code>robust=TRUE</code>) of
+the outcome (which becomes their expression 'unit'). Then, the coefficients
+related to numeric variables are additionally multiplied by the standard
+deviation (or MAD) of the related terms, so that they correspond to
+changes of 1 SD of the predictor. This does not apply to binary
+variables or factors, so the coefficients are still related to changes in
+levels. This method is not accurate and tend to give aberrant results when
+interactions are specified.</p></dd>
+<dt><strong>smart</strong></dt><dd><p>(Standardization of Model's parameters with Adjustment, Reconnaissance
+and Transformation - <em>experimental</em>): Similar to <code>method="posthoc"</code>
+in that it does not involve model refitting. The difference is that the
+SD (or MAD) of the response is computed on the relevant section of the
+data. For instance, if a factor with 3 levels A (the intercept), B and C
+is entered as a predictor, the effect corresponding to B vs. A will be
+scaled by the variance of the response at the intercept only. As a results,
+the coefficients for effects of factors are similar to a Glass' delta.</p></dd>
+<dt><strong>basic</strong></dt><dd><p>This method is similar to <code>method="posthoc"</code>, but treats all
+variables as continuous: it also scales the coefficient by the standard
+deviation of model's matrix' parameter of factors levels (transformed to
+integers) or binary predictors. Although being inappropriate for these cases,
+this method is the one implemented by default in other software packages,
+such as <code><a href='https://rdrr.io/pkg/lm.beta/man/lm.beta.html'>lm.beta::lm.beta()</a></code>.</p></dd>
+<dt><strong>pseudo</strong> (<em>for 2-level (G)LMMs only</em>)</dt><dd><p>In this (post-hoc) method, the response and the predictor are standardized
+based on the level of prediction:
+Predictors are standardized based on their SD at level of prediction
+(see also <code><a href='https://easystats.github.io/datawizard/reference/demean.html'>datawizard::demean()</a></code>). The outcome (in linear LMMs) is
+standardized based on a fitted random-intercept-model, where
+<code>sqrt(random-intercept-variance)</code> is used for level 2 predictors,
+and <code>sqrt(residual-variance)</code> is used for level 1 predictors
+(Hoffman 2015, page 342). A warning is given when a within-group variable
+is found to have access between-group variance.</p></dd>
+
 </dl>
 
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The <code><a href='print.parameters_model.html'>print()</a></code> method has several
-  arguments to tweak the output. There is also a
-  <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
-  implemented in the
-  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>, and a dedicated
-  method for use inside rmarkdown files,
-  <code><a href='display.parameters_model.html'>print_md()</a></code>.</p>
+arguments to tweak the output. There is also a
+<a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+implemented in the
+<a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>, and a dedicated
+method for use inside rmarkdown files,
+<code><a href='display.parameters_model.html'>print_md()</a></code>.</p>
     <h2 class="hasAnchor" id="labeling-the-degrees-of-freedom"><a class="anchor" href="#labeling-the-degrees-of-freedom"></a>Labeling the Degrees of Freedom</h2>
 
     
@@ -364,8 +361,8 @@ to add the model-specification to the output of the
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>standardize_names()</a></code> to
-  rename columns into a consistent, standardized naming scheme.</p></div>
+    <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>insight::standardize_names()</a></code> to
+rename columns into a consistent, standardized naming scheme.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

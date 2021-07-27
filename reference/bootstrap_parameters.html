@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -232,7 +229,7 @@ to be estimated. Default to <code>.95</code> (95%).</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The indices to compute. Character (vector) with one or more of these options: <code>"p-value"</code> (or <code>"p"</code>), <code>"p_direction"</code> (or <code>"pd"</code>), <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>), <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests. For each "test", the corresponding <span class="pkg">bayestestR</span> function is called (e.g. <code><a href='https://easystats.github.io/bayestestR/reference/rope.html'>rope</a></code> or <code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>p_direction</a></code>) and its results included in the summary output.</p></td>
+      <td><p>The indices to compute. Character (vector) with one or more of these options: <code>"p-value"</code> (or <code>"p"</code>), <code>"p_direction"</code> (or <code>"pd"</code>), <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>), <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests. For each "test", the corresponding <span class="pkg">bayestestR</span> function is called (e.g. <code><a href='https://easystats.github.io/bayestestR/reference/rope.html'>bayestestR::rope()</a></code> or <code><a href='https://easystats.github.io/bayestestR/reference/p_direction.html'>bayestestR::p_direction()</a></code>) and its results included in the summary output.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -245,16 +242,16 @@ to be estimated. Default to <code>.95</code> (95%).</p></td>
     <p>A data frame summarizing the bootstrapped parameters.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function first calls <code><a href='bootstrap_model.html'>bootstrap_model</a></code> to generate
-  bootstrapped coefficients. The resulting replicated for each coefficient
-  are treated as "distribution", and is passed to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior()</a></code>
-  to calculate the related indices defined in the <code>"test"</code> argument.
-  <br /><br />
-  Note that that p-values returned here are estimated under the assumption of
-  <em>translation equivariance</em>: that shape of the sampling distribution is
-  unaffected by the null being true or not. If this assumption does not hold,
-  p-values can be biased, and it is suggested to use proper permutation tests
-  to obtain non-parametric p-values.</p>
+    <p>This function first calls <code><a href='bootstrap_model.html'>bootstrap_model()</a></code> to generate
+bootstrapped coefficients. The resulting replicated for each coefficient
+are treated as "distribution", and is passed to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>bayestestR::describe_posterior()</a></code>
+to calculate the related indices defined in the <code>"test"</code> argument.
+<br /><br />
+Note that that p-values returned here are estimated under the assumption of
+<em>translation equivariance</em>: that shape of the sampling distribution is
+unaffected by the null being true or not. If this assumption does not hold,
+p-values can be biased, and it is suggested to use proper permutation tests
+to obtain non-parametric p-values.</p>
     <h2 class="hasAnchor" id="using-with-emmeans"><a class="anchor" href="#using-with-emmeans"></a>Using with <code>emmeans</code></h2>
 
     
@@ -275,7 +272,7 @@ to obtain non-parametric p-values.</p>
     <p>Davison, A. C., &amp; Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters</a></code>, <code><a href='simulate_model.html'>simulate_model</a></code></p></div>
+    <div class='dont-index'><p><code><a href='bootstrap_model.html'>bootstrap_model()</a></code>, <code><a href='simulate_parameters.html'>simulate_parameters()</a></code>, <code><a href='simulate_model.html'>simulate_model()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>

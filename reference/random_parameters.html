@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Summary information from random effects — random_parameters" />
 <meta property="og:description" content="This function extracts the different variance components of a
-  mixed model and returns the result as a data frame." />
+mixed model and returns the result as a data frame." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -126,9 +126,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -192,7 +189,7 @@
 
     <div class="ref-description">
     <p>This function extracts the different variance components of a
-  mixed model and returns the result as a data frame.</p>
+mixed model and returns the result as a data frame.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>random_parameters</span><span class='op'>(</span><span class='va'>model</span>, component <span class='op'>=</span> <span class='st'>"conditional"</span><span class='op'>)</span></code></pre></div>
@@ -217,30 +214,33 @@ May be abbreviated.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with random effects statistics for the variance components,
-  including number of levels per random effect group, as well as complete
-  observations in the model.</p>
+including number of levels per random effect group, as well as complete
+observations in the model.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The variance components are obtained from
-  <code><a href='https://easystats.github.io/insight/reference/get_variance.html'>get_variance</a></code> and are denoted as following:</p><h3 class='hasAnchor' id='within-group-or-residual-variance'><a class='anchor' aria-hidden='true' href='#within-group-or-residual-variance'></a>Within-group (or residual) variance</h3>
+<code><a href='https://easystats.github.io/insight/reference/get_variance.html'>insight::get_variance()</a></code> and are denoted as following:</p><h3 class='hasAnchor' id='within-group-or-residual-variance'><a class='anchor' aria-hidden='true' href='#within-group-or-residual-variance'></a>Within-group (or residual) variance</h3>
 <p>The residual variance, &sigma;<sup>2</sup><sub>&epsilon;</sub>,
-    is the sum of the distribution-specific variance and the variance due to additive dispersion.
-    It indicates the <em>within-group variance</em>.</p><p></p><h3 class='hasAnchor' id='between-group-random-intercept-variance'><a class='anchor' aria-hidden='true' href='#between-group-random-intercept-variance'></a>Between-group random intercept variance</h3>
+is the sum of the distribution-specific variance and the variance due to additive dispersion.
+It indicates the <em>within-group variance</em>.</p>
+<h3 class='hasAnchor' id='between-group-random-intercept-variance'><a class='anchor' aria-hidden='true' href='#between-group-random-intercept-variance'></a>Between-group random intercept variance</h3>
 <p>The random intercept variance, or <em>between-group</em> variance
-    for the intercept (&tau;<sub>00</sub>),
-    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. It indicates how much groups
-    or subjects differ from each other.</p><p></p><h3 class='hasAnchor' id='between-group-random-slope-variance'><a class='anchor' aria-hidden='true' href='#between-group-random-slope-variance'></a>Between-group random slope variance</h3>
+for the intercept (&tau;<sub>00</sub>),
+is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. It indicates how much groups
+or subjects differ from each other.</p>
+<h3 class='hasAnchor' id='between-group-random-slope-variance'><a class='anchor' aria-hidden='true' href='#between-group-random-slope-variance'></a>Between-group random slope variance</h3>
 <p>The random slope variance, or <em>between-group</em> variance
-    for the slopes (&tau;<sub>11</sub>)
-    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
-    for mixed models with random slopes. It indicates how much groups
-    or subjects differ from each other according to their slopes.</p><p></p><h3 class='hasAnchor' id='random-slope-intercept-correlation'><a class='anchor' aria-hidden='true' href='#random-slope-intercept-correlation'></a>Random slope-intercept correlation</h3>
+for the slopes (&tau;<sub>11</sub>)
+is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
+for mixed models with random slopes. It indicates how much groups
+or subjects differ from each other according to their slopes.</p>
+<h3 class='hasAnchor' id='random-slope-intercept-correlation'><a class='anchor' aria-hidden='true' href='#random-slope-intercept-correlation'></a>Random slope-intercept correlation</h3>
 <p>The random slope-intercept correlation
-    (&rho;<sub>01</sub>)
-    is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
-    for mixed models with random intercepts and slopes.</p><p><strong>Note:</strong> For the within-group and between-group variance, variance
-  and standard deviations (which are simply the square root of the variance)
-  are shown.</p>
+(&rho;<sub>01</sub>)
+is obtained from <code><a href='https://rdrr.io/pkg/lme4/man/VarCorr.html'>VarCorr()</a></code>. This measure is only available
+for mixed models with random intercepts and slopes.</p><p><strong>Note:</strong> For the within-group and between-group variance, variance
+and standard deviations (which are simply the square root of the variance)
+are shown.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>

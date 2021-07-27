@@ -136,9 +136,6 @@ reduce_parameters.data.frame()." />
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -236,8 +233,8 @@ data analysis workflow. <code>reduce_data()</code> is an alias for
       <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
 set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
 <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is
-selected through <code><a href='n_factors.html'>n_factors</a></code> resp. <code><a href='n_factors.html'>n_components</a></code>.
-In <code>reduce_parameters</code>, can also be <code>"max"</code>, in which case
+selected through <code><a href='n_factors.html'>n_factors()</a></code> resp. <code><a href='n_factors.html'>n_components()</a></code>.
+In <code>reduce_parameters()</code>, can also be <code>"max"</code>, in which case
 it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.</p></td>
     </tr>
@@ -259,7 +256,7 @@ can be given.</p></td>
     <p>The different methods available are described below:</p><h3 class='hasAnchor' id='supervised-methods'><a class='anchor' aria-hidden='true' href='#supervised-methods'></a>Supervised Methods</h3>
 
 <ul>
-<li><p><strong>PCA</strong>: See <code><a href='principal_components.html'>principal_components</a></code>.</p></li>
+<li><p><strong>PCA</strong>: See <code><a href='principal_components.html'>principal_components()</a></code>.</p></li>
 <li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a
 set of dissimilarities (i.e., a distance matrix) and returns a set of points
 such that the distances between the points are approximately equal to the
@@ -286,10 +283,10 @@ source, which makes it a poor tool for dimensionality reduction. Requires the
     
 <ul>
 <li><p>Nguyen, L. H., \&amp; Holmes, S. (2019). Ten quick tips for effective
- dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
+dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
 <li><p>Laparra, V., Malo, J., &amp; Camps-Valls, G. (2015). Dimensionality
- reduction via regression in hyperspectral imagery. IEEE Journal of Selected
- Topics in Signal Processing, 9(6), 1026-1036.</p></li>
+reduction via regression in hyperspectral imagery. IEEE Journal of Selected
+Topics in Signal Processing, 9(6), 1026-1036.</p></li>
 </ul>
 
 

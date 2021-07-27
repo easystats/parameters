@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Print tables in different output formats — display.parameters_model" />
 <meta property="og:description" content="Prints tables (i.e. data frame) in different output formats.
-  print_md() is a alias for display(format = &quot;markdown&quot;)." />
+print_md() is a alias for display(format = &quot;markdown&quot;)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -126,9 +126,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -192,7 +189,7 @@
 
     <div class="ref-description">
     <p>Prints tables (i.e. data frame) in different output formats.
-  <code><a href='https://easystats.github.io/insight/reference/display.html'>print_md()</a></code> is a alias for <code>display(format = "markdown")</code>.</p>
+<code><a href='https://easystats.github.io/insight/reference/display.html'>print_md()</a></code> is a alias for <code>display(format = "markdown")</code>.</p>
     </div>
 
     <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='co'># S3 method for parameters_model</span>
@@ -371,7 +368,7 @@ significant figures. May also be <code>"signif"</code> to return significant
 figures or <code>"scientific"</code> to return scientific notation. Control the
 number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
 to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
-for 5 significant figures (see also <code><a href='https://rdrr.io/r/base/Round.html'>signif</a></code>).</p></td>
+for 5 significant figures (see also <code><a href='https://rdrr.io/r/base/Round.html'>signif()</a></code>).</p></td>
     </tr>
     <tr>
       <th>footer_digits</th>
@@ -419,7 +416,8 @@ structure).</p></td>
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>A character vector containing labels to be added to the loadings data. Usually, the question related to the item.</p></td>
+      <td><p>A character vector containing labels to be added to the
+loadings data. Usually, the question related to the item.</p></td>
     </tr>
     <tr>
       <th>x</th>
@@ -449,16 +447,16 @@ to the end.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If <code>format = "markdown"</code>, the return value will be a character
-  vector in markdown-table format. If <code>format = "html"</code>, an object of
-  class <code>gt_tbl</code>.</p>
+vector in markdown-table format. If <code>format = "html"</code>, an object of
+class <code>gt_tbl</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code><a href='https://easystats.github.io/insight/reference/display.html'>display()</a></code> is useful when the table-output from functions,
-  which is usually printed as formatted text-table to console, should
-  be formatted for pretty table-rendering in markdown documents, or if
-  knitted from rmarkdown to PDF or Word files. See
-  <a href='https://easystats.github.io/parameters/articles/model_parameters_formatting.html'>vignette</a>
-  for examples.</p>
+which is usually printed as formatted text-table to console, should
+be formatted for pretty table-rendering in markdown documents, or if
+knitted from rmarkdown to PDF or Word files. See
+<a href='https://easystats.github.io/parameters/articles/model_parameters_formatting.html'>vignette</a>
+for examples.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span></span>

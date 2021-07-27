@@ -77,9 +77,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -255,7 +252,7 @@
 <p>We can get a similar tabular output using <em>broom</em>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt; # A tibble: 6 × 7</span>
 <span class="co">#&gt;   term                 estimate std.error statistic   p.value conf.low conf.high</span>
 <span class="co">#&gt;   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 (Intercept)             3.81     0.0582    65.5   4.61e-109    3.70      3.93 </span>

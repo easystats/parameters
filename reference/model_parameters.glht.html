@@ -125,9 +125,6 @@
     <li>
       <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
     </li>
-    <li>
-      <a href="../articles/demean.html">Panel Data Analysis</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -204,7 +201,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>Object of class <code><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>glht</a></code> (<span class="pkg">multcomp</span>)
+      <td><p>Object of class <code><a href='https://rdrr.io/pkg/multcomp/man/glht.html'>multcomp::glht()</a></code> (<span class="pkg">multcomp</span>)
 or of class <code>PMCMR</code>, <code>trendPMCMR</code> or <code>osrt</code> (<span class="pkg">PMCMRplus</span>).</p></td>
     </tr>
     <tr>
@@ -212,11 +209,11 @@ or of class <code>PMCMR</code>, <code>trendPMCMR</code> or <code>osrt</code> (<s
       <td><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href='bootstrap_model.html'>bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>describe_posterior</a></code>.</p></td>
+are passed down to <code><a href='https://easystats.github.io/bayestestR/reference/describe_posterior.html'>bayestestR::describe_posterior()</a></code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to 0.95 (95%).</p></td>
+      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>exponentiate</th>
@@ -273,10 +270,10 @@ from non-Gaussian families.</p></td>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter             | Coefficient |   SE |         95% CI | t(41) |      p</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ----------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Agriculture == 0      |       -0.17 | 0.07 | [-0.36,  0.01] | -2.45 | 0.079 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Agriculture == 0      |       -0.17 | 0.07 | [-0.36,  0.01] | -2.45 | 0.080 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Examination == 0      |       -0.26 | 0.25 | [-0.93,  0.41] | -1.02 | 0.785 </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Education == 0        |       -0.87 | 0.18 | [-1.35, -0.39] | -4.76 | &lt; .001</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Catholic == 0         |        0.10 | 0.04 | [ 0.01,  0.20] |  2.95 | 0.024 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Education == 0        |       -0.87 | 0.18 | [-1.36, -0.39] | -4.76 | &lt; .001</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Catholic == 0         |        0.10 | 0.04 | [ 0.01,  0.20] |  2.95 | 0.023 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Infant Mortality == 0 |        1.08 | 0.38 | [ 0.07,  2.09] |  2.82 | 0.033 </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>p-value adjustment method: single-step</span></span>
