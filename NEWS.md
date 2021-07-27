@@ -99,6 +99,9 @@ necessary changes before this breaking change is implemented.
 * Fixed sign error for `model_parameters.htest()` for objects created with
   `t.test.formula()` (issue #552)
 
+* Fixed issue when computing random effect variances in `model_parameters()` 
+  for mixed models with categorical random slopes.
+
 # parameters 0.14.0
 
 ## Breaking changes
