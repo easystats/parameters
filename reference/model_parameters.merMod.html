@@ -350,17 +350,15 @@ standard errors and confidence intervals (CI). By default (<code>NULL</code>),
 returns residual degrees of freedom for linear mixed models, or <code>Inf</code>
 for all other distributional families. May be <code>"wald"</code>,
 <code>"residual"</code> (for both see <code><a href='degrees_of_freedom.html'>degrees_of_freedom()</a></code>),
-<code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1()</a></code>), <code>"betwithin"</code> (see
-<code><a href='p_value_betwithin.html'>dof_betwithin()</a></code>), <code>"satterthwaite"</code> (see
-<code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code>) or <code>"kenward"</code> (see
-<code><a href='p_value_kenward.html'>dof_kenward()</a></code>). The options <code>df_method = "boot"</code>,
-<code>df_method = "profile"</code> and <code>df_method = "uniroot"</code> only affect
-confidence intervals; in this case, bootstrapped resp. profiled confidence
-intervals are computed. <code>"uniroot"</code> only applies to models of class
-<code>glmmTMB</code>. For models of class <code>lmerMod</code>, when
-<code>df_method = "wald"</code>, residual degrees of freedom are returned.
-Note that when <code>df_method</code> is not <code>NULL</code>, <code>"wald"</code> or
-<code>"residual"</code>, robust standard errors etc. cannot be computed.</p></td>
+<code>"ml1"</code> (see <code><a href='p_value_ml1.html'>dof_ml1()</a></code>), <code>"betwithin"</code> (see <code><a href='p_value_betwithin.html'>dof_betwithin()</a></code>),
+<code>"satterthwaite"</code> (see <code><a href='p_value_satterthwaite.html'>dof_satterthwaite()</a></code>) or <code>"kenward"</code> (see
+<code><a href='p_value_kenward.html'>dof_kenward()</a></code>). The options <code>"boot"</code>, <code>"profile"</code> and <code>"uniroot"</code> only
+affect confidence intervals; in this case, bootstrapped resp. profiled
+confidence intervals are computed. <code>"uniroot"</code> only applies to models of
+class <code>glmmTMB</code>. For models of class <code>lmerMod</code>, when <code>df_method = "wald"</code>,
+residual degrees of freedom are returned. Note that when <code>df_method</code> is
+not <code>NULL</code>, <code>"wald"</code> or <code>"residual"</code>, robust standard errors etc. cannot
+be computed.</p></td>
     </tr>
     <tr>
       <th>p_adjust</th>
@@ -467,6 +465,14 @@ for working examples.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is also a <a href='https://easystats.github.io/see/articles/parameters.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <h2 class="hasAnchor" id="confidence-intervals-for-random-effect-variances"><a class="anchor" href="#confidence-intervals-for-random-effect-variances"></a>Confidence intervals for random effect variances</h2>
+
+    
+
+<p>When <code>df_method = "profile"</code> and <code>effects</code> is either <code>"random"</code> or <code>"all"</code>,
+profiled confidence intervals are computed for the random effects. For all
+other options of <code>df_method</code>, confidence intervals for random effects will
+be missing.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://easystats.github.io/insight/reference/standardize_names.html'>insight::standardize_names()</a></code> to

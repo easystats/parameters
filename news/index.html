@@ -184,9 +184,9 @@
       <small>Source: <a href='https://github.com/easystats/parameters/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="parameters-0141" class="section level1">
-<h1 class="page-header" data-toc-text="0.14.1">
-<a href="#parameters-0141" class="anchor" aria-hidden="true"></a>parameters 0.14.1<small> Unreleased </small></h1>
+    <div id="parameters-0150" class="section level1">
+<h1 class="page-header" data-toc-text="0.15.0">
+<a href="#parameters-0150" class="anchor" aria-hidden="true"></a>parameters 0.15.0<small> Unreleased </small></h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking changes</h2>
@@ -226,6 +226,7 @@
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a new argument <code>table_wide</code> for ANOVA tables. This can be helpful for users who may wish to report ANOVA table in wide format (i.e., with numerator and denominator degrees of freedom on the same row).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains two new arguments, <code>keep</code> and <code>drop</code>. <code>keep</code> is the new names for the former <code>parameters</code> argument and can be used to filter parameters. While <code>keep</code> selects those parameters whose names match the regular expression pattern defined in <code>keep</code>, <code>drop</code> is the counterpart and excludes matching parameter names.</p></li>
 <li><p>When <code><a href="../reference/model_parameters.html">model_parameters()</a></code> is called with <code>verbose = TRUE</code>, and <code>df_method</code> is not the default value, the printed output includes a message indicating which approximation-method for degrees of freedom was used.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models with <code>df_method = "profile</code> computes (profiled) confidence intervals for both fixed and random effects. Thus, <code>df_method = "profile</code> allows to add confidence intervals to the random effect variances.</p></li>
 </ul></div>
 <div id="other-functions" class="section level3">
 <h3 class="hasAnchor">
