@@ -36,19 +36,19 @@ simulate_parameters(model, ...)
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
-\code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).}
+\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi()}}), \code{"ETI"}
+(see \code{\link[bayestestR:eti]{eti()}}), \code{"BCI"} (see
+\code{\link[bayestestR:bci]{bci()}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
 \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
+(e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
 \item{...}{Arguments passed to or from other methods.}

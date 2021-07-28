@@ -61,7 +61,7 @@
 
 #' @keywords internal
 .ci_profile_merMod <- function(x, ci, profiled, ...) {
-  out <- as.data.frame(stats::confint(profiled, level = ci, ...))
+  out <- as.data.frame(suppressWarnings(stats::confint(profiled, level = ci, ...)))
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
   out <- out[rownames(out) %in% insight::find_parameters(x, effects = "fixed")$conditional, ]
   names(out) <- c("CI_low", "CI_high")

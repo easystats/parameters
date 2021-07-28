@@ -8,6 +8,7 @@
                                               ci = .95,
                                               effects = "random",
                                               component = "conditional",
+                                              df_method = NULL,
                                               ...) {
   suppressWarnings(
     .extract_random_variances_helper(
@@ -15,6 +16,7 @@
       ci = ci,
       effects = effects,
       component = component,
+      df_method = df_method,
       ...
     )
   )
@@ -30,6 +32,7 @@
                                               ci = .95,
                                               effects = "random",
                                               component = "all",
+                                              df_method = NULL,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
 
@@ -39,6 +42,7 @@
       ci = ci,
       effects = effects,
       component = "conditional",
+      df_method = df_method,
       ...
     )
   )
@@ -51,6 +55,7 @@
         ci = ci,
         effects = effects,
         component = "zi",
+        df_method = df_method,
         ...
       )
     )
@@ -79,7 +84,11 @@
 # workhorse ------------------------
 
 
-.extract_random_variances_helper <- function(model, ci = ci, effects = effects, component = "conditional", ...) {
+.extract_random_variances_helper <- function(model,
+                                             ci = .95,
+                                             effects = "random",
+                                             component = "conditional",
+                                             df_method = NULL, ...) {
   ran_intercept <- data.frame(
     insight::get_variance(
       model,
@@ -188,6 +197,31 @@
     }
   }
   out[ci_cols] <- NA
+
+  # add confidence intervals?
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(df_method) && df_method == "profile") {
+    var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = "profile", level = ci)))
+    colnames(var_ci) <- c("CI_low", "CI_high")
+
+    rn <- row.names(var_ci)
+    rn <- gsub("sd_(.*)(\\|)(.*)", "\\1: \\3", rn)
+    rn <- gsub("|", ":", rn, fixed = TRUE)
+    rn <- gsub("[\\(\\)]", "", rn)
+    rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
+
+    var_ci_corr_param <- grepl("^cor ", rn)
+    var_ci_sigma_param <- rn == "sigma"
+
+    out$CI <- ci
+
+    out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
+    out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
+    out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
+
+    out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
+    out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
+    out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+  }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
 

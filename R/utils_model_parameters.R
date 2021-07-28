@@ -42,6 +42,7 @@
   }
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- ci_method
+  attr(params, "test_statistic") <- insight::find_statistic(model)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)

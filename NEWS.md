@@ -1,4 +1,4 @@
-# parameters 0.14.1
+# parameters 0.15.0
 
 ## Breaking changes
 
@@ -62,6 +62,11 @@ necessary changes before this breaking change is implemented.
 * When `model_parameters()` is called with `verbose = TRUE`, and `df_method` is
   not the default value, the printed output includes a message indicating which
   approximation-method for degrees of freedom was used.
+
+* `model_parameters()` for mixed models with `df_method = "profile` computes 
+  (profiled) confidence intervals for both fixed and random effects. Thus, 
+  `df_method = "profile` allows to add confidence intervals to the random
+  effect variances.
 
 ### Other functions
 

@@ -66,17 +66,15 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   returns residual degrees of freedom for linear mixed models, or `Inf`
 #'   for all other distributional families. May be `"wald"`,
 #'   `"residual"` (for both see [degrees_of_freedom()]),
-#'   `"ml1"` (see [dof_ml1()]), `"betwithin"` (see
-#'   [dof_betwithin()]), `"satterthwaite"` (see
-#'   [dof_satterthwaite()]) or `"kenward"` (see
-#'   [dof_kenward()]). The options `df_method = "boot"`,
-#'   `df_method = "profile"` and `df_method = "uniroot"` only affect
-#'   confidence intervals; in this case, bootstrapped resp. profiled confidence
-#'   intervals are computed. `"uniroot"` only applies to models of class
-#'   `glmmTMB`. For models of class `lmerMod`, when
-#'   `df_method = "wald"`, residual degrees of freedom are returned.
-#'   Note that when `df_method` is not `NULL`, `"wald"` or
-#'   `"residual"`, robust standard errors etc. cannot be computed.
+#'   `"ml1"` (see [dof_ml1()]), `"betwithin"` (see [dof_betwithin()]),
+#'   `"satterthwaite"` (see [dof_satterthwaite()]) or `"kenward"` (see
+#'   [dof_kenward()]). The options `"boot"`, `"profile"` and `"uniroot"` only
+#'   affect confidence intervals; in this case, bootstrapped resp. profiled
+#'   confidence intervals are computed. `"uniroot"` only applies to models of
+#'   class `glmmTMB`. For models of class `lmerMod`, when `df_method = "wald"`,
+#'   residual degrees of freedom are returned. Note that when `df_method` is
+#'   not `NULL`, `"wald"` or `"residual"`, robust standard errors etc. cannot
+#'   be computed.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
 #'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
@@ -85,6 +83,12 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   conditional or zero-inflated component of the model.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
+#'
+#' @section Confidence intervals for random effect variances:
+#' When `df_method = "profile"` and `effects` is either `"random"` or `"all"`,
+#' profiled confidence intervals are computed for the random effects. For all
+#' other options of `df_method`, confidence intervals for random effects will
+#' be missing.
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
@@ -205,7 +209,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, df_method = df_method)
   }
 
   # merge random and fixed effects, if necessary
@@ -342,7 +346,7 @@ ci.merMod <- function(x,
 
     # profiles CIs
   } else if (method == "profile") {
-    pp <- stats::profile(x)
+    pp <- suppressWarnings(stats::profile(x, which = "beta_"))
     out <- lapply(ci, function(i) .ci_profile_merMod(x, ci = i, profiled = pp, ...))
     out <- do.call(rbind, out)
   }
@@ -368,17 +372,17 @@ standard_error.merMod <- function(model,
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      # Classic and Satterthwaite SE
-      if (method %in% c("wald", "satterthwaite", "residual")) {
-        se_mixed_default(model)
-        # ml1 approx
-      } else if (method == "ml1") {
+      # ml1 approx
+      if (method == "ml1") {
         se_ml1(model)
       } else if (method == "betwithin") {
         se_betwithin(model)
         # Kenward approx
       } else if (method %in% c("kenward", "kr")) {
         se_kenward(model)
+      } else {
+        # Classic and Satterthwaite SE
+        se_mixed_default(model)
       }
     }
   }

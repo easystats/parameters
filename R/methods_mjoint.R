@@ -37,7 +37,7 @@ model_parameters.mjoint <- function(model,
   }
 
   if (effects %in% c("random", "all")) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, df_method = df_method)
     params_variance$Component <- "conditional"
   }
 
