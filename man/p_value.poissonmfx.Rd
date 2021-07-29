@@ -19,7 +19,9 @@
 \arguments{
 \item{model}{A statistical model.}
 
-\item{component}{Should all parameters, parameters for the conditional model, precision-component or marginal effects be returned? \code{component} may be one of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).}
+\item{component}{Should all parameters, parameters for the conditional model,
+precision-component or marginal effects be returned? \code{component} may be one
+of \code{"conditional"}, \code{"precision"}, \code{"marginal"} or \code{"all"} (default).}
 
 \item{...}{Currently not used.}
 }
@@ -29,7 +31,8 @@ p-values. Depending on the model, may also include columns for model
 components etc.
 }
 \description{
-This function attempts to return, or compute, p-values of marginal effects models from package \pkg{mfx}.
+This function attempts to return, or compute, p-values of marginal effects
+models from package \pkg{mfx}.
 }
 \examples{
 if (require("mfx", quietly = TRUE)) {

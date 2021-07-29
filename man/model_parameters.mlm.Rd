@@ -21,7 +21,7 @@
   ...
 )
 
-\method{model_parameters}{bifeAPEs}(x, ...)
+\method{model_parameters}{bifeAPEs}(model, ...)
 
 \method{model_parameters}{bracl}(
   model,

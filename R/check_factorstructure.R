@@ -1,8 +1,8 @@
 #' Check suitability of data for Factor Analysis (FA)
 #'
 #' This checks whether the data is appropriate for Factor Analysis (FA) by
-#' running the [Bartlett's Test of Sphericity][check_sphericity_bartlett] and the
-#' [Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
+#' running the [Bartlett's Test of Sphericity][check_sphericity_bartlett] and
+#' the [Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
 #' (MSA)][check_kmo].
 #'
 #' @inheritParams check_sphericity_bartlett
@@ -10,7 +10,8 @@
 #' library(parameters)
 #' check_factorstructure(mtcars)
 #' @return A list of lists of indices related to sphericity and KMO.
-#' @seealso [check_kmo()], [check_sphericity_bartlett()] and [check_clusterstructure()].
+#' @seealso
+#' [check_kmo()], [check_sphericity_bartlett()] and [check_clusterstructure()].
 #' @export
 check_factorstructure <- function(x, ...) {
 

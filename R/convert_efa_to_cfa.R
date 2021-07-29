@@ -1,6 +1,7 @@
 #' Conversion between EFA results and CFA structure
 #'
-#' Enables a conversion between Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) `lavaan`-ready structure.
+#' Enables a conversion between Exploratory Factor Analysis (EFA) and
+#' Confirmatory Factor Analysis (CFA) `lavaan`-ready structure.
 #'
 #' @param model An EFA model (e.g., a `psych::fa` object).
 #' @inheritParams principal_components
@@ -42,7 +43,10 @@ convert_efa_to_cfa.fa.ci <- convert_efa_to_cfa.fa
 
 
 #' @export
-convert_efa_to_cfa.parameters_efa <- function(model, threshold = NULL, names = NULL, ...) {
+convert_efa_to_cfa.parameters_efa <- function(model,
+                                              threshold = NULL,
+                                              names = NULL,
+                                              ...) {
   if (!is.null(threshold)) {
     model <- model_parameters(attributes(model)$model, threshold = threshold, ...)
   }

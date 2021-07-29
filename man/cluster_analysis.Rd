@@ -21,36 +21,39 @@ cluster_analysis(
 \arguments{
 \item{x}{A data frame.}
 
-\item{n_clusters}{Number of clusters used for the cluster solution. By default,
-the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}.}
+\item{n_clusters}{Number of clusters used for the cluster solution. By
+default, the number of clusters to extract is determined by calling
+\code{\link[=n_clusters]{n_clusters()}}.}
 
-\item{method}{Method for computing the cluster analysis. By default (\code{"hclust"}), a
-hierarchical cluster analysis, will be computed. Use \code{"kmeans"} to
-compute a kmeans cluster analysis. You can specify the initial letters only.}
+\item{method}{Method for computing the cluster analysis. By default
+(\code{"hclust"}), a hierarchical cluster analysis, will be computed. Use
+\code{"kmeans"} to compute a kmeans cluster analysis. You can specify the
+initial letters only.}
 
-\item{distance}{Distance measure to be used when \code{method = "hclust"} (for hierarchical
-clustering). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
-\code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}}.
-If is \code{method = "kmeans"} this argument will be ignored.}
+\item{distance}{Distance measure to be used when \code{method = "hclust"} (for
+hierarchical clustering). Must be one of \code{"euclidean"}, \code{"maximum"},
+\code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}}. If
+is \code{method = "kmeans"} this argument will be ignored.}
 
-\item{agglomeration}{Agglomeration method to be used when \code{method = "hclust"} (for hierarchical
-clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
-\code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link[=hclust]{hclust()}}).
-If \code{method = "kmeans"} this argument will be ignored.}
+\item{agglomeration}{Agglomeration method to be used when \code{method = "hclust"}
+(for hierarchical clustering). This should be one of \code{"ward"}, \code{"single"},
+\code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
+Default is \code{"ward"} (see \code{\link[=hclust]{hclust()}}). If \code{method = "kmeans"} this argument
+will be ignored.}
 
 \item{iterations}{Maximum number of iterations allowed. Only applies, if
 \code{method = "kmeans"}. See \code{\link[=kmeans]{kmeans()}} for details on this argument.}
 
-\item{algorithm}{Algorithm used for calculating kmeans cluster. Only applies, if
-\code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
-\code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}}
-for details on this argument.}
+\item{algorithm}{Algorithm used for calculating kmeans cluster. Only applies,
+if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
+\code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}} for details on
+this argument.}
 
 \item{force}{Logical, if \code{TRUE}, ordered factors (ordinal variables) are
-converted to numeric values, while character vectors and factors are converted
-to dummy-variables (numeric 0/1) and are included in the cluster analysis.
-If \code{FALSE}, factors and character vectors are removed before computing
-the cluster analysis.}
+converted to numeric values, while character vectors and factors are
+converted to dummy-variables (numeric 0/1) and are included in the cluster
+analysis. If \code{FALSE}, factors and character vectors are removed before
+computing the cluster analysis.}
 
 \item{package}{Package from which methods are to be called to determine the
 number of clusters. Can be \code{"all"} or a vector containing
@@ -68,11 +71,11 @@ Compute hierarchical or kmeans cluster analysis and return the group
 assignment for each observation as vector.
 }
 \details{
-The \code{print()} and \code{plot()} methods show the (standardized)
-mean value for each variable within each cluster. Thus, a higher absolute
-value indicates that a certain variable characteristic is more pronounced
-within that specific cluster (as compared to other cluster groups with lower
-absolute mean values).
+The \code{print()} and \code{plot()} methods show the (standardized) mean value for
+each variable within each cluster. Thus, a higher absolute value indicates
+that a certain variable characteristic is more pronounced within that
+specific cluster (as compared to other cluster groups with lower absolute
+mean values).
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -89,8 +92,12 @@ groups
 }
 }
 \references{
-Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
+Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
+Analysis Basics and Extensions. R package.
 }
 \seealso{
-\code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract, \code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group classification and \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data for clustering.
+\code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
+\code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group
+classification and \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data
+for clustering.
 }
