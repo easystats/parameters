@@ -20,6 +20,7 @@ p_value.bife <- function(model, ...) {
   )
 }
 
+#' @rdname model_parameters.mlm
 #' @export
 
 model_parameters.bifeAPEs <- function(x, ...) {
@@ -27,7 +28,7 @@ model_parameters.bifeAPEs <- function(x, ...) {
   est <- x[["delta"]]
   se <- sqrt(diag(x[["vcov"]]))
   z <- est/se
-  p <- 2 * pnorm(-abs(z))
+  p <- 2 * stats::pnorm(-abs(z))
   nms <- names(est)
 
   out <- data.frame(nms, est, se, z, p)
