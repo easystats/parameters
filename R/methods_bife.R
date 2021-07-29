@@ -19,3 +19,22 @@ p_value.bife <- function(model, ...) {
     p = as.vector(p)
   )
 }
+
+#' @export
+
+model_parameters.bifeAPEs <- function(x, ...) {
+
+  est <- x[["delta"]]
+  se <- sqrt(diag(x[["vcov"]]))
+  z <- est/se
+  p <- 2 * pnorm(-abs(z))
+  nms <- names(est)
+
+  out <- data.frame(nms, est, se, z, p)
+  colnames(out) <- c("Parameter", "Coefficient", "Std. error", "z value", "p")
+  rownames(out) <- NULL
+  out <- as.data.frame(out)
+
+  class(out) <- c("parameters_model", "see_parameters_model", class(out))
+  out
+}
