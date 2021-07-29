@@ -253,14 +253,14 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 × 7</span>
-<span class="co">#&gt;   term                 estimate std.error statistic   p.value conf.low conf.high</span>
-<span class="co">#&gt;   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 (Intercept)             3.81     0.0582    65.5   4.61e-109    3.70      3.93 </span>
-<span class="co">#&gt; 2 poly(Sepal.Length, …    4.06     0.467      8.70  7.00e- 15    3.14      4.98 </span>
-<span class="co">#&gt; 3 poly(Sepal.Length, …   -1.30     0.315     -4.14  5.98e-  5   -1.92     -0.680</span>
-<span class="co">#&gt; 4 Speciesversicolor      -1.01     0.278     -3.62  4.12e-  4   -1.56     -0.456</span>
-<span class="co">#&gt; 5 Speciesvirginica       -0.991    0.285     -3.48  6.72e-  4   -1.55     -0.428</span>
-<span class="co">#&gt; 6 Petlen(3,7]            -0.136    0.282     -0.482 6.30e-  1   -0.693     0.421</span></code></pre></div>
+<span class="co">#&gt;   term                   estimate std.error statistic   p.value conf.low conf.high</span>
+<span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 (Intercept)               3.81     0.0582    65.5   4.61e-109    3.70      3.93 </span>
+<span class="co">#&gt; 2 poly(Sepal.Length, 2)1    4.06     0.467      8.70  7.00e- 15    3.14      4.98 </span>
+<span class="co">#&gt; 3 poly(Sepal.Length, 2)2   -1.30     0.315     -4.14  5.98e-  5   -1.92     -0.680</span>
+<span class="co">#&gt; 4 Speciesversicolor        -1.01     0.278     -3.62  4.12e-  4   -1.56     -0.456</span>
+<span class="co">#&gt; 5 Speciesvirginica         -0.991    0.285     -3.48  6.72e-  4   -1.55     -0.428</span>
+<span class="co">#&gt; 6 Petlen(3,7]              -0.136    0.282     -0.482 6.30e-  1   -0.693     0.421</span></code></pre></div>
 <p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that does all the work for you.</p>
 <p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em> packages</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
