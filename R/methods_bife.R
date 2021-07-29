@@ -23,7 +23,7 @@ p_value.bife <- function(model, ...) {
 #' @rdname model_parameters.mlm
 #' @export
 
-model_parameters.bifeAPEs <- function(x, ...) {
+model_parameters.bifeAPEs <- function(model, ...) {
 
   est <- x[["delta"]]
   se <- sqrt(diag(x[["vcov"]]))
