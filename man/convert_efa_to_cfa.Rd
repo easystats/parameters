@@ -29,7 +29,8 @@ structure).}
 Converted index.
 }
 \description{
-Enables a conversion between Exploratory Factor Analysis (EFA) and Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
+Enables a conversion between Exploratory Factor Analysis (EFA) and
+Confirmatory Factor Analysis (CFA) \code{lavaan}-ready structure.
 }
 \examples{
 \donttest{

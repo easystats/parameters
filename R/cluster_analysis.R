@@ -1,35 +1,41 @@
 #' @title Compute cluster analysis and return group indices
 #' @name cluster_analysis
-#' @description Compute hierarchical or kmeans cluster analysis and return the group
-#'                assignment for each observation as vector.
+#' @description
+#' Compute hierarchical or kmeans cluster analysis and return the group
+#' assignment for each observation as vector.
 #'
-#' @references Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
+#' @references
+#' Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
+#' Analysis Basics and Extensions. R package.
 #'
 #' @param x A data frame.
-#' @param n_clusters Number of clusters used for the cluster solution. By default,
-#'   the number of clusters to extract is determined by calling [n_clusters()].
-#' @param method Method for computing the cluster analysis. By default (`"hclust"`), a
-#'   hierarchical cluster analysis, will be computed. Use `"kmeans"` to
-#'   compute a kmeans cluster analysis. You can specify the initial letters only.
-#' @param distance Distance measure to be used when `method = "hclust"` (for hierarchical
-#'   clustering). Must be one of `"euclidean"`, `"maximum"`, `"manhattan"`,
-#'   `"canberra"`, `"binary"` or `"minkowski"`. See [dist()].
-#'   If is `method = "kmeans"` this argument will be ignored.
-#' @param agglomeration Agglomeration method to be used when `method = "hclust"` (for hierarchical
-#'   clustering). This should be one of `"ward"`, `"single"`, `"complete"`, `"average"`,
-#'   `"mcquitty"`, `"median"` or `"centroid"`. Default is `"ward"` (see [hclust()]).
-#'   If `method = "kmeans"` this argument will be ignored.
+#' @param n_clusters Number of clusters used for the cluster solution. By
+#'   default, the number of clusters to extract is determined by calling
+#'   [n_clusters()].
+#' @param method Method for computing the cluster analysis. By default
+#'   (`"hclust"`), a hierarchical cluster analysis, will be computed. Use
+#'   `"kmeans"` to compute a kmeans cluster analysis. You can specify the
+#'   initial letters only.
+#' @param distance Distance measure to be used when `method = "hclust"` (for
+#'   hierarchical clustering). Must be one of `"euclidean"`, `"maximum"`,
+#'   `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()]. If
+#'   is `method = "kmeans"` this argument will be ignored.
+#' @param agglomeration Agglomeration method to be used when `method = "hclust"`
+#'   (for hierarchical clustering). This should be one of `"ward"`, `"single"`,
+#'   `"complete"`, `"average"`, `"mcquitty"`, `"median"` or `"centroid"`.
+#'   Default is `"ward"` (see [hclust()]). If `method = "kmeans"` this argument
+#'   will be ignored.
 #' @param iterations Maximum number of iterations allowed. Only applies, if
 #'   `method = "kmeans"`. See [kmeans()] for details on this argument.
-#' @param algorithm Algorithm used for calculating kmeans cluster. Only applies, if
-#'   `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
-#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()]
-#'   for details on this argument.
+#' @param algorithm Algorithm used for calculating kmeans cluster. Only applies,
+#'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
+#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
+#'   this argument.
 #' @param force Logical, if `TRUE`, ordered factors (ordinal variables) are
-#'   converted to numeric values, while character vectors and factors are converted
-#'   to dummy-variables (numeric 0/1) and are included in the cluster analysis.
-#'   If `FALSE`, factors and character vectors are removed before computing
-#'   the cluster analysis.
+#'   converted to numeric values, while character vectors and factors are
+#'   converted to dummy-variables (numeric 0/1) and are included in the cluster
+#'   analysis. If `FALSE`, factors and character vectors are removed before
+#'   computing the cluster analysis.
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -38,15 +44,21 @@
 #'   returned vector includes missing values, so it has the same length
 #'   as `nrow(x)`.
 #'
-#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note
+#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @details The `print()` and `plot()` methods show the (standardized)
-#'   mean value for each variable within each cluster. Thus, a higher absolute
-#'   value indicates that a certain variable characteristic is more pronounced
-#'   within that specific cluster (as compared to other cluster groups with lower
-#'   absolute mean values).
+#' @details
+#' The `print()` and `plot()` methods show the (standardized) mean value for
+#' each variable within each cluster. Thus, a higher absolute value indicates
+#' that a certain variable characteristic is more pronounced within that
+#' specific cluster (as compared to other cluster groups with lower absolute
+#' mean values).
 #'
-#' @seealso [n_clusters()] to determine the number of clusters to extract, [cluster_discrimination()] to determine the accuracy of cluster group classification and [check_clusterstructure()] to check suitability of data for clustering.
+#' @seealso
+#' [n_clusters()] to determine the number of clusters to extract,
+#' [cluster_discrimination()] to determine the accuracy of cluster group
+#' classification and [check_clusterstructure()] to check suitability of data
+#' for clustering.
 #'
 #' @examples
 #' # Hierarchical clustering of mtcars-dataset

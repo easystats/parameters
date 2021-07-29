@@ -147,7 +147,9 @@ names.}
 
 \item{...}{Currently not used.}
 
-\item{bf_prior}{Distribution representing a prior for the computation of Bayes factors / SI. Used if the input is a posterior, otherwise (in the case of models) ignored.}
+\item{bf_prior}{Distribution representing a prior for the computation of
+Bayes factors / SI. Used if the input is a posterior, otherwise (in the
+case of models) ignored.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
