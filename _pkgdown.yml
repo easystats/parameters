@@ -39,6 +39,7 @@ reference:
   - model_parameters.glht
   - model_parameters.averaging
   - model_parameters.t1way
+  - model_parameters.systemfit
   - pool_parameters
   - random_parameters
   - print.parameters_model
