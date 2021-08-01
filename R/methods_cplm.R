@@ -7,8 +7,9 @@
 #' @title Parameters from Zero-Inflated Models
 #' @name model_parameters.zcpglm
 #'
-#' @description Parameters from zero-inflated models (from packages like \pkg{pscl},
-#'   \pkg{cplm} or \pkg{countreg}).
+#' @description
+#' Parameters from zero-inflated models (from packages like \pkg{pscl},
+#' \pkg{cplm} or \pkg{countreg}).
 #'
 #' @param model A model with zero-inflation component.
 #' @inheritParams model_parameters.default
@@ -116,7 +117,8 @@ standard_error.zcpglm <- function(model,
 
 #' p-values for Models with Zero-Inflation
 #'
-#' This function attempts to return, or compute, p-values of hurdle and zero-inflated models.
+#' This function attempts to return, or compute, p-values of hurdle and
+#' zero-inflated models.
 #'
 #' @param model A statistical model.
 #' @inheritParams p_value
@@ -124,9 +126,9 @@ standard_error.zcpglm <- function(model,
 #' @inheritParams standard_error
 #' @inheritParams ci.merMod
 #'
-#' @return A data frame with at least two columns: the parameter names and the
-#'   p-values. Depending on the model, may also include columns for model
-#'   components etc.
+#' @return
+#' A data frame with at least two columns: the parameter names and the p-values.
+#' Depending on the model, may also include columns for model components etc.
 #'
 #' @examples
 #' if (require("pscl", quietly = TRUE)) {
@@ -245,10 +247,19 @@ model_parameters.cpglmm <- function(model,
   }
 
   params <- .mixed_model_parameters_generic(
-    model = model, ci = ci, bootstrap = bootstrap, iterations = iterations,
-    merge_by = "Parameter", standardize = standardize,
-    exponentiate = exponentiate, effects = effects, robust = FALSE,
-    p_adjust = p_adjust, group_level = group_level, df_method = df_method, ...
+    model = model,
+    ci = ci,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    merge_by = "Parameter",
+    standardize = standardize,
+    exponentiate = exponentiate,
+    effects = effects,
+    robust = FALSE,
+    p_adjust = p_adjust,
+    group_level = group_level,
+    df_method = df_method,
+    ...
   )
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
