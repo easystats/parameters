@@ -31,12 +31,12 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \item{verbose}{Toggle warnings and messages.}
 }
 \value{
-A data frame with at least two columns: the parameter names and the
-p-values. Depending on the model, may also include columns for model
-components etc.
+A data frame with at least two columns: the parameter names and the p-values.
+Depending on the model, may also include columns for model components etc.
 }
 \description{
-This function attempts to return, or compute, p-values of hurdle and zero-inflated models.
+This function attempts to return, or compute, p-values of hurdle and
+zero-inflated models.
 }
 \examples{
 if (require("pscl", quietly = TRUE)) {

@@ -46,8 +46,8 @@ necessary changes before this breaking change is implemented.
   option for the `df_method` (resp. `method`) argument, to explicitly calculate
   confidence intervals based on the residual degrees of freedom, when present.
 
-* `model_parameters()` supports following new objects in *WRS2* package:
-  `trimcibt`, `wmcpAKP`, `dep.effect`.
+* `model_parameters()` supports following new objects:
+  `trimcibt`, `wmcpAKP`, `dep.effect` (in *WRS2* package), `systemfit`
 
 * `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
   can be helpful for users who may wish to report ANOVA table in wide format
