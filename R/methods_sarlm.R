@@ -1,5 +1,5 @@
 #' @export
-p_value.sarlm <- function(model, ...) {
+p_value.Sarlm <- function(model, ...) {
   stat <- insight::get_statistic(model)
   .data_frame(
     Parameter = stat$Parameter,
@@ -9,13 +9,13 @@ p_value.sarlm <- function(model, ...) {
 
 
 #' @export
-ci.sarlm <- function(x, ci = .95, ...) {
+ci.Sarlm <- function(x, ci = .95, ...) {
   ci_wald(model = x, ci = ci, ...)
 }
 
 
 #' @export
-standard_error.sarlm <- function(model, ...) {
+standard_error.Sarlm <- function(model, ...) {
   params <- insight::get_parameters(model)
   s <- summary(model)
   # add rho, if present
