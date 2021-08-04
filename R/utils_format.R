@@ -317,6 +317,24 @@
       i
     })
 
+    # sanity check - check if all parameter names in the
+    # group list are spelled correctly
+    misspelled <- sapply(group_rows, function(i) {
+      any(is.na(i))
+    })
+
+    if (any(misspelled)) {
+      # remove invalid groups
+      group_rows[misspelled] <- NULL
+      # tell user
+      warning(insight::format_message(
+        "Couldn't find one or more parameters specified in following groups:",
+        paste0(names(misspelled[misspelled]), collapse = ", "),
+        "Maybe you misspelled parameter names?"
+      ), call. = FALSE)
+    }
+
+
     # sort parameters according to grouping
     selected_rows <- unlist(group_rows)
     indent_parameters <- x$Parameter[selected_rows]
