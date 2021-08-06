@@ -124,6 +124,13 @@ n_factors <- function(x,
   }
   eigen_values <- eigen(cor)$values
 
+  # Smooth matrix if negative eigen values
+  if(any(eigen_values < 0)) {
+    insight::check_if_installed("psych")
+    cor <- psych::cor.smooth(cor, ...)
+    eigen_values <- eigen(cor)$values
+  }
+
 
   # Initialize dataframe
   out <- data.frame()
@@ -375,6 +382,9 @@ as.double.n_clusters <- as.double.n_factors
 print.n_clusters <- print.n_factors
 
 
+# Methods -----------------------------------------------------------------
+
+
 #' Bartlett, Anderson and Lawley Procedures
 #' @keywords internal
 .n_factors_bartlett <- function(eigen_values = NULL, model = "factors", nobs = NULL) {
@@ -383,7 +393,6 @@ print.n_clusters <- print.n_factors
     N = nobs,
     alpha = 0.05,
     details = FALSE,
-    model = model
   )$nFactors
 
   data.frame(
@@ -482,11 +491,10 @@ print.n_clusters <- print.n_factors
                            eigen_values = NULL,
                            type = "FA") {
 
+
   # Replace with own correlation matrix
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(x, model = "glasso", plot.EGA = FALSE)$n.dim)))
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(x, model = "TMFG", plot.EGA = FALSE)$n.dim)))
-  # junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso_boot <- EGAnet::bootEGA(x, model = "glasso", n = 500, plot.typicalStructure = FALSE)$n.dim)))
-  # junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG_boot <- EGAnet::bootEGA(x, model = "TMFG", n = 500, plot.typicalStructure = FALSE)$n.dim)))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim)))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim)))
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
