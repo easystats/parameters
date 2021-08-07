@@ -44,8 +44,13 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 library(parameters)
 \donttest{
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-  require("cluster", quietly = TRUE)) {
-  n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+  require("cluster", quietly = TRUE) && require("see")) {
+  n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+  n
+  plot(n)
+
+  # The following runs all the method but it significantly slower
+  # n_clusters(iris[, 1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
 }

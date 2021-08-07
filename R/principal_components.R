@@ -45,7 +45,7 @@
 #'  \subsection{Methods and Utilities}{
 #'  \itemize{
 #'    \item [n_components()] and [n_factors()] automatically
-#'    estimate the optimal number of dimensions to retain.
+#'    estimates the optimal number of dimensions to retain.
 #'
 #'    \item [check_factorstructure()] checks the suitability of the
 #'    data for factor analysis using the

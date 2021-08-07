@@ -107,7 +107,7 @@ Details section).
 \subsection{Methods and Utilities}{
 \itemize{
 \item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically
-estimate the optimal number of dimensions to retain.
+estimates the optimal number of dimensions to retain.
 
 \item \code{\link[=check_factorstructure]{check_factorstructure()}} checks the suitability of the
 data for factor analysis using the

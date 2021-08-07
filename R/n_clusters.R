@@ -22,8 +22,13 @@
 #' library(parameters)
 #' \donttest{
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-#'   require("cluster", quietly = TRUE)) {
-#'   n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+#'   require("cluster", quietly = TRUE) && require("see")) {
+#'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+#'   n
+#'   plot(n)
+#'
+#'   # The following runs all the method but it significantly slower
+#'   # n_clusters(iris[, 1:4], standardize = FALSE, package = "all", fast = FALSE)
 #' }
 #' }
 #' @export
@@ -137,6 +142,9 @@ n_clusters <- function(x,
 }
 
 
+# Methods -----------------------------------------------------------------
+
+
 
 #' @keywords internal
 .n_clusters_NbClust <- function(x, fast = TRUE, ...) {
@@ -148,15 +156,13 @@ n_clusters <- function(x,
   if (fast) {
     indices <- "all"
   } else {
-    indices <- "allong"
+    indices <- "alllong"  # This is not misspelling (it's like that in the function)
   }
 
   junk <- utils::capture.output(n <- NbClust::NbClust(
     x,
-    min.nc = 2,
-    max.nc = 9,
-    method = "ward.D2",
-    index = indices
+    index = indices,
+    method = "ward.D2"
   ))
   grDevices::dev.off()
   unlink(ff)
