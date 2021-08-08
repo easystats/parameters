@@ -48,3 +48,7 @@ datawizard::smoothness
 #' @importFrom datawizard center
 #' @export
 datawizard::center
+
+#' @importFrom datawizard visualisation_recipe
+#' @export
+datawizard::visualisation_recipe

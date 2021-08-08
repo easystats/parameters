@@ -99,6 +99,7 @@ Suggests:
     effectsize (>= 0.4.5),
     EGAnet (>= 0.7),
     emmeans (>= 1.4),
+    factoextra,
     FactoMineR,
     fastICA,
     gam,
@@ -163,6 +164,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
+    easystats/datawizard
     easystats/insight
 Encoding: UTF-8
 Language: en-US

@@ -5,7 +5,7 @@
 #' consensus. In case of ties, it will select the solution with fewer clusters.
 #'
 #' @inheritParams check_clusterstructure
-#' @param force Logical, if `TRUE`, factors are converted to numerical
+#' @param include_factors Logical, if `TRUE`, factors are converted to numerical
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that
 #'   determine the number of clusters need numeric input only.
@@ -15,6 +15,8 @@
 #' @param fast If `FALSE`, will compute 4 more indices (sets `index =
 #'   "allong"` in `NbClust`). This has been deactivated by default as it is
 #'   computationally heavy.
+#' @param n_max Maximal number of clusters to test.
+#' @param clustering_function The clustering functions to use. Can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. See \code{fviz_nbclust}.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -25,6 +27,7 @@
 #'   require("cluster", quietly = TRUE) && require("see")) {
 #'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #'   n
+#'   as.data.frame(n)
 #'   plot(n)
 #'
 #'   # The following runs all the method but it significantly slower
@@ -34,7 +37,7 @@
 #' @export
 n_clusters <- function(x,
                        standardize = TRUE,
-                       force = FALSE,
+                       include_factors = FALSE,
                        package = c("NbClust", "mclust", "cluster", "M3C"),
                        fast = TRUE,
                        ...) {
@@ -42,17 +45,7 @@ n_clusters <- function(x,
     package <- c("NbClust", "mclust", "cluster", "M3C")
   }
 
-  # convert factors to numeric
-  if (force) {
-    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
-    if (any(factors)) x[factors] <- sapply(x[factors], .factor_to_numeric)
-  }
-
-  # remove all missing values from data, only use numerics
-  x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
-  if (standardize) {
-    x <- as.data.frame(scale(x))
-  }
+  x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   out <- data.frame()
 
@@ -196,4 +189,23 @@ n_clusters <- function(x,
   # }
 
   out
+}
+
+
+# Utils -------------------------------------------------------------------
+
+#' @keywords internal
+.prepare_data_clustering <- function(x, include_factors = FALSE, standardize = FALSE, ...) {
+  # Convert factors to numeric
+  if (include_factors) {
+    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
+    if (any(factors)) x[factors] <- sapply(x[factors], .factor_to_numeric)
+  }
+
+  # Remove all missing values from data, only use numerics
+  x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
+  if (standardize == TRUE) {
+    x <- datawizard::standardize(x, ...)
+  }
+  x
 }
