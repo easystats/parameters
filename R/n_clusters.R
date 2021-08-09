@@ -11,7 +11,7 @@
 #' most parsimonious solution with fewer clusters).
 #' \cr
 #' Note that we also implement some specific, commonly used methods, like the
-#' Elbow or the Gap method, with their own visualisation functionalities. See
+#' Elbow or the Gap method, with their own visualization functionalities. See
 #' the examples below for more details.
 #'
 #' @inheritParams check_clusterstructure
@@ -27,7 +27,7 @@
 #'   computationally heavy.
 #' @param n_max Maximal number of clusters to test.
 #' @param clustering_function,gap_method Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).
-#' @param method,min_size,eps_length,eps_range Arguments for DBSCAN algorithm.
+#' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
 #' @param distance_method The distance method (passed to [dist()]). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.
 #' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
 #' @inheritParams model_parameters.glm
@@ -174,7 +174,7 @@ n_clusters <- function(x,
 #' @keywords internal
 .n_clusters_M3C <- function(x, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
-    stop("Package 'M3C' required for this function to work. Please install it from Bioconductor by first running `install.packages(\"BiocManager\")`, then `BiocManager::install(\"M3C\")`.") # Not on CRAN (but on github and bioconductor)
+    stop("Package 'M3C' required for this function to work. Please install it from Bioconductor by first running `remotes::install_github('https://github.com/crj32/M3C')`.") # Not on CRAN (but on github and bioconductor)
   }
 
   data <- data.frame(t(x))

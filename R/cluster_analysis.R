@@ -16,26 +16,19 @@
 #'   (`"hclust"`), a hierarchical cluster analysis, will be computed. Use
 #'   `"kmeans"` to compute a kmeans cluster analysis. You can specify the
 #'   initial letters only.
-#' @param distance Distance measure to be used when `method = "hclust"` (for
+#' @param distance_method Distance measure to be used when `method = "hclust"` (for
 #'   hierarchical clustering). Must be one of `"euclidean"`, `"maximum"`,
 #'   `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()]. If
 #'   is `method = "kmeans"` this argument will be ignored.
-#' @param agglomeration Agglomeration method to be used when `method = "hclust"`
+#' @param hclust_method Agglomeration method to be used when `method = "hclust"`
 #'   (for hierarchical clustering). This should be one of `"ward"`, `"single"`,
 #'   `"complete"`, `"average"`, `"mcquitty"`, `"median"` or `"centroid"`.
 #'   Default is `"ward"` (see [hclust()]). If `method = "kmeans"` this argument
 #'   will be ignored.
-#' @param iterations Maximum number of iterations allowed. Only applies, if
-#'   `method = "kmeans"`. See [kmeans()] for details on this argument.
-#' @param algorithm Algorithm used for calculating kmeans cluster. Only applies,
+#' @param kmeans_method Algorithm used for calculating kmeans cluster. Only applies,
 #'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
 #'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
 #'   this argument.
-#' @param force Logical, if `TRUE`, ordered factors (ordinal variables) are
-#'   converted to numeric values, while character vectors and factors are
-#'   converted to dummy-variables (numeric 0/1) and are included in the cluster
-#'   analysis. If `FALSE`, factors and character vectors are removed before
-#'   computing the cluster analysis.
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -144,7 +137,7 @@ cluster_analysis <- function(x,
   attr(out, "data") <- data
   attr(out, "performance") <- performance::model_performance(rez$model)
 
-  class(out) <- c("cluster_analysis", "see_cluster_analysis", class(out))
+  class(out) <- c("cluster_analysis", class(out))
   out
 
   # Old ---------------------------------------------------------------------
@@ -256,6 +249,7 @@ print.cluster_analysis <- function(x, ...) {
 
 # Plotting ----------------------------------------------------------------
 
+#' @importFrom stats predict
 #' @export
 visualisation_recipe.cluster_analysis <- function(x, ...) {
   ori_data <- attributes(x)$data

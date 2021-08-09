@@ -6,15 +6,16 @@
 #' rez
 #' @export
 model_parameters.hclust <- function(model, verbose = TRUE, ...) {
-  library(pvclust)
-  fit <- pvclust(mat, method.hclust="ward.D", method.dist="canberra")
-
-  params <- cbind(
-    data.frame(
-      Cluster = row.names(model$centers),
-      n_Obs = model$size,
-      Sum_Squares = model$withinss
-    ),
-    model$centers
-  )
+  print("COMING SOON.")
+  # library(pvclust)
+  # fit <- pvclust(mat, method.hclust="ward.D", method.dist="canberra")
+  #
+  # params <- cbind(
+  #   data.frame(
+  #     Cluster = row.names(model$centers),
+  #     n_Obs = model$size,
+  #     Sum_Squares = model$withinss
+  #   ),
+  #   model$centers
+  # )
 }

@@ -39,36 +39,23 @@ determine the number of clusters need numeric input only.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{distance_method}{The distance method (passed to \code{\link[=dist]{dist()}}). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.}
-
-\item{hclust_method}{The hierarchical clustering method (passed to \code{\link[=hclust]{hclust()}}).}
-
-\item{...}{Arguments passed to or from other methods.}
-
-\item{distance}{Distance measure to be used when \code{method = "hclust"} (for
+\item{distance_method}{Distance measure to be used when \code{method = "hclust"} (for
 hierarchical clustering). Must be one of \code{"euclidean"}, \code{"maximum"},
 \code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}}. If
 is \code{method = "kmeans"} this argument will be ignored.}
 
-\item{agglomeration}{Agglomeration method to be used when \code{method = "hclust"}
+\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"}
 (for hierarchical clustering). This should be one of \code{"ward"}, \code{"single"},
 \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
 Default is \code{"ward"} (see \code{\link[=hclust]{hclust()}}). If \code{method = "kmeans"} this argument
 will be ignored.}
 
-\item{iterations}{Maximum number of iterations allowed. Only applies, if
-\code{method = "kmeans"}. See \code{\link[=kmeans]{kmeans()}} for details on this argument.}
-
-\item{algorithm}{Algorithm used for calculating kmeans cluster. Only applies,
+\item{kmeans_method}{Algorithm used for calculating kmeans cluster. Only applies,
 if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}} for details on
 this argument.}
 
-\item{force}{Logical, if \code{TRUE}, ordered factors (ordinal variables) are
-converted to numeric values, while character vectors and factors are
-converted to dummy-variables (numeric 0/1) and are included in the cluster
-analysis. If \code{FALSE}, factors and character vectors are removed before
-computing the cluster analysis.}
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 The group classification for each observation as vector. The

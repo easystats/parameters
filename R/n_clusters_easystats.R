@@ -183,6 +183,7 @@ n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, d
   factoextra::fviz_nbclust(x, clustering_function, method = method, k.max = n_max, verbose = FALSE)$data
 }
 
+#' @importFrom stats dist
 #' @keywords internal
 .cluster_analysis_get_SS <- function(data, clusters) {
   total_ss <- 0

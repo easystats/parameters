@@ -15,7 +15,7 @@ cluster_centers(data, clusters, fun = mean)
 }
 \description{
 For each cluster, computes the mean (or other indices) of the variables. Can be used
-to retrieve the centrers of clusters.
+to retrieve the centers of clusters.
 }
 \examples{
 k <- kmeans(iris[1:4], 3)

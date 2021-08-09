@@ -91,7 +91,7 @@ computationally heavy.}
 
 \item{n_max}{Maximal number of clusters to test.}
 
-\item{method, min_size, eps_length, eps_range}{Arguments for DBSCAN algorithm.}
+\item{method, min_size, eps_n, eps_range}{Arguments for DBSCAN algorithm.}
 
 \item{distance_method}{The distance method (passed to \code{\link[=dist]{dist()}}). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.}
 
@@ -114,7 +114,7 @@ suggested by the majority of methods (in case of ties, it will select the
 most parsimonious solution with fewer clusters).
 \cr
 Note that we also implement some specific, commonly used methods, like the
-Elbow or the Gap method, with their own visualisation functionalities. See
+Elbow or the Gap method, with their own visualization functionalities. See
 the examples below for more details.
 }
 \note{
