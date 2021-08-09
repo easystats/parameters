@@ -139,7 +139,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
 #' @rdname n_clusters
 #' @examples
 #' #
-#' # hclust method -------------------------
+#' # hclust method -------------------------------
 #' # iterations should be higher for real analyses
 #' x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 #' x
@@ -216,7 +216,7 @@ print.n_clusters_silhouette <- function(x, ...) {
 
 #' @export
 print.n_clusters_dbscan <- function(x, ...) {
-  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of quares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size,"), which corresponds to ", attributes(x)$n, " clusters."), "green")
+  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size,"), which corresponds to ", attributes(x)$n, " clusters."), "green")
   invisible(x)
 }
 
@@ -381,18 +381,16 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
 
 #' @export
-plot.n_clusters_elbow <- function(x, ...) {
-  plot(visualisation_recipe(x, ...))
-}
+plot.n_clusters_elbow <- plot.cluster_analysis
 
 #' @export
-plot.n_clusters_gap <- plot.n_clusters_elbow
+plot.n_clusters_gap <- plot.cluster_analysis
 
 #' @export
-plot.n_clusters_silhouette <- plot.n_clusters_elbow
+plot.n_clusters_silhouette <- plot.cluster_analysis
 
 #' @export
-plot.n_clusters_dbscan <- plot.n_clusters_elbow
+plot.n_clusters_dbscan <- plot.cluster_analysis
 
 #' @export
 plot.n_clusters_hclust <- function(x, ...) {

@@ -86,6 +86,8 @@ predict.parameters_efa <- function(object,
   }
   if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names
+  } else {
+    names(out) <- names(get_scores(object))
   }
   row.names(out) <- NULL
   out

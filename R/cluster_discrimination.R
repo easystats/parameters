@@ -1,9 +1,6 @@
-#' @title Compute a linear discriminant analysis on classified cluster groups
+#' Compute a linear discriminant analysis on classified cluster groups
 #'
-#' @name cluster_discrimination
-#'
-#' @description Computes linear discriminant analysis on classified cluster groups,
-#'   and determines the goodness of classification for each cluster group.
+#' Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See \code{MASS::lda()} for details.
 #'
 #' @param x A data frame
 #' @param cluster_groups Group classification of the cluster analysis, which can

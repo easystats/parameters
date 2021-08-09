@@ -64,6 +64,11 @@ summary.parameters_clusters <- function(object, ...) {
 }
 
 
+
+
+# Predict -----------------------------------------------------------------
+
+
 #' @export
 predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {
@@ -111,3 +116,5 @@ predict.kmeans <- function(object, newdata = NULL, ...) {
     as.vector(apply(as.data.frame(sumsquares_by_center), 1, which.min))
   }
 }
+
+

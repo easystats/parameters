@@ -13,8 +13,7 @@ cluster_discrimination(x, cluster_groups)
 be retrieved from the \code{\link[=cluster_analysis]{cluster_analysis()}} function.}
 }
 \description{
-Computes linear discriminant analysis on classified cluster groups,
-and determines the goodness of classification for each cluster group.
+Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See \code{MASS::lda()} for details.
 }
 \examples{
 \dontrun{

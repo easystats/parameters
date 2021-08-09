@@ -263,7 +263,7 @@ principal_components.data.frame <- function(x,
   # PCA
   model <- stats::prcomp(x,
                   retx = TRUE,
-                  center = TRUE,
+                  center = standardize,
                   scale. = standardize,
                   ...)
 
@@ -289,10 +289,10 @@ principal_components.data.frame <- function(x,
   }
 
   # Re-add centers and scales
-  if (standardize) {
-    model$center <- attributes(x)$center
-    model$scale <- attributes(x)$scale
-  }
+  # if (standardize) {
+  #   model$center <- attributes(x)$center
+  #   model$scale <- attributes(x)$scale
+  # }
 
   # Summary (cumulative variance etc.)
   eigenvalues <- model$sdev^2

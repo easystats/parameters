@@ -61,16 +61,12 @@
 #' for clustering.
 #'
 #' @examples
-#' # Hierarchical clustering of mtcars-dataset
+#' # K-Means ==================================================
 #' rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
+#' plot(rez)
 #'
-#' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
-#' \dontrun{
-#' groups <- cluster_analysis(iris[, 1:4], method = "k")
-#' groups
-#' }
 #' @export
 cluster_analysis <- function(x,
                              n = NULL,
@@ -143,8 +139,9 @@ cluster_analysis <- function(x,
   out <- model_parameters(rez$model)
 
 
-
+  attr(out, "method") <- method
   attr(out, "clusters") <- clusters
+  attr(out, "data") <- data
   attr(out, "performance") <- performance::model_performance(rez$model)
 
   class(out) <- c("cluster_analysis", "see_cluster_analysis", class(out))
@@ -252,26 +249,48 @@ print.cluster_analysis <- function(x, ...) {
 
   insight::print_color("\n# You can access the predicted clusters via 'predict()'.", "yellow")
   invisible(x)
-  # # retrieve data
-  # dat <- attr(x, "data", exact = TRUE)
-  #
-  # if (is.null(dat)) {
-  #   stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
-  # }
-  #
-  # # save output from cluster_discrimination()
-  # accuracy <- attributes(x)$accuracy
-  #
-  # # headline
-  # insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
-  #
-  # # round numeric variables (i.e. all but first term column)
-  # dat[2:ncol(dat)] <- sapply(dat[2:ncol(dat)], round, digits = digits)
-  # print.data.frame(dat, row.names = FALSE)
-  #
-  # if (!is.null(accuracy)) {
-  #   cat("\n")
-  #   print(accuracy)
-  # }
-  # invisible(x)
+}
+
+
+
+
+# Plotting ----------------------------------------------------------------
+
+#' @export
+visualisation_recipe.cluster_analysis <- function(x, ...) {
+  ori_data <- attributes(x)$data
+  # Get 2 PCA Components
+  pca <- principal_components(ori_data, n = 2)
+  data <- predict(pca)
+  names(data) <- c("x", "y")
+  data$Cluster <- as.factor(attributes(x)$clusters)
+
+  # Centers data (also on the PCA scale)
+  data_centers <- predict(pca, newdata = as.data.frame(x)[names(ori_data)], names = c("x", "y"))
+  data_centers$Cluster <- as.data.frame(x)$Cluster
+
+  layers <- list()
+
+  # Layers -----------------------
+  layers[["l1"]] <- list(geom = "point",
+                         data = data,
+                         aes = list(x = "x", y = "y", color = "Cluster"))
+  layers[["l2"]] <- list(geom = "point",
+                         data = data_centers,
+                         aes = list(x = "x", y = "y", color = "Cluster"),
+                         shape = "+", size = 10)
+  layers[["l3"]] <- list(geom = "labs",
+                         x = "PCA - 1",
+                         y = "PCA - 2",
+                         title = "Clustering Solution")
+
+  # Out
+  class(layers) <- c("visualisation_recipe", class(layers))
+  attr(layers, "data") <- data
+  layers
+}
+
+#' @export
+plot.cluster_analysis <- function(x, ...) {
+  plot(visualisation_recipe(x, ...))
 }

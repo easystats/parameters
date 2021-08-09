@@ -90,16 +90,12 @@ mean values).
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-# Hierarchical clustering of mtcars-dataset
+# K-Means ==================================================
 rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
 rez  # Show results
 predict(rez)  # Get clusters
+plot(rez)
 
-# K-means clustering of mtcars-dataset, auto-detection of cluster-groups
-\dontrun{
-groups <- cluster_analysis(iris[, 1:4], method = "k")
-groups
-}
 }
 \references{
 \itemize{

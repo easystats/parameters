@@ -169,7 +169,7 @@ x
 head(as.data.frame(x))
 plot(x)
 #
-# hclust method -------------------------
+# hclust method -------------------------------
 # iterations should be higher for real analyses
 x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 x
