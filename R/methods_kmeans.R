@@ -9,8 +9,13 @@
 #' @examples
 #' library(parameters)
 #'
+#' # K-means -------------------------------
 #' model <- kmeans(iris[1:4], centers = 3)
-#' model_parameters(model)
+#' rez <- model_parameters(model)
+#' rez
+#'
+#' # Clusters centers in long form
+#' attributes(rez)$means
 #' @export
 model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
   params <- cbind(

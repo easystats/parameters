@@ -4,7 +4,7 @@
 \alias{cluster_discrimination}
 \title{Compute a linear discriminant analysis on classified cluster groups}
 \usage{
-cluster_discrimination(x, cluster_groups = NULL)
+cluster_discrimination(x, cluster_groups)
 }
 \arguments{
 \item{x}{A data frame}

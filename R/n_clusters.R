@@ -1,8 +1,18 @@
-#' Number of clusters to extract
+#' Find how many clusters in your data
 #'
-#' This function runs many existing procedures for determining how many clusters
-#' are present in data. It returns the number of clusters based on the maximum
-#' consensus. In case of ties, it will select the solution with fewer clusters.
+#' Similarly to [n_factors()] for factor / principal component analysis,
+#' \code{n_clusters} is the main function to find out the optimal numbers of clusters
+#' present in the data based on the maximum consensus of a large number of methods.
+#' \cr
+#' Essentially, there exist many methods to determine the optimal number of clusters,
+#' each with pros and cons, benefits and limitations. The main \code{n_clusters}
+#' function proposes to run all of them, and find out the number of clusters that is
+#' suggested by the majority of methods (in case of ties, it will select the
+#' most parsimonious solution with fewer clusters).
+#' \cr
+#' Note that we also implement some specific, commonly used methods, like the
+#' Elbow or the Gap method, with their own visualisation functionalities. See
+#' the examples below for more details.
 #'
 #' @inheritParams check_clusterstructure
 #' @param include_factors Logical, if `TRUE`, factors are converted to numerical
@@ -11,22 +21,28 @@
 #'   determine the number of clusters need numeric input only.
 #' @param package Package from which methods are to be called to determine the
 #'   number of clusters. Can be `"all"` or a vector containing
-#'   `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
+#'   `"easystats"`, `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
 #' @param fast If `FALSE`, will compute 4 more indices (sets `index =
 #'   "allong"` in `NbClust`). This has been deactivated by default as it is
 #'   computationally heavy.
 #' @param n_max Maximal number of clusters to test.
-#' @param clustering_function The clustering functions to use. Can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. See \code{fviz_nbclust}.
+#' @param clustering_function,gap_method Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).
+#' @param method,min_size,eps_length,eps_range Arguments for DBSCAN algorithm.
+#' @param distance_method The distance method (passed to [dist()]). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.
+#' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
+#' @inheritParams model_parameters.glm
+#'
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(parameters)
 #' \donttest{
-#' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-#'   require("cluster", quietly = TRUE) && require("see")) {
-#'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+#' # The main 'n_clusters' function ===============================
+#' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
+#'   n <- n_clusters(iris[, 1:4], package = c("easystats", "NbClust", "mclust"))
 #'   n
+#'   summary(n)
 #'   as.data.frame(n)
 #'   plot(n)
 #'
@@ -38,16 +54,20 @@
 n_clusters <- function(x,
                        standardize = TRUE,
                        include_factors = FALSE,
-                       package = c("NbClust", "mclust", "cluster", "M3C"),
+                       package = c("easystats", "NbClust", "mclust", "M3C"),
                        fast = TRUE,
                        ...) {
   if (all(package == "all")) {
-    package <- c("NbClust", "mclust", "cluster", "M3C")
+    package <- c("easystats", "NbClust", "mclust", "M3C")
   }
 
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   out <- data.frame()
+
+  if ("easystats" %in% tolower(package)) {
+    out <- rbind(out, .n_clusters_easystats(x, ...))
+  }
 
   if ("nbclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
@@ -55,10 +75,6 @@ n_clusters <- function(x,
 
   if ("mclust" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_mclust(x))
-  }
-
-  if ("cluster" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_cluster(x))
   }
 
   if ("M3C" %in% tolower(package)) {
@@ -109,33 +125,23 @@ n_clusters <- function(x,
 }
 
 
-#' @keywords internal
-.n_clusters_cluster <- function(x, ...) {
-  insight::check_if_installed("cluster")
-
-  # listwise deletion of missing
-  x <- stats::na.omit(x)
-
-  # Gap Statistic for Estimating the Number of Clusters
-  junk <- utils::capture.output(gap <- cluster::clusGap(x,
-    stats::kmeans,
-    K.max = 10,
-    B = 100
-  )$Tab)
-
-  # Gap Statistic for Estimating the Number of Clusters
-  n <- cluster::maxSE(
-    f = gap[, "gap"],
-    SE.f = gap[, "SE.sim"],
-    method = "Tibs2001SEmax",
-    SE.factor = 1
-  )
-
-  data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
-}
 
 
 # Methods -----------------------------------------------------------------
+
+
+#' @keywords internal
+.n_clusters_easystats <- function(x, ...) {
+  elb <- n_clusters_elbow(x, preprocess = FALSE, ...)
+  sil <- n_clusters_silhouette(x, preprocess = FALSE, ...)
+  gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", ...)
+  gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", ...)
+
+  data.frame(n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
+             Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
+             Package = "easystats")
+}
+
 
 
 
@@ -195,15 +201,31 @@ n_clusters <- function(x,
 # Utils -------------------------------------------------------------------
 
 #' @keywords internal
-.prepare_data_clustering <- function(x, include_factors = FALSE, standardize = FALSE, ...) {
+.prepare_data_clustering <- function(x, include_factors = FALSE, standardize = FALSE, preprocess = TRUE, ...) {
+  if(preprocess == FALSE) return(x)
+
   # Convert factors to numeric
+  # include factors?
   if (include_factors) {
+    # ordered factors to numeric
+    factors <- sapply(x, is.ordered)
+    if (any(factors)) {
+      x[factors] <- sapply(x[factors], .factor_to_numeric)
+    }
+
+    # character and factors to dummies
     factors <- sapply(x, function(i) is.character(i) | is.factor(i))
-    if (any(factors)) x[factors] <- sapply(x[factors], .factor_to_numeric)
+    if (any(factors)) {
+      dummies <- lapply(x[factors], .factor_to_dummy)
+      x <- cbind(x[!factors], dummies)
+    }
+  } else {
+    # remove factors
+    x <- x[sapply(x, is.numeric)]
   }
 
   # Remove all missing values from data, only use numerics
-  x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
+  x <- stats::na.omit(x)
   if (standardize == TRUE) {
     x <- datawizard::standardize(x, ...)
   }

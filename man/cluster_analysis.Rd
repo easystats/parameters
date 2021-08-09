@@ -2,33 +2,48 @@
 % Please edit documentation in R/cluster_analysis.R
 \name{cluster_analysis}
 \alias{cluster_analysis}
-\title{Compute cluster analysis and return group indices}
+\title{Cluster Analysis}
 \usage{
 cluster_analysis(
   x,
-  n_clusters = NULL,
-  method = c("hclust", "kmeans"),
-  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-  agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average",
-    "mcquitty", "median", "centroid"),
-  iterations = 20,
-  algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-  force = TRUE,
-  package = c("NbClust", "mclust"),
-  verbose = TRUE
+  n = NULL,
+  method = "kmeans",
+  include_factors = FALSE,
+  standardize = TRUE,
+  verbose = TRUE,
+  distance_method = "euclidean",
+  hclust_method = "complete",
+  kmeans_method = "Hartigan-Wong",
+  ...
 )
 }
 \arguments{
 \item{x}{A data frame.}
 
-\item{n_clusters}{Number of clusters used for the cluster solution. By
-default, the number of clusters to extract is determined by calling
-\code{\link[=n_clusters]{n_clusters()}}.}
+\item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
+the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}. Note
+that this argument does not apply for unsupervised clustering methods like
+DBSCAN.}
 
 \item{method}{Method for computing the cluster analysis. By default
 (\code{"hclust"}), a hierarchical cluster analysis, will be computed. Use
 \code{"kmeans"} to compute a kmeans cluster analysis. You can specify the
 initial letters only.}
+
+\item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
+values in order to be included in the data for determining the number of
+clusters. By default, factors are removed, because most methods that
+determine the number of clusters need numeric input only.}
+
+\item{standardize}{Standardize the dataframe before clustering (default).}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{distance_method}{The distance method (passed to \code{\link[=dist]{dist()}}). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.}
+
+\item{hclust_method}{The hierarchical clustering method (passed to \code{\link[=hclust]{hclust()}}).}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{distance}{Distance measure to be used when \code{method = "hclust"} (for
 hierarchical clustering). Must be one of \code{"euclidean"}, \code{"maximum"},
@@ -54,12 +69,6 @@ converted to numeric values, while character vectors and factors are
 converted to dummy-variables (numeric 0/1) and are included in the cluster
 analysis. If \code{FALSE}, factors and character vectors are removed before
 computing the cluster analysis.}
-
-\item{package}{Package from which methods are to be called to determine the
-number of clusters. Can be \code{"all"} or a vector containing
-\code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
-
-\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 The group classification for each observation as vector. The
@@ -82,8 +91,9 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \examples{
 # Hierarchical clustering of mtcars-dataset
-groups <- cluster_analysis(iris[, 1:4], 3)
-groups
+rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
+rez  # Show results
+predict(rez)  # Get clusters
 
 # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
 \dontrun{
@@ -92,8 +102,10 @@ groups
 }
 }
 \references{
-Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
+\itemize{
+\item Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
 Analysis Basics and Extensions. R package.
+}
 }
 \seealso{
 \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,

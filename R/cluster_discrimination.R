@@ -20,7 +20,7 @@
 #' cluster_discrimination(iris[, 1:4], cluster_groups = groups)
 #' }
 #' @export
-cluster_discrimination <- function(x, cluster_groups = NULL) {
+cluster_discrimination <- function(x, cluster_groups) {
   if (is.null(cluster_groups)) {
     cluster_groups <- cluster_analysis(x)
   }
@@ -47,14 +47,14 @@ cluster_discrimination <- function(x, cluster_groups = NULL) {
   )
 
   attr(out, "Overall_Accuracy") <- total_correct
-  class(out) <- c("cluster_discrimintation", class(out))
+  class(out) <- c("cluster_discrimination", class(out))
 
   out
 }
 
 
 #' @export
-print.cluster_discrimintation <- function(x, ...) {
+print.cluster_discrimination <- function(x, ...) {
   orig_x <- x
   insight::print_color("# Accuracy of Cluster Group Classification\n\n", "blue")
 
