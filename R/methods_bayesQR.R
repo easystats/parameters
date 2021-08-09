@@ -2,7 +2,7 @@
 model_parameters.bayesQR <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .89,
+                                     ci = .95,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
                                      rope_range = "default",
