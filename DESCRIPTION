@@ -164,7 +164,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    easystats/datawizard
+    easystats/datawizard,
     easystats/insight
 Encoding: UTF-8
 Language: en-US
