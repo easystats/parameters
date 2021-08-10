@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0.2</span>
       </span>
     </div>
 
@@ -195,11 +195,11 @@
   <span class='va'>model</span>,
   centrality <span class='op'>=</span> <span class='st'>"median"</span>,
   dispersion <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   ci_method <span class='op'>=</span> <span class='st'>"hdi"</span>,
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pd"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
-  rope_ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  rope_ci <span class='op'>=</span> <span class='fl'>1</span>,
   priors <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -306,9 +306,9 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> ************</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Bayesian t-test</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter  | Median |         89% CI |   pd | % in ROPE |              Prior |     BF</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter  | Median |         95% CI |   pd | % in ROPE |              Prior |     BF</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> -------------------------------------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Difference |  -0.99 | [-1.14, -0.84] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Difference |  -0.99 | [-1.17, -0.80] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000</span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span> Using highest density intervals as credible intervals.</span>
 <span class='r-in'><span class='co'># }</span></span>
