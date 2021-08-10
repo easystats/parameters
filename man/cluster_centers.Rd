@@ -4,7 +4,7 @@
 \alias{cluster_centers}
 \title{Find the cluster centers in your data}
 \usage{
-cluster_centers(data, clusters, fun = mean)
+cluster_centers(data, clusters, fun = mean, ...)
 }
 \arguments{
 \item{data}{A data.frame.}
@@ -12,6 +12,8 @@ cluster_centers(data, clusters, fun = mean)
 \item{clusters}{A vector with clusters assignments (must be same length as rows in data).}
 
 \item{fun}{What function to use, \code{mean} by default.}
+
+\item{...}{Other arguments to be passed to or from other functions.}
 }
 \description{
 For each cluster, computes the mean (or other indices) of the variables. Can be used

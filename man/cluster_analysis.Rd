@@ -90,6 +90,10 @@ rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
 
+# n = NULL uses pvclust() to identify significant clusters =======
+rez <- cluster_analysis(iris[, 1:4], n = NULL, method = "hclust", iterations = 50)
+plot(rez)
+
 }
 \references{
 \itemize{

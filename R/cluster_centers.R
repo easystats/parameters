@@ -6,6 +6,8 @@
 #' @param data A data.frame.
 #' @param clusters A vector with clusters assignments (must be same length as rows in data).
 #' @param fun What function to use, \code{mean} by default.
+#' @param ... Other arguments to be passed to or from other functions.
+#'
 #'
 #' @examples
 #' k <- kmeans(iris[1:4], 3)

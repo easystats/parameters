@@ -24,7 +24,7 @@
 #' attributes(rez)$Total_Sum_Squares
 #' attributes(rez)$Between_Sum_Squares
 #' @export
-model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
+model_parameters.kmeans <- function(model, ...) {
   params <- cbind(
     data.frame(
       Cluster = row.names(model$centers),

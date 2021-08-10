@@ -15,9 +15,9 @@
 
 \method{model_parameters}{hclust}(model, data = NULL, clusters = NULL, ...)
 
-\method{model_parameters}{pvclust}(model, data = NULL, ci = 0.95, ...)
+\method{model_parameters}{pvclust}(model, data = NULL, clusters = NULL, ci = 0.95, ...)
 
-\method{model_parameters}{kmeans}(model, verbose = TRUE, ...)
+\method{model_parameters}{kmeans}(model, ...)
 }
 \arguments{
 \item{model}{Cluster model.}
@@ -29,8 +29,6 @@
 \item{...}{Arguments passed to or from other methods.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
-
-\item{verbose}{Toggle warnings and messages.}
 }
 \description{
 Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
@@ -44,12 +42,9 @@ clusters <- cutree(model, 3)
 rez <- cluster_performance(model, data, clusters)
 rez
 
-# hclust
-data <- iris[1:4]
-model <- kmeans(iris[1:4], 3)
-
-params <- model_parameters(model)
-cluster_performance(model)
+# Retrieve performance from parameters
+params <- model_parameters(kmeans(iris[1:4], 3))
+cluster_performance(params)
 
 # Hierarchical clustering (hclust) ---------------------------
 data <- iris[1:4]
@@ -69,7 +64,7 @@ attributes(rez)$means
 attributes(rez)$Total_Sum_Squares
 attributes(rez)$Between_Sum_Squares
 
-# pvclust ---------------------------
+# pvclust (finds "significant" clusters) ---------------------------
 if (require("pvclust", quietly = TRUE)) {
   data <- iris[1:4]
   # NOTE: pvclust works on transposed data
