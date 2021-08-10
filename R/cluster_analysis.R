@@ -67,6 +67,10 @@
 #' predict(rez)  # Get clusters
 #' plot(rez)
 #'
+#' # n = NULL uses pvclust() to identify significant clusters =======
+#' rez <- cluster_analysis(iris[, 1:4], n = NULL, method = "hclust", iterations = 50)
+#' plot(rez)
+#'
 #' @export
 cluster_analysis <- function(x,
                              n = NULL,
@@ -117,9 +121,9 @@ cluster_analysis <- function(x,
 
 
   if (any(method == "kmeans")) {
-    rez <- .cluster_analysis_kmeans(data, n = n, ...)
+    rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, ...)
   } else if(any(method %in% c("hclust"))) {
-    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, ...)
+    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(dist = dist, n = n, ...)
   }
@@ -132,7 +136,7 @@ cluster_analysis <- function(x,
   clusters[complete_cases] <- rez$clusters
 
   # Get clustering parameters
-  out <- model_parameters(rez$model, data = data, clusters = clusters)
+  out <- model_parameters(rez$model, data = data, clusters = clusters, ...)
   performance <-  cluster_performance(out)
 
   attr(out, "method") <- method
@@ -150,16 +154,16 @@ cluster_analysis <- function(x,
 # Clustering Methods --------------------------------------------------------
 
 #' @keywords internal
-.cluster_analysis_kmeans <- function(data, n = 2, ...) {
-  model <- stats::kmeans(data, centers = n, ...)
+.cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", ...) {
+  model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, ...)
   list(model = model, clusters = model$cluster)
 }
 
 #' @keywords internal
 .cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", ...) {
   if(is.null(n)) {
-    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, ...)
-    out <- list(model = attributes(rez)$fit$clust, clusters = rez$Cluster)
+    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, hclust_method = hclust_method, ...)
+    out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
     dist <- dist(data, method = distance_method, ...)
     model <- stats::hclust(dist, method = hclust_method, ...)

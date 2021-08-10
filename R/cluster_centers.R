@@ -13,7 +13,7 @@
 #' cluster_centers(iris[1:4], clusters = k$cluster, fun = median)
 #' @importFrom stats aggregate
 #' @export
-cluster_centers <- function(data, clusters, fun = mean) {
+cluster_centers <- function(data, clusters, fun = mean, ...) {
 
   # Get n obs
   params <- data.frame(table(clusters))

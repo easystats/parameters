@@ -79,12 +79,14 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #' }
 #'
 #' @export
-model_parameters.pvclust <- function(model, data = NULL, ci = 0.95, ...) {
+model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0.95, ...) {
   if(is.null(data)) {
     stop("This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself.")
   }
 
-  clusters <- .model_parameters_pvclust_clusters(model, data, ci)$Cluster
+  if(is.null(clusters)) {
+    clusters <- .model_parameters_pvclust_clusters(model, data, ci)$Cluster
+  }
 
   params <- cluster_centers(data, clusters, ...)
 
