@@ -9,7 +9,7 @@
   sort = FALSE,
   centrality = "median",
   dispersion = FALSE,
-  ci = 0.89,
+  ci = 0.95,
   ci_method = "hdi",
   test = NULL,
   verbose = TRUE,

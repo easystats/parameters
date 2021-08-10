@@ -11,7 +11,7 @@
   model,
   centrality = "median",
   dispersion = FALSE,
-  ci = 0.89,
+  ci = 0.95,
   ci_method = "hdi",
   test = c("pd", "rope"),
   rope_range = "default",
@@ -27,7 +27,7 @@
   model,
   centrality = "median",
   dispersion = FALSE,
-  ci = 0.89,
+  ci = 0.95,
   ci_method = "hdi",
   test = c("pd", "rope"),
   rope_range = "default",
@@ -51,7 +51,7 @@
   model,
   centrality = "median",
   dispersion = FALSE,
-  ci = 0.89,
+  ci = 0.95,
   ci_method = "hdi",
   test = c("pd", "rope"),
   rope_range = "default",
@@ -78,7 +78,7 @@ a data frame with posterior samples.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
-\item{ci}{Credible Interval (CI) level. Default to \code{0.89} (\verb{89\%}). See
+\item{ci}{Credible Interval (CI) level. Default to \code{0.95} (\verb{95\%}). See
 \code{\link[bayestestR:ci]{bayestestR::ci()}} for further details.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
