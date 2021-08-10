@@ -41,8 +41,8 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
 
   # Attributes
   attr(params, "variance") <- model$betweenss / model$totss
-  attr(params, "Between_Sum_Squares") <- model$betweenss
-  attr(params, "Total_Sum_Squares") <- model$totss
+  attr(params, "Sum_Squares_Between") <- model$betweenss
+  attr(params, "Sum_Squares_Total") <- model$totss
   attr(params, "means") <- means
   attr(params, "model") <- model
   attr(params, "iterations") <- model$iter

@@ -132,13 +132,13 @@ cluster_analysis <- function(x,
   clusters[complete_cases] <- rez$clusters
 
   # Get clustering parameters
-  out <- model_parameters(rez$model)
-
+  out <- model_parameters(rez$model, data = data, clusters = clusters)
+  performance <-  cluster_performance(out)
 
   attr(out, "method") <- method
   attr(out, "clusters") <- clusters
   attr(out, "data") <- data
-  attr(out, "performance") <- performance::model_performance(rez$model)
+  attr(out, "performance") <- performance
 
   class(out) <- c("cluster_analysis", class(out))
   out

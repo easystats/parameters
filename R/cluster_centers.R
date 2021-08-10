@@ -27,8 +27,8 @@ cluster_centers <- function(data, clusters, fun = mean) {
   centers <- aggregate(data, list(Cluster=clusters), fun)
   params <- merge(params, centers, by = "Cluster")
 
-  attr(params, "Total_Sum_Squares") <- ss$TSS
-  attr(params, "Between_Sum_Squares") <- ss$BSS
+  attr(params, "Sum_Squares_Total") <- ss$TSS
+  attr(params, "Sum_Squares_Between") <- ss$BSS
   attr(params, "variance") <- ss$BSS / ss$TSS
 
   params

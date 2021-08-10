@@ -37,8 +37,8 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
   names(means) <- c("Cluster", "Mean", "Variable")
 
   attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Between_Sum_Squares") <- attributes(params)$Between_Sum_Squares
-  attr(params, "Total_Sum_Squares") <- attributes(params)$Total_Sum_Squares
+  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
+  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
   attr(params, "means") <- means
   attr(params, "model") <- model
   attr(params, "scores") <- clusters
@@ -55,7 +55,7 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #' @inheritParams n_clusters
 #' @rdname model_parameters.kmeans
 #' @examples
-#' # pvclust ---------------------------
+#' # pvclust (finds "significant" clusters) ---------------------------
 #' if (require("pvclust", quietly = TRUE)) {
 #'   data <- iris[1:4]
 #'   # NOTE: pvclust works on transposed data
@@ -94,8 +94,8 @@ model_parameters.pvclust <- function(model, data = NULL, ci = 0.95, ...) {
   names(means) <- c("Cluster", "Mean", "Variable")
 
   attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Between_Sum_Squares") <- attributes(params)$Between_Sum_Squares
-  attr(params, "Total_Sum_Squares") <- attributes(params)$Total_Sum_Squares
+  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
+  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
   attr(params, "means") <- means
   attr(params, "model") <- model
   attr(params, "scores") <- clusters
