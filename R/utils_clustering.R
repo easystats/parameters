@@ -1,26 +1,3 @@
-#' Find the cluster centers in your data
-#'
-#' For each cluster, computes the mean (or other indices) of the variables. Can be used
-#' to retrieve the centers of clusters.
-#'
-#' @param data A data.frame.
-#' @param clusters A vector with clusters assignments (must be same length as rows in data).
-#' @param fun What function to use, \code{mean} by default.
-#'
-#' @examples
-#' k <- kmeans(iris[1:4], 3)
-#' cluster_centers(iris[1:4], k$cluster)
-#' cluster_centers(iris[1:4], k$cluster, median)
-#' @importFrom stats aggregate
-#' @export
-cluster_centers <- function(data, clusters, fun = mean) {
-  aggregate(data, list(Cluster=clusters), fun)
-}
-
-
-
-
-
 # Utils -------------------------------------------------------------------
 
 #' @keywords internal

@@ -1,21 +1,133 @@
 #' @rdname model_parameters.kmeans
+#' @inheritParams cluster_centers
+#'
 #' @examples
-#' # hclust ---------------------------------
-#' model <- hclust(dist(iris[1:4]))
-#' rez <- model_parameters(model)
+#' # Hierarchical clustering (hclust) ---------------------------
+#' data <- iris[1:4]
+#' model <- hclust(dist(data))
+#' clusters <- cutree(model, 3)
+#'
+#' rez <- model_parameters(model, data, clusters)
 #' rez
+#'
+#' # Get clusters
+#' predict(rez)
+#'
+#' # Clusters centers in long form
+#' attributes(rez)$means
+#'
+#' # Between and Total Sum of Squares
+#' attributes(rez)$Total_Sum_Squares
+#' attributes(rez)$Between_Sum_Squares
+#'
 #' @export
-model_parameters.hclust <- function(model, verbose = TRUE, ...) {
-  print("COMING SOON.")
-  # library(pvclust)
-  # fit <- pvclust(mat, method.hclust="ward.D", method.dist="canberra")
-  #
-  # params <- cbind(
-  #   data.frame(
-  #     Cluster = row.names(model$centers),
-  #     n_Obs = model$size,
-  #     Sum_Squares = model$withinss
-  #   ),
-  #   model$centers
-  # )
+model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
+  if(is.null(data)) {
+    stop("This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself.")
+  }
+  if(is.null(clusters)) {
+    stop("This function requires a vector of clusters assignments of same length as data to be passed, as it is not contained in the clustering object itself.")
+  }
+
+  params <- cluster_centers(data, clusters, ...)
+
+  # Long means
+  means <- .long_loadings(params, loadings_columns = 4:ncol(params))
+  means <- means[c("Cluster", "Loading", "Component")]
+  names(means) <- c("Cluster", "Mean", "Variable")
+
+  attr(params, "variance") <- attributes(params)$variance
+  attr(params, "Between_Sum_Squares") <- attributes(params)$Between_Sum_Squares
+  attr(params, "Total_Sum_Squares") <- attributes(params)$Total_Sum_Squares
+  attr(params, "means") <- means
+  attr(params, "model") <- model
+  attr(params, "scores") <- clusters
+  attr(params, "type") <- "hclust"
+
+  class(params) <- c("parameters_clusters", class(params))
+  params
+
+}
+
+
+
+
+#' @inheritParams n_clusters
+#' @rdname model_parameters.kmeans
+#' @examples
+#' # pvclust ---------------------------
+#' if (require("pvclust", quietly = TRUE)) {
+#'   data <- iris[1:4]
+#'   # NOTE: pvclust works on transposed data
+#'   model <- pvclust::pvclust(datawizard::data_transpose(data),
+#'                             method.dist="euclidean",
+#'                             nboot = 50,
+#'                             quiet = TRUE)
+#'
+#'   rez <- model_parameters(model, data, ci = 0.90)
+#'   rez
+#'
+#'   # Get clusters
+#'   predict(rez)
+#'
+#'   # Clusters centers in long form
+#'   attributes(rez)$means
+#'
+#'   # Between and Total Sum of Squares
+#'   attributes(rez)$Total_Sum_Squares
+#'   attributes(rez)$Between_Sum_Squares
+#' }
+#'
+#' @export
+model_parameters.pvclust <- function(model, data = NULL, ci = 0.95, ...) {
+  if(is.null(data)) {
+    stop("This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself.")
+  }
+
+  clusters <- .model_parameters_pvclust_clusters(model, data, ci)$Cluster
+
+  params <- cluster_centers(data, clusters, ...)
+
+  # Long means
+  means <- .long_loadings(params, loadings_columns = 4:ncol(params))
+  means <- means[c("Cluster", "Loading", "Component")]
+  names(means) <- c("Cluster", "Mean", "Variable")
+
+  attr(params, "variance") <- attributes(params)$variance
+  attr(params, "Between_Sum_Squares") <- attributes(params)$Between_Sum_Squares
+  attr(params, "Total_Sum_Squares") <- attributes(params)$Total_Sum_Squares
+  attr(params, "means") <- means
+  attr(params, "model") <- model
+  attr(params, "scores") <- clusters
+  attr(params, "type") <- "pvclust"
+
+  class(params) <- c("parameters_clusters", class(params))
+  params
+
+}
+
+
+
+# Utils -------------------------------------------------------------------
+
+
+#' @keywords internal
+.model_parameters_pvclust_clusters <- function(model, data, ci = 0.95) {
+  insight::check_if_installed("pvclust")
+  rez <- pvclust::pvpick(model, alpha = ci)
+
+  # Assign clusters
+  out <- data.frame()
+  for(cluster in 1:length(rez$clusters)) {
+    out <- rbind(out, data.frame(Cluster = cluster, Row = rez$clusters[[cluster]], stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+  }
+
+  # Add points not in significant clusters
+  remaining_rows <- row.names(data)[!row.names(data) %in% out$Row]
+  if(length(remaining_rows) > 0) out <- rbind(out, data.frame(Cluster = 0, Row = remaining_rows, stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+
+  # Reorder according to original order of rows
+  out <- out[order(match(out$Row, row.names(data))), ]
+  row.names(out) <- NULL
+  out
 }

@@ -2,28 +2,71 @@
 % Please edit documentation in R/methods_hclust.R, R/methods_kmeans.R
 \name{model_parameters.hclust}
 \alias{model_parameters.hclust}
+\alias{model_parameters.pvclust}
 \alias{model_parameters.kmeans}
 \title{Parameters from Cluster Models (k-means, ...)}
 \usage{
-\method{model_parameters}{hclust}(model, verbose = TRUE, ...)
+\method{model_parameters}{hclust}(model, data = NULL, clusters = NULL, ...)
+
+\method{model_parameters}{pvclust}(model, data = NULL, ci = 0.95, ...)
 
 \method{model_parameters}{kmeans}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{Cluster model.}
 
-\item{verbose}{Toggle warnings and messages.}
+\item{data}{A data.frame.}
+
+\item{clusters}{A vector with clusters assignments (must be same length as rows in data).}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \description{
 Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
-# hclust ---------------------------------
-model <- hclust(dist(iris[1:4]))
-rez <- model_parameters(model)
+# Hierarchical clustering (hclust) ---------------------------
+data <- iris[1:4]
+model <- hclust(dist(data))
+clusters <- cutree(model, 3)
+
+rez <- model_parameters(model, data, clusters)
 rez
+
+# Get clusters
+predict(rez)
+
+# Clusters centers in long form
+attributes(rez)$means
+
+# Between and Total Sum of Squares
+attributes(rez)$Total_Sum_Squares
+attributes(rez)$Between_Sum_Squares
+
+# pvclust ---------------------------
+if (require("pvclust", quietly = TRUE)) {
+  data <- iris[1:4]
+  # pvclust works on transposed data
+  model <- pvclust::pvclust(datawizard::data_transpose(data), nboot = 50, quiet = TRUE)
+
+  rez <- model_parameters(model, data, ci = 0.90)
+  rez
+
+  # Get clusters
+  predict(rez)
+
+  # Clusters centers in long form
+  attributes(rez)$means
+
+  # Between and Total Sum of Squares
+  attributes(rez)$Total_Sum_Squares
+  attributes(rez)$Between_Sum_Squares
+}
+
 library(parameters)
 
 # K-means -------------------------------
@@ -31,6 +74,13 @@ model <- kmeans(iris[1:4], centers = 3)
 rez <- model_parameters(model)
 rez
 
+# Get clusters
+predict(rez)
+
 # Clusters centers in long form
 attributes(rez)$means
+
+# Between and Total Sum of Squares
+attributes(rez)$Total_Sum_Squares
+attributes(rez)$Between_Sum_Squares
 }

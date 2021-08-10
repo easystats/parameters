@@ -14,8 +14,15 @@
 #' rez <- model_parameters(model)
 #' rez
 #'
+#' # Get clusters
+#' predict(rez)
+#'
 #' # Clusters centers in long form
 #' attributes(rez)$means
+#'
+#' # Between and Total Sum of Squares
+#' attributes(rez)$Total_Sum_Squares
+#' attributes(rez)$Between_Sum_Squares
 #' @export
 model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
   params <- cbind(
@@ -32,7 +39,10 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
   means <- means[c("Cluster", "Loading", "Component")]
   names(means) <- c("Cluster", "Mean", "Variable")
 
+  # Attributes
   attr(params, "variance") <- model$betweenss / model$totss
+  attr(params, "Between_Sum_Squares") <- model$betweenss
+  attr(params, "Total_Sum_Squares") <- model$totss
   attr(params, "means") <- means
   attr(params, "model") <- model
   attr(params, "iterations") <- model$iter

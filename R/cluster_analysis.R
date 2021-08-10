@@ -54,8 +54,15 @@
 #' for clustering.
 #'
 #' @examples
-#' # K-Means ==================================================
+#' # K-Means ====================================================
 #' rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
+#' rez  # Show results
+#' predict(rez)  # Get clusters
+#' plot(rez)
+#'
+#'
+#' # Hierarchical Clustering (hclust) ===========================
+#' rez <- cluster_analysis(iris[, 1:4], n = 3, method = "hclust")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
 #' plot(rez)
@@ -85,7 +92,7 @@ cluster_analysis <- function(x,
   data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # Get number of clusters
-  if (is.null(n) && any(method %in% c("kmeans", "hclust"))) {
+  if (is.null(n) && any(method %in% c("kmeans"))) {
     n <- tryCatch(
       {
         nc <- n_clusters(data, preprocess = FALSE, ...)
@@ -111,14 +118,10 @@ cluster_analysis <- function(x,
 
   if (any(method == "kmeans")) {
     rez <- .cluster_analysis_kmeans(data, n = n, ...)
-  } else if(any(method %in% c("hclust", "dbscan"))) {
-    # Get distance
-    dist <- stats::dist(data, ...)
-    if(any(method == "hclust")) {
-      rez <- .cluster_analysis_hclust(dist, n = n, ...)
-    } else if(any(method == "dbscan")) {
-      rez <- .cluster_analysis_dbscan(dist = dist, n = n, ...)
-    }
+  } else if(any(method %in% c("hclust"))) {
+    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, ...)
+  } else if(any(method == "dbscan")) {
+    rez <- .cluster_analysis_dbscan(dist = dist, n = n, ...)
   }
 
   # Assign clusters to observations
@@ -140,54 +143,6 @@ cluster_analysis <- function(x,
   class(out) <- c("cluster_analysis", class(out))
   out
 
-  # Old ---------------------------------------------------------------------
-#
-#   # create NA-vector of same length as data frame
-#   complete.groups <- rep(NA, times = nrow(x))
-#
-#
-#   # save original data, standardized, for later use
-#   original_data <- as.data.frame(scale(x))
-
-#   # Ward Hierarchical Clustering
-#   if (method == "hclust") {
-#     # check for argument and R version
-#     if (agglomeration == "ward") agglomeration <- "ward.D2"
-#     # distance matrix
-#     d <- stats::dist(x, method = distance)
-#     # hierarchical clustering
-#     hc <- stats::hclust(d, method = agglomeration)
-#     # cut tree into x clusters
-#     groups <- stats::cutree(hc, k = n_clusters)
-#   } else {
-#     km <- stats::kmeans(x, centers = n_clusters, iter.max = iterations, algorithm = algorithm)
-#     # return cluster assignment
-#     groups <- km$cluster
-#   }
-#
-#   # create vector with cluster group classification,
-#   # including missings
-#   complete.groups[non_missing] <- groups
-#
-#   # create mean of z-score for each variable in data
-#   out <- as.data.frame(do.call(rbind, lapply(original_data, tapply, complete.groups, mean)))
-#   colnames(out) <- sprintf("Group %s", colnames(out))
-#   out <- cbind(data.frame(Term = rownames(out), stringsAsFactors = FALSE), out)
-#   rownames(out) <- NULL
-#
-#   attr(complete.groups, "data") <- out
-#   attr(complete.groups, "accuracy") <- tryCatch(
-#     {
-#       cluster_discrimination(original_data, complete.groups)
-#     },
-#     error = function(e) {
-#       NULL
-#     }
-#   )
-#
-#   class(complete.groups) <- c("cluster_analysis", "see_cluster_analysis", class(complete.groups))
-#
-#   complete.groups
 }
 
 
@@ -201,9 +156,16 @@ cluster_analysis <- function(x,
 }
 
 #' @keywords internal
-.cluster_analysis_hclust <- function(dist, n = 2, ...) {
-  model <- stats::hclust(dist, ...)
-  list(model = model, clusters = stats::cutree(model, k = n))
+.cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", ...) {
+  if(is.null(n)) {
+    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, ...)
+    out <- list(model = attributes(rez)$fit$clust, clusters = rez$Cluster)
+  } else {
+    dist <- dist(data, method = distance_method, ...)
+    model <- stats::hclust(dist, method = hclust_method, ...)
+    out <- list(model = model, clusters = stats::cutree(model, k = n))
+  }
+  out
 }
 
 #' @keywords internal

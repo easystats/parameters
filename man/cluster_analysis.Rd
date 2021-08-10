@@ -77,8 +77,15 @@ mean values).
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-# K-Means ==================================================
+# K-Means ====================================================
 rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
+rez  # Show results
+predict(rez)  # Get clusters
+plot(rez)
+
+
+# Hierarchical Clustering (hclust) ===========================
+rez <- cluster_analysis(iris[, 1:4], n = 3, method = "hclust")
 rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)

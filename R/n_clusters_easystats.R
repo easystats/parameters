@@ -104,7 +104,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
       rez <- .cluster_analysis_dbscan(x, eps = eps, min_size = min_size)
       out <- rbind(out, data.frame(eps = eps,
                                    n_Clusters = length(unique(rez$clusters)) - 1,
-                                   total_SS = .cluster_analysis_get_SS(x, rez$clusters)))
+                                   total_SS = sum(.cluster_analysis_SS(x, rez$clusters)$WSS)))
     }
     attr(out, "min_size") <- rez$model$MinPts
     attr(out, "eps") <- out$eps[which.min(out$total_SS)]
@@ -143,7 +143,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
 #' # iterations should be higher for real analyses
 #' x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 #' x
-#' head(as.data.frame(x))
+#' head(as.data.frame(x), n = 10)  # Print 10 first rows
 #' plot(x)
 #' @export
 n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, distance_method = "euclidean", hclust_method = "complete", ci = 0.95, iterations = 100, ...) {
@@ -152,17 +152,12 @@ n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, d
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # pvclust works on columns, so we need to pivot the dataframe
-  fit <- pvclust::pvclust(datawizard::data_transpose(x), method.hclust=hclust_method, method.dist=distance_method, nboot = iterations, quiet = TRUE, ...)
-  model <- fit$hclust
-  rez <- pvclust::pvpick(fit, alpha = ci)
+  model <- pvclust::pvclust(datawizard::data_transpose(x), method.hclust=hclust_method, method.dist=distance_method, nboot = iterations, quiet = TRUE)
+  out <- .model_parameters_pvclust_clusters(model, x, ci)
 
-  out <- data.frame()
-  for(cluster in 1:length(rez$clusters)) {
-    out <- rbind(out, data.frame(Cluster = cluster, Row = rez$clusters[[cluster]]))
-  }
-
-  attr(out, "fit") <- fit
-  attr(out, "n") <- length(rez$clusters)
+  attr(out, "model") <- model
+  attr(out, "ci") <- ci
+  attr(out, "n") <- length(unique(out$Cluster)[unique(out$Cluster) != 0])
   class(out) <- c("n_clusters_hclust", class(out))
   out
 }
@@ -183,16 +178,7 @@ n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, d
   factoextra::fviz_nbclust(x, clustering_function, method = method, k.max = n_max, verbose = FALSE)$data
 }
 
-#' @importFrom stats dist
-#' @keywords internal
-.cluster_analysis_get_SS <- function(data, clusters) {
-  total_ss <- 0
-  for(c in unique(clusters)) {
-    within_ss <- sum(as.matrix(dist(data[clusters == c, ])^2)) / (2 * nrow(data[clusters == c, ]))
-    total_ss <- total_ss + within_ss
-  }
-  total_ss
-}
+
 
 
 # Printing ----------------------------------------------------------------
@@ -368,8 +354,8 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
                            xintercept = attributes(x)$eps,
                            linetype = "dotted")
     layers[["l4"]] <- list(geom = "labs",
-                           x = "EPS Value",
-                           y = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
+                           x = "EPS Value (min. size = ", attributes(x)$min_size, ")",
+                           y = paste0("Number of CLusters"),
                            title = "DBSCAN Method")
   }
 
@@ -396,6 +382,6 @@ plot.n_clusters_dbscan <- plot.cluster_analysis
 #' @export
 plot.n_clusters_hclust <- function(x, ...) {
   insight::check_if_installed("pvclust")
-  plot(attributes(x)$fit)
-  pvclust::pvrect(attributes(x)$fit)
+  plot(attributes(x)$model)
+  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci)
 }
