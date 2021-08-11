@@ -4,11 +4,26 @@
 #' x <- n_clusters_elbow(iris[1:4])
 #' x
 #' as.data.frame(x)
-#' plot(x)
-#' @importFrom stats kmeans
+#'
+#' if (require("see", quietly = TRUE)) {
+#'   plot(x)
+#' }
 #' @export
-n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 15, ...) {
-  out <- .n_clusters_factoextra(x, method = "wss", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+n_clusters_elbow <- function(x,
+                             standardize = TRUE,
+                             include_factors = FALSE,
+                             clustering_function = stats::kmeans,
+                             n_max = 15,
+                             ...) {
+  out <- .n_clusters_factoextra(
+    x,
+    method = "wss",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   names(out) <- c("n_Clusters", "WSS")
 
   gradient <- c(0, diff(out$WSS))
@@ -18,7 +33,6 @@ n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, cl
   attr(out, "gradient") <- gradient
   class(out) <- c("n_clusters_elbow", class(out))
   out
-
 }
 
 
@@ -32,8 +46,21 @@ n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, cl
 #' as.data.frame(x)
 #' plot(x)
 #' @export
-n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 15, ...) {
-  rez <- .n_clusters_factoextra(x, method = "gap_stat", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+n_clusters_gap <- function(x,
+                           standardize = TRUE,
+                           include_factors = FALSE,
+                           clustering_function = stats::kmeans,
+                           n_max = 15,
+                           ...) {
+  rez <- .n_clusters_factoextra(
+    x,
+    method = "gap_stat",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   out <- rez[c("clusters", "gap", "SE.sim")]
   names(out) <- c("n_Clusters", "Gap", "SE")
 
@@ -44,7 +71,6 @@ n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clus
   attr(out, "ymax") <- rez$ymax
   class(out) <- c("n_clusters_gap", class(out))
   out
-
 }
 
 
@@ -57,8 +83,21 @@ n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clus
 #' as.data.frame(x)
 #' plot(x)
 #' @export
-n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = kmeans, n_max = 15, ...) {
-  out <- .n_clusters_factoextra(x, method = "silhouette", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+n_clusters_silhouette <- function(x,
+                                  standardize = TRUE,
+                                  include_factors = FALSE,
+                                  clustering_function = kmeans,
+                                  n_max = 15,
+                                  ...) {
+out <- .n_clusters_factoextra(
+    x,
+    method = "silhouette",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   names(out) <- c("n_Clusters", "Silhouette")
 
   optim <- which.max(out$Silhouette)
@@ -66,7 +105,6 @@ n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALS
   attr(out, "n") <- optim
   class(out) <- c("n_clusters_silhouette", class(out))
   out
-
 }
 
 
@@ -91,14 +129,14 @@ n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALS
   k <- length(x)
 
   decr <- diff(x) <= 0 # length K-1
-  if(any(decr)) {
+  if (any(decr)) {
     nc <- which.max(decr)
   } else {
     nc <- k # the first TRUE, or K
   }
 
   mp <- x[seq_len(nc - 1)] >= (x[nc] - se[nc])
-  if(any(mp)) {
+  if (any(mp)) {
     which(mp)[1]
   } else {
     nc
@@ -225,6 +263,7 @@ visualisation_recipe.n_clusters_silhouette <- function(x, ...) {
 
 #' @export
 plot.n_clusters_elbow <- function(x, ...) {
+  insight::check_if_installed("see")
   plot(visualisation_recipe(x, ...))
 }
 
