@@ -6,11 +6,26 @@
 #' x <- n_clusters_elbow(iris[1:4])
 #' x
 #' as.data.frame(x)
-#' plot(x)
-#' @importFrom stats kmeans
+#'
+#' if (require("see", quietly = TRUE)) {
+#'   plot(x)
+#' }
 #' @export
-n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 15, ...) {
-  out <- .n_clusters_factoextra(x, method = "wss", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+n_clusters_elbow <- function(x,
+                             standardize = TRUE,
+                             include_factors = FALSE,
+                             clustering_function = stats::kmeans,
+                             n_max = 15,
+                             ...) {
+  out <- .n_clusters_factoextra(
+    x,
+    method = "wss",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   names(out) <- c("n_Clusters", "WSS")
 
   gradient <- c(0, diff(out$WSS))
@@ -20,7 +35,6 @@ n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, cl
   attr(out, "gradient") <- gradient
   class(out) <- c("n_clusters_elbow", class(out))
   out
-
 }
 
 
@@ -35,10 +49,23 @@ n_clusters_elbow <-  function(x, standardize = TRUE, include_factors = FALSE, cl
 #' as.data.frame(x)
 #' plot(x)
 #' @export
-n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 15, gap_method = "firstSEmax", ...) {
+n_clusters_gap <- function(x,
+                           standardize = TRUE,
+                           include_factors = FALSE,
+                           clustering_function = stats::kmeans,
+                           n_max = 15,
+                           gap_method = "firstSEmax",
+                           ...) {
   insight::check_if_installed("cluster")
-
-  rez <- .n_clusters_factoextra(x, method = "gap_stat", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+  rez <- .n_clusters_factoextra(
+    x,
+    method = "gap_stat",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   out <- rez[c("clusters", "gap", "SE.sim")]
   names(out) <- c("n_Clusters", "Gap", "SE")
 
@@ -49,7 +76,6 @@ n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clus
   attr(out, "ymax") <- rez$ymax
   class(out) <- c("n_clusters_gap", class(out))
   out
-
 }
 
 
@@ -63,8 +89,21 @@ n_clusters_gap <-  function(x, standardize = TRUE, include_factors = FALSE, clus
 #' as.data.frame(x)
 #' plot(x)
 #' @export
-n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALSE, clustering_function = kmeans, n_max = 15, ...) {
-  out <- .n_clusters_factoextra(x, method = "silhouette", standardize = standardize, include_factors = include_factors, clustering_function = clustering_function, n_max = n_max, ...)
+n_clusters_silhouette <- function(x,
+                                  standardize = TRUE,
+                                  include_factors = FALSE,
+                                  clustering_function = kmeans,
+                                  n_max = 15,
+                                  ...) {
+  out <- .n_clusters_factoextra(
+    x,
+    method = "silhouette",
+    standardize = standardize,
+    include_factors = include_factors,
+    clustering_function = clustering_function,
+    n_max = n_max,
+    ...
+  )
   names(out) <- c("n_Clusters", "Silhouette")
 
   optim <- which.max(out$Silhouette)
@@ -72,7 +111,6 @@ n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALS
   attr(out, "n") <- optim
   class(out) <- c("n_clusters_silhouette", class(out))
   out
-
 }
 
 
@@ -387,3 +425,4 @@ plot.n_clusters_hclust <- function(x, ...) {
   plot(attributes(x)$model)
   pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
 }
+

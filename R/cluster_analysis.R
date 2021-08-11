@@ -163,6 +163,7 @@ cluster_analysis <- function(x,
   out <- model_parameters(rez$model, data = data, clusters = clusters, ...)
   performance <-  cluster_performance(out)
 
+  attr(out, "model") <- rez$model
   attr(out, "method") <- method
   attr(out, "clusters") <- clusters
   attr(out, "data") <- data

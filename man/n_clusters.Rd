@@ -144,7 +144,10 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && r
 x <- n_clusters_elbow(iris[1:4])
 x
 as.data.frame(x)
-plot(x)
+
+if (require("see", quietly = TRUE)) {
+  plot(x)
+}
 #
 # Gap method ------------------------------
 x <- n_clusters_gap(iris[1:4])

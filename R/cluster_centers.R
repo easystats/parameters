@@ -13,7 +13,6 @@
 #' k <- kmeans(iris[1:4], 3)
 #' cluster_centers(iris[1:4], clusters = k$cluster)
 #' cluster_centers(iris[1:4], clusters = k$cluster, fun = median)
-#' @importFrom stats aggregate
 #' @export
 cluster_centers <- function(data, clusters, fun = mean, ...) {
 
@@ -26,7 +25,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   params$Sum_Squares <- ss$WSS
 
   # Get Cluster Centers
-  centers <- aggregate(data, list(Cluster=clusters), fun)
+  centers <- stats::aggregate(data, list(Cluster=clusters), fun)
   params <- merge(params, centers, by = "Cluster")
 
   attr(params, "Sum_Squares_Total") <- ss$TSS
@@ -40,7 +39,6 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
 # Performance -------------------------------------------------------------
 
-#' @importFrom stats dist
 #' @keywords internal
 .cluster_analysis_SS <- function(data, clusters) {
   # https://stackoverflow.com/questions/68714612/compute-between-clusters-sum-of-squares-bcss-and-total-sum-of-squares-manually
