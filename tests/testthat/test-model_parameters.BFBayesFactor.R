@@ -5,12 +5,12 @@ if (require("testthat") &&
   getRversion() >= "3.6") {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-  if (.runThisTest) {
-    test_that("model_parameters.BFBayesFactor", {
-      model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
-      expect_equal(parameters::model_parameters(model)$BF, c(492.77057, NA), tolerance = 1e-2)
-    })
-  }
+  # if (.runThisTest) {
+  #   test_that("model_parameters.BFBayesFactor", {
+  #     model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
+  #     expect_equal(parameters::model_parameters(model)$BF, c(492.770567186302, NA), tolerance = 1e-2)
+  #   })
+  # }
 
   test_that("model_parameters.BFBayesFactor", {
     model <- BayesFactor::correlationBF(iris$Sepal.Width, iris$Petal.Length)
@@ -27,12 +27,12 @@ if (require("testthat") &&
   df$gear <- as.factor(df$gear)
   df$am <- as.factor(df$am)
 
-  if (.runThisTest) {
-    test_that("model_parameters.BFBayesFactor", {
-      model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
-      expect_equal(model_parameters(model)$BF, c(86.58973, NA), tolerance = 1)
-    })
-  }
+  # if (.runThisTest) {
+  #   test_that("model_parameters.BFBayesFactor", {
+  #     model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
+  #     expect_equal(model_parameters(model)$BF, c(86.58973, NA), tolerance = 1)
+  #   })
+  # }
 
   test_that("model_parameters.BFBayesFactor", {
     set.seed(123)
@@ -47,8 +47,8 @@ if (require("testthat") &&
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c(
-        "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-        "SD", "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+        "Parameter", "Mean", "SD", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
       ))
     })
 
