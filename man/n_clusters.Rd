@@ -140,12 +140,11 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && r
 }
 #
 # Specific Methods =========================
-# Elbow method -----------------------------
-x <- n_clusters_elbow(iris[1:4])
-x
-as.data.frame(x)
-
-if (require("see", quietly = TRUE)) {
+# Elbow method --------------------
+if (require("openxlsx") && require("see")) {
+  x <- n_clusters_elbow(iris[1:4])
+  x
+  as.data.frame(x)
   plot(x)
 }
 #

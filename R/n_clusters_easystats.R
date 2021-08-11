@@ -2,12 +2,11 @@
 #' @examples
 #' #
 #' # Specific Methods =========================
-#' # Elbow method -----------------------------
-#' x <- n_clusters_elbow(iris[1:4])
-#' x
-#' as.data.frame(x)
-#'
-#' if (require("see", quietly = TRUE)) {
+#' # Elbow method --------------------
+#' if (require("openxlsx") && require("see")) {
+#'   x <- n_clusters_elbow(iris[1:4])
+#'   x
+#'   as.data.frame(x)
 #'   plot(x)
 #' }
 #' @export
