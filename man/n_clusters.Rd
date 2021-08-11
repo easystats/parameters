@@ -38,7 +38,7 @@ n_clusters_silhouette(
   x,
   standardize = TRUE,
   include_factors = FALSE,
-  clustering_function = kmeans,
+  clustering_function = stats::kmeans,
   n_max = 15,
   ...
 )
@@ -89,11 +89,10 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 }
 }
 # Elbow method --------------------
-x <- n_clusters_elbow(iris[1:4])
-x
-as.data.frame(x)
-
-if (require("see", quietly = TRUE)) {
+if (require("openxlsx") && require("see")) {
+  x <- n_clusters_elbow(iris[1:4])
+  x
+  as.data.frame(x)
   plot(x)
 }
 # Gap method --------------------

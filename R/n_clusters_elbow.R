@@ -1,11 +1,10 @@
 #' @rdname n_clusters
 #' @examples
 #' # Elbow method --------------------
-#' x <- n_clusters_elbow(iris[1:4])
-#' x
-#' as.data.frame(x)
-#'
-#' if (require("see", quietly = TRUE)) {
+#' if (require("openxlsx") && require("see")) {
+#'   x <- n_clusters_elbow(iris[1:4])
+#'   x
+#'   as.data.frame(x)
 #'   plot(x)
 #' }
 #' @export
@@ -86,7 +85,7 @@ n_clusters_gap <- function(x,
 n_clusters_silhouette <- function(x,
                                   standardize = TRUE,
                                   include_factors = FALSE,
-                                  clustering_function = kmeans,
+                                  clustering_function = stats::kmeans,
                                   n_max = 15,
                                   ...) {
 out <- .n_clusters_factoextra(

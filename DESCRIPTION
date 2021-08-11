@@ -137,6 +137,7 @@ Suggests:
     NbClust,
     nFactors,
     nlme,
+    openxlsx,
     panelr,
     pbkrtest,
     performance (>= 0.7.2),
