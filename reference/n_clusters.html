@@ -225,7 +225,7 @@ consensus. In case of ties, it will select the solution with fewer clusters.</p>
   <span class='va'>x</span>,
   standardize <span class='op'>=</span> <span class='cn'>TRUE</span>,
   include_factors <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  clustering_function <span class='op'>=</span> <span class='va'>kmeans</span>,
+  clustering_function <span class='op'>=</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/r/stats/kmeans.html'>kmeans</a></span>,
   n_max <span class='op'>=</span> <span class='fl'>15</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></code></pre></div>
@@ -295,29 +295,16 @@ computationally heavy.</p></td>
 <span class='r-msg co'><span class='r-pr'>#&gt;</span>  object ‘check_heterogeneity’ is not exported by 'namespace:parameters'</span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'><span class='co'># Elbow method --------------------</span></span>
-<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>n_clusters_elbow</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span></span>
-<span class='r-in'><span class='va'>x</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>The Elbow method, that aims at minimizing the total intra-cluster variation (i.e., the total within-cluster sum of square), suggests that the optimal number of clusters is 2.</span></span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    n_Clusters       WSS</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           1 596.00000</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           2 220.87929</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3 138.88836</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           4 113.64981</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           5  90.22782</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           6  95.25396</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 7           7  72.75296</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 8           8  64.61603</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 9           9  59.48502</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 10         10  59.10865</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 11         11  59.38389</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 12         12  68.74352</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 13         13  35.91391</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 14         14  41.47813</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 15         15  33.59736</span>
-<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error:</span> Package 'see' is required for this function to work.</span>
-<span class='r-err co'><span class='r-pr'>#&gt;</span>   Please install it by running install.packages('see').</span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://ycphs.github.io/openxlsx/index.html'>"openxlsx"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/see/'>"see"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>n_clusters_elbow</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>x</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: openxlsx</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: see</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Error: package or namespace load failed for ‘see’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  object ‘check_heterogeneity’ is not exported by 'namespace:parameters'</span>
 <span class='r-in'><span class='co'># Gap method --------------------</span></span>
 <span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>n_clusters_gap</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>x</span></span>
