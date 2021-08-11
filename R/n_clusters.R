@@ -74,18 +74,21 @@ n_clusters <- function(x,
   }
 
   if ("nbclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
+    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, ...))
   }
 
   if ("mclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_mclust(x))
+    out <- rbind(out, .n_clusters_mclust(x, ...))
   }
 
   if ("M3C" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_M3C(x, fast = fast))
   }
 
+  # Drop Nans
+  out <- out[!is.na(out$n_Clusters), ]
 
+  # Clean
   out <- out[order(out$n_Clusters), ] # Arrange by n clusters
   row.names(out) <- NULL # Reset row index
   out$Method <- as.character(out$Method)
@@ -150,7 +153,7 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, hclust_method = "complete", ...) {
   insight::check_if_installed("NbClust")
 
   # Run the function and suppress output and automatic plotting
@@ -165,7 +168,7 @@ n_clusters <- function(x,
   junk <- utils::capture.output(n <- NbClust::NbClust(
     x,
     index = indices,
-    method = "ward.D2"
+    method = hclust_method
   ))
   grDevices::dev.off()
   unlink(ff)
