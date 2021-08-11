@@ -142,12 +142,14 @@ cluster_analysis <- function(x,
 
   if (any(method == "kmeans")) {
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if(any(method %in% c("hkclust"))) {
+  } else if(any(method %in% c("hkmeans"))) {
     rez <- .cluster_analysis_hkmeans(data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method, iterations = iterations, ...)
   }  else if(any(method %in% c("hclust"))) {
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
+  } else {
+    stop("Did not find 'method' argument. Could be misspecified.")
   }
 
   # Assign clusters to observations
