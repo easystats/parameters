@@ -29,6 +29,8 @@
 #'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
 #'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
 #'   this argument.
+#' @param iterations The number of replications.
+#' @param dbscan_eps The 'eps' argument for DBSCAN method. See [n_clusters_dbscan()].
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -54,21 +56,34 @@
 #' for clustering.
 #'
 #' @examples
+#' set.seed(33)
 #' # K-Means ====================================================
-#' rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
+#' rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
 #' plot(rez)
 #'
 #'
 #' # Hierarchical Clustering (hclust) ===========================
-#' rez <- cluster_analysis(iris[, 1:4], n = 3, method = "hclust")
+#' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
 #' plot(rez)
 #'
 #' # n = NULL uses pvclust() to identify significant clusters =======
-#' rez <- cluster_analysis(iris[, 1:4], n = NULL, method = "hclust", iterations = 50)
+#' rez <- cluster_analysis(iris[1:4],
+#'                         n = NULL,
+#'                         method = "hclust",
+#'                         iterations = 50,
+#'                         distance_method = "correlation")
+#' plot(rez)
+#'
+#' # DBSCAN ====================================================
+#' # Note that you can assimilate outliers (cluster 0) to neighbouring clusters
+#' # by setting borderPoints = TRUE.
+#' rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
+#' rez  # Show results
+#' predict(rez)  # Get clusters
 #' plot(rez)
 #'
 #' @export
@@ -81,6 +96,8 @@ cluster_analysis <- function(x,
                              distance_method = "euclidean",
                              hclust_method = "complete",
                              kmeans_method = "Hartigan-Wong",
+                             dbscan_eps = 15,
+                             iterations = 100,
                              ...) {
 
 
@@ -121,11 +138,11 @@ cluster_analysis <- function(x,
 
 
   if (any(method == "kmeans")) {
-    rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, ...)
+    rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
   } else if(any(method %in% c("hclust"))) {
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, ...)
   } else if(any(method == "dbscan")) {
-    rez <- .cluster_analysis_dbscan(dist = dist, n = n, ...)
+    rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
   }
 
   # Assign clusters to observations
@@ -154,17 +171,21 @@ cluster_analysis <- function(x,
 # Clustering Methods --------------------------------------------------------
 
 #' @keywords internal
-.cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", ...) {
-  model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, ...)
+.cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", iterations = 100, ...) {
+  model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, iter.max = iterations, ...)
   list(model = model, clusters = model$cluster)
 }
 
+
 #' @keywords internal
-.cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", ...) {
+.cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", iterations = 100, ...) {
   if(is.null(n)) {
-    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, hclust_method = hclust_method, ...)
+    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
+    if(distance_method %in% c("correlation", "uncentered", "abscor")) {
+      warning(paste0("method '", distance_method, "' not supported by regular hclust(). Please specify another one or set n = NULL to use pvclust."))
+    }
     dist <- dist(data, method = distance_method, ...)
     model <- stats::hclust(dist, method = hclust_method, ...)
     out <- list(model = model, clusters = stats::cutree(model, k = n))
@@ -173,16 +194,11 @@ cluster_analysis <- function(x,
 }
 
 #' @keywords internal
-.cluster_analysis_dbscan <- function(data = NULL, dist = NULL, eps = 0.15, min_size = 0.1, ...) {
-  insight::check_if_installed("fpc")
+.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.1, borderPoints = FALSE, ...) {
+  insight::check_if_installed("dbscan")
 
-  if(!is.null(dist)) {
-    if(min_size < 1) min_size <- round(min_size * dim(as.matrix(dist))[1])
-    model <- fpc::dbscan(dist, eps = eps, MinPts = min_size, method = "dist", ...)
-  } else {
-    if(min_size < 1) min_size <- round(min_size * nrow(data))
-    model <- fpc::dbscan(data, eps = eps, MinPts = min_size, method = "hybrid", ...)
-  }
+  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  model <- dbscan::dbscan(data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
 
   list(model = model, clusters = model$cluster)
 }
@@ -223,11 +239,15 @@ visualisation_recipe.cluster_analysis <- function(x, ...) {
   pca <- principal_components(ori_data, n = 2)
   data <- predict(pca)
   names(data) <- c("x", "y")
-  data$Cluster <- as.factor(attributes(x)$clusters)
+  data$Cluster <- as.character(attributes(x)$clusters)
 
   # Centers data (also on the PCA scale)
   data_centers <- predict(pca, newdata = as.data.frame(x)[names(ori_data)], names = c("x", "y"))
-  data_centers$Cluster <- as.data.frame(x)$Cluster
+  data_centers$Cluster <- as.character(as.data.frame(x)$Cluster)
+
+  # Outliers
+  data$Cluster[data$Cluster == "0"] <- NA
+  data_centers <- data_centers[data_centers$Cluster != "0", ]
 
   layers <- list()
 

@@ -144,7 +144,7 @@ navbar:
         href: articles/model_parameters_formatting.html
       - text: Printing Model Parameters
         href: articles/model_parameters_print.html
-  - text: Dimension Reduction
+  - text: Dimension Reduction and Clustering
     menu:
       - text: 'Feature reduction (PCA, cMDS, ICA...)'
         href: articles/parameters_reduction.html
@@ -152,3 +152,5 @@ navbar:
         href: articles/efa_cfa.html
       - text: Parameters Selection
         href: articles/parameters_selection.html
+      - text: Clustering with easystats
+        href: articles/clustering.html

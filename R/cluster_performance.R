@@ -32,7 +32,7 @@ cluster_performance.kmeans <- function(model, ...) {
 
 
 
-#' @rdname model_parameters.kmeans
+#' @rdname cluster_performance
 #' @examples
 #' # hclust
 #' data <- iris[1:4]
@@ -57,9 +57,33 @@ cluster_performance.hclust <- function(model, data, clusters, ...) {
 }
 
 
+#' @rdname cluster_performance
+#' @examples
+#' # DBSCAN
+#' if (require("dbscan", quietly = TRUE)) {
+#' model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
+#'
+#' rez <- cluster_performance(model, iris[1:4])
+#' rez
+#' }
+#'
+#' @export
+cluster_performance.dbscan <- function(model, data, ...) {
+  if(is.null(data)) {
+    stop("This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself.")
+  }
+
+  params <- model_parameters(model, data = data, ...)
+
+  cluster_performance(params)
+}
 
 
-#' @rdname model_parameters.kmeans
+# Base --------------------------------------------------------------------
+
+
+
+#' @rdname cluster_performance
 #' @examples
 #' # Retrieve performance from parameters
 #' params <- model_parameters(kmeans(iris[1:4], 3))

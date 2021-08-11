@@ -80,6 +80,7 @@ n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALS
 #' @rdname n_clusters
 #' @examples
 #' #
+#' if (require("dbscan", quietly = TRUE)) {
 #' # DBSCAN method -------------------------
 #' # NOTE: This actually primarily estimates the 'eps' parameter, the number of
 #' # clusters is a side effect (it's the number of clusters corresponding to
@@ -93,6 +94,7 @@ n_clusters_silhouette <-  function(x, standardize = TRUE, include_factors = FALS
 #' x
 #' head(as.data.frame(x))
 #' plot(x)
+#' }
 #' @export
 n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {
   method <- match.arg(method)
@@ -101,7 +103,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
   if(method == "SS") {
     out <- data.frame()
     for(eps in seq(eps_range[1], eps_range[2], length.out = eps_n)){
-      rez <- .cluster_analysis_dbscan(x, eps = eps, min_size = min_size)
+      rez <- .cluster_analysis_dbscan(x, dbscan_eps = eps, min_size = min_size)
       out <- rbind(out, data.frame(eps = eps,
                                    n_Clusters = length(unique(rez$clusters)) - 1,
                                    total_SS = sum(.cluster_analysis_SS(x, rez$clusters)$WSS)))
@@ -119,7 +121,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
     gradient <- c(0, diff(out$eps))
     eps <- out$eps[which.max(gradient)]
 
-    rez <- .cluster_analysis_dbscan(x, eps = eps, min_size = min_size)
+    rez <- .cluster_analysis_dbscan(x, dbscan_eps = eps, min_size = min_size)
 
     attr(out, "gradient") <- gradient
     attr(out, "min_size") <- min_size
@@ -146,7 +148,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
 #' head(as.data.frame(x), n = 10)  # Print 10 first rows
 #' plot(x)
 #' @export
-n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, distance_method = "euclidean", hclust_method = "complete", ci = 0.95, iterations = 100, ...) {
+n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
 
   insight::check_if_installed("pvclust")
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
@@ -383,5 +385,5 @@ plot.n_clusters_dbscan <- plot.cluster_analysis
 plot.n_clusters_hclust <- function(x, ...) {
   insight::check_if_installed("pvclust")
   plot(attributes(x)$model)
-  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci)
+  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
 }

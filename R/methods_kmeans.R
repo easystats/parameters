@@ -21,8 +21,8 @@
 #' attributes(rez)$means
 #'
 #' # Between and Total Sum of Squares
-#' attributes(rez)$Total_Sum_Squares
-#' attributes(rez)$Between_Sum_Squares
+#' attributes(rez)$Sum_Squares_Total
+#' attributes(rez)$Sum_Squares_Between
 #' @export
 model_parameters.kmeans <- function(model, ...) {
   params <- cbind(

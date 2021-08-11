@@ -13,7 +13,7 @@ n_clusters(
   x,
   standardize = TRUE,
   include_factors = FALSE,
-  package = c("easystats", "NbClust", "mclust", "M3C"),
+  package = c("easystats", "NbClust", "mclust"),
   fast = TRUE,
   ...
 )
@@ -61,8 +61,8 @@ n_clusters_hclust(
   x,
   standardize = TRUE,
   include_factors = FALSE,
-  distance_method = "euclidean",
-  hclust_method = "complete",
+  distance_method = "correlation",
+  hclust_method = "average",
   ci = 0.95,
   iterations = 100,
   ...
@@ -125,14 +125,17 @@ library(parameters)
 \donttest{
 # The main 'n_clusters' function ===============================
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
-  n <- n_clusters(iris[, 1:4], package = c("easystats", "NbClust", "mclust"))
+
+  # Note: you need to install NbClust and mclust by running the following:
+  n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
+
   n
   summary(n)
   as.data.frame(n)
   plot(n)
 
   # The following runs all the method but it significantly slower
-  # n_clusters(iris[, 1:4], standardize = FALSE, package = "all", fast = FALSE)
+  # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
 #
@@ -155,6 +158,7 @@ x
 as.data.frame(x)
 plot(x)
 #
+if (require("dbscan", quietly = TRUE)) {
 # DBSCAN method -------------------------
 # NOTE: This actually primarily estimates the 'eps' parameter, the number of
 # clusters is a side effect (it's the number of clusters corresponding to
@@ -168,6 +172,7 @@ x <- n_clusters_dbscan(iris[1:4], method = "SS", eps_n = 100, eps_range = c(0.1,
 x
 head(as.data.frame(x))
 plot(x)
+}
 #
 # hclust method -------------------------------
 # iterations should be higher for real analyses

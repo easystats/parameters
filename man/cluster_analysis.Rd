@@ -14,6 +14,8 @@ cluster_analysis(
   distance_method = "euclidean",
   hclust_method = "complete",
   kmeans_method = "Hartigan-Wong",
+  dbscan_eps = 15,
+  iterations = 100,
   ...
 )
 }
@@ -55,6 +57,10 @@ if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}} for details on
 this argument.}
 
+\item{dbscan_eps}{The 'eps' argument for DBSCAN method. See \code{\link[=n_clusters_dbscan]{n_clusters_dbscan()}}.}
+
+\item{iterations}{The number of replications.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
@@ -77,21 +83,34 @@ mean values).
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+set.seed(33)
 # K-Means ====================================================
-rez <- cluster_analysis(iris[, 1:4], n = 3, method = "kmeans")
+rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
 
 
 # Hierarchical Clustering (hclust) ===========================
-rez <- cluster_analysis(iris[, 1:4], n = 3, method = "hclust")
+rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
 
 # n = NULL uses pvclust() to identify significant clusters =======
-rez <- cluster_analysis(iris[, 1:4], n = NULL, method = "hclust", iterations = 50)
+rez <- cluster_analysis(iris[1:4],
+                        n = NULL,
+                        method = "hclust",
+                        iterations = 50,
+                        distance_method = "correlation")
+plot(rez)
+
+# DBSCAN ====================================================
+# Note that you can assimilate outliers (cluster 0) to neighbouring clusters
+# by setting borderPoints = TRUE.
+rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
+rez  # Show results
+predict(rez)  # Get clusters
 plot(rez)
 
 }

@@ -40,21 +40,25 @@
 #' \donttest{
 #' # The main 'n_clusters' function ===============================
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
-#'   n <- n_clusters(iris[, 1:4], package = c("easystats", "NbClust", "mclust"))
+#'
+#'   # Note: you need to install NbClust and mclust by running the following:
+#    # install.packages(c("NbClust", "mclust"))
+#'   n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
+#'
 #'   n
 #'   summary(n)
 #'   as.data.frame(n)
 #'   plot(n)
 #'
 #'   # The following runs all the method but it significantly slower
-#'   # n_clusters(iris[, 1:4], standardize = FALSE, package = "all", fast = FALSE)
+#'   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 #' }
 #' }
 #' @export
 n_clusters <- function(x,
                        standardize = TRUE,
                        include_factors = FALSE,
-                       package = c("easystats", "NbClust", "mclust", "M3C"),
+                       package = c("easystats", "NbClust", "mclust"),
                        fast = TRUE,
                        ...) {
   if (all(package == "all")) {

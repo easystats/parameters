@@ -74,8 +74,8 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #'   attributes(rez)$means
 #'
 #'   # Between and Total Sum of Squares
-#'   attributes(rez)$Total_Sum_Squares
-#'   attributes(rez)$Between_Sum_Squares
+#'   attributes(rez)$Sum_Squares_Total
+#'   attributes(rez)$Sum_Squares_Between
 #' }
 #'
 #' @export
@@ -116,7 +116,7 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
 #' @keywords internal
 .model_parameters_pvclust_clusters <- function(model, data, ci = 0.95) {
   insight::check_if_installed("pvclust")
-  rez <- pvclust::pvpick(model, alpha = ci)
+  rez <- pvclust::pvpick(model, alpha = ci, pv = "si")
 
   # Assign clusters
   out <- data.frame()
