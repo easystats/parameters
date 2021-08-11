@@ -8,7 +8,7 @@ if (require("testthat") &&
   if (.runThisTest) {
     test_that("model_parameters.BFBayesFactor", {
       model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
-      expect_equal(parameters::model_parameters(model)$BF, c(492.77057, NA), tolerance = 1e-2)
+      expect_equal(parameters::model_parameters(model)$BF, c(492.770567186302, NA), tolerance = 1e-2)
     })
   }
 
