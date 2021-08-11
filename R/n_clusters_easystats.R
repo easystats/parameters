@@ -92,7 +92,7 @@ n_clusters_gap <- function(x,
 n_clusters_silhouette <- function(x,
                                   standardize = TRUE,
                                   include_factors = FALSE,
-                                  clustering_function = kmeans,
+                                  clustering_function = stats::kmeans,
                                   n_max = 15,
                                   ...) {
   out <- .n_clusters_factoextra(

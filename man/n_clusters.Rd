@@ -41,7 +41,7 @@ n_clusters_silhouette(
   x,
   standardize = TRUE,
   include_factors = FALSE,
-  clustering_function = kmeans,
+  clustering_function = stats::kmeans,
   n_max = 15,
   ...
 )
