@@ -137,9 +137,9 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
   method <- match.arg(method)
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
-  if(method == "SS") {
+  if (method == "SS") {
     out <- data.frame()
-    for(eps in seq(eps_range[1], eps_range[2], length.out = eps_n)){
+    for (eps in seq(eps_range[1], eps_range[2], length.out = eps_n)) {
       rez <- .cluster_analysis_dbscan(x, dbscan_eps = eps, min_size = min_size)
       out <- rbind(out, data.frame(eps = eps,
                                    n_Clusters = length(unique(rez$clusters)) - 1,
@@ -151,7 +151,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
 
   } else {
     insight::check_if_installed("dbscan")
-    if(min_size < 1) min_size <- round(min_size * nrow(x))
+    if (min_size < 1) min_size <- round(min_size * nrow(x))
     out <- data.frame(n_Obs = 1:nrow(x), eps = sort(dbscan::kNNdist(x, k =  min_size)))
     row.names(out) <- NULL
 
@@ -191,7 +191,7 @@ n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, d
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # pvclust works on columns, so we need to pivot the dataframe
-  model <- pvclust::pvclust(datawizard::data_transpose(x), method.hclust=hclust_method, method.dist=distance_method, nboot = iterations, quiet = TRUE)
+  model <- pvclust::pvclust(datawizard::data_transpose(x), method.hclust = hclust_method, method.dist = distance_method, nboot = iterations, quiet = TRUE)
   out <- .model_parameters_pvclust_clusters(model, x, ci)
 
   attr(out, "model") <- model
@@ -356,7 +356,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
 
   # Layers -----------------------
-  if("gradient" %in% names(attributes(x))) {
+  if ("gradient" %in% names(attributes(x))) {
     data$gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
 
     layers[["l1"]] <- list(geom = "line",
