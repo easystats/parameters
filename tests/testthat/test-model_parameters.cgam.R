@@ -115,6 +115,7 @@ if (.runThisTest && require("testthat") && require("cgam")) {
         sigma = numeric(0),
         residual_df = Inf,
         ci = 0.95,
+        test_statistic = "t-statistic",
         verbose = TRUE,
         exponentiate = FALSE,
         ordinal_model = FALSE,
