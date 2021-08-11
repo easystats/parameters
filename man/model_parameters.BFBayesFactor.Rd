@@ -12,7 +12,7 @@
   ci_method = "hdi",
   test = c("pd", "rope"),
   rope_range = "default",
-  rope_ci = 1,
+  rope_ci = 0.95,
   priors = TRUE,
   verbose = TRUE,
   ...
