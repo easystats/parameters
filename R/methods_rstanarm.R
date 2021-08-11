@@ -4,7 +4,7 @@
 #'
 #' @param model Bayesian model (including SEM from \pkg{blavaan}. May also be
 #'   a data frame with posterior samples.
-#' @param ci Credible Interval (CI) level. Default to `0.89` (`89%`). See
+#' @param ci Credible Interval (CI) level. Default to `0.95` (`95%`). See
 #'   [bayestestR::ci()] for further details.
 #' @param group_level Logical, for multilevel models (i.e. models with random
 #'   effects) and when `effects = "all"` or `effects = "random"`,
@@ -43,11 +43,11 @@
 model_parameters.stanreg <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .89,
+                                     ci = .95,
                                      ci_method = "hdi",
                                      test = c("pd", "rope"),
                                      rope_range = "default",
-                                     rope_ci = 1.0,
+                                     rope_ci = 0.95,
                                      bf_prior = NULL,
                                      diagnostic = c("ESS", "Rhat"),
                                      priors = TRUE,
@@ -115,11 +115,11 @@ model_parameters.stanreg <- function(model,
 model_parameters.stanmvreg <- function(model,
                                        centrality = "median",
                                        dispersion = FALSE,
-                                       ci = .89,
+                                       ci = .95,
                                        ci_method = "hdi",
                                        test = "pd",
                                        rope_range = "default",
-                                       rope_ci = 1.0,
+                                       rope_ci = 0.95,
                                        bf_prior = NULL,
                                        diagnostic = c("ESS", "Rhat"),
                                        priors = TRUE,
