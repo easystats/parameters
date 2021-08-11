@@ -29,6 +29,7 @@ if (.runThisTest && require("testthat") && require("cgam")) {
         residual_df = 49,
         pretty_names = c(`(Intercept)` = "(Intercept)"),
         ci = 0.95,
+        test_statistic = "t-statistic",
         verbose = TRUE,
         exponentiate = FALSE,
         ordinal_model = FALSE,
