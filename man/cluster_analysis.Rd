@@ -27,10 +27,7 @@ the number of clusters to extract is determined by calling \code{\link[=n_cluste
 that this argument does not apply for unsupervised clustering methods like
 DBSCAN.}
 
-\item{method}{Method for computing the cluster analysis. By default
-(\code{"hclust"}), a hierarchical cluster analysis, will be computed. Use
-\code{"kmeans"} to compute a kmeans cluster analysis. You can specify the
-initial letters only.}
+\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarhical k-means using \code{factoextra::hkmeans()}), \code{"hclust"} (hierarhical clustering using \code{hclust()} or \code{pvclust::pvclust()}), or \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}).}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
 values in order to be included in the data for determining the number of
@@ -90,6 +87,11 @@ rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
 
+# Hierarchical k-means (more robust k-means)
+rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+rez  # Show results
+predict(rez)  # Get clusters
+plot(rez)
 
 # Hierarchical Clustering (hclust) ===========================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
@@ -121,8 +123,11 @@ Analysis Basics and Extensions. R package.
 }
 }
 \seealso{
-\code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
+\itemize{
+\item \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
 \code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group
 classification and \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data
 for clustering.
+\item https://www.datanovia.com/en/lessons/
+}
 }

@@ -6,6 +6,7 @@
 \alias{model_parameters.hclust}
 \alias{model_parameters.pvclust}
 \alias{model_parameters.kmeans}
+\alias{model_parameters.hkmeans}
 \title{Parameters from Cluster Models (k-means, ...)}
 \usage{
 \method{model_parameters}{dbscan}(model, data = NULL, clusters = NULL, ...)
@@ -15,6 +16,8 @@
 \method{model_parameters}{pvclust}(model, data = NULL, clusters = NULL, ci = 0.95, ...)
 
 \method{model_parameters}{kmeans}(model, ...)
+
+\method{model_parameters}{hkmeans}(model, ...)
 }
 \arguments{
 \item{model}{Cluster model.}
@@ -107,4 +110,23 @@ attributes(rez)$means
 # Between and Total Sum of Squares
 attributes(rez)$Sum_Squares_Total
 attributes(rez)$Sum_Squares_Between
+# Hierarchical K-means (factoextra::hkclust) ----------------------
+if (require("factoextra", quietly = TRUE)) {
+  data <- iris[1:4]
+  model <- factoextra::hkmeans(data, k = 3)
+
+  rez <- model_parameters(model)
+  rez
+
+  # Get clusters
+  predict(rez)
+
+  # Clusters centers in long form
+  attributes(rez)$means
+
+  # Between and Total Sum of Squares
+  attributes(rez)$Sum_Squares_Total
+  attributes(rez)$Sum_Squares_Between
+}
+
 }

@@ -54,6 +54,46 @@ model_parameters.kmeans <- function(model, ...) {
 }
 
 
+
+
+
+# factoextra::hkmeans -----------------------------------------------------
+
+
+
+#' @rdname model_parameters.kmeans
+#' @inheritParams cluster_centers
+#'
+#' @examples
+#' # Hierarchical K-means (factoextra::hkclust) ----------------------
+#' if (require("factoextra", quietly = TRUE)) {
+#'   data <- iris[1:4]
+#'   model <- factoextra::hkmeans(data, k = 3)
+#'
+#'   rez <- model_parameters(model)
+#'   rez
+#'
+#'   # Get clusters
+#'   predict(rez)
+#'
+#'   # Clusters centers in long form
+#'   attributes(rez)$means
+#'
+#'   # Between and Total Sum of Squares
+#'   attributes(rez)$Sum_Squares_Total
+#'   attributes(rez)$Sum_Squares_Between
+#' }
+#'
+#' @export
+model_parameters.hkmeans <- model_parameters.kmeans
+
+
+
+# Methods -------------------------------------------------------------------
+
+
+
+
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
   insight::print_color("# K-means Cluster Means", "blue")

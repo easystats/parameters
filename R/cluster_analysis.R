@@ -12,10 +12,7 @@
 #' the number of clusters to extract is determined by calling [n_clusters()]. Note
 #' that this argument does not apply for unsupervised clustering methods like
 #' DBSCAN.
-#' @param method Method for computing the cluster analysis. By default
-#'   (`"hclust"`), a hierarchical cluster analysis, will be computed. Use
-#'   `"kmeans"` to compute a kmeans cluster analysis. You can specify the
-#'   initial letters only.
+#' @param method Method for computing the cluster analysis. Can be `"kmeans"` (default; k-means using `kmeans()`), `"hkmeans"` (hierarhical k-means using `factoextra::hkmeans()`), `"hclust"` (hierarhical clustering using `hclust()` or `pvclust::pvclust()`), or `dbscan` (DBSCAN using `dbscan::dbscan()`).
 #' @param distance_method Distance measure to be used when `method = "hclust"` (for
 #'   hierarchical clustering). Must be one of `"euclidean"`, `"maximum"`,
 #'   `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()]. If
@@ -50,10 +47,11 @@
 #' mean values).
 #'
 #' @seealso
-#' [n_clusters()] to determine the number of clusters to extract,
+#' - [n_clusters()] to determine the number of clusters to extract,
 #' [cluster_discrimination()] to determine the accuracy of cluster group
 #' classification and [check_clusterstructure()] to check suitability of data
 #' for clustering.
+#' - https://www.datanovia.com/en/lessons/
 #'
 #' @examples
 #' set.seed(33)
@@ -63,6 +61,11 @@
 #' predict(rez)  # Get clusters
 #' plot(rez)
 #'
+#' # Hierarchical k-means (more robust k-means)
+#' rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+#' rez  # Show results
+#' predict(rez)  # Get clusters
+#' plot(rez)
 #'
 #' # Hierarchical Clustering (hclust) ===========================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
@@ -105,7 +108,7 @@ cluster_analysis <- function(x,
   insight::check_if_installed("performance")
 
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hclust", "dbscan"), several.ok = TRUE)
+  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan"), several.ok = TRUE)
 
   # Preparation -------------------------------------------------------------
 
@@ -113,7 +116,7 @@ cluster_analysis <- function(x,
   data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # Get number of clusters
-  if (is.null(n) && any(method %in% c("kmeans"))) {
+  if (is.null(n) && any(method %in% c("kmeans", "hkmeans"))) {
     n <- tryCatch(
       {
         nc <- n_clusters(data, preprocess = FALSE, ...)
@@ -139,8 +142,10 @@ cluster_analysis <- function(x,
 
   if (any(method == "kmeans")) {
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if(any(method %in% c("hclust"))) {
-    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, ...)
+  } else if(any(method %in% c("hkclust"))) {
+    rez <- .cluster_analysis_hkmeans(data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method, iterations = iterations, ...)
+  }  else if(any(method %in% c("hclust"))) {
+    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
   }
@@ -173,6 +178,13 @@ cluster_analysis <- function(x,
 #' @keywords internal
 .cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", iterations = 100, ...) {
   model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, iter.max = iterations, ...)
+  list(model = model, clusters = model$cluster)
+}
+
+#' @keywords internal
+.cluster_analysis_hkmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", hclust_method = "complete", iterations = 100, ...) {
+  insight::check_if_installed("factoextra")
+  model <- factoextra::hkmeans(data, k = n, km.algorithm = kmeans_method, iter.max = iterations, hc.method = hclust_method, ...)
   list(model = model, clusters = model$cluster)
 }
 
