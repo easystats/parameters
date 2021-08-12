@@ -16,6 +16,7 @@ n_clusters(
   package = c("easystats", "NbClust", "mclust"),
   fast = TRUE,
   nbclust_method = "kmeans",
+  n_max = 10,
   ...
 )
 
@@ -24,7 +25,7 @@ n_clusters_elbow(
   standardize = TRUE,
   include_factors = FALSE,
   clustering_function = stats::kmeans,
-  n_max = 15,
+  n_max = 10,
   ...
 )
 
@@ -33,7 +34,7 @@ n_clusters_gap(
   standardize = TRUE,
   include_factors = FALSE,
   clustering_function = stats::kmeans,
-  n_max = 15,
+  n_max = 10,
   gap_method = "firstSEmax",
   ...
 )
@@ -43,7 +44,7 @@ n_clusters_silhouette(
   standardize = TRUE,
   include_factors = FALSE,
   clustering_function = stats::kmeans,
-  n_max = 15,
+  n_max = 10,
   ...
 )
 
@@ -88,11 +89,11 @@ computationally heavy.}
 
 \item{nbclust_method}{The clustering method (passed to \code{NbClust::NbClust()} as \code{method}).}
 
+\item{n_max}{Maximal number of clusters to test.}
+
 \item{...}{Arguments passed to or from other methods.}
 
 \item{clustering_function, gap_method}{Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).}
-
-\item{n_max}{Maximal number of clusters to test.}
 
 \item{method, min_size, eps_n, eps_range}{Arguments for DBSCAN algorithm.}
 

@@ -14,7 +14,7 @@ n_clusters_elbow <- function(x,
                              standardize = TRUE,
                              include_factors = FALSE,
                              clustering_function = stats::kmeans,
-                             n_max = 15,
+                             n_max = 10,
                              ...) {
   out <- .n_clusters_factoextra(
     x,
@@ -52,7 +52,7 @@ n_clusters_gap <- function(x,
                            standardize = TRUE,
                            include_factors = FALSE,
                            clustering_function = stats::kmeans,
-                           n_max = 15,
+                           n_max = 10,
                            gap_method = "firstSEmax",
                            ...) {
   insight::check_if_installed("cluster")
@@ -92,7 +92,7 @@ n_clusters_silhouette <- function(x,
                                   standardize = TRUE,
                                   include_factors = FALSE,
                                   clustering_function = stats::kmeans,
-                                  n_max = 15,
+                                  n_max = 10,
                                   ...) {
   out <- .n_clusters_factoextra(
     x,
@@ -209,7 +209,7 @@ n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, d
 
 
 #' @keywords internal
-.n_clusters_factoextra <- function(x, method = "wss", standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 15, ...) {
+.n_clusters_factoextra <- function(x, method = "wss", standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 10, ...) {
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   insight::check_if_installed("factoextra")

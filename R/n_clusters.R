@@ -62,6 +62,7 @@ n_clusters <- function(x,
                        package = c("easystats", "NbClust", "mclust"),
                        fast = TRUE,
                        nbclust_method = "kmeans",
+                       n_max = 10,
                        ...) {
   if (all(package == "all")) {
     package <- c("easystats", "NbClust", "mclust", "M3C")
@@ -72,11 +73,11 @@ n_clusters <- function(x,
   out <- data.frame()
 
   if ("easystats" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_easystats(x, ...))
+    out <- rbind(out, .n_clusters_easystats(x, n_max = n_max, ...))
   }
 
   if ("nbclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, nbclust_method = nbclust_method, ...))
+    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, nbclust_method = nbclust_method, n_max = n_max, ...))
   }
 
   if ("mclust" %in% tolower(package)) {
@@ -140,11 +141,11 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_easystats <- function(x, ...) {
-  elb <- n_clusters_elbow(x, preprocess = FALSE, ...)
-  sil <- n_clusters_silhouette(x, preprocess = FALSE, ...)
-  gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", ...)
-  gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", ...)
+.n_clusters_easystats <- function(x, n_max = 10, ...) {
+  elb <- n_clusters_elbow(x, preprocess = FALSE, n_max = n_max, ...)
+  sil <- n_clusters_silhouette(x, preprocess = FALSE, n_max = n_max, ...)
+  gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", n_max = n_max, ...)
+  gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
 
   data.frame(n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
              Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
@@ -155,7 +156,7 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", n_max = 15, ...) {
   insight::check_if_installed("NbClust")
 
   indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw", "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette", "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial", "Frey", "Mcclain", "Dunn", "SDindex", "SDbw")
@@ -171,7 +172,9 @@ n_clusters <- function(x,
         n <- NbClust::NbClust(
           x,
           index = tolower(idx),
-          method = nbclust_method
+          method = nbclust_method,
+          max.nc = n_max,
+          ...
         )
         out <- rbind(out, data.frame(n_Clusters = n$Best.nc[["Number_clusters"]],
                                      Method = idx,
