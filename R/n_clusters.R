@@ -30,6 +30,7 @@
 #' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
 #' @param distance_method The distance method (passed to [dist()]). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.
 #' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
+#' @param nbclust_method The clustering method (passed to `NbClust::NbClust()` as `method`).
 #' @inheritParams model_parameters.glm
 #'
 #'
@@ -42,7 +43,7 @@
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
 #'
 #'   # Note: you need to install NbClust and mclust by running the following:
-#    # install.packages(c("NbClust", "mclust"))
+#'   # install.packages(c("NbClust", "mclust"))
 #'   n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
 #'
 #'   n
@@ -60,6 +61,7 @@ n_clusters <- function(x,
                        include_factors = FALSE,
                        package = c("easystats", "NbClust", "mclust"),
                        fast = TRUE,
+                       nbclust_method = "kmeans",
                        ...) {
   if (all(package == "all")) {
     package <- c("easystats", "NbClust", "mclust", "M3C")
@@ -74,7 +76,7 @@ n_clusters <- function(x,
   }
 
   if ("nbclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, ...))
+    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, nbclust_method = nbclust_method, ...))
   }
 
   if ("mclust" %in% tolower(package)) {
@@ -153,28 +155,36 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, hclust_method = "complete", ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", ...) {
   insight::check_if_installed("NbClust")
 
-  # Run the function and suppress output and automatic plotting
-  ff <- tempfile()
-  grDevices::png(filename = ff)
-  if (fast) {
-    indices <- "all"
-  } else {
-    indices <- "alllong"  # This is not misspelling (it's like that in the function)
+  indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw", "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette", "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial", "Frey", "Mcclain", "Dunn", "SDindex", "SDbw")
+  # c("hubert", "dindex") are graphical methods
+  if (fast == FALSE) {
+    indices <- c(indices, c("gap", "gamma", "gplus", "tau"))
   }
 
-  junk <- utils::capture.output(n <- NbClust::NbClust(
-    x,
-    index = indices,
-    method = hclust_method
-  ))
-  grDevices::dev.off()
-  unlink(ff)
-
-  out <- as.data.frame(t(n$Best.nc))
-  data.frame(n_Clusters = out$Number_clusters, Method = row.names(out), Package = "NbClust")
+  out <- data.frame()
+  for(idx in indices) {
+    tryCatch(
+      expr = {
+        n <- NbClust::NbClust(
+          x,
+          index = tolower(idx),
+          method = nbclust_method
+        )
+        out <- rbind(out, data.frame(n_Clusters = n$Best.nc[["Number_clusters"]],
+                                     Method = idx,
+                                     Package = "NbClust"))
+      },
+      error = function(e){
+        NULL
+      },
+      warning = function(w){
+        NULL
+      })
+  }
+  out
 }
 
 

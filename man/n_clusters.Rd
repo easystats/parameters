@@ -15,6 +15,7 @@ n_clusters(
   include_factors = FALSE,
   package = c("easystats", "NbClust", "mclust"),
   fast = TRUE,
+  nbclust_method = "kmeans",
   ...
 )
 
@@ -85,6 +86,8 @@ number of clusters. Can be \code{"all"} or a vector containing
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is
 computationally heavy.}
 
+\item{nbclust_method}{The clustering method (passed to \code{NbClust::NbClust()} as \code{method}).}
+
 \item{...}{Arguments passed to or from other methods.}
 
 \item{clustering_function, gap_method}{Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).}
@@ -127,6 +130,7 @@ library(parameters)
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
 
   # Note: you need to install NbClust and mclust by running the following:
+  # install.packages(c("NbClust", "mclust"))
   n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
 
   n
