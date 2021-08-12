@@ -83,12 +83,15 @@
 #' plot(rez)
 #'
 #' # DBSCAN ====================================================
-#' # Note that you can assimilate outliers (cluster 0) to neighbouring clusters
-#' # by setting borderPoints = TRUE.
+#' # Note that you can assimilate more outliers (cluster 0) to neighbouring
+#' # clusters by setting borderPoints = TRUE.
 #' rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
 #' rez  # Show results
 #' predict(rez)  # Get clusters
 #' plot(rez)
+#'
+#' # HDBSCAN (doesn't require the eps parameter)
+#' plot(cluster_analysis(iris[1:4], method = "hdbscan"))
 #'
 #' # Mixture ====================================================
 #' if (require("mclust", quietly = TRUE)) {
@@ -118,7 +121,7 @@ cluster_analysis <- function(x,
   insight::check_if_installed("performance")
 
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan", "mixture"), several.ok = TRUE)
+  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
 
   # Preparation -------------------------------------------------------------
 
@@ -158,6 +161,8 @@ cluster_analysis <- function(x,
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
+  } else if(any(method == "hdbscan")) {
+    rez <- .cluster_analysis_hdbscan(data, ...)
   } else if(any(method %in% c("mixture", "mclust"))) {
     rez <- .cluster_analysis_mixture(data, ...)
   } else {
@@ -229,6 +234,18 @@ cluster_analysis <- function(x,
 
   list(model = model, clusters = model$cluster)
 }
+
+
+#' @keywords internal
+.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
+  insight::check_if_installed("dbscan")
+
+  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  model <- dbscan::hdbscan(data, minPts = min_size, ...)
+
+  list(model = model, clusters = model$cluster)
+}
+
 
 #' @keywords internal
 .cluster_analysis_mixture <- function(data = NULL, ...) {

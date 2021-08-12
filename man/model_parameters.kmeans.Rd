@@ -54,6 +54,10 @@ attributes(rez)$means
 # Between and Total Sum of Squares
 attributes(rez)$Sum_Squares_Total
 attributes(rez)$Sum_Squares_Between
+
+# HDBSCAN
+model <- dbscan::hdbscan(iris[1:4], minPts = 10)
+model_parameters(model, iris[1:4])
 }
 
 # Hierarchical clustering (hclust) ---------------------------

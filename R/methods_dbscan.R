@@ -19,6 +19,10 @@
 #' # Between and Total Sum of Squares
 #' attributes(rez)$Sum_Squares_Total
 #' attributes(rez)$Sum_Squares_Between
+#'
+#' # HDBSCAN
+#' model <- dbscan::hdbscan(iris[1:4], minPts = 10)
+#' model_parameters(model, iris[1:4])
 #' }
 #'
 #' @export
@@ -50,3 +54,6 @@ model_parameters.dbscan <- function(model, data = NULL, clusters = NULL, ...) {
   class(params) <- c("parameters_clusters", class(params))
   params
 }
+
+#' @export
+model_parameters.hdbscan <- model_parameters.dbscan

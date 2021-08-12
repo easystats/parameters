@@ -109,12 +109,15 @@ rez <- cluster_analysis(iris[1:4],
 plot(rez)
 
 # DBSCAN ====================================================
-# Note that you can assimilate outliers (cluster 0) to neighbouring clusters
-# by setting borderPoints = TRUE.
+# Note that you can assimilate more outliers (cluster 0) to neighbouring
+# clusters by setting borderPoints = TRUE.
 rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
 rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
+
+# HDBSCAN (doesn't require the eps parameter)
+plot(cluster_analysis(iris[1:4], method = "hdbscan"))
 
 # Mixture ====================================================
 if (require("mclust", quietly = TRUE)) {
