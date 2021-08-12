@@ -393,7 +393,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
                            xintercept = attributes(x)$eps,
                            linetype = "dotted")
     layers[["l4"]] <- list(geom = "labs",
-                           x = "EPS Value (min. size = ", attributes(x)$min_size, ")",
+                           x = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
                            y = paste0("Number of CLusters"),
                            title = "DBSCAN Method")
   }
