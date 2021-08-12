@@ -258,7 +258,7 @@ print.parameters_omega_summary <- function(x, ...) {
     type <- "principal component"
   } else if (type %in% c("fa")) {
     type <- "latent factor"
-  } else if (type %in% c("kmeans", "hclust", "pvclust", "dbscan")) {
+  } else if (type %in% c("kmeans", "hclust", "pvclust", "dbscan", "mixture")) {
     type <- "cluster"
   } else {
     type <- paste0(type, " component")

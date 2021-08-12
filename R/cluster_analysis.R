@@ -61,17 +61,18 @@
 #' predict(rez)  # Get clusters
 #' plot(rez)
 #'
+#'
 #' # Hierarchical k-means (more robust k-means)
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
-#' plot(rez)
+#' plot(rez, show_data = "point")
 #'
 #' # Hierarchical Clustering (hclust) ===========================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
-#' plot(rez)
+#' plot(rez, show_data = "label")
 #'
 #' # n = NULL uses pvclust() to identify significant clusters =======
 #' rez <- cluster_analysis(iris[1:4],
@@ -88,6 +89,15 @@
 #' rez  # Show results
 #' predict(rez)  # Get clusters
 #' plot(rez)
+#'
+#' # Mixture ====================================================
+#' if (require("mclust", quietly = TRUE)) {
+#'  library(mclust)  # Needs the package to be loaded
+#'  rez <- cluster_analysis(iris[1:4], method = "mixture")
+#'  rez  # Show results
+#'  predict(rez)  # Get clusters
+#'  plot(rez)
+#' }
 #'
 #' @export
 cluster_analysis <- function(x,
@@ -108,7 +118,7 @@ cluster_analysis <- function(x,
   insight::check_if_installed("performance")
 
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan"), several.ok = TRUE)
+  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan", "mixture"), several.ok = TRUE)
 
   # Preparation -------------------------------------------------------------
 
@@ -119,7 +129,7 @@ cluster_analysis <- function(x,
   if (is.null(n) && any(method %in% c("kmeans", "hkmeans"))) {
     n <- tryCatch(
       {
-        nc <- n_clusters(data, preprocess = FALSE, ...)
+        nc <- n_clusters(data, standardize = FALSE, ...)
         n <- attributes(nc)$n
         if (verbose) {
           insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n, max(summary(nc)$n_Methods), sum(summary(nc)$n_Methods)), "blue")
@@ -148,6 +158,8 @@ cluster_analysis <- function(x,
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
+  } else if(any(method %in% c("mixture", "mclust"))) {
+    rez <- .cluster_analysis_mixture(data, ...)
   } else {
     stop("Did not find 'method' argument. Could be misspecified.")
   }
@@ -218,6 +230,16 @@ cluster_analysis <- function(x,
   list(model = model, clusters = model$cluster)
 }
 
+#' @keywords internal
+.cluster_analysis_mixture <- function(data = NULL, ...) {
+  insight::check_if_installed("mclust")
+
+  model <- mclust::Mclust(data, verbose = FALSE, ...)
+
+  list(model = model, clusters = model$classification)
+}
+
+
 # Methods ----------------------------------------------------------------
 
 #' @export
@@ -248,13 +270,20 @@ print.cluster_analysis <- function(x, ...) {
 
 #' @importFrom stats predict
 #' @export
-visualisation_recipe.cluster_analysis <- function(x, ...) {
+visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   ori_data <- attributes(x)$data
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)
   data <- predict(pca)
   names(data) <- c("x", "y")
   data$Cluster <- as.character(attributes(x)$clusters)
+
+  data$label <- row.names(ori_data)
+  if(show_data %in% c("label", "text")) {
+    label <- "label"
+  } else {
+    label <- NULL
+  }
 
   # Centers data (also on the PCA scale)
   data_centers <- predict(pca, newdata = as.data.frame(x)[names(ori_data)], names = c("x", "y"))
@@ -267,9 +296,11 @@ visualisation_recipe.cluster_analysis <- function(x, ...) {
   layers <- list()
 
   # Layers -----------------------
-  layers[["l1"]] <- list(geom = "point",
+
+  layers[["l1"]] <- list(geom = show_data,
                          data = data,
-                         aes = list(x = "x", y = "y", color = "Cluster"))
+                         aes = list(x = "x", y = "y", label = label, color = "Cluster"))
+
   layers[["l2"]] <- list(geom = "point",
                          data = data_centers,
                          aes = list(x = "x", y = "y", color = "Cluster"),

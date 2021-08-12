@@ -87,17 +87,18 @@ rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
 
+
 # Hierarchical k-means (more robust k-means)
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
 rez  # Show results
 predict(rez)  # Get clusters
-plot(rez)
+plot(rez, show_data = "point")
 
 # Hierarchical Clustering (hclust) ===========================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 rez  # Show results
 predict(rez)  # Get clusters
-plot(rez)
+plot(rez, show_data = "label")
 
 # n = NULL uses pvclust() to identify significant clusters =======
 rez <- cluster_analysis(iris[1:4],
@@ -114,6 +115,15 @@ rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
 rez  # Show results
 predict(rez)  # Get clusters
 plot(rez)
+
+# Mixture ====================================================
+if (require("mclust", quietly = TRUE)) {
+ library(mclust)  # Needs the package to be loaded
+ rez <- cluster_analysis(iris[1:4], method = "mixture")
+ rez  # Show results
+ predict(rez)  # Get clusters
+ plot(rez)
+}
 
 }
 \references{
