@@ -404,3 +404,29 @@ sort.parameters_pca <- sort.parameters_efa
 
   loadings
 }
+
+
+
+# closest_component -------------------------------------------------------
+
+
+#' @rdname principal_components
+#' @export
+closest_component <- function(pca_results) {
+  if("closest_component" %in% names(attributes(pca_results))) {
+    attributes(pca_results)$closest_component
+  } else {
+    .closest_component(pca_results)
+  }
+}
+
+
+
+.closest_component <- function(loadings, loadings_columns = NULL, variable_names = NULL) {
+  if(is.matrix(loadings)) loadings <- as.data.frame(loadings)
+  if(is.null(loadings_columns)) loadings_columns <- 1:ncol(loadings)
+  if(is.null(variable_names)) variable_names <- row.names(loadings)
+  component_columns <- apply(loadings[loadings_columns], 1, function(i) which.max(abs(i)))
+  stats::setNames(component_columns, variable_names)
+}
+

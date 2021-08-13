@@ -209,11 +209,7 @@ principal_components <- function(x,
   UseMethod("principal_components")
 }
 
-#' @rdname principal_components
-#' @export
-closest_component <- function(pca_results) {
-  attributes(pca_results)$closest_component
-}
+
 
 
 
@@ -425,8 +421,3 @@ principal_components.data.frame <- function(x,
 }
 
 
-
-.closest_component <- function(loadings, loadings_columns, variable_names) {
-  component_columns <- apply(loadings[loadings_columns], 1, function(i) which.max(abs(i)))
-  stats::setNames(component_columns, variable_names)
-}
