@@ -166,7 +166,8 @@ VignetteBuilder:
     knitr
 Remotes: 
     easystats/datawizard,
-    easystats/insight
+    easystats/insight,
+    easystats/see
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.1.9001
