@@ -39,9 +39,10 @@ model_parameters.dbscan <- function(model, data = NULL, clusters = NULL, ...) {
   params <- cluster_centers(data = data, clusters = clusters, ...)
 
   # Long means
-  means <- .long_loadings(params, loadings_columns = 4:ncol(params))
-  means <- means[c("Cluster", "Loading", "Component")]
-  names(means) <- c("Cluster", "Mean", "Variable")
+  means <- datawizard::reshape_longer(params,
+                                      cols = 4:ncol(params),
+                                      values_to = "Mean",
+                                      names_to = "Variable")
 
   attr(params, "variance") <- attributes(params)$variance
   attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
