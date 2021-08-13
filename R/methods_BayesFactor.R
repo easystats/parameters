@@ -108,6 +108,7 @@ model_parameters.BFBayesFactor <- function(model,
       {
         effsize <- effectsize::effectsize(model,
           centrality = centrality,
+          dispersion = dispersion,
           ci = ci,
           ci_method = ci_method,
           rope_ci = rope_ci
