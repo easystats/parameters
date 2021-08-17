@@ -209,11 +209,7 @@ principal_components <- function(x,
   UseMethod("principal_components")
 }
 
-#' @rdname principal_components
-#' @export
-closest_component <- function(pca_results) {
-  attributes(pca_results)$closest_component
-}
+
 
 
 
@@ -263,7 +259,7 @@ principal_components.data.frame <- function(x,
   # PCA
   model <- stats::prcomp(x,
                   retx = TRUE,
-                  center = TRUE,
+                  center = standardize,
                   scale. = standardize,
                   ...)
 
@@ -289,10 +285,10 @@ principal_components.data.frame <- function(x,
   }
 
   # Re-add centers and scales
-  if (standardize) {
-    model$center <- attributes(x)$center
-    model$scale <- attributes(x)$scale
-  }
+  # if (standardize) {
+  #   model$center <- attributes(x)$center
+  #   model$scale <- attributes(x)$scale
+  # }
 
   # Summary (cumulative variance etc.)
   eigenvalues <- model$sdev^2
@@ -425,8 +421,3 @@ principal_components.data.frame <- function(x,
 }
 
 
-
-.closest_component <- function(loadings, loadings_columns, variable_names) {
-  component_columns <- apply(loadings[loadings_columns], 1, function(i) which.max(abs(i)))
-  stats::setNames(component_columns, variable_names)
-}

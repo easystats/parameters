@@ -1,8 +1,18 @@
-#' Number of clusters to extract
+#' Find how many clusters in your data
 #'
-#' This function runs many existing procedures for determining how many clusters
-#' are present in data. It returns the number of clusters based on the maximum
-#' consensus. In case of ties, it will select the solution with fewer clusters.
+#' Similarly to [n_factors()] for factor / principal component analysis,
+#' \code{n_clusters} is the main function to find out the optimal numbers of clusters
+#' present in the data based on the maximum consensus of a large number of methods.
+#' \cr
+#' Essentially, there exist many methods to determine the optimal number of clusters,
+#' each with pros and cons, benefits and limitations. The main \code{n_clusters}
+#' function proposes to run all of them, and find out the number of clusters that is
+#' suggested by the majority of methods (in case of ties, it will select the
+#' most parsimonious solution with fewer clusters).
+#' \cr
+#' Note that we also implement some specific, commonly used methods, like the
+#' Elbow or the Gap method, with their own visualization functionalities. See
+#' the examples below for more details.
 #'
 #' @inheritParams check_clusterstructure
 #' @param include_factors Logical, if `TRUE`, factors are converted to numerical
@@ -16,56 +26,69 @@
 #'   in `NbClust`). This has been deactivated by default as it is computationally
 #'   heavy.
 #' @param n_max Maximal number of clusters to test.
-#' @param clustering_function The clustering functions to use. Can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. See \code{fviz_nbclust}.
+#' @param clustering_function,gap_method Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).
+#' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
+#' @param distance_method The distance method (passed to [dist()]). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.
+#' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
+#' @param nbclust_method The clustering method (passed to `NbClust::NbClust()` as `method`).
+#' @inheritParams model_parameters.glm
+#'
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(parameters)
 #' \donttest{
+#' # The main 'n_clusters' function ===============================
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 #'   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
 #'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #'   n
+#'   summary(n)
 #'   as.data.frame(n)
 #'   plot(n)
 #'
 #'   # The following runs all the method but it significantly slower
-#'   # n_clusters(iris[, 1:4], standardize = FALSE, package = "all", fast = FALSE)
+#'   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 #' }
 #' }
 #' @export
 n_clusters <- function(x,
                        standardize = TRUE,
                        include_factors = FALSE,
-                       package = c("NbClust", "mclust", "cluster", "M3C"),
+                       package = c("easystats", "NbClust", "mclust"),
                        fast = TRUE,
+                       nbclust_method = "kmeans",
+                       n_max = 10,
                        ...) {
   if (all(package == "all")) {
-    package <- c("NbClust", "mclust", "cluster", "M3C")
+    package <- c("easystats", "NbClust", "mclust", "M3C")
   }
 
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   out <- data.frame()
 
+  if ("easystats" %in% tolower(package)) {
+    out <- rbind(out, .n_clusters_easystats(x, n_max = n_max, ...))
+  }
+
   if ("nbclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_NbClust(x, fast = fast))
+    out <- rbind(out, .n_clusters_NbClust(x, fast = fast, nbclust_method = nbclust_method, n_max = n_max, ...))
   }
 
   if ("mclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_mclust(x))
-  }
-
-  if ("cluster" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_cluster(x))
+    out <- rbind(out, .n_clusters_mclust(x, ...))
   }
 
   if ("M3C" %in% tolower(package)) {
     out <- rbind(out, .n_clusters_M3C(x, fast = fast))
   }
 
+  # Drop Nans
+  out <- out[!is.na(out$n_Clusters), ]
 
+  # Clean
   out <- out[order(out$n_Clusters), ] # Arrange by n clusters
   row.names(out) <- NULL # Reset row index
   out$Method <- as.character(out$Method)
@@ -109,66 +132,66 @@ n_clusters <- function(x,
 }
 
 
-#' @keywords internal
-.n_clusters_cluster <- function(x, ...) {
-  insight::check_if_installed("cluster")
-
-  # listwise deletion of missing
-  x <- stats::na.omit(x)
-
-  # Gap Statistic for Estimating the Number of Clusters
-  junk <- utils::capture.output(gap <- cluster::clusGap(x,
-    stats::kmeans,
-    K.max = 10,
-    B = 100
-  )$Tab)
-
-  # Gap Statistic for Estimating the Number of Clusters
-  n <- cluster::maxSE(
-    f = gap[, "gap"],
-    SE.f = gap[, "SE.sim"],
-    method = "Tibs2001SEmax",
-    SE.factor = 1
-  )
-
-  data.frame(n_Clusters = n, Method = "Tibs2001SEmax", Package = "cluster")
-}
 
 
 # Methods -----------------------------------------------------------------
 
 
+#' @keywords internal
+.n_clusters_easystats <- function(x, n_max = 10, ...) {
+  elb <- n_clusters_elbow(x, preprocess = FALSE, n_max = n_max, ...)
+  sil <- n_clusters_silhouette(x, preprocess = FALSE, n_max = n_max, ...)
+  gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", n_max = n_max, ...)
+  gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
+
+  data.frame(n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
+             Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
+             Package = "easystats")
+}
+
+
+
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", n_max = 15, ...) {
   insight::check_if_installed("NbClust")
 
-  # Run the function and suppress output and automatic plotting
-  ff <- tempfile()
-  grDevices::png(filename = ff)
-  if (fast) {
-    indices <- "all"
-  } else {
-    indices <- "alllong"  # This is not misspelling (it's like that in the function)
+  indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw", "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette", "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial", "Frey", "Mcclain", "Dunn", "SDindex", "SDbw")
+  # c("hubert", "dindex") are graphical methods
+  if (fast == FALSE) {
+    indices <- c(indices, c("gap", "gamma", "gplus", "tau"))
   }
 
-  junk <- utils::capture.output(n <- NbClust::NbClust(
-    x,
-    index = indices,
-    method = "ward.D2"
-  ))
-  grDevices::dev.off()
-  unlink(ff)
-
-  out <- as.data.frame(t(n$Best.nc))
-  data.frame(n_Clusters = out$Number_clusters, Method = row.names(out), Package = "NbClust")
+  out <- data.frame()
+  for(idx in indices) {
+    tryCatch(
+      expr = {
+        n <- NbClust::NbClust(
+          x,
+          index = tolower(idx),
+          method = nbclust_method,
+          max.nc = n_max,
+          ...
+        )
+        out <- rbind(out, data.frame(n_Clusters = n$Best.nc[["Number_clusters"]],
+                                     Method = idx,
+                                     Package = "NbClust"))
+      },
+      error = function(e){
+        NULL
+      },
+      warning = function(w){
+        NULL
+      })
+  }
+  out
 }
 
 
 #' @keywords internal
 .n_clusters_M3C <- function(x, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
-    stop("Package 'M3C' required for this function to work. Please install it from Bioconductor by first running `install.packages(\"BiocManager\")`, then `BiocManager::install(\"M3C\")`.") # Not on CRAN (but on github and bioconductor)
+    stop("Package 'M3C' required for this function to work. Please install it from Bioconductor by first running `remotes::install_github('https://github.com/crj32/M3C')`.") # Not on CRAN (but on github and bioconductor)
   }
 
   data <- data.frame(t(x))
@@ -192,20 +215,3 @@ n_clusters <- function(x,
 }
 
 
-# Utils -------------------------------------------------------------------
-
-#' @keywords internal
-.prepare_data_clustering <- function(x, include_factors = FALSE, standardize = FALSE, ...) {
-  # Convert factors to numeric
-  if (include_factors) {
-    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
-    if (any(factors)) x[factors] <- sapply(x[factors], .factor_to_numeric)
-  }
-
-  # Remove all missing values from data, only use numerics
-  x <- stats::na.omit(as.data.frame(x[sapply(x, is.numeric)]))
-  if (standardize == TRUE) {
-    x <- datawizard::standardize(x, ...)
-  }
-  x
-}

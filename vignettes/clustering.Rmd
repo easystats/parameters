@@ -1,0 +1,169 @@
+---
+title: "Clustering with easytats"
+output: 
+  rmarkdown::html_vignette:
+vignette: >
+  %\VignetteIndexEntry{Clustering with easytats}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  eval = TRUE
+)
+```
+
+This vignette can be referred to by citing the package:
+
+- Lüdecke, D., Ben-Shachar, M. S., Patil, I., \& Makowski, D. (2020). *Extracting, computing and exploring the parameters of statistical models using R*. Journal of Open Source Software, 5(53), 2445. https://doi.org/10.21105/joss.02445
+
+## Introduction
+
+Clustering traditionally refers to the identification of groups of observations (i.e., data rows). It differs from methods like [**PCA or Factor Analysis**](https://easystats.github.io/parameters/articles/efa_cfa.html), which are usually applied on variables (i.e., columns). That said, it is possible to *transpose* your data (columns become rows) to apply clustering on variables.
+
+There are many clustering algorithms (see [this for an overview](https://scikit-learn.org/stable/modules/clustering.html)), but they can grouped in two categories: **supervised** and **unsupervised** techniques. In **supervised** techniques, you have to explicitly specify [**how many clusters**](https://easystats.github.io/parameters/reference/n_clusters.html) you want to extract. **Unsupervised** techniques, on the other hand, will estimate this number as part of their algorithm. Note that there are no inherently superior and inferior clustering methods, each come with their sets of limitations and benefits.
+
+As an example in the tutorial below, we will use the **iris** dataset, for which we know that there are 3 "real" clusters (the 3 Species of flowers). Let's first start with visualizing the 3 "real" clusters on a 2D space of the variables created through PCA. 
+
+
+```{r}
+library(ggplot2)
+library(parameters)
+library(see)
+
+set.seed(33)  # Set random seed
+
+# Select the first 4 numeric columns (drop the Species fator)
+data <- iris[1:4]  
+head(data)  # Print the 6 first rows
+
+# Run PCA
+pca <- principal_components(data, n = 2)
+pca_scores <- predict(pca, names = c("PCA_1", "PCA_2"))
+pca_scores$True_Clusters <- iris$Species  # Add real clusters
+
+# Visualize
+ggplot(pca_scores, aes(x = PCA_1, y = PCA_2, color = True_Clusters)) + 
+  geom_point() +
+  theme_modern()
+```
+
+While the **setosa** species stands out quite clearly in this PCA space, the separation between the two other species appear less clear cut. Let's see how data-driven clustering performs, and if we manage to retrieve these 3 clusters.
+
+
+## Supervised Clustering Methods
+
+### How Many Clusters to Extract?
+
+There is no easy answer to that important question. The best way is to have strong expectations or hypotheses. If you don't, well, researchers have came up with data-driven solutions to estimate the optimal number of clusters. The problem is that there are now a lot of these numerical methods, and that they don't always agree...
+
+Because there is no clearly better method, we have implemented in *easystats* a consensus-based algorithm that runs many of these methods, and returns the number of clusters that is the most agreed upon.
+
+
+```{r}
+# Note: you need to install NbClust and mclust by running the following:
+# install.packages(c("NbClust", "mclust"))
+n <- n_clusters(data, package = c("easystats", "NbClust", "mclust"))
+n
+plot(n)
+```
+
+As we can see, most methods suggest the existence of **2 clusters**, followed by a **3-clusters** solution. It seems like the data does not clearly discriminate between the 3 species of flowers. This discrepancy between what is, and what we can recover from real-world data, is a fundamental issue in data science.
+
+### K-Means
+
+We won't go too much into details about the mathematics and intuition behind these clustering methods, as good [resources](https://scikit-learn.org/stable/modules/clustering.html) are available all over the internet. Instead, we'll focus on how to apply them.
+
+K-means is one of the most basic clustering algorithm, available in base R through the `kmeans()` function. However, we provide in easystats a unified function to run different clustering algorithms: [**cluster_analysis()**](https://easystats.github.io/parameters/reference/cluster_analysis.html). *(Note that k-means is a non-deterministic algorithm; running it multiple times will result in different results!)*
+
+Now that we know how many clusters we want to extract (let's say that we have a strong hypothesis on 3, which is partially supported by the consensus method for estimating the optimal number of clusters).
+
+
+```{r}
+rez <- cluster_analysis(data, n = 3, method = "kmeans")
+
+rez  # Show results
+```
+
+One can extract the cluster assignments to use it as a new variable by using `predict()`.
+
+```{r}
+predict(rez)  # Get clusters
+```
+
+It is also possible to visualize the clustering on a 2D space created by the two first PCA components:
+
+```{r}
+plot(rez) +
+  theme_modern()
+```
+
+### Hierarchical Clustering
+
+Hierarchical clustering is also a common clustering algorithm, available in base R through the `hclust()` function. This method is a bit different in the sense that is does not straight up return clusters. Instead, in creates a hierachical structure (a *dendrogram*), a tree from which we can *cut* branches to get a given number of clusters. Note that this "tree" cutting can be done in an unsupervised fashion too using bootstrapping (which we will apply in the next section).
+
+```{r}
+rez <- cluster_analysis(data, n = 3, method = "hclust")
+
+rez  # Show results
+plot(rez) + theme_modern()  # Visualize
+```
+
+
+
+## Unsupervised Clustering Methods
+
+Unsupervised clustering methods estimate the optimal number of clusters themselves (hence, `n = NULL` as we don't pre-specify a given number of clusters). Note that unsupervised methods can sometimes identify observations that do not fit under any clusters (i.e., **"outliers"**). They will be classified as belonging to the cluster "0" (which is not a real cluster, but rather groups all the outliers).
+
+### Bootstrapped Hiearchical Clustering
+
+This method computes p-values for each cluster of the hierachical cluster structure, and returns the **significant** clusters. This method can return a larger number of smaller clusters and, because it's based on bootstrapping, is quite slow.
+
+```{r}
+rez <- cluster_analysis(data, 
+                        n = NULL, 
+                        method = "hclust", 
+                        iterations = 500,
+                        ci = 0.90)
+
+rez  # Show results
+plot(rez) + theme_modern()  # Visualize
+```
+
+
+### DBSCAN
+
+Although the DBSCAN method is quite powerful to identify clusters, it is highly dependent on its parameters, namely, `eps` and the `min_size`. Regarding the latter, the minimum size of any cluster is set by default to `0.1` (i.e., 10\% of rows), which is appropriate to avoid having too small clusters. 
+
+The "optimal" **eps** value can be estimated using the [`n_clusters_dbscan()`](https://easystats.github.io/parameters/reference/cluster_analysis.html) function:
+
+```{r}
+eps <- n_clusters_dbscan(data, min_size = 0.1) 
+eps
+plot(eps)
+```
+
+It seems like the numeric method to find the elbow of the curve doesn't work well, and returns a value that is too high. Based on visual assessment, the elbow seems to be located around `eps = 1.45`.
+
+```{r}
+rez <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
+
+rez  # Show results
+plot(rez) + theme_modern()  # Visualize
+```
+
+
+
+## Resources
+
+- [Clustering algorithms overview](https://scikit-learn.org/stable/modules/clustering.html)
+- [Density-based Clustering](https://www.datanovia.com/en/lessons/dbscan-density-based-clustering-essentials/)

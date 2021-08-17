@@ -9,10 +9,22 @@
 #' @examples
 #' library(parameters)
 #'
+#' # K-means -------------------------------
 #' model <- kmeans(iris[1:4], centers = 3)
-#' model_parameters(model)
+#' rez <- model_parameters(model)
+#' rez
+#'
+#' # Get clusters
+#' predict(rez)
+#'
+#' # Clusters centers in long form
+#' attributes(rez)$means
+#'
+#' # Between and Total Sum of Squares
+#' attributes(rez)$Sum_Squares_Total
+#' attributes(rez)$Sum_Squares_Between
 #' @export
-model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
+model_parameters.kmeans <- function(model, ...) {
   params <- cbind(
     data.frame(
       Cluster = row.names(model$centers),
@@ -23,11 +35,15 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
   )
 
   # Long means
-  means <- .long_loadings(params, loadings_columns = 4:ncol(params))
-  means <- means[c("Cluster", "Loading", "Component")]
-  names(means) <- c("Cluster", "Mean", "Variable")
+  means <- datawizard::reshape_longer(params,
+                                      cols = 4:ncol(params),
+                                      values_to = "Mean",
+                                      names_to = "Variable")
 
+  # Attributes
   attr(params, "variance") <- model$betweenss / model$totss
+  attr(params, "Sum_Squares_Between") <- model$betweenss
+  attr(params, "Sum_Squares_Total") <- model$totss
   attr(params, "means") <- means
   attr(params, "model") <- model
   attr(params, "iterations") <- model$iter
@@ -39,9 +55,52 @@ model_parameters.kmeans <- function(model, verbose = TRUE, ...) {
 }
 
 
+
+
+
+# factoextra::hkmeans -----------------------------------------------------
+
+
+
+#' @rdname model_parameters.kmeans
+#' @inheritParams cluster_centers
+#'
+#' @examples
+#' # Hierarchical K-means (factoextra::hkclust) ----------------------
+#' if (require("factoextra", quietly = TRUE)) {
+#'   data <- iris[1:4]
+#'   model <- factoextra::hkmeans(data, k = 3)
+#'
+#'   rez <- model_parameters(model)
+#'   rez
+#'
+#'   # Get clusters
+#'   predict(rez)
+#'
+#'   # Clusters centers in long form
+#'   attributes(rez)$means
+#'
+#'   # Between and Total Sum of Squares
+#'   attributes(rez)$Sum_Squares_Total
+#'   attributes(rez)$Sum_Squares_Between
+#' }
+#'
+#' @export
+model_parameters.hkmeans <- model_parameters.kmeans
+
+
+
+# Methods -------------------------------------------------------------------
+
+
+
+
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
-  insight::print_color("# K-means Cluster Means", "blue")
+  title <- "# Clustering Solution"
+  if("title" %in% attributes(x)) title <- attributes(x)$title
+
+  insight::print_color(title, "blue")
 
   cat("\n\n")
   insight::print_colour(.text_components_variance(x), "yellow")
@@ -57,6 +116,11 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 summary.parameters_clusters <- function(object, ...) {
   object[1:3]
 }
+
+
+
+
+# Predict -----------------------------------------------------------------
 
 
 #' @export
@@ -106,3 +170,5 @@ predict.kmeans <- function(object, newdata = NULL, ...) {
     as.vector(apply(as.data.frame(sumsquares_by_center), 1, which.min))
   }
 }
+
+

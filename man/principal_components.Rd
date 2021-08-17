@@ -4,11 +4,11 @@
 \name{factor_analysis}
 \alias{factor_analysis}
 \alias{principal_components}
-\alias{closest_component}
 \alias{rotated_data}
 \alias{predict.parameters_efa}
 \alias{print.parameters_efa}
 \alias{sort.parameters_efa}
+\alias{closest_component}
 \title{Principal Component Analysis (PCA) and Factor Analysis (FA)}
 \usage{
 factor_analysis(
@@ -32,8 +32,6 @@ principal_components(
   ...
 )
 
-closest_component(pca_results)
-
 rotated_data(pca_results)
 
 \method{predict}{parameters_efa}(object, newdata = NULL, names = NULL, keep_na = TRUE, ...)
@@ -41,6 +39,8 @@ rotated_data(pca_results)
 \method{print}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
 \method{sort}{parameters_efa}(x, ...)
+
+closest_component(pca_results)
 }
 \arguments{
 \item{x}{A data frame or a statistical model.}
