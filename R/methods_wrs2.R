@@ -112,7 +112,7 @@ model_parameters.dep.effect <- function(model,
 
   # select a specific effect size only
   if (!is.null(keep)) {
-    out <- out[out$Parameter == keep]
+    out <- out[out$Parameter == keep, ]
   }
 
   out
