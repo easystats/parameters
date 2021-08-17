@@ -21,10 +21,10 @@
 #'   determine the number of clusters need numeric input only.
 #' @param package Package from which methods are to be called to determine the
 #'   number of clusters. Can be `"all"` or a vector containing
-#'   `"easystats"`, `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
-#' @param fast If `FALSE`, will compute 4 more indices (sets `index =
-#'   "allong"` in `NbClust`). This has been deactivated by default as it is
-#'   computationally heavy.
+#'   `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
+#' @param fast If `FALSE`, will compute 4 more indices (sets `index = "allong"`
+#'   in `NbClust`). This has been deactivated by default as it is computationally
+#'   heavy.
 #' @param n_max Maximal number of clusters to test.
 #' @param clustering_function,gap_method Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).
 #' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
@@ -40,12 +40,9 @@
 #' library(parameters)
 #' \donttest{
 #' # The main 'n_clusters' function ===============================
-#' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
-#'
-#'   # Note: you need to install NbClust and mclust by running the following:
-#'   # install.packages(c("NbClust", "mclust"))
-#'   n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
-#'
+#' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
+#'   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
+#'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #'   n
 #'   summary(n)
 #'   as.data.frame(n)

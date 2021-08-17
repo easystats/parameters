@@ -82,10 +82,11 @@ determine the number of clusters need numeric input only.}
 
 \item{package}{Package from which methods are to be called to determine the
 number of clusters. Can be \code{"all"} or a vector containing
-\code{"easystats"}, \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
+\code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
-\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is
-computationally heavy.}
+\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"}
+in \code{NbClust}). This has been deactivated by default as it is computationally
+heavy.}
 
 \item{nbclust_method}{The clustering method (passed to \code{NbClust::NbClust()} as \code{method}).}
 
@@ -128,12 +129,9 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 library(parameters)
 \donttest{
 # The main 'n_clusters' function ===============================
-if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) && require("see")) {
-
-  # Note: you need to install NbClust and mclust by running the following:
-  # install.packages(c("NbClust", "mclust"))
-  n <- n_clusters(iris[1:4], package = c("easystats", "NbClust", "mclust"))
-
+if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
+  require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
+  n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
   n
   summary(n)
   as.data.frame(n)
@@ -152,12 +150,13 @@ if (require("openxlsx") && require("see")) {
   as.data.frame(x)
   plot(x)
 }
-#
-# Gap method ------------------------------
-x <- n_clusters_gap(iris[1:4])
-x
-as.data.frame(x)
-plot(x)
+# Gap method --------------------
+if (require("see", quietly = TRUE)) {
+  x <- n_clusters_gap(iris[1:4])
+  x
+  as.data.frame(x)
+  plot(x)
+}
 #
 # Silhouette method --------------------------
 x <- n_clusters_silhouette(iris[1:4])
