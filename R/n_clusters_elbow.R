@@ -40,10 +40,12 @@ n_clusters_elbow <- function(x,
 #' @rdname n_clusters
 #' @examples
 #' # Gap method --------------------
-#' x <- n_clusters_gap(iris[1:4])
-#' x
-#' as.data.frame(x)
-#' plot(x)
+#' if (require("see", quietly = TRUE)) {
+#'   x <- n_clusters_gap(iris[1:4])
+#'   x
+#'   as.data.frame(x)
+#'   plot(x)
+#' }
 #' @export
 n_clusters_gap <- function(x,
                            standardize = TRUE,
