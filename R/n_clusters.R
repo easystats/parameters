@@ -12,9 +12,9 @@
 #' @param package Package from which methods are to be called to determine the
 #'   number of clusters. Can be `"all"` or a vector containing
 #'   `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
-#' @param fast If `FALSE`, will compute 4 more indices (sets `index =
-#'   "allong"` in `NbClust`). This has been deactivated by default as it is
-#'   computationally heavy.
+#' @param fast If `FALSE`, will compute 4 more indices (sets `index = "allong"`
+#'   in `NbClust`). This has been deactivated by default as it is computationally
+#'   heavy.
 #' @param n_max Maximal number of clusters to test.
 #' @param clustering_function The clustering functions to use. Can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. See \code{fviz_nbclust}.
 #'
@@ -24,7 +24,7 @@
 #' library(parameters)
 #' \donttest{
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-#'   require("cluster", quietly = TRUE) && require("see")) {
+#'   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
 #'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
 #'   n
 #'   as.data.frame(n)

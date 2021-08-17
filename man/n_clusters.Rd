@@ -57,8 +57,9 @@ determine the number of clusters need numeric input only.}
 number of clusters. Can be \code{"all"} or a vector containing
 \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
-\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"} in \code{NbClust}). This has been deactivated by default as it is
-computationally heavy.}
+\item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"}
+in \code{NbClust}). This has been deactivated by default as it is computationally
+heavy.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -78,7 +79,7 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 library(parameters)
 \donttest{
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
-  require("cluster", quietly = TRUE) && require("see")) {
+  require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
   n
   as.data.frame(n)
