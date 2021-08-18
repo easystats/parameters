@@ -154,7 +154,7 @@ Suggests:
     rmarkdown,
     rstanarm,
     sandwich,
-    see (>= 0.6.5),
+    see (>= 0.6.4),
     sjstats,
     spelling,
     survey,
@@ -167,13 +167,8 @@ Suggests:
     WRS2
 VignetteBuilder: 
     knitr
-Remotes: 
-    easystats/datawizard,
-    easystats/insight,
-    easystats/bayestestR,
-    easystats/see
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.1.9001
+RoxygenNote: 7.1.1
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
