@@ -292,7 +292,7 @@
         v <- params$df[params$Parameter == "Residuals"]
 
         lambda <- f2 * (u + v + 1)
-        cohens_f2$Power <- stats::pf(stats::qf(0.05, u, v, lower = FALSE), u, v, lambda, lower = FALSE)
+        cohens_f2$Power <- stats::pf(stats::qf(0.05, u, v, lower.tail = FALSE), u, v, lambda, lower.tail = FALSE)
         cohens_f2
       },
       error = function(e) {
