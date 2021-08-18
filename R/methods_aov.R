@@ -36,6 +36,11 @@
 #' @param table_wide Logical that decides whether the ANOVA table should be in
 #'   wide format, i.e. should the numerator and denominator degrees of freedom
 #'   be in the same row. Default: `FALSE`.
+#' @param alternative A character string specifying the alternative hypothesis;
+#'   Controls the type of CI returned: `"two.sided"` (default, two-sided CI),
+#'   `"greater"` or `"less"` (one-sided CI). Partial matching is allowed
+#'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
+#'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -108,6 +113,7 @@ model_parameters.aov <- function(model,
                                  df_error = NULL,
                                  type = NULL,
                                  ci = NULL,
+                                 alternative = NULL,
                                  test = NULL,
                                  power = FALSE,
                                  keep = NULL,
@@ -154,6 +160,7 @@ model_parameters.aov <- function(model,
     epsilon_squared = epsilon_squared,
     df_error = df_error,
     ci = ci,
+    alternative = alternative,
     verbose = verbose
   )
 
@@ -426,6 +433,7 @@ model_parameters.maov <- model_parameters.aov
                                  epsilon_squared,
                                  df_error = NULL,
                                  ci = NULL,
+                                 alternative = NULL,
                                  verbose = TRUE) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
@@ -461,11 +469,13 @@ model_parameters.maov <- model_parameters.aov
       fx <- effectsize::omega_squared(model,
                                   partial = TRUE,
                                   ci = ci,
+                                  alternative = alternative,
                                   verbose = verbose)
     } else {
       fx <- effectsize::omega_squared(model,
                                   partial = FALSE,
                                   ci = ci,
+                                  alternative = alternative,
                                   verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
@@ -477,11 +487,13 @@ model_parameters.maov <- model_parameters.aov
       fx <- effectsize::eta_squared(model,
                                 partial = TRUE,
                                 ci = ci,
+                                alternative = alternative,
                                 verbose = verbose)
     } else {
       fx <- effectsize::eta_squared(model,
                                 partial = FALSE,
                                 ci = ci,
+                                alternative = alternative,
                                 verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)
@@ -493,11 +505,13 @@ model_parameters.maov <- model_parameters.aov
       fx <- effectsize::epsilon_squared(model,
                                     partial = TRUE,
                                     ci = ci,
+                                    alternative = alternative,
                                     verbose = verbose)
     } else {
       fx <- effectsize::epsilon_squared(model,
                                     partial = FALSE,
                                     ci = ci,
+                                    alternative = alternative,
                                     verbose = verbose)
     }
     parameters <- .add_effectsize_to_parameters(fx, parameters)

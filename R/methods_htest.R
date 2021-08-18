@@ -28,6 +28,7 @@
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
+#' @inheritParams model_parameters.aov
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
@@ -67,6 +68,7 @@ model_parameters.htest <- function(model,
                                    rank_epsilon_squared = NULL,
                                    kendalls_w = NULL,
                                    ci = .95,
+                                   alternative = NULL,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
                                    ...) {
@@ -87,6 +89,7 @@ model_parameters.htest <- function(model,
       rank_epsilon_squared = rank_epsilon_squared,
       kendalls_w = kendalls_w,
       ci = ci,
+      alternative = alternative,
       verbose = verbose,
       ...
     )
@@ -158,6 +161,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       rank_epsilon_squared = NULL,
                                       kendalls_w = NULL,
                                       ci = 0.95,
+                                      alternative = NULL,
                                       verbose = TRUE,
                                       ...) {
   m_info <- insight::model_info(model)
@@ -224,7 +228,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     if (grepl("^McNemar", model$method)) {
       out <- .add_effectsize_mcnemar(model, out, cohens_g = cohens_g, ci = ci, verbose = verbose)
     } else {
-      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, verbose = verbose)
+      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, alternative = alternative, verbose = verbose)
     }
   } else if (m_info$is_proptest) {
     out <- .extract_htest_prop(model)
@@ -602,6 +606,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                  cramers_v = NULL,
                                  phi = NULL,
                                  ci = .95,
+                                 alternative = NULL,
                                  verbose = TRUE) {
   if (is.null(cramers_v) && is.null(phi)) {
     return(out)
@@ -613,6 +618,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       model,
       type = "cramers_v",
       ci = ci,
+      alternative = alternative,
       adjust = identical(cramers_v, "adjusted"),
       verbose = verbose
     )
@@ -628,6 +634,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       model,
       type = "phi",
       ci = ci,
+      alternative = alternative,
       adjust = identical(phi, "adjusted"),
       verbose = verbose
     )

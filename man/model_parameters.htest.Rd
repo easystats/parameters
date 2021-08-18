@@ -19,6 +19,7 @@
   rank_epsilon_squared = NULL,
   kendalls_w = NULL,
   ci = 0.95,
+  alternative = NULL,
   bootstrap = FALSE,
   verbose = TRUE,
   ...
@@ -60,6 +61,12 @@ concordance as effect size measure. Only applies to objects from
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}
+
+\item{alternative}{A character string specifying the alternative hypothesis;
+Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
+\code{"greater"} or \code{"less"} (one-sided CI). Partial matching is allowed
+(e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
+the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 

@@ -12,6 +12,7 @@
   df_error = NULL,
   type = NULL,
   ci = NULL,
+  alternative = NULL,
   test = NULL,
   power = FALSE,
   keep = NULL,
@@ -52,6 +53,12 @@ ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
 \code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL},
 will compute no confidence intervals. \code{ci} should be a scalar between
 0 and 1.}
+
+\item{alternative}{A character string specifying the alternative hypothesis;
+Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
+\code{"greater"} or \code{"less"} (one-sided CI). Partial matching is allowed
+(e.g., \code{"g"}, \code{"l"}, \code{"two"}...). See section \emph{One-Sided CIs} in
+the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{test}{String, indicating the type of test for \code{Anova.mlm} to be
 returned. If \code{"multivariate"} (or \code{NULL}), returns the summary of
