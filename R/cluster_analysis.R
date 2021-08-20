@@ -11,12 +11,9 @@
 #' @param n Number of clusters used for supervised cluster methods. If \code{NULL},
 #' the number of clusters to extract is determined by calling [n_clusters()]. Note
 #' that this argument does not apply for unsupervised clustering methods like
-#' DBSCAN.
-#' @param method Method for computing the cluster analysis. Can be `"kmeans"` (default; k-means using `kmeans()`), `"hkmeans"` (hierarhical k-means using `factoextra::hkmeans()`), `"hclust"` (hierarhical clustering using `hclust()` or `pvclust::pvclust()`), or `dbscan` (DBSCAN using `dbscan::dbscan()`).
-#' @param distance_method Distance measure to be used when `method = "hclust"` (for
-#'   hierarchical clustering). Must be one of `"euclidean"`, `"maximum"`,
-#'   `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()]. If
-#'   is `method = "kmeans"` this argument will be ignored.
+#' `dbscan`, `mixture`, `pvclust`, or `pamk`.
+#' @param method Method for computing the cluster analysis. Can be `"kmeans"` (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`), `pamk` (K-Medoids that finds out the number of clusters), `"hclust"` (hierarchical clustering using `hclust()` or `pvclust::pvclust()`), `dbscan` (DBSCAN using `dbscan::dbscan()`), `hdbscan` (Hierarchical DBSCAN using `dbscan::hdbscan()`), or `mixture` (Mixture modelling using `mclust::Mclust()`).
+#' @param distance_method Distance measure to be used for methods based on distances (e.g., when `method = "hclust"` for hierarchical clustering. For other methods, such as `"kmeans"`, this argument will be ignored). Must be one of `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()] and `pvclust::pvclust()` for more information.
 #' @param hclust_method Agglomeration method to be used when `method = "hclust"`
 #'   (for hierarchical clustering). This should be one of `"ward"`, `"single"`,
 #'   `"complete"`, `"average"`, `"mcquitty"`, `"median"` or `"centroid"`.
@@ -82,6 +79,18 @@
 #'                         distance_method = "correlation")
 #' plot(rez)
 #'
+#' # K-Medoids (pam) ============================================
+#' rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
+#' rez  # Show results
+#' predict(rez)  # Get clusters
+#' plot(rez, show_data = "label")
+#'
+#' # PAM with automated number of clusters
+#' rez <- cluster_analysis(iris[1:4], method = "pamk")
+#' rez  # Show results
+#' predict(rez)  # Get clusters
+#' plot(rez, show_data = "label")
+#'
 #' # DBSCAN ====================================================
 #' # Note that you can assimilate more outliers (cluster 0) to neighbouring
 #' # clusters by setting borderPoints = TRUE.
@@ -121,7 +130,7 @@ cluster_analysis <- function(x,
   insight::check_if_installed("performance")
 
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
+  method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
 
   # Preparation -------------------------------------------------------------
 
@@ -129,7 +138,7 @@ cluster_analysis <- function(x,
   data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # Get number of clusters
-  if (is.null(n) && any(method %in% c("kmeans", "hkmeans"))) {
+  if (is.null(n) && any(method %in% c("kmeans", "hkmeans", "pam"))) {
     n <- tryCatch(
       {
         nc <- n_clusters(data, standardize = FALSE, ...)
@@ -157,7 +166,11 @@ cluster_analysis <- function(x,
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
   } else if(any(method %in% c("hkmeans"))) {
     rez <- .cluster_analysis_hkmeans(data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method, iterations = iterations, ...)
-  }  else if(any(method %in% c("hclust"))) {
+  } else if(any(method %in% c("pam"))) {
+    rez <- .cluster_analysis_pam(data, n = n, distance_method = distance_method, ...)
+  } else if(any(method %in% c("pamk"))) {
+    rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
+  } else if(any(method %in% c("hclust"))) {
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
   } else if(any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
@@ -208,6 +221,23 @@ cluster_analysis <- function(x,
   list(model = model, clusters = model$cluster)
 }
 
+#' @keywords internal
+.cluster_analysis_pam <- function(data = NULL, n = 2, distance_method = "euclidean", ...) {
+  insight::check_if_installed("cluster")
+
+  model <- cluster::pam(data, k = n, metric = distance_method, ...)
+
+  list(model = model, clusters = model$clustering)
+}
+
+#' @keywords internal
+.cluster_analysis_pamk <- function(data = NULL, distance_method = "euclidean", pamk_method = "ch", ...) {
+  insight::check_if_installed("fpc")
+
+  model <- fpc::pamk(data, metric = distance_method, criterion = pamk_method, ...)
+
+  list(model = model$pamobject, clusters = model$pamobject$clustering)
+}
 
 #' @keywords internal
 .cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", iterations = 100, ...) {
@@ -235,7 +265,6 @@ cluster_analysis <- function(x,
   list(model = model, clusters = model$cluster)
 }
 
-
 #' @keywords internal
 .cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
   insight::check_if_installed("dbscan")
@@ -246,7 +275,6 @@ cluster_analysis <- function(x,
   list(model = model, clusters = model$cluster)
 }
 
-
 #' @keywords internal
 .cluster_analysis_mixture <- function(data = NULL, ...) {
   insight::check_if_installed("mclust")
@@ -255,6 +283,7 @@ cluster_analysis <- function(x,
 
   list(model = model, clusters = model$classification)
 }
+
 
 
 # Methods ----------------------------------------------------------------

@@ -26,6 +26,15 @@ This vignette can be referred to by citing the package:
 
 - Lüdecke, D., Ben-Shachar, M. S., Patil, I., \& Makowski, D. (2020). *Extracting, computing and exploring the parameters of statistical models using R*. Journal of Open Source Software, 5(53), 2445. https://doi.org/10.21105/joss.02445
 
+
+
+Note that in order to fully use all the methods demonstrated below, you will need to additionnaly install the packages below:
+
+```{r eval = FALSE}
+install.packages(c("NbClust", "mclust", "pvclust", "cluster", 
+                   "fpc", "dbscan", "mclust"))
+```
+
 ## Introduction
 
 Clustering traditionally refers to the identification of groups of observations (i.e., data rows). It differs from methods like [**PCA or Factor Analysis**](https://easystats.github.io/parameters/articles/efa_cfa.html), which are usually applied on variables (i.e., columns). That said, it is possible to *transpose* your data (columns become rows) to apply clustering on variables.
@@ -70,14 +79,13 @@ Because there is no clearly better method, we have implemented in *easystats* a 
 
 
 ```{r}
-# Note: you need to install NbClust and mclust by running the following:
-# install.packages(c("NbClust", "mclust"))
 n <- n_clusters(data, package = c("easystats", "NbClust", "mclust"))
 n
 plot(n)
 ```
 
 As we can see, most methods suggest the existence of **2 clusters**, followed by a **3-clusters** solution. It seems like the data does not clearly discriminate between the 3 species of flowers. This discrepancy between what is, and what we can recover from real-world data, is a fundamental issue in data science.
+
 
 ### K-Means
 
@@ -89,54 +97,81 @@ Now that we know how many clusters we want to extract (let's say that we have a 
 
 
 ```{r}
-rez <- cluster_analysis(data, n = 3, method = "kmeans")
+rez_kmeans <- cluster_analysis(data, n = 3, method = "kmeans")
 
-rez  # Show results
+rez_kmeans  # Show results
 ```
 
 One can extract the cluster assignments to use it as a new variable by using `predict()`.
 
 ```{r}
-predict(rez)  # Get clusters
+predict(rez_kmeans)  # Get clusters
 ```
 
 It is also possible to visualize the clustering on a 2D space created by the two first PCA components:
 
 ```{r}
-plot(rez) +
+plot(rez_kmeans) +
   theme_modern()
 ```
 
 ### Hierarchical Clustering
 
-Hierarchical clustering is also a common clustering algorithm, available in base R through the `hclust()` function. This method is a bit different in the sense that is does not straight up return clusters. Instead, in creates a hierachical structure (a *dendrogram*), a tree from which we can *cut* branches to get a given number of clusters. Note that this "tree" cutting can be done in an unsupervised fashion too using bootstrapping (which we will apply in the next section).
+Hierarchical clustering is also a common clustering algorithm, available in base R through the `hclust()` function. This method is a bit different in the sense that is does not straight up return clusters. Instead, in creates a hierarchical structure (a *dendrogram*), a tree from which we can *cut* branches to get a given number of clusters. Note that this "tree" cutting can be done in an unsupervised fashion too using bootstrapping (which we will apply in the next section).
 
 ```{r}
-rez <- cluster_analysis(data, n = 3, method = "hclust")
+rez_hclust <- cluster_analysis(data, n = 3, method = "hclust")
 
-rez  # Show results
-plot(rez) + theme_modern()  # Visualize
+rez_hclust  # Show results
+
+# Visualize
+plot(rez_hclust) + theme_modern()  # Visualize 
 ```
 
+### Hierarchical K-Means
+
+Hierarchical K-Means, as its name suggest, is essentially a combination of K-Means and hierarchical clustering that aims at improving the stability and robustness of the results.
+
+```{r}
+rez_hkmeans <- cluster_analysis(data, n = 3, method = "hkmeans")
+
+rez_hkmeans  # Show results
+
+# Visualize
+plot(rez_hkmeans) + theme_modern()  # Visualize 
+```
+
+### K-Medoids (PAM)
+
+Clustering around "medoids", instead of "centroid", is considered to be a more robust version of K-means. See `cluster::pam()` for more information. 
+
+```{r}
+rez_pam <- cluster_analysis(data, n = 3, method = "pam")
+
+rez_pam  # Show results
+
+# Visualize
+plot(rez_pam) + theme_modern()  # Visualize 
+```
 
 
 ## Unsupervised Clustering Methods
 
 Unsupervised clustering methods estimate the optimal number of clusters themselves (hence, `n = NULL` as we don't pre-specify a given number of clusters). Note that unsupervised methods can sometimes identify observations that do not fit under any clusters (i.e., **"outliers"**). They will be classified as belonging to the cluster "0" (which is not a real cluster, but rather groups all the outliers).
 
-### Bootstrapped Hiearchical Clustering
+### Bootstrapped Hierarchical Clustering
 
-This method computes p-values for each cluster of the hierachical cluster structure, and returns the **significant** clusters. This method can return a larger number of smaller clusters and, because it's based on bootstrapping, is quite slow.
+This method computes p-values for each cluster of the hierarchical cluster structure, and returns the **significant** clusters. This method can return a larger number of smaller clusters and, because it's based on bootstrapping, is quite slow.
 
 ```{r}
-rez <- cluster_analysis(data, 
+rez_hclust2 <- cluster_analysis(data, 
                         n = NULL, 
                         method = "hclust", 
                         iterations = 500,
                         ci = 0.90)
 
-rez  # Show results
-plot(rez) + theme_modern()  # Visualize
+rez_hclust2  # Show results
+plot(rez_hclust2) + theme_modern()  # Visualize
 ```
 
 
@@ -155,13 +190,48 @@ plot(eps)
 It seems like the numeric method to find the elbow of the curve doesn't work well, and returns a value that is too high. Based on visual assessment, the elbow seems to be located around `eps = 1.45`.
 
 ```{r}
-rez <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
+rez_dbscan <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
 
-rez  # Show results
-plot(rez) + theme_modern()  # Visualize
+rez_dbscan  # Show results
+plot(rez_dbscan) + theme_modern()  # Visualize
+```
+
+### Hierarchical K-Means
+
+Hierachical DBSCAN is a variant that does not require the critical **EPS** argument. It computes the hierarchy of all DBSCAN solutions, and then finds the optimal cuts in the hierarchy using a stability-based extraction method.
+
+```{r}
+rez_hdbscan <- cluster_analysis(data, method = "hdbscan")
+
+rez_hdbscan  # Show results
+
+# Visualize
+plot(rez_hdbscan) + theme_modern()  # Visualize 
 ```
 
 
+### K-Medoids with estimation of number of clusters (pamk)
+
+This is K-Medoids with an integrated estimation of the number of clusters. See `fpc::pamk` for more details.
+
+```{r}
+rez_pamk <- cluster_analysis(data, method = "pamk")
+
+rez_pamk  # Show results
+
+# Visualize
+plot(rez_pamk) + theme_modern()  # Visualize 
+```
+
+
+
+## Metaclustering
+
+One of the core "issue" of statistical clustering is that, in many cases, different methods will give different results. The **metaclustering** approach proposed by *easystats* (that finds echoes in *consensus clustering*; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability map. 
+
+```{r}
+print("SOON.")
+```
 
 ## Resources
 

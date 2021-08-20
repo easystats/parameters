@@ -75,23 +75,16 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
 
 #' @export
 model_parameters.list <- function(model,
-                                  ci = .95,
-                                  bootstrap = FALSE,
-                                  iterations = 1000,
-                                  robust = FALSE,
-                                  verbose = TRUE,
                                   ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
-    model_parameters(
-      model,
-      ci = ci,
-      bootstrap = bootstrap,
-      iterations = iterations,
-      robust = robust,
-      ...
-    )
+    model_parameters(model, ...)
+  } else if("pamobject" %in% names(model)) {
+    model <- model$pamobject
+    model_parameters(model, ...)
+  } else {
+    stop("We don't recognize this object of class 'list'. Please raise an issue.")
   }
 }
 

@@ -25,9 +25,9 @@ cluster_analysis(
 \item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
 the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}. Note
 that this argument does not apply for unsupervised clustering methods like
-DBSCAN.}
+\code{dbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
-\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarhical k-means using \code{factoextra::hkmeans()}), \code{"hclust"} (hierarhical clustering using \code{hclust()} or \code{pvclust::pvclust()}), or \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}).}
+\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}), \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"} (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}), \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using \code{mclust::Mclust()}).}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
 values in order to be included in the data for determining the number of
@@ -38,10 +38,7 @@ determine the number of clusters need numeric input only.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{distance_method}{Distance measure to be used when \code{method = "hclust"} (for
-hierarchical clustering). Must be one of \code{"euclidean"}, \code{"maximum"},
-\code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}}. If
-is \code{method = "kmeans"} this argument will be ignored.}
+\item{distance_method}{Distance measure to be used for methods based on distances (e.g., when \code{method = "hclust"} for hierarchical clustering. For other methods, such as \code{"kmeans"}, this argument will be ignored). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}} and \code{pvclust::pvclust()} for more information.}
 
 \item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"}
 (for hierarchical clustering). This should be one of \code{"ward"}, \code{"single"},
@@ -107,6 +104,18 @@ rez <- cluster_analysis(iris[1:4],
                         iterations = 50,
                         distance_method = "correlation")
 plot(rez)
+
+# K-Medoids (pam) ============================================
+rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
+rez  # Show results
+predict(rez)  # Get clusters
+plot(rez, show_data = "label")
+
+# PAM with automated number of clusters
+rez <- cluster_analysis(iris[1:4], method = "pamk")
+rez  # Show results
+predict(rez)  # Get clusters
+plot(rez, show_data = "label")
 
 # DBSCAN ====================================================
 # Note that you can assimilate more outliers (cluster 0) to neighbouring
