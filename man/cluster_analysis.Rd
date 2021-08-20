@@ -27,7 +27,7 @@ the number of clusters to extract is determined by calling \code{\link[=n_cluste
 that this argument does not apply for unsupervised clustering methods like
 \code{dbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
-\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}), \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"} (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}), \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using \code{mclust::Mclust()}).}
+\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}), \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"} (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}), \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using \code{mclust::Mclust()}, which requires the user to run \code{library(mclust)} before).}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
 values in order to be included in the data for determining the number of

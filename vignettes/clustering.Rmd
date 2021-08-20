@@ -28,11 +28,10 @@ This vignette can be referred to by citing the package:
 
 
 
-Note that in order to fully use all the methods demonstrated below, you will need to additionnaly install the packages below:
+Note that in order to fully use all the methods demonstrated below, you will need to additionally install the packages below:
 
 ```{r eval = FALSE}
-install.packages(c("NbClust", "mclust", "pvclust", "cluster", 
-                   "fpc", "dbscan", "mclust"))
+install.packages(c("NbClust", "mclust", "pvclust", "cluster", "fpc", "dbscan"))
 ```
 
 ## Introduction
@@ -198,7 +197,7 @@ plot(rez_dbscan) + theme_modern()  # Visualize
 
 ### Hierarchical K-Means
 
-Hierachical DBSCAN is a variant that does not require the critical **EPS** argument. It computes the hierarchy of all DBSCAN solutions, and then finds the optimal cuts in the hierarchy using a stability-based extraction method.
+Hierarchical DBSCAN is a variant that does not require the critical **EPS** argument. It computes the hierarchy of all DBSCAN solutions, and then finds the optimal cuts in the hierarchy using a stability-based extraction method.
 
 ```{r}
 rez_hdbscan <- cluster_analysis(data, method = "hdbscan")
@@ -223,15 +222,44 @@ rez_pamk  # Show results
 plot(rez_pamk) + theme_modern()  # Visualize 
 ```
 
+### Mixture
 
+Model-based clustering based on finite Gaussian mixture models. Models are estimated by EM algorithm initialized by hierarchical model-based agglomerative clustering. The optimal model is then selected according to BIC.
+
+```{r}
+library(mclust)
+
+rez_mixture <- cluster_analysis(data, method = "mixture")
+
+rez_mixture  # Show results
+
+# Visualize
+plot(rez_mixture) + theme_modern()  # Visualize 
+```
 
 ## Metaclustering
 
-One of the core "issue" of statistical clustering is that, in many cases, different methods will give different results. The **metaclustering** approach proposed by *easystats* (that finds echoes in *consensus clustering*; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability map. 
+One of the core "issue" of statistical clustering is that, in many cases, different methods will give different results. The **metaclustering** approach proposed by *easystats* (that finds echoes in *consensus clustering*; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability matrix. This matrix contains, for each pair of observations, the probability of being in the same cluster. For instance, if the 6th and the 9th row of a dataframe has been assigned to a similar cluster by 5 our of 10 clustering methods, then its probability of being grouped together is 0.5.
+
+Metaclustering is based on the hypothesis that, as each clustering algorithm embodies a different prism by which it sees the data, running an infinite amount of algorithms would result in the emergence of the "true" clusters. As the number of algorithms and parameters is finite, the probabilistic perspective is a useful proxy. This method is interesting where there is no obvious reasons to prefer one over another clustering method, as well as to investigate how robust some clusters are under different algorithms.
+
 
 ```{r}
-print("SOON.")
+list_of_results <- list(rez_kmeans, rez_hclust, rez_hkmeans, rez_pam,
+                        rez_hclust2, rez_dbscan, rez_hdbscan, rez_mixture)
+
+probability_matrix <- cluster_meta(list_of_results)
+
+# Plot the matrix as a reordered heatmap
+heatmap(probability_matrix, scale = "none", 
+        col = grDevices::hcl.colors(256, palette = "inferno"))
 ```
+
+
+
+The dendrogram (which is a **hierarchical clustering of the clustering solution**, hence the name of **meta**clustering), as well as the heatmap (in which the darker squares represent a higher probability of belonging to the same cluster) shows that there is one metacluster consisting of the 1-50 first rows (bottom left), and then the rest of the observations are closer to one another. However, two subclusters are still visible, corresponding to the "true" species.
+
+The metaclustering approach confirms our initial hypothesis, *the **setosa** species stands out quite clearly, and the separation between the two other species is less clear cut*.
 
 ## Resources
 
