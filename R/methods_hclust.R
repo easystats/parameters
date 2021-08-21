@@ -89,23 +89,12 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
     clusters <- .model_parameters_pvclust_clusters(model, data, ci)$Cluster
   }
 
-  params <- cluster_centers(data, clusters, ...)
+  params <- .cluster_centers_params(data, clusters, ...)
 
-  # Long means
-  means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
-
-  attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
-  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
-  attr(params, "means") <- means
   attr(params, "model") <- model
-  attr(params, "scores") <- clusters
   attr(params, "type") <- "pvclust"
+  attr(params, "title") <- "Bootstrapped Hierarchical Clustering (PVCLUST)"
 
-  class(params) <- c("parameters_clusters", class(params))
   params
 
 }

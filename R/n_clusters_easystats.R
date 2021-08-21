@@ -144,7 +144,7 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
       rez <- .cluster_analysis_dbscan(x, dbscan_eps = eps, min_size = min_size)
       out <- rbind(out, data.frame(eps = eps,
                                    n_Clusters = length(unique(rez$clusters)) - 1,
-                                   total_SS = sum(.cluster_analysis_SS(x, rez$clusters)$WSS)))
+                                   total_SS = sum(.cluster_centers_SS(x, rez$clusters)$WSS)))
     }
     attr(out, "min_size") <- rez$model$MinPts
     attr(out, "eps") <- out$eps[which.min(out$total_SS)]

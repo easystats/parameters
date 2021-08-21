@@ -6,28 +6,16 @@
 #'   model_parameters(model)
 #' }
 #' @export
-model_parameters.Mclust <- function(model, ...) {
+model_parameters.Mclust <- function(model, data = NULL, clusters = NULL, ...) {
 
-  data <- as.data.frame(model$data)
-  clusters <- model$classification
+  if(is.null(data)) data <- as.data.frame(model$data)
+  if(is.null(clusters)) clusters <- model$classification
 
-  params <- cluster_centers(data, clusters)
+  params <- .cluster_centers_params(data, clusters, ...)
 
-  # Long means
-  means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
-
-  attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
-  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
-  attr(params, "means") <- means
   attr(params, "model") <- model
-  attr(params, "scores") <- clusters
   attr(params, "type") <- "mixture"
   attr(params, "title") <- "Gaussian finite mixture model fitted by EM algorithm"
 
-  class(params) <- c("parameters_clusters", class(params))
   params
 }

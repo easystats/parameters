@@ -35,24 +35,12 @@ model_parameters.dbscan <- function(model, data = NULL, clusters = NULL, ...) {
     clusters <- model$cluster
   }
 
+  params <- .cluster_centers_params(data, clusters, ...)
 
-  params <- cluster_centers(data = data, clusters = clusters, ...)
-
-  # Long means
-  means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
-
-  attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
-  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
-  attr(params, "means") <- means
   attr(params, "model") <- model
-  attr(params, "scores") <- clusters
   attr(params, "type") <- "dbscan"
+  attr(params, "title") <- ifelse(inherits(model, "hdbscan"), "HDBSCAN", "DBSCAN")
 
-  class(params) <- c("parameters_clusters", class(params))
   params
 }
 

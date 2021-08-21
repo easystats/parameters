@@ -21,9 +21,9 @@
 
 \method{model_parameters}{hkmeans}(model, ...)
 
-\method{model_parameters}{Mclust}(model, ...)
+\method{model_parameters}{Mclust}(model, data = NULL, clusters = NULL, ...)
 
-\method{model_parameters}{pam}(model, ...)
+\method{model_parameters}{pam}(model, data = NULL, clusters = NULL, ...)
 }
 \arguments{
 \item{model}{Cluster model.}

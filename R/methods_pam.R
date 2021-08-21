@@ -11,29 +11,17 @@
 #'   model_parameters(model)
 #' }
 #' @export
-model_parameters.pam <- function(model, ...) {
+model_parameters.pam <- function(model, data = NULL, clusters = NULL, ...) {
 
-  data <- as.data.frame(model$data)
-  clusters <- model$clustering
+  if(is.null(data)) data <- as.data.frame(model$data)
+  if(is.null(clusters)) clusters <- model$clustering
 
-  params <- cluster_centers(data, clusters)
+  params <- .cluster_centers_params(data, clusters, ...)
 
-  # Long means
-  means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
-
-  attr(params, "variance") <- attributes(params)$variance
-  attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
-  attr(params, "Sum_Squares_Total") <- attributes(params)$Sum_Squares_Total
-  attr(params, "means") <- means
   attr(params, "model") <- model
-  attr(params, "scores") <- clusters
-  attr(params, "type") <- "mixture"
+  attr(params, "type") <- "pam"
   attr(params, "title") <- "K-Medoids"
 
-  class(params) <- c("parameters_clusters", class(params))
   params
 }
 
