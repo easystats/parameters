@@ -300,11 +300,19 @@ model_parameters.default <- function(model,
       )
     },
     error = function(e) {
-      NULL
+      fail <- NA
+      attr(fail, "error") <- gsub("  ", " ", gsub("\\n", "", e$message), fixed = TRUE)
+      fail
     }
   )
 
-  if (is.null(out)) {
+  if (is.na(out)) {
+    msg <- insight::format_message(
+      paste0("Sorry, `model_parameters()` failed with the following error (possible class '", class(model)[1], "' not supported):\n"),
+      attr(out, "error")
+    )
+    stop(msg, call. = FALSE)
+  } else if (is.null(out)) {
     stop(paste0("Sorry, `model_parameters()` does currently not work for objects of class '", class(model)[1], "'."), call. = FALSE)
   }
 

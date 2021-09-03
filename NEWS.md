@@ -68,6 +68,9 @@ necessary changes before this breaking change is implemented.
   `df_method = "profile` allows to add confidence intervals to the random
   effect variances.
 
+* `model_parameters()` should longer fail for supported model classes when
+  robust standard errors are not available.
+
 ### Other functions
 
 * `compare_parameters()` now also accepts a list of model objects.

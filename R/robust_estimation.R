@@ -165,7 +165,7 @@ ci_robust <- function(model,
 
   # check if required package is available
   if (vcov_fun == "vcovCR") {
-    insight::check_if_installed("clubSandwich")
+    insight::check_if_installed("clubSandwich", reason = "to get cluster-robust standard errors")
     .vcov <- do.call(
       clubSandwich::vcovCR,
       c(
@@ -174,7 +174,7 @@ ci_robust <- function(model,
       )
     )
   } else {
-    insight::check_if_installed("sandwich")
+    insight::check_if_installed("sandwich", reason = "to get robust standard errors")
     vcov_fun <- get(vcov_fun, asNamespace("sandwich"))
     .vcov <- do.call(
       vcov_fun,
