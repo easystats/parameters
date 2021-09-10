@@ -306,7 +306,7 @@ model_parameters.default <- function(model,
     }
   )
 
-  if (is.na(out)) {
+  if (length(out) == 1 && isTRUE(is.na(out))) {
     msg <- insight::format_message(
       paste0("Sorry, `model_parameters()` failed with the following error (possible class '", class(model)[1], "' not supported):\n"),
       attr(out, "error")
