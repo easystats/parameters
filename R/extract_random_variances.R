@@ -89,44 +89,65 @@
                                              effects = "random",
                                              component = "conditional",
                                              df_method = NULL, ...) {
-  ran_intercept <- data.frame(
-    insight::get_variance(
-      model,
-      component = "intercept",
-      verbose = FALSE,
-      model_component = component
-    )
+  ran_intercept <- tryCatch(
+    {
+      data.frame(
+        insight::get_variance(
+          model,
+          component = "intercept",
+          verbose = FALSE,
+          model_component = component
+        )
+      )
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
-  ran_slope <- data.frame(
-    insight::get_variance(
-      model,
-      component = "slope",
-      verbose = FALSE,
-      model_component = component
-    )
+  ran_slope <- tryCatch(
+    {
+      data.frame(
+        insight::get_variance(
+          model,
+          component = "slope",
+          verbose = FALSE,
+          model_component = component
+        )
+      )
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
-  ran_corr <- data.frame(
-    insight::get_variance(
-      model,
-      component = "rho01",
-      verbose = FALSE,
-      model_component = component
-    )
+  ran_corr <- tryCatch(
+    {
+      data.frame(
+        insight::get_variance(
+          model,
+          component = "rho01",
+          verbose = FALSE,
+          model_component = component
+        )
+      )
+    },
+    error = function(e) {
+      NULL
+    }
   )
 
   ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
 
   # random intercept - tau00
-  if (nrow(ran_intercept) > 0) {
+  if (!is.null(ran_intercept) && nrow(ran_intercept) > 0) {
     colnames(ran_intercept) <- "Coefficient"
     ran_intercept$Group <- rownames(ran_intercept)
     ran_intercept$Parameter <- "SD (Intercept)"
   }
 
   # random slope - tau11
-  if (nrow(ran_slope) > 0) {
+  if (!is.null(ran_slope) && nrow(ran_slope) > 0) {
     colnames(ran_slope) <- "Coefficient"
     ran_slope$Group <- rownames(ran_slope)
     for (i in unique(ran_intercept$Group)) {
@@ -141,7 +162,7 @@
   }
 
   # random slope-intercept correlation - rho01
-  if (nrow(ran_corr) > 0) {
+  if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
     if (colnames(ran_corr)[1] == ran_intercept$Group[1]) {
       colnames(ran_corr)[1] <- "Coefficient"
       ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ")")
