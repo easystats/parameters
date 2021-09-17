@@ -465,55 +465,31 @@ model_parameters.maov <- model_parameters.aov
 
   # Omega squared
   if (!is.null(omega_squared)) {
-    if (omega_squared == "partial") {
-      fx <- effectsize::omega_squared(model,
-                                  partial = TRUE,
-                                  ci = ci,
-                                  alternative = alternative,
-                                  verbose = verbose)
-    } else {
-      fx <- effectsize::omega_squared(model,
-                                  partial = FALSE,
-                                  ci = ci,
-                                  alternative = alternative,
-                                  verbose = verbose)
-    }
+    fx <- effectsize::omega_squared(model,
+                                    partial = omega_squared == "partial",
+                                    ci = ci,
+                                    alternative = alternative,
+                                    verbose = verbose)
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Eta squared
   if (!is.null(eta_squared)) {
-    if (eta_squared == "partial") {
-      fx <- effectsize::eta_squared(model,
-                                partial = TRUE,
-                                ci = ci,
-                                alternative = alternative,
-                                verbose = verbose)
-    } else {
-      fx <- effectsize::eta_squared(model,
-                                partial = FALSE,
-                                ci = ci,
-                                alternative = alternative,
-                                verbose = verbose)
-    }
+    fx <- effectsize::eta_squared(model,
+                                  partial = eta_squared == "partial",
+                                  ci = ci,
+                                  alternative = alternative,
+                                  verbose = verbose)
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 
   # Epsilon squared
   if (!is.null(epsilon_squared)) {
-    if (epsilon_squared == "partial") {
-      fx <- effectsize::epsilon_squared(model,
-                                    partial = TRUE,
-                                    ci = ci,
-                                    alternative = alternative,
-                                    verbose = verbose)
-    } else {
-      fx <- effectsize::epsilon_squared(model,
-                                    partial = FALSE,
-                                    ci = ci,
-                                    alternative = alternative,
-                                    verbose = verbose)
-    }
+    fx <- effectsize::epsilon_squared(model,
+                                      partial = epsilon_squared == "partial",
+                                      ci = ci,
+                                      alternative = alternative,
+                                      verbose = verbose)
     parameters <- .add_effectsize_to_parameters(fx, parameters)
   }
 

@@ -97,7 +97,7 @@ Suggests:
     dbscan,
     dplyr,
     DRR,
-    effectsize (>= 0.4.5),
+    effectsize (>= 0.5.0),
     EGAnet (>= 0.7),
     emmeans (>= 1.4),
     factoextra,

@@ -8,12 +8,14 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   # aov ----------------------------------
 
   test_that("model_parameters.aov", {
+    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     model <- aov(Sepal.Width ~ Species, data = iris)
     mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-    expect_equal(mp$Omega2_CI_low, c(0.29018, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Omega2_CI_low, c(0.3122, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), 1, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -26,8 +28,9 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
     mp <- model_parameters(model, eta_squared = "raw", ci = .9)
     es <- effectsize::eta_squared(model, partial = FALSE, ci = .9)
     expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-    expect_equal(mp$Eta2_CI_low, c(0.53866, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Eta2_CI_high), rep(1, 7), tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -40,6 +43,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   data(mtcars)
   test_that("model_parameters.anova", {
+    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
@@ -56,6 +60,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   data(mtcars)
   test_that("model_parameters.anova", {
+    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
@@ -83,11 +88,13 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
         contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
       ))
     test_that("model_parameters.car-anova", {
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
       mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
       expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-      expect_equal(mp$Omega2_CI_low, c(0, 0.0284, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
+      expect_equal(mp$Omega2_CI_low, c(0, 0.05110, 0.00666, NA), tolerance = 1e-3, ignore_attr = TRUE)
       expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
+      expect_equal(na.omit(mp$Omega2_CI_high), rep(1, 3), tolerance = 1e-3, ignore_attr = TRUE)
 
       expect_equal(colnames(mp), c(
         "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -106,11 +113,13 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
   model <- aov(fit)
 
   test_that("model_parameters.maov", {
+    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-    expect_equal(mp$Omega2_CI_low, c(0.71218, NA, 0.50841, NA, 0.53774, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Omega2_CI_low, c(0.74092, NA, 0.55331, NA, 0.58067, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(na.omit(mp$Omega2_CI_high), rep(1, 3), tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
       "Response", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
@@ -128,6 +137,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     test_that("works with aov", {
       skip_on_cran()
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
 
       set.seed(123)
       npk.aov <- aov(yield ~ block + N * P, npk)
@@ -152,10 +162,10 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
             p = c(0.03, 0.01, 0.54, 0.33, NA),
             Omega2 = c(0.27, 0.19, -0.01, 0, NA),
             Omega2_CI_low = c(0, 0, 0, 0, NA),
-            Omega2_CI_high = c(0.49, 0.5, 0, 0.1, NA),
+            Omega2_CI_high = c(1, 1, 1, 1, NA),
             Eta2_partial = c(0.52, 0.38, 0.03, 0.06, NA),
-            Eta2_CI_low = c(0, 0.03, 0, 0, NA),
-            Eta2_CI_high = c(0.71, 0.64, 0.31, 0.37, NA)
+            Eta2_CI_low = c(0.04258, 0.0733, 0, 0, NA),
+            Eta2_CI_high = c(1, 1, 1, 1, NA)
           ),
           row.names = c(NA, 5L),
           class = "data.frame",
@@ -242,6 +252,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     test_that("works with manova", {
       skip_on_cran()
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
 
       set.seed(123)
       # fake a 2nd response variable
@@ -270,10 +281,10 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
             p = c(0.1, 0.01, 0.69, 0.07, 0.54, 0.35, 0.98, NA),
             Omega2_partial = c(0.2, 0.52, -0.1, 0.26, -0.05, 0.02, -0.16, NA),
             Omega2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA),
-            Omega2_CI_high = c(0.38, 0.79, 0, 0.66, 0, 0.38, 0, NA),
+            Omega2_CI_high = c(1, 1, 1, 1, 1, 1, 1, NA),
             Epsilon2_partial = c(0.21, 0.54, -0.1, 0.28, -0.06, 0.02, -0.18, NA),
             Epsilon2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA),
-            Epsilon2_CI_high = c(0.37, 0.8, 0, 0.67, 0, 0.39, 0, NA)
+            Epsilon2_CI_high = c(1, 1, 1, 1, 1, 1, 1, NA)
           ),
           row.names = c(NA, 8L),
           class = "data.frame",
@@ -292,6 +303,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     test_that("works with maov", {
       skip_on_cran()
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
 
       set.seed(123)
       fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
@@ -326,13 +338,13 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
             p = c(0, NA, 0, NA, 0, NA),
             Omega2 = c(0.82, NA, 0.69, NA, 0.71, NA),
             Omega2_CI_low = c(0.68, NA, 0.47, NA, 0.5, NA),
-            Omega2_CI_high = c(0.89, NA, 0.8, NA, 0.81, NA),
+            Omega2_CI_high = c(1, NA, 1, NA, 1, NA),
             Eta2 = c(0.84, NA, 0.71, NA, 0.73, NA),
             Eta2_CI_low = c(0.71, NA, 0.51, NA, 0.54, NA),
-            Eta2_CI_high = c(0.9, NA, 0.82, NA, 0.83, NA),
+            Eta2_CI_high = c(1, NA, 1, NA, 1, NA),
             Epsilon2 = c(0.83, NA, 0.69, NA, 0.71, NA),
             Epsilon2_CI_low = c(0.69, NA, 0.48, NA, 0.51, NA),
-            Epsilon2_CI_high = c(0.89, NA, 0.8, NA, 0.82, NA)
+            Epsilon2_CI_high = c(1, NA, 1, NA, 1, NA)
           ),
           row.names = c(NA, 6L),
           class = "data.frame",
@@ -351,6 +363,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     test_that("works with Gam", {
       skip_on_cran()
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
 
       # setup
       set.seed(123)
@@ -358,7 +371,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
       # model
       set.seed(123)
       g <- gam::gam(
-        formula = mpg ~ s(hp, 4) + am + qsec,
+        formula = mpg ~ gam::s(hp, 4) + am + qsec,
         data = mtcars
       )
 
@@ -381,7 +394,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
             p = c(0, 0, 0.95, NA),
             Omega2_partial = c(0.76, 0.34, -0.04, NA),
             Omega2_CI_low = c(0.71, 0.23, 0, NA),
-            Omega2_CI_high = c(0.8, 0.42, 0, NA)
+            Omega2_CI_high = c(1, 1, 1, NA)
           ),
           row.names = c(NA, 4L),
           class = "data.frame",
@@ -401,6 +414,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
     test_that("works with anova", {
       skip_on_cran()
+      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
 
       set.seed(123)
       mod <-
@@ -436,13 +450,13 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
             p = c(0.76, 0, 0.02, NA),
             Omega2_partial = c(-0.03, 0.17, 0.12, NA),
             Omega2_CI_low = c(0, 0.03, 0, NA),
-            Omega2_CI_high = c(0, 0.34, 0.27, NA),
+            Omega2_CI_high = c(1, 1, 1, NA),
             Eta2 = c(0.01, 0.17, 0.14, NA),
             Eta2_CI_low = c(0, 0.03, 0, NA),
-            Eta2_CI_high = c(0.06, 0.35, 0.3, NA),
+            Eta2_CI_high = c(1, 1, 1, NA),
             Epsilon2 = c(-0.02, 0.16, 0.11, NA),
             Epsilon2_CI_low = c(0, 0.03, 0, NA),
-            Epsilon2_CI_high = c(0, 0.33, 0.25, NA)
+            Epsilon2_CI_high = c(1, 1, 1, NA)
           ),
           row.names = c(NA, 4L),
           class = "data.frame",

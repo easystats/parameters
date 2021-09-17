@@ -632,17 +632,19 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                  cramers_v = NULL,
                                  phi = NULL,
                                  ci = .95,
+                                 alternative = NULL,
                                  verbose = TRUE) {
-  if (is.null(cramers_v) && is.null(phi)) {
+  if (!requireNamespace("effectsize", quietly = TRUE) || (is.null(cramers_v) && is.null(phi))) {
     return(out)
   }
 
-  if (!is.null(cramers_v) && requireNamespace("effectsize", quietly = TRUE)) {
+  if (!is.null(cramers_v)) {
     # Cramers V
     es <- effectsize::effectsize(
       model,
       type = "cramers_v",
       ci = ci,
+      alternative = alternative,
       adjust = identical(cramers_v, "adjusted"),
       verbose = verbose
     )
@@ -652,12 +654,13 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     out <- cbind(out, es)
   }
 
-  if (!is.null(phi) && requireNamespace("effectsize", quietly = TRUE)) {
+  if (!is.null(phi)) {
     # Phi
     es <- effectsize::effectsize(
       model,
       type = "phi",
       ci = ci,
+      alternative = alternative,
       adjust = identical(phi, "adjusted"),
       verbose = verbose
     )
