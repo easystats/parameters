@@ -56,51 +56,41 @@
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
-#' plot(rez)
-#'
 #'
 #' # Hierarchical k-means (more robust k-means)
-#' rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-#' rez  # Show results
-#' predict(rez)  # Get clusters
-#' plot(rez, show_data = "point")
+#' if (require("factoextra", quietly = TRUE)) {
+#'   rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+#'   rez  # Show results
+#'   predict(rez)  # Get clusters
+#' }
 #'
 #' # Hierarchical Clustering (hclust) ===========================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 #' rez  # Show results
 #' predict(rez)  # Get clusters
-#' plot(rez, show_data = "label")
-#'
-#' # n = NULL uses pvclust() to identify significant clusters =======
-#' rez <- cluster_analysis(iris[1:4],
-#'                         n = NULL,
-#'                         method = "hclust",
-#'                         iterations = 50,
-#'                         distance_method = "correlation")
-#' plot(rez)
 #'
 #' # K-Medoids (pam) ============================================
-#' rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
-#' rez  # Show results
-#' predict(rez)  # Get clusters
-#' plot(rez, show_data = "label")
+#' if (require("cluster", quietly = TRUE)) {
+#'   rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
+#'   rez  # Show results
+#'   predict(rez)  # Get clusters
+#' }
 #'
 #' # PAM with automated number of clusters
-#' rez <- cluster_analysis(iris[1:4], method = "pamk")
-#' rez  # Show results
-#' predict(rez)  # Get clusters
-#' plot(rez, show_data = "label")
+#' if (require("fpc", quietly = TRUE)) {
+#'   rez <- cluster_analysis(iris[1:4], method = "pamk")
+#'   rez  # Show results
+#'   predict(rez)  # Get clusters
+#' }
 #'
 #' # DBSCAN ====================================================
-#' # Note that you can assimilate more outliers (cluster 0) to neighbouring
-#' # clusters by setting borderPoints = TRUE.
-#' rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
-#' rez  # Show results
-#' predict(rez)  # Get clusters
-#' plot(rez)
-#'
-#' # HDBSCAN (doesn't require the eps parameter)
-#' plot(cluster_analysis(iris[1:4], method = "hdbscan"))
+#' if (require("dbscan", quietly = TRUE)) {
+#'   # Note that you can assimilate more outliers (cluster 0) to neighbouring
+#'   # clusters by setting borderPoints = TRUE.
+#'   rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
+#'   rez  # Show results
+#'   predict(rez)  # Get clusters
+#' }
 #'
 #' # Mixture ====================================================
 #' if (require("mclust", quietly = TRUE)) {
@@ -108,7 +98,6 @@
 #'  rez <- cluster_analysis(iris[1:4], method = "mixture")
 #'  rez  # Show results
 #'  predict(rez)  # Get clusters
-#'  plot(rez)
 #' }
 #'
 #' @export
@@ -164,19 +153,19 @@ cluster_analysis <- function(x,
 
   if (any(method == "kmeans")) {
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if(any(method %in% c("hkmeans"))) {
+  } else if (any(method %in% c("hkmeans"))) {
     rez <- .cluster_analysis_hkmeans(data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method, iterations = iterations, ...)
-  } else if(any(method %in% c("pam"))) {
+  } else if (any(method %in% c("pam"))) {
     rez <- .cluster_analysis_pam(data, n = n, distance_method = distance_method, ...)
-  } else if(any(method %in% c("pamk"))) {
+  } else if (any(method %in% c("pamk"))) {
     rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
-  } else if(any(method %in% c("hclust"))) {
+  } else if (any(method %in% c("hclust"))) {
     rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
-  } else if(any(method == "dbscan")) {
+  } else if (any(method == "dbscan")) {
     rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
-  } else if(any(method == "hdbscan")) {
+  } else if (any(method == "hdbscan")) {
     rez <- .cluster_analysis_hdbscan(data, ...)
-  } else if(any(method %in% c("mixture", "mclust"))) {
+  } else if (any(method %in% c("mixture", "mclust"))) {
     rez <- .cluster_analysis_mixture(data, ...)
   } else {
     stop("Did not find 'method' argument. Could be misspecified.")
@@ -241,11 +230,11 @@ cluster_analysis <- function(x,
 
 #' @keywords internal
 .cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", iterations = 100, ...) {
-  if(is.null(n)) {
+  if (is.null(n)) {
     rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
-    if(distance_method %in% c("correlation", "uncentered", "abscor")) {
+    if (distance_method %in% c("correlation", "uncentered", "abscor")) {
       warning(paste0("method '", distance_method, "' not supported by regular hclust(). Please specify another one or set n = NULL to use pvclust."))
     }
     dist <- dist(data, method = distance_method, ...)
@@ -259,7 +248,7 @@ cluster_analysis <- function(x,
 .cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.1, borderPoints = FALSE, ...) {
   insight::check_if_installed("dbscan")
 
-  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  if (min_size < 1) min_size <- round(min_size * nrow(data))
   model <- dbscan::dbscan(data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
 
   list(model = model, clusters = model$cluster)
@@ -269,7 +258,7 @@ cluster_analysis <- function(x,
 .cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
   insight::check_if_installed("dbscan")
 
-  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  if (min_size < 1) min_size <- round(min_size * nrow(data))
   model <- dbscan::hdbscan(data, minPts = min_size, ...)
 
   list(model = model, clusters = model$cluster)
@@ -290,7 +279,7 @@ cluster_analysis <- function(x,
 
 #' @export
 predict.cluster_analysis <- function(object, newdata = NULL, ...) {
-  if(is.null(newdata)) {
+  if (is.null(newdata)) {
     attributes(object)$clusters
   } else {
     NextMethod()
@@ -305,7 +294,7 @@ print.cluster_analysis <- function(x, ...) {
   cat("\n")
   print(attributes(x)$performance)
 
-  insight::print_color("\n# You can access the predicted clusters via 'predict()'.", "yellow")
+  insight::print_color("\n# You can access the predicted clusters via 'predict()'.\n", "yellow")
   invisible(x)
 }
 
@@ -325,7 +314,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   data$Cluster <- as.character(attributes(x)$clusters)
 
   data$label <- row.names(ori_data)
-  if(show_data %in% c("label", "text")) {
+  if (show_data %in% c("label", "text")) {
     label <- "label"
   } else {
     label <- NULL

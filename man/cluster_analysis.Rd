@@ -82,51 +82,41 @@ set.seed(33)
 rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 rez  # Show results
 predict(rez)  # Get clusters
-plot(rez)
-
 
 # Hierarchical k-means (more robust k-means)
-rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-rez  # Show results
-predict(rez)  # Get clusters
-plot(rez, show_data = "point")
+if (require("factoextra", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+  rez  # Show results
+  predict(rez)  # Get clusters
+}
 
 # Hierarchical Clustering (hclust) ===========================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
 rez  # Show results
 predict(rez)  # Get clusters
-plot(rez, show_data = "label")
-
-# n = NULL uses pvclust() to identify significant clusters =======
-rez <- cluster_analysis(iris[1:4],
-                        n = NULL,
-                        method = "hclust",
-                        iterations = 50,
-                        distance_method = "correlation")
-plot(rez)
 
 # K-Medoids (pam) ============================================
-rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
-rez  # Show results
-predict(rez)  # Get clusters
-plot(rez, show_data = "label")
+if (require("cluster", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
+  rez  # Show results
+  predict(rez)  # Get clusters
+}
 
 # PAM with automated number of clusters
-rez <- cluster_analysis(iris[1:4], method = "pamk")
-rez  # Show results
-predict(rez)  # Get clusters
-plot(rez, show_data = "label")
+if (require("fpc", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], method = "pamk")
+  rez  # Show results
+  predict(rez)  # Get clusters
+}
 
 # DBSCAN ====================================================
-# Note that you can assimilate more outliers (cluster 0) to neighbouring
-# clusters by setting borderPoints = TRUE.
-rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
-rez  # Show results
-predict(rez)  # Get clusters
-plot(rez)
-
-# HDBSCAN (doesn't require the eps parameter)
-plot(cluster_analysis(iris[1:4], method = "hdbscan"))
+if (require("dbscan", quietly = TRUE)) {
+  # Note that you can assimilate more outliers (cluster 0) to neighbouring
+  # clusters by setting borderPoints = TRUE.
+  rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
+  rez  # Show results
+  predict(rez)  # Get clusters
+}
 
 # Mixture ====================================================
 if (require("mclust", quietly = TRUE)) {
@@ -134,7 +124,6 @@ if (require("mclust", quietly = TRUE)) {
  rez <- cluster_analysis(iris[1:4], method = "mixture")
  rez  # Show results
  predict(rez)  # Get clusters
- plot(rez)
 }
 
 }
