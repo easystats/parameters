@@ -1,9 +1,9 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (require("testthat") &&
-  require("parameters") &&
-  require("lme4") &&
-  require("GLMMadaptive")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("lme4") &&
+  requiet("GLMMadaptive")) {
   data("fish")
   data("cbpp")
 
@@ -131,7 +131,7 @@ if (require("testthat") &&
     )
   })
 
-  if (.runThisTest && require("glmmTMB")) {
+  if (.runThisTest && requiet("glmmTMB")) {
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,

@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   test_that("parameters_type-1", {
     m0 <- lm(mpg ~ am * cyl, mtcars)
     m1 <- lm(mpg ~ am * scale(cyl), mtcars)

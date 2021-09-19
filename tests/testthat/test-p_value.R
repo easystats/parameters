@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (require("testthat") &&
-    require("parameters") &&
-    require("lme4") &&
-    require("insight")) {
+  if (requiet("testthat") &&
+    requiet("parameters") &&
+    requiet("lme4") &&
+    requiet("insight")) {
     data(mtcars)
     test_that("p_value", {
       # h-tests

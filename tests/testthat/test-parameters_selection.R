@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   test_that("select_parameters", {
     model <- lm(mpg ~ ., data = mtcars)
     x <- select_parameters(model)

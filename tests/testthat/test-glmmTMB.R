@@ -1,9 +1,9 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  require("testthat") &&
-  require("parameters") &&
-  require("glmmTMB")) {
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("glmmTMB")) {
   data("fish")
   data("Salamanders")
 

@@ -1,8 +1,8 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("sandwich") &&
-  require("clubSandwich") &&
-  require("effectsize")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("sandwich") &&
+  requiet("clubSandwich") &&
+  requiet("effectsize")) {
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)

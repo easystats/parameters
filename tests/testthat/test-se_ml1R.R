@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("lme4")) {
+if (requiet("testthat") && requiet("parameters") && requiet("lme4")) {
   data(iris)
   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
   test_that("se_ml1", {

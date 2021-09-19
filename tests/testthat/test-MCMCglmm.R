@@ -1,6 +1,6 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("MCMCglmm")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("MCMCglmm")) {
   data(PlodiaPO)
   set.seed(123)
   m1 <- MCMCglmm(

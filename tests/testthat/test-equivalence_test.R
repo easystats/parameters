@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   test_that("equivalence_test", {
     data(mtcars)
     m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)

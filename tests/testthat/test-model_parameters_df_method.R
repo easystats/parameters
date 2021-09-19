@@ -1,8 +1,8 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("lmerTest") &&
-  require("pbkrtest") &&
-  require("lme4")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("lmerTest") &&
+  requiet("pbkrtest") &&
+  requiet("lme4")) {
   data("mtcars")
   mtcars$cyl <- as.factor(mtcars$cyl)
   model <- suppressMessages(lme4::lmer(mpg ~ as.factor(gear) * hp + as.factor(am) + wt + (1 | cyl), data = mtcars))

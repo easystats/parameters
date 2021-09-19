@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("geepack")) {
+if (requiet("testthat") && requiet("parameters") && requiet("geepack")) {
   data(warpbreaks)
   m1 <-
     geeglm(
