@@ -78,8 +78,6 @@ ci_wald <- function(model,
         "wald" = standard_error(model, component = component),
         "kenward" = ,
         "kr" = se_kenward(model),
-        "ml1" = se_ml1(model),
-        "betwithin" = se_betwithin(model),
         "satterthwaite" = se_satterthwaite(model),
         standard_error(model, component = component)
       )

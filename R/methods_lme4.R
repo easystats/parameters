@@ -372,13 +372,8 @@ standard_error.merMod <- function(model,
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      # ml1 approx
-      if (method == "ml1") {
-        se_ml1(model)
-      } else if (method == "betwithin") {
-        se_betwithin(model)
-        # Kenward approx
-      } else if (method %in% c("kenward", "kr")) {
+      # kenward approx
+      if (method %in% c("kenward", "kr")) {
         se_kenward(model)
       } else {
         # Classic and Satterthwaite SE

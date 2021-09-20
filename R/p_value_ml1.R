@@ -12,11 +12,10 @@
 #' standard errors) may be biased in mixed models when the number of clusters
 #' is small (even if the sample size of level-1 units is high). In such cases
 #' it is recommended to approximate a more accurate number of degrees of freedom
-#' for such inferential statitics (see \cite{Li and Redden 2015}). The
+#' for such inferential statistics (see \cite{Li and Redden 2015}). The
 #' *m-l-1* heuristic is such an approach that uses a t-distribution with
 #' fewer degrees of freedom (`dof_ml1`) to calculate p-values
-#' (`p_value_ml1`), standard errors (`se_ml1`) and confidence intervals
-#' (`ci(method = "ml1")`).
+#' (`p_value_ml1`) and confidence intervals (`ci(method = "ml1")`).
 #' }
 #' \subsection{Degrees of Freedom for Longitudinal Designs (Repeated Measures)}{
 #' In particular for repeated measure designs (longitudinal data analysis),
@@ -32,9 +31,8 @@
 #' mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
 #' to linear mixed models only.
 #' }
-#' @seealso `dof_ml1()` and `se_ml1()` are small helper-functions
-#' to calculate approximated degrees of freedom and standard errors of model
-#' parameters, based on the "m-l-1" heuristic.
+#' @seealso `dof_ml1()` is a small helper-function to calculate approximated
+#' degrees of freedom of model parameters, based on the "m-l-1" heuristic.
 #'
 #' @examples
 #' \donttest{
