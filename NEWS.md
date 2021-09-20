@@ -42,6 +42,9 @@ necessary changes before this breaking change is implemented.
 
 ### `model_parameters()`
 
+* `model_parameters()` with `standardize != "refit"` now returns random effects
+  from the standardized model.
+
 * `model_parameters()` and `ci()` for `lmerMod` models gain a `"residuals"`
   option for the `df_method` (resp. `method`) argument, to explicitly calculate
   confidence intervals based on the residual degrees of freedom, when present.

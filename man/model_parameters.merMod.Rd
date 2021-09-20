@@ -105,17 +105,21 @@
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
-\code{"refit"}, \code{"posthoc"}, \code{"smart"}, \code{"basic"},
-\code{"pseudo"} or \code{NULL} (default) for no standardization. See
-'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
-\strong{Important:} Categorical predictors (i.e. factors) are \emph{never}
-standardized by default, which may be a different behaviour compared to
-other R packages or other software packages (like SPSS). If standardizing
-categorical predictors is desired, either use \code{standardize="basic"}
-to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
-the data with \code{effectsize::standardize(force=TRUE)} before fitting
-the model. Robust estimation (i.e. \code{robust=TRUE}) of standardized
-parameters only works when \code{standardize="refit"}.}
+\code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model
+on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"},
+\code{"pseudo"}. See 'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
+\strong{Important:}
+\itemize{
+\item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
+factors), which may be a different behaviour compared to other R packages
+(such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+such behaviours, either use \code{standardize="basic"} or standardize the data
+with \code{effectsize::standardize(force=TRUE)} \emph{before} fitting the model.
+\item For mixed models, when using methods other than \code{"refit"}, only the fixed
+effects will be returned.
+\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+works when \code{standardize="refit"}.
+}}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies

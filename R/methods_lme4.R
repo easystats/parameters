@@ -157,7 +157,7 @@ model_parameters.merMod <- function(model,
   params <- params_random <- params_variance <- NULL
 
   # standardize only works for fixed effects...
-  if (!is.null(standardize)) {
+  if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
       warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
     }

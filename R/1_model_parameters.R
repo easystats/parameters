@@ -168,17 +168,19 @@ parameters <- model_parameters
 #' @param iterations The number of bootstrap replicates. This only apply in the
 #'   case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be
-#'   `"refit"`, `"posthoc"`, `"smart"`, `"basic"`,
-#'   `"pseudo"` or `NULL` (default) for no standardization. See
-#'   'Details' in [effectsize::standardize_parameters()].
-#'   **Important:** Categorical predictors (i.e. factors) are *never*
-#'   standardized by default, which may be a different behaviour compared to
-#'   other R packages or other software packages (like SPSS). If standardizing
-#'   categorical predictors is desired, either use `standardize="basic"`
-#'   to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
-#'   the data with `effectsize::standardize(force=TRUE)` before fitting
-#'   the model. Robust estimation (i.e. `robust=TRUE`) of standardized
-#'   parameters only works when `standardize="refit"`.
+#'   `NULL` (default; no standardization), `"refit"` (for re-fitting the model
+#'   on standardized data) or one of `"basic"`, `"posthoc"`, `"smart"`,
+#'   `"pseudo"`. See 'Details' in [effectsize::standardize_parameters()].
+#'   **Important:**
+#'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
+#'   factors), which may be a different behaviour compared to other R packages
+#'   (such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+#'   such behaviours, either use `standardize="basic"` or standardize the data
+#'   with `effectsize::standardize(force=TRUE)` *before* fitting the model.
+#'   - For mixed models, when using methods other than `"refit"`, only the fixed
+#'   effects will be returned.
+#'   - Robust estimation (i.e. `robust=TRUE`) of standardized parameters only
+#'   works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log
