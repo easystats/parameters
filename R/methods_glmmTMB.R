@@ -29,7 +29,7 @@ model_parameters.glmmTMB <- function(model,
 
   ## TODO remove later
   if (!missing(df_method)) {
-    message(insight::format_message("Argument 'df_method' is deprecated. Please use ' ci_method' instead."))
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
     ci_method <- df_method
   }
 

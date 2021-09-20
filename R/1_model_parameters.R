@@ -207,9 +207,10 @@ parameters <- model_parameters
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,
 #'   `"sidak"` and `"none"` to explicitly disable adjustment for
 #'   `emmGrid` objects (from \pkg{emmeans}).
-#' @param ci_method Method for computing degrees of freedom for confidence
-#'   intervals (CI). Only applies to models of class `glm` or `polr`.
-#'   May be `"profile"` or `"wald"`.
+#' @param ci_method Method for computing degrees of freedom for
+#'   confidence intervals (CI). Only applies to models of class `glm` or
+#'   `polr`. May be `"profile"` or `"wald"`.
+#' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
@@ -342,7 +343,7 @@ model_parameters.default <- function(model,
 
   ## TODO remove later
   if (!missing(df_method)) {
-    message(insight::format_message("Argument 'df_method' is deprecated. Please use ' ci_method' instead."))
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
     ci_method <- df_method
   }
 
@@ -388,7 +389,7 @@ model_parameters.default <- function(model,
     exponentiate,
     bootstrap,
     iterations,
-    df_method = df_method,
+    df_method = ci_method,
     p_adjust = p_adjust,
     summary = summary,
     verbose = verbose,
@@ -409,7 +410,7 @@ model_parameters.default <- function(model,
 #' @export
 model_parameters.glm <- function(model,
                                  ci = .95,
-                                 df_method = "profile",
+                                 ci_method = "profile",
                                  bootstrap = FALSE,
                                  iterations = 1000,
                                  standardize = NULL,
@@ -418,15 +419,23 @@ model_parameters.glm <- function(model,
                                  p_adjust = NULL,
                                  summary = FALSE,
                                  verbose = TRUE,
+                                 df_method = ci_method,
                                  ...) {
-  if (insight::n_obs(model) > 1e4 && df_method == "profile") {
-    message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs."))
+
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    ci_method <- df_method
+  }
+
+  if (insight::n_obs(model) > 1e4 && ci_method == "profile") {
+    message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."))
   }
 
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
-    df_method = df_method,
+    ci_method = ci_method,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = "Parameter",

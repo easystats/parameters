@@ -53,19 +53,18 @@ model_parameters.cgam <- function(model,
       ...
     )
   } else {
-    params <-
-      .extract_parameters_generic(
-        model,
-        ci = ci,
-        component = "all",
-        merge_by = c("Parameter", "Component"),
-        standardize = standardize,
-        robust = robust,
-        p_adjust = p_adjust,
-        keep_parameters = keep,
-        drop_parameters = drop,
-        ...
-      )
+    params <- .extract_parameters_generic(
+      model,
+      ci = ci,
+      component = "all",
+      merge_by = c("Parameter", "Component"),
+      standardize = standardize,
+      robust = robust,
+      p_adjust = p_adjust,
+      keep_parameters = keep,
+      drop_parameters = drop,
+      ...
+    )
   }
 
   # fix statistic column

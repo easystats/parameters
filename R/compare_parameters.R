@@ -70,15 +70,22 @@ compare_parameters <- function(...,
                                component = "conditional",
                                standardize = NULL,
                                exponentiate = FALSE,
-                               df_method = "wald",
+                               ci_method = "wald",
                                p_adjust = NULL,
                                style = NULL,
                                column_names = NULL,
                                keep = NULL,
                                drop = NULL,
                                parameters = keep,
-                               verbose = TRUE) {
+                               verbose = TRUE,
+                               df_method = ci_method) {
   models <- list(...)
+
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    ci_method <- df_method
+  }
 
   if (length(models) == 1) {
     if (insight::is_model(models[[1]]) || inherits(models[[1]], "parameters_model")) {

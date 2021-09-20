@@ -81,9 +81,9 @@ a data frame with posterior samples.}
 \item{ci}{Credible Interval (CI) level. Default to \code{0.95} (\verb{95\%}). See
 \code{\link[bayestestR:ci]{bayestestR::ci()}} for further details.}
 
-\item{ci_method}{Method for computing degrees of freedom for confidence
-intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
-May be \code{"profile"} or \code{"wald"}.}
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI). Only applies to models of class \code{glm} or
+\code{polr}. May be \code{"profile"} or \code{"wald"}.}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
