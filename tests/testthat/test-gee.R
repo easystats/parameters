@@ -1,6 +1,6 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("gee")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("gee")) {
   data(warpbreaks)
   m1 <- gee(breaks ~ tension, id = wool, data = warpbreaks)
 

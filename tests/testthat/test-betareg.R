@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("betareg")) {
+if (requiet("testthat") && requiet("parameters") && requiet("betareg")) {
   data("GasolineYield")
   data("FoodExpenditure")
 

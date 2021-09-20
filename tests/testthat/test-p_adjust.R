@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("testthat") && require("parameters")) {
+if (.runThisTest && requiet("testthat") && requiet("parameters")) {
   data(mtcars)
   model <- lm(mpg ~ wt * cyl + am + log(hp), data = mtcars)
 
@@ -13,7 +13,7 @@ if (.runThisTest && require("testthat") && require("parameters")) {
     expect_equal(mp$p, c(0, 0.01824, 0.16588, 1, 0.06411, 0.13869), tolerance = 1e-3)
   })
 
-  if (require("emmeans")) {
+  if (requiet("emmeans")) {
     data(iris)
     m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species))
     test_that("model_parameters, emmeans, p-adjust", {

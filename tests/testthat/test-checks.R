@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   data(mtcars)
   test_that("check_factorstructure", {
     x <- check_factorstructure(mtcars)

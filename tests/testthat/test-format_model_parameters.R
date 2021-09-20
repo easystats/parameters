@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("splines")) {
+if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
   data(mtcars)
 
   m <- lm(mpg ~ qsec:wt + wt:drat, data = mtcars)

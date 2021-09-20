@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("splines")) {
+if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
   data(iris)
   set.seed(123)
   iris$cat <- sample(LETTERS[1:4], nrow(iris), replace = TRUE)
@@ -217,7 +217,7 @@ if (require("testthat") && require("parameters") && require("splines")) {
   })
 
   test_that("format_parameters-17", {
-    if (require("pscl")) {
+    if (requiet("pscl")) {
       data("bioChemists")
       model <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
       fp <- format_parameters(model)

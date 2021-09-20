@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("testthat") && require("parameters") && require("glmmTMB")) {
+if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("glmmTMB")) {
   data(Salamanders)
   model <- suppressWarnings(glmmTMB(
     count ~ spp + mined + spp * mined,

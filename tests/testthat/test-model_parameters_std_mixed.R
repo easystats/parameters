@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  require("testthat") &&
-  require("parameters") &&
-  require("effectsize") &&
-  require("lme4")) {
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("effectsize") &&
+  requiet("lme4")) {
   data(iris)
   set.seed(1234)
   iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
@@ -68,7 +68,7 @@ if (.runThisTest &&
     expect_equal(params$CI_high, c(0, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492), tolerance = 1e-3)
   })
 
-  if (require("clubSandwich")) {
+  if (requiet("clubSandwich")) {
     test_that("model_parameters, standardize-refit robust", {
       params <- model_parameters(model, standardize = "refit", robust = TRUE, vcov_estimation = "CR", vcov_type = "CR1", vcov_args = list(cluster = iris$grp), verbose = FALSE)
       expect_equal(c(nrow(params), ncol(params)), c(7, 10))

@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && require("insight") && require("testthat") && require("parameters")) {
+if (.runThisTest && requiet("insight") && requiet("testthat") && requiet("parameters")) {
   data(mtcars)
   m <- glm(am ~ mpg + hp + factor(cyl),
     data = mtcars, family = binomial()
@@ -32,7 +32,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     )
   })
 
-  if (require("car")) {
+  if (requiet("car")) {
     a <- car::Anova(m, type = 3, test.statistic = "F")
     mp <- model_parameters(a)
 
@@ -70,7 +70,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     })
 
 
-    if (require("MASS")) {
+    if (requiet("MASS")) {
       data(housing)
       m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
       a <- car::Anova(m)
@@ -83,7 +83,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
     }
   }
 
-  if (require("lme4") && require("effectsize") && utils::packageVersion("effectsize") > "0.4.3") {
+  if (requiet("lme4") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.4.3") {
     data(iris)
     df <- iris
     df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
@@ -115,7 +115,7 @@ if (.runThisTest && require("insight") && require("testthat") && require("parame
 
 # XXX -----
 
-if (.runThisTest && require("parameters") && require("testthat")) {
+if (.runThisTest && requiet("parameters") && requiet("testthat")) {
   test_that("anova type | lm", {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 

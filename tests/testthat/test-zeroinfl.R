@@ -1,6 +1,6 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("pscl")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("pscl")) {
   data("bioChemists")
   m1 <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
 

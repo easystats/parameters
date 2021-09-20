@@ -1,7 +1,7 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("stats") &&
-  require("plm") &&
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("stats") &&
+  requiet("plm") &&
   getRversion() > "3.5") {
   data(Crime)
   data("Produc", package = "plm")
