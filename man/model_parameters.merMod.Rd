@@ -18,9 +18,10 @@
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -50,7 +51,7 @@
   model,
   ci = 0.95,
   bootstrap = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
@@ -64,6 +65,7 @@
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -88,9 +90,10 @@
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 }
@@ -140,24 +143,6 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{df_method}{Deprecated. Please use \code{ci_method}.}
-
-\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
-adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
-possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
-\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \pkg{emmeans}).}
-
-\item{verbose}{Toggle warnings and messages.}
-
-\item{...}{Arguments passed to or from other methods.}
-
-\item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
-
 \item{ci_method}{Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). By default (\code{NULL}),
 returns residual degrees of freedom for linear mixed models, or \code{Inf}
@@ -172,6 +157,24 @@ class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{ci_method =
 residual degrees of freedom are returned. Note that when \code{ci_method} is
 not \code{NULL}, \code{"wald"} or \code{"residual"}, robust standard errors etc. cannot
 be computed.}
+
+\item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
+adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
+possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
+\code{"sidak"} and \code{"none"} to explicitly disable adjustment for
+\code{emmGrid} objects (from \pkg{emmeans}).}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{df_method}{Deprecated. Please use \code{ci_method}.}
+
+\item{...}{Arguments passed to or from other methods.}
+
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column
@@ -245,9 +248,9 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \section{Confidence intervals for random effect variances}{
 
-When \code{df_method = "profile"} and \code{effects} is either \code{"random"} or \code{"all"},
+When \code{ci_method = "profile"} and \code{effects} is either \code{"random"} or \code{"all"},
 profiled confidence intervals are computed for the random effects. For all
-other options of \code{df_method}, confidence intervals for random effects will
+other options of \code{ci_method}, confidence intervals for random effects will
 be missing.
 }
 
