@@ -163,11 +163,11 @@ model_parameters.brmsfit <- function(model,
   # Renaming
   re_name <- insight::find_random(model, flatten = TRUE)
 
-  study_names <- gsub(sprintf("r_%s\\.(.*)", re_name[1]), "\\1", colnames(studies))
+  study_names <- gsub(sprintf("r_%s\\[(.*)\\]", re_name[1]), "\\1", colnames(studies))
   # replace dots by white space
   study_names <- gsub(".", " ", study_names, fixed = TRUE)
   # remove "Intercept"
-  study_names <- trimws(gsub("Intercept", "", study_names, fixed = TRUE))
+  study_names <- trimws(gsub(",Intercept", "", study_names, fixed = TRUE))
 
   cleaned_parameters <- c(study_names, "Overall", "tau")
 
