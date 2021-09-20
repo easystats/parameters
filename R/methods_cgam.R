@@ -64,6 +64,7 @@ model_parameters.cgam <- function(model,
         p_adjust = p_adjust,
         keep_parameters = keep,
         drop_parameters = drop,
+        ...
       )
   }
 

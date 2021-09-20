@@ -49,12 +49,7 @@ p_value_satterthwaite.lmerMod <- function(model, dof = NULL) {
 
 
 #' @export
-p_value_satterthwaite.lme <- function(model, dof = NULL) {
-  if (is.null(dof)) {
-    dof <- dof_satterthwaite(model)
-  }
-  .p_value_dof(model, dof, method = "satterthwaite")
-}
+p_value_satterthwaite.lme <- p_value_satterthwaite.lmerMod
 
 #' @export
-p_value_satterthwaite.gls <- p_value_satterthwaite.lme
+p_value_satterthwaite.gls <- p_value_satterthwaite.lmerMod

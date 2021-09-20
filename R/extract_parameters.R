@@ -9,7 +9,7 @@
                                         standardize = NULL,
                                         effects = "fixed",
                                         robust = FALSE,
-                                        df_method = NULL,
+                                        ci_method = NULL,
                                         p_adjust = NULL,
                                         wb_component = FALSE,
                                         verbose = TRUE,
@@ -67,8 +67,8 @@
 
   # ==== check Degrees of freedom
 
-  if (!.dof_method_ok(model, df_method)) {
-    df_method <- NULL
+  if (!.dof_method_ok(model, ci_method, type = "ci_method")) {
+    ci_method <- NULL
   }
 
 
@@ -102,14 +102,14 @@
         verbose = verbose,
         ...
       ))
-    } else if (!is.null(df_method)) {
+    } else if (!is.null(ci_method)) {
       ci_df <- suppressMessages(
         ci(
           model,
           ci = ci,
           effects = effects,
           component = component,
-          method = df_method,
+          method = ci_method,
           verbose = verbose
         )
       )
@@ -138,12 +138,12 @@
 
   if (isTRUE(robust)) {
     pval <- p_value_robust(model, component = component, ...)
-  } else if (!is.null(df_method)) {
+  } else if (!is.null(ci_method)) {
     pval <- p_value(
       model,
       effects = effects,
       component = component,
-      method = df_method,
+      method = ci_method,
       verbose = verbose
     )
   } else {
@@ -165,12 +165,12 @@
 
   if (isTRUE(robust)) {
     std_err <- standard_error_robust(model, component = component, ...)
-  } else if (!is.null(df_method)) {
+  } else if (!is.null(ci_method)) {
     std_err <- standard_error(
       model,
       effects = effects,
       component = component,
-      method = df_method,
+      method = ci_method,
       verbose = verbose
     )
   } else {
@@ -196,8 +196,8 @@
 
 
   # ==== degrees of freedom
-  if (!is.null(df_method)) {
-    df_error <- degrees_of_freedom(model, method = df_method)
+  if (!is.null(ci_method)) {
+    df_error <- degrees_of_freedom(model, method = ci_method)
   } else {
     df_error <- degrees_of_freedom(model, method = "any")
   }

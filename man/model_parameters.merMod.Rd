@@ -34,7 +34,7 @@
   group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
@@ -42,6 +42,7 @@
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -139,21 +140,6 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{df_method}{Method for computing degrees of freedom for p values,
-standard errors and confidence intervals (CI). By default (\code{NULL}),
-returns residual degrees of freedom for linear mixed models, or \code{Inf}
-for all other distributional families. May be \code{"wald"},
-\code{"residual"} (for both see \code{\link[=degrees_of_freedom]{degrees_of_freedom()}}),
-\code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"} (see \code{\link[=dof_betwithin]{dof_betwithin()}}),
-\code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}) or \code{"kenward"} (see
-\code{\link[=dof_kenward]{dof_kenward()}}). The options \code{"boot"}, \code{"profile"} and \code{"uniroot"} only
-affect confidence intervals; in this case, bootstrapped resp. profiled
-confidence intervals are computed. \code{"uniroot"} only applies to models of
-class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{df_method = "wald"},
-residual degrees of freedom are returned. Note that when \code{df_method} is
-not \code{NULL}, \code{"wald"} or \code{"residual"}, robust standard errors etc. cannot
-be computed.}
-
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
@@ -169,6 +155,21 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
 (default). May be abbreviated.}
+
+\item{ci_method}{Method for computing degrees of freedom for p values,
+standard errors and confidence intervals (CI). By default (\code{NULL}),
+returns residual degrees of freedom for linear mixed models, or \code{Inf}
+for all other distributional families. May be \code{"wald"},
+\code{"residual"} (for both see \code{\link[=degrees_of_freedom]{degrees_of_freedom()}}),
+\code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"} (see \code{\link[=dof_betwithin]{dof_betwithin()}}),
+\code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}) or \code{"kenward"} (see
+\code{\link[=dof_kenward]{dof_kenward()}}). The options \code{"boot"}, \code{"profile"} and \code{"uniroot"} only
+affect confidence intervals; in this case, bootstrapped resp. profiled
+confidence intervals are computed. \code{"uniroot"} only applies to models of
+class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{ci_method = "wald"},
+residual degrees of freedom are returned. Note that when \code{ci_method} is
+not \code{NULL}, \code{"wald"} or \code{"residual"}, robust standard errors etc. cannot
+be computed.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column

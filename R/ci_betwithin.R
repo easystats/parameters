@@ -1,13 +1,14 @@
 #' @rdname p_value_betwithin
 #' @export
 ci_betwithin <- function(model, ci = .95) {
+  df_bet <- dof_ml1(model)
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
       effects = "fixed",
       component = "all",
-      dof = Inf,
+      dof = df_bet,
       method = "betwithin"
     )
   })

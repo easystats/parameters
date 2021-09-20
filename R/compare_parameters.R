@@ -13,7 +13,7 @@
 #'   documentation for related model class in [model_parameters()].
 #' @param column_names Character vector with strings that should be used as
 #'   column headers. Must be of same length as number of models in `...`.
-#' @param df_method Method for computing degrees of freedom for p values,
+#' @param ci_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). See documentation for
 #'   related model class in [model_parameters()].
 #' @param style String, indicating which style of output is requested. Following

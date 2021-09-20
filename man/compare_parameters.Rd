@@ -80,10 +80,6 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{df_method}{Method for computing degrees of freedom for p values,
-standard errors and confidence intervals (CI). See documentation for
-related model class in \code{\link[=model_parameters]{model_parameters()}}.}
-
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
@@ -147,6 +143,10 @@ names.}
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{ci_method}{Method for computing degrees of freedom for p values,
+standard errors and confidence intervals (CI). See documentation for
+related model class in \code{\link[=model_parameters]{model_parameters()}}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

@@ -61,7 +61,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), or both (`"all"`) be returned? Only applies
 #'   to mixed models. May be abbreviated.
-#' @param df_method Method for computing degrees of freedom for p values,
+#' @param ci_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). By default (`NULL`),
 #'   returns residual degrees of freedom for linear mixed models, or `Inf`
 #'   for all other distributional families. May be `"wald"`,
@@ -71,8 +71,8 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   [dof_kenward()]). The options `"boot"`, `"profile"` and `"uniroot"` only
 #'   affect confidence intervals; in this case, bootstrapped resp. profiled
 #'   confidence intervals are computed. `"uniroot"` only applies to models of
-#'   class `glmmTMB`. For models of class `lmerMod`, when `df_method = "wald"`,
-#'   residual degrees of freedom are returned. Note that when `df_method` is
+#'   class `glmmTMB`. For models of class `lmerMod`, when `ci_method = "wald"`,
+#'   residual degrees of freedom are returned. Note that when `ci_method` is
 #'   not `NULL`, `"wald"` or `"residual"`, robust standard errors etc. cannot
 #'   be computed.
 #' @param wb_component Logical, if `TRUE` and models contains within- and

@@ -207,7 +207,7 @@ parameters <- model_parameters
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,
 #'   `"sidak"` and `"none"` to explicitly disable adjustment for
 #'   `emmGrid` objects (from \pkg{emmeans}).
-#' @param df_method Method for computing degrees of freedom for confidence
+#' @param ci_method Method for computing degrees of freedom for confidence
 #'   intervals (CI). Only applies to models of class `glm` or `polr`.
 #'   May be `"profile"` or `"wald"`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
@@ -331,13 +331,20 @@ model_parameters.default <- function(model,
                                       effects = "fixed",
                                       component = "conditional",
                                       robust = FALSE,
-                                      df_method = NULL,
+                                      ci_method = NULL,
                                       p_adjust = NULL,
                                       summary = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       verbose = TRUE,
+                                      df_method = ci_method,
                                       ...) {
+
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use ' ci_method' instead."))
+    ci_method <- df_method
+  }
 
   # to avoid "match multiple argument error", check if "component" was
   # already used as argument and passed via "...".
@@ -361,7 +368,7 @@ model_parameters.default <- function(model,
       standardize = standardize,
       effects = effects,
       robust = robust,
-      df_method = df_method,
+      ci_method = ci_method,
       p_adjust = p_adjust,
       keep_parameters = keep_parameters,
       drop_parameters = drop_parameters,

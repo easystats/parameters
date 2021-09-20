@@ -21,7 +21,7 @@ ci_wald <- function(model,
   effects <- match.arg(effects)
   component <- match.arg(component)
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
       dof = dof,
@@ -39,15 +39,15 @@ ci_wald <- function(model,
 
 
 #' @keywords internal
-.ci_wald <- function(model,
-                     ci,
-                     dof,
-                     effects,
-                     component,
-                     robust = FALSE,
-                     method = "wald",
-                     se = NULL,
-                     ...) {
+.ci_dof <- function(model,
+                    ci,
+                    dof,
+                    effects,
+                    component,
+                    robust = FALSE,
+                    method = "wald",
+                    se = NULL,
+                    ...) {
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
