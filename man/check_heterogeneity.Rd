@@ -22,6 +22,10 @@ argument will be ignored.}
 cause a heterogeneity bias, i.e. if variables have a within- and/or
 between-effect.
 }
+\note{
+Ths function will be removed in a future update. Please use
+\code{performance::check_heterogeneity_bias()}.
+}
 \examples{
 data(iris)
 iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
