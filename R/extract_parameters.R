@@ -445,20 +445,6 @@
                                       drop_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
-  # check if standardization is required and package available
-  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
-    if (verbose) {
-      warning("Package 'effectsize' required to calculate standardized coefficients. Please install it.", call. = FALSE)
-    }
-    standardize <- NULL
-  }
-
-  # for refit, we completely refit the model, than extract parameters,
-  # ci etc. as usual - therefor, we set "standardize" to NULL
-  if (!is.null(standardize) && standardize == "refit") {
-    model <- effectsize::standardize(model, verbose = FALSE)
-    standardize <- NULL
-  }
 
   special_df_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
