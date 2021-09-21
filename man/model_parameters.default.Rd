@@ -28,7 +28,7 @@
 \method{model_parameters}{glm}(
   model,
   ci = 0.95,
-  df_method = "profile",
+  ci_method = "profile",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -37,6 +37,7 @@
   p_adjust = NULL,
   summary = FALSE,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -165,15 +166,17 @@ names.}
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
 are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI). Only applies to models of class \code{glm} or
+\code{polr}. May be \code{"profile"} or \code{"wald"}.}
+
+\item{df_method}{Deprecated. Please use \code{ci_method}.}
+
 \item{component}{Model component for which parameters should be shown. May be
 one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
 \code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
 \code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
-
-\item{ci_method}{Method for computing degrees of freedom for confidence
-intervals (CI). Only applies to models of class \code{glm} or \code{polr}.
-May be \code{"profile"} or \code{"wald"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

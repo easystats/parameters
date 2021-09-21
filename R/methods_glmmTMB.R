@@ -29,7 +29,7 @@ model_parameters.glmmTMB <- function(model,
 
   ## TODO remove later
   if (!missing(df_method)) {
-    message(insight::format_message("Argument 'df_method' is deprecated. Please use ' ci_method' instead."))
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
     ci_method <- df_method
   }
 
@@ -115,7 +115,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, df_method = df_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method)
   }
 
 
