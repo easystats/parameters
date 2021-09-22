@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (require("insight") && require("testthat") && require("lme4") && require("parameters")) {
+  if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
     if (requireNamespace("effectsize")) {
       unloadNamespace("afex")
       unloadNamespace("lmerTest")

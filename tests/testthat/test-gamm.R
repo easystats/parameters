@@ -1,6 +1,6 @@
-if (require("testthat") &&
-  require("parameters") &&
-  suppressPackageStartupMessages(require("mgcv", quietly = TRUE))) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("mgcv")) {
   set.seed(123)
   dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
   m1 <-

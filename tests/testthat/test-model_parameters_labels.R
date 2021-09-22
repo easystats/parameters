@@ -1,4 +1,4 @@
-if (require("insight") && require("testthat") && require("parameters") && require("lme4")) {
+if (requiet("insight") && requiet("testthat") && requiet("parameters") && requiet("lme4")) {
   test_that("model_parameters_labels", {
     data(mtcars)
     mtcars$am <- as.factor(mtcars$am)

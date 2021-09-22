@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("lavaan")) {
+if (requiet("testthat") && requiet("parameters") && requiet("lavaan")) {
   model <- "
     # measurement model
       ind60 =~ x1 + x2 + x3

@@ -229,13 +229,20 @@ model_parameters.cpglmm <- function(model,
                                     effects = "all",
                                     group_level = FALSE,
                                     exponentiate = FALSE,
-                                    df_method = NULL,
+                                    ci_method = NULL,
                                     p_adjust = NULL,
                                     verbose = TRUE,
+                                    df_method = ci_method,
                                     ...) {
 
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    ci_method <- df_method
+  }
+
   # p-values, CI and se might be based on different df-methods
-  df_method <- .check_df_method(df_method)
+  ci_method <- .check_df_method(ci_method)
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   # standardize only works for fixed effects...
@@ -258,7 +265,7 @@ model_parameters.cpglmm <- function(model,
     robust = FALSE,
     p_adjust = p_adjust,
     group_level = group_level,
-    df_method = df_method,
+    ci_method = ci_method,
     ...
   )
 

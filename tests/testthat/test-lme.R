@@ -1,8 +1,8 @@
-if (require("testthat") &&
-  require("parameters") &&
-  require("nlme") &&
-  require("lme4") &&
-  require("insight")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("nlme") &&
+  requiet("lme4") &&
+  requiet("insight")) {
   data("sleepstudy")
   m1 <- nlme::lme(Reaction ~ Days,
     random = ~ 1 + Days | Subject,

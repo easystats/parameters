@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && getRversion() >= "3.6.0") {
+if (requiet("testthat") && requiet("parameters") && getRversion() >= "3.6.0") {
   set.seed(123)
   mod <- lm(formula = cbind(mpg, disp) ~ wt, data = mtcars)
   mp <- model_parameters(mod)

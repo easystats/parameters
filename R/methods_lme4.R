@@ -61,7 +61,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), or both (`"all"`) be returned? Only applies
 #'   to mixed models. May be abbreviated.
-#' @param df_method Method for computing degrees of freedom for p values,
+#' @param ci_method Method for computing degrees of freedom for p values,
 #'   standard errors and confidence intervals (CI). By default (`NULL`),
 #'   returns residual degrees of freedom for linear mixed models, or `Inf`
 #'   for all other distributional families. May be `"wald"`,
@@ -71,8 +71,8 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #'   [dof_kenward()]). The options `"boot"`, `"profile"` and `"uniroot"` only
 #'   affect confidence intervals; in this case, bootstrapped resp. profiled
 #'   confidence intervals are computed. `"uniroot"` only applies to models of
-#'   class `glmmTMB`. For models of class `lmerMod`, when `df_method = "wald"`,
-#'   residual degrees of freedom are returned. Note that when `df_method` is
+#'   class `glmmTMB`. For models of class `lmerMod`, when `ci_method = "wald"`,
+#'   residual degrees of freedom are returned. Note that when `ci_method` is
 #'   not `NULL`, `"wald"` or `"residual"`, robust standard errors etc. cannot
 #'   be computed.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
@@ -85,9 +85,9 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @inheritParams model_parameters.stanreg
 #'
 #' @section Confidence intervals for random effect variances:
-#' When `df_method = "profile"` and `effects` is either `"random"` or `"all"`,
+#' When `ci_method = "profile"` and `effects` is either `"random"` or `"all"`,
 #' profiled confidence intervals are computed for the random effects. For all
-#' other options of `df_method`, confidence intervals for random effects will
+#' other options of `ci_method`, confidence intervals for random effects will
 #' be missing.
 #'
 #' @seealso [insight::standardize_names()] to
@@ -124,7 +124,7 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 model_parameters.merMod <- function(model,
                                     ci = .95,
                                     bootstrap = FALSE,
-                                    df_method = NULL,
+                                    ci_method = NULL,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "all",
@@ -138,19 +138,26 @@ model_parameters.merMod <- function(model,
                                     drop = NULL,
                                     parameters = keep,
                                     verbose = TRUE,
+                                    df_method = ci_method,
                                     ...) {
 
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    ci_method <- df_method
+  }
+
   # set default
-  if (is.null(df_method)) {
-    df_method <- switch(insight::find_statistic(model),
+  if (is.null(ci_method)) {
+    ci_method <- switch(insight::find_statistic(model),
       "t-statistic" = "residual",
       "wald"
     )
   }
 
   # p-values, CI and se might be based of wald, or KR
-  df_method <- tolower(df_method)
-  df_method <- match.arg(df_method, choices = c("wald", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
+  ci_method <- tolower(ci_method)
+  ci_method <- match.arg(ci_method, choices = c("wald", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
 
   # which component to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -198,7 +205,7 @@ model_parameters.merMod <- function(model,
       params <- .extract_parameters_mixed(
         model,
         ci = ci,
-        df_method = df_method,
+        ci_method = ci_method,
         robust = robust,
         standardize = standardize,
         p_adjust = p_adjust,
@@ -224,7 +231,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, df_method = df_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method)
   }
 
   # merge random and fixed effects, if necessary
@@ -258,7 +265,7 @@ model_parameters.merMod <- function(model,
     exponentiate,
     bootstrap,
     iterations,
-    df_method,
+    df_method = ci_method,
     p_adjust = p_adjust,
     verbose = verbose,
     summary = summary,
@@ -387,13 +394,8 @@ standard_error.merMod <- function(model,
     if (isTRUE(robust)) {
       standard_error_robust(model, ...)
     } else {
-      # ml1 approx
-      if (method == "ml1") {
-        se_ml1(model)
-      } else if (method == "betwithin") {
-        se_betwithin(model)
-        # Kenward approx
-      } else if (method %in% c("kenward", "kr")) {
+      # kenward approx
+      if (method %in% c("kenward", "kr")) {
         se_kenward(model)
       } else {
         # Classic and Satterthwaite SE

@@ -4,7 +4,7 @@ ci_kenward <- function(model, ci = .95) {
   .check_REML_fit(model)
   df_kr <- dof_kenward(model)
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
       dof = df_kr,
@@ -23,7 +23,7 @@ ci_kenward <- function(model, ci = .95) {
 
 .ci_kenward_dof <- function(model, ci = .95, df_kr) {
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
       dof = df_kr$df_error,

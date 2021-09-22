@@ -29,7 +29,7 @@ model_parameters.wbm <- function(model,
     robust = FALSE,
     p_adjust = p_adjust,
     group_level = group_level,
-    df_method = NULL,
+    ci_method = NULL,
     ...
   )
 
@@ -116,7 +116,7 @@ p_value.wbgee <- p_value.wbm
                                             robust,
                                             p_adjust,
                                             group_level,
-                                            df_method,
+                                            ci_method,
                                             ...) {
   params <- params_random <- params_variance <- att <- NULL
 
@@ -132,7 +132,7 @@ p_value.wbgee <- p_value.wbm
       effects = "fixed",
       robust = FALSE,
       p_adjust = p_adjust,
-      df_method = df_method,
+      ci_method = ci_method,
       ...
     )
     params$Effects <- "fixed"
@@ -144,7 +144,7 @@ p_value.wbgee <- p_value.wbm
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, df_method = df_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method)
   }
 
 

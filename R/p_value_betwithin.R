@@ -26,9 +26,8 @@
 #' using the residual or infinite degrees of freedom, because `dof_betwithin()`
 #' returns different degrees of freedom for within-cluster and between-cluster effects.
 #' }
-#' @seealso `dof_betwithin()` and `se_betwithin()` are small helper-functions
-#' to calculate approximated degrees of freedom and standard errors of model
-#' parameters, based on the "between-within" heuristic.
+#' @seealso `dof_betwithin()` is a small helper-function to calculate approximated
+#' degrees of freedom of model parameters, based on the "between-within" heuristic.
 #'
 #' @examples
 #' \donttest{

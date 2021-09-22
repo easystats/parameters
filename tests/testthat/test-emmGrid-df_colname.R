@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  require("testthat") &&
-  require("parameters") &&
-  require("emmeans") &&
-  require("lme4")) {
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("emmeans") &&
+  requiet("lme4")) {
   data(sleep)
   data(fiber)
 

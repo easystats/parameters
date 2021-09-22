@@ -17,6 +17,10 @@
 #' <https://easystats.github.io/parameters/articles/demean.html> and also
 #' see documentation for `?datawizard::demean`.
 #'
+#' @note
+#' Ths function will be removed in a future update. Please use
+#' `performance::check_heterogeneity_bias()`.
+#'
 #' @examples
 #' data(iris)
 #' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID

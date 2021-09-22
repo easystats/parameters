@@ -9,7 +9,7 @@
                                         standardize = NULL,
                                         effects = "fixed",
                                         robust = FALSE,
-                                        df_method = NULL,
+                                        ci_method = NULL,
                                         p_adjust = NULL,
                                         wb_component = FALSE,
                                         verbose = TRUE,
@@ -67,8 +67,8 @@
 
   # ==== check Degrees of freedom
 
-  if (!.dof_method_ok(model, df_method)) {
-    df_method <- NULL
+  if (!.dof_method_ok(model, ci_method, type = "ci_method")) {
+    ci_method <- NULL
   }
 
 
@@ -102,14 +102,14 @@
         verbose = verbose,
         ...
       ))
-    } else if (!is.null(df_method)) {
+    } else if (!is.null(ci_method)) {
       ci_df <- suppressMessages(
         ci(
           model,
           ci = ci,
           effects = effects,
           component = component,
-          method = df_method,
+          method = ci_method,
           verbose = verbose
         )
       )
@@ -138,12 +138,12 @@
 
   if (isTRUE(robust)) {
     pval <- p_value_robust(model, component = component, ...)
-  } else if (!is.null(df_method)) {
+  } else if (!is.null(ci_method)) {
     pval <- p_value(
       model,
       effects = effects,
       component = component,
-      method = df_method,
+      method = ci_method,
       verbose = verbose
     )
   } else {
@@ -165,12 +165,12 @@
 
   if (isTRUE(robust)) {
     std_err <- standard_error_robust(model, component = component, ...)
-  } else if (!is.null(df_method)) {
+  } else if (!is.null(ci_method)) {
     std_err <- standard_error(
       model,
       effects = effects,
       component = component,
-      method = df_method,
+      method = ci_method,
       verbose = verbose
     )
   } else {
@@ -196,8 +196,8 @@
 
 
   # ==== degrees of freedom
-  if (!is.null(df_method)) {
-    df_error <- degrees_of_freedom(model, method = df_method)
+  if (!is.null(ci_method)) {
+    df_error <- degrees_of_freedom(model, method = ci_method)
   } else {
     df_error <- degrees_of_freedom(model, method = "any")
   }
@@ -436,7 +436,7 @@
 #' @keywords internal
 .extract_parameters_mixed <- function(model,
                                       ci = .95,
-                                      df_method = "wald",
+                                      ci_method = "wald",
                                       standardize = NULL,
                                       robust = FALSE,
                                       p_adjust = NULL,
@@ -446,7 +446,7 @@
                                       verbose = TRUE,
                                       ...) {
 
-  special_df_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
+  special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
   # get parameters and statistic
   parameters <- insight::get_parameters(model, effects = "fixed", component = "all", verbose = FALSE)
@@ -466,8 +466,8 @@
 
 
   # Degrees of freedom
-  if (.dof_method_ok(model, df_method)) {
-    df <- degrees_of_freedom(model, df_method)
+  if (.dof_method_ok(model, ci_method)) {
+    df <- degrees_of_freedom(model, method = ci_method)
   } else {
     df <- Inf
   }
@@ -489,11 +489,11 @@
   if (!is.null(ci)) {
     if (isTRUE(robust)) {
       ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
-    } else if (df_method %in% c("kenward", "kr")) {
+    } else if (ci_method %in% c("kenward", "kr")) {
       # special handling for KR-CIs, where we already have computed SE
       ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
     } else {
-      ci_df <- ci(model, ci = ci, method = df_method, effects = "fixed")
+      ci_df <- ci(model, ci = ci, method = ci_method, effects = "fixed")
     }
     if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
@@ -513,7 +513,7 @@
       se_kr$df_error <- NULL
       parameters <- merge(parameters, se_kr, by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, standard_error(model, method = df_method, effects = "fixed"), by = "Parameter", sort = FALSE)
+      parameters <- merge(parameters, standard_error(model, method = ci_method, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
   }
 
@@ -524,10 +524,10 @@
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
-    } else if (df_method %in% special_df_methods) {
+    } else if (ci_method %in% special_ci_methods) {
       # special handling for KR-p, which we already have computed from dof
       # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
-      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = df_method, se = df_error$SE), by = "Parameter", sort = FALSE)
+      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE), by = "Parameter", sort = FALSE)
     } else {
       parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter", sort = FALSE)
     }
@@ -535,7 +535,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (isFALSE(robust) && df_method %in% special_df_methods) {
+  if (isFALSE(robust) && ci_method %in% special_ci_methods) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
@@ -544,7 +544,7 @@
 
   # dof
   if (!"df" %in% names(parameters)) {
-    if (!df_method %in% special_df_methods) {
+    if (!ci_method %in% special_ci_methods) {
       df_error <- data.frame(
         Parameter = parameters$Parameter,
         df_error = degrees_of_freedom(model, method = "any"),

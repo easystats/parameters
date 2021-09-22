@@ -197,7 +197,7 @@ dof <- degrees_of_freedom
 
 # Helper, check args ------------------------------
 
-.dof_method_ok <- function(model, method) {
+.dof_method_ok <- function(model, method, type = "df_method") {
   if (is.null(method)) {
     return(TRUE)
   }
@@ -207,7 +207,7 @@ dof <- degrees_of_freedom
     if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr", "likelihood")) {
       return(TRUE)
     } else {
-      warning(insight::format_message("'df_method' must be one of 'wald' or 'profile'. Using 'wald' now."), call. = FALSE)
+      warning(insight::format_message(sprintf("'%s' must be one of 'wald' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
       return(FALSE)
     }
   }
@@ -218,7 +218,7 @@ dof <- degrees_of_freedom
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual"))) {
-    warning(insight::format_message("'df_method' must be one of 'residual', 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now."), call. = FALSE)
+    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
     return(FALSE)
   }
 

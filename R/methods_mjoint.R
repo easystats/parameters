@@ -4,7 +4,6 @@ model_parameters.mjoint <- function(model,
                                     effects = "fixed",
                                     component = c("all", "conditional", "survival"),
                                     exponentiate = FALSE,
-                                    df_method = NULL,
                                     p_adjust = NULL,
                                     keep = NULL,
                                     drop = NULL,
@@ -24,7 +23,6 @@ model_parameters.mjoint <- function(model,
       component = component,
       standardize = FALSE,
       robust = FALSE,
-      df_method = NULL,
       p_adjust = p_adjust,
       keep_parameters = keep,
       drop_parameters = drop,
@@ -38,7 +36,7 @@ model_parameters.mjoint <- function(model,
   }
 
   if (effects %in% c("random", "all")) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, df_method = df_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = NULL)
     params_variance$Component <- "conditional"
   }
 

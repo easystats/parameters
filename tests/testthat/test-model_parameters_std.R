@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (require("testthat") &&
-    require("parameters") &&
-    require("effectsize") &&
-    require("insight")) {
+  if (requiet("testthat") &&
+    requiet("parameters") &&
+    requiet("effectsize") &&
+    requiet("insight")) {
     data(mtcars)
     mtcars$am <- as.factor(mtcars$am)
     model <- lm(mpg ~ wt * am, data = mtcars)

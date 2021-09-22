@@ -12,14 +12,15 @@ compare_parameters(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = "wald",
+  ci_method = "wald",
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
   keep = NULL,
   drop = NULL,
   parameters = keep,
-  verbose = TRUE
+  verbose = TRUE,
+  df_method = ci_method
 )
 
 compare_models(
@@ -29,14 +30,15 @@ compare_models(
   component = "conditional",
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = "wald",
+  ci_method = "wald",
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
   keep = NULL,
   drop = NULL,
   parameters = keep,
-  verbose = TRUE
+  verbose = TRUE,
+  df_method = ci_method
 )
 }
 \arguments{
@@ -84,7 +86,7 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{df_method}{Method for computing degrees of freedom for p values,
+\item{ci_method}{Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). See documentation for
 related model class in \code{\link[=model_parameters]{model_parameters()}}.}
 
@@ -151,6 +153,8 @@ names.}
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{df_method}{Deprecated. Please use \code{ci_method}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

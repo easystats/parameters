@@ -8,7 +8,7 @@
                                               ci = .95,
                                               effects = "random",
                                               component = "conditional",
-                                              df_method = NULL,
+                                              ci_method = NULL,
                                               ...) {
   suppressWarnings(
     .extract_random_variances_helper(
@@ -16,7 +16,7 @@
       ci = ci,
       effects = effects,
       component = component,
-      df_method = df_method,
+      ci_method = ci_method,
       ...
     )
   )
@@ -32,7 +32,7 @@
                                               ci = .95,
                                               effects = "random",
                                               component = "all",
-                                              df_method = NULL,
+                                              ci_method = NULL,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
 
@@ -42,7 +42,7 @@
       ci = ci,
       effects = effects,
       component = "conditional",
-      df_method = df_method,
+      ci_method = ci_method,
       ...
     )
   )
@@ -55,7 +55,7 @@
         ci = ci,
         effects = effects,
         component = "zi",
-        df_method = df_method,
+        ci_method = ci_method,
         ...
       )
     )
@@ -88,7 +88,7 @@
                                              ci = .95,
                                              effects = "random",
                                              component = "conditional",
-                                             df_method = NULL, ...) {
+                                             ci_method = NULL, ...) {
   ran_intercept <- tryCatch(
     {
       data.frame(
@@ -220,7 +220,7 @@
   out[ci_cols] <- NA
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(df_method) && df_method == "profile") {
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(ci_method) && ci_method == "profile") {
     var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = "profile", level = ci)))
     colnames(var_ci) <- c("CI_low", "CI_high")
 

@@ -76,7 +76,7 @@ if (require("testthat") &&
     expect_equal(params$CI_high, c(0, 0.85424, 0.42299, 0.4659, 2.01759, -0.18572, -0.00492), tolerance = 1e-3)
   })
 
-  if (require("clubSandwich")) {
+  if (requiet("clubSandwich")) {
     test_that("model_parameters, standardize-refit robust", {
       skip_on_cran()
       params <- model_parameters(model, standardize = "refit", effects = "fixed", robust = TRUE, vcov_estimation = "CR", vcov_type = "CR1", vcov_args = list(cluster = iris$grp), verbose = FALSE)

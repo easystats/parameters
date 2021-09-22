@@ -63,10 +63,6 @@ standard_error.default <- function(model, method = NULL, verbose = TRUE, ...) {
 
   if (method == "robust") {
     standard_error_robust(model, ...)
-  } else if (method == "ml1") {
-    se_ml1(model)
-  } else if (method == "betwithin") {
-    se_betwithin(model)
   } else {
     se <- tryCatch(
       {

@@ -1,11 +1,12 @@
 #' @rdname p_value_satterthwaite
 #' @export
 ci_satterthwaite <- function(model, ci = .95) {
+  df_satter <- dof_satterthwaite(model)
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
-      dof = dof_satterthwaite(model),
+      dof = df_satter,
       effects = "fixed",
       component = "all",
       method = "satterthwaite"
