@@ -246,7 +246,7 @@ model_parameters.cpglmm <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   # standardize only works for fixed effects...
-  if (!is.null(standardize)) {
+  if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
       warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
     }

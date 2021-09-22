@@ -45,74 +45,18 @@
 #'   [`print_md()`][print_md.parameters_model].
 #'
 #' @details
-#' \subsection{Standardization of model coefficients}{
-#'   Standardization is based on [effectsize::standardize_parameters()].
-#'   In case of `standardize = "refit"`, the data used to fit the model
-#'   will be standardized and the model is completely refitted. In such cases,
-#'   standard errors and confidence intervals refer to the standardized
-#'   coefficient. The default, `standardize = "refit"`, never standardizes
-#'   categorical predictors (i.e. factors), which may be a different behaviour
-#'   compared to other R packages or other software packages (like SPSS).
-#'   To mimic behaviour of SPSS or packages such as \pkg{lm.beta}, use
-#'   `standardize = "basic"`.
-#'   }
-#' \subsection{Methods of standardization}{
-#'   For full details, please refer to [effectsize::standardize_parameters()].
-#'   \describe{
-#'     \item{**refit**}{
-#'       This method is based on a complete model re-fit with a standardized version
-#'       of the data. Hence, this method is equal to standardizing the variables
-#'       before fitting the model. It is the "purest" and the most accurate
-#'       (Neter et al., 1989), but it is also the most computationally costly and
-#'       long (especially for heavy models such as Bayesian models).The
-#'       `robust` argument (default to `FALSE`) enables a robust standardization
-#'       of data, i.e., based on the `median` and `MAD` instead of the
-#'       `mean` and `SD`.
-#'     }
-#'     \item{**posthoc**}{
-#'       Post-hoc standardization of the parameters, aiming at emulating the
-#'       results obtained by `"refit"` without refitting the model. The coefficients
-#'       are divided by the standard deviation (or MAD if `robust=TRUE`) of
-#'       the outcome (which becomes their expression 'unit'). Then, the coefficients
-#'       related to numeric variables are additionally multiplied by the standard
-#'       deviation (or MAD) of the related terms, so that they correspond to
-#'       changes of 1 SD of the predictor. This does not apply to binary
-#'       variables or factors, so the coefficients are still related to changes in
-#'       levels. This method is not accurate and tend to give aberrant results when
-#'       interactions are specified.
-#'     }
-#'     \item{**smart**}{
-#'       (Standardization of Model's parameters with Adjustment, Reconnaissance
-#'       and Transformation - *experimental*): Similar to `method="posthoc"`
-#'       in that it does not involve model refitting. The difference is that the
-#'       SD (or MAD) of the response is computed on the relevant section of the
-#'       data. For instance, if a factor with 3 levels A (the intercept), B and C
-#'       is entered as a predictor, the effect corresponding to B vs. A will be
-#'       scaled by the variance of the response at the intercept only. As a results,
-#'       the coefficients for effects of factors are similar to a Glass' delta.
-#'     }
-#'     \item{**basic**}{
-#'       This method is similar to `method="posthoc"`, but treats all
-#'       variables as continuous: it also scales the coefficient by the standard
-#'       deviation of model's matrix' parameter of factors levels (transformed to
-#'       integers) or binary predictors. Although being inappropriate for these cases,
-#'       this method is the one implemented by default in other software packages,
-#'       such as `lm.beta::lm.beta()`.
-#'     }
-#'     \item{**pseudo** (*for 2-level (G)LMMs only*)}{
-#'       In this (post-hoc) method, the response and the predictor are standardized
-#'       based on the level of prediction:
-#'       Predictors are standardized based on their SD at level of prediction
-#'       (see also `datawizard::demean()`). The outcome (in linear LMMs) is
-#'       standardized based on a fitted random-intercept-model, where
-#'       `sqrt(random-intercept-variance)` is used for level 2 predictors,
-#'       and `sqrt(residual-variance)` is used for level 1 predictors
-#'       (Hoffman 2015, page 342). A warning is given when a within-group variable
-#'       is found to have access between-group variance.
-#'     }
-#'   }
-#' }
+#' ## Standardization of model coefficients:
+#' Standardization is based on [effectsize::standardize_parameters()]. In case
+#' of `standardize = "refit"`, the data used to fit the model will be
+#' standardized and the model is completely refitted. In such cases, standard
+#' errors and confidence intervals refer to the standardized coefficient. The
+#' default, `standardize = "refit"`, never standardizes categorical predictors
+#' (i.e. factors), which may be a different behaviour compared to other R
+#' packages or other software packages (like SPSS). To mimic behaviour of SPSS
+#' or packages such as \pkg{lm.beta}, use `standardize = "basic"`.
 #'
+#' @inheritSection effectsize::standardize_parameters Standardization Methods:
+
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
 #' degrees of freedom *df_error*. The reason for this is that these degrees
@@ -168,17 +112,19 @@ parameters <- model_parameters
 #' @param iterations The number of bootstrap replicates. This only apply in the
 #'   case of bootstrapped frequentist models.
 #' @param standardize The method used for standardizing the parameters. Can be
-#'   `"refit"`, `"posthoc"`, `"smart"`, `"basic"`,
-#'   `"pseudo"` or `NULL` (default) for no standardization. See
-#'   'Details' in [effectsize::standardize_parameters()].
-#'   **Important:** Categorical predictors (i.e. factors) are *never*
-#'   standardized by default, which may be a different behaviour compared to
-#'   other R packages or other software packages (like SPSS). If standardizing
-#'   categorical predictors is desired, either use `standardize="basic"`
-#'   to mimic behaviour of SPSS or packages such as \pkg{lm.beta}, or standardize
-#'   the data with `effectsize::standardize(force=TRUE)` before fitting
-#'   the model. Robust estimation (i.e. `robust=TRUE`) of standardized
-#'   parameters only works when `standardize="refit"`.
+#'   `NULL` (default; no standardization), `"refit"` (for re-fitting the model
+#'   on standardized data) or one of `"basic"`, `"posthoc"`, `"smart"`,
+#'   `"pseudo"`. See 'Details' in [effectsize::standardize_parameters()].
+#'   **Important:**
+#'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
+#'   factors), which may be a different behaviour compared to other R packages
+#'   (such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+#'   such behaviours, either use `standardize="basic"` or standardize the data
+#'   with `effectsize::standardize(force=TRUE)` *before* fitting the model.
+#'   - For mixed models, when using methods other than `"refit"`, only the fixed
+#'   effects will be returned.
+#'   - Robust estimation (i.e. `robust=TRUE`) of standardized parameters only
+#'   works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log
