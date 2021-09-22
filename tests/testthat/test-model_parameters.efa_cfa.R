@@ -8,12 +8,12 @@ linux <- tryCatch({
 })
 
 
-if (require("testthat") &&
-  require("parameters") &&
-  require("psych") &&
-  suppressPackageStartupMessages(require("lavaan", quietly = TRUE)) &&
-  suppressPackageStartupMessages(require("BayesFM", quietly = TRUE)) &&
-  require("FactoMineR")) {
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("psych") &&
+  requiet("lavaan") &&
+  requiet("BayesFM") &&
+  requiet("FactoMineR")) {
   test_that("principal_components", {
     set.seed(333)
 

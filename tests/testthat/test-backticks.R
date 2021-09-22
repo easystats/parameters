@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (require("testthat") && require("parameters")) {
+  if (requiet("testthat") && requiet("parameters")) {
     data(iris)
     iris$`a m` <<- iris$Species
     iris$`Sepal Width` <<- iris$Sepal.Width

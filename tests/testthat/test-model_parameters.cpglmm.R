@@ -1,4 +1,4 @@
-if (require("testthat") && require("insight") && require("parameters") && require("cplm")) {
+if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("cplm")) {
   data("FineRoot")
   model <- cpglmm(RLD ~ Stock + Spacing + (1 | Plant), data = FineRoot)
 

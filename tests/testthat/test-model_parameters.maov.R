@@ -1,4 +1,4 @@
-if (require("insight") && require("testthat") && require("parameters")) {
+if (requiet("insight") && requiet("testthat") && requiet("parameters")) {
   fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
   m <- aov(fit)
   mp <- model_parameters(m)

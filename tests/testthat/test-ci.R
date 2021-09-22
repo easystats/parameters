@@ -1,4 +1,4 @@
-if (require("testthat") && require("lme4") && require("parameters")) {
+if (requiet("testthat") && requiet("lme4") && requiet("parameters")) {
   data(mtcars)
   test_that("ci", {
     model <- lm(mpg ~ wt, data = mtcars)

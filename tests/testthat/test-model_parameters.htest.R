@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("effectsize") && utils::packageVersion("effectsize") > "0.4.5") {
+if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.4.5") {
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
     expect_equal(

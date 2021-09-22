@@ -1,13 +1,14 @@
 #' @rdname p_value_ml1
 #' @export
 ci_ml1 <- function(model, ci = .95) {
+  df_ml1 <- dof_ml1(model)
   out <- lapply(ci, function(i) {
-    .ci_wald(
+    .ci_dof(
       model = model,
       ci = i,
       effects = "fixed",
       component = "all",
-      dof = Inf,
+      dof = df_ml1,
       method = "ml1"
     )
   })

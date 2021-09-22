@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   set.seed(123)
   data(mtcars)
   model <-

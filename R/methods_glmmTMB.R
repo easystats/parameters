@@ -16,7 +16,7 @@ model_parameters.glmmTMB <- function(model,
                                      group_level = FALSE,
                                      standardize = NULL,
                                      exponentiate = FALSE,
-                                     df_method = NULL,
+                                     ci_method = NULL,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = FALSE,
@@ -24,9 +24,17 @@ model_parameters.glmmTMB <- function(model,
                                      drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
+                                     df_method = ci_method,
                                      ...) {
+
+  ## TODO remove later
+  if (!missing(df_method)) {
+    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    ci_method <- df_method
+  }
+
   # p-values, CI and se might be based on different df-methods
-  df_method <- .check_df_method(df_method)
+  ci_method <- .check_df_method(df_method, type = "ci_method")
 
   # which components to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -73,7 +81,7 @@ model_parameters.glmmTMB <- function(model,
         component = component,
         standardize = standardize,
         robust = FALSE,
-        df_method = df_method,
+        ci_method = ci_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
         keep_parameters = NULL,
@@ -107,7 +115,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, df_method = df_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method)
   }
 
 

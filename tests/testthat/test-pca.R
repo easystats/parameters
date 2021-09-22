@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("psych") && require("nFactors")) {
+if (requiet("testthat") && requiet("parameters") && requiet("psych") && requiet("nFactors")) {
   test_that("principal_components", {
     x <- parameters::principal_components(mtcars[, 1:7], rotation = "varimax")
 

@@ -1,7 +1,7 @@
-if (require("testthat") &&
-  require("parameters") &&
-  suppressPackageStartupMessages(require("BayesFactor", quietly = TRUE)) &&
-  require("logspline") &&
+if (requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("BayesFactor") &&
+  requiet("logspline") &&
   getRversion() >= "3.6") {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 

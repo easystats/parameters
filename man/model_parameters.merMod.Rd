@@ -18,9 +18,10 @@
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -34,7 +35,7 @@
   group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
@@ -42,6 +43,7 @@
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -49,7 +51,7 @@
   model,
   ci = 0.95,
   bootstrap = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
@@ -63,6 +65,7 @@
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 
@@ -87,9 +90,10 @@
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  df_method = NULL,
+  ci_method = NULL,
   p_adjust = NULL,
   verbose = TRUE,
+  df_method = ci_method,
   ...
 )
 }
@@ -143,7 +147,7 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{df_method}{Method for computing degrees of freedom for p values,
+\item{ci_method}{Method for computing degrees of freedom for p values,
 standard errors and confidence intervals (CI). By default (\code{NULL}),
 returns residual degrees of freedom for linear mixed models, or \code{Inf}
 for all other distributional families. May be \code{"wald"},
@@ -153,8 +157,8 @@ for all other distributional families. May be \code{"wald"},
 \code{\link[=dof_kenward]{dof_kenward()}}). The options \code{"boot"}, \code{"profile"} and \code{"uniroot"} only
 affect confidence intervals; in this case, bootstrapped resp. profiled
 confidence intervals are computed. \code{"uniroot"} only applies to models of
-class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{df_method = "wald"},
-residual degrees of freedom are returned. Note that when \code{df_method} is
+class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{ci_method = "wald"},
+residual degrees of freedom are returned. Note that when \code{ci_method} is
 not \code{NULL}, \code{"wald"} or \code{"residual"}, robust standard errors etc. cannot
 be computed.}
 
@@ -165,6 +169,8 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{emmGrid} objects (from \pkg{emmeans}).}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{df_method}{Deprecated. Please use \code{ci_method}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -246,9 +252,9 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \section{Confidence intervals for random effect variances}{
 
-When \code{df_method = "profile"} and \code{effects} is either \code{"random"} or \code{"all"},
+When \code{ci_method = "profile"} and \code{effects} is either \code{"random"} or \code{"all"},
 profiled confidence intervals are computed for the random effects. For all
-other options of \code{df_method}, confidence intervals for random effects will
+other options of \code{ci_method}, confidence intervals for random effects will
 be missing.
 }
 

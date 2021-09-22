@@ -1,4 +1,4 @@
-if (require("insight") && require("effectsize") && require("testthat") && require("lme4") && require("parameters")) {
+if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
@@ -78,7 +78,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   # car anova ---------------------------------
 
-  if (require("car")) {
+  if (requiet("car")) {
     set.seed(123)
     data(Moore)
     model <-
@@ -131,7 +131,7 @@ if (require("insight") && require("effectsize") && require("testthat") && requir
 
   # stricter tests ---------------------------------------------------------
 
-  if (require("car") && require("gam")) {
+  if (requiet("car") && requiet("gam")) {
 
     # aov ------------------------------------------------
 

@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters")) {
+if (requiet("testthat") && requiet("parameters")) {
   data(iris)
   dat <- iris
   m <- lm(Sepal.Length ~ Species, data = dat)

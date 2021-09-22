@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("PMCMRplus")) {
+if (requiet("testthat") && requiet("parameters") && requiet("PMCMRplus")) {
   test_that("model_parameters.PMCMR", {
     set.seed(123)
     mod <- suppressWarnings(kwAllPairsConoverTest(count ~ spray, data = InsectSprays))

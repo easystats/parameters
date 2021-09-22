@@ -1,4 +1,4 @@
-if (require("testthat") && require("insight") && require("parameters") && require("metafor")) {
+if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("metafor")) {
   test <- data.frame(
     estimate = c(0.111, 0.245, 0.8, 1.1, 0.03),
     std.error = c(0.05, 0.111, 0.001, 0.2, 0.01)

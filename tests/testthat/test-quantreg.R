@@ -1,11 +1,11 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  require("testthat") &&
-  require("parameters") &&
-  require("tripack") &&
-  require("insight") &&
-  require("quantreg")) {
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("tripack") &&
+  requiet("insight") &&
+  requiet("quantreg")) {
 
   # rqss ---------
 
