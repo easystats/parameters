@@ -233,13 +233,13 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, degree, NA))
 
     # Splines
-  } else if (grepl("(bs|ns|psline|lspline|rcs)\\(", name)) {
+  } else if (grepl("(bs|ns|psline|lspline|rcs|mSpline)\\(", name)) {
     type <- "spline"
-    var <- gsub("(bs|ns|psline|lspline|rcs)\\((.*)\\)(\\d)", "\\2", name)
+    var <- gsub("(bs|ns|psline|lspline|rcs|mSpline)\\((.*)\\)(\\d)", "\\2", name)
     if (grepl(",", var, fixed = TRUE)) {
       var <- substr(var, start = 0, stop = regexpr(",", var, fixed = TRUE) - 1)
     }
-    degree <- gsub("(bs|ns|psline|lspline|rcs)\\((.*)\\)(\\d)", "\\3", name)
+    degree <- gsub("(bs|ns|psline|lspline|rcs|mSpline)\\((.*)\\)(\\d)", "\\3", name)
     return(c(type, "Association", name, var, degree, NA))
 
     # log-transformation
