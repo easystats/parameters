@@ -10,7 +10,6 @@
   range = "default",
   ci = 0.95,
   rule = "classic",
-  p_values = FALSE,
   verbose = TRUE,
   ...
 )
@@ -21,7 +20,6 @@
   ci = 0.95,
   rule = "classic",
   effects = c("fixed", "random"),
-  p_values = FALSE,
   verbose = TRUE,
   ...
 )
@@ -38,9 +36,6 @@ model's data.}
 \item{rule}{Character, indicating the rules when testing for practical
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
 'Details'.}
-
-\item{p_values}{Logical, if \code{TRUE}, adjusted p-values for equivalence
-testing are calculated.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -117,6 +112,12 @@ and internally a ci-level of 0.90 is used. \code{rule = "cet"} uses
 both regular and narrow confidence intervals, while \code{rule = "bayes"}
 only uses the regular intervals.
 }
+\subsection{p-Values}{
+The equivalence p-value is the area of the (cumulative) confidence
+distribution that is outside of the region of equivalence. It can be
+interpreted as p-value for \emph{rejecting} the alternative hypothesis
+and \emph{accepting} the null hypothesis.
+}
 \subsection{Second Generation p-Value (SGPV)}{
 Second generation p-values (SGPV) were proposed as a statistic
 that represents \dQuote{the proportion of data-supported hypotheses
@@ -125,21 +126,6 @@ is actually computed in the same way as the percentage inside the ROPE as
 returned by \code{equivalence_test()} (see \cite{Lakens and Delacre 2020}
 for details on computation of the SGPV). Thus, the \code{"inside ROPE"}
 column reflects the SGPV.
-}
-\subsection{Adjustment for multiple testing}{
-The calculation of p-values is somewhat "experimental". For parameters, where H0...
-\itemize{
-\item ... is rejected, the p-value equals a NHST as if the upper / lower
-boundary of the ROPE (see \code{range}) would be the point-null to test
-against.
-\item ... is accepted, the p-value is set to 1.
-\item ... is undecided, the p-value equals a NHST against the point-null,
-however, the "uncertainty" (i.e. ROPE range) is added to the confidence
-intervals (so the upper confidence interval limit equals the regular
-upper confidence interval limit + half the ROPE range).
-}
-All p-values are then adjusted for multiple testing (using
-\code{\link[stats:p.adjust]{stats::p.adjust()}} with \code{method = "fdr"}).
 }
 \subsection{ROPE range}{
 Some attention is required for finding suitable values for the ROPE limits

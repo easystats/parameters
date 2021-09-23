@@ -16,8 +16,6 @@ bayestestR::equivalence_test
 #' @param rule Character, indicating the rules when testing for practical
 #'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.
-#' @param p_values Logical, if `TRUE`, adjusted p-values for equivalence
-#'   testing are calculated.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
@@ -87,6 +85,12 @@ bayestestR::equivalence_test
 #'   both regular and narrow confidence intervals, while `rule = "bayes"`
 #'   only uses the regular intervals.
 #' }
+#' \subsection{p-Values}{
+#'   The equivalence p-value is the area of the (cumulative) confidence
+#'   distribution that is outside of the region of equivalence. It can be
+#'   interpreted as p-value for *rejecting* the alternative hypothesis
+#'   and *accepting* the null hypothesis.
+#' }
 #' \subsection{Second Generation p-Value (SGPV)}{
 #'   Second generation p-values (SGPV) were proposed as a statistic
 #'   that represents \dQuote{the proportion of data-supported hypotheses
@@ -95,21 +99,6 @@ bayestestR::equivalence_test
 #'   returned by `equivalence_test()` (see \cite{Lakens and Delacre 2020}
 #'   for details on computation of the SGPV). Thus, the `"inside ROPE"`
 #'   column reflects the SGPV.
-#' }
-#' \subsection{Adjustment for multiple testing}{
-#'   The calculation of p-values is somewhat "experimental". For parameters, where H0...
-#'   \itemize{
-#'     \item ... is rejected, the p-value equals a NHST as if the upper / lower
-#'     boundary of the ROPE (see `range`) would be the point-null to test
-#'     against.
-#'     \item ... is accepted, the p-value is set to 1.
-#'     \item ... is undecided, the p-value equals a NHST against the point-null,
-#'     however, the "uncertainty" (i.e. ROPE range) is added to the confidence
-#'     intervals (so the upper confidence interval limit equals the regular
-#'     upper confidence interval limit + half the ROPE range).
-#'   }
-#'   All p-values are then adjusted for multiple testing (using
-#'   [stats::p.adjust()] with `method = "fdr"`).
 #' }
 #' \subsection{ROPE range}{
 #'   Some attention is required for finding suitable values for the ROPE limits
@@ -171,11 +160,10 @@ equivalence_test.lm <- function(x,
                                 range = "default",
                                 ci = .95,
                                 rule = "classic",
-                                p_values = FALSE,
                                 verbose = TRUE,
                                 ...) {
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
-  out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
+  out <- .equivalence_test_frequentist(x, range, ci, rule, verbose, ...)
 
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
@@ -236,7 +224,6 @@ equivalence_test.merMod <- function(x,
                                     ci = .95,
                                     rule = "classic",
                                     effects = c("fixed", "random"),
-                                    p_values = FALSE,
                                     verbose = TRUE,
                                     ...) {
 
@@ -249,7 +236,7 @@ equivalence_test.merMod <- function(x,
   # ==== equivalent testing for fixed or random effects ====
 
   if (effects == "fixed") {
-    out <- .equivalence_test_frequentist(x, range, ci, rule, p_values, verbose, ...)
+    out <- .equivalence_test_frequentist(x, range, ci, rule, verbose, ...)
   } else {
     out <- .equivalence_test_frequentist_random(x, range, ci, rule, verbose, ...)
   }
@@ -321,7 +308,6 @@ equivalence_test.parameters_simulate_model <- function(x,
                                           range = "default",
                                           ci = .95,
                                           rule = "classic",
-                                          p_values = FALSE,
                                           verbose = TRUE,
                                           ...) {
 
@@ -381,9 +367,9 @@ equivalence_test.parameters_simulate_model <- function(x,
   )
 
 
-  # ==== adjusted p-value for tests ====
+  # ==== (adjusted) p-values for tests ====
 
-  if (isTRUE(p_values)) out$p <- .add_p_to_equitest(x, ci, range, out$ROPE_Equivalence)
+  out$p <- .add_p_to_equitest(x, ci, range)
 
   attr(out, "rope") <- range
   out
@@ -573,7 +559,7 @@ equivalence_test.parameters_simulate_model <- function(x,
 
 
 
-.add_p_to_equitest <- function(model, ci, range, decision) {
+.add_p_to_equitest <- function(model, ci, range) {
   tryCatch(
     {
       params <- insight::get_parameters(model)
