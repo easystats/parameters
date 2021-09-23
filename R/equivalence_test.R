@@ -576,18 +576,19 @@ equivalence_test.parameters_simulate_model <- function(x,
 .add_p_to_equitest <- function(model, ci, range, decision) {
   tryCatch(
     {
+      params <- insight::get_parameters(model)
+
+      # degrees of freedom
       df <- degrees_of_freedom(model, method = "any")
-      fac <- stats::qt((1 + ci) / 2, df = df)
-      interval <- ci_wald(model, ci = ci)
-      se <- abs((interval$CI_high - interval$CI_low) / (2 * fac))
-      est <- insight::get_parameters(model, verbose = FALSE)$Estimate
-      r <- range[2]
-      if (any(decision == "Undecided")) se[decision == "Undecided"] <- se[decision == "Undecided"] + (r / fac)
-      if (any(decision == "Rejected")) est[decision == "Rejected"] <- ifelse(est[decision == "Rejected"] < 0, est[decision == "Rejected"] + r, est[decision == "Rejected"] - r)
-      stat <- abs(est / se)
-      out <- stats::p.adjust(2 * stats::pt(stat, df = df, lower.tail = FALSE), method = "fdr")
-      if (any(decision == "Accepted")) out[decision == "Accepted"] <- 1
-      out
+
+      # mu
+      params$mu <- params$Estimate * -1
+
+      # se
+      se <- standard_error(model)
+
+      stats::pt((range[1] - params$mu) / se$SE, df, lower.tail = TRUE) +
+        stats::pt((range[2] - params$mu) / se$SE, df, lower.tail = FALSE)
     },
     error = function(e) {
       NULL
