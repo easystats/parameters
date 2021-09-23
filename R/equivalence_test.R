@@ -651,36 +651,9 @@ plot.equivalence_test_lm <- function(x, ...) {
 # method-helper ----------------------
 
 .print_equitest_freq <- function(x, digits, ...) {
-  # find the longest CI-value, so we can align the brackets in the output
-  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
-  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
+  out <- insight::format_table(x)
+  colnames(out)[which(colnames(out) == "Equivalence (ROPE)")] <- "H0"
+  out$ROPE <- NULL
 
-  maxlen_low <- max(nchar(x$CI_low))
-  maxlen_high <- max(nchar(x$CI_high))
-
-  x$ROPE_Percentage <- sprintf("%.*f %%", digits, 100 * x$ROPE_Percentage)
-  x$conf.int <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
-  if ("p" %in% colnames(x)) {
-    x$p <- insight::format_p(x$p, name = NULL)
-  }
-
-  CI <- unique(x$CI)
-  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "conf.int", "p")
-
-  x <- x[, intersect(keep.columns, colnames(x))]
-
-  colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
-  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
-
-  for (i in CI) {
-    xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-    if ("p" %in% colnames(x)) {
-      ci_col <- ncol(xsub) - 1
-    } else {
-      ci_col <- ncol(xsub)
-    }
-    colnames(xsub)[ci_col] <- sprintf("%i%% CI", round(100 * i))
-    print.data.frame(xsub, digits = digits, row.names = FALSE)
-    cat("\n")
-  }
+  cat(insight::export_table(out))
 }
