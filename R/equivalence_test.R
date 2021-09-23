@@ -590,8 +590,59 @@ equivalence_test.parameters_simulate_model <- function(x,
 # methods ----------------
 
 
+
 #' @export
-print.equivalence_test_lm <- function(x, digits = 2, ...) {
+format.equivalence_test_lm <- function(x,
+                                       digits = 2,
+                                       ci_digits = 2,
+                                       p_digits = 3,
+                                       ci_width = NULL,
+                                       ci_brackets = NULL,
+                                       format = "text",
+                                       zap_small = FALSE,
+                                       ...) {
+
+  # default brackets are parenthesis for HTML / MD
+  if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
+    ci_brackets <- c("(", ")")
+  } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
+    ci_brackets <- c("[", "]")
+  }
+
+  # main formatting
+  out <- insight::format_table(
+    x,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    ...
+  )
+
+  # format column names
+  colnames(out)[which(colnames(out) == "Equivalence (ROPE)")] <- "H0"
+  out$ROPE <- NULL
+
+  # only show supported components
+  if ("Component" %in% colnames(out)) {
+    out <- out[out$Component %in% c("conditional", "count"), ]
+  }
+
+  out
+}
+
+
+
+#' @export
+print.equivalence_test_lm <- function(x,
+                                      digits = 2,
+                                      ci_digits = 2,
+                                      p_digits = 3,
+                                      ci_brackets = NULL,
+                                      zap_small = FALSE,
+                                      ...) {
   orig_x <- x
 
   rule <- attributes(x)$rule
@@ -610,32 +661,25 @@ print.equivalence_test_lm <- function(x, digits = 2, ...) {
   .rope <- attr(x, "rope", exact = TRUE)
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
 
-  # set pretty names
-  x <- tryCatch(
-    {
-      pretty_names <- attr(x, "pretty_names", exact = TRUE)
-      if (!is.null(pretty_names)) {
-        x$Parameter[match(names(pretty_names), x$Parameter)] <- pretty_names
-      }
-      x
-    },
-    error = function(e) {
-      x
-    }
-  )
-
-  if ("Component" %in% colnames(x)) {
-    x <- x[x$Component %in% c("conditional", "count"), ]
-  }
+  # formatting
+  x <- format(x,
+              digits = digits,
+              ci_digits = ci_digits,
+              p_digits = p_digits,
+              ci_width = "auto",
+              ci_brackets = ci_brackets,
+              format = "text",
+              zap_small = zap_small,
+              ...)
 
   if ("Group" %in% colnames(x)) {
     out <- split(x, x$Group)
     for (i in names(out)) {
       insight::print_color(sprintf("Group: %s\n\n", i), "red")
-      .print_equitest_freq(out[[i]], digits, ...)
+      cat(insight::export_table(out[[i]]))
     }
   } else {
-    .print_equitest_freq(x, digits, ...)
+    cat(insight::export_table(x))
   }
   invisible(orig_x)
 }
@@ -646,14 +690,55 @@ plot.equivalence_test_lm <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
 }
-
-
-# method-helper ----------------------
-
-.print_equitest_freq <- function(x, digits, ...) {
-  out <- insight::format_table(x)
-  colnames(out)[which(colnames(out) == "Equivalence (ROPE)")] <- "H0"
-  out$ROPE <- NULL
-
-  cat(insight::export_table(out))
-}
+#'
+#'
+#' #' @export
+#' print_md.equivalence_test_lm <- function(x,
+#'                                          digits = 2,
+#'                                          ci_digits = 2,
+#'                                          p_digits = 3,
+#'                                          ci_brackets = NULL,
+#'                                          zap_small = FALSE,
+#'                                          ...) {
+#'   orig_x <- x
+#'
+#'   rule <- attributes(x)$rule
+#'   if (!is.null(rule)) {
+#'     if (rule == "cet") {
+#'       title <- "Conditional Equivalence Testing"
+#'     } else if (rule == "classic") {
+#'       title <- "TOST-test for Practical Equivalence"
+#'     } else {
+#'       title <- "Test for Practical Equivalence"
+#'     }
+#'   } else {
+#'     title <- "Test for Practical Equivalence"
+#'   }
+#'
+#'   .rope <- attr(x, "rope", exact = TRUE)
+#'   subtitle <- sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2])
+#'
+#'   # formatting
+#'   x <- format(x,
+#'               digits = digits,
+#'               ci_digits = ci_digits,
+#'               p_digits = p_digits,
+#'               ci_width = NULL,
+#'               ci_brackets = ci_brackets,
+#'               format = "md",
+#'               zap_small = zap_small,
+#'               ...)
+#'
+#'   if ("Group" %in% colnames(x)) {
+#'     group_by <- "Group"
+#'   } else {
+#'     group_by <- NULL
+#'   }
+#'
+#'   cat(insight::export_table(x,
+#'                             format = "md",
+#'                             title = title,
+#'                             subtitle = subtitle,
+#'                             group_by = group_by))
+#'   invisible(orig_x)
+#' }
