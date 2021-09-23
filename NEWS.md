@@ -84,6 +84,10 @@ necessary changes before this breaking change is implemented.
 * `format_parameters()` removes dots and underscores from parameter names, to
   make these more "human readable".
 
+* The experimental calculation of p-values in `equivalence_test()` was 
+  replaced by a proper calculation p-values. The argument `p_value` was removed
+  and p-values are now always included.
+
 * Minor improvements to `print()`, `print_html()` and `print_md()`.
 
 ## Bug fixes
