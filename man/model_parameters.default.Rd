@@ -191,6 +191,11 @@ A data frame of indices related to the model's parameters.
 Extract and compute indices and measures to describe parameters of (general)
 linear models (GLMs).
 }
+\section{Confidence intervals and approximation of degrees of freedom}{
+
+This still needs to be done.
+}
+
 \examples{
 library(parameters)
 model <- lm(mpg ~ wt + cyl, data = mtcars)

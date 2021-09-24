@@ -44,8 +44,7 @@
 #'   method for use inside rmarkdown files,
 #'   [`print_md()`][print_md.parameters_model].
 #'
-#' @details
-#' ## Standardization of model coefficients:
+#' @section Standardization of model coefficients:
 #' Standardization is based on [effectsize::standardize_parameters()]. In case
 #' of `standardize = "refit"`, the data used to fit the model will be
 #' standardized and the model is completely refitted. In such cases, standard
@@ -55,8 +54,11 @@
 #' packages or other software packages (like SPSS). To mimic behaviour of SPSS
 #' or packages such as \pkg{lm.beta}, use `standardize = "basic"`.
 #'
-#' @inheritSection effectsize::standardize_parameters Standardization Methods:
-
+#' @section Confidence intervals and approximation of degrees of freedom:
+#' This still needs to be done.
+#'
+#' @inheritSection effectsize::standardize_parameters Standardization Methods
+#'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
 #' degrees of freedom *df_error*. The reason for this is that these degrees
@@ -190,6 +192,8 @@ parameters <- model_parameters
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
+#'
+#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @examples
 #' library(parameters)

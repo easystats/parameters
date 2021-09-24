@@ -44,8 +44,16 @@ Compute and extract model parameters. See the documentation for your object's cl
 \item{\link[=model_parameters.mira]{Multiply imputed repeated analyses} (\code{mira})}
 }
 }
-\details{
-\subsection{Standardization of model coefficients:}{
+\note{
+The \code{\link[=print.parameters_model]{print()}} method has several
+arguments to tweak the output. There is also a
+\href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+implemented in the
+\href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
+method for use inside rmarkdown files,
+\code{\link[=print_md.parameters_model]{print_md()}}.
+}
+\section{Standardization of model coefficients}{
 
 Standardization is based on \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}. In case
 of \code{standardize = "refit"}, the data used to fit the model will be
@@ -56,16 +64,12 @@ default, \code{standardize = "refit"}, never standardizes categorical predictors
 packages or other software packages (like SPSS). To mimic behaviour of SPSS
 or packages such as \pkg{lm.beta}, use \code{standardize = "basic"}.
 }
+
+\section{Confidence intervals and approximation of degrees of freedom}{
+
+This still needs to be done.
 }
-\note{
-The \code{\link[=print.parameters_model]{print()}} method has several
-arguments to tweak the output. There is also a
-\href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
-implemented in the
-\href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
-method for use inside rmarkdown files,
-\code{\link[=print_md.parameters_model]{print_md()}}.
-}
+
 \section{Labeling the Degrees of Freedom}{
 
 Throughout the \pkg{parameters} package, we decided to label the residual
