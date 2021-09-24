@@ -34,7 +34,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # p-values, CI and se might be based on different df-methods
-  ci_method <- .check_df_method(df_method, type = "ci_method")
+  ci_method <- .check_df_method(ci_method)
 
   # which components to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))

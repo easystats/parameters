@@ -88,7 +88,10 @@ reference:
   contents:
   - check_clusterstructure
   - cluster_analysis
+  - cluster_centers
   - cluster_discrimination
+  - cluster_meta
+  - cluster_performance
   - n_clusters
 - subtitle: "Factors and Principal Components"
   contents:
