@@ -172,7 +172,9 @@ are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::descri
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI). Only applies to models of class \code{glm} or
-\code{polr}. May be \code{"profile"} or \code{"wald"}.}
+\code{polr} or if \code{bootstrap = TRUE}. For \code{glm} and \code{polr}, \code{ci_method} may be
+\code{"profile"} or \code{"wald"}. If \code{bootstrap = TRUE}, see argument \code{ci_method}
+in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 

@@ -155,7 +155,9 @@ parameters <- model_parameters
 #'   `emmGrid` objects (from \pkg{emmeans}).
 #' @param ci_method Method for computing degrees of freedom for
 #'   confidence intervals (CI). Only applies to models of class `glm` or
-#'   `polr`. May be `"profile"` or `"wald"`.
+#'   `polr` or if `bootstrap = TRUE`. For `glm` and `polr`, `ci_method` may be
+#'   `"profile"` or `"wald"`. If `bootstrap = TRUE`, see argument `ci_method`
+#'   in [bayestestR::describe_posterior()].
 #' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
@@ -293,17 +295,13 @@ model_parameters.default <- function(model,
     ci_method <- df_method
   }
 
-  # to avoid "match multiple argument error", check if "component" was
-  # already used as argument and passed via "...".
-  mc <- match.call()
-  comp_argument <- parse(text = .safe_deparse(mc))[[1]]$component
-
   # Processing
   if (bootstrap) {
     params <- bootstrap_parameters(
       model,
       iterations = iterations,
       ci = ci,
+      ci_method = ci_method,
       ...
     )
   } else {

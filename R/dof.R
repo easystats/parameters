@@ -70,7 +70,9 @@ degrees_of_freedom <- function(model, ...) {
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward", "nokr", "wald", "profile", "boot", "uniroot", "residual"))
+  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin",
+                                "satterthwaite", "kenward", "nokr", "wald",
+                                "profile", "boot", "uniroot", "residual"))
 
   if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
     method <- "any"

@@ -83,7 +83,9 @@ a data frame with posterior samples.}
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI). Only applies to models of class \code{glm} or
-\code{polr}. May be \code{"profile"} or \code{"wald"}.}
+\code{polr} or if \code{bootstrap = TRUE}. For \code{glm} and \code{polr}, \code{ci_method} may be
+\code{"profile"} or \code{"wald"}. If \code{bootstrap = TRUE}, see argument \code{ci_method}
+in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),

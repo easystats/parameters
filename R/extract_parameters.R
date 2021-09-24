@@ -481,9 +481,6 @@
   df_error$SE <- attr(df, "se", exact = TRUE)
 
 
-
-
-
   # CI - only if we don't already have CI for std. parameters
 
   if (!is.null(ci)) {
