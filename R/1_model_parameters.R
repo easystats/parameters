@@ -301,6 +301,11 @@ model_parameters.default <- function(model,
 
   # Processing
   if (bootstrap) {
+    # set default method for bootstrapped CI
+    if (is.null(ci_method) || missing(ci_method)) {
+      ci_method <- "quantile"
+    }
+
     params <- bootstrap_parameters(
       model,
       iterations = iterations,
