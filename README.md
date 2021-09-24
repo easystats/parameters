@@ -5,6 +5,16 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 
+------------------------------------------------------------------------
+
+:warning: For Bayesian models, we changed the default the CI width!
+Please make an [informed
+decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+and set it explicitly (`ci = 0.89`, `ci = 0.95`, or anything else that
+you decide) :warning:
+
+------------------------------------------------------------------------
+
 ***Describe and understand your model’s parameters!***
 
 **parameters**’ primary goal is to provide utilities for processing the
@@ -128,7 +138,6 @@ model_parameters(model)
 #> Petal Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |   4.41 | < .001
 #> Petal Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 
 #> Petal Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618
-
 # standardized parameters
 model_parameters(model, standardize = "refit")
 #> Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p
@@ -164,7 +173,6 @@ model_parameters(model, effects = "all")
 #> -------------------------------------
 #> SD (Intercept: Species) |        0.89
 #> SD (Residual)           |        0.32
-
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
 #> # Fixed Effects
