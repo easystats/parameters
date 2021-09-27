@@ -111,8 +111,8 @@ templates are possible:
 column headers. Must be of same length as number of models in \code{...}.}
 
 \item{keep}{Character containing a regular expression pattern that
-describes the parameters that should be included in the returned data frame
-(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+describes the parameters that should be included (for \code{keep}) or excluded
+(for \code{drop}) in the returned data frame. \code{keep} may also be a
 named list of regular expressions. All non-matching parameters will be
 removed from the output. If \code{keep} is a character vector, every parameter
 name in the \emph{"Parameter"} column that matches the regular expression in
@@ -131,8 +131,8 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{Character containing a regular expression pattern that
-describes the parameters that should be included in the returned data frame
-(for \code{keep}), resp. parameters to exclude (\code{drop}). \code{keep} may also be a
+describes the parameters that should be included (for \code{keep}) or excluded
+(for \code{drop}) in the returned data frame. \code{keep} may also be a
 named list of regular expressions. All non-matching parameters will be
 removed from the output. If \code{keep} is a character vector, every parameter
 name in the \emph{"Parameter"} column that matches the regular expression in

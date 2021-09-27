@@ -33,6 +33,10 @@
 #' @param cor An optional correlation matrix that can be used (note that the
 #'   data must still be passed as the first argument). If `NULL`, will
 #'   compute it by running `cor()` on the passed data.
+#' @param n_max If set to a value (e.g., `10`), will drop from the results all
+#' methods that suggest a higher number of components. The interpretation becomes
+#' 'from all the methods that suggested a number lower than n_max, the results
+#' are ...'.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details `n_components` is actually an alias for `n_factors`, with
@@ -113,6 +117,7 @@ n_factors <- function(x,
                       package = c("nFactors", "psych"),
                       cor = NULL,
                       safe = TRUE,
+                      n_max = NULL,
                       ...) {
   if (all(package == "all")) {
     package <- c("nFactors", "EGAnet", "psych", "fit", "pcdimension")
@@ -122,6 +127,7 @@ n_factors <- function(x,
   if(!is.data.frame(x)) {
     if(is.numeric(x) && !is.null(cor)) {
       nobs <- x
+      package <- package[!package %in% c("pcdimension", "PCDimension")]
     } else if(is.matrix(x) || inherits(x, "easycormatrix")) {
       stop("Please input the correlation matrix via the `cor = ...` argument and
            the number of rows / observations via the first argument.")
@@ -312,10 +318,13 @@ n_factors <- function(x,
 
   # OUTPUT ----------------------------------------------
   # TODO created weighted composite score
-
   out <- out[!is.na(out$n_Factors), ] # Remove empty methods
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
+
+  if(!is.null(n_max)) {
+    out <-  out[out$n_Factors <= n_max, ]
+  }
 
   # Add summary
   by_factors <- .data_frame(
@@ -431,8 +440,9 @@ print.n_clusters <- print.n_factors
   nfac <- nFactors::nBartlett(
     eigen_values,
     N = nobs,
+    cor = TRUE,
     alpha = 0.05,
-    details = FALSE,
+    details = FALSE
   )$nFactors
 
   data.frame(
@@ -515,7 +525,7 @@ print.n_clusters <- print.n_factors
   nfac <- nFactors::nSeScree(x = eigen_values, cor = TRUE, model = model)$nFactors
   data.frame(
     n_Factors = as.numeric(nfac),
-    Method = c("SE Scree", "R2"),
+    Method = c("Scree (SE)", "Scree (R2)"),
     Family = "Scree_SE"
   )
 }

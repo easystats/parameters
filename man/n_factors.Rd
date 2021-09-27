@@ -13,6 +13,7 @@ n_factors(
   package = c("nFactors", "psych"),
   cor = NULL,
   safe = TRUE,
+  n_max = NULL,
   ...
 )
 
@@ -62,6 +63,11 @@ compute it by running \code{cor()} on the passed data.}
 blocks, and will only return those that work and silently skip the ones
 that may fail.}
 
+\item{n_max}{If set to a value (e.g., \code{10}), will drop from the results all
+methods that suggest a higher number of components. The interpretation becomes
+'from all the methods that suggested a number lower than n_max, the results
+are ...'.}
+
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
@@ -94,6 +100,7 @@ if (require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)) {
   as.data.frame(result)
   summary(result)
   \donttest{
+  # Setting package = 'all' will increase the number of methods (but is slow)
   n_factors(mtcars, type = "PCA", package = "all")
   n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 }

@@ -76,6 +76,10 @@ necessary changes before this breaking change is implemented.
 
 ### Other functions
 
+* `n_factors()` the methods based on fit indices have been fixed and can be 
+  included separately (`package = "fit"`). Also added a `n_max` argument to 
+  crop the output.  
+
 * `compare_parameters()` now also accepts a list of model objects.
 
 * `describe_distribution()` gets `verbose` argument to toggle warnings and
