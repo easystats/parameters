@@ -165,8 +165,8 @@ parameters <- model_parameters
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
 #' @param keep,drop Character containing a regular expression pattern that
-#'   describes the parameters that should be included in the returned data frame
-#'   (for `keep`), resp. parameters to exclude (`drop`). `keep` may also be a
+#'   describes the parameters that should be included (for `keep`) or excluded
+#'   (for `drop`) in the returned data frame. `keep` may also be a
 #'   named list of regular expressions. All non-matching parameters will be
 #'   removed from the output. If `keep` is a character vector, every parameter
 #'   name in the *"Parameter"* column that matches the regular expression in

@@ -48,9 +48,11 @@ Principal Components. \code{"default"} will select \code{"minres"} if
 \code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.}
 
 \item{package}{Package from which respective methods are used. Can be
-\code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"} and
-\code{"EGAnet"}. However, \code{"EGAnet"} can be very slow for bigger
-datasets. Thus, by default, \code{c("nFactors", "psych")} are selected.}
+\code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"}, \code{"PCDimension"}, \code{"fit"} or
+\code{"EGAnet"}. Note that \code{"fit"} (which actually also relies on the \code{psych}
+package) and \code{"EGAnet"} can be very slow for bigger
+datasets. Thus, the default is \code{c("nFactors", "psych")}. You must have
+the respective packages installed for the methods to be used.}
 
 \item{cor}{An optional correlation matrix that can be used (note that the
 data must still be passed as the first argument). If \code{NULL}, will

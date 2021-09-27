@@ -22,9 +22,11 @@
 #'   Principal Components. `"default"` will select `"minres"` if
 #'   `type = "FA"` and `"pc"` if `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
-#'   `"all"` or a vector containing `"nFactors"`, `"psych"` and
-#'   `"EGAnet"`. However, `"EGAnet"` can be very slow for bigger
-#'   datasets. Thus, by default, `c("nFactors", "psych")` are selected.
+#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"`, `"fit"` or
+#'   `"EGAnet"`. Note that `"fit"` (which actually also relies on the `psych`
+#'   package) and `"EGAnet"` can be very slow for bigger
+#'   datasets. Thus, the default is `c("nFactors", "psych")`. You must have
+#'   the respective packages installed for the methods to be used.
 #' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
@@ -52,6 +54,7 @@
 #'   as.data.frame(result)
 #'   summary(result)
 #'   \donttest{
+#'   # Setting package = 'all' will increase the number of methods (but is slow)
 #'   n_factors(mtcars, type = "PCA", package = "all")
 #'   n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
@@ -112,15 +115,24 @@ n_factors <- function(x,
                       safe = TRUE,
                       ...) {
   if (all(package == "all")) {
-    package <- c("nFactors", "EGAnet", "psych")
+    package <- c("nFactors", "EGAnet", "psych", "fit", "pcdimension")
   }
 
-  # Initialize parameters
-  nobs <- nrow(x)
+  # Get number of observations
+  if(!is.data.frame(x)) {
+    if(is.numeric(x) && !is.null(cor)) {
+      nobs <- x
+    } else if(is.matrix(x) || inherits(x, "easycormatrix")) {
+      stop("Please input the correlation matrix via the `cor = ...` argument and
+           the number of rows / observations via the first argument.")
+    }
+  } else {
+    nobs <- nrow(x)
+  }
 
   # Correlation matrix
   if (is.null(cor)) {
-    cor <- stats::cor(x, use = "pairwise.complete.obs")
+    cor <- stats::cor(x, use = "pairwise.complete.obs", ...)
   }
   eigen_values <- eigen(cor)$values
 
@@ -130,7 +142,6 @@ n_factors <- function(x,
     cor <- psych::cor.smooth(cor, ...)
     eigen_values <- eigen(cor)$values
   }
-
 
   # Initialize dataframe
   out <- data.frame()
@@ -219,7 +230,7 @@ n_factors <- function(x,
   }
 
   # EGAnet -------------------------------------------
-  if ("EGAnet" %in% c(package)) {
+  if ("EGAnet" %in% package) {
     insight::check_if_installed("EGAnet")
 
     if (safe) {
@@ -240,7 +251,7 @@ n_factors <- function(x,
 
 
   # psych -------------------------------------------
-  if ("psych" %in% c(package)) {
+  if ("psych" %in% package) {
     insight::check_if_installed("psych")
 
     if (safe) {
@@ -251,6 +262,19 @@ n_factors <- function(x,
           error = function(e) data.frame()
         )
       )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
+      )
+    }
+  }
+
+  # fit -------------------------------------------
+  if ("fit" %in% package) {
+    insight::check_if_installed("psych")
+
+    if (safe) {
       out <- rbind(
         out,
         tryCatch(.n_factors_fit(x, cor, nobs, type, rotation, algorithm),
@@ -261,11 +285,27 @@ n_factors <- function(x,
     } else {
       out <- rbind(
         out,
-        .n_factors_vss(x, cor, nobs, type, rotation, algorithm)
+        .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
       )
+    }
+  }
+
+  # fit -------------------------------------------
+  if ("pcdimension" %in% tolower(package)) {
+    insight::check_if_installed("PCDimension")
+
+    if (safe) {
       out <- rbind(
         out,
-        .n_factors_fit(x, cor, nobs, type, rotation, algorithm)
+        tryCatch(.n_factors_PCDimension(x, type),
+                 warning = function(w) data.frame(),
+                 error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_PCDimension(x, type)
       )
     }
   }
@@ -563,7 +603,8 @@ print.n_clusters <- print.n_factors
                            nobs = NULL,
                            type = "FA",
                            rotation = "varimax",
-                           algorithm = "default") {
+                           algorithm = "default",
+                           threshold = 0.1) {
   if (algorithm == "default") {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       algorithm <- "minres"
@@ -575,22 +616,20 @@ print.n_clusters <- print.n_factors
   rez <- data.frame()
   for (n in 1:(ncol(cor) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
-      factors <- tryCatch(psych::fa(cor,
+      factors <- tryCatch(suppressWarnings(psych::fa(cor,
         nfactors = n,
         n.obs = nobs,
         rotate = rotation,
         fm = algorithm
-      ),
-      warning = function(w) NA,
+      )),
       error = function(e) NA
       )
     } else {
-      factors <- tryCatch(psych::pca(cor,
+      factors <- tryCatch(suppressWarnings(psych::pca(cor,
         nfactors = n,
         n.obs = nobs,
         rotate = rotation
-      ),
-      warning = function(w) NA,
+      )),
       error = function(e) NA
       )
     }
@@ -609,8 +648,8 @@ print.n_clusters <- print.n_factors
       rez,
       data.frame(
         n = n,
-        TLI = tli,
         Fit = factors$fit.off,
+        TLI = tli,
         RMSEA = rmsea,
         RMSR = rmsr,
         CRMS = crms,
@@ -619,20 +658,92 @@ print.n_clusters <- print.n_factors
     )
   }
 
-  TLI <- ifelse(all(is.na(rez$TLI)), NA, rez[!is.na(rez$TLI) & rez$TLI == min(rez$TLI, na.rm = TRUE), "n"])
-  RMSEA <- ifelse(all(is.na(rez$RMSEA)), NA, rez[!is.na(rez$RMSEA) & rez$RMSEA == max(rez$RMSEA, na.rm = TRUE), "n"])
-  RMSR <- ifelse(all(is.na(rez$RMSR)), NA, rez[!is.na(rez$RMSR) & rez$RMSR == min(rez$RMSR, na.rm = TRUE), "n"])
-  CRMS <- ifelse(all(is.na(rez$CRMS)), NA, rez[!is.na(rez$CRMS) & rez$CRMS == min(rez$CRMS, na.rm = TRUE), "n"])
+  # For fit indices that constantly increase / decrease, we need to find
+  # an "elbow"/"knee". Here we take the first value that reaches 90 percent
+  # of the range between the max and the min (when 'threshold = 0.1').
+  # Fit
+  if(all(is.na(rez$Fit))) {
+    fit_off <- NA
+  } else {
+    target <- max(rez$Fit, na.rm = TRUE) - threshold * diff(range(rez$Fit, na.rm = TRUE))
+    fit_off <- rez[!is.na(rez$Fit) & rez$Fit >= target, "n"][1]
+  }
+  # TLI
+  if(all(is.na(rez$TLI))) {
+    TLI <- NA
+  } else {
+    target <- max(rez$TLI, na.rm = TRUE) - threshold * diff(range(rez$TLI, na.rm = TRUE))
+    TLI <- rez[!is.na(rez$TLI) & rez$TLI >= target, "n"][1]
+  }
+  # RMSEA
+  if(all(is.na(rez$RMSEA))) {
+    RMSEA <- NA
+  } else {
+    target <- min(rez$RMSEA, na.rm = TRUE) + threshold * diff(range(rez$RMSEA, na.rm = TRUE))
+    RMSEA <- rez[!is.na(rez$RMSEA) & rez$RMSEA <= target, "n"][1]
+  }
+  # RMSR
+  if(all(is.na(rez$RMSR))) {
+    RMSR <- NA
+  } else {
+    target <- min(rez$RMSR, na.rm = TRUE) + threshold * diff(range(rez$RMSR, na.rm = TRUE))
+    RMSR <- rez[!is.na(rez$RMSR) & rez$RMSR <= target, "n"][1]
+  }
+  # CRMS
+  if(all(is.na(rez$CRMS))) {
+    CRMS <- NA
+  } else {
+    target <- min(rez$CRMS, na.rm = TRUE) + threshold * diff(range(rez$CRMS, na.rm = TRUE))
+    CRMS <- rez[!is.na(rez$CRMS) & rez$CRMS <= target, "n"][1]
+  }
+  # BIC (this is a penalized method so we can just take the one that minimizes it)
   BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
 
   data.frame(
-    n_Factors = c(TLI, RMSEA, CRMS, BIC),
-    Method = c("TLI", "RMSEA", "CRMS", "BIC"),
-    Family = c("Fit", "Fit", "Fit", "Fit")
+    n_Factors = c(fit_off, TLI, RMSEA, RMSR, CRMS, BIC),
+    Method = c("Fit_off", "TLI", "RMSEA", "RMSR", "CRMS", "BIC"),
+    Family = c("Fit", "Fit", "Fit", "Fit", "Fit", "Fit")
   )
 }
 
+# PCDimension ------------------------
 
+#' @keywords internal
+.n_factors_PCDimension <- function(x = NULL, type = "PCA") {
+  # This package is a strict dependency of PCDimension so if users have the
+  # former they should have it
+  insight::check_if_installed("ClassDiscovery")
+
+  # Only applies to PCA with full data
+  if(tolower(type) %in% c("fa", "factor", "efa") || !is.data.frame(x)) {
+    return(data.frame())
+  }
+  # Randomization-Based Methods
+  rez_rnd <- PCDimension::rndLambdaF(x)
+
+  # Broken-Stick
+  spca <- ClassDiscovery::SamplePCA(t(x))
+  lambda <- spca@variances[1:(ncol(x)-1)]
+  rez_bokenstick <- PCDimension::bsDimension(lambda)
+
+  # Auer-Gervini
+  ag <- PCDimension::AuerGervini(spca)
+  agfuns <- list(twice=PCDimension::agDimTwiceMean,
+                 specc=PCDimension::agDimSpectral,
+                 km=PCDimension::agDimKmeans,
+                 km3=PCDimension::agDimKmeans3,
+                 # tt=PCDimension::agDimTtest,  # known to overestimate
+                 # cpm=PCDimension::makeAgCpmFun("Exponential"), # known to overestimate
+                 tt2=PCDimension::agDimTtest2,
+                 cpt=PCDimension::agDimCPT)
+  rez_ag <- PCDimension::compareAgDimMethods(ag, agfuns)
+
+  data.frame(
+    n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
+    Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)", "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)", "Auer-Gervini (T)", "AuerGervini (CPT)"),
+    Family = "PCDimension"
+  )
+}
 
 # Re-implementation of nBentler in nFactors ------------------------
 
