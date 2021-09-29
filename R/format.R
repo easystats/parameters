@@ -287,6 +287,8 @@ format.parameters_stan <- function(x,
   # modify table title, if requested
   if (length(final_table) == 1 && !is.null(table_caption)) {
     attr(final_table[[1]], "table_caption") <- table_caption
+  } else if (length(final_table) == 1 && attr(final_table[[1]], "table_caption")[1] == "# Fixed effects") {
+    attr(final_table[[1]], "table_caption") <- ""
   }
 
   final_table

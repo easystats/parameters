@@ -12,7 +12,7 @@ random_parameters(model, component = "conditional")
 \item{component}{Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of
-\code{"conditional"} (default), \code{"zi"} or \code{"zero-inflated"}.
+\code{"conditional"} (default), \code{"zi"} or \code{"zero_inflated"}.
 May be abbreviated.}
 }
 \value{

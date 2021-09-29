@@ -294,7 +294,7 @@ model_parameters.default <- function(model,
                                       ...) {
 
   ## TODO remove later
-  if (!missing(df_method)) {
+  if (!missing(df_method) && !identical(ci_method, df_method)) {
     message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
     ci_method <- df_method
   }
@@ -376,7 +376,7 @@ model_parameters.glm <- function(model,
                                  ...) {
 
   ## TODO remove later
-  if (!missing(df_method)) {
+  if (!missing(df_method) && !identical(ci_method, df_method)) {
     message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
     ci_method <- df_method
   }

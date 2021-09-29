@@ -8,7 +8,7 @@
 #' @param component Should all parameters, parameters for the conditional model,
 #'   or for the zero-inflated part of the model be returned? Applies to models
 #'   with zero-inflated component. `component` may be one of
-#'   `"conditional"` (default), `"zi"` or `"zero-inflated"`.
+#'   `"conditional"` (default), `"zi"` or `"zero_inflated"`.
 #'   May be abbreviated.
 #'
 #' @return A data frame with random effects statistics for the variance components,

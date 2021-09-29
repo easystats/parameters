@@ -160,11 +160,19 @@ with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
+\item{component}{Which type of parameters to return, such as parameters for the
+conditional model, the zero-inflated part of the model, the dispersion
+term, or other auxiliary parameters be returned? Applies to models with
+zero-inflated and/or dispersion formula, or if parameters such as \code{sigma}
+should be included. May be abbreviated. Note that the \emph{conditional}
+component is also called \emph{count} or \emph{mean} component, depending on the
+model. There are three convenient shortcuts: \code{component = "all"} returns
+all possible parameters. If \code{component = "location"}, location parameters
+such as \code{conditional}, \code{zero_inflated}, or \code{smooth_terms}, are returned
+(everything that are fixed or random effects - depending on the \code{effects}
+argument - but no auxiliary parameters). For \code{component = "distributional"}
+(or \code{"auxiliary"}), components like \code{sigma}, \code{dispersion}, or \code{beta}
+(and other auxiliary parameters) are returned.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
