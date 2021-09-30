@@ -173,7 +173,16 @@
       for (i in unique(ran_intercept$Group)) {
         corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
         if (length(corrs)) {
-          ran_corr$Parameter[corrs] <- paste0("Cor (Intercept~", i, ")")
+          param_name <- i
+          cor_slopes <- which(grepl(paste0("^\\Q", i, "\\E"), ran_slope$Group))
+          if (length(cor_slopes)) {
+            param_name <- paste0(
+              gsub("SD \\((.*)\\)", "\\1", ran_slope$Parameter[cor_slopes]),
+              ": ",
+              i
+            )
+          }
+          ran_corr$Parameter[corrs] <- paste0("Cor (Intercept~", param_name, ")")
           ran_corr$Group[corrs] <- i
         }
       }
