@@ -85,7 +85,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   }
 
   if (method == "any") {
-    dof <- .degrees_of_freedom_fit(model, verbose = FALSE)
+    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
     if (is.null(dof) || all(is.infinite(dof)) || anyNA(dof)) {
       dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
     }
@@ -104,7 +104,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   } else if (method == "nokr") {
     dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
   } else {
-    dof <- .degrees_of_freedom_fit(model)
+    dof <- .degrees_of_freedom_residual(model)
   }
 
   if (!is.null(dof) && length(dof) > 0 && all(dof == 0)) {
@@ -144,7 +144,7 @@ dof <- degrees_of_freedom
 # Model approach (Residual df) ------------------------------
 
 #' @keywords internal
-.degrees_of_freedom_fit <- function(model, verbose = TRUE) {
+.degrees_of_freedom_residual <- function(model, verbose = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
