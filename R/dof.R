@@ -4,21 +4,19 @@
 #'
 #' @param model A statistical model.
 #' @param method Can be `"analytical"` (default, DoFs are estimated based
-#'   on the model type), `"residual"` (or `"fit"`), in which case they
-#'   are directly taken from the model if available (for Bayesian models, the
-#'   goal (looking for help to make it happen) would be to refit the model as a
-#'   frequentist one before extracting the DoFs), `"ml1"` (see
-#'   [dof_ml1()]), `"betwithin"` (see [dof_betwithin()]),
-#'   `"satterthwaite"` (see [dof_satterthwaite()]), `"kenward"`
-#'   (see [dof_kenward()]) or `"any"`, which tries to extract DoF
-#'   by any of those methods, whichever succeeds.
+#'   on the model type), `"residual"` in which case they are directly taken
+#'   from the model if available (for Bayesian models, the goal (looking for
+#'   help to make it happen) would be to refit the model as a frequentist one
+#'   before extracting the DoFs), `"ml1"` (see [dof_ml1()]), `"betwithin"`
+#'   (see [dof_betwithin()]), `"satterthwaite"` (see [dof_satterthwaite()]),
+#'   `"kenward"` (see [dof_kenward()]) or `"any"`, which tries to extract DoF
+#'   by any of those methods, whichever succeeds. See 'Details'.
 #' @param ... Currently not used.
 #'
 #' @details Methods for calculating degrees of freedom:
 #' \itemize{
 #' \item `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated degrees of freedoms are calculated, for other models, `n-k` (number of observations minus number of parameters).
 #' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted.
-#' \item `"fit"` is an alias for `"residual"`.
 #' \item `"any"` first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 #' \item `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation for models of class `lmerMod`. Instead, always uses `n-k` to calculate df for any model.
 #' \item `"wald"` returns `Inf`.
@@ -29,12 +27,12 @@
 #' }
 #' For models with z-statistic, the returned degrees of freedom for model parameters is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is only one distribution for the related test statistic.
 #'
-#' @note In many cases, `degrees_of_freedom` returns the same as
-#' `df.residuals`, or `n-k` (number of observations minus number of
-#' parameters). However, `degrees_of_freedom` refers to the model's
+#' @note In many cases, `degrees_of_freedom()` returns the same as
+#' `df.residuals()`, or `n-k` (number of observations minus number of
+#' parameters). However, `degrees_of_freedom()` refers to the model's
 #' *parameters* degrees of freedom of the distribution for the related test
-#' statistic. Thus, for models with z-statistic, results from `degrees_of_freedom`
-#' and `df.residuals` differ. Furthermore, for other approximation methods
+#' statistic. Thus, for models with z-statistic, results from `degrees_of_freedom()`
+#' and `df.residuals()` differ. Furthermore, for other approximation methods
 #' like `"kenward"` or `"satterthwaite"`, each model parameter can have
 #' a different degree of freedom.
 #'
@@ -147,8 +145,7 @@ dof <- degrees_of_freedom
 .degrees_of_freedom_residual <- function(model, verbose = TRUE) {
   info <- insight::model_info(model, verbose = FALSE)
 
-  ## TODO remove is.list() when insight 0.8.3 on CRAN
-  if (!is.null(info) && is.list(info) && info$is_bayesian && !inherits(model, c("bayesx", "blmerMod", "bglmerMod"))) {
+  if (!is.null(info) && info$is_bayesian && !inherits(model, c("bayesx", "blmerMod", "bglmerMod"))) {
     model <- bayestestR::bayesian_as_frequentist(model)
   }
 

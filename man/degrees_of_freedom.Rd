@@ -18,14 +18,13 @@ dof(model, ...)
 \item{...}{Currently not used.}
 
 \item{method}{Can be \code{"analytical"} (default, DoFs are estimated based
-on the model type), \code{"residual"} (or \code{"fit"}), in which case they
-are directly taken from the model if available (for Bayesian models, the
-goal (looking for help to make it happen) would be to refit the model as a
-frequentist one before extracting the DoFs), \code{"ml1"} (see
-\code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"} (see \code{\link[=dof_betwithin]{dof_betwithin()}}),
-\code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}), \code{"kenward"}
-(see \code{\link[=dof_kenward]{dof_kenward()}}) or \code{"any"}, which tries to extract DoF
-by any of those methods, whichever succeeds.}
+on the model type), \code{"residual"} in which case they are directly taken
+from the model if available (for Bayesian models, the goal (looking for
+help to make it happen) would be to refit the model as a frequentist one
+before extracting the DoFs), \code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"}
+(see \code{\link[=dof_betwithin]{dof_betwithin()}}), \code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}),
+\code{"kenward"} (see \code{\link[=dof_kenward]{dof_kenward()}}) or \code{"any"}, which tries to extract DoF
+by any of those methods, whichever succeeds. See 'Details'.}
 }
 \description{
 Estimate or extract degrees of freedom of models parameters.
@@ -35,7 +34,6 @@ Methods for calculating degrees of freedom:
 \itemize{
 \item \code{"analytical"} for models of class \code{lmerMod}, Kenward-Roger approximated degrees of freedoms are calculated, for other models, \code{n-k} (number of observations minus number of parameters).
 \item \code{"residual"} tries to extract residual degrees of freedom, and returns \code{Inf} if residual degrees of freedom could not be extracted.
-\item \code{"fit"} is an alias for \code{"residual"}.
 \item \code{"any"} first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 \item \code{"nokr"} same as \code{"analytical"}, but does not Kenward-Roger approximation for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df for any model.
 \item \code{"wald"} returns \code{Inf}.
@@ -47,12 +45,12 @@ Methods for calculating degrees of freedom:
 For models with z-statistic, the returned degrees of freedom for model parameters is \code{Inf} (unless \code{method = "ml1"} or \code{method = "betwithin"}), because there is only one distribution for the related test statistic.
 }
 \note{
-In many cases, \code{degrees_of_freedom} returns the same as
-\code{df.residuals}, or \code{n-k} (number of observations minus number of
-parameters). However, \code{degrees_of_freedom} refers to the model's
+In many cases, \code{degrees_of_freedom()} returns the same as
+\code{df.residuals()}, or \code{n-k} (number of observations minus number of
+parameters). However, \code{degrees_of_freedom()} refers to the model's
 \emph{parameters} degrees of freedom of the distribution for the related test
-statistic. Thus, for models with z-statistic, results from \code{degrees_of_freedom}
-and \code{df.residuals} differ. Furthermore, for other approximation methods
+statistic. Thus, for models with z-statistic, results from \code{degrees_of_freedom()}
+and \code{df.residuals()} differ. Furthermore, for other approximation methods
 like \code{"kenward"} or \code{"satterthwaite"}, each model parameter can have
 a different degree of freedom.
 }
