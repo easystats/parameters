@@ -101,7 +101,7 @@ bootstrap_parameters <- function(model,
   # p-value
   if (p_value) {
     parameters$.col_order <- 1:nrow(parameters)
-    p <- p_value(data, ...)
+    p <- bayestestR::p_direction(data, null = 0, ...)
     parameters <- merge(parameters, p, all = TRUE)
     parameters <- parameters[order(parameters$.col_order), ]
     parameters$.col_order <- NULL
