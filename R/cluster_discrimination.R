@@ -9,17 +9,20 @@
 #' @seealso [n_clusters()] to determine the number of clusters to extract, [cluster_analysis()] to compute a cluster analysis and [check_clusterstructure()] to check suitability of data for clustering.
 #'
 #' @examples
-#' \dontrun{
-#' # retrieve group classification from hierarchical cluster analysis
-#' groups <- cluster_analysis(iris[, 1:4])
+#' if (requireNamespace("MASS", quietly = TRUE)) {
+#'   # retrieve group classification from hierarchical cluster analysis
+#'   groups <- cluster_analysis(iris[, 1:4], n = 2)
 #'
-#' # goodness of group classificatoin
-#' cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+#'   # goodness of group classificatoin
+#'   cluster_discrimination(iris[, 1:4], cluster_groups = groups)
 #' }
 #' @export
 cluster_discrimination <- function(x, cluster_groups) {
   if (is.null(cluster_groups)) {
     cluster_groups <- cluster_analysis(x)
+  }
+  if (inherits(cluster_groups, "cluster_analysis")) {
+    cluster_groups <- attributes(cluster_groups)$clusters
   }
 
   x <- stats::na.omit(x)

@@ -16,12 +16,12 @@ be retrieved from the \code{\link[=cluster_analysis]{cluster_analysis()}} functi
 Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See \code{MASS::lda()} for details.
 }
 \examples{
-\dontrun{
-# retrieve group classification from hierarchical cluster analysis
-groups <- cluster_analysis(iris[, 1:4])
+if (requireNamespace("MASS", quietly = TRUE)) {
+  # retrieve group classification from hierarchical cluster analysis
+  groups <- cluster_analysis(iris[, 1:4], n = 2)
 
-# goodness of group classificatoin
-cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+  # goodness of group classificatoin
+  cluster_discrimination(iris[, 1:4], cluster_groups = groups)
 }
 }
 \seealso{

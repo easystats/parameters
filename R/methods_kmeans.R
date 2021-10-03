@@ -112,10 +112,6 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 }
 
 
-#' @export
-summary.parameters_clusters <- function(object, ...) {
-  object[1:3]
-}
 
 
 

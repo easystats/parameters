@@ -306,15 +306,15 @@ print.cluster_analysis <- function(x, ...) {
 #' @importFrom stats predict
 #' @export
 visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
-  ori_data <- attributes(x)$data
+  ori_data <- stats::na.omit(attributes(x)$data)
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)
   data <- predict(pca)
   names(data) <- c("x", "y")
-  data$Cluster <- as.character(attributes(x)$clusters)
+  data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
 
   data$label <- row.names(ori_data)
-  if (show_data %in% c("label", "text")) {
+  if (!is.null(show_data) && show_data %in% c("label", "text")) {
     label <- "label"
   } else {
     label <- NULL
@@ -346,7 +346,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
                          title = "Clustering Solution")
 
   # Out
-  class(layers) <- c("visualisation_recipe", class(layers))
+  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
   attr(layers, "data") <- data
   layers
 }
