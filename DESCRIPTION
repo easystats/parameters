@@ -69,9 +69,9 @@ BugReports: https://github.com/easystats/parameters/issues
 Depends:
     R (>= 3.4)
 Imports:
-    bayestestR (>= 0.10.5),
-    datawizard (>= 0.2.0),
-    insight (>= 0.14.0),
+    bayestestR (>= 0.11.0),
+    datawizard (>= 0.2.1),
+    insight (>= 0.14.4),
     methods,
     stats,
     utils
@@ -98,9 +98,9 @@ Suggests:
     dbscan,
     dplyr,
     DRR,
-    effectsize (>= 0.5.0),
+    effectsize (>= 0.5),
     EGAnet (>= 0.7),
-    emmeans (>= 1.4),
+    emmeans (>= 1.7.0),
     factoextra,
     FactoMineR,
     fastICA,
@@ -144,7 +144,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.7.2),
+    performance (>= 0.8.0),
     plm,
     PMCMRplus,
     projpred,
@@ -156,7 +156,7 @@ Suggests:
     rmarkdown,
     rstanarm,
     sandwich,
-    see (>= 0.6.5),
+    see (>= 0.6.8),
     sjstats,
     spelling,
     survey,
@@ -171,7 +171,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-Remotes: easystats/effectsize, easystats/performance
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
