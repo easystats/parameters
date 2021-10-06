@@ -13,8 +13,10 @@ ci.default <- function(x, ci = .95, dof = Inf, method = NULL, ...) {
     ci_ml1(model = x, ci = ci)
   } else if (method == "betwithin") {
     ci_betwithin(model = x, ci = ci)
+  } else if (method == "normal") {
+    ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE)
   } else {
-    ci_wald(model = x, ci = ci, dof = dof, robust = FALSE)
+    ci_wald(model = x, ci = ci, dof = NULL, robust = FALSE)
   }
 }
 

@@ -70,7 +70,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
   method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin",
                                 "satterthwaite", "kenward", "nokr", "wald",
-                                "profile", "boot", "uniroot", "residual"))
+                                "profile", "boot", "uniroot", "residual", "normal"))
 
   if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
     method <- "any"
@@ -216,7 +216,11 @@ dof <- degrees_of_freedom
 
   info <- insight::model_info(model, verbose = FALSE)
   if (is.null(info) || !info$is_mixed) {
-    return(FALSE)
+    if (!(method %in% c("analytical", "any", "fit", "betwithin", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
+      warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+      return(FALSE)
+    }
+    return(TRUE)
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
