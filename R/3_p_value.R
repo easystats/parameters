@@ -56,9 +56,8 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
   } else if (method == "residual") {
     dof <- degrees_of_freedom(model, method = "residual")
     return(.p_value_dof(model, dof = dof))
-  } else if (method == "wald") {
-    dof <- degrees_of_freedom(model, method = "wald")
-    return(.p_value_dof(model, dof = dof))
+  } else if (method == "normal") {
+    return(.p_value_dof(model, dof = Inf))
   } else if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
     return(bayestestR::p_direction(model, ...))
   } else {
@@ -82,8 +81,13 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
   if (is.null(p)) {
     p <- tryCatch(
       {
+        if (method == "wald") {
+          dof <- degrees_of_freedom(model, method = "wald")
+        } else {
+          dof <- Inf
+        }
         stat <- insight::get_statistic(model)
-        p_from_stat <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
+        p_from_stat <- 2 * stats::pt(abs(stat$Statistic), df = dof, lower.tail = FALSE)
         names(p_from_stat) <- stat$Parameter
         p_from_stat
       },
