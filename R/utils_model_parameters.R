@@ -8,6 +8,7 @@
                                              df_method = NULL,
                                              ci_method = NULL,
                                              p_adjust = NULL,
+                                             robust = FALSE,
                                              summary = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
@@ -54,6 +55,7 @@
   attr(params, "iterations") <- iterations
   attr(params, "df_method") <- df_method
   attr(params, "p_adjust") <- p_adjust
+  attr(params, "robust_vcov") <- isTRUE(robust)
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)

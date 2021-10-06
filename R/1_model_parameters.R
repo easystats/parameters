@@ -394,6 +394,7 @@ model_parameters.default <- function(model,
     iterations,
     df_method = ci_method,
     p_adjust = p_adjust,
+    robust = robust,
     summary = summary,
     verbose = verbose,
     ...
