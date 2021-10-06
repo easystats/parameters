@@ -27,12 +27,14 @@ if (!requireNamespace("NbClust", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("fpc", quietly = TRUE) ||
+  !requireNamespace("performance", quietly = TRUE) ||
   !requireNamespace("dbscan", quietly = TRUE) ||
   !requireNamespace("pvclust", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
   library(NbClust)
+  library(performance)
   library(cluster)
   library(fpc)
   library(mclust)
