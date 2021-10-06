@@ -26,7 +26,7 @@
 \usage{
 \method{ci}{default}(x, ci = 0.95, dof = Inf, method = NULL, robust = FALSE, ...)
 
-\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
+\method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald"), robust = FALSE, ...)
 
 \method{ci}{DirichletRegModel}(x, ci = 0.95, component = c("all", "conditional", "precision"), ...)
 
