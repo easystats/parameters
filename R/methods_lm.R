@@ -11,9 +11,8 @@ p_value.lm <- p_value.default
 
 
 #' @export
-ci.lm <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, robust = robust, ...)
+ci.lm <- function(x, ci = .95, method = "residual", robust = FALSE, ...) {
+  ci_wald(model = x, ci = ci, method = method, robust = robust, ...)
 }
 
 

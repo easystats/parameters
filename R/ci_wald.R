@@ -13,6 +13,7 @@
 #' @export
 ci_wald <- function(model,
                     ci = .95,
+                    method = "wald",
                     dof = NULL,
                     effects = c("fixed", "random", "all"),
                     component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
@@ -28,7 +29,7 @@ ci_wald <- function(model,
       effects = effects,
       component = component,
       robust = robust,
-      method = "wald",
+      method = method,
       ...
     )
   })
@@ -66,6 +67,10 @@ ci_wald <- function(model,
   # check if all estimates are non-NA
   params <- .check_rank_deficiency(params, verbose = FALSE)
 
+  # sanity check...
+  if (is.null(method)) {
+    method <- "wald"
+  }
   method <- tolower(method)
 
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
@@ -75,7 +80,6 @@ ci_wald <- function(model,
       standard_error_robust(model, component = component, ...)
     } else {
       switch(method,
-        "wald" = standard_error(model, component = component),
         "kenward" = ,
         "kr" = se_kenward(model),
         "satterthwaite" = se_satterthwaite(model),
@@ -96,7 +100,7 @@ ci_wald <- function(model,
 
   if (is.null(dof)) {
     # residual df
-    dof <- degrees_of_freedom(model, method = "any")
+    dof <- degrees_of_freedom(model, method = method)
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0) {
       dof <- Inf

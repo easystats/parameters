@@ -27,6 +27,7 @@ p_value_robust(
 ci_robust(
   model,
   ci = 0.95,
+  method = NULL,
   vcov_estimation = "HC",
   vcov_type = NULL,
   vcov_args = NULL,
@@ -63,6 +64,17 @@ components be returned?}
 down to \code{standard_error_robust()}.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}}
+(default), \code{\link[=p_value_ml1]{"ml1"()}} or
+\code{\link[=p_value_betwithin]{"betwithin"()}}. For linear mixed model, can
+also be \code{\link[=p_value_satterthwaite]{"satterthwaite"()}},
+\code{\link[=p_value_kenward]{"kenward"()}} or \code{"boot"} (see
+\code{lme4::confint.merMod}). For (generalized) linear models, can be
+\code{"robust"} to compute confidence intervals based on robust covariance
+matrix estimation, and for generalized linear models and models from
+packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"},
+\code{"uniroot"} or \code{"wald"} (default).}
 }
 \value{
 A data frame.

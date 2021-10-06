@@ -99,6 +99,7 @@
       ci_df <- suppressMessages(ci_robust(
         model,
         ci = ci,
+        method = ci_method,
         component = component,
         verbose = verbose,
         ...

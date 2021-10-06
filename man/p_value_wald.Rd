@@ -9,6 +9,7 @@
 ci_wald(
   model,
   ci = 0.95,
+  method = "wald",
   dof = NULL,
   effects = c("fixed", "random", "all"),
   component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision",
@@ -25,6 +26,17 @@ p_value_wald(model, ...)
 \item{model}{A statistical model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{method}{If \code{"robust"}, robust standard errors are computed by
+calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
+\code{standard_error_robust()}, in turn, calls one of the
+\verb{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
+package for robust covariance matrix estimators. For certain mixed models,
+\code{method} may also be one of \code{"wald"},
+\code{\link[=p_value_ml1]{"ml1"()}},
+\code{\link[=p_value_betwithin]{"betwithin"()}},
+\code{\link[=p_value_satterthwaite]{"satterthwaite"()}} or
+\code{\link[=p_value_kenward]{"kenward"()}}.}
 
 \item{dof}{Degrees of Freedom. If not specified, for \code{ci_wald()}, defaults to
 model's residual degrees of freedom (i.e. \code{n-k}, where \code{n} is the number of
