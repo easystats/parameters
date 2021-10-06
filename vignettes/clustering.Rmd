@@ -20,6 +20,26 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = TRUE
 )
+
+if (!requireNamespace("NbClust", quietly = TRUE) ||
+  !requireNamespace("mclust", quietly = TRUE) ||
+  !requireNamespace("cluster", quietly = TRUE) ||
+  !requireNamespace("ggplot2", quietly = TRUE) ||
+  !requireNamespace("see", quietly = TRUE) ||
+  !requireNamespace("fpc", quietly = TRUE) ||
+  !requireNamespace("dbscan", quietly = TRUE) ||
+  !requireNamespace("pvclust", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(NbClust)
+  library(cluster)
+  library(fpc)
+  library(mclust)
+  library(insight)
+  library(dbscan)
+  library(pvclust)
+}
 ```
 
 This vignette can be referred to by citing the package:
