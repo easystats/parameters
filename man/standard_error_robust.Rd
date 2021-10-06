@@ -21,6 +21,7 @@ p_value_robust(
   vcov_type = NULL,
   vcov_args = NULL,
   component = "conditional",
+  method = NULL,
   ...
 )
 
@@ -63,8 +64,6 @@ components be returned?}
 \code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
 down to \code{standard_error_robust()}.}
 
-\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
-
 \item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}}
 (default), \code{\link[=p_value_ml1]{"ml1"()}} or
 \code{\link[=p_value_betwithin]{"betwithin"()}}. For linear mixed model, can
@@ -75,6 +74,8 @@ also be \code{\link[=p_value_satterthwaite]{"satterthwaite"()}},
 matrix estimation, and for generalized linear models and models from
 packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"},
 \code{"uniroot"} or \code{"wald"} (default).}
+
+\item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 }
 \value{
 A data frame.

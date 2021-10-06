@@ -24,7 +24,7 @@
 \alias{ci.svyglm}
 \title{Confidence Intervals (CI)}
 \usage{
-\method{ci}{default}(x, ci = 0.95, dof = Inf, method = NULL, ...)
+\method{ci}{default}(x, ci = 0.95, dof = Inf, method = NULL, robust = FALSE, ...)
 
 \method{ci}{glm}(x, ci = 0.95, method = c("profile", "wald", "robust"), ...)
 
@@ -129,6 +129,14 @@ also be \code{\link[=p_value_satterthwaite]{"satterthwaite"()}},
 matrix estimation, and for generalized linear models and models from
 packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"},
 \code{"uniroot"} or \code{"wald"} (default).}
+
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like \code{vcov_estimation} or
+\code{vcov_type} are passed down to other methods, see
+\code{\link[=standard_error_robust]{standard_error_robust()}} for details
+and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
+for working examples.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when
 confidence intervals or p-values based on robust standard errors should be

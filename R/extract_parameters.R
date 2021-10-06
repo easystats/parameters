@@ -139,7 +139,7 @@
   # ==== p value
 
   if (isTRUE(robust)) {
-    pval <- p_value_robust(model, component = component, ...)
+    pval <- p_value_robust(model, method = ci_method, component = component, ...)
   } else if (!is.null(ci_method)) {
     pval <- p_value(
       model,

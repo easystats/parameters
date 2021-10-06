@@ -38,7 +38,7 @@ p_value <- function(model, ...) {
 
 #' @rdname p_value
 #' @export
-p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
+p_value.default <- function(model, method = NULL, robust = FALSE, verbose = TRUE, ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {
@@ -47,8 +47,8 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
 
   p <- NULL
 
-  if (method == "robust") {
-    return(p_value_robust(model, ...))
+  if (isTRUE(robust)) {
+    return(p_value_robust(model, method = method, ...))
   } else if (method == "ml1") {
     return(p_value_ml1(model))
   } else if (method == "betwithin") {

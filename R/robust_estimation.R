@@ -94,6 +94,7 @@ p_value_robust <- function(model,
                            vcov_type = NULL,
                            vcov_args = NULL,
                            component = "conditional",
+                           method = NULL,
                            ...) {
   # exceptions
   if (inherits(model, "gee")) {
@@ -110,7 +111,8 @@ p_value_robust <- function(model,
     vcov_fun = vcov_estimation,
     vcov_type = vcov_type,
     vcov_args = vcov_args,
-    component = component
+    component = component,
+    method = method
   )
 
   if ("Component" %in% colnames(robust) && .n_unique(robust$Component) > 1) {
@@ -154,7 +156,8 @@ ci_robust <- function(model,
                                       vcov_fun = "vcovHC",
                                       vcov_type = NULL,
                                       vcov_args = NULL,
-                                      component = "conditional") {
+                                      component = "conditional",
+                                      method = "any") {
   # fix default, if necessary
   if (!is.null(vcov_type) && vcov_type %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
     vcov_fun <- "vcovCR"
@@ -195,8 +198,12 @@ ci_robust <- function(model,
     .vcov <- .vcov[keep, keep, drop = FALSE]
   }
 
+  if (is.null(method)) {
+    method <- "any"
+  }
+
   se <- sqrt(diag(.vcov))
-  dendf <- degrees_of_freedom(x, method = "any")
+  dendf <- degrees_of_freedom(x, method = method)
   t.stat <- params$Estimate / se
 
   if (is.null(dendf)) {

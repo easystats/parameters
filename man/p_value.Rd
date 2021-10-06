@@ -8,7 +8,7 @@
 \usage{
 p_value(model, ...)
 
-\method{p_value}{default}(model, method = NULL, verbose = TRUE, ...)
+\method{p_value}{default}(model, method = NULL, robust = FALSE, verbose = TRUE, ...)
 
 \method{p_value}{emmGrid}(model, ci = 0.95, adjust = "none", ...)
 }

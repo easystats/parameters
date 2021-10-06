@@ -47,8 +47,8 @@ p_value.summary.lm <- function(model, ...) {
 
 
 #' @export
-ci.summary.lm <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x), ...)
+ci.summary.lm <- function(x, ci = .95, method = "residual", ...) {
+  ci_wald(model = x, ci = ci, method = method, dof = degrees_of_freedom(x), ...)
 }
 
 
