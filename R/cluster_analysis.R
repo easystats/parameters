@@ -303,9 +303,26 @@ print.cluster_analysis <- function(x, ...) {
 
 # Plotting ----------------------------------------------------------------
 
-#' @importFrom stats predict
 #' @export
-visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
+visualisation_recipe.cluster_analysis <- function(x, show_data = "text", type = "bars", ...) {
+  type <- match.arg(type, choices = c("bars", "centers"))
+
+  if (type == "bars") {
+    vr_cluster_bars(x, ...)
+  } else {
+    vr_cluster_centers(x, show_data = show_data, ...)
+  }
+}
+
+
+
+vr_cluster_bars <- function(x, ...) {
+  NULL
+}
+
+
+
+vr_cluster_centers <- function(x, show_data, ...) {
   ori_data <- stats::na.omit(attributes(x)$data)
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)
