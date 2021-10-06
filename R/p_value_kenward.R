@@ -53,7 +53,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
 # helper ------------------------------
 
-.p_value_dof <- function(model, dof, method, statistic = NULL, se = NULL) {
+.p_value_dof <- function(model, dof, method = NULL, statistic = NULL, se = NULL) {
   params <- insight::get_parameters(model)
   if (is.null(statistic)) {
     statistic <- insight::get_statistic(model)$Statistic
