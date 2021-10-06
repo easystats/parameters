@@ -90,6 +90,8 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   } else if (method == "ml1") {
     dof <- dof_ml1(model)
   } else if (method == "wald") {
+    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
+  } else if (method == "normal") {
     dof <- Inf
   } else if (method == "satterthwaite") {
     dof <- dof_satterthwaite(model)
@@ -203,7 +205,8 @@ dof <- degrees_of_freedom
 
   method <- tolower(method)
   if (inherits(model, c("polr", "glm"))) {
-    if (method %in% c("analytical", "any", "fit", "profile", "wald", "nokr", "likelihood")) {
+    if (method %in% c("analytical", "any", "fit", "profile",
+                      "wald", "nokr", "likelihood")) {
       return(TRUE)
     } else {
       warning(insight::format_message(sprintf("'%s' must be one of 'wald' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
@@ -216,8 +219,8 @@ dof <- degrees_of_freedom
     return(FALSE)
   }
 
-  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual"))) {
-    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+  if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
+    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
     return(FALSE)
   }
 

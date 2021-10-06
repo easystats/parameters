@@ -53,6 +53,14 @@ p_value.default <- function(model, method = NULL, verbose = TRUE, ...) {
     return(p_value_ml1(model))
   } else if (method == "betwithin") {
     return(p_value_betwithin(model))
+  } else if (method == "residual") {
+    dof <- degrees_of_freedom(model, method = "residual")
+    return(.p_value_dof(model, dof = dof))
+  } else if (method == "wald") {
+    dof <- degrees_of_freedom(model, method = "wald")
+    return(.p_value_dof(model, dof = dof))
+  } else if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
+    return(bayestestR::p_direction(model, ...))
   } else {
     # first, we need some special handling for Zelig-models
     p <- tryCatch(

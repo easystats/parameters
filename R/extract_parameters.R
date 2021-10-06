@@ -58,6 +58,7 @@
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(parameters)
 
+
   # ==== check if we really have a component column
 
   if (!("Component" %in% names(parameters)) && "Component" %in% merge_by) {
