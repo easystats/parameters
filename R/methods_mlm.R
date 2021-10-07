@@ -108,7 +108,7 @@ ci.mlm <- function(x, ci = .95, ...) {
     })
     out <- .remove_backticks_from_parameter_names(do.call(rbind, out))
   } else {
-    out <- .data_frame(ci_wald(x, ci = ci, ...), Response = insight::get_parameters(x)$Response)
+    out <- .data_frame(.ci_generic(x, ci = ci, ...), Response = insight::get_parameters(x)$Response)
   }
   out
 }

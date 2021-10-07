@@ -5,7 +5,7 @@
 #'
 #' @param model A mixed model.
 #' @param dof Degrees of Freedom.
-#' @inheritParams ci.merMod
+#' @inheritParams ci.default
 #'
 #' @details \subsection{Small Sample Cluster corrected Degrees of Freedom}{
 #' Inferential statistics (like p-values, confidence intervals and

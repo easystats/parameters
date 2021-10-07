@@ -18,7 +18,6 @@
 #' if (require("lme4")) {
 #'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 #'   p_value_wald(model)
-#'   ci_wald(model, ci = c(0.90, 0.95))
 #' }
 #' }
 #' @return A data frame.

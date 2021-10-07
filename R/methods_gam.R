@@ -11,7 +11,7 @@ model_parameters.gam <- model_parameters.cgam
 
 #' @export
 ci.gam <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, ...)
+  .ci_generic(model = x, ci = ci, ...)
 }
 
 

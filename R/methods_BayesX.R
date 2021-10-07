@@ -9,7 +9,7 @@ standard_error.bayesx <- function(model, ...) {
 
 #' @export
 ci.bayesx <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, robust = FALSE, component = "conditional")
+  .ci_generic(model = x, ci = ci, dof = Inf, robust = FALSE, component = "conditional")
 }
 
 

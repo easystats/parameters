@@ -6,7 +6,6 @@
 model_parameters.lme <- model_parameters.merMod
 
 
-#' @rdname ci.merMod
 #' @export
 ci.lme <- function(x, ci = .95, method = "wald", ...) {
   method <- tolower(method)
@@ -14,7 +13,7 @@ ci.lme <- function(x, ci = .95, method = "wald", ...) {
 
   if (method %in% c("wald", "residual")) {
     if (!requireNamespace("nlme", quietly = TRUE)) {
-      ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x, method = method))
+      .ci_generic(model = x, ci = ci, method = method)
     } else {
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(

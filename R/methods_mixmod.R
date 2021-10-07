@@ -3,7 +3,6 @@
 model_parameters.MixMod <- model_parameters.glmmTMB
 
 
-#' @rdname ci.merMod
 #' @export
 ci.MixMod <- function(x,
                       ci = .95,
@@ -16,7 +15,7 @@ ci.MixMod <- function(x,
     return(NULL)
   }
 
-  ci_wald(
+  .ci_generic(
     model = x,
     ci = ci,
     dof = Inf,

@@ -12,7 +12,6 @@
 #' @inheritParams p_value
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
-#' @inheritParams ci.merMod
 #'
 #' @details By default, p-values are based on Wald-test approximations (see [p_value_wald()]). For certain situations, the "m-l-1" rule might be a better approximation. That is, for `method = "ml1"`, [p_value_ml1()] is called. For `lmerMod` objects, if `method = "kenward"`, p-values are based on Kenward-Roger approximations, i.e. [p_value_kenward()] is called, and `method = "satterthwaite"` calls [p_value_satterthwaite()].
 #'
@@ -281,96 +280,34 @@ model_parameters.merMod <- function(model,
 }
 
 
-#' @title Confidence Intervals (CI)
-#' @name ci.merMod
-#'
-#' @description Compute confidence intervals (CI) for frequentist models.
-#'
-#' @param x A statistical model.
-#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
-#' @param method For mixed models, can be [`"wald"()`][p_value_wald]
-#'   (default), [`"ml1"()`][p_value_ml1] or
-#'   [`"betwithin"()`][p_value_betwithin]. For linear mixed model, can
-#'   also be [`"satterthwaite"()`][p_value_satterthwaite],
-#'   [`"kenward"()`][p_value_kenward] or `"boot"` (see
-#'   `lme4::confint.merMod`). For (generalized) linear models, can be
-#'   `"robust"` to compute confidence intervals based on robust covariance
-#'   matrix estimation, and for generalized linear models and models from
-#'   packages \pkg{lme4} or \pkg{glmmTMB}, may also be `"profile"`,
-#'   `"uniroot"` or `"wald"` (default).
-#' @param ... Arguments passed down to `standard_error_robust()` when
-#'   confidence intervals or p-values based on robust standard errors should be
-#'   computed.
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#' @inheritParams p_value
-#' @inheritParams ci_wald
-#'
-#' @return A data frame containing the CI bounds.
-#'
-#' @note `ci_robust()` resp. `ci(method = "robust")`
-#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
-#'   thus only work for those models supported by those packages.
-#'
-#' @examples
-#' \donttest{
-#' library(parameters)
-#' if (require("glmmTMB")) {
-#'   model <- glmmTMB(
-#'     count ~ spp + mined + (1 | site),
-#'     ziformula = ~mined,
-#'     family = poisson(),
-#'     data = Salamanders
-#'   )
-#'
-#'   ci(model)
-#'   ci(model, component = "zi")
-#' }
-#' }
 #' @export
 ci.merMod <- function(x,
                       ci = 0.95,
-                      method = c("wald", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "residual"),
+                      dof = NULL,
+                      method = "wald",
+                      robust = FALSE,
                       ...) {
+
   method <- tolower(method)
-  method <- match.arg(method)
+  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "kr",
+                                          "satterthwaite", "kenward", "boot",
+                                          "profile", "residual", "normal"))
 
-  # Wald approx
-  if (method == "wald") {
-    out <- ci_wald(model = x, ci = ci, dof = Inf)
-
-    # residual df
-  } else if (method == "residual") {
-    out <- ci_wald(model = x, ci = ci, dof = degrees_of_freedom(x, method = "residual"))
-
-    # ml1 approx
-  } else if (method == "ml1") {
-    out <- ci_ml1(x, ci)
-
-    # betwithin approx
-  } else if (method == "betwithin") {
-    out <- ci_betwithin(x, ci)
-
-    # Satterthwaite
-  } else if (method == "satterthwaite") {
-    out <- ci_satterthwaite(x, ci)
-
-    # Kenward approx
-  } else if (method %in% c("kenward", "kr")) {
-    out <- ci_kenward(x, ci)
-
-    # bootstrapping
-  } else if (method == "boot") {
+  # bootstrapping
+  if (method == "boot") {
     out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
     out <- do.call(rbind, out)
     row.names(out) <- NULL
 
-    # profiles CIs
+    # profiled CIs
   } else if (method == "profile") {
     pp <- suppressWarnings(stats::profile(x, which = "beta_"))
     out <- lapply(ci, function(i) .ci_profile_merMod(x, ci = i, profiled = pp, ...))
     out <- do.call(rbind, out)
+
+    # all others
+  } else {
+    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
   }
 
   out

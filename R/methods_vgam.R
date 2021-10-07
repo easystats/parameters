@@ -99,7 +99,7 @@ standard_error.vglm <- function(model, ...) {
 #   params_names <- names(dof)
 #
 #   # Wald CI for non-chisq parameters
-#   out <- ci_wald(model = x, ci = ci, dof = Inf)
+#   out <- .ci_generic(model = x, ci = ci, dof = Inf)
 #
 #   chisq_fac <- stats::qchisq(se, df = dof, lower.tail = FALSE)
 #   for (i in 1:length(params_names)) {

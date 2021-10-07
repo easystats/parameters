@@ -330,14 +330,14 @@ equivalence_test.parameters_simulate_model <- function(x,
 
   # ==== requested confidence intervals ====
 
-  params <- conf_int <- ci_wald(x, ci = ci)
+  params <- conf_int <- .ci_generic(x, ci = ci)
   conf_int <- as.data.frame(t(conf_int[, c("CI_low", "CI_high")]))
 
 
   # ==== the "narrower" intervals (1-2*alpha) for CET-rules. ====
 
   alpha <- 1 - ci
-  conf_int2 <- ci_wald(x, ci = (ci - alpha))
+  conf_int2 <- .ci_generic(x, ci = (ci - alpha))
   conf_int2 <- as.data.frame(t(conf_int2[, c("CI_low", "CI_high")]))
 
 

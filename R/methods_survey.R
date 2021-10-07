@@ -83,7 +83,6 @@ standard_error.svyolr <- standard_error.svyglm
 
 # confidence intervals -----------------------------------
 
-#' @rdname ci.merMod
 #' @export
 ci.svyglm <- function(x, ci = .95, method = c("wald", "likelihood"), ...) {
   method <- match.arg(method)
@@ -91,7 +90,7 @@ ci.svyglm <- function(x, ci = .95, method = c("wald", "likelihood"), ...) {
     out <- lapply(ci, function(i) .ci_likelihood(model = x, ci = i))
     out <- do.call(rbind, out)
   } else {
-    out <- ci_wald(model = x, ci = ci)
+    out <- .ci_generic(model = x, ci = ci)
   }
 
   row.names(out) <- NULL
@@ -175,7 +174,7 @@ p_value.svyglm.zip <- p_value.svyglm.nb
   )
 
   if (is.null(glm_ci)) {
-    glm_ci <- ci_wald(model, ci = ci)
+    glm_ci <- .ci_generic(model, ci = ci)
   }
 
   glm_ci

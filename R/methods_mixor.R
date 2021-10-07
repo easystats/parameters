@@ -39,11 +39,10 @@ model_parameters.mixor <- function(model,
 }
 
 
-#' @rdname ci.merMod
 #' @export
 ci.mixor <- function(x, ci = .95, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
-  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
+  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
 }
 
 

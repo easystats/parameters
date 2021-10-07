@@ -10,7 +10,7 @@
 #' @export
 ci.tobit <- function(x, ci = .95, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
+  .ci_generic(model = x, ci = ci, dof = Inf, robust = robust, ...)
 }
 
 

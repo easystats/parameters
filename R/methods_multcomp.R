@@ -72,7 +72,7 @@ ci.glht <- function(x, ci = .95, method = "robust", ...) {
     adjusted_ci <- ci
     dof <- x$df
   }
-  out <- ci_wald(model = x, ci = adjusted_ci, dof = dof, ...)
+  out <- .ci_generic(model = x, ci = adjusted_ci, dof = dof, ...)
   if (robust) {
     out$CI <- ci
   }

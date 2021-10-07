@@ -145,9 +145,8 @@ model_parameters.betamfx <- function(model,
 
 
 #' @export
-ci.logitor <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x$fit, ci = ci, robust = robust, ...)
+ci.logitor <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
+  .ci_generic(model = x$fit, ci = ci, method = method, robust = robust, ...)
 }
 
 
@@ -159,16 +158,15 @@ ci.poissonirr <- ci.logitor
 ci.negbinirr <- ci.logitor
 
 
-#' @rdname ci.merMod
 #' @export
 ci.poissonmfx <- function(x,
                           ci = .95,
                           component = c("all", "conditional", "marginal"),
                           method = NULL,
+                          robust = FALSE,
                           ...) {
   component <- match.arg(component)
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
+  .ci_generic(model = x, ci = ci, component = component, method = method, robust = robust, ...)
 }
 
 
@@ -190,20 +188,19 @@ ci.betaor <- function(x,
                       component = c("all", "conditional", "precision"),
                       ...) {
   component <- match.arg(component)
-  ci_wald(model = x$fit, ci = ci, dof = Inf, component = component)
+  .ci_generic(model = x$fit, ci = ci, dof = Inf, component = component)
 }
 
 
-#' @rdname ci.merMod
 #' @export
 ci.betamfx <- function(x,
                        ci = .95,
-                       component = c("all", "conditional", "precision", "marginal"),
                        method = NULL,
+                       robust = FALSE,
+                       component = c("all", "conditional", "precision", "marginal"),
                        ...) {
   component <- match.arg(component)
-  robust <- !is.null(method) && method == "robust"
-  ci_wald(model = x, ci = ci, component = component, robust = robust, ...)
+  .ci_generic(model = x, ci = ci, component = component, method = method, robust = robust, ...)
 }
 
 

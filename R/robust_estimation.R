@@ -26,7 +26,7 @@
 #'   `standard_error()`, if `method = "robust"`, arguments
 #'   `vcov_estimation`, `vcov_type` and `vcov_args` can be passed
 #'   down to `standard_error_robust()`.
-#' @inheritParams ci.merMod
+#' @inheritParams ci.default
 #'
 #' @note These functions rely on the \pkg{sandwich} or \pkg{clubSandwich} package
 #'   (the latter if `vcov_estimation = "CR"` for cluster-robust standard errors)
@@ -134,7 +134,7 @@ ci_robust <- function(model,
                       vcov_args = NULL,
                       component = "conditional",
                       ...) {
-  out <- ci_wald(
+  out <- .ci_generic(
     model = model,
     ci = ci,
     method = method,

@@ -111,7 +111,7 @@ p_value.mjoint <- function(model, component = c("all", "conditional", "survival"
 
 #' @export
 ci.mjoint <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
+  .ci_generic(model = x, ci = ci, dof = Inf, ...)
 }
 
 

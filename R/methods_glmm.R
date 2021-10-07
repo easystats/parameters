@@ -30,14 +30,13 @@ model_parameters.glmm <- function(model,
 #' @export
 ci.glmm <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
-  ci_wald(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE)
+  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE)
 }
 
 
 #' @export
 standard_error.glmm <- function(model, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
-  s <- summary(model)
 
   out <- insight::get_parameters(model, effects = "all")
   out$SE <- sqrt(diag(insight::get_varcov(model, effects = "all")))

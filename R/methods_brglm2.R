@@ -55,7 +55,7 @@ model_parameters.bracl <- function(model,
 ci.bracl <- function(x, ci = .95, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   params <- insight::get_parameters(x)
-  out <- ci_wald(model = x, ci = ci, dof = Inf, robust = robust, ...)
+  out <- .ci_generic(model = x, ci = ci, dof = Inf, robust = robust, ...)
   if ("Response" %in% colnames(params)) {
     out$Response <- params$Response
   }

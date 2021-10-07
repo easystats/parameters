@@ -22,7 +22,7 @@
   )
 
   if (is.null(glm_ci)) {
-    glm_ci <- ci_wald(model, ci = ci)
+    glm_ci <- .ci_generic(model, ci = ci)
   }
 
   glm_ci
@@ -52,7 +52,7 @@
   )
 
   if (is.null(glm_ci)) {
-    glm_ci <- ci_wald(model, ci = ci)
+    glm_ci <- .ci_generic(model, ci = ci)
   }
 
   glm_ci

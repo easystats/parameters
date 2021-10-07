@@ -55,7 +55,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
 #' @export
 ci.margins <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = Inf, ...)
+  .ci_generic(model = x, ci = ci, dof = Inf, ...)
 }
 
 

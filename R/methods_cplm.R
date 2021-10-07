@@ -124,7 +124,6 @@ standard_error.zcpglm <- function(model,
 #' @inheritParams p_value
 #' @inheritParams simulate_model
 #' @inheritParams standard_error
-#' @inheritParams ci.merMod
 #'
 #' @return
 #' A data frame with at least two columns: the parameter names and the p-values.

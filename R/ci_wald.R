@@ -1,26 +1,34 @@
-#' @rdname p_value_wald
-#'
-#' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
-#' @param dof Degrees of Freedom. If not specified, for `ci_wald()`, defaults to
-#'   model's residual degrees of freedom (i.e. `n-k`, where `n` is the number of
-#'   observations and `k` is the number of parameters). For `p_value_wald()`,
-#'   defaults to `Inf`.
-#'
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#' @inheritParams model_parameters.default
-#'
-#' @export
-ci_wald <- function(model,
-                    ci = .95,
-                    method = "wald",
-                    dof = NULL,
-                    effects = c("fixed", "random", "all"),
-                    component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
-                    robust = FALSE,
-                    ...) {
+.ci_generic <- function(model,
+                        ci = .95,
+                        method = "wald",
+                        dof = NULL,
+                        effects = c("fixed", "random", "all"),
+                        component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
+                        robust = FALSE,
+                        ...) {
+
+  # check method
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  method <- tolower(method)
+  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "kr",
+                                          "satterthwaite", "kenward", "boot",
+                                          "profile", "residual", "normal"))
+
   effects <- match.arg(effects)
   component <- match.arg(component)
+
+  if (method == "ml1") {
+    return(ci_ml1(model, ci = ci))
+  } else if (method == "betwithin") {
+    return(ci_betwithin(model, ci = ci))
+  } else if (method == "satterthwaite") {
+    return(ci_satterthwaite(model, ci = ci))
+  } else if (method %in% c("kenward", "kr")) {
+    return(ci_kenward(model, ci = ci))
+  }
+
   out <- lapply(ci, function(i) {
     .ci_dof(
       model = model,
@@ -33,6 +41,7 @@ ci_wald <- function(model,
       ...
     )
   })
+
   out <- do.call(rbind, out)
   row.names(out) <- NULL
   out

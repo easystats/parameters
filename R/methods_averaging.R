@@ -88,5 +88,5 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
 #' @export
 ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
   component <- match.arg(component)
-  ci_wald(model = x, ci = ci, dof = Inf, component = component)
+  .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

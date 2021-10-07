@@ -177,37 +177,38 @@ model_parameters.glmmTMB <- function(model,
 # ci -----
 
 
-#' @rdname ci.merMod
 #' @export
 ci.glmmTMB <- function(x,
                        ci = .95,
+                       dof = NULL,
+                       method = "wald",
+                       robust = FALSE,
                        component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
-                       method = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"),
                        verbose = TRUE,
                        ...) {
+
   method <- tolower(method)
-  method <- match.arg(method)
+  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"))
   component <- match.arg(component)
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
   }
 
-  if (method == "robust") {
-    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = TRUE)
-  } else if (method == "wald") {
-    ci_wald(model = x, ci = ci, dof = Inf, component = component, robust = FALSE)
-  } else if (method == "ml1") {
-    ci_ml1(model = x, ci = ci)
-  } else if (method == "betwithin") {
-    ci_betwithin(model = x, ci = ci)
-  } else if (method == "profile") {
+  # profiled CIs
+  if (method == "profile") {
     pp <- stats::profile(x)
     out <- lapply(ci, function(i) .ci_profile_glmmTMB(x, ci = i, profiled = pp, component = component, ...))
     do.call(rbind, out)
+
+    # uniroot CIs
   } else if (method == "uniroot") {
     out <- lapply(ci, function(i) .ci_uniroot_glmmTMB(x, ci = i, component = component, ...))
     do.call(rbind, out)
+  } else {
+
+    # all other
+    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
   }
 }
 

@@ -25,7 +25,7 @@ model_parameters.merModList <- function(model,
 
 #' @export
 ci.merModList <- function(x, ci = .95, ...) {
-  ci_wald(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
+  .ci_generic(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
 }
 
 

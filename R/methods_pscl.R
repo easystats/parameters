@@ -17,12 +17,10 @@ model_parameters.zerocount <- model_parameters.zcpglm
 
 # ci -----------------
 
-#' @rdname ci.merMod
 #' @export
 ci.zeroinfl <- ci.glmmTMB
 
 
-#' @rdname ci.merMod
 #' @export
 ci.hurdle <- ci.glmmTMB
 

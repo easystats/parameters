@@ -3,7 +3,6 @@
 model_parameters.HLfit <- model_parameters.default
 
 
-#' @rdname ci.merMod
 #' @export
 ci.HLfit <- function(x,
                      ci = 0.95,
@@ -14,7 +13,7 @@ ci.HLfit <- function(x,
 
   # Wald approx
   if (method == "wald") {
-    out <- ci_wald(model = x, ci = ci, dof = Inf)
+    out <- .ci_generic(model = x, ci = ci, dof = Inf)
 
     # ml1 approx
   } else if (method == "ml1") {
