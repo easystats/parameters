@@ -170,12 +170,10 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
     # correlation ---------
     out <- .extract_htest_correlation(model)
-
   } else if (.is_levenetest(model)) {
 
     # levene's test ---------
     out <- .extract_htest_levenetest(model)
-
   } else if (m_info$is_ttest) {
 
     # t-test -----------
@@ -189,7 +187,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       verbose = verbose,
       ...
     )
-
   } else if (m_info$is_ranktest) {
 
     # rank-test (kruskal / wilcox / friedman) -----------
@@ -224,7 +221,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         ...
       )
     }
-
   } else if (m_info$is_onewaytest) {
 
     # one-way test -----------
@@ -238,7 +234,6 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
       ci = ci,
       verbose = verbose
     )
-
   } else if (m_info$is_chi2test) {
 
     # chi2- and mcnemar-test -----------
@@ -248,19 +243,15 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     } else {
       out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, alternative = alternative, verbose = verbose)
     }
-
   } else if (m_info$is_proptest) {
 
     # test of proportion --------------
     out <- .extract_htest_prop(model)
-
   } else if (m_info$is_binomtest) {
 
     # exact binomial test --------------
     out <- .extract_htest_binom(model)
-
-  }
-  else {
+  } else {
     stop("model_parameters not implemented for such h-tests yet.")
   }
 

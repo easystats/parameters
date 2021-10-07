@@ -80,33 +80,33 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 set.seed(33)
 # K-Means ====================================================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
-rez  # Show results
-predict(rez)  # Get clusters
+rez # Show results
+predict(rez) # Get clusters
 
 # Hierarchical k-means (more robust k-means)
 if (require("factoextra", quietly = TRUE)) {
   rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-  rez  # Show results
-  predict(rez)  # Get clusters
+  rez # Show results
+  predict(rez) # Get clusters
 }
 
 # Hierarchical Clustering (hclust) ===========================
 rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
-rez  # Show results
-predict(rez)  # Get clusters
+rez # Show results
+predict(rez) # Get clusters
 
 # K-Medoids (pam) ============================================
 if (require("cluster", quietly = TRUE)) {
   rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
-  rez  # Show results
-  predict(rez)  # Get clusters
+  rez # Show results
+  predict(rez) # Get clusters
 }
 
 # PAM with automated number of clusters
 if (require("fpc", quietly = TRUE)) {
   rez <- cluster_analysis(iris[1:4], method = "pamk")
-  rez  # Show results
-  predict(rez)  # Get clusters
+  rez # Show results
+  predict(rez) # Get clusters
 }
 
 # DBSCAN ====================================================
@@ -114,18 +114,17 @@ if (require("dbscan", quietly = TRUE)) {
   # Note that you can assimilate more outliers (cluster 0) to neighbouring
   # clusters by setting borderPoints = TRUE.
   rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
-  rez  # Show results
-  predict(rez)  # Get clusters
+  rez # Show results
+  predict(rez) # Get clusters
 }
 
 # Mixture ====================================================
 if (require("mclust", quietly = TRUE)) {
- library(mclust)  # Needs the package to be loaded
- rez <- cluster_analysis(iris[1:4], method = "mixture")
- rez  # Show results
- predict(rez)  # Get clusters
+  library(mclust) # Needs the package to be loaded
+  rez <- cluster_analysis(iris[1:4], method = "mixture")
+  rez # Show results
+  predict(rez) # Get clusters
 }
-
 }
 \references{
 \itemize{

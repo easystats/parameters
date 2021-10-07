@@ -123,7 +123,7 @@ are standardized based on their SD at level of prediction (see also
 on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
 is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
-within-group varialbe is found to have access between-group variance.
+within-group variable is found to have access between-group variance.
 }
 }
 
@@ -158,8 +158,10 @@ to add the model-specification to the output of the
 
 \references{
 \itemize{
-\item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation and change. Routledge.
-\item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
+\item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
+fluctuation and change. Routledge.
+\item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+regression models.
 }
 }
 \seealso{

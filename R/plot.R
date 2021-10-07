@@ -73,4 +73,3 @@ plot.parameters_efa <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
 }
-

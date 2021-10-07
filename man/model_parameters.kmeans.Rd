@@ -43,26 +43,25 @@ Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 
 # DBSCAN ---------------------------
 if (require("dbscan", quietly = TRUE)) {
-model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
+  model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
 
-rez <- model_parameters(model, iris[1:4])
-rez
+  rez <- model_parameters(model, iris[1:4])
+  rez
 
-# Get clusters
-predict(rez)
+  # Get clusters
+  predict(rez)
 
-# Clusters centers in long form
-attributes(rez)$means
+  # Clusters centers in long form
+  attributes(rez)$means
 
-# Between and Total Sum of Squares
-attributes(rez)$Sum_Squares_Total
-attributes(rez)$Sum_Squares_Between
+  # Between and Total Sum of Squares
+  attributes(rez)$Sum_Squares_Total
+  attributes(rez)$Sum_Squares_Between
 
-# HDBSCAN
-model <- dbscan::hdbscan(iris[1:4], minPts = 10)
-model_parameters(model, iris[1:4])
+  # HDBSCAN
+  model <- dbscan::hdbscan(iris[1:4], minPts = 10)
+  model_parameters(model, iris[1:4])
 }
-
 # Hierarchical clustering (hclust) ---------------------------
 data <- iris[1:4]
 model <- hclust(dist(data))
@@ -80,15 +79,15 @@ attributes(rez)$means
 # Between and Total Sum of Squares
 attributes(rez)$Total_Sum_Squares
 attributes(rez)$Between_Sum_Squares
-
 # pvclust (finds "significant" clusters) ---------------------------
 if (require("pvclust", quietly = TRUE)) {
   data <- iris[1:4]
   # NOTE: pvclust works on transposed data
   model <- pvclust::pvclust(datawizard::data_transpose(data),
-                            method.dist="euclidean",
-                            nboot = 50,
-                            quiet = TRUE)
+    method.dist = "euclidean",
+    nboot = 50,
+    quiet = TRUE
+  )
 
   rez <- model_parameters(model, data, ci = 0.90)
   rez
@@ -103,7 +102,6 @@ if (require("pvclust", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Total
   attributes(rez)$Sum_Squares_Between
 }
-
 library(parameters)
 
 # K-means -------------------------------
@@ -138,7 +136,6 @@ if (require("factoextra", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Total
   attributes(rez)$Sum_Squares_Between
 }
-
 if (require("mclust", quietly = TRUE)) {
   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
   model_parameters(model)

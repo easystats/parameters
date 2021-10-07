@@ -8,7 +8,7 @@
 #' Analysis Basics and Extensions. R package.
 #'
 #' @param x A data frame.
-#' @param n Number of clusters used for supervised cluster methods. If \code{NULL},
+#' @param n Number of clusters used for supervised cluster methods. If `NULL`,
 #' the number of clusters to extract is determined by calling [n_clusters()]. Note
 #' that this argument does not apply for unsupervised clustering methods like
 #' `dbscan`, `mixture`, `pvclust`, or `pamk`.
@@ -54,33 +54,33 @@
 #' set.seed(33)
 #' # K-Means ====================================================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
-#' rez  # Show results
-#' predict(rez)  # Get clusters
+#' rez # Show results
+#' predict(rez) # Get clusters
 #'
 #' # Hierarchical k-means (more robust k-means)
 #' if (require("factoextra", quietly = TRUE)) {
 #'   rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-#'   rez  # Show results
-#'   predict(rez)  # Get clusters
+#'   rez # Show results
+#'   predict(rez) # Get clusters
 #' }
 #'
 #' # Hierarchical Clustering (hclust) ===========================
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
-#' rez  # Show results
-#' predict(rez)  # Get clusters
+#' rez # Show results
+#' predict(rez) # Get clusters
 #'
 #' # K-Medoids (pam) ============================================
 #' if (require("cluster", quietly = TRUE)) {
 #'   rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
-#'   rez  # Show results
-#'   predict(rez)  # Get clusters
+#'   rez # Show results
+#'   predict(rez) # Get clusters
 #' }
 #'
 #' # PAM with automated number of clusters
 #' if (require("fpc", quietly = TRUE)) {
 #'   rez <- cluster_analysis(iris[1:4], method = "pamk")
-#'   rez  # Show results
-#'   predict(rez)  # Get clusters
+#'   rez # Show results
+#'   predict(rez) # Get clusters
 #' }
 #'
 #' # DBSCAN ====================================================
@@ -88,18 +88,17 @@
 #'   # Note that you can assimilate more outliers (cluster 0) to neighbouring
 #'   # clusters by setting borderPoints = TRUE.
 #'   rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
-#'   rez  # Show results
-#'   predict(rez)  # Get clusters
+#'   rez # Show results
+#'   predict(rez) # Get clusters
 #' }
 #'
 #' # Mixture ====================================================
 #' if (require("mclust", quietly = TRUE)) {
-#'  library(mclust)  # Needs the package to be loaded
-#'  rez <- cluster_analysis(iris[1:4], method = "mixture")
-#'  rez  # Show results
-#'  predict(rez)  # Get clusters
+#'   library(mclust) # Needs the package to be loaded
+#'   rez <- cluster_analysis(iris[1:4], method = "mixture")
+#'   rez # Show results
+#'   predict(rez) # Get clusters
 #' }
-#'
 #' @export
 cluster_analysis <- function(x,
                              n = NULL,
@@ -180,7 +179,7 @@ cluster_analysis <- function(x,
 
   # Get clustering parameters
   out <- model_parameters(rez$model, data = data, clusters = clusters, ...)
-  performance <-  cluster_performance(out)
+  performance <- cluster_performance(out)
 
   attr(out, "model") <- rez$model
   attr(out, "method") <- method
@@ -190,7 +189,6 @@ cluster_analysis <- function(x,
 
   class(out) <- c("cluster_analysis", class(out))
   out
-
 }
 
 
@@ -349,18 +347,24 @@ vr_cluster_centers <- function(x, show_data, ...) {
 
   # Layers -----------------------
 
-  layers[["l1"]] <- list(geom = show_data,
-                         data = data,
-                         aes = list(x = "x", y = "y", label = label, color = "Cluster"))
+  layers[["l1"]] <- list(
+    geom = show_data,
+    data = data,
+    aes = list(x = "x", y = "y", label = label, color = "Cluster")
+  )
 
-  layers[["l2"]] <- list(geom = "point",
-                         data = data_centers,
-                         aes = list(x = "x", y = "y", color = "Cluster"),
-                         shape = "+", size = 10)
-  layers[["l3"]] <- list(geom = "labs",
-                         x = "PCA - 1",
-                         y = "PCA - 2",
-                         title = "Clustering Solution")
+  layers[["l2"]] <- list(
+    geom = "point",
+    data = data_centers,
+    aes = list(x = "x", y = "y", color = "Cluster"),
+    shape = "+", size = 10
+  )
+  layers[["l3"]] <- list(
+    geom = "labs",
+    x = "PCA - 1",
+    y = "PCA - 2",
+    title = "Clustering Solution"
+  )
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))

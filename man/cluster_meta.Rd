@@ -36,9 +36,7 @@ list_of_clusters <- list(rez1, rez2, rez3, rez4, rez5, rez6)
 m <- cluster_meta(list_of_clusters)
 
 # Visualize matrix without reordering
-heatmap(m, Rowv = NA, Colv= NA, scale = "none")  # Without reordering
+heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 # Reordered heatmap
 heatmap(m, scale = "none")
-
-
 }

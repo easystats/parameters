@@ -2,7 +2,9 @@
 
 #' @keywords internal
 .prepare_data_clustering <- function(x, include_factors = FALSE, standardize = FALSE, preprocess = TRUE, ...) {
-  if(preprocess == FALSE) return(x)
+  if (preprocess == FALSE) {
+    return(x)
+  }
 
   # Convert factors to numeric
   # include factors?

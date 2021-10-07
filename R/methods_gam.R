@@ -80,7 +80,7 @@ model_parameters.list <- function(model,
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     model_parameters(model, ...)
-  } else if("pamobject" %in% names(model)) {
+  } else if ("pamobject" %in% names(model)) {
     model <- model$pamobject
     model_parameters(model, ...)
   } else {

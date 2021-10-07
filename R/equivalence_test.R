@@ -663,14 +663,15 @@ print.equivalence_test_lm <- function(x,
 
   # formatting
   x <- format(x,
-              digits = digits,
-              ci_digits = ci_digits,
-              p_digits = p_digits,
-              ci_width = "auto",
-              ci_brackets = ci_brackets,
-              format = "text",
-              zap_small = zap_small,
-              ...)
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = "auto",
+    ci_brackets = ci_brackets,
+    format = "text",
+    zap_small = zap_small,
+    ...
+  )
 
   if ("Group" %in% colnames(x)) {
     out <- split(x, x$Group)
