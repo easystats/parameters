@@ -62,9 +62,8 @@ model_parameters.glht <- function(model,
 
 
 #' @export
-ci.glht <- function(x, ci = .95, method = "robust", ...) {
+ci.glht <- function(x, ci = .95, robust = TRUE, ...) {
   s <- summary(x)
-  robust <- !is.null(method) && method == "robust"
   if (robust) {
     adjusted_ci <- 2 * stats::pnorm(s$test$qfunction(ci)) - 1
     dof <- Inf

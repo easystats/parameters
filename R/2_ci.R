@@ -5,6 +5,12 @@
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
+#' @param dof Number of degrees of freedom to be used when calculating
+#'   confidence intervals. If `NULL` (default), the degrees of freedom are
+#'   retrieved by calling [`degrees_of_freedom()`][degrees_of_freedom] with
+#'   approximation method defined in `method`. If not `NULL`, use this argument
+#'   to override the default degrees of freedom used to compute confidence
+#'   intervals.
 #' @param method For mixed models, can be [`"wald"()`][p_value_wald]
 #'   (default), [`"ml1"()`][p_value_ml1] or
 #'   [`"betwithin"()`][p_value_betwithin]. For linear mixed model, can
@@ -15,19 +21,18 @@
 #'   matrix estimation, and for generalized linear models and models from
 #'   packages \pkg{lme4} or \pkg{glmmTMB}, may also be `"profile"`,
 #'   `"uniroot"` or `"wald"` (default).
-#' @param ... Arguments passed down to `standard_error_robust()` when
-#'   confidence intervals or p-values based on robust standard errors should be
-#'   computed.
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#' @inheritParams p_value
+#' @param robust Logical, if `TRUE`, computes confidence intervals based on
+#'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
+#' @param ... Arguments passed down to [`standard_error_robust()`][standard_error_robust]
+#'   when confidence intervals or p-values based on robust standard errors
+#'   should be computed.
 #'
 #' @return A data frame containing the CI bounds.
 #'
-#' @note `ci_robust()` resp. `ci(method = "robust")`
-#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
-#'   thus only work for those models supported by those packages.
+#' @note `ci_robust()` resp. `ci(robust = TRUE)` rely on the \pkg{sandwich}
+#'   or \pkg{clubSandwich} package (the latter if `vcov_estimation = "CR"` for
+#'   cluster-robust standard errors) and will thus only work for those models
+#'   supported by those packages.
 #'
 #' @examples
 #' \donttest{
@@ -57,7 +62,8 @@ ci.glm <- function(x,
                    method = "profile",
                    robust = FALSE,
                    ...) {
-  method <- match.arg(method, choices = c("profile", "wald"))
+
+  method <- match.arg(method, choices = c("profile", "wald", "normal"))
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)

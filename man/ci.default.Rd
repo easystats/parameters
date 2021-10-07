@@ -11,6 +11,13 @@
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
+\item{dof}{Number of degrees of freedom to be used when calculating
+confidence intervals. If \code{NULL} (default), the degrees of freedom are
+retrieved by calling \code{\link[=degrees_of_freedom]{degrees_of_freedom()}} with
+approximation method defined in \code{method}. If not \code{NULL}, use this argument
+to override the default degrees of freedom used to compute confidence
+intervals.}
+
 \item{method}{For mixed models, can be \code{\link[=p_value_wald]{"wald"()}}
 (default), \code{\link[=p_value_ml1]{"ml1"()}} or
 \code{\link[=p_value_betwithin]{"betwithin"()}}. For linear mixed model, can
@@ -22,9 +29,12 @@ matrix estimation, and for generalized linear models and models from
 packages \pkg{lme4} or \pkg{glmmTMB}, may also be \code{"profile"},
 \code{"uniroot"} or \code{"wald"} (default).}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when
-confidence intervals or p-values based on robust standard errors should be
-computed.}
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
+robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+
+\item{...}{Arguments passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}
+when confidence intervals or p-values based on robust standard errors
+should be computed.}
 }
 \value{
 A data frame containing the CI bounds.
@@ -33,10 +43,10 @@ A data frame containing the CI bounds.
 Compute confidence intervals (CI) for frequentist models.
 }
 \note{
-\code{ci_robust()} resp. \code{ci(method = "robust")}
-rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-\code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-thus only work for those models supported by those packages.
+\code{ci_robust()} resp. \code{ci(robust = TRUE)} rely on the \pkg{sandwich}
+or \pkg{clubSandwich} package (the latter if \code{vcov_estimation = "CR"} for
+cluster-robust standard errors) and will thus only work for those models
+supported by those packages.
 }
 \examples{
 \donttest{

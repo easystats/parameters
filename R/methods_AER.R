@@ -8,8 +8,7 @@
 
 
 #' @export
-ci.tobit <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+ci.tobit <- function(x, ci = .95, robust = FALSE, ...) {
   .ci_generic(model = x, ci = ci, dof = Inf, robust = robust, ...)
 }
 

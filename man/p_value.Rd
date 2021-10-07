@@ -19,6 +19,9 @@ p_value(model, ...)
 
 \item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
 
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
+robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+
 \item{verbose}{Toggle warnings and messages.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}

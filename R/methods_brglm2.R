@@ -52,10 +52,9 @@ model_parameters.bracl <- function(model,
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+ci.bracl <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
   params <- insight::get_parameters(x)
-  out <- .ci_generic(model = x, ci = ci, dof = Inf, robust = robust, ...)
+  out <- .ci_generic(model = x, ci = ci, dof = Inf, method = method, robust = robust, ...)
   if ("Response" %in% colnames(params)) {
     out$Response <- params$Response
   }

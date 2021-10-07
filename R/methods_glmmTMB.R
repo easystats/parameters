@@ -183,13 +183,13 @@ ci.glmmTMB <- function(x,
                        dof = NULL,
                        method = "wald",
                        robust = FALSE,
-                       component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                       component = "all",
                        verbose = TRUE,
                        ...) {
 
   method <- tolower(method)
   method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"))
-  component <- match.arg(component)
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
     return(NULL)
