@@ -1,9 +1,9 @@
 ---
-title: "Clustering with easytats"
+title: "Clustering with easystats"
 output: 
   rmarkdown::html_vignette:
 vignette: >
-  %\VignetteIndexEntry{Clustering with easytats}
+  %\VignetteIndexEntry{Clustering with easystats}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

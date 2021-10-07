@@ -447,7 +447,6 @@
                                       drop_parameters = NULL,
                                       verbose = TRUE,
                                       ...) {
-
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
   # get parameters and statistic

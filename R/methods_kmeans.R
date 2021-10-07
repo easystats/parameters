@@ -36,9 +36,10 @@ model_parameters.kmeans <- function(model, ...) {
 
   # Long means
   means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
+    cols = 4:ncol(params),
+    values_to = "Mean",
+    names_to = "Variable"
+  )
 
   # Attributes
   attr(params, "variance") <- model$betweenss / model$totss
@@ -84,7 +85,6 @@ model_parameters.kmeans <- function(model, ...) {
 #'   attributes(rez)$Sum_Squares_Total
 #'   attributes(rez)$Sum_Squares_Between
 #' }
-#'
 #' @export
 model_parameters.hkmeans <- model_parameters.kmeans
 
@@ -98,7 +98,7 @@ model_parameters.hkmeans <- model_parameters.kmeans
 #' @export
 print.parameters_clusters <- function(x, digits = 2, ...) {
   title <- "# Clustering Solution"
-  if("title" %in% attributes(x)) title <- attributes(x)$title
+  if ("title" %in% attributes(x)) title <- attributes(x)$title
 
   insight::print_color(title, "blue")
 
@@ -166,5 +166,3 @@ predict.kmeans <- function(object, newdata = NULL, ...) {
     as.vector(apply(as.data.frame(sumsquares_by_center), 1, which.min))
   }
 }
-
-

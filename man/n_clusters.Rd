@@ -7,7 +7,7 @@
 \alias{n_clusters_silhouette}
 \alias{n_clusters_dbscan}
 \alias{n_clusters_hclust}
-\title{Find how many clusters in your data}
+\title{Find number of clusters in your data}
 \usage{
 n_clusters(
   x,
@@ -85,20 +85,27 @@ number of clusters. Can be \code{"all"} or a vector containing
 \code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
 
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"}
-in \code{NbClust}). This has been deactivated by default as it is computationally
-heavy.}
+in \code{NbClust}). This has been deactivated by default as it is
+computationally heavy.}
 
-\item{nbclust_method}{The clustering method (passed to \code{NbClust::NbClust()} as \code{method}).}
+\item{nbclust_method}{The clustering method (passed to \code{NbClust::NbClust()}
+as \code{method}).}
 
 \item{n_max}{Maximal number of clusters to test.}
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{clustering_function, gap_method}{Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).}
+\item{clustering_function, gap_method}{Other arguments passed to other
+functions. \code{clustering_function} is used by \code{fviz_nbclust} and
+can be \code{kmeans}, code{cluster::pam}, code{cluster::clara},
+code{cluster::fanny}, and more. \code{gap_method} is used by
+\code{cluster::maxSE} to extract the optimal numbers of clusters (see its
+\code{method} argument).}
 
 \item{method, min_size, eps_n, eps_range}{Arguments for DBSCAN algorithm.}
 
-\item{distance_method}{The distance method (passed to \code{\link[=dist]{dist()}}). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.}
+\item{distance_method}{The distance method (passed to \code{\link[=dist]{dist()}}). Used by
+algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.}
 
 \item{hclust_method}{The hierarchical clustering method (passed to \code{\link[=hclust]{hclust()}}).}
 
@@ -110,13 +117,14 @@ case of bootstrapped frequentist models.}
 \description{
 Similarly to \code{\link[=n_factors]{n_factors()}} for factor / principal component analysis,
 \code{n_clusters} is the main function to find out the optimal numbers of clusters
-present in the data based on the maximum consensus of a large number of methods.
+present in the data based on the maximum consensus of a large number of
+methods.
 \cr
-Essentially, there exist many methods to determine the optimal number of clusters,
-each with pros and cons, benefits and limitations. The main \code{n_clusters}
-function proposes to run all of them, and find out the number of clusters that is
-suggested by the majority of methods (in case of ties, it will select the
-most parsimonious solution with fewer clusters).
+Essentially, there exist many methods to determine the optimal number of
+clusters, each with pros and cons, benefits and limitations. The main
+\code{n_clusters} function proposes to run all of them, and find out the number of
+clusters that is suggested by the majority of methods (in case of ties, it
+will select the most parsimonious solution with fewer clusters).
 \cr
 Note that we also implement some specific, commonly used methods, like the
 Elbow or the Gap method, with their own visualization functionalities. See
@@ -165,25 +173,25 @@ as.data.frame(x)
 plot(x)
 #
 if (require("dbscan", quietly = TRUE)) {
-# DBSCAN method -------------------------
-# NOTE: This actually primarily estimates the 'eps' parameter, the number of
-# clusters is a side effect (it's the number of clusters corresponding to
-# this 'optimal' EPS parameter).
-x <- n_clusters_dbscan(iris[1:4], method = "kNN", min_size = 0.05) # 5 percent
-x
-head(as.data.frame(x))
-plot(x)
+  # DBSCAN method -------------------------
+  # NOTE: This actually primarily estimates the 'eps' parameter, the number of
+  # clusters is a side effect (it's the number of clusters corresponding to
+  # this 'optimal' EPS parameter).
+  x <- n_clusters_dbscan(iris[1:4], method = "kNN", min_size = 0.05) # 5 percent
+  x
+  head(as.data.frame(x))
+  plot(x)
 
-x <- n_clusters_dbscan(iris[1:4], method = "SS", eps_n = 100, eps_range = c(0.1, 2))
-x
-head(as.data.frame(x))
-plot(x)
+  x <- n_clusters_dbscan(iris[1:4], method = "SS", eps_n = 100, eps_range = c(0.1, 2))
+  x
+  head(as.data.frame(x))
+  plot(x)
 }
 #
 # hclust method -------------------------------
 # iterations should be higher for real analyses
 x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 x
-head(as.data.frame(x), n = 10)  # Print 10 first rows
+head(as.data.frame(x), n = 10) # Print 10 first rows
 plot(x)
 }

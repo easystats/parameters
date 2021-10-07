@@ -1,7 +1,7 @@
 if (require("testthat") &&
-    require("parameters") &&
-    require("effectsize") &&
-    require("lme4")) {
+  require("parameters") &&
+  require("effectsize") &&
+  require("lme4")) {
   data(iris)
   set.seed(1234)
   iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))

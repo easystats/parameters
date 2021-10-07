@@ -7,9 +7,8 @@
 #' }
 #' @export
 model_parameters.Mclust <- function(model, data = NULL, clusters = NULL, ...) {
-
-  if(is.null(data)) data <- as.data.frame(model$data)
-  if(is.null(clusters)) clusters <- model$classification
+  if (is.null(data)) data <- as.data.frame(model$data)
+  if (is.null(clusters)) clusters <- model$classification
 
   params <- .cluster_centers_params(data, clusters, ...)
 

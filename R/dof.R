@@ -68,9 +68,11 @@ degrees_of_freedom <- function(model, ...) {
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   method <- tolower(method)
-  method <- match.arg(method, c("analytical", "any", "fit", "ml1", "betwithin",
-                                "satterthwaite", "kenward", "nokr", "wald",
-                                "profile", "boot", "uniroot", "residual", "normal"))
+  method <- match.arg(method, c(
+    "analytical", "any", "fit", "ml1", "betwithin",
+    "satterthwaite", "kenward", "nokr", "wald",
+    "profile", "boot", "uniroot", "residual", "normal"
+  ))
 
   if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
     method <- "any"
@@ -205,8 +207,10 @@ dof <- degrees_of_freedom
 
   method <- tolower(method)
   if (inherits(model, c("polr", "glm"))) {
-    if (method %in% c("analytical", "any", "fit", "profile",
-                      "wald", "nokr", "likelihood")) {
+    if (method %in% c(
+      "analytical", "any", "fit", "profile",
+      "wald", "nokr", "likelihood"
+    )) {
       return(TRUE)
     } else {
       warning(insight::format_message(sprintf("'%s' must be one of 'wald' or 'profile'. Using 'wald' now.", type)), call. = FALSE)

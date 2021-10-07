@@ -1,14 +1,15 @@
-#' Find how many clusters in your data
+#' Find number of clusters in your data
 #'
 #' Similarly to [n_factors()] for factor / principal component analysis,
-#' \code{n_clusters} is the main function to find out the optimal numbers of clusters
-#' present in the data based on the maximum consensus of a large number of methods.
+#' `n_clusters` is the main function to find out the optimal numbers of clusters
+#' present in the data based on the maximum consensus of a large number of
+#' methods.
 #' \cr
-#' Essentially, there exist many methods to determine the optimal number of clusters,
-#' each with pros and cons, benefits and limitations. The main \code{n_clusters}
-#' function proposes to run all of them, and find out the number of clusters that is
-#' suggested by the majority of methods (in case of ties, it will select the
-#' most parsimonious solution with fewer clusters).
+#' Essentially, there exist many methods to determine the optimal number of
+#' clusters, each with pros and cons, benefits and limitations. The main
+#' `n_clusters` function proposes to run all of them, and find out the number of
+#' clusters that is suggested by the majority of methods (in case of ties, it
+#' will select the most parsimonious solution with fewer clusters).
 #' \cr
 #' Note that we also implement some specific, commonly used methods, like the
 #' Elbow or the Gap method, with their own visualization functionalities. See
@@ -23,14 +24,21 @@
 #'   number of clusters. Can be `"all"` or a vector containing
 #'   `"NbClust"`, `"mclust"`, `"cluster"` and `"M3C"`.
 #' @param fast If `FALSE`, will compute 4 more indices (sets `index = "allong"`
-#'   in `NbClust`). This has been deactivated by default as it is computationally
-#'   heavy.
+#'   in `NbClust`). This has been deactivated by default as it is
+#'   computationally heavy.
 #' @param n_max Maximal number of clusters to test.
-#' @param clustering_function,gap_method Other arguments passed to other functions. \code{clustering_function} is used by \code{fviz_nbclust} and can be \code{kmeans}, code{cluster::pam}, code{cluster::clara}, code{cluster::fanny}, and more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal numbers of clusters (see its \code{method} argument).
+#' @param clustering_function,gap_method Other arguments passed to other
+#'   functions. `clustering_function` is used by `fviz_nbclust` and
+#'   can be `kmeans`, code{cluster::pam}, code{cluster::clara},
+#'   code{cluster::fanny}, and more. `gap_method` is used by
+#'   `cluster::maxSE` to extract the optimal numbers of clusters (see its
+#'   `method` argument).
 #' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
-#' @param distance_method The distance method (passed to [dist()]). Used by algorithms relying on the distance matrix, such as \code{hclust} or \code{dbscan}.
+#' @param distance_method The distance method (passed to [dist()]). Used by
+#'   algorithms relying on the distance matrix, such as `hclust` or `dbscan`.
 #' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
-#' @param nbclust_method The clustering method (passed to `NbClust::NbClust()` as `method`).
+#' @param nbclust_method The clustering method (passed to `NbClust::NbClust()`
+#'   as `method`).
 #' @inheritParams model_parameters.glm
 #'
 #'
@@ -144,9 +152,11 @@ n_clusters <- function(x,
   gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", n_max = n_max, ...)
   gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
 
-  data.frame(n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
-             Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
-             Package = "easystats")
+  data.frame(
+    n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
+    Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
+    Package = "easystats"
+  )
 }
 
 
@@ -163,7 +173,7 @@ n_clusters <- function(x,
   }
 
   out <- data.frame()
-  for(idx in indices) {
+  for (idx in indices) {
     tryCatch(
       expr = {
         n <- NbClust::NbClust(
@@ -173,16 +183,19 @@ n_clusters <- function(x,
           max.nc = n_max,
           ...
         )
-        out <- rbind(out, data.frame(n_Clusters = n$Best.nc[["Number_clusters"]],
-                                     Method = idx,
-                                     Package = "NbClust"))
+        out <- rbind(out, data.frame(
+          n_Clusters = n$Best.nc[["Number_clusters"]],
+          Method = idx,
+          Package = "NbClust"
+        ))
       },
-      error = function(e){
+      error = function(e) {
         NULL
       },
-      warning = function(w){
+      warning = function(w) {
         NULL
-      })
+      }
+    )
   }
   out
 }
@@ -213,5 +226,3 @@ n_clusters <- function(x,
 
   out
 }
-
-

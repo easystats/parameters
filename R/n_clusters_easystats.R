@@ -119,22 +119,22 @@ n_clusters_silhouette <- function(x,
 #' @examples
 #' #
 #' if (require("dbscan", quietly = TRUE)) {
-#' # DBSCAN method -------------------------
-#' # NOTE: This actually primarily estimates the 'eps' parameter, the number of
-#' # clusters is a side effect (it's the number of clusters corresponding to
-#' # this 'optimal' EPS parameter).
-#' x <- n_clusters_dbscan(iris[1:4], method = "kNN", min_size = 0.05) # 5 percent
-#' x
-#' head(as.data.frame(x))
-#' plot(x)
+#'   # DBSCAN method -------------------------
+#'   # NOTE: This actually primarily estimates the 'eps' parameter, the number of
+#'   # clusters is a side effect (it's the number of clusters corresponding to
+#'   # this 'optimal' EPS parameter).
+#'   x <- n_clusters_dbscan(iris[1:4], method = "kNN", min_size = 0.05) # 5 percent
+#'   x
+#'   head(as.data.frame(x))
+#'   plot(x)
 #'
-#' x <- n_clusters_dbscan(iris[1:4], method = "SS", eps_n = 100, eps_range = c(0.1, 2))
-#' x
-#' head(as.data.frame(x))
-#' plot(x)
+#'   x <- n_clusters_dbscan(iris[1:4], method = "SS", eps_n = 100, eps_range = c(0.1, 2))
+#'   x
+#'   head(as.data.frame(x))
+#'   plot(x)
 #' }
 #' @export
-n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {
+n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {
   method <- match.arg(method)
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
@@ -142,18 +142,19 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
     out <- data.frame()
     for (eps in seq(eps_range[1], eps_range[2], length.out = eps_n)) {
       rez <- .cluster_analysis_dbscan(x, dbscan_eps = eps, min_size = min_size)
-      out <- rbind(out, data.frame(eps = eps,
-                                   n_Clusters = length(unique(rez$clusters)) - 1,
-                                   total_SS = sum(.cluster_centers_SS(x, rez$clusters)$WSS)))
+      out <- rbind(out, data.frame(
+        eps = eps,
+        n_Clusters = length(unique(rez$clusters)) - 1,
+        total_SS = sum(.cluster_centers_SS(x, rez$clusters)$WSS)
+      ))
     }
     attr(out, "min_size") <- rez$model$MinPts
     attr(out, "eps") <- out$eps[which.min(out$total_SS)]
     attr(out, "n") <- out$n_Clusters[which.min(out$total_SS)]
-
   } else {
     insight::check_if_installed("dbscan")
     if (min_size < 1) min_size <- round(min_size * nrow(x))
-    out <- data.frame(n_Obs = 1:nrow(x), eps = sort(dbscan::kNNdist(x, k =  min_size)))
+    out <- data.frame(n_Obs = 1:nrow(x), eps = sort(dbscan::kNNdist(x, k = min_size)))
     row.names(out) <- NULL
 
     gradient <- c(0, diff(out$eps))
@@ -183,11 +184,10 @@ n_clusters_dbscan <-  function(x, standardize = TRUE, include_factors = FALSE, m
 #' # iterations should be higher for real analyses
 #' x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 #' x
-#' head(as.data.frame(x), n = 10)  # Print 10 first rows
+#' head(as.data.frame(x), n = 10) # Print 10 first rows
 #' plot(x)
 #' @export
-n_clusters_hclust <-  function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
-
+n_clusters_hclust <- function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
   insight::check_if_installed("pvclust")
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
@@ -243,7 +243,7 @@ print.n_clusters_silhouette <- function(x, ...) {
 
 #' @export
 print.n_clusters_dbscan <- function(x, ...) {
-  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size,"), which corresponds to ", attributes(x)$n, " clusters."), "green")
+  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size, "), which corresponds to ", attributes(x)$n, " clusters."), "green")
   invisible(x)
 }
 
@@ -262,27 +262,37 @@ visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   layers <- list()
 
   # Layers -----------------------
-  layers[["l1"]] <- list(geom = "line",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "WSS", group = 1),
-                         size = 1)
-  layers[["l2"]] <- list(geom = "point",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "WSS"))
-  layers[["l3"]] <- list(geom = "line",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "Gradient", group = 1),
-                         size = 0.5,
-                         color = "red",
-                         linetype = "dashed")
-  layers[["l4"]] <- list(geom = "vline",
-                         data = data,
-                         xintercept = attributes(x)$n,
-                         linetype = "dotted")
-  layers[["l5"]] <- list(geom = "labs",
-                         x = "Number of Clusters",
-                         y = "Total Within-Clusters Sum of Squares",
-                         title = "Elbow Method")
+  layers[["l1"]] <- list(
+    geom = "line",
+    data = data,
+    aes = list(x = "n_Clusters", y = "WSS", group = 1),
+    size = 1
+  )
+  layers[["l2"]] <- list(
+    geom = "point",
+    data = data,
+    aes = list(x = "n_Clusters", y = "WSS")
+  )
+  layers[["l3"]] <- list(
+    geom = "line",
+    data = data,
+    aes = list(x = "n_Clusters", y = "Gradient", group = 1),
+    size = 0.5,
+    color = "red",
+    linetype = "dashed"
+  )
+  layers[["l4"]] <- list(
+    geom = "vline",
+    data = data,
+    xintercept = attributes(x)$n,
+    linetype = "dotted"
+  )
+  layers[["l5"]] <- list(
+    geom = "labs",
+    x = "Number of Clusters",
+    y = "Total Within-Clusters Sum of Squares",
+    title = "Elbow Method"
+  )
 
   # Out
   class(layers) <- c("visualisation_recipe", class(layers))
@@ -299,20 +309,28 @@ visualisation_recipe.n_clusters_gap <- function(x, ...) {
   layers <- list()
 
   # Layers -----------------------
-  layers[["l1"]] <- list(geom = "line",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "Gap", group = 1))
-  layers[["l2"]] <- list(geom = "pointrange",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "Gap", ymin = "ymin", ymax = "ymax"))
-  layers[["l4"]] <- list(geom = "vline",
-                         data = data,
-                         xintercept = attributes(x)$n,
-                         linetype = "dotted")
-  layers[["l5"]] <- list(geom = "labs",
-                         x = "Number of Clusters",
-                         y = "Gap statistic",
-                         title = "Gap Method")
+  layers[["l1"]] <- list(
+    geom = "line",
+    data = data,
+    aes = list(x = "n_Clusters", y = "Gap", group = 1)
+  )
+  layers[["l2"]] <- list(
+    geom = "pointrange",
+    data = data,
+    aes = list(x = "n_Clusters", y = "Gap", ymin = "ymin", ymax = "ymax")
+  )
+  layers[["l4"]] <- list(
+    geom = "vline",
+    data = data,
+    xintercept = attributes(x)$n,
+    linetype = "dotted"
+  )
+  layers[["l5"]] <- list(
+    geom = "labs",
+    x = "Number of Clusters",
+    y = "Gap statistic",
+    title = "Gap Method"
+  )
 
   # Out
   class(layers) <- c("visualisation_recipe", class(layers))
@@ -327,20 +345,28 @@ visualisation_recipe.n_clusters_silhouette <- function(x, ...) {
   layers <- list()
 
   # Layers -----------------------
-  layers[["l1"]] <- list(geom = "line",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "Silhouette", group = 1))
-  layers[["l2"]] <- list(geom = "point",
-                         data = data,
-                         aes = list(x = "n_Clusters", y = "Silhouette"))
-  layers[["l4"]] <- list(geom = "vline",
-                         data = data,
-                         xintercept = attributes(x)$n,
-                         linetype = "dotted")
-  layers[["l5"]] <- list(geom = "labs",
-                         x = "Number of Clusters",
-                         y = "Average Silhouette Width",
-                         title = "Silhouette Method")
+  layers[["l1"]] <- list(
+    geom = "line",
+    data = data,
+    aes = list(x = "n_Clusters", y = "Silhouette", group = 1)
+  )
+  layers[["l2"]] <- list(
+    geom = "point",
+    data = data,
+    aes = list(x = "n_Clusters", y = "Silhouette")
+  )
+  layers[["l4"]] <- list(
+    geom = "vline",
+    data = data,
+    xintercept = attributes(x)$n,
+    linetype = "dotted"
+  )
+  layers[["l5"]] <- list(
+    geom = "labs",
+    x = "Number of Clusters",
+    y = "Average Silhouette Width",
+    title = "Silhouette Method"
+  )
 
   # Out
   class(layers) <- c("visualisation_recipe", class(layers))
@@ -360,43 +386,59 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
   if ("gradient" %in% names(attributes(x))) {
     data$gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
 
-    layers[["l1"]] <- list(geom = "line",
-                           data = data,
-                           aes = list(x = "n_Obs", y = "eps"),
-                           size = 1)
-    layers[["l2"]] <- list(geom = "line",
-                           data = data,
-                           aes = list(x = "n_Obs", y = "gradient"),
-                           color = "red",
-                           linetype = "dashed")
-    layers[["l3"]] <- list(geom = "hline",
-                           data = data,
-                           yintercept = attributes(x)$eps,
-                           linetype = "dotted")
-    layers[["l4"]] <- list(geom = "labs",
-                           x = "Observations",
-                           y = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
-                           title = "DBSCAN Method")
+    layers[["l1"]] <- list(
+      geom = "line",
+      data = data,
+      aes = list(x = "n_Obs", y = "eps"),
+      size = 1
+    )
+    layers[["l2"]] <- list(
+      geom = "line",
+      data = data,
+      aes = list(x = "n_Obs", y = "gradient"),
+      color = "red",
+      linetype = "dashed"
+    )
+    layers[["l3"]] <- list(
+      geom = "hline",
+      data = data,
+      yintercept = attributes(x)$eps,
+      linetype = "dotted"
+    )
+    layers[["l4"]] <- list(
+      geom = "labs",
+      x = "Observations",
+      y = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
+      title = "DBSCAN Method"
+    )
   } else {
     data$y <- datawizard::change_scale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
 
-    layers[["l1"]] <- list(geom = "line",
-                           data = data,
-                           aes = list(x = "eps", y = "n_Clusters"),
-                           size = 1)
-    layers[["l2"]] <- list(geom = "line",
-                           data = data,
-                           aes = list(x = "eps", y = "y"),
-                           color = "red",
-                           linetype = "dashed")
-    layers[["l3"]] <- list(geom = "vline",
-                           data = data,
-                           xintercept = attributes(x)$eps,
-                           linetype = "dotted")
-    layers[["l4"]] <- list(geom = "labs",
-                           x = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
-                           y = paste0("Number of CLusters"),
-                           title = "DBSCAN Method")
+    layers[["l1"]] <- list(
+      geom = "line",
+      data = data,
+      aes = list(x = "eps", y = "n_Clusters"),
+      size = 1
+    )
+    layers[["l2"]] <- list(
+      geom = "line",
+      data = data,
+      aes = list(x = "eps", y = "y"),
+      color = "red",
+      linetype = "dashed"
+    )
+    layers[["l3"]] <- list(
+      geom = "vline",
+      data = data,
+      xintercept = attributes(x)$eps,
+      linetype = "dotted"
+    )
+    layers[["l4"]] <- list(
+      geom = "labs",
+      x = paste0("EPS Value (min. size = ", attributes(x)$min_size, ")"),
+      y = paste0("Number of CLusters"),
+      title = "DBSCAN Method"
+    )
   }
 
   # Out
@@ -425,4 +467,3 @@ plot.n_clusters_hclust <- function(x, ...) {
   plot(attributes(x)$model)
   pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
 }
-

@@ -107,7 +107,7 @@
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
 #' is used for level 2 predictors, and `sqrt(residual-variance)` is used for
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
-#' within-group varialbe is found to have access between-group variance.
+#' within-group variable is found to have access between-group variance.
 #'
 #' @section Labeling the Degrees of Freedom:
 #' Throughout the \pkg{parameters} package, we decided to label the residual
@@ -121,10 +121,10 @@
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #'
 #' @references
-#' \itemize{
-#'   \item Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation and change. Routledge.
-#'   \item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
-#' }
+#'   - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
+#'   fluctuation and change. Routledge.
+#'   - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+#'   regression models.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #' @export

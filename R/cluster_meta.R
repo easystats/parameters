@@ -26,25 +26,22 @@
 #' m <- cluster_meta(list_of_clusters)
 #'
 #' # Visualize matrix without reordering
-#' heatmap(m, Rowv = NA, Colv= NA, scale = "none")  # Without reordering
+#' heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 #' # Reordered heatmap
 #' heatmap(m, scale = "none")
-#'
-#'
 #' @export
 cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
-
   x <- list()
 
   # Sanitize output
-  for(i in 1:length(list_of_clusters)) {
+  for (i in 1:length(list_of_clusters)) {
     # Get name
     name <- names(list_of_clusters[i])
-    if(is.null(name)) name <- paste0("Solution", i)
+    if (is.null(name)) name <- paste0("Solution", i)
 
     solution <- list_of_clusters[[i]]
-    if(inherits(solution, "cluster_analysis")) {
-      if(name == paste0("Solution", i)) {
+    if (inherits(solution, "cluster_analysis")) {
+      if (name == paste0("Solution", i)) {
         name <- paste0(name, "_", attributes(solution)$method)
       }
       solution <- predict(solution, ...)
@@ -54,14 +51,14 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
   }
 
   # Sanity check
-  if(length(unique(sapply(x, length))) != 1) {
+  if (length(unique(sapply(x, length))) != 1) {
     stop("The clustering solutions are not of equal lengths.")
   }
 
   # Convert to dataframe
   data <- as.data.frame(x)
-  if(!is.null(names(solution))) row.names(data) <- names(solution)
-  if(!is.null(rownames)) row.names(data) <- rownames
+  if (!is.null(names(solution))) row.names(data) <- names(solution)
+  if (!is.null(rownames)) row.names(data) <- rownames
 
   # Get probability matrix
   .cluster_meta_matrix(data)
@@ -79,7 +76,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
   # Internal function
   .get_prob <- function(x) {
-    if(any(is.na(x))) {
+    if (any(is.na(x))) {
       NA
     } else {
       ifelse(length(unique(x[!is.na(x)])) == 1, 0, 1)
@@ -87,11 +84,11 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
   }
 
   # Initialize matrix
-  m <- matrix(data=NA, nrow=nrow(data), ncol=nrow(data), dimnames = list(rev(row.names(data)), row.names(data)))
+  m <- matrix(data = NA, nrow = nrow(data), ncol = nrow(data), dimnames = list(rev(row.names(data)), row.names(data)))
 
-  for(row in row.names(m)) {
-    for(col in colnames(m)) {
-      if(row == col) {
+  for (row in row.names(m)) {
+    for (col in colnames(m)) {
+      if (row == col) {
         m[row, col] <- 0
         next
       }

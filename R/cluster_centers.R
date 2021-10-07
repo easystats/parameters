@@ -5,7 +5,7 @@
 #'
 #' @param data A data.frame.
 #' @param clusters A vector with clusters assignments (must be same length as rows in data).
-#' @param fun What function to use, \code{mean} by default.
+#' @param fun What function to use, `mean` by default.
 #' @param ... Other arguments to be passed to or from other functions.
 #'
 #' @return A dataframe containing the cluster centers. Attributes include performance statistics and distance between each observation and its respective cluster centre.
@@ -27,7 +27,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   params$Sum_Squares <- ss$WSS
 
   # Get Cluster Centers
-  centers <- stats::aggregate(data, list(Cluster=clusters), fun)
+  centers <- stats::aggregate(data, list(Cluster = clusters), fun)
   params <- merge(params, centers, by = "Cluster")
 
   # Get distance of observations from cluster
@@ -54,9 +54,10 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
   # Long means
   means <- datawizard::reshape_longer(params,
-                                      cols = 4:ncol(params),
-                                      values_to = "Mean",
-                                      names_to = "Variable")
+    cols = 4:ncol(params),
+    values_to = "Mean",
+    names_to = "Variable"
+  )
 
   attr(params, "variance") <- attributes(params)$variance
   attr(params, "Sum_Squares_Between") <- attributes(params)$Sum_Squares_Between
@@ -75,16 +76,15 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
 #' @keywords internal
 .cluster_centers_distance <- function(data, clusters, centers, scale) {
-
   dis <- c()
-  for(c in unique(clusters)) {
+  for (c in unique(clusters)) {
     center <- centers[centers$Cluster == c, ]
     center$Cluster <- NULL # Remove column
 
     d <- apply(data[clusters == c, ], 1, function(x) {
       z <- x - center[names(data)]
       z <- z / scale
-      sqrt(sum((z) ^ 2))
+      sqrt(sum((z)^2))
     })
     dis <- c(dis, d)
   }
@@ -98,9 +98,9 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 .cluster_centers_SS <- function(data, clusters) {
   # https://stackoverflow.com/questions/68714612/compute-between-clusters-sum-of-squares-bcss-and-total-sum-of-squares-manually
   # total sum of squares
-  TSS <- sum(scale(data, scale=FALSE)^2)
+  TSS <- sum(scale(data, scale = FALSE)^2)
   # Within clusters sum of squares (WCSS)
-  WSS <- sapply(split(data, clusters), function(x) sum(scale(x, scale=FALSE)^2))
+  WSS <- sapply(split(data, clusters), function(x) sum(scale(x, scale = FALSE)^2))
   # Between clsuters sum of squares
   BSS <- TSS - sum(WSS)
 
@@ -110,7 +110,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   BSS2 <- sum(colSums((gmeans - means)^2) * table(clusters))
 
   # Double check
-  if(BSS2 - BSS > 1e-05) stop("The between sum of squares computation went wrong. Please open an issue at https://github.com/easystats/parameters/issues so we can fix the bug (provide an example and mention that 'BSS != BSS2').")
+  if (BSS2 - BSS > 1e-05) stop("The between sum of squares computation went wrong. Please open an issue at https://github.com/easystats/parameters/issues so we can fix the bug (provide an example and mention that 'BSS != BSS2').")
 
   list(WSS = WSS, BSS = BSS, TSS = TSS)
 }
