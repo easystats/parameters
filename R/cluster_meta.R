@@ -6,6 +6,7 @@
 #'
 #' @param list_of_clusters A list of vectors with the clustering assignments from various methods.
 #' @param rownames An optional vector of row.names for the matrix.
+#' @param ... Currently not used.
 #' @inheritParams cluster_analysis
 #'
 #' @return A matrix containing all the pairwise (between each observation) probabilities of being clustered together by the methods.
@@ -44,7 +45,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
       if (name == paste0("Solution", i)) {
         name <- paste0(name, "_", attributes(solution)$method)
       }
-      solution <- predict(solution, ...)
+      solution <- stats::predict(solution, ...)
     }
     solution[solution == "0"] <- NA
     x[[name]] <- solution

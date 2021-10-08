@@ -21,9 +21,12 @@ cluster_discrimination <- function(x, cluster_groups) {
   if (is.null(cluster_groups)) {
     cluster_groups <- cluster_analysis(x)
   }
-  if (inherits(cluster_groups, "cluster_analysis")) {
-    cluster_groups <- attributes(cluster_groups)$clusters
-  }
+
+  ## TODO fix when WIP cluster_analysis_new is re-implemented.
+
+  # if (inherits(cluster_groups, "cluster_analysis")) {
+  #   cluster_groups <- attributes(cluster_groups)$clusters
+  # }
 
   x <- stats::na.omit(x)
   cluster_groups <- stats::na.omit(cluster_groups)
