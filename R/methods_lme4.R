@@ -156,7 +156,7 @@ model_parameters.merMod <- function(model,
 
   # p-values, CI and se might be based of wald, or KR
   ci_method <- tolower(ci_method)
-  ci_method <- match.arg(ci_method, choices = c("wald", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "boot", "profile", "uniroot"))
+  ci_method <- match.arg(ci_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "kr", "boot", "profile", "uniroot"))
 
   # which component to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
