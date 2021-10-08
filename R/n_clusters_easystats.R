@@ -449,21 +449,21 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
 
 
-#' @export
-plot.n_clusters_elbow <- plot.cluster_analysis
-
-#' @export
-plot.n_clusters_gap <- plot.cluster_analysis
-
-#' @export
-plot.n_clusters_silhouette <- plot.cluster_analysis
-
-#' @export
-plot.n_clusters_dbscan <- plot.cluster_analysis
-
-#' @export
-plot.n_clusters_hclust <- function(x, ...) {
-  insight::check_if_installed("pvclust")
-  plot(attributes(x)$model)
-  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
-}
+#' #' @export
+#' plot.n_clusters_elbow <- plot.cluster_analysis
+#'
+#' #' @export
+#' plot.n_clusters_gap <- plot.cluster_analysis
+#'
+#' #' @export
+#' plot.n_clusters_silhouette <- plot.cluster_analysis
+#'
+#' #' @export
+#' plot.n_clusters_dbscan <- plot.cluster_analysis
+#'
+#' #' @export
+#' plot.n_clusters_hclust <- function(x, ...) {
+#'   insight::check_if_installed("pvclust")
+#'   plot(attributes(x)$model)
+#'   pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
+#' }

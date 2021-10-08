@@ -10,8 +10,6 @@ cluster_meta(list_of_clusters, rownames = NULL, ...)
 \item{list_of_clusters}{A list of vectors with the clustering assignments from various methods.}
 
 \item{rownames}{An optional vector of row.names for the matrix.}
-
-\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 A matrix containing all the pairwise (between each observation) probabilities of being clustered together by the methods.

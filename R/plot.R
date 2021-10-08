@@ -73,3 +73,10 @@ plot.parameters_efa <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
 }
+
+
+#' @export
+plot.cluster_analysis <- function(x, ...) {
+  insight::check_if_installed("see")
+  NextMethod()
+}

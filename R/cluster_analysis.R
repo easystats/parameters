@@ -1,378 +1,196 @@
-#' Cluster Analysis
+#' @title Compute cluster analysis and return group indices
+#' @name cluster_analysis
+#' @description Compute hierarchical or kmeans cluster analysis and return the group
+#'                assignment for each observation as vector.
 #'
-#' Compute hierarchical or kmeans cluster analysis and return the group
-#' assignment for each observation as vector.
-#'
-#' @references
-#' - Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
-#' Analysis Basics and Extensions. R package.
+#' @references Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
 #'
 #' @param x A data frame.
-#' @param n Number of clusters used for supervised cluster methods. If `NULL`,
-#' the number of clusters to extract is determined by calling [n_clusters()]. Note
-#' that this argument does not apply for unsupervised clustering methods like
-#' `dbscan`, `mixture`, `pvclust`, or `pamk`.
-#' @param method Method for computing the cluster analysis. Can be `"kmeans"` (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`), `pamk` (K-Medoids that finds out the number of clusters), `"hclust"` (hierarchical clustering using `hclust()` or `pvclust::pvclust()`), `dbscan` (DBSCAN using `dbscan::dbscan()`), `hdbscan` (Hierarchical DBSCAN using `dbscan::hdbscan()`), or `mixture` (Mixture modelling using `mclust::Mclust()`, which requires the user to run `library(mclust)` before).
-#' @param distance_method Distance measure to be used for methods based on distances (e.g., when `method = "hclust"` for hierarchical clustering. For other methods, such as `"kmeans"`, this argument will be ignored). Must be one of `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()] and `pvclust::pvclust()` for more information.
-#' @param hclust_method Agglomeration method to be used when `method = "hclust"`
-#'   (for hierarchical clustering). This should be one of `"ward"`, `"single"`,
-#'   `"complete"`, `"average"`, `"mcquitty"`, `"median"` or `"centroid"`.
-#'   Default is `"ward"` (see [hclust()]). If `method = "kmeans"` this argument
-#'   will be ignored.
-#' @param kmeans_method Algorithm used for calculating kmeans cluster. Only applies,
-#'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
-#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
-#'   this argument.
-#' @param iterations The number of replications.
-#' @param dbscan_eps The 'eps' argument for DBSCAN method. See [n_clusters_dbscan()].
+#' @param n_clusters Number of clusters used for the cluster solution. By default,
+#'   the number of clusters to extract is determined by calling \code{\link{n_clusters}}.
+#' @param method Method for computing the cluster analysis. By default (\code{"hclust"}), a
+#'   hierarchical cluster analysis, will be computed. Use \code{"kmeans"} to
+#'   compute a kmeans cluster analysis. You can specify the initial letters only.
+#' @param distance Distance measure to be used when \code{method = "hclust"} (for hierarchical
+#'   clustering). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
+#'   \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
+#'   If is \code{method = "kmeans"} this argument will be ignored.
+#' @param agglomeration Agglomeration method to be used when \code{method = "hclust"} (for hierarchical
+#'   clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
+#'   \code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
+#'   If \code{method = "kmeans"} this argument will be ignored.
+#' @param iterations Maximum number of iterations allowed. Only applies, if
+#'   \code{method = "kmeans"}. See \code{\link{kmeans}} for details on this argument.
+#' @param algorithm Algorithm used for calculating kmeans cluster. Only applies, if
+#'   \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
+#'   \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
+#'   for details on this argument.
+#' @param force Logical, if \code{TRUE}, ordered factors (ordinal variables) are
+#'   converted to numeric values, while character vectors and factors are converted
+#'   to dummy-variables (numeric 0/1) and are included in the cluster analysis.
+#'   If \code{FALSE}, factors and character vectors are removed before computing
+#'   the cluster analysis.
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
 #'
 #' @return The group classification for each observation as vector. The
 #'   returned vector includes missing values, so it has the same length
-#'   as `nrow(x)`.
+#'   as \code{nrow(x)}.
 #'
-#' @note
-#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @details
-#' The `print()` and `plot()` methods show the (standardized) mean value for
-#' each variable within each cluster. Thus, a higher absolute value indicates
-#' that a certain variable characteristic is more pronounced within that
-#' specific cluster (as compared to other cluster groups with lower absolute
-#' mean values).
+#' @details The \code{print()} and \code{plot()} methods show the (standardized)
+#'   mean value for each variable within each cluster. Thus, a higher absolute
+#'   value indicates that a certain variable characteristic is more pronounced
+#'   within that specific cluster (as compared to other cluster groups with lower
+#'   absolute mean values).
 #'
-#' @seealso
-#' - [n_clusters()] to determine the number of clusters to extract,
-#' [cluster_discrimination()] to determine the accuracy of cluster group
-#' classification and [check_clusterstructure()] to check suitability of data
-#' for clustering.
-#' - https://www.datanovia.com/en/lessons/
+#' @seealso \code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification and \code{\link{check_clusterstructure}} to check suitability of data for clustering.
 #'
 #' @examples
-#' set.seed(33)
-#' # K-Means ====================================================
-#' rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
-#' rez # Show results
-#' predict(rez) # Get clusters
+#' # Hierarchical clustering of mtcars-dataset
+#' groups <- cluster_analysis(iris[, 1:4], 3)
+#' groups
 #'
-#' # Hierarchical k-means (more robust k-means)
-#' if (require("factoextra", quietly = TRUE)) {
-#'   rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
-#'   rez # Show results
-#'   predict(rez) # Get clusters
-#' }
-#'
-#' # Hierarchical Clustering (hclust) ===========================
-#' rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
-#' rez # Show results
-#' predict(rez) # Get clusters
-#'
-#' # K-Medoids (pam) ============================================
-#' if (require("cluster", quietly = TRUE)) {
-#'   rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
-#'   rez # Show results
-#'   predict(rez) # Get clusters
-#' }
-#'
-#' # PAM with automated number of clusters
-#' if (require("fpc", quietly = TRUE)) {
-#'   rez <- cluster_analysis(iris[1:4], method = "pamk")
-#'   rez # Show results
-#'   predict(rez) # Get clusters
-#' }
-#'
-#' # DBSCAN ====================================================
-#' if (require("dbscan", quietly = TRUE)) {
-#'   # Note that you can assimilate more outliers (cluster 0) to neighbouring
-#'   # clusters by setting borderPoints = TRUE.
-#'   rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
-#'   rez # Show results
-#'   predict(rez) # Get clusters
-#' }
-#'
-#' # Mixture ====================================================
-#' if (require("mclust", quietly = TRUE)) {
-#'   library(mclust) # Needs the package to be loaded
-#'   rez <- cluster_analysis(iris[1:4], method = "mixture")
-#'   rez # Show results
-#'   predict(rez) # Get clusters
+#' # K-means clustering of mtcars-dataset, auto-detection of cluster-groups
+#' \dontrun{
+#' groups <- cluster_analysis(iris[, 1:4], method = "k")
+#' groups
 #' }
 #' @export
-cluster_analysis <- function(x,
-                             n = NULL,
-                             method = "kmeans",
-                             include_factors = FALSE,
-                             standardize = TRUE,
-                             verbose = TRUE,
-                             distance_method = "euclidean",
-                             hclust_method = "complete",
-                             kmeans_method = "Hartigan-Wong",
-                             dbscan_eps = 15,
-                             iterations = 100,
-                             ...) {
-
-
-  # Sanity checks -----------------------------------------------------------
-  insight::check_if_installed("performance")
-
+cluster_analysis <- function(x, n_clusters = NULL, method = c("hclust", "kmeans"),
+                             distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
+                             agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"),
+                             iterations = 20,
+                             algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
+                             force = TRUE,
+                             package = c("NbClust", "mclust"),
+                             verbose = TRUE) {
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
+  distance <- match.arg(distance)
+  method <- match.arg(method)
+  agglomeration <- match.arg(agglomeration)
+  algorithm <- match.arg(algorithm)
 
-  # Preparation -------------------------------------------------------------
 
-  # Preprocess data
-  data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
+  # include factors?
+  if (force) {
+    # ordered factors to numeric
+    factors <- sapply(x, is.ordered)
+    if (any(factors)) {
+      x[factors] <- sapply(x[factors], .factor_to_numeric)
+    }
 
-  # Get number of clusters
-  if (is.null(n) && any(method %in% c("kmeans", "hkmeans", "pam"))) {
-    n <- tryCatch(
+    # character and factors to dummies
+    factors <- sapply(x, function(i) is.character(i) | is.factor(i))
+    if (any(factors)) {
+      dummies <- lapply(x[factors], .factor_to_dummy)
+      x <- cbind(x[!factors], dummies)
+    }
+  } else {
+    # remove factors
+    x <- x[sapply(x, is.numeric)]
+  }
+
+
+  # check number of clusters
+  if (is.null(n_clusters)) {
+    n_clusters <- tryCatch(
       {
-        nc <- n_clusters(data, standardize = FALSE, ...)
-        n <- attributes(nc)$n
+        nc <- n_clusters(x, package = package, force = force)
+        ncs <- attributes(nc)$summary
+        n_cl <- ncs$n_Clusters[which.max(ncs$n_Methods)][1]
         if (verbose) {
-          insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n, max(summary(nc)$n_Methods), sum(summary(nc)$n_Methods)), "blue")
+          insight::print_color(sprintf("Using solution with %i clusters, supported by %i out of %i methods.\n", n_cl, max(ncs$n_Methods), sum(ncs$n_Methods)), "blue")
         }
-        n
+        n_cl
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          stop(insight::format_message("Could not extract number of cluster. Please provide argument 'n'."), call. = FALSE)
+          warning(insight::format_message("Could not extract number of cluster. Please provide argument 'n_clusters'."), call. = FALSE)
         }
-        2
+        1
       }
     )
   }
 
+  # save original data, standardized, for later use
+  original_data <- as.data.frame(scale(x))
 
+  # create NA-vector of same length as data frame
+  complete.groups <- rep(NA, times = nrow(x))
 
-  # Apply clustering --------------------------------------------------------
+  # save IDs from non-missing data
+  non_missing <- stats::complete.cases(x)
+  x <- stats::na.omit(x)
 
-
-  if (any(method == "kmeans")) {
-    rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if (any(method %in% c("hkmeans"))) {
-    rez <- .cluster_analysis_hkmeans(data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method, iterations = iterations, ...)
-  } else if (any(method %in% c("pam"))) {
-    rez <- .cluster_analysis_pam(data, n = n, distance_method = distance_method, ...)
-  } else if (any(method %in% c("pamk"))) {
-    rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
-  } else if (any(method %in% c("hclust"))) {
-    rez <- .cluster_analysis_hclust(data, n = n, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
-  } else if (any(method == "dbscan")) {
-    rez <- .cluster_analysis_dbscan(data, dbscan_eps = dbscan_eps, ...)
-  } else if (any(method == "hdbscan")) {
-    rez <- .cluster_analysis_hdbscan(data, ...)
-  } else if (any(method %in% c("mixture", "mclust"))) {
-    rez <- .cluster_analysis_mixture(data, ...)
+  # Ward Hierarchical Clustering
+  if (method == "hclust") {
+    # check for argument and R version
+    if (agglomeration == "ward") agglomeration <- "ward.D2"
+    # distance matrix
+    d <- stats::dist(x, method = distance)
+    # hierarchical clustering
+    hc <- stats::hclust(d, method = agglomeration)
+    # cut tree into x clusters
+    groups <- stats::cutree(hc, k = n_clusters)
   } else {
-    stop("Did not find 'method' argument. Could be misspecified.")
+    km <- stats::kmeans(x, centers = n_clusters, iter.max = iterations, algorithm = algorithm)
+    # return cluster assignment
+    groups <- km$cluster
   }
 
-  # Assign clusters to observations
-  # Create NA-vector of same length as original data frame
-  clusters <- rep(NA, times = nrow(x))
-  # Create vector with cluster group classification (with missing)
-  complete_cases <- stats::complete.cases(x[names(data)])
-  clusters[complete_cases] <- rez$clusters
+  # create vector with cluster group classification,
+  # including missings
+  complete.groups[non_missing] <- groups
 
-  # Get clustering parameters
-  out <- model_parameters(rez$model, data = data, clusters = clusters, ...)
-  performance <- cluster_performance(out)
+  # create mean of z-score for each variable in data
+  out <- as.data.frame(do.call(rbind, lapply(original_data, tapply, complete.groups, mean)))
+  colnames(out) <- sprintf("Group %s", colnames(out))
+  out <- cbind(data.frame(Term = rownames(out), stringsAsFactors = FALSE), out)
+  rownames(out) <- NULL
 
-  attr(out, "model") <- rez$model
-  attr(out, "method") <- method
-  attr(out, "clusters") <- clusters
-  attr(out, "data") <- data
-  attr(out, "performance") <- performance
-
-  class(out) <- c("cluster_analysis", class(out))
-  out
-}
-
-
-
-# Clustering Methods --------------------------------------------------------
-
-#' @keywords internal
-.cluster_analysis_kmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", iterations = 100, ...) {
-  model <- stats::kmeans(data, centers = n, algorithm = kmeans_method, iter.max = iterations, ...)
-  list(model = model, clusters = model$cluster)
-}
-
-#' @keywords internal
-.cluster_analysis_hkmeans <- function(data, n = 2, kmeans_method = "Hartigan-Wong", hclust_method = "complete", iterations = 100, ...) {
-  insight::check_if_installed("factoextra")
-  model <- factoextra::hkmeans(data, k = n, km.algorithm = kmeans_method, iter.max = iterations, hc.method = hclust_method, ...)
-  list(model = model, clusters = model$cluster)
-}
-
-#' @keywords internal
-.cluster_analysis_pam <- function(data = NULL, n = 2, distance_method = "euclidean", ...) {
-  insight::check_if_installed("cluster")
-
-  model <- cluster::pam(data, k = n, metric = distance_method, ...)
-
-  list(model = model, clusters = model$clustering)
-}
-
-#' @keywords internal
-.cluster_analysis_pamk <- function(data = NULL, distance_method = "euclidean", pamk_method = "ch", ...) {
-  insight::check_if_installed("fpc")
-
-  model <- fpc::pamk(data, metric = distance_method, criterion = pamk_method, ...)
-
-  list(model = model$pamobject, clusters = model$pamobject$clustering)
-}
-
-#' @keywords internal
-.cluster_analysis_hclust <- function(data, n = 2, distance_method = "euclidean", hclust_method = "complete", iterations = 100, ...) {
-  if (is.null(n)) {
-    rez <- n_clusters_hclust(data, preprocess = FALSE, distance_method = distance_method, hclust_method = hclust_method, iterations = iterations, ...)
-    out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
-  } else {
-    if (distance_method %in% c("correlation", "uncentered", "abscor")) {
-      warning(paste0("method '", distance_method, "' not supported by regular hclust(). Please specify another one or set n = NULL to use pvclust."))
+  attr(complete.groups, "data") <- out
+  attr(complete.groups, "accuracy") <- tryCatch(
+    {
+      cluster_discrimination(original_data, complete.groups)
+    },
+    error = function(e) {
+      NULL
     }
-    dist <- dist(data, method = distance_method, ...)
-    model <- stats::hclust(dist, method = hclust_method, ...)
-    out <- list(model = model, clusters = stats::cutree(model, k = n))
-  }
-  out
-}
+  )
 
-#' @keywords internal
-.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.1, borderPoints = FALSE, ...) {
-  insight::check_if_installed("dbscan")
+  class(complete.groups) <- c("cluster_analysis", "see_cluster_analysis", class(complete.groups))
 
-  if (min_size < 1) min_size <- round(min_size * nrow(data))
-  model <- dbscan::dbscan(data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
-
-  list(model = model, clusters = model$cluster)
-}
-
-#' @keywords internal
-.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
-  insight::check_if_installed("dbscan")
-
-  if (min_size < 1) min_size <- round(min_size * nrow(data))
-  model <- dbscan::hdbscan(data, minPts = min_size, ...)
-
-  list(model = model, clusters = model$cluster)
-}
-
-#' @keywords internal
-.cluster_analysis_mixture <- function(data = NULL, ...) {
-  insight::check_if_installed("mclust")
-
-  model <- mclust::Mclust(data, verbose = FALSE, ...)
-
-  list(model = model, clusters = model$classification)
+  complete.groups
 }
 
 
-
-# Methods ----------------------------------------------------------------
-
-#' @export
-predict.cluster_analysis <- function(object, newdata = NULL, ...) {
-  if (is.null(newdata)) {
-    attributes(object)$clusters
-  } else {
-    NextMethod()
-  }
-}
 
 
 #' @export
-print.cluster_analysis <- function(x, ...) {
-  NextMethod()
+print.cluster_analysis <- function(x, digits = 2, ...) {
+  # retrieve data
+  dat <- attr(x, "data", exact = TRUE)
 
-  cat("\n")
-  print(attributes(x)$performance)
+  if (is.null(dat)) {
+    stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
+  }
 
-  insight::print_color("\n# You can access the predicted clusters via 'predict()'.\n", "yellow")
+  # save output from cluster_discrimination()
+  accuracy <- attributes(x)$accuracy
+
+  # headline
+  insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
+
+  # round numeric variables (i.e. all but first term column)
+  dat[2:ncol(dat)] <- sapply(dat[2:ncol(dat)], round, digits = digits)
+  print.data.frame(dat, row.names = FALSE)
+
+  if (!is.null(accuracy)) {
+    cat("\n")
+    print(accuracy)
+  }
   invisible(x)
-}
-
-
-
-
-# Plotting ----------------------------------------------------------------
-
-#' @export
-visualisation_recipe.cluster_analysis <- function(x, show_data = "text", type = "bars", ...) {
-  type <- match.arg(type, choices = c("bars", "centers"))
-
-  if (type == "bars") {
-    vr_cluster_bars(x, ...)
-  } else {
-    vr_cluster_centers(x, show_data = show_data, ...)
-  }
-}
-
-
-
-vr_cluster_bars <- function(x, ...) {
-  NULL
-}
-
-
-
-vr_cluster_centers <- function(x, show_data, ...) {
-  ori_data <- stats::na.omit(attributes(x)$data)
-  # Get 2 PCA Components
-  pca <- principal_components(ori_data, n = 2)
-  data <- predict(pca)
-  names(data) <- c("x", "y")
-  data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
-
-  data$label <- row.names(ori_data)
-  if (!is.null(show_data) && show_data %in% c("label", "text")) {
-    label <- "label"
-  } else {
-    label <- NULL
-  }
-
-  # Centers data (also on the PCA scale)
-  data_centers <- predict(pca, newdata = as.data.frame(x)[names(ori_data)], names = c("x", "y"))
-  data_centers$Cluster <- as.character(as.data.frame(x)$Cluster)
-
-  # Outliers
-  data$Cluster[data$Cluster == "0"] <- NA
-  data_centers <- data_centers[data_centers$Cluster != "0", ]
-
-  layers <- list()
-
-  # Layers -----------------------
-
-  layers[["l1"]] <- list(
-    geom = show_data,
-    data = data,
-    aes = list(x = "x", y = "y", label = label, color = "Cluster")
-  )
-
-  layers[["l2"]] <- list(
-    geom = "point",
-    data = data_centers,
-    aes = list(x = "x", y = "y", color = "Cluster"),
-    shape = "+", size = 10
-  )
-  layers[["l3"]] <- list(
-    geom = "labs",
-    x = "PCA - 1",
-    y = "PCA - 2",
-    title = "Clustering Solution"
-  )
-
-  # Out
-  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
-  layers
-}
-
-#' @export
-plot.cluster_analysis <- function(x, ...) {
-  plot(visualisation_recipe(x, ...))
 }

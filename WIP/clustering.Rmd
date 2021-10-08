@@ -129,13 +129,6 @@ One can extract the cluster assignments to use it as a new variable by using `pr
 predict(rez_kmeans)  # Get clusters
 ```
 
-It is also possible to visualize the clustering on a 2D space created by the two first PCA components:
-
-```{r}
-plot(rez_kmeans) +
-  theme_modern()
-```
-
 ### Hierarchical Clustering
 
 Hierarchical clustering is also a common clustering algorithm, available in base R through the `hclust()` function. This method is a bit different in the sense that is does not straight up return clusters. Instead, in creates a hierarchical structure (a *dendrogram*), a tree from which we can *cut* branches to get a given number of clusters. Note that this "tree" cutting can be done in an unsupervised fashion too using bootstrapping (which we will apply in the next section).
