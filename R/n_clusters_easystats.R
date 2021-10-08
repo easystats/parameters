@@ -295,7 +295,7 @@ visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   )
 
   # Out
-  class(layers) <- c("visualisation_recipe", class(layers))
+  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
   attr(layers, "data") <- data
   layers
 }
@@ -333,7 +333,7 @@ visualisation_recipe.n_clusters_gap <- function(x, ...) {
   )
 
   # Out
-  class(layers) <- c("visualisation_recipe", class(layers))
+  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
   attr(layers, "data") <- data
   layers
 }
@@ -369,7 +369,7 @@ visualisation_recipe.n_clusters_silhouette <- function(x, ...) {
   )
 
   # Out
-  class(layers) <- c("visualisation_recipe", class(layers))
+  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
   attr(layers, "data") <- data
   layers
 }
@@ -442,28 +442,29 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
   }
 
   # Out
-  class(layers) <- c("visualisation_recipe", class(layers))
+  class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
   attr(layers, "data") <- data
   layers
 }
 
 
+#' @export
+plot.n_clusters_elbow <- function(x, ...) {
+  plot(visualisation_recipe(x, ...))
+}
 
-#' #' @export
-#' plot.n_clusters_elbow <- plot.cluster_analysis
-#'
-#' #' @export
-#' plot.n_clusters_gap <- plot.cluster_analysis
-#'
-#' #' @export
-#' plot.n_clusters_silhouette <- plot.cluster_analysis
-#'
-#' #' @export
-#' plot.n_clusters_dbscan <- plot.cluster_analysis
-#'
-#' #' @export
-#' plot.n_clusters_hclust <- function(x, ...) {
-#'   insight::check_if_installed("pvclust")
-#'   plot(attributes(x)$model)
-#'   pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
-#' }
+#' @export
+plot.n_clusters_gap <- plot.n_clusters_elbow
+
+#' @export
+plot.n_clusters_silhouette <- plot.n_clusters_elbow
+
+#' @export
+plot.n_clusters_dbscan <- plot.n_clusters_elbow
+
+#' @export
+plot.n_clusters_hclust <- function(x, ...) {
+  insight::check_if_installed("pvclust")
+  plot(attributes(x)$model)
+  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
+}
