@@ -73,10 +73,9 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   }
   method <- tolower(method)
 
-  method <- match.arg(method, c(
-    "analytical", "any", "fit", "ml1", "betwithin",
-    "satterthwaite", "kenward", "nokr", "wald",
-    "profile", "boot", "uniroot", "residual", "normal"
+  method <- match.arg(method, choices = c(
+    "analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward",
+    "nokr", "wald", "kr", "profile", "boot", "uniroot", "residual", "normal"
   ))
 
   if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
