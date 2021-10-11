@@ -7,22 +7,19 @@
 #' @param list_of_clusters A list of vectors with the clustering assignments from various methods.
 #' @param rownames An optional vector of row.names for the matrix.
 #' @param ... Currently not used.
-#' @inheritParams cluster_analysis
 #'
 #' @return A matrix containing all the pairwise (between each observation) probabilities of being clustered together by the methods.
 #'
 #'
 #' @examples
+#' \dontrun{
 #' data <- iris[1:4]
 #'
-#' rez1 <- cluster_analysis(data, n = 2, method = "hkmeans")
-#' rez2 <- cluster_analysis(data, n = 3, method = "hkmeans")
-#' rez3 <- cluster_analysis(data, n = 6, method = "hkmeans")
-#' rez4 <- cluster_analysis(data, method = "pamk")
-#' rez5 <- cluster_analysis(data, method = "hdbscan")
-#' rez6 <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
+#' rez1 <- cluster_analysis(data, n = 2, method = "kmeans")
+#' rez2 <- cluster_analysis(data, n = 3, method = "kmeans")
+#' rez3 <- cluster_analysis(data, n = 6, method = "kmeans")
 #'
-#' list_of_clusters <- list(rez1, rez2, rez3, rez4, rez5, rez6)
+#' list_of_clusters <- list(rez1, rez2, rez3)
 #'
 #' m <- cluster_meta(list_of_clusters)
 #'
@@ -30,6 +27,7 @@
 #' heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 #' # Reordered heatmap
 #' heatmap(m, scale = "none")
+#' }
 #' @export
 cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
   x <- list()

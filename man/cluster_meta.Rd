@@ -22,16 +22,14 @@ One of the core "issue" of statistical clustering is that, in many cases, differ
 Metaclustering is based on the hypothesis that, as each clustering algorithm embodies a different prism by which it sees the data, running an infinite amount of algorithms would result in the emergence of the "true" clusters. As the number of algorithms and parameters is finite, the probabilistic perspective is a useful proxy. This method is interesting where there is no obvious reasons to prefer one over another clustering method, as well as to investigate how robust some clusters are under different algorithms.
 }
 \examples{
+\dontrun{
 data <- iris[1:4]
 
-rez1 <- cluster_analysis(data, n = 2, method = "hkmeans")
-rez2 <- cluster_analysis(data, n = 3, method = "hkmeans")
-rez3 <- cluster_analysis(data, n = 6, method = "hkmeans")
-rez4 <- cluster_analysis(data, method = "pamk")
-rez5 <- cluster_analysis(data, method = "hdbscan")
-rez6 <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
+rez1 <- cluster_analysis(data, n = 2, method = "kmeans")
+rez2 <- cluster_analysis(data, n = 3, method = "kmeans")
+rez3 <- cluster_analysis(data, n = 6, method = "kmeans")
 
-list_of_clusters <- list(rez1, rez2, rez3, rez4, rez5, rez6)
+list_of_clusters <- list(rez1, rez2, rez3)
 
 m <- cluster_meta(list_of_clusters)
 
@@ -39,4 +37,5 @@ m <- cluster_meta(list_of_clusters)
 heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 # Reordered heatmap
 heatmap(m, scale = "none")
+}
 }

@@ -13,6 +13,8 @@
 #' @param ... Arguments passed down to `standard_error_robust()` when confidence
 #'   intervals or p-values based on robust standard errors should be computed.
 #'
+#' @inheritParams ci.default
+#'
 #' @examples
 #' \donttest{
 #' if (require("lme4")) {

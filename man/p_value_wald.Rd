@@ -14,6 +14,13 @@ p_value_wald(model, ...)
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
 intervals or p-values based on robust standard errors should be computed.}
+
+\item{dof}{Number of degrees of freedom to be used when calculating
+confidence intervals. If \code{NULL} (default), the degrees of freedom are
+retrieved by calling \code{\link[=degrees_of_freedom]{degrees_of_freedom()}} with
+approximation method defined in \code{method}. If not \code{NULL}, use this argument
+to override the default degrees of freedom used to compute confidence
+intervals.}
 }
 \value{
 A data frame.
