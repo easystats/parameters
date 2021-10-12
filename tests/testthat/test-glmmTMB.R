@@ -330,8 +330,8 @@ if (.runThisTest &&
     expect_equal(
       params$Parameter,
       c(
-        "SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)", "SD (Observations)",
-        "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)", "SD (Observations)"
+        "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb: persons)", "SD (Observations)",
+        "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg: persons)", "SD (Observations)"
       )
     )
     expect_equal(
