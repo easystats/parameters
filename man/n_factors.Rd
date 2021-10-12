@@ -99,11 +99,13 @@ if (require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)) {
   result <- n_factors(mtcars[1:5], type = "FA")
   as.data.frame(result)
   summary(result)
-  \donttest{
-  # Setting package = 'all' will increase the number of methods (but is slow)
-  n_factors(mtcars, type = "PCA", package = "all")
-  n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
-}
+  \dontrun{
+  if (require("PCDimension", quietly = TRUE)) {
+    # Setting package = 'all' will increase the number of methods (but is slow)
+    n_factors(mtcars, type = "PCA", package = "all")
+    n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
+  }
+  }
 }
 }
 \references{

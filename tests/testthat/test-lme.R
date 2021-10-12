@@ -58,7 +58,7 @@ if (requiet("testthat") &&
   })
 
   test_that("model_parameters, satterthwaite", {
-    params <- model_parameters(m2, df_method = "satterthwaite", effects = "fixed")
+    params <- model_parameters(m2, ci_method = "satterthwaite", effects = "fixed")
     expect_equal(params$Coefficient, c(17.70671, 0.66019, -2.32102), tolerance = 1e-4)
     expect_equal(params$SE, c(0.83155, 0.06209, 0.74307), tolerance = 1e-4)
     # expect_equal(params$df, c(104.1503, 82.87867, 26.25), tolerance = 1e-4)
@@ -66,7 +66,7 @@ if (requiet("testthat") &&
   })
 
   test_that("model_parameters, satterthwaite", {
-    params <- model_parameters(m2, df_method = "satterthwaite", effects = "all")
+    params <- model_parameters(m2, ci_method = "satterthwaite", effects = "all")
     expect_equal(params$Coefficient, c(17.70671, 0.66019, -2.32102, 1.73008, 1.42273), tolerance = 1e-4)
     expect_equal(params$SE, c(0.83155, 0.06209, 0.74307, NA, NA), tolerance = 1e-4)
     # expect_equal(params$df, c(104.1503, 82.87867, 26.25), tolerance = 1e-4)
