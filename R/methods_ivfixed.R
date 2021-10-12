@@ -8,8 +8,17 @@ standard_error.ivFixed <- standard_error.coxr
 
 
 #' @export
-degrees_of_freedom.ivFixed <- function(model, ...) {
-  as.vector(model$df)
+degrees_of_freedom.ivFixed <- function(model, method = "wald", ...) {
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
+
+  if (method %in% c("wald", "residual", "fit")) {
+    as.vector(model$df)
+  } else {
+    degrees_of_freedom.default(model, method = method, ...)
+  }
 }
 
 

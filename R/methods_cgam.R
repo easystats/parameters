@@ -158,6 +158,15 @@ standard_error.cgam <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.cgam <- function(model, ...) {
-  model$resid_df_obs
+degrees_of_freedom.cgam <- function(model, method = "wald", ...) {
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
+
+  if (method %in% c("wald", "residual", "fit")) {
+    model$resid_df_obs
+  } else {
+    degrees_of_freedom.default(model, method = method, ...)
+  }
 }
