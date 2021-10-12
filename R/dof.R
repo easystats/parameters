@@ -75,10 +75,11 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
 
   method <- match.arg(method, choices = c(
     "analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward",
-    "nokr", "wald", "kr", "profile", "boot", "uniroot", "residual", "normal"
+    "nokr", "wald", "kr", "profile", "boot", "uniroot", "residual", "normal",
+    "likelihood"
   ))
 
-  if (!.dof_method_ok(model, method) || method %in% c("profile", "boot", "uniroot")) {
+  if (!.dof_method_ok(model, method) || method %in% c("profile", "likelihood", "boot", "uniroot")) {
     method <- "any"
   }
 
@@ -210,7 +211,7 @@ dof <- degrees_of_freedom
   }
 
   method <- tolower(method)
-  if (inherits(model, c("polr", "glm"))) {
+  if (inherits(model, c("polr", "glm", "svyglm"))) {
     if (method %in% c(
       "analytical", "any", "fit", "profile",
       "wald", "nokr", "likelihood"

@@ -3,7 +3,7 @@
 #' @export
 model_parameters.svyglm <- function(model,
                                     ci = .95,
-                                    df_method = "wald",
+                                    ci_method = "wald",
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
@@ -12,14 +12,14 @@ model_parameters.svyglm <- function(model,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
-  if (insight::n_obs(model) > 1e4 && df_method == "likelihood") {
+  if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
     message(insight::format_message("Likelihood confidence intervals may take longer time to compute. Use 'df_method=\"wald\"' for faster computation of CIs."))
   }
 
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
-    df_method = df_method,
+    ci_method = ci_method,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = "Parameter",
@@ -84,13 +84,13 @@ standard_error.svyolr <- standard_error.svyglm
 # confidence intervals -----------------------------------
 
 #' @export
-ci.svyglm <- function(x, ci = .95, method = c("wald", "likelihood"), ...) {
-  method <- match.arg(method)
+ci.svyglm <- function(x, ci = .95, method = "wald", ...) {
+  method <- match.arg(method, choices = c("wald", "residual", "normal", "likelihood"))
   if (method == "likelihood") {
     out <- lapply(ci, function(i) .ci_likelihood(model = x, ci = i))
     out <- do.call(rbind, out)
   } else {
-    out <- .ci_generic(model = x, ci = ci)
+    out <- .ci_generic(model = x, ci = ci, method = method, ...)
   }
 
   row.names(out) <- NULL
