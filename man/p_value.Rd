@@ -50,7 +50,7 @@ This function attempts to return, or compute, p-values of a model's parameters. 
 }
 }
 \note{
-\code{p_value_robust()} resp. \code{p_value(method = "robust")}
+\code{p_value_robust()} resp. \code{p_value(robust = TRUE)}
 rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
 \code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
 thus only work for those models supported by those packages.

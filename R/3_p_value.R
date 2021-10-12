@@ -15,7 +15,7 @@
 #' @param ... Arguments passed down to `standard_error_robust()` when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where `method = "robust"` is supported.
 #' @inheritParams ci.default
 #'
-#' @note `p_value_robust()` resp. `p_value(method = "robust")`
+#' @note `p_value_robust()` resp. `p_value(robust = TRUE)`
 #'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
 #'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.

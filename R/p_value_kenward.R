@@ -63,7 +63,8 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
                          robust = FALSE,
                          component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
                          effects = c("fixed", "random", "all"),
-                         verbose = TRUE) {
+                         verbose = TRUE,
+                         ...) {
   component <- match.arg(component)
   effects <- match.arg(effects)
 
