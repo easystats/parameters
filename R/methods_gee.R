@@ -47,4 +47,13 @@ p_value.gee <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.geeglm <- p_value.default
+p_value.geeglm <- function(model, ...) {
+  stat <- insight::get_statistic(model)
+
+  if (!is.null(stat)) {
+    .data_frame(
+      Parameter = stat$Parameter,
+      p = as.vector(1 - stats::pchisq(stat$Statistic, df = 1))
+    )
+  }
+}
