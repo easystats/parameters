@@ -11,18 +11,16 @@
 #'   approximation method defined in `method`. If not `NULL`, use this argument
 #'   to override the default degrees of freedom used to compute confidence
 #'   intervals.
-#' @param method For mixed models, can be [`"wald"()`][p_value_wald]
-#'   (default), [`"ml1"()`][p_value_ml1] or
-#'   [`"betwithin"()`][p_value_betwithin]. For linear mixed model, can
-#'   also be [`"satterthwaite"()`][p_value_satterthwaite],
-#'   [`"kenward"()`][p_value_kenward] or `"boot"` (see
-#'   `lme4::confint.merMod`). For (generalized) linear models, can be
-#'   `"robust"` to compute confidence intervals based on robust covariance
-#'   matrix estimation, and for generalized linear models and models from
-#'   packages \pkg{lme4} or \pkg{glmmTMB}, may also be `"profile"`,
-#'   `"uniroot"` or `"wald"` (default).
+#' @param method Method for computing degrees of freedom for confidence
+#'   intervals (CI) or p-values. May be one of `"analytical"`, `"any"`, `"ml1"`,
+#'   `"betwithin"`, `"satterthwaite"`, `"kenward"`, `"wald"`, `"profile"`,
+#'   `"boot"`, `"uniroot"`, `"residual"`, `"normal"`, or `"likelihood"`.
+#'   If `bootstrap = TRUE`, may be one of `"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
+#'   `"si"`, `"bci"`, or `"bcai"`. See argument `ci_method` in
+#'   [bayestestR::describe_posterior()].
 #' @param robust Logical, if `TRUE`, computes confidence intervals based on
 #'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
+#' @param component TODO.
 #' @param ... Arguments passed down to [`standard_error_robust()`][standard_error_robust]
 #'   when confidence intervals or p-values based on robust standard errors
 #'   should be computed.

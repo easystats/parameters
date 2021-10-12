@@ -18,11 +18,7 @@
 \arguments{
 \item{model}{A statistical model.}
 
-\item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
+\item{component}{TODO.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
 

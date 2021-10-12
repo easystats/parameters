@@ -1,53 +1,3 @@
-# Package lme4; .merMod, .lmerMod
-
-############# .lmerMod -----------------
-
-
-#' p-values for Mixed Models
-#'
-#' This function attempts to return, or compute, p-values of mixed models.
-#'
-#' @param model A statistical model.
-#' @param method For mixed models, can be [`"wald"()`][p_value_wald] (default), [`"ml1"()`][p_value_ml1], [`"betwithin"()`][p_value_betwithin], [`"satterthwaite"()`][p_value_satterthwaite] or [`"kenward"()`][p_value_kenward]. For models that are supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, may also be `method = "robust"` to compute p-values based ob robust standard errors.
-#' @inheritParams p_value
-#' @inheritParams simulate_model
-#' @inheritParams standard_error
-#'
-#' @details By default, p-values are based on Wald-test approximations (see [p_value_wald()]). For certain situations, the "m-l-1" rule might be a better approximation. That is, for `method = "ml1"`, [p_value_ml1()] is called. For `lmerMod` objects, if `method = "kenward"`, p-values are based on Kenward-Roger approximations, i.e. [p_value_kenward()] is called, and `method = "satterthwaite"` calls [p_value_satterthwaite()].
-#'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
-#'
-#' @note `p_value_robust()` resp. `p_value(method = "robust")`
-#'   rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-#'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
-#'   thus only work for those models supported by those packages.
-#'
-#' @examples
-#' if (require("lme4")) {
-#'   data(iris)
-#'   model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
-#'   p_value(model)
-#' }
-#' @export
-p_value.lmerMod <- function(model, method = "wald", ...) {
-  method <- tolower(method)
-  method <- match.arg(method, c("wald", "ml1", "betwithin", "satterthwaite", "kr", "kenward"))
-  if (method == "wald") {
-    p_value_wald(model, ...)
-  } else if (method == "ml1") {
-    p_value_ml1(model, ...)
-  } else if (method == "betwithin") {
-    p_value_betwithin(model, ...)
-  } else if (method == "satterthwaite") {
-    p_value_satterthwaite(model, ...)
-  } else if (method %in% c("kr", "kenward")) {
-    p_value_kenward(model, ...)
-  }
-}
-
-
-
-
 ############# .merMod -----------------
 
 
@@ -60,20 +10,6 @@ p_value.lmerMod <- function(model, method = "wald", ...) {
 #' @param effects Should parameters for fixed effects (`"fixed"`), random
 #'   effects (`"random"`), or both (`"all"`) be returned? Only applies
 #'   to mixed models. May be abbreviated.
-#' @param ci_method Method for computing degrees of freedom for p values,
-#'   standard errors and confidence intervals (CI). By default (`NULL`),
-#'   returns residual degrees of freedom for linear mixed models, or `Inf`
-#'   for all other distributional families. May be `"wald"`,
-#'   `"residual"` (for both see [degrees_of_freedom()]),
-#'   `"ml1"` (see [dof_ml1()]), `"betwithin"` (see [dof_betwithin()]),
-#'   `"satterthwaite"` (see [dof_satterthwaite()]) or `"kenward"` (see
-#'   [dof_kenward()]). The options `"boot"`, `"profile"` and `"uniroot"` only
-#'   affect confidence intervals; in this case, bootstrapped resp. profiled
-#'   confidence intervals are computed. `"uniroot"` only applies to models of
-#'   class `glmmTMB`. For models of class `lmerMod`, when `ci_method = "wald"`,
-#'   residual degrees of freedom are returned. Note that when `ci_method` is
-#'   not `NULL`, `"wald"` or `"residual"`, robust standard errors etc. cannot
-#'   be computed.
 #' @param wb_component Logical, if `TRUE` and models contains within- and
 #'   between-effects (see `datawizard::demean()`), the `Component` column
 #'   will indicate which variables belong to the within-effects,
@@ -392,6 +328,5 @@ se_mixed_default <- function(model) {
 
 
 
-#' @rdname p_value.lmerMod
 #' @export
 p_value.merMod <- p_value.cpglmm

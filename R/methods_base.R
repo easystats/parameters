@@ -175,11 +175,11 @@ p_value.data.frame <- function(model, ...) {
 
 
 #' @export
-p_value.list <- function(model, verbose = TRUE, ...) {
+p_value.list <- function(model, method = NULL, verbose = TRUE, ...) {
   if ("gam" %in% names(model)) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
-    p_value(model)
+    p_value(model, method = method)
   } else {
     if (isTRUE(verbose)) {
       warning("Could not extract p-values from model object.", call. = FALSE)

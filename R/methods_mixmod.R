@@ -80,7 +80,6 @@ standard_error.MixMod <- function(model,
 }
 
 
-#' @rdname p_value.lmerMod
 #' @export
 p_value.MixMod <- function(model,
                            component = c("all", "conditional", "zi", "zero_inflated"),

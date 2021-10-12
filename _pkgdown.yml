@@ -46,9 +46,9 @@ reference:
 - title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
   contents:
   - standard_error
-  - ci.merMod
+  - ci.default
+  - ci.glmmTMB
   - p_value
-  - p_value.lmerMod
   - p_value.BFBayesFactor
   - p_value.zeroinfl
   - p_value.poissonmfx
@@ -60,7 +60,6 @@ reference:
   - standard_error_robust
 - subtitle: "Approximation Methods"
   contents:
-  - p_value_wald
   - p_value_kenward
   - p_value_satterthwaite
   - p_value_betwithin

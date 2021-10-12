@@ -61,7 +61,6 @@ standard_error.mixor <- function(model, effects = "all", ...) {
 }
 
 
-#' @rdname p_value.lmerMod
 #' @export
 p_value.mixor <- function(model, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))

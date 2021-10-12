@@ -48,13 +48,6 @@ degrees_of_freedom.merModList <- function(model, ...) {
 
 
 #' @export
-p_value.merModList <- function(model, ...) {
-  dof <- degrees_of_freedom(model)
-  p_value_wald(model, dof, ...)
-}
-
-
-#' @export
 format_parameters.merModList <- function(model, brackets = c("[", "]"), ...) {
   .format_parameter_default(model[[1]], brackets = brackets)
 }

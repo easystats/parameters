@@ -147,20 +147,13 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{ci_method}{Method for computing degrees of freedom for p values,
-standard errors and confidence intervals (CI). By default (\code{NULL}),
-returns residual degrees of freedom for linear mixed models, or \code{Inf}
-for all other distributional families. May be \code{"wald"},
-\code{"residual"} (for both see \code{\link[=degrees_of_freedom]{degrees_of_freedom()}}),
-\code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"} (see \code{\link[=dof_betwithin]{dof_betwithin()}}),
-\code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}) or \code{"kenward"} (see
-\code{\link[=dof_kenward]{dof_kenward()}}). The options \code{"boot"}, \code{"profile"} and \code{"uniroot"} only
-affect confidence intervals; in this case, bootstrapped resp. profiled
-confidence intervals are computed. \code{"uniroot"} only applies to models of
-class \code{glmmTMB}. For models of class \code{lmerMod}, when \code{ci_method = "wald"},
-residual degrees of freedom are returned. Note that when \code{ci_method} is
-not \code{NULL}, \code{"wald"} or \code{"residual"}, robust standard errors etc. cannot
-be computed.}
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI). May be one of \code{"analytical"}, \code{"any"}, \code{"ml1"},
+\code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"},
+\code{"boot"}, \code{"uniroot"}, \code{"residual"}, \code{"normal"}, or \code{"likelihood"}.
+If \code{bootstrap = TRUE}, may be one of \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
+\code{"si"}, \code{"bci"}, or \code{"bcai"}. See argument \code{ci_method} in
+\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further

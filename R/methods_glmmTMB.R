@@ -177,6 +177,7 @@ model_parameters.glmmTMB <- function(model,
 # ci -----
 
 
+#' @rdname ci.default
 #' @export
 ci.glmmTMB <- function(x,
                        ci = .95,
@@ -270,7 +271,7 @@ standard_error.glmmTMB <- function(model,
 # p_value -----
 
 
-#' @rdname p_value.lmerMod
+#' @rdname p_value
 #' @export
 p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
   component <- match.arg(component)

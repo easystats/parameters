@@ -275,11 +275,9 @@ model_parameters.cpglmm <- function(model,
 }
 
 
-#' @rdname p_value.lmerMod
 #' @export
 p_value.cpglmm <- function(model, method = "wald", ...) {
-  dof <- degrees_of_freedom(model, method = method, ...)
-  p_value_wald(model, dof, ...)
+  p_value.default(model, method = method, ...)
 }
 
 
