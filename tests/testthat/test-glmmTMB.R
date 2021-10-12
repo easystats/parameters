@@ -373,12 +373,12 @@ if (.runThisTest &&
       c(
         "# Random Effects",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        3.41",
-        "SD (xb: persons)        |        1.21",
-        "Cor (Intercept~persons) |       -1.00",
-        "SD (Residual)           |        1.00"
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        3.41",
+        "SD (xb: persons)            |        1.21",
+        "Cor (Intercept~xb: persons) |       -1.00",
+        "SD (Residual)               |        1.00"
       )
     )
 
@@ -391,8 +391,8 @@ if (.runThisTest &&
         "",
         "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
         "-------------------------------------------------------------",
-        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
-        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660"
+        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
+        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663"
       )
     )
 
@@ -403,12 +403,12 @@ if (.runThisTest &&
       c(
         "# Random Effects (Zero-Inflated Model)",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        2.74",
-        "SD (zg: persons)        |        1.57",
-        "Cor (Intercept~persons) |        1.00",
-        "SD (Residual)           |        1.00"
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        2.74",
+        "SD (zg: persons)            |        1.57",
+        "Cor (Intercept~zg: persons) |        1.00",
+        "SD (Residual)               |        1.00"
       )
     )
 
@@ -426,12 +426,12 @@ if (.runThisTest &&
         "",
         "# Random Effects",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        3.41",
-        "SD (xb: persons)        |        1.21",
-        "Cor (Intercept~persons) |       -1.00",
-        "SD (Residual)           |        1.00"
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        3.41",
+        "SD (xb: persons)            |        1.21",
+        "Cor (Intercept~xb: persons) |       -1.00",
+        "SD (Residual)               |        1.00"
       )
     )
 
@@ -449,12 +449,12 @@ if (.runThisTest &&
         "",
         "# Random Effects (Zero-Inflated Model)",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        2.74",
-        "SD (zg: persons)        |        1.57",
-        "Cor (Intercept~persons) |        1.00",
-        "SD (Residual)           |        1.00"
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        2.74",
+        "SD (zg: persons)            |        1.57",
+        "Cor (Intercept~zg: persons) |        1.00",
+        "SD (Residual)               |        1.00"
       )
     )
 
@@ -479,21 +479,21 @@ if (.runThisTest &&
         "",
         "# Random Effects Variances",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        3.41",
-        "SD (xb: persons)        |        1.21",
-        "Cor (Intercept~persons) |       -1.00",
-        "SD (Residual)           |        1.00",
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        3.41",
+        "SD (xb: persons)            |        1.21",
+        "Cor (Intercept~xb: persons) |       -1.00",
+        "SD (Residual)               |        1.00",
         "",
         "# Random Effects (Zero-Inflated Model)",
         "",
-        "Parameter               | Coefficient",
-        "-------------------------------------",
-        "SD (Intercept: persons) |        2.74",
-        "SD (zg: persons)        |        1.57",
-        "Cor (Intercept~persons) |        1.00",
-        "SD (Residual)           |        1.00"
+        "Parameter                   | Coefficient",
+        "-----------------------------------------",
+        "SD (Intercept: persons)     |        2.74",
+        "SD (zg: persons)            |        1.57",
+        "Cor (Intercept~zg: persons) |        1.00",
+        "SD (Residual)               |        1.00"
       )
     )
   })
