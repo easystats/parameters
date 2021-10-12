@@ -421,7 +421,7 @@ model_parameters.default <- function(model,
 #' @export
 model_parameters.glm <- function(model,
                                  ci = .95,
-                                 ci_method = "profile",
+                                 ci_method = NULL,
                                  bootstrap = FALSE,
                                  iterations = 1000,
                                  standardize = NULL,
@@ -432,6 +432,11 @@ model_parameters.glm <- function(model,
                                  verbose = TRUE,
                                  df_method = ci_method,
                                  ...) {
+
+  # set default
+  if (is.null(ci_method)) {
+    ci_method <- ifelse(isTRUE(bootstrap), "quantile", "profile")
+  }
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
