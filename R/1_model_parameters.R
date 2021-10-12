@@ -206,10 +206,12 @@ parameters <- model_parameters
 #'   `"sidak"` and `"none"` to explicitly disable adjustment for
 #'   `emmGrid` objects (from \pkg{emmeans}).
 #' @param ci_method Method for computing degrees of freedom for
-#'   confidence intervals (CI). Only applies to models of class `glm` or
-#'   `polr` or if `bootstrap = TRUE`. For `glm` and `polr`, `ci_method` may be
-#'   `"profile"` or `"wald"`. If `bootstrap = TRUE`, see argument `ci_method`
-#'   in [bayestestR::describe_posterior()].
+#'   confidence intervals (CI). May be one of `"analytical"`, `"any"`, `"ml1"`,
+#'   `"betwithin"`, `"satterthwaite"`, `"kenward"`, `"wald"`, `"profile"`,
+#'   `"boot"`, `"uniroot"`, `"residual"`, `"normal"`, or `"likelihood"`.
+#'   If `bootstrap = TRUE`, may be one of `"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
+#'   `"si"`, `"bci"`, or `"bcai"`. See argument `ci_method` in
+#'   [bayestestR::describe_posterior()].
 #' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
