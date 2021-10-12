@@ -33,19 +33,6 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
   })
 
   data(mtcars)
-  mp <- model_parameters(stats::chisq.test(table(mtcars$am)), cramers_v = "raw", phi = "raw", ci = 0.95)
-  test_that("model_parameters-chisq-test raw", {
-    expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
-    expect_equal(mp$phi, 0.1875, tolerance = 1e-3)
-    expect_equal(
-      colnames(mp),
-      c(
-        "Chi2", "df", "Cramers_v", "CI", "Cramers_CI_low", "Cramers_CI_high",
-        "phi", "phi_CI_low", "phi_CI_high", "p", "Method"
-      )
-    )
-  })
-
   mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
   test_that("model_parameters-chisq-test NULL", {
     expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)

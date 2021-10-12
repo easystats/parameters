@@ -1,7 +1,7 @@
 #' @export
 model_parameters.systemfit <- function(model,
                                        ci = .95,
-                                       df_method = NULL,
+                                       ci_method = NULL,
                                        bootstrap = FALSE,
                                        iterations = 1000,
                                        standardize = NULL,
@@ -14,7 +14,7 @@ model_parameters.systemfit <- function(model,
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
-    df_method = df_method,
+    ci_method = ci_method,
     bootstrap = bootstrap,
     iterations = iterations,
     merge_by = c("Parameter", "Component"),

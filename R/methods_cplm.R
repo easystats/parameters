@@ -321,7 +321,7 @@ standard_error.cpglmm <- function(model, ...) {
       warning(insight::format_message("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models."), call. = FALSE)
       df_method <- "wald"
     }
-    df_method <- match.arg(df_method, choices = c("wald", "ml1", "betwithin", "profile", "boot", "uniroot"))
+    df_method <- match.arg(df_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "profile", "boot", "uniroot"))
   }
   df_method
 }

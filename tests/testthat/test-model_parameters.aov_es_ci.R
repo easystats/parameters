@@ -386,9 +386,9 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
         df_Gam,
         structure(
           list(
-            Parameter = c("s(hp, 4)", "am", "qsec", "Residuals"),
+            Parameter = c("gam::s(hp, 4)", "am", "qsec", "Residuals"),
             Sum_Squares = c(678.37287, 202.23503, 6.87905, 238.56023),
-            df = c(1, 1, 1, 25),
+            df = c(1, 1, 1, 28),
             Mean_Square = c(678.37287, 202.23503, 6.87905, 8.52001),
             `F` = c(79.62115, 23.73648, 0.8074, NA),
             p = c(0, 4e-05, 0.37655, NA),

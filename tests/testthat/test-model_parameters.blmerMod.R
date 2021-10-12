@@ -22,7 +22,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("blme")) {
     )
     expect_equal(
       params$Parameter,
-      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Subject)", "SD (Observations)")
+      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days: Subject)", "SD (Observations)")
     )
   })
 }
