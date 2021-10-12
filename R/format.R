@@ -678,9 +678,9 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
     # bootstrapped intervals
     if (isTRUE(bootstrap)) {
-      message(paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals."))
+      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")))
     } else {
-      message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using ", string_method, "distribution ", string_approx, "approximation."))
+      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using ", string_method, "distribution ", string_approx, "approximation.")))
     }
   }
 }
