@@ -188,7 +188,7 @@ ci.glmmTMB <- function(x,
                        ...) {
 
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "robust", "profile", "uniroot"))
+  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot"))
   component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
@@ -208,7 +208,7 @@ ci.glmmTMB <- function(x,
   } else {
 
     # all other
-    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
+    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, component = component, ...)
   }
 }
 

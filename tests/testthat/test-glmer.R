@@ -89,7 +89,7 @@ if (.runThisTest &&
 
   test_that("model_parameters.glmer ml1", {
     params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
-    expect_equal(params$SE, c(0.68563, 0.37647, 0.37702, 0.48758, 0.23907), tolerance = 1e-2)
+    expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)
     expect_equal(params$df, c(53, 53, 53, 53, 53), tolerance = 1e-2)
   })
 
