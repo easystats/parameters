@@ -139,19 +139,18 @@
   # ==== p value
 
   if (isTRUE(robust)) {
-    pval <- p_value_robust(model, method = ci_method, component = component, ...)
-  } else if (!is.null(ci_method)) {
+    pval <- p_value_robust(
+      model,
+      method = ci_method,
+      component = component,
+      ...
+    )
+  } else {
     pval <- p_value(
       model,
       effects = effects,
       component = component,
       method = ci_method,
-      verbose = verbose
-    )
-  } else {
-    pval <- p_value(model,
-      effects = effects,
-      component = component,
       verbose = verbose
     )
   }

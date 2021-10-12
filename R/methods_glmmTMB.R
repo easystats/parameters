@@ -268,35 +268,6 @@ standard_error.glmmTMB <- function(model,
 }
 
 
-# p_value -----
-
-
-#' @rdname p_value
-#' @export
-p_value.glmmTMB <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = TRUE, ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  cs <- .compact_list(stats::coef(summary(model)))
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),
-      p = as.vector(cs[[i]][, 4]),
-      Component = i
-    )
-  })
-
-  p <- do.call(rbind, x)
-  p$Component <- .rename_values(p$Component, "cond", "conditional")
-  p$Component <- .rename_values(p$Component, "zi", "zero_inflated")
-  p$Component <- .rename_values(p$Component, "disp", "dispersion")
-
-  .filter_component(p, component)
-}
-
-
 
 
 # simulate model -----

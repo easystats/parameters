@@ -51,18 +51,43 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 }
 
 
+
+
 # helper ------------------------------
 
-.p_value_dof <- function(model, dof, method = NULL, statistic = NULL, se = NULL) {
-  params <- insight::get_parameters(model)
-  if (is.null(statistic)) {
-    statistic <- insight::get_statistic(model)$Statistic
+.p_value_dof <- function(model,
+                         dof,
+                         method = NULL,
+                         statistic = NULL,
+                         se = NULL,
+                         robust = FALSE,
+                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
+                         effects = c("fixed", "random", "all"),
+                         verbose = TRUE) {
+  component <- match.arg(component)
+  effects <- match.arg(effects)
+
+  if (is.null(.check_component(model, component, verbose = verbose))) {
+    return(NULL)
   }
 
+  params <- insight::get_parameters(model, component = component)
+
+  if (is.null(statistic)) {
+    statistic <- insight::get_statistic(model, component = component)$Statistic
+  }
+
+  # different SE for kenward and robust
   if (identical(method, "kenward") || identical(method, "kr")) {
     if (is.null(se)) {
       se <- se_kenward(model)$SE
     }
+  } else if (isTRUE(robust)) {
+    se <- standard_error_robust(model, component = component, ...)$SE
+  }
+
+  # overwrite statistic, based on robust or kenward standard errors
+  if (identical(method, "kenward") || identical(method, "kr") || isTRUE(robust)) {
     estimate <- if ("Coefficient" %in% colnames(params)) {
       params$Coefficient
     } else {
@@ -72,10 +97,16 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   }
 
   p <- 2 * stats::pt(abs(statistic), df = dof, lower.tail = FALSE)
-  .data_frame(
+  out <- .data_frame(
     Parameter = params$Parameter,
     p = unname(p)
   )
+
+  if ("Component" %in% names(params)) out$Component <- params$Component
+  if ("Effects" %in% names(params) && effects != "fixed") out$Effects <- params$Effects
+  if ("Response" %in% names(params)) out$Response <- params$Response
+
+  out
 }
 
 
