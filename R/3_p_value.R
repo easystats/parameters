@@ -38,6 +38,7 @@ p_value <- function(model, ...) {
 #' @rdname p_value
 #' @export
 p_value.default <- function(model,
+                            dof = NULL,
                             method = NULL,
                             robust = FALSE,
                             component = "all",
@@ -56,7 +57,9 @@ p_value.default <- function(model,
   } else if (method == "betwithin") {
     return(p_value_betwithin(model))
   } else if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
-    dof <- degrees_of_freedom(model, method = method)
+    if (is.null(dof)) {
+      dof <- degrees_of_freedom(model, method = method)
+    }
     return(.p_value_dof(model, dof = dof, method = method, component = component, verbose = verbose, robust = robust, ...))
   } else if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
     return(bayestestR::p_direction(model, ...))

@@ -10,6 +10,7 @@ p_value(model, ...)
 
 \method{p_value}{default}(
   model,
+  dof = NULL,
   method = NULL,
   robust = FALSE,
   component = "all",
@@ -23,6 +24,13 @@ p_value(model, ...)
 \item{model}{A statistical model.}
 
 \item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
+
+\item{dof}{Number of degrees of freedom to be used when calculating
+confidence intervals. If \code{NULL} (default), the degrees of freedom are
+retrieved by calling \code{\link[=degrees_of_freedom]{degrees_of_freedom()}} with
+approximation method defined in \code{method}. If not \code{NULL}, use this argument
+to override the default degrees of freedom used to compute confidence
+intervals.}
 
 \item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
 
