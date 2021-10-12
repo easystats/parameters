@@ -74,8 +74,12 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   params <- insight::get_parameters(model, component = component)
 
+  # check if all estimates are non-NA
+  params <- .check_rank_deficiency(params, verbose = FALSE)
+
   if (is.null(statistic)) {
-    statistic <- insight::get_statistic(model, component = component)$Statistic
+    statistic <- insight::get_statistic(model, component = component)
+    statistic <- merge(statistic, params, sort = FALSE)[["Statistic"]]
   }
 
   # different SE for kenward and robust
