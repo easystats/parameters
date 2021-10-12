@@ -209,7 +209,7 @@ ci.glmmTMB <- function(x,
   } else {
 
     # all other
-    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, component = component, ...)
+    .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, component = component, ...)
   }
 }
 
