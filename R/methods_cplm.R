@@ -278,16 +278,7 @@ model_parameters.cpglmm <- function(model,
 #' @rdname p_value.lmerMod
 #' @export
 p_value.cpglmm <- function(model, method = "wald", ...) {
-  method <- match.arg(tolower(method), c("wald", "betwithin", "ml1", "residual"))
-  if (method == "wald") {
-    dof <- Inf
-  } else if (method == "residual") {
-    dof <- degrees_of_freedom(model, method = "residual")
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else {
-    dof <- dof_betwithin(model)
-  }
+  dof <- degrees_of_freedom(model, method = method, ...)
   p_value_wald(model, dof, ...)
 }
 
