@@ -156,7 +156,12 @@ model_parameters.merMod <- function(model,
 
   # p-values, CI and se might be based of wald, or KR
   ci_method <- tolower(ci_method)
-  ci_method <- match.arg(ci_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "kr", "boot", "profile", "uniroot"))
+
+  if (isTRUE(bootstrap)) {
+    ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+  } else {
+    ci_method <- match.arg(ci_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "kr", "boot", "profile", "uniroot"))
+  }
 
   # which component to return?
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -264,7 +269,7 @@ model_parameters.merMod <- function(model,
     exponentiate,
     bootstrap,
     iterations,
-    df_method = ci_method,
+    ci_method = ci_method,
     p_adjust = p_adjust,
     verbose = verbose,
     summary = summary,

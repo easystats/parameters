@@ -271,6 +271,7 @@ parameters <- model_parameters
 #' @export
 model_parameters.default <- function(model,
                                      ci = .95,
+                                     ci_method = NULL,
                                      bootstrap = FALSE,
                                      iterations = 1000,
                                      standardize = NULL,
@@ -288,6 +289,7 @@ model_parameters.default <- function(model,
       .model_parameters_generic(
         model = model,
         ci = ci,
+        ci_method = ci_method,
         bootstrap = bootstrap,
         iterations = iterations,
         merge_by = "Parameter",
@@ -364,6 +366,11 @@ model_parameters.default <- function(model,
       ...
     )
   } else {
+    # set default method for CI
+    if (is.null(ci_method) || missing(ci_method)) {
+      ci_method <- "wald"
+    }
+
     params <- .extract_parameters_generic(
       model,
       ci = ci,
@@ -392,7 +399,7 @@ model_parameters.default <- function(model,
     exponentiate,
     bootstrap,
     iterations,
-    df_method = ci_method,
+    ci_method = ci_method,
     p_adjust = p_adjust,
     robust = robust,
     summary = summary,
@@ -432,7 +439,7 @@ model_parameters.glm <- function(model,
     ci_method <- df_method
   }
 
-  if (insight::n_obs(model) > 1e4 && ci_method == "profile") {
+  if (insight::n_obs(model) > 1e4 && identical(ci_method, "profile")) {
     message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."))
   }
 

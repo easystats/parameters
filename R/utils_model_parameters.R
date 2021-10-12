@@ -5,7 +5,6 @@
                                              exponentiate = FALSE,
                                              bootstrap = FALSE,
                                              iterations = 1000,
-                                             df_method = NULL,
                                              ci_method = NULL,
                                              p_adjust = NULL,
                                              robust = FALSE,
@@ -43,6 +42,7 @@
   }
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- ci_method
+  attr(params, "df_method") <- ci_method
   attr(params, "test_statistic") <- insight::find_statistic(model)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
@@ -53,7 +53,6 @@
   attr(params, "model_class") <- class(model)
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
-  attr(params, "df_method") <- df_method
   attr(params, "p_adjust") <- p_adjust
   attr(params, "robust_vcov") <- isTRUE(robust)
   attr(params, "ignore_group") <- isFALSE(group_level)

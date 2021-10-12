@@ -639,15 +639,50 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: type of uncertainty interval
-.print_footer_cimethod <- function(ci_method = NULL) {
+.print_footer_cimethod <- function(ci_method = NULL, test_statistic = NULL, bootstrap = FALSE) {
+
+  # prepare strings
   if (!is.null(ci_method)) {
-    ci_method <- switch(toupper(ci_method),
-      "HDI" = "highest density intervals",
-      "ETI" = "equal-tailed intervals",
-      "SI" = "support intervals",
-      "uncertainty intervals"
-    )
-    message(paste0("\nUsing ", ci_method, " as credible intervals."))
+
+    string_tailed <- switch(toupper(ci_method),
+                            "HDI" = "highest-density",
+                            "profile" = "profiled",
+                            "equal-tailed")
+
+    string_method <- switch(toupper(ci_method),
+                            "BCI" = ,
+                            "BCAI" = "accelerated bootstrap",
+                            "SI" = ,
+                            "CI" = ,
+                            "QUANTILE" = ,
+                            "ETI" = ,
+                            "HDI" = ifelse(isTRUE(bootstrap), "bootstrap", "MCMC"),
+                            "RESIDUAL" = ,
+                            "WALD" = "Wald",
+                            "NORMAL" = "normal")
+
+    if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGERS", "SATTERTHWAITE")) {
+      string_approx <- format_df_adjust(ci_method, approx_string = " approximation.", dof_string = "")
+    } else {
+      string_approx <- ""
+    }
+
+    if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
+      string_statistic <- switch(tolower(test_statistic),
+                                 "t-statistic" = "t",
+                                 "z-statistic" = "z",
+                                 "")
+      string_method <- paste0(string_method, " ", string_statistic, "-")
+    } else {
+      string_method <- paste0(string_method, " ")
+    }
+
+    # bootstrapped intervals
+    if (isTRUE(bootstrap)) {
+      message(paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals."))
+    } else {
+      message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using ", string_method, "distribution ", string_approx, "approximation."))
+    }
   }
 }
 

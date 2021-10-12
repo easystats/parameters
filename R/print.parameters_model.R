@@ -168,6 +168,7 @@ print.parameters_model <- function(x,
   ci_method <- .additional_arguments(x, "ci_method", NULL)
   df_method <- .additional_arguments(x, "df_method", NULL)
   test_statistic <- .additional_arguments(x, "test_statistic", NULL)
+  bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print main table
@@ -178,14 +179,9 @@ print.parameters_model <- function(x,
     footer = footer
   ))
 
-  # for Bayesian models
+  # inform about CI and df approx.
   if (isTRUE(verbose)) {
-    .print_footer_cimethod(ci_method)
-  }
-
-  # for Bayesian models
-  if (isTRUE(verbose)) {
-    .print_footer_dfmethod(df_method, test_statistic)
+    .print_footer_cimethod(ci_method, test_statistic, bootstrap)
   }
 
   invisible(orig_x)

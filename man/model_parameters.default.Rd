@@ -11,6 +11,7 @@
 \method{model_parameters}{default}(
   model,
   ci = 0.95,
+  ci_method = NULL,
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -86,6 +87,12 @@
 \item{model}{Model object.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI). Only applies to models of class \code{glm} or
+\code{polr} or if \code{bootstrap = TRUE}. For \code{glm} and \code{polr}, \code{ci_method} may be
+\code{"profile"} or \code{"wald"}. If \code{bootstrap = TRUE}, see argument \code{ci_method}
+in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
@@ -169,12 +176,6 @@ names.}
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
 are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
-
-\item{ci_method}{Method for computing degrees of freedom for
-confidence intervals (CI). Only applies to models of class \code{glm} or
-\code{polr} or if \code{bootstrap = TRUE}. For \code{glm} and \code{polr}, \code{ci_method} may be
-\code{"profile"} or \code{"wald"}. If \code{bootstrap = TRUE}, see argument \code{ci_method}
-in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 
