@@ -3,7 +3,7 @@ if (requiet("testthat") && requiet("parameters")) {
     data(mtcars)
     m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
     x <- equivalence_test(m)
-    expect_equal(c(nrow(x), ncol(x)), c(5, 8))
+    expect_equal(c(nrow(x), ncol(x)), c(5, 9))
 
     expect_true(is.character(capture.output(equivalence_test(m))))
   })
