@@ -657,12 +657,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
                             "QUANTILE" = ,
                             "ETI" = ,
                             "HDI" = ifelse(isTRUE(bootstrap), "bootstrap", "MCMC"),
-                            "RESIDUAL" = ,
-                            "WALD" = "Wald",
-                            "NORMAL" = "normal")
+                            "NORMAL" = "normal",
+                            "Wald")
 
     if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGERS", "SATTERTHWAITE")) {
-      string_approx <- format_df_adjust(ci_method, approx_string = " approximation.", dof_string = "")
+      string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""))
     } else {
       string_approx <- ""
     }
