@@ -59,7 +59,7 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     statistic <- insight::get_statistic(model)$Statistic
   }
 
-  if (identical(method, "kenward")) {
+  if (identical(method, "kenward") || identical(method, "kr")) {
     if (is.null(se)) {
       se <- se_kenward(model)$SE
     }
