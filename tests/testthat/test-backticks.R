@@ -42,14 +42,14 @@ if (.runThisTest) {
         )
       )
       expect_equal(
-        ci_wald(m1)$Parameter,
+        ci(m1, method = "wald")$Parameter,
         c(
           "(Intercept)", "Petal.Length", "a mversicolor", "a mvirginica",
           "log(Sepal.Length)", "a mversicolor:log(Sepal.Length)", "a mvirginica:log(Sepal.Length)"
         )
       )
       expect_equal(
-        ci_wald(m2)$Parameter,
+        ci(m2, method = "wald")$Parameter,
         c(
           "(Intercept)", "Petal.Length", "Speciesversicolor", "Speciesvirginica",
           "log(Sepal.Length)", "Speciesversicolor:log(Sepal.Length)", "Speciesvirginica:log(Sepal.Length)"
