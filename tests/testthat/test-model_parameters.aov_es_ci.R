@@ -387,13 +387,13 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
         structure(
           list(
             Parameter = c("s(hp, 4)", "am", "qsec", "Residuals"),
-            Sum_Squares = c(678.37, 112.58, 0.03, 179.68),
+            Sum_Squares = c(678.37287, 202.23503, 6.87905, 238.56023),
             df = c(1, 1, 1, 25),
-            Mean_Square = c(678.37, 112.58, 0.03, 7.19),
-            F = c(94.38, 15.66, 0, NA),
-            p = c(0, 0, 0.95, NA),
-            Omega2_partial = c(0.76, 0.34, -0.04, NA),
-            Omega2_CI_low = c(0.71, 0.23, 0, NA),
+            Mean_Square = c(678.37287, 202.23503, 6.87905, 8.52001),
+            `F` = c(79.62115, 23.73648, 0.8074, NA),
+            p = c(0, 4e-05, 0.37655, NA),
+            Omega2_partial = c(0.71072, 0.41538, -0.00606, NA),
+            Omega2_CI_low = c(0.70634, 0.41067, 0, NA),
             Omega2_CI_high = c(1, 1, 1, NA)
           ),
           row.names = c(NA, 4L),
