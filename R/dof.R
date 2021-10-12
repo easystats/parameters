@@ -104,7 +104,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
     dof <- dof_satterthwaite(model)
   } else if (method == "betwithin") {
     dof <- dof_betwithin(model)
-  } else if (method == c("kenward", "kr")) {
+  } else if (method %in% c("kenward", "kr")) {
     dof <- dof_kenward(model)
   } else if (method == "analytical") {
     dof <- .degrees_of_freedom_analytical(model, kenward = TRUE)
