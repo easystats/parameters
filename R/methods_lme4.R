@@ -148,10 +148,14 @@ model_parameters.merMod <- function(model,
 
   # set default
   if (is.null(ci_method)) {
-    ci_method <- switch(insight::find_statistic(model),
-      "t-statistic" = "residual",
-      "wald"
-    )
+    if (isTRUE(bootstrap)) {
+      ci_method <- "quantile"
+    } else {
+      ci_method <- switch(insight::find_statistic(model),
+                          "t-statistic" = "residual",
+                          "wald"
+      )
+    }
   }
 
   # p-values, CI and se might be based of wald, or KR
