@@ -153,8 +153,8 @@ if (requiet("testthat") &&
       expect_equal(
         params$Parameter,
         c(
-          "SD (Intercept)", "SD (DOY)", "Cor (Intercept~site)", "SD (Observations)",
-          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~site)", "SD (Observations)"
+          "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY: site)", "SD (Observations)",
+          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP: site)", "SD (Observations)"
         )
       )
       expect_equal(
