@@ -34,11 +34,16 @@ standard_error.coxph <- function(model, method = NULL, ...) {
 
 #' @export
 p_value.coxph <- function(model, ...) {
-  params <- merge(
-    insight::get_parameters(model),
-    insight::get_statistic(model),
-    sort = FALSE
-  )
+  params <- insight::get_parameters(model)
+  stats <- insight::get_statistic(model)
+
+  params <- merge(params, stats, sort = FALSE)
+  statistic <- attributes(stats)$statistic
+
+  # convert in case of z
+  if (identical(statistic, "z-statistic")) {
+    params$Statistic <- params$Statistic ^ 2
+  }
 
   .data_frame(
     Parameter = params$Parameter,
