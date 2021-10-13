@@ -646,7 +646,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
     string_tailed <- switch(toupper(ci_method),
                             "HDI" = "highest-density",
-                            "profile" = "profiled",
+                            "PROFILE" = "profiled",
                             "equal-tailed")
 
     string_method <- switch(toupper(ci_method),
