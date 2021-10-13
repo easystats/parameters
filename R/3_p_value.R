@@ -49,6 +49,11 @@ p_value.default <- function(model,
     method <- "wald"
   }
 
+  # default p-value method for profiled or uniroot CI
+  if (method %in% c("uniroot", "profile", "likelihood")) {
+    method <- "normal"
+  }
+
   p <- NULL
 
   if (method == "ml1") {
