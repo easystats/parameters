@@ -73,8 +73,9 @@
     }
   }
 
-  # here we add exception for objects that should not have a table headline
-  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm"))) {
+  # here we add exception for objects that should not have a
+  # table headline
+  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph"))) {
     attr(params, "title") <- ""
   }
 
