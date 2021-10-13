@@ -28,7 +28,7 @@ set.seed(333)
 library(parameters)
 ```
 
-# parameters <img src='man/figures/logo.png' align="right" height="139" />
+# parameters
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
@@ -100,7 +100,9 @@ In case you want to file an issue or contribute in another way to the package, p
  
 ## Model's parameters description
 
-<p><img src='man/figures/figure1.png' align="center" /></p>
+```{r echo=FALSE, fig.width=734, fig.align='center', dpi=96}
+knitr::include_graphics("man/figures/figure1.png")
+```
 
 The [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html) function (that can be accessed via the `parameters()` shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to [`broom::tidy()`](https://github.com/tidymodels/broom), with some notable differences: 
 
@@ -150,8 +152,10 @@ model_parameters(model)
 
 ## Variable and parameters selection
 
-<p><img src='man/figures/figure2.png' align="center" /></p>
- 
+```{r echo=FALSE, fig.width=756, fig.align='center', dpi=96}
+knitr::include_graphics("man/figures/figure2.png")
+```
+
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}

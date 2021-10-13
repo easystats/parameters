@@ -450,7 +450,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
 #' @export
 plot.n_clusters_elbow <- function(x, ...) {
-  plot(visualisation_recipe(x, ...))
+  graphics::plot(visualisation_recipe(x, ...))
 }
 
 #' @export
@@ -465,6 +465,6 @@ plot.n_clusters_dbscan <- plot.n_clusters_elbow
 #' @export
 plot.n_clusters_hclust <- function(x, ...) {
   insight::check_if_installed("pvclust")
-  plot(attributes(x)$model)
+  graphics::plot(attributes(x)$model)
   pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
 }
