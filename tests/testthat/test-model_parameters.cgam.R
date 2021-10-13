@@ -89,7 +89,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam")) {
     # use REML method to fit the model
     ans <- cgam::cgamm(formula = y ~ s.incr(x) + (1 | group), reml = TRUE)
 
-    df <- as.data.frame(suppressWarnings(parameters::model_parameters(ans)))
+    df <- suppressWarnings(parameters::model_parameters(ans))
 
     expect_equal(df,
       structure(
@@ -106,7 +106,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam")) {
         ),
         row.names = 1L,
         sigma = numeric(0),
-        residual_df = Inf,
+        residual_df = 890,
         ci = 0.95,
         test_statistic = "t-statistic",
         verbose = TRUE,
@@ -131,10 +131,10 @@ if (.runThisTest && requiet("testthat") && requiet("cgam")) {
         ci_digits = 2,
         p_digits = 3,
         footer_digits = 3,
-        class = "data.frame",
+        class = c("parameters_model", "see_parameters_model", "data.frame"),
         object_name = "ans"
       ),
-      tolerance = 0.001
+      tolerance = 0.01
     )
   })
 }
