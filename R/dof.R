@@ -217,7 +217,7 @@ dof <- degrees_of_freedom
   method <- tolower(method)
   if (inherits(model, c("polr", "glm", "svyglm"))) {
     if (method %in% c(
-      "analytical", "any", "fit", "profile",
+      "analytical", "any", "fit", "profile", "residual",
       "wald", "nokr", "likelihood", "normal"
     )) {
       return(TRUE)
