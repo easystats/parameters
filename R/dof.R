@@ -88,6 +88,10 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
     return(Inf)
   }
+  # Chi2-distributions usually have 1 df
+  if (!is.null(stat) && stat == "chi-squared statistic") {
+    return(1)
+  }
 
   if (method == "any") {
     dof <- .degrees_of_freedom_residual(model, verbose = FALSE)

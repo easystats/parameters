@@ -33,25 +33,16 @@ standard_error.coxph <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.coxph <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(p_value_robust(model, ...))
-  }
-
-  cs <- stats::coef(summary(model))
-  p_column <- grep("^(Pr\\(>|p)", colnames(cs))
-  p <- cs[, p_column]
-  params <- insight::get_parameters(model)
-
-  # check
-  if (length(p) > nrow(params)) {
-    p <- p[match(params$Parameter, .remove_backticks_from_string(rownames(cs)))]
-  }
+p_value.coxph <- function(model, ...) {
+  params <- merge(
+    insight::get_parameters(model),
+    insight::get_statistic(model),
+    sort = FALSE
+  )
 
   .data_frame(
     Parameter = params$Parameter,
-    p = as.vector(p)
+    p = as.vector(1 - stats::pchisq(params$Statistic, df = 1))
   )
 }
 
