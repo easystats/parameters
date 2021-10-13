@@ -613,8 +613,8 @@ if (.runThisTest &&
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
-        "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~persons)",
-        "SD (Observations)", "SD (Intercept)", "SD (zg)", "Cor (Intercept~persons)",
+        "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb: persons)",
+        "SD (Observations)", "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg: persons)",
         "SD (Observations)"
       )
     )

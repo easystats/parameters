@@ -9,7 +9,7 @@ if (.runThisTest &&
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
   test_that("model_parameters.mixed", {
-    params <- model_parameters(m1, ci_method = "wald", effects = "fixed")
+    params <- model_parameters(m1, ci_method = "normal", effects = "fixed")
     expect_equal(c(nrow(params), ncol(params)), c(2, 10))
     expect_equal(params$CI_high, c(1.6373105660317, 0.554067677205595), tolerance = 1e-3)
 
