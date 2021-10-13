@@ -33,8 +33,8 @@ is small (even if the sample size of level-1 units is high). In such cases
 it is recommended to approximate a more accurate number of degrees of freedom
 for such inferential statistics (see \cite{Li and Redden 2015}). The
 \emph{m-l-1} heuristic is such an approach that uses a t-distribution with
-fewer degrees of freedom (\code{dof_ml1}) to calculate p-values
-(\code{p_value_ml1}) and confidence intervals (\code{ci(method = "ml1")}).
+fewer degrees of freedom (\code{dof_ml1()}) to calculate p-values
+(\code{p_value_ml1()}) and confidence intervals (\code{ci(method = "ml1")}).
 }
 \subsection{Degrees of Freedom for Longitudinal Designs (Repeated Measures)}{
 In particular for repeated measure designs (longitudinal data analysis),

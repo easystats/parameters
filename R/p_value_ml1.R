@@ -14,8 +14,8 @@
 #' it is recommended to approximate a more accurate number of degrees of freedom
 #' for such inferential statistics (see \cite{Li and Redden 2015}). The
 #' *m-l-1* heuristic is such an approach that uses a t-distribution with
-#' fewer degrees of freedom (`dof_ml1`) to calculate p-values
-#' (`p_value_ml1`) and confidence intervals (`ci(method = "ml1")`).
+#' fewer degrees of freedom (`dof_ml1()`) to calculate p-values
+#' (`p_value_ml1()`) and confidence intervals (`ci(method = "ml1")`).
 #' }
 #' \subsection{Degrees of Freedom for Longitudinal Designs (Repeated Measures)}{
 #' In particular for repeated measure designs (longitudinal data analysis),
