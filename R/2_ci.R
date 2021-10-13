@@ -21,6 +21,7 @@
 #' @param robust Logical, if `TRUE`, computes confidence intervals based on
 #'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
 #' @param component TODO.
+#' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed down to [`standard_error_robust()`][standard_error_robust]
 #'   when confidence intervals or p-values based on robust standard errors
 #'   should be computed.

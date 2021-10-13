@@ -46,6 +46,8 @@ when confidence intervals or p-values based on robust standard errors
 should be computed.}
 
 \item{component}{TODO.}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 A data frame containing the CI bounds.
