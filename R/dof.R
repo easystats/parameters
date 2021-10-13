@@ -218,7 +218,7 @@ dof <- degrees_of_freedom
   if (inherits(model, c("polr", "glm", "svyglm"))) {
     if (method %in% c(
       "analytical", "any", "fit", "profile",
-      "wald", "nokr", "likelihood"
+      "wald", "nokr", "likelihood", "normal"
     )) {
       return(TRUE)
     } else {
@@ -237,7 +237,7 @@ dof <- degrees_of_freedom
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
-    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', 'normal', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
     return(FALSE)
   }
 
