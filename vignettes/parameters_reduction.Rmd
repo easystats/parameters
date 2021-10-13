@@ -44,93 +44,54 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
 set.seed(333)
 ```
 
-Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine
-learning, the goal of variable reduction is to **reduce the number of predictors** by deriving  a new set of variables intended to be informative and
-non-redundant from a set of measured data. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and
-improve generalization (by reducing overfitting).
+Also known as [**feature extraction** or **dimension reduction**](https://en.wikipedia.org/wiki/Feature_extraction) in machine learning, the goal of variable reduction is to **reduce the number of predictors** by deriving  a new set of variables intended to be informative and non-redundant from a set of measured data. This method can be used to **simplify models**, which can benefit model interpretation, shorten fitting time, and improve generalization (by reducing overfitting).
 
 ## Quick and Exploratory Method
 
-Let's start by fitting a multiple linear regression model with the `attitude`
-dataset, available is base R, to predict the overall **rating** by employees of
-their organization with the remaining variables (handling of employee
-**complaints**, special **privileges**, opportunity of **learning**, **raises**,
-a feedback considered too **critical** and opportunity of **advancement**).
+Let's start by fitting a multiple linear regression model with the `attitude` dataset, available is base R, to predict the overall **rating** by employees of their organization with the remaining variables (handling of employee **complaints**, special **privileges**, opportunity of **learning**, **raises**, a feedback considered too **critical** and opportunity of **advancement**).
 
 ```{r}
+data("attitude")
 model <- lm(rating ~ ., data = attitude)
 parameters(model)
 ```
 
-We can explore a reduction of the number of parameters with the
-`reduce_parameters()` function.
+We can explore a reduction of the number of parameters with the `reduce_parameters()` function.
 
 ```{r}
 newmodel <- reduce_parameters(model)
 parameters(newmodel)
 ```
 
-This output *hints* at the fact that the model could be represented via
-**two "latent" dimensions**, one correlated with all the positive things that a
-company has to offer, and the other one related to the amount of negative
-critiques received by the employees. These two dimensions have a positive and
-negative relationship with the company rating, respectively.
+This output *hints* at the fact that the model could be represented via **two "latent" dimensions**, one correlated with all the positive things that a company has to offer, and the other one related to the amount of negative critiques received by the employees. These two dimensions have a positive and negative relationship with the company rating, respectively.
 
 > What does `reduce_parameters()` exactly do?
 
-This function performs a reduction in the parameter space (the number of
-variables). It starts by creating a new set of variables, based on the chosen
-method (the default method is "**PCA**", but other are available via the
-`method` argument, such as "**cMDS**", "**DRR**" or "**ICA**"). Then, it names
-this new dimensions using the original variables that *correlate* the most with
-it. For instance, in the example above a variable named
-`raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68` means
-that the respective variables (`raises`, `learning`, `complaints`, `privileges`,
-`advance`) correlate maximally (with coefficients of .88, .82, .78, .70, .68,
-respectively) with this dimension.
+This function performs a reduction in the parameter space (the number of variables). It starts by creating a new set of variables, based on the chosen method (the default method is "**PCA**", but other are available via the `method` argument, such as "**cMDS**", "**DRR**" or "**ICA**"). Then, it names this new dimensions using the original variables that *correlate* the most with it. For instance, in the example above a variable named `raises_0.88/learning_0.82/complaints_0.78/privileges_0.70/advance_0.68` means that the respective variables (`raises`, `learning`, `complaints`, `privileges`, `advance`) correlate maximally (with coefficients of .88, .82, .78, .70, .68, respectively) with this dimension.
 
 ```{r}
 reduce_parameters(model, method = "cMDS") %>%
   parameters()
 ```
 
-A different method (**Classical Multidimensional Scaling - cMDS**) suggests that
-negative critiques do not have a significant impact on the rating, and that the
-lack of opportunities of career advancement is a separate dimension with an
-importance on its own.
+A different method (**Classical Multidimensional Scaling - cMDS**) suggests that negative critiques do not have a significant impact on the rating, and  that the lack of opportunities of career advancement is a separate dimension with an importance on its own.
 
-Although `reduce_parameters()` function can be useful in exploratory data
-analysis, it's best to perform the dimension reduction step in a **separate and
-dedicated stage**, as this is a very important process in the data analysis
-workflow.
+Although `reduce_parameters()` function can be useful in exploratory data analysis, it's best to perform the dimension reduction step in a **separate and dedicated stage**, as this is a very important process in the data analysis workflow.
 
 ## Principal Component Analysis (PCA)
 
-PCA is a widely used procedure that lies in-between dimension reduction and
-structural modeling. Indeed, one of the ways of reducing the number of
-predictors is to extract a new set of uncorrelated variables that will
-*represent* variance of your initial dataset. But how the original variables
-relate between themselves can also be a question on its own.
+PCA is a widely used procedure that lies in-between dimension reduction and structural modeling. Indeed, one of the ways of reducing the number of predictors is to extract a new set of uncorrelated variables that will *represent* variance of your initial dataset. But how the original variables relate between themselves can also be a question on its own.
 
-We can apply the `principal_components()` function to do the the predictors of
-the model:
+We can apply the `principal_components()` function to do the the predictors of the model:
 
 ```{r}
 pca <- principal_components(insight::get_predictors(model), n = "auto")
 pca
 ```
 
-The `principal_components()` function automatically selected one component (if
-the number of components is not specified, this function uses
-[`n_factors()`](https://easystats.github.io/parameters/reference/n_factors.html)
-to estimate the optimal number to keep) and returned the **loadings**, i.e., the
-relationship with all of the original variables.
+The `principal_components()` function automatically selected one component (if the number of components is not specified, this function uses [`n_factors()`](https://easystats.github.io/parameters/reference/n_factors.html) to estimate the optimal number to keep) and returned the **loadings**, i.e., the relationship with all of the original variables.
 
-As we can see here, it seems that our new component captured the essence (more
-than half of the total variance present in the original dataset) of all our
-other variables together. We can **extract** the values of this component for
-each of our observation using the `predict()` method and add in the response
-variable of our initial dataset.
+As we can see here, it seems that our new component captured the essence (more than half of the total variance present in the original dataset) of all our other variables together. We can **extract** the values of this component for each of our observation using the `predict()` method and add in the response variable of our initial dataset.
 
 ```{r}
 newdata <- predict(pca)
@@ -140,38 +101,29 @@ newdata$rating <- attitude$rating
 We can know update the model with this new component:
 
 ```{r}
-update(model, rating ~ PC1, data = newdata) %>%
+update(model, rating ~ Component_1, data = newdata) %>%
   parameters()
 ```
 
 ### Using the `psych` package for PCA
 
-You can also use different packages for models, such as
-[`psych`](https://cran.r-project.org/package=psych) [@revelle2018] or
-[`FactoMineR`](http://factominer.free.fr/) for PCA or Exploratory Factor
-Analysis (EFA), as it allows for more flexibility and control when
-running such procedures. 
+You can also use different packages for models, such as [`psych`](https://cran.r-project.org/package=psych) [@revelle2018] or [`FactoMineR`](http://factominer.free.fr/) for PCA or Exploratory Factor Analysis (EFA), as it allows for more flexibility and control when running such procedures. 
 
-The functions from this package are **fully supported** by `parameters` through
-the `model_parameters()` function. For instance, we can redo the above analysis
-using the `psych` package as follows:
+The functions from this package are **fully supported** by `parameters` through the `model_parameters()` function. For instance, we can redo the above analysis using the `psych` package as follows:
 
 ```{r}
 library(psych)
 
 # Fit the PCA
-pca <- psych::principal(attitude, nfactors = 1) %>%
-  model_parameters()
-
+pca <- model_parameters(psych::principal(attitude, nfactors = 1))
 pca
 ```
 
-*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract
-rotated components, possibly leading to discrepancies in the results.
+*Note:* By default, `psych::principal()` uses a **varimax** rotation to extract rotated components, possibly leading to discrepancies in the results.
 
 Finally, refit the model:
 
-```{r}
+```{r eval=FALSE}
 df <- cbind(attitude, predict(pca))
 
 update(model, rating ~ PC1, data = df) %>%
