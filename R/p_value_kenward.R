@@ -79,7 +79,8 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
 
   if (is.null(statistic)) {
     statistic <- insight::get_statistic(model, component = component)
-    statistic <- merge(statistic, params, sort = FALSE)[["Statistic"]]
+    params <- merge(params, statistic, sort = FALSE)
+    statistic <- params$Statistic
   }
 
   # different SE for kenward and robust

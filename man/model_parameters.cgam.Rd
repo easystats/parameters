@@ -10,6 +10,7 @@
 \method{model_parameters}{cgam}(
   model,
   ci = 0.95,
+  ci_method = "residual",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -26,6 +27,7 @@
 \method{model_parameters}{gam}(
   model,
   ci = 0.95,
+  ci_method = "residual",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -42,6 +44,7 @@
 \method{model_parameters}{rqss}(
   model,
   ci = 0.95,
+  ci_method = "residual",
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
@@ -59,6 +62,14 @@
 \item{model}{A gam/gamm model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI). May be one of \code{"analytical"}, \code{"any"}, \code{"ml1"},
+\code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"},
+\code{"boot"}, \code{"uniroot"}, \code{"residual"}, \code{"normal"}, or \code{"likelihood"}.
+If \code{bootstrap = TRUE}, may be one of \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
+\code{"si"}, \code{"bci"}, or \code{"bcai"}. See argument \code{ci_method} in
+\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also

@@ -45,8 +45,9 @@
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
+#' \dontrun{
 #' library(parameters)
-#' \donttest{
+#'
 #' # The main 'n_clusters' function ===============================
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 #'   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {

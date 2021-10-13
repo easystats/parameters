@@ -7,6 +7,20 @@ if (.runThisTest &&
   data("fish")
   data("Salamanders")
 
+  win_os <- tryCatch(
+    {
+      si <- Sys.info()
+      if (!is.null(si["sysname"])) {
+        si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+      } else {
+        FALSE
+      }
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
+
   m1 <- suppressWarnings(glmmTMB(
     count ~ child + camper + (1 | persons),
     ziformula = ~ child + camper + (1 | persons),
@@ -444,8 +458,8 @@ if (.runThisTest &&
         "",
         "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
         "-------------------------------------------------------------",
-        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
-        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660",
+        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
+        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663",
         "",
         "# Random Effects (Zero-Inflated Model)",
         "",
@@ -474,8 +488,8 @@ if (.runThisTest &&
         "",
         "Parameter   | Log-Odds |   SE |        95% CI |     z |     p",
         "-------------------------------------------------------------",
-        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
-        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660",
+        "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
+        "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663",
         "",
         "# Random Effects Variances",
         "",
@@ -501,21 +515,7 @@ if (.runThisTest &&
 
   # proper printing of digits ---------------------
 
-  win <- tryCatch(
-    {
-      si <- Sys.info()
-      if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
-      } else {
-        FALSE
-      }
-    },
-    error = function(e) {
-      FALSE
-    }
-  )
-
-  if (win) {
+  if (win_os) {
     test_that("print-model_parameters glmmTMB digits", {
       mp <- model_parameters(m4, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
@@ -538,21 +538,21 @@ if (.runThisTest &&
           "",
           "# Random Effects Variances",
           "",
-          "Parameter               | Coefficient",
-          "-------------------------------------",
-          "SD (Intercept: persons) |      3.4056",
-          "SD (xb: persons)        |      1.2132",
-          "Cor (Intercept~persons) |     -1.0000",
-          "SD (Residual)           |      1.0000",
+          "Parameter                   | Coefficient",
+          "-----------------------------------------",
+          "SD (Intercept: persons)     |      3.4056",
+          "SD (xb: persons)            |      1.2132",
+          "Cor (Intercept~xb: persons) |     -1.0000",
+          "SD (Residual)               |      1.0000",
           "",
           "# Random Effects (Zero-Inflated Model)",
           "",
-          "Parameter               | Coefficient",
-          "-------------------------------------",
-          "SD (Intercept: persons) |      2.7358",
-          "SD (zg: persons)        |      1.5683",
-          "Cor (Intercept~persons) |      1.0000",
-          "SD (Residual)           |      1.0000"
+          "Parameter                   | Coefficient",
+          "-----------------------------------------",
+          "SD (Intercept: persons)     |      2.7358",
+          "SD (zg: persons)            |      1.5683",
+          "Cor (Intercept~zg: persons) |      1.0000",
+          "SD (Residual)               |      1.0000"
         )
       )
 
@@ -577,21 +577,21 @@ if (.runThisTest &&
           "",
           "# Random Effects Variances",
           "",
-          "Parameter               | Coefficient",
-          "-------------------------------------",
-          "SD (Intercept: persons) |      3.4056",
-          "SD (xb: persons)        |      1.2132",
-          "Cor (Intercept~persons) |     -1.0000",
-          "SD (Residual)           |      1.0000",
+          "Parameter                   | Coefficient",
+          "-----------------------------------------",
+          "SD (Intercept: persons)     |      3.4056",
+          "SD (xb: persons)            |      1.2132",
+          "Cor (Intercept~xb: persons) |     -1.0000",
+          "SD (Residual)               |      1.0000",
           "",
           "# Random Effects (Zero-Inflated Model)",
           "",
-          "Parameter               | Coefficient",
-          "-------------------------------------",
-          "SD (Intercept: persons) |      2.7358",
-          "SD (zg: persons)        |      1.5683",
-          "Cor (Intercept~persons) |      1.0000",
-          "SD (Residual)           |      1.0000"
+          "Parameter                   | Coefficient",
+          "-----------------------------------------",
+          "SD (Intercept: persons)     |      2.7358",
+          "SD (zg: persons)            |      1.5683",
+          "Cor (Intercept~zg: persons) |      1.0000",
+          "SD (Residual)               |      1.0000"
         )
       )
     })

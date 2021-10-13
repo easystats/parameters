@@ -7,6 +7,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
+#' \dontrun{
 #' library(parameters)
 #'
 #' # K-means -------------------------------
@@ -23,6 +24,7 @@
 #' # Between and Total Sum of Squares
 #' attributes(rez)$Sum_Squares_Total
 #' attributes(rez)$Sum_Squares_Between
+#' }
 #' @export
 model_parameters.kmeans <- function(model, ...) {
   params <- cbind(

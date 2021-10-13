@@ -134,8 +134,9 @@ the examples below for more details.
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontrun{
 library(parameters)
-\donttest{
+
 # The main 'n_clusters' function ===============================
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {

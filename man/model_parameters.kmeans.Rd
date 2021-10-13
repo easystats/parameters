@@ -102,6 +102,7 @@ if (require("pvclust", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Total
   attributes(rez)$Sum_Squares_Between
 }
+\dontrun{
 library(parameters)
 
 # K-means -------------------------------
@@ -118,6 +119,7 @@ attributes(rez)$means
 # Between and Total Sum of Squares
 attributes(rez)$Sum_Squares_Total
 attributes(rez)$Sum_Squares_Between
+}
 # Hierarchical K-means (factoextra::hkclust) ----------------------
 if (require("factoextra", quietly = TRUE)) {
   data <- iris[1:4]

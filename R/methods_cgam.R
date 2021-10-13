@@ -33,6 +33,7 @@
 #' @export
 model_parameters.cgam <- function(model,
                                   ci = .95,
+                                  ci_method = "residual",
                                   bootstrap = FALSE,
                                   iterations = 1000,
                                   standardize = NULL,
@@ -56,6 +57,7 @@ model_parameters.cgam <- function(model,
     params <- .extract_parameters_generic(
       model,
       ci = ci,
+      ci_method = ci_method,
       component = "all",
       merge_by = c("Parameter", "Component"),
       standardize = standardize,
