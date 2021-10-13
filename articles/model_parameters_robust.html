@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.3</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Dimension Reduction
+    Dimension Reduction and Clustering
      
     <span class="caret"></span>
   </a>
@@ -109,6 +109,9 @@
     </li>
     <li>
       <a href="../articles/parameters_selection.html">Parameters Selection</a>
+    </li>
+    <li>
+      <a href="../articles/clustering.html">Clustering with easystats</a>
     </li>
   </ul>
 </li>
@@ -288,15 +291,15 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, robust estimation on standardized model</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
-<span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)                         |        0.87 | 0.45 | [-0.03, 1.76] |   1.91 | 0.059 </span>
-<span class="co">#&gt; Sepal Length                        |        0.04 | 0.12 | [-0.19, 0.28] |   0.37 | 0.711 </span>
-<span class="co">#&gt; Species [versicolor]                |       -0.78 | 0.69 | [-2.15, 0.59] |  -1.12 | 0.265 </span>
-<span class="co">#&gt; Species [virginica]                 |       -0.41 | 0.63 | [-1.66, 0.83] |  -0.66 | 0.513 </span>
-<span class="co">#&gt; Sepal Width                         |        0.11 | 0.08 | [-0.05, 0.27] |   1.32 | 0.190 </span>
-<span class="co">#&gt; Sepal Length * Species [versicolor] |        0.61 | 0.13 | [ 0.35, 0.87] |   4.65 | &lt; .001</span>
-<span class="co">#&gt; Sepal Length * Species [virginica]  |        0.68 | 0.12 | [ 0.45, 0.91] |   5.75 | &lt; .001</span></code></pre></div>
+<span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | &lt; .001</span>
+<span class="co">#&gt; Sepal Length                        |        0.02 | 0.06 | [-0.09,  0.13] |   0.37 | 0.711 </span>
+<span class="co">#&gt; Species [versicolor]                |        1.57 | 0.09 | [ 1.40,  1.74] |  17.84 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]                 |        2.02 | 0.09 | [ 1.84,  2.20] |  22.49 | &lt; .001</span>
+<span class="co">#&gt; Sepal Width                         |        0.03 | 0.02 | [-0.01,  0.07] |   1.32 | 0.190 </span>
+<span class="co">#&gt; Sepal Length * Species [versicolor] |        0.28 | 0.06 | [ 0.16,  0.41] |   4.65 | &lt; .001</span>
+<span class="co">#&gt; Sepal Length * Species [virginica]  |        0.32 | 0.06 | [ 0.21,  0.43] |   5.75 | &lt; .001</span></code></pre></div>
 </div>
 </div>
 <div id="linear-mixed-effects-regression-models" class="section level2">
@@ -385,13 +388,20 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.76,  2.35] |   3.87 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |   0.75 | 0.608 </span>
-<span class="co">#&gt; Species [virginica]                |       -0.41 | 0.19 | [-0.78, -0.03] |  -0.70 | 0.033 </span>
-<span class="co">#&gt; Sepal Width                        |        0.66 | 0.10 | [ 0.46,  0.86] |   5.83 | &lt; .001</span>
-<span class="co">#&gt; Petal Length                       |        0.82 | 0.05 | [ 0.72,  0.91] |  12.52 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.48 | 0.35 | [-1.18,  0.21] |  -2.60 | 0.172 </span>
-<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.36 | 0.11 | [-0.57, -0.15] |  -1.99 | &lt; .001</span></code></pre></div>
+<span class="co">#&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |   4.74 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] |  -4.91 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]                |       -1.81 | 0.23 | [-2.26, -1.37] |  -5.33 | &lt; .001</span>
+<span class="co">#&gt; Sepal Width                        |        0.35 | 0.05 | [ 0.24,  0.45] |   5.83 | &lt; .001</span>
+<span class="co">#&gt; Petal Length                       |        1.74 | 0.10 | [ 1.54,  1.94] |  12.52 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.25 | 0.19 | [-0.62,  0.11] |  -2.60 | 0.172 </span>
+<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.19 | 0.06 | [-0.30, -0.08] |  -1.99 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter           | Coefficient</span>
+<span class="co">#&gt; ---------------------------------</span>
+<span class="co">#&gt; SD (Intercept: grp) |        0.10</span>
+<span class="co">#&gt; SD (Residual)       |        0.36</span></code></pre></div>
 <p>Notice how drastically some of the <em>p</em>-values change between robust-unstandardized model and robust-standardized model.</p>
 <!-- TO DO: Maybe provide references to read more? -->
 </div>
@@ -415,7 +425,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

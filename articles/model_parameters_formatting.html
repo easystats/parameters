@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.14.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.14.0.3</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Dimension Reduction
+    Dimension Reduction and Clustering
      
     <span class="caret"></span>
   </a>
@@ -109,6 +109,9 @@
     </li>
     <li>
       <a href="../articles/parameters_selection.html">Parameters Selection</a>
+    </li>
+    <li>
+      <a href="../articles/clustering.html">Clustering with easystats</a>
     </li>
   </ul>
 </li>
@@ -252,15 +255,15 @@
 <p>We can get a similar tabular output using <em>broom</em>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 × 7</span>
+<span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span>
 <span class="co">#&gt;   term                   estimate std.error statistic   p.value conf.low conf.high</span>
-<span class="co">#&gt;   &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 (Intercept)               3.81     0.0582    65.5   4.61e-109    3.70      3.93 </span>
-<span class="co">#&gt; 2 poly(Sepal.Length, 2)1    4.06     0.467      8.70  7.00e- 15    3.14      4.98 </span>
-<span class="co">#&gt; 3 poly(Sepal.Length, 2)2   -1.30     0.315     -4.14  5.98e-  5   -1.92     -0.680</span>
-<span class="co">#&gt; 4 Speciesversicolor        -1.01     0.278     -3.62  4.12e-  4   -1.56     -0.456</span>
-<span class="co">#&gt; 5 Speciesvirginica         -0.991    0.285     -3.48  6.72e-  4   -1.55     -0.428</span>
-<span class="co">#&gt; 6 Petlen(3,7]              -0.136    0.282     -0.482 6.30e-  1   -0.693     0.421</span></code></pre></div>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)               3.81     0.058<span style="text-decoration: underline;">2</span>    65.5   4.61<span style="color: #949494;">e</span><span style="color: #BB0000;">-109</span>    3.70      3.93 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> poly(Sepal.Length, 2)1    4.06     0.467      8.70  7.00<span style="color: #949494;">e</span><span style="color: #BB0000;">- 15</span>    3.14      4.98 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> poly(Sepal.Length, 2)2   -<span style="color: #BB0000;">1.30</span>     0.315     -<span style="color: #BB0000;">4.14</span>  5.98<span style="color: #949494;">e</span><span style="color: #BB0000;">-  5</span>   -<span style="color: #BB0000;">1.92</span>     -<span style="color: #BB0000;">0.680</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Speciesversicolor        -<span style="color: #BB0000;">1.01</span>     0.278     -<span style="color: #BB0000;">3.62</span>  4.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.56</span>     -<span style="color: #BB0000;">0.456</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Speciesvirginica         -<span style="color: #BB0000;">0.991</span>    0.285     -<span style="color: #BB0000;">3.48</span>  6.72<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.55</span>     -<span style="color: #BB0000;">0.428</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Petlen(3,7]              -<span style="color: #BB0000;">0.136</span>    0.282     -<span style="color: #BB0000;">0.482</span> 6.30<span style="color: #949494;">e</span><span style="color: #BB0000;">-  1</span>   -<span style="color: #BB0000;">0.693</span>     0.421</span></code></pre></div>
 <p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that does all the work for you.</p>
 <p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em> packages</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -1299,7 +1302,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>

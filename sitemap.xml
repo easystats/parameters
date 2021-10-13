@@ -67,19 +67,31 @@
     <loc>/reference/check_factorstructure.html</loc>
   </url>
   <url>
+    <loc>/reference/check_heterogeneity.html</loc>
+  </url>
+  <url>
     <loc>/reference/check_kmo.html</loc>
   </url>
   <url>
     <loc>/reference/check_sphericity_bartlett.html</loc>
   </url>
   <url>
-    <loc>/reference/ci.merMod.html</loc>
+    <loc>/reference/ci.default.html</loc>
   </url>
   <url>
     <loc>/reference/cluster_analysis.html</loc>
   </url>
   <url>
+    <loc>/reference/cluster_centers.html</loc>
+  </url>
+  <url>
     <loc>/reference/cluster_discrimination.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cluster_meta.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cluster_performance.html</loc>
   </url>
   <url>
     <loc>/reference/compare_parameters.html</loc>
@@ -166,9 +178,6 @@
     <loc>/reference/model_parameters.BFBayesFactor.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.Mclust.html</loc>
-  </url>
-  <url>
     <loc>/reference/model_parameters.aov.html</loc>
   </url>
   <url>
@@ -238,9 +247,6 @@
     <loc>/reference/p_value.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.lmerMod.html</loc>
-  </url>
-  <url>
     <loc>/reference/p_value.poissonmfx.html</loc>
   </url>
   <url>
@@ -257,9 +263,6 @@
   </url>
   <url>
     <loc>/reference/p_value_satterthwaite.html</loc>
-  </url>
-  <url>
-    <loc>/reference/p_value_wald.html</loc>
   </url>
   <url>
     <loc>/reference/parameters_type.html</loc>
