@@ -15,7 +15,7 @@
 #' for such inferential statistics (see \cite{Li and Redden 2015}). The
 #' *Between-within* denominator degrees of freedom approximation is
 #' recommended in particular for (generalized) linear mixed models with repeated
-#' measurements (longitudinal design). `dof_betwithin`) implements a heuristic
+#' measurements (longitudinal design). `dof_betwithin()` implements a heuristic
 #' based on the between-within approach. **Note** that this implementation
 #' does not return exactly the same results as shown in \cite{Li and Redden 2015},
 #' but similar.

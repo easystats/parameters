@@ -669,14 +669,10 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
       string_statistic <- switch(tolower(test_statistic),
                                  "t-statistic" = "t",
+                                 "chi-squared statistic" = ,
                                  "z-statistic" = "z",
-                                 "chi-squared statistic" = "Chi-squared",
                                  "")
-      if (tolower(test_statistic) == "chi-squared statistic") {
-        string_method <- paste0(string_statistic, "-")
-      } else {
-        string_method <- paste0(string_method, " ", string_statistic, "-")
-      }
+      string_method <- paste0(string_method, " ", string_statistic, "-")
     } else {
       string_method <- paste0(string_method, " ")
     }

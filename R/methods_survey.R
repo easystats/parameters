@@ -113,6 +113,8 @@ ci.svyglm.zip <- ci.tobit
 
 # p values -----------------------------------------------
 
+## TODO how to calculate p when ci-method is "likelihood"?
+
 #' @export
 p_value.svyglm <- function(model, verbose = TRUE, ...) {
   statistic <- insight::get_statistic(model)
