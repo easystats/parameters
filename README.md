@@ -1,5 +1,5 @@
 
-# parameters
+# parameters <img src="man/figures/logo.png" align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
 [![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
@@ -137,6 +137,7 @@ model_parameters(model)
 #> Petal Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |   4.41 | < .001
 #> Petal Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 
 #> Petal Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618
+
 # standardized parameters
 model_parameters(model, standardize = "refit")
 #> Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p
@@ -172,6 +173,7 @@ model_parameters(model, effects = "all")
 #> -------------------------------------
 #> SD (Intercept: Species) |        0.89
 #> SD (Residual)           |        0.32
+
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, df_method = "kenward")
 #> # Fixed Effects
