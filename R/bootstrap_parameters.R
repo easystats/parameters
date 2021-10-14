@@ -9,7 +9,7 @@
 #'
 #' @return A data frame summarizing the bootstrapped parameters.
 #'
-#' @inheritSection bootstrap_model Using with `emmeans`
+#' @inheritSection bootstrap_model Using with **emmeans**
 #'
 #' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
 #'

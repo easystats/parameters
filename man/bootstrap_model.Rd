@@ -56,17 +56,17 @@ Bootstrap a statistical model n times to return a data frame of estimates.
 \details{
 By default, \code{boot::boot()} is used to generate bootstraps from
 the model data, which are then used to \code{update()} the model, i.e. refit
-the model with the bootstrapped samples. For \code{merMod} objects (\pkg{lme4})
-or models from \pkg{glmmTMB}, the \code{lme4::bootMer()} function is used to
+the model with the bootstrapped samples. For \code{merMod} objects (\strong{lme4})
+or models from \strong{glmmTMB}, the \code{lme4::bootMer()} function is used to
 obtain bootstrapped samples. \code{bootstrap_parameters()} summarizes the
 bootstrapped model estimates.
 }
-\section{Using with \code{emmeans}}{
+\section{Using with \strong{emmeans}}{
 
 The output can be passed directly to the various functions from the
-\code{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
+\strong{emmeans} package, to obtain bootstrapped estimates, contrasts, simple
 slopes, etc. and their confidence intervals. These can then be passed to
-\code{model_parameter()} to obtain standard errors, p-values, etc (see
+\code{model_parameter()} to obtain standard errors, p-values, etc. (see
 example).
 \cr\cr
 Note that that p-values returned here are estimated under the assumption of

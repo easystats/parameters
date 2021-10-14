@@ -18,16 +18,16 @@
 #'
 #' @details By default, `boot::boot()` is used to generate bootstraps from
 #' the model data, which are then used to `update()` the model, i.e. refit
-#' the model with the bootstrapped samples. For `merMod` objects (\pkg{lme4})
-#' or models from \pkg{glmmTMB}, the `lme4::bootMer()` function is used to
+#' the model with the bootstrapped samples. For `merMod` objects (**lme4**)
+#' or models from **glmmTMB**, the `lme4::bootMer()` function is used to
 #' obtain bootstrapped samples. `bootstrap_parameters()` summarizes the
 #' bootstrapped model estimates.
 #'
-#' @section Using with `emmeans`:
+#' @section Using with **emmeans**:
 #' The output can be passed directly to the various functions from the
-#' `emmeans` package, to obtain bootstrapped estimates, contrasts, simple
+#' **emmeans** package, to obtain bootstrapped estimates, contrasts, simple
 #' slopes, etc. and their confidence intervals. These can then be passed to
-#' `model_parameter()` to obtain standard errors, p-values, etc (see
+#' `model_parameter()` to obtain standard errors, p-values, etc. (see
 #' example).
 #' \cr\cr
 #' Note that that p-values returned here are estimated under the assumption of

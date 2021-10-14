@@ -7,8 +7,8 @@
 #' Compute and extract model parameters. See the documentation for your object's class:
 #' \itemize{
 #'  \item{[Correlations, t-tests, ...][model_parameters.htest] (`htest`, `pairwise.htest`)}
-#'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, \pkg{afex}, ...)}
-#'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, \pkg{survey}, ...)}
+#'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, **afex**, ...)}
+#'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, **survey**, ...)}
 #'  \item{[Additive models][model_parameters.cgam] (`gam`, `gamm`, ...)}
 #'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
 #'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, ...)}
@@ -40,7 +40,7 @@
 #'   arguments to tweak the output. There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
-#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
+#'   [**see**-package](https://easystats.github.io/see/), and a dedicated
 #'   method for use inside rmarkdown files,
 #'   [`print_md()`][print_md.parameters_model].
 #'

@@ -26,8 +26,8 @@ A data frame of indices related to the model's parameters.
 Compute and extract model parameters. See the documentation for your object's class:
 \itemize{
 \item{\link[=model_parameters.htest]{Correlations, t-tests, ...} (\code{htest}, \code{pairwise.htest})}
-\item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \pkg{afex}, ...)}
-\item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \pkg{survey}, ...)}
+\item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \strong{afex}, ...)}
+\item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \strong{survey}, ...)}
 \item{\link[=model_parameters.cgam]{Additive models} (\code{gam}, \code{gamm}, ...)}
 \item{\link[=model_parameters.zcpglm]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
 \item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, ...)}
@@ -49,7 +49,7 @@ The \code{\link[=print.parameters_model]{print()}} method has several
 arguments to tweak the output. There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the
-\href{https://easystats.github.io/see/}{\pkg{see}-package}, and a dedicated
+\href{https://easystats.github.io/see/}{\strong{see}-package}, and a dedicated
 method for use inside rmarkdown files,
 \code{\link[=print_md.parameters_model]{print_md()}}.
 }
