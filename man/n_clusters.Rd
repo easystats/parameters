@@ -153,14 +153,15 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 #
 # Specific Methods =========================
 # Elbow method --------------------
-if (require("openxlsx") && require("see")) {
+if (require("openxlsx") && require("see") && require("factoextra")) {
   x <- n_clusters_elbow(iris[1:4])
   x
   as.data.frame(x)
   plot(x)
 }
 # Gap method --------------------
-if (require("see", quietly = TRUE)) {
+if (require("see", quietly = TRUE) &&
+    require("cluster", quietly = TRUE)) {
   x <- n_clusters_gap(iris[1:4])
   x
   as.data.frame(x)
@@ -168,10 +169,12 @@ if (require("see", quietly = TRUE)) {
 }
 #
 # Silhouette method --------------------------
-x <- n_clusters_silhouette(iris[1:4])
-x
-as.data.frame(x)
-plot(x)
+if (require("factoextra", quietly = TRUE)) {
+  x <- n_clusters_silhouette(iris[1:4])
+  x
+  as.data.frame(x)
+  plot(x)
+}
 #
 if (require("dbscan", quietly = TRUE)) {
   # DBSCAN method -------------------------
@@ -190,9 +193,11 @@ if (require("dbscan", quietly = TRUE)) {
 }
 #
 # hclust method -------------------------------
-# iterations should be higher for real analyses
-x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
-x
-head(as.data.frame(x), n = 10) # Print 10 first rows
-plot(x)
+if (require("pvclust", quietly = TRUE)) {
+  # iterations should be higher for real analyses
+  x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
+  x
+  head(as.data.frame(x), n = 10) # Print 10 first rows
+  plot(x)
+}
 }
