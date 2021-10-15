@@ -45,7 +45,7 @@
 #'   b <- bootstrap_model(model)
 #'   print(head(b))
 #'
-#'   if (require("emmeans")) {
+#'   if (require("emmeans", quietly = TRUE)) {
 #'     est <- emmeans(b, consec ~ cyl)
 #'     print(model_parameters(est))
 #'   }

@@ -3,7 +3,9 @@
 #' #
 #' # Specific Methods =========================
 #' # Elbow method --------------------
-#' if (require("openxlsx") && require("see") && require("factoextra")) {
+#' if (require("openxlsx", quietly = TRUE) &&
+#'     require("see", quietly = TRUE) &&
+#'     require("factoextra", quietly = TRUE)) {
 #'   x <- n_clusters_elbow(iris[1:4])
 #'   x
 #'   as.data.frame(x)
@@ -43,7 +45,8 @@ n_clusters_elbow <- function(x,
 #' @examples
 #' # Gap method --------------------
 #' if (require("see", quietly = TRUE) &&
-#'     require("cluster", quietly = TRUE)) {
+#'     require("cluster", quietly = TRUE) &&
+#'     require("factoextra", quietly = TRUE)) {
 #'   x <- n_clusters_gap(iris[1:4])
 #'   x
 #'   as.data.frame(x)
