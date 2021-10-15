@@ -166,17 +166,17 @@ dof <- degrees_of_freedom
   dof <- try(stats::df.residual(model), silent = TRUE)
 
   # 2nd try
-  if (inherits(dof, "try-error") || is.null(dof)) {
+  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     junk <- utils::capture.output(dof = try(summary(model)$df[2], silent = TRUE))
   }
 
   # 3rd try, nlme
-  if (inherits(dof, "try-error") || is.null(dof)) {
+  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
     dof <- try(unname(model$fixDF$X), silent = TRUE)
   }
 
   # last try
-  if (inherits(dof, "try-error") || is.null(dof)) {
+  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
     dof <- Inf
     if (verbose) {
       warning("Could not extract degrees of freedom.", call. = FALSE)

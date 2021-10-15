@@ -1,3 +1,20 @@
+# degrees of freedom -----------------
+
+#' @export
+degrees_of_freedom.rlm <- function(model, method = "residual", ...) {
+  if (identical(method, "normal")) {
+    return(Inf)
+  } else {
+    .degrees_of_freedom_analytical(model, kenward = FALSE)
+  }
+}
+
+
+
+
+
+
+# ci -----------------
 
 #' @export
 ci.negbin <- ci.glm
@@ -29,6 +46,12 @@ ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", robust = FALSE,
 }
 
 
+
+
+
+
+# SE -----------------
+
 #' @export
 standard_error.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
@@ -46,6 +69,12 @@ standard_error.polr <- function(model, method = NULL, ...) {
   )
 }
 
+
+
+
+
+
+# p -----------------
 
 #' @export
 p_value.negbin <- p_value.default
@@ -80,6 +109,11 @@ p_value.polr <- function(model, method = NULL, ...) {
   )
 }
 
+
+
+
+
+# parameters -----------------
 
 #' @export
 model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
