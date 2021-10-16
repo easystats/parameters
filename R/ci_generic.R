@@ -109,7 +109,7 @@
 
   if (is.null(dof)) {
     # residual df
-    dof <- degrees_of_freedom(model, method = method)
+    dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0) {
       dof <- Inf

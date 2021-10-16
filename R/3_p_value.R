@@ -62,7 +62,7 @@ p_value.default <- function(model,
     return(p_value_betwithin(model))
   } else if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
     if (is.null(dof)) {
-      dof <- degrees_of_freedom(model, method = method)
+      dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
     }
     return(.p_value_dof(model, dof = dof, method = method, component = component, verbose = verbose, robust = robust, ...))
   } else if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
