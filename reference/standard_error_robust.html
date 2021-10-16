@@ -170,13 +170,14 @@ components be returned?</p></td>
 <code>vcov_estimation</code>, <code>vcov_type</code> and <code>vcov_args</code> can be passed
 down to <code>standard_error_robust()</code>.</p></td>
     </tr><tr><th>method</th>
-      <td><p>Method for computing degrees of freedom for confidence
-intervals (CI) or p-values. May be one of <code>"analytical"</code>, <code>"any"</code>, <code>"ml1"</code>,
-<code>"betwithin"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>, <code>"profile"</code>,
-<code>"boot"</code>, <code>"uniroot"</code>, <code>"residual"</code>, <code>"normal"</code>, or <code>"likelihood"</code>.
-If <code>bootstrap = TRUE</code>, may be one of <code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
-<code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See argument <code>ci_method</code> in
-<code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></td>
+      <td><p>Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> below for
+further details.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr></table></div>

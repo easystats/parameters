@@ -196,12 +196,13 @@ linear models (GLMs).</p>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr><tr><th>ci_method</th>
       <td><p>Method for computing degrees of freedom for
-confidence intervals (CI). May be one of <code>"analytical"</code>, <code>"any"</code>, <code>"ml1"</code>,
-<code>"betwithin"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>, <code>"profile"</code>,
-<code>"boot"</code>, <code>"uniroot"</code>, <code>"residual"</code>, <code>"normal"</code>, or <code>"likelihood"</code>.
-If <code>bootstrap = TRUE</code>, may be one of <code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
-<code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See argument <code>ci_method</code> in
-<code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></td>
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> below for
+further details.</p></td>
     </tr><tr><th>bootstrap</th>
       <td><p>Should estimates be based on bootstrapped model? If
 <code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
@@ -301,8 +302,32 @@ one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">b
     <h2>Confidence intervals and approximation of degrees of freedom<a class="anchor" aria-label="anchor" href="#confidence-intervals-and-approximation-of-degrees-of-freedom"></a></h2>
     
 
-<p>This still needs to be done.</p>
-    </div>
+<p>There are different ways of approximating the degrees of freedom depending
+on different assumptions about the nature of the model and its sampling
+distribution. The <code>ci_method</code> modulates the method for computing degrees
+of freedom (df) that are used to calculate confidence intervals (CI) and the
+related p-values. Following options are allowed, depending on the model
+class:</p><ul><li><p><code>"residual"</code>: Applies to <strong>non-Bayesian models</strong>; CI computation based on
+<strong>t distribution with residual df</strong>; p-value is <strong>Wald-based p (t-distribution)</strong>;
+For models with z-statistics,<code>"residual"</code> will return the same result as
+<code>"normal"</code>.</p></li>
+<li><p><code>"normal"</code>: Applies to <strong>all models</strong>; CI computation based on
+<strong>normal distribution assumptions</strong>; p-value is <strong>Wald-based p (normal-distribution)</strong></p></li>
+<li><p><code>"wald"</code>: Applies to <strong>non-Bayesian models</strong>; CI computation based on
+<strong>t distribution with residual df</strong> for <em>linear models</em>, and on
+<strong>normal distribution assumptions</strong> for all other models; p-value is
+<strong>Wald-based p (t-distribution)</strong> for linear models and
+<strong>Wald-based p (normal-distribution)</strong> for all other models. In other word:
+for linear models, <code>"wald"</code> will give the same results as <code>"residual"</code>,
+while for all other models, <code>"wald"</code> is an alias for <code>"normal"</code>.</p></li>
+<li><p><code>"satterthwaite"</code>: Applies to <strong>linear mixed models</strong>; CI computation
+based on <strong>t distribution with Satterthwaite df</strong>; p-value is
+<strong>Wald-based p (t-distribution with Satterthwaite df)</strong>.</p></li>
+<li><p><code>"kenward"</code>: Applies to <strong>linear mixed models</strong>; CI computation
+based on <strong>t distribution with Kenward-Roger standard errors and df</strong>;  p-value
+is <strong>Wald-based p (t-distribution with Kenward-Roger standard errors and df)</strong>.</p></li>
+<li><p><code>"hdi"</code>: See argument <code>ci_method</code> in <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></li>
+</ul></div>
     <div id="see-also">
     <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
@@ -328,9 +353,9 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.70 | [35.40, 44.24] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.21 | [-4.76, -1.89] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.46 | [-2.31, -0.79] | 0.002 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.75 | [35.67, 44.12] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.22 | [-4.84, -1.88] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.49 | [-2.17, -0.69] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are bootstrap intervals.</span>
 <span class="r-in"></span>

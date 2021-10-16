@@ -186,12 +186,13 @@ a data frame with posterior samples.</p></td>
 <code><a href="https://easystats.github.io/bayestestR/reference/ci.html">bayestestR::ci()</a></code> for further details.</p></td>
     </tr><tr><th>ci_method</th>
       <td><p>Method for computing degrees of freedom for
-confidence intervals (CI). May be one of <code>"analytical"</code>, <code>"any"</code>, <code>"ml1"</code>,
-<code>"betwithin"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>, <code>"profile"</code>,
-<code>"boot"</code>, <code>"uniroot"</code>, <code>"residual"</code>, <code>"normal"</code>, or <code>"likelihood"</code>.
-If <code>bootstrap = TRUE</code>, may be one of <code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
-<code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See argument <code>ci_method</code> in
-<code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></td>
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> below for
+further details.</p></td>
     </tr><tr><th>test</th>
       <td><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
