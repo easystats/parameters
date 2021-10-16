@@ -227,12 +227,17 @@ dof <- degrees_of_freedom
     )) {
       return(TRUE)
     } else {
-      warning(insight::format_message(sprintf("'%s' must be one of 'wald' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
+      warning(insight::format_message(sprintf("'%s' must be one of 'wald', 'residual' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
       return(FALSE)
     }
   }
 
   info <- insight::model_info(model, verbose = FALSE)
+  if (!is.null(info) && isTRUE(info$is_mixed) && method == "boot") {
+    warning(insight::format_message(sprintf("'%s=boot' only works for mixed models of class 'merMod'. To bootstrap this model, use `bootstrap=TRUE, ci_method=\"bcai\"`.", type)), call. = FALSE)
+    return(TRUE)
+  }
+
   if (is.null(info) || !info$is_mixed) {
     if (!(method %in% c("analytical", "any", "fit", "betwithin", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
       warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
