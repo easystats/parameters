@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Confidence Intervals (CI)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/2_ci.R"><code>R/2_ci.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R"><code>R/methods_glmmTMB.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/2_ci.R"><code>R/2_ci.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_lme4.R"><code>R/methods_lme4.R</code></a></small>
     <div class="hidden name"><code>ci.default.Rd</code></div>
     </div>
 
@@ -119,7 +119,10 @@
   component <span class="op">=</span> <span class="st">"all"</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+
+<span class="co"># S3 method for merMod</span>
+<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">"wald"</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
