@@ -51,26 +51,64 @@
 #' of freedom (df) that are used to calculate confidence intervals (CI) and the
 #' related p-values. Following options are allowed, depending on the model
 #' class:
+#' \cr \cr
+#' **Classic methods:**
 #' - `"residual"`: Applies to **non-Bayesian models**; CI computation based on
-#'   **t distribution with residual df**; p-value is **Wald-based p (t-distribution)**;
+#'   **t distribution with residual df**; p-values are **Wald-based p (t-distribution)**;
 #'   For models with z-statistics,`"residual"` will return the same result as
 #'   `"normal"`.
-#' - `"normal"`: Applies to **all models**; CI computation based on
-#'   **normal distribution assumptions**; p-value is **Wald-based p (normal-distribution)**
+#' - `"normal"`: Applies to **non-Bayesian models**; CI computation based on
+#'   **normal distribution assumptions**; p-values are **Wald-based p (normal-distribution)**
 #' - `"wald"`: Applies to **non-Bayesian models**; CI computation based on
 #'   **t distribution with residual df** for *linear models*, and on
-#'   **normal distribution assumptions** for all other models; p-value is
+#'   **normal distribution assumptions** for all other models; p-values are
 #'   **Wald-based p (t-distribution)** for linear models and
 #'   **Wald-based p (normal-distribution)** for all other models. In other word:
 #'   for linear models, `"wald"` will give the same results as `"residual"`,
 #'   while for all other models, `"wald"` is an alias for `"normal"`.
+#' \cr \cr
+#' **Methods for mixed models:**
 #' - `"satterthwaite"`: Applies to **linear mixed models**; CI computation
-#'   based on **t distribution with Satterthwaite df**; p-value is
+#'   based on **t distribution with Satterthwaite df**; p-values are
 #'   **Wald-based p (t-distribution with Satterthwaite df)**.
 #' - `"kenward"`: Applies to **linear mixed models**; CI computation
-#'   based on **t distribution with Kenward-Roger standard errors and df**;  p-value
-#'   is **Wald-based p (t-distribution with Kenward-Roger standard errors and df)**.
-#' - `"hdi"`: See argument `ci_method` in [bayestestR::describe_posterior()].
+#'   based on **t distribution with Kenward-Roger standard errors and df**;  p-values
+#'   are **Wald-based p (t-distribution with Kenward-Roger standard errors and df)**.
+#' - `"ml1"`: Applies to **linear mixed models**; CI computation
+#'   based on **t distribution with m-l-1 approximated df**;  p-values are
+#'   **Wald-based p (t-distribution with m-l-1 approximated df)**. See
+#'   [`ci_ml1()`].
+#' - `"betwithin"`: Applies to **(generalized) linear mixed models**; CI
+#'   computation based on **t distribution with between-with df**;  p-values are
+#'   **Wald-based p (t-distribution with between-with df)**. See [`ci_betwithin()`].
+#' \cr \cr
+#' **Special methods for GLM(M)s**:
+#' - `"profile"`: Applies to **non-Bayesian models** of class `glm` or `polr`;
+#'   CI computation based on **profiling the likelihood curve for a parameter**,
+#'   using linear interpolation to find where likelihood ratio equals a
+#'   critical value; p-values are **Wald-based p (normal-distribution)** (note:
+#'   this might change in a future update!).
+#' - `"uniroot"`: Applies to **non-Bayesian models** of class `glmmTMB`;
+#'   CI computation based on **profiling the likelihood curve for a parameter**,
+#'   using root finding to find where likelihood ratio equals a critical value;
+#'   p-values are **Wald-based p (normal-distribution)** (note: this might
+#'   change in a future update!).
+#' \cr \cr
+#' **Methods for bootstrapped or Bayesian models:**
+#' - `"quantile"`: Applies to **all models (including Bayesian model)**, for
+#'   non-Bayesian models only if `bootstrap=TRUE`; CI computation based on
+#'   **equal tailed intervals using the quantiles method**; p-values are based on
+#'   the **probability of direction**. See also [`bayestestR::eti()`].
+#' - `"eti"`: Same as `"quantile"`.
+#' - `"hdi"`: Applies to **all models (including Bayesian model)**, for
+#'   non-Bayesian models only if `bootstrap=TRUE`; CI computation based on
+#'   **highest density intervals**; p-values are based on the
+#'   **probability of direction**. See also [`bayestestR::hdi()`].
+#' \cr \cr
+#' For all iteration-based methods (`"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
+#' `"si"`, `"bci"`, or `"bcai"`), p-values are based on the probability of
+#' direction ([`bayestestR::p_direction()`]), which is converted into
+#' p-value using [`bayestestR::pd_to_p()`].
 #'
 #' @section Standardization of model coefficients:
 #' Standardization is based on [effectsize::standardize_parameters()]. In case
@@ -236,8 +274,8 @@ parameters <- model_parameters
 #'   `"normal"`, `"likelihood"`, `"satterthwaite"`, `"kenward"`, `"wald"`,
 #'   `"profile"`, `"boot"`, `"uniroot"`, `"ml1"`, `"betwithin"`, `"hdi"`,
 #'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
-#'   _Confidence intervals and approximation of degrees of freedom_ below for
-#'   further details.
+#'   _Confidence intervals and approximation of degrees of freedom_ in
+#'   [`model_parameters()`] for further details.
 #' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation

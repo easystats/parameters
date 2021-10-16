@@ -70,27 +70,65 @@ distribution. The \code{ci_method} modulates the method for computing degrees
 of freedom (df) that are used to calculate confidence intervals (CI) and the
 related p-values. Following options are allowed, depending on the model
 class:
+\cr \cr
+\strong{Classic methods:}
 \itemize{
 \item \code{"residual"}: Applies to \strong{non-Bayesian models}; CI computation based on
-\strong{t distribution with residual df}; p-value is \strong{Wald-based p (t-distribution)};
+\strong{t distribution with residual df}; p-values are \strong{Wald-based p (t-distribution)};
 For models with z-statistics,\code{"residual"} will return the same result as
 \code{"normal"}.
-\item \code{"normal"}: Applies to \strong{all models}; CI computation based on
-\strong{normal distribution assumptions}; p-value is \strong{Wald-based p (normal-distribution)}
+\item \code{"normal"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{normal distribution assumptions}; p-values are \strong{Wald-based p (normal-distribution)}
 \item \code{"wald"}: Applies to \strong{non-Bayesian models}; CI computation based on
 \strong{t distribution with residual df} for \emph{linear models}, and on
-\strong{normal distribution assumptions} for all other models; p-value is
+\strong{normal distribution assumptions} for all other models; p-values are
 \strong{Wald-based p (t-distribution)} for linear models and
 \strong{Wald-based p (normal-distribution)} for all other models. In other word:
 for linear models, \code{"wald"} will give the same results as \code{"residual"},
 while for all other models, \code{"wald"} is an alias for \code{"normal"}.
+\cr \cr
+\strong{Methods for mixed models:}
 \item \code{"satterthwaite"}: Applies to \strong{linear mixed models}; CI computation
-based on \strong{t distribution with Satterthwaite df}; p-value is
+based on \strong{t distribution with Satterthwaite df}; p-values are
 \strong{Wald-based p (t-distribution with Satterthwaite df)}.
 \item \code{"kenward"}: Applies to \strong{linear mixed models}; CI computation
-based on \strong{t distribution with Kenward-Roger standard errors and df};  p-value
-is \strong{Wald-based p (t-distribution with Kenward-Roger standard errors and df)}.
-\item \code{"hdi"}: See argument \code{ci_method} in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.
+based on \strong{t distribution with Kenward-Roger standard errors and df};  p-values
+are \strong{Wald-based p (t-distribution with Kenward-Roger standard errors and df)}.
+\item \code{"ml1"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with m-l-1 approximated df};  p-values are
+\strong{Wald-based p (t-distribution with m-l-1 approximated df)}. See
+\code{\link[=ci_ml1]{ci_ml1()}}.
+\item \code{"betwithin"}: Applies to \strong{(generalized) linear mixed models}; CI
+computation based on \strong{t distribution with between-with df};  p-values are
+\strong{Wald-based p (t-distribution with between-with df)}. See \code{\link[=ci_betwithin]{ci_betwithin()}}.
+\cr \cr
+\strong{Special methods for GLM(M)s}:
+\item \code{"profile"}: Applies to \strong{non-Bayesian models} of class \code{glm} or \code{polr};
+CI computation based on \strong{profiling the likelihood curve for a parameter},
+using linear interpolation to find where likelihood ratio equals a
+critical value; p-values are \strong{Wald-based p (normal-distribution)} (note:
+this might change in a future update!).
+\item \code{"uniroot"}: Applies to \strong{non-Bayesian models} of class \code{glmmTMB};
+CI computation based on \strong{profiling the likelihood curve for a parameter},
+using root finding to find where likelihood ratio equals a critical value;
+p-values are \strong{Wald-based p (normal-distribution)} (note: this might
+change in a future update!).
+\cr \cr
+\strong{Methods for bootstrapped or Bayesian models:}
+\item \code{"quantile"}: Applies to \strong{all models (including Bayesian model)}, for
+non-Bayesian models only if \code{bootstrap=TRUE}; CI computation based on
+\strong{equal tailed intervals using the quantiles method}; p-values are based on
+the \strong{probability of direction}. See also \code{\link[bayestestR:eti]{bayestestR::eti()}}.
+\item \code{"eti"}: Same as \code{"quantile"}.
+\item \code{"hdi"}: Applies to \strong{all models (including Bayesian model)}, for
+non-Bayesian models only if \code{bootstrap=TRUE}; CI computation based on
+\strong{highest density intervals}; p-values are based on the
+\strong{probability of direction}. See also \code{\link[bayestestR:hdi]{bayestestR::hdi()}}.
+\cr \cr
+For all iteration-based methods (\code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
+\code{"si"}, \code{"bci"}, or \code{"bcai"}), p-values are based on the probability of
+direction (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}), which is converted into
+p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
 }
 }
 
