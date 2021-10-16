@@ -33,7 +33,7 @@ Estimate or extract degrees of freedom of models parameters.
 Methods for calculating degrees of freedom:
 \itemize{
 \item \code{"analytical"} for models of class \code{lmerMod}, Kenward-Roger approximated degrees of freedoms are calculated, for other models, \code{n-k} (number of observations minus number of parameters).
-\item \code{"residual"} tries to extract residual degrees of freedom, and returns \code{Inf} if residual degrees of freedom could not be extracted (e.g., for models with z-statistic).
+\item \code{"residual"} tries to extract residual degrees of freedom, and returns \code{Inf} if residual degrees of freedom could not be extracted.
 \item \code{"any"} first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 \item \code{"nokr"} same as \code{"analytical"}, but does not Kenward-Roger approximation for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df for any model.
 \item \code{"normal"} returns \code{Inf}.

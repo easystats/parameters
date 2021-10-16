@@ -16,7 +16,7 @@
 #' @details Methods for calculating degrees of freedom:
 #' \itemize{
 #' \item `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated degrees of freedoms are calculated, for other models, `n-k` (number of observations minus number of parameters).
-#' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted (e.g., for models with z-statistic).
+#' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted.
 #' \item `"any"` first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 #' \item `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation for models of class `lmerMod`. Instead, always uses `n-k` to calculate df for any model.
 #' \item `"normal"` returns `Inf`.
@@ -87,7 +87,11 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   # for z-statistic, always return Inf
   stat <- insight::find_statistic(model)
   if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
-    return(Inf)
+    if (method == "residual") {
+      return(.degrees_of_freedom_residual(model, verbose = FALSE))
+    } else {
+      return(Inf)
+    }
   }
   # Chi2-distributions usually have 1 df
   if (!is.null(stat) && stat == "chi-squared statistic") {
@@ -172,12 +176,12 @@ dof <- degrees_of_freedom
   }
 
   # 3rd try, nlme
-  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
+  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     dof <- try(unname(model$fixDF$X), silent = TRUE)
   }
 
   # last try
-  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
+  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     dof <- Inf
     if (verbose) {
       warning("Could not extract degrees of freedom.", call. = FALSE)
