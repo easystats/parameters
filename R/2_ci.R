@@ -7,7 +7,7 @@
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param dof Number of degrees of freedom to be used when calculating
 #'   confidence intervals. If `NULL` (default), the degrees of freedom are
-#'   retrieved by calling [`degrees_of_freedom()`][degrees_of_freedom] with
+#'   retrieved by calling [`degrees_of_freedom()`] with
 #'   approximation method defined in `method`. If not `NULL`, use this argument
 #'   to override the default degrees of freedom used to compute confidence
 #'   intervals.
@@ -20,10 +20,12 @@
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details.
 #' @param robust Logical, if `TRUE`, computes confidence intervals based on
-#'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
-#' @param component TODO.
+#'   robust standard errors. See [`standard_error_robust()`].
+#' @param component Model component for which parameters should be shown. See
+#'   the documentation for your object's class in [`model_parameters()`] for
+#'   further details.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed down to [`standard_error_robust()`][standard_error_robust]
+#' @param ... Arguments passed down to [`standard_error_robust()`]
 #'   when confidence intervals or p-values based on robust standard errors
 #'   should be computed.
 #'

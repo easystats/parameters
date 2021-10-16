@@ -46,7 +46,9 @@ robust standard errors. See \code{\link[=standard_error_robust]{standard_error_r
 when confidence intervals or p-values based on robust standard errors
 should be computed.}
 
-\item{component}{TODO.}
+\item{component}{Model component for which parameters should be shown. See
+the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
+further details.}
 
 \item{verbose}{Toggle warnings and messages.}
 }
@@ -107,8 +109,12 @@ computation based on \emph{t distribution with between-with df};  p-values are
 
 \strong{Special methods for GLM(M)s:}
 \itemize{
-\item \code{"profile"}: Applies to \emph{non-Bayesian models} of class \code{glm} or \code{polr};
-CI computation based on \emph{profiling the likelihood curve for a parameter},
+\item \code{"boot"}: Applies to \emph{non-Bayesian models} of class \code{merMod};
+CI computation based on \emph{parametric bootstrapping}; p-values are
+\emph{Wald-based p (normal-distribution)} (note: this might change in a future
+update!).
+\item \code{"profile"}: Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or
+\code{glmmTMB}; CI computation based on \emph{profiling the likelihood curve for a parameter},
 using linear interpolation to find where likelihood ratio equals a
 critical value; p-values are \emph{Wald-based p (normal-distribution)} (note:
 this might change in a future update!).
@@ -130,6 +136,15 @@ the \emph{probability of direction}. See also \code{\link[bayestestR:eti]{bayest
 non-Bayesian models only if \code{bootstrap=TRUE}; CI computation based on
 \emph{highest density intervals}; p-values are based on the
 \emph{probability of direction}. See also \code{\link[bayestestR:hdi]{bayestestR::hdi()}}.
+\item \code{"bci"}: Applies to \emph{all models (including Bayesian model)}, for
+non-Bayesian models only if \code{bootstrap=TRUE}; CI computation based on
+\emph{bias corrected and accelerated intervals}; p-values are based on the
+\emph{probability of direction}. See also \code{\link[bayestestR:bci]{bayestestR::bci()}}.
+\item \code{"bcai"}: is an alias for \code{"bci"}.
+\item \code{"si"}: Applies to \emph{all models (including Bayesian model)}, for
+non-Bayesian models only if \code{bootstrap=TRUE}; CI computation based on the
+\emph{support interval method}; p-values are based on the
+\emph{probability of direction}. See also \code{\link[bayestestR:si]{bayestestR::si()}}.
 }
 
 For all iteration-based methods (\code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},

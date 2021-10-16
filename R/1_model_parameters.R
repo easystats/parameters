@@ -83,8 +83,12 @@
 #'   *Wald-based p (t-distribution with between-with df)*. See [`ci_betwithin()`].
 #'
 #' **Special methods for GLM(M)s:**
-#' - `"profile"`: Applies to *non-Bayesian models* of class `glm` or `polr`;
-#'   CI computation based on *profiling the likelihood curve for a parameter*,
+#' - `"boot"`: Applies to *non-Bayesian models* of class `merMod`;
+#'   CI computation based on *parametric bootstrapping*; p-values are
+#'   *Wald-based p (normal-distribution)* (note: this might change in a future
+#'   update!).
+#' - `"profile"`: Applies to *non-Bayesian models* of class `glm`, `polr` or
+#'   `glmmTMB`; CI computation based on *profiling the likelihood curve for a parameter*,
 #'   using linear interpolation to find where likelihood ratio equals a
 #'   critical value; p-values are *Wald-based p (normal-distribution)* (note:
 #'   this might change in a future update!).
@@ -104,6 +108,15 @@
 #'   non-Bayesian models only if `bootstrap=TRUE`; CI computation based on
 #'   *highest density intervals*; p-values are based on the
 #'   *probability of direction*. See also [`bayestestR::hdi()`].
+#' - `"bci"`: Applies to *all models (including Bayesian model)*, for
+#'   non-Bayesian models only if `bootstrap=TRUE`; CI computation based on
+#'   *bias corrected and accelerated intervals*; p-values are based on the
+#'   *probability of direction*. See also [`bayestestR::bci()`].
+#' - `"bcai"`: is an alias for `"bci"`.
+#' - `"si"`: Applies to *all models (including Bayesian model)*, for
+#'   non-Bayesian models only if `bootstrap=TRUE`; CI computation based on the
+#'   *support interval method*; p-values are based on the
+#'   *probability of direction*. See also [`bayestestR::si()`].
 #'
 #' For all iteration-based methods (`"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
 #' `"si"`, `"bci"`, or `"bcai"`), p-values are based on the probability of

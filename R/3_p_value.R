@@ -50,7 +50,7 @@ p_value.default <- function(model,
   }
 
   # default p-value method for profiled or uniroot CI
-  if (method %in% c("uniroot", "profile", "likelihood")) {
+  if (method %in% c("uniroot", "profile", "likelihood", "boot")) {
     method <- "normal"
   }
 

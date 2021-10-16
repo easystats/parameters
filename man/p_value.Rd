@@ -37,7 +37,9 @@ intervals.}
 \item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
 robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 
-\item{component}{TODO.}
+\item{component}{Model component for which parameters should be shown. See
+the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
+further details.}
 
 \item{verbose}{Toggle warnings and messages.}
 
