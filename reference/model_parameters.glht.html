@@ -175,13 +175,13 @@ from non-Gaussian families.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Agriculture == 0      |       -0.17 | 0.07 | [-0.36,  0.01] | -2.45 | 0.079 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Examination == 0      |       -0.26 | 0.25 | [-0.93,  0.41] | -1.02 | 0.785 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Education == 0        |       -0.87 | 0.18 | [-1.36, -0.39] | -4.76 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Catholic == 0         |        0.10 | 0.04 | [ 0.01,  0.20] |  2.95 | 0.024 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Catholic == 0         |        0.10 | 0.04 | [ 0.01,  0.20] |  2.95 | 0.023 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Infant Mortality == 0 |        1.08 | 0.38 | [ 0.07,  2.09] |  2.82 | 0.032 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">p-value adjustment method: single-step</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"PMCMRplus"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/kwAllPairsConoverTest.html">kwAllPairsConoverTest</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">spray</span>, data <span class="op">=</span> <span class="va">InsectSprays</span><span class="op">)</span></span>

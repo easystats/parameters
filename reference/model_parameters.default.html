@@ -421,18 +421,18 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.001 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># bootstrapped parameters</span></span>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.69 | [35.19, 43.75] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | [-5.01, -1.92] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.47 | [-2.23, -0.74] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.77 | [35.52, 44.08] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.24 | [-4.81, -2.04] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.49 | [-2.19, -0.72] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are bootstrap intervals.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># standardized parameters</span></span>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span>
@@ -442,7 +442,7 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># different p-value style in output</span></span>
@@ -453,7 +453,7 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 0.00022    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.00106    </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">3</span>, ci_digits <span class="op">=</span> <span class="fl">4</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |    SE |             95% CI |  t(29) |           p</span>
@@ -462,7 +462,7 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 2.22020e-04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 1.06428e-03</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># logistic regression model</span></span>
@@ -474,8 +474,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profiled) and p values (two-tailed) computed using Wald</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># show odds ratio / exponentiated coefficients</span></span>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -485,8 +485,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       8.17 |    12.63 | [  0.59,   514.10] |  1.36 | 0.174</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       0.05 |     0.07 | [  0.00,     0.34] | -2.12 | 0.034</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profiled) and p values (two-tailed) computed using Wald</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
 </code></pre></div>
     </div>
   </div>
