@@ -334,8 +334,12 @@ based on <em>t distribution with m-l-1 approximated df</em>;  p-values are
 <li><p><code>"betwithin"</code>: Applies to <em>(generalized) linear mixed models</em>; CI
 computation based on <em>t distribution with between-with df</em>;  p-values are
 <em>Wald-based p (t-distribution with between-with df)</em>. See <code><a href="p_value_betwithin.html">ci_betwithin()</a></code>.</p></li>
-</ul><p><strong>Special methods for GLM(M)s:</strong></p><ul><li><p><code>"profile"</code>: Applies to <em>non-Bayesian models</em> of class <code>glm</code> or <code>polr</code>;
-CI computation based on <em>profiling the likelihood curve for a parameter</em>,
+</ul><p><strong>Special methods for GLM(M)s:</strong></p><ul><li><p><code>"boot"</code>: Applies to <em>non-Bayesian models</em> of class <code>merMod</code>;
+CI computation based on <em>parametric bootstrapping</em>; p-values are
+<em>Wald-based p (normal-distribution)</em> (note: this might change in a future
+update!).</p></li>
+<li><p><code>"profile"</code>: Applies to <em>non-Bayesian models</em> of class <code>glm</code>, <code>polr</code> or
+<code>glmmTMB</code>; CI computation based on <em>profiling the likelihood curve for a parameter</em>,
 using linear interpolation to find where likelihood ratio equals a
 critical value; p-values are <em>Wald-based p (normal-distribution)</em> (note:
 this might change in a future update!).</p></li>
@@ -353,6 +357,15 @@ the <em>probability of direction</em>. See also <code><a href="https://easystats
 non-Bayesian models only if <code>bootstrap=TRUE</code>; CI computation based on
 <em>highest density intervals</em>; p-values are based on the
 <em>probability of direction</em>. See also <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+<li><p><code>"bci"</code>: Applies to <em>all models (including Bayesian model)</em>, for
+non-Bayesian models only if <code>bootstrap=TRUE</code>; CI computation based on
+<em>bias corrected and accelerated intervals</em>; p-values are based on the
+<em>probability of direction</em>. See also <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+<li><p><code>"bcai"</code>: is an alias for <code>"bci"</code>.</p></li>
+<li><p><code>"si"</code>: Applies to <em>all models (including Bayesian model)</em>, for
+non-Bayesian models only if <code>bootstrap=TRUE</code>; CI computation based on the
+<em>support interval method</em>; p-values are based on the
+<em>probability of direction</em>. See also <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
 </ul><p>For all iteration-based methods (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
 <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>), p-values are based on the probability of
 direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>), which is converted into
@@ -383,9 +396,9 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.64 | [35.21, 43.76] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.24 | [-5.13, -1.95] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.46 | [-2.19, -0.65] | 0.002 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.83 | [35.32, 43.86] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.23 | [-5.08, -1.94] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.50 | [-2.22, -0.70] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are bootstrap intervals.</span>
 <span class="r-in"></span>
