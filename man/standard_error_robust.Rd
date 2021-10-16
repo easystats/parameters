@@ -70,8 +70,8 @@ options (which vary depending on the model class): \code{"residual"},
 \code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
 \code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
 \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
-\emph{Confidence intervals and approximation of degrees of freedom} below for
-further details.}
+\emph{Confidence intervals and approximation of degrees of freedom} in
+\code{\link[=model_parameters]{model_parameters()}} for further details.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 }

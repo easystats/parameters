@@ -17,8 +17,8 @@
 #'   `"normal"`, `"likelihood"`, `"satterthwaite"`, `"kenward"`, `"wald"`,
 #'   `"profile"`, `"boot"`, `"uniroot"`, `"ml1"`, `"betwithin"`, `"hdi"`,
 #'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
-#'   _Confidence intervals and approximation of degrees of freedom_ below for
-#'   further details.
+#'   _Confidence intervals and approximation of degrees of freedom_ in
+#'   [`model_parameters()`] for further details.
 #' @param robust Logical, if `TRUE`, computes confidence intervals based on
 #'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
 #' @param component TODO.
