@@ -124,7 +124,8 @@ as <code><a href="https://amices.org/mice/reference/pool.html">mice::pool()</a><
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A list of <code>parameters_model</code> objects, as returned by
 <code><a href="model_parameters.html">model_parameters()</a></code>, or a list of model-objects that is
@@ -155,16 +156,20 @@ one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">b
       <td><p>Toggle warnings and messages.</p></td>
     </tr><tr><th>...</th>
       <td><p>Currently not used.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Averaging of parameters follows Rubin's rules (<cite>Rubin, 1987, p. 76</cite>).
 The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
 small samples (<cite>Barnard and Rubin, 1999</cite>).</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
+    </div>
+    <div id="note">
+    <h2>Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Models with multiple components, (for instance, models with zero-inflation,
 where predictors appear in the count and zero-inflated part) may fail in
 case of identical names for coefficients in the different model components,
@@ -172,13 +177,16 @@ since the coefficient table is grouped by coefficient names for pooling. In
 such cases, coefficients of count and zero-inflated model parts would be
 combined. Therefore, the <code>component</code> argument defaults to
 <code>"conditional"</code> to avoid this.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
 multiple imputation. Biometrika, 86, 948-955. Rubin, D.B. (1987). Multiple
 Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># example for multiple imputed datasets</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/amices/mice">"mice"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span></span>
@@ -199,6 +207,7 @@ Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4      hypyes  2.46673562 2.07396774  1.189380  6.147560 0.2781911871</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5         chl  0.06028557 0.02078061  2.901050 10.206904 0.0154916183</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

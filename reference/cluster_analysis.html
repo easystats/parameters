@@ -125,7 +125,8 @@ assignment for each observation as vector.</p>
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame.</p></td>
     </tr><tr><th>n_clusters</th>
@@ -165,29 +166,37 @@ number of clusters. Can be <code>"all"</code> or a vector containing
 <code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></td>
     </tr><tr><th>verbose</th>
       <td><p>Toggle warnings and messages.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The group classification for each observation as vector. The
 returned vector includes missing values, so it has the same length
 as <code>nrow(x)</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> methods show the (standardized)
 mean value for each variable within each cluster. Thus, a higher absolute
 value indicates that a certain variable characteristic is more pronounced
 within that specific cluster (as compared to other cluster groups with lower
 absolute mean values).</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
+    </div>
+    <div id="note">
+    <h2>Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="n_clusters.html">n_clusters</a></code> to determine the number of clusters to extract, <code><a href="cluster_discrimination.html">cluster_discrimination</a></code> to determine the accuracy of cluster group classification and <code><a href="check_clusterstructure.html">check_clusterstructure</a></code> to check suitability of data for clustering.</p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Hierarchical clustering of mtcars-dataset</span></span>
 <span class="r-in"><span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">groups</span></span>
@@ -215,6 +224,7 @@ absolute mean values).</p>
 <span class="r-in"><span class="va">groups</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

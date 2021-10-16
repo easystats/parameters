@@ -225,7 +225,8 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
       <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
 <code><a href="simulate_parameters.html">simulate_parameters()</a></code>,
@@ -313,21 +314,26 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in <code>groups</code>, while all non-matching parameters will be added
 to the end.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>If <code>format = "markdown"</code>, the return value will be a character
 vector in markdown-table format. If <code>format = "html"</code>, an object of
 class <code>gt_tbl</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code><a href="https://easystats.github.io/insight/reference/display.html">display()</a></code> is useful when the table-output from functions,
 which is usually printed as formatted text-table to console, should
 be formatted for pretty table-rendering in markdown documents, or if
 knitted from rmarkdown to PDF or Word files. See
 <a href="https://easystats.github.io/parameters/articles/model_parameters_formatting.html">vignette</a>
 for examples.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span>
@@ -339,6 +345,7 @@ for examples.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

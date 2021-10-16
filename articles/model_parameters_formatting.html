@@ -148,8 +148,8 @@
     
 <p>The <em>parameters</em> package, together with the <a href="https://easystats.github.io/insight/" class="external-link"><em>insight</em> package</a>, provides tools to format the layout and style of tables from model parameters. When you use the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function, you usually don’t have to take care about formatting and layout, at least not for simple purposes like printing to the console or inside rmarkdown documents. However, sometime you may want to do the formatting steps manually. This vignette introduces the various functions that are used for parameters table formatting.</p>
 <div id="an-example-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#an-example-model" class="anchor" aria-hidden="true"></a>An Example Model</h2>
+<h2>An Example Model<a class="anchor" aria-label="anchor" href="#an-example-model"></a>
+</h2>
 <p>We start with a model that does not make much sense, but it is useful for demonstrating the formatting functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
@@ -182,8 +182,8 @@
 <span class="co">#&gt; F-statistic:   46 on 5 and 144 DF,  p-value: &lt;2e-16</span></code></pre></div>
 </div>
 <div id="formatting-parameter-names" class="section level2">
-<h2 class="hasAnchor">
-<a href="#formatting-parameter-names" class="anchor" aria-hidden="true"></a>Formatting Parameter Names</h2>
+<h2>Formatting Parameter Names<a class="anchor" aria-label="anchor" href="#formatting-parameter-names"></a>
+</h2>
 <p>As we can see, in such cases, the standard R output looks a bit cryptic, although all necessary and important information is included in the summary. The formatting of coefficients for polynomial transformation is difficult to read, factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> always require a short time of thinking to find out which of the bound (in this case, <code>Petlen(3,7]</code>, 3 and 7) is included in the range, and names of factor levels are directly concatenated to the name of the factor variable.</p>
 <p>Thus, the first step would be to format the parameter names, which can be done with <code><a href="../reference/format_parameters.html">format_parameters()</a></code> from the <em>parameters</em> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -207,8 +207,8 @@
 <p>Now variable names and factor levels, but also polynomial terms or even factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> are much more readable. Factor levels are separated from the variable name, inside brackets. Same for the coefficients of the different polynomial degrees. And the exact range for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>-factors is also clearer now.</p>
 </div>
 <div id="standardizing-column-names-of-parameter-tables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#standardizing-column-names-of-parameter-tables" class="anchor" aria-hidden="true"></a>Standardizing Column Names of Parameter Tables</h2>
+<h2>Standardizing Column Names of Parameter Tables<a class="anchor" aria-label="anchor" href="#standardizing-column-names-of-parameter-tables"></a>
+</h2>
 <p>As seen above, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns columns named <code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>. While <code>Estimate</code> is not specific for certain models, <code>t value</code> is. For logistic regression models, you would get <code>z value</code>. Some packages alter the names, so you get just <code>t</code> or <code>t-value</code> etc.</p>
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -240,8 +240,8 @@
 <span class="co">#&gt; [6] "conf.high"  "statistic"  "df.error"   "p.value"</span></code></pre></div>
 </div>
 <div id="formatting-column-names-and-columns" class="section level2">
-<h2 class="hasAnchor">
-<a href="#formatting-column-names-and-columns" class="anchor" aria-hidden="true"></a>Formatting Column Names and Columns</h2>
+<h2>Formatting Column Names and Columns<a class="anchor" aria-label="anchor" href="#formatting-column-names-and-columns"></a>
+</h2>
 <p>Beside formatting parameter names (coefficient names) using <code><a href="../reference/format_parameters.html">format_parameters()</a></code>, we can do even more to make the output more readable. Let’s look at an example that includes confidence intervals.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/confint.rma.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
@@ -291,8 +291,8 @@
 <span class="co">#&gt; 6              Petlen [4-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</span></code></pre></div>
 </div>
 <div id="exporting-the-parameters-table" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exporting-the-parameters-table" class="anchor" aria-hidden="true"></a>Exporting the Parameters Table</h2>
+<h2>Exporting the Parameters Table<a class="anchor" aria-label="anchor" href="#exporting-the-parameters-table"></a>
+</h2>
 <p>Finally, <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> from <em>insight</em> formats the data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more “table-like”.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
@@ -335,8 +335,8 @@
 <span class="co">#&gt; Petlen [4-7]              |       -0.14 | 0.28 | [-0.69,  0.42] |  -0.48 | 0.630</span></code></pre></div>
 </div>
 <div id="formatting-the-parameters-table-in-markdown" class="section level2">
-<h2 class="hasAnchor">
-<a href="#formatting-the-parameters-table-in-markdown" class="anchor" aria-hidden="true"></a>Formatting the Parameters Table in Markdown</h2>
+<h2>Formatting the Parameters Table in Markdown<a class="anchor" aria-label="anchor" href="#formatting-the-parameters-table-in-markdown"></a>
+</h2>
 <p><code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> provides a few options to generate tables in markdown-format. This allows to easily render nice-looking tables inside markdown-documents. First of all, use <code>format = "markdown"</code> to activate the markdown-formatting. <code>caption</code> can be used to add a table caption. Furthermore, <code>align</code> allows to choose an alignment for all table columns, or to specify the alignment for each column individually.</p>
 <p>The following table has six columns. Using <code>align = "lcccrr"</code> would left-align the first column, center columns two to four, and right-align the last two columns.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">

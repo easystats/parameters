@@ -112,19 +112,25 @@
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BFBayesFactor</span>
 <span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The p-values.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>For Bayesian models, the p-values corresponds to the <em>probability of direction</em> (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>), which is converted to a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::convert_pd_to_p()</a></code>.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -134,6 +140,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 Speciesversicolor 9.645641e-67</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4  Speciesvirginica 4.917626e-71</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

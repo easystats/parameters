@@ -175,7 +175,8 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Bayesian model (including SEM from <span class="pkg">blavaan</span>. May also be
 a data frame with posterior samples.</p></td>
@@ -314,11 +315,14 @@ effects) and when <code>effects = "all"</code> or <code>effects = "random"</code
 include the parameters for each group level from random effects. If
 <code>group_level = FALSE</code> (the default), only information on SD and COR
 are shown.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame of indices related to the model's parameters.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
+    </div>
+    <div id="note">
+    <h2>Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>When <code>standardize = "refit"</code>, columns <code>diagnostic</code>,
 <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em>
 <code>model</code>. If <code>model</code> is a data frame, arguments <code>diagnostic</code>,
@@ -326,12 +330,15 @@ are shown.</p></td>
 <a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a>
 implemented in the
 <a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/">"rstanarm"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -343,6 +350,7 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

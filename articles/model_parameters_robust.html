@@ -148,11 +148,11 @@
     
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function also allows the computation of standard errors, confidence intervals, and <em>p</em>-values based on robust covariance matrix estimation from model parameters. Robust estimation is relies on <a href="https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf" class="external-link"><code>sandwich</code></a> and <a href="https://cran.r-project.org/web/packages/clubSandwich/index.html" class="external-link"><code>clubSandwich</code></a> package. This means that all models supported by either of these packages will with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>.</p>
 <div id="linear-regression-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linear-regression-models" class="anchor" aria-hidden="true"></a>Linear Regression Models</h2>
+<h2>Linear Regression Models<a class="anchor" aria-label="anchor" href="#linear-regression-models"></a>
+</h2>
 <div id="robust-covariance-matrix-estimation-from-model-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#robust-covariance-matrix-estimation-from-model-parameters" class="anchor" aria-hidden="true"></a>Robust Covariance Matrix Estimation from Model Parameters</h3>
+<h3>Robust Covariance Matrix Estimation from Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-from-model-parameters"></a>
+</h3>
 <p>By default, when <code>model_parameters(robust = TRUE)</code>, it internally calls <code>sandwich::vcovHC(type = "HC3")</code>. However, there are three arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error_robust.html" class="external-link"><code>?standard_error_robust</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov_estimation</code> - <code>vcov_type</code> - <code>vcov_args</code></p>
 <p>Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type “HC3” (i.e. <code>sandwich::vcovHC(type = "HC3")</code>).</p>
 <p>First let’s create a simple linear regression model, which we know violates homoscedasticity assumption, and thus robust estimation methods are to be considered.</p>
@@ -187,8 +187,8 @@
 <span class="co">#&gt; [1] 5.93 0.43</span></code></pre></div>
 </div>
 <div id="cluster-robust-covariance-matrix-estimation-sandwich" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cluster-robust-covariance-matrix-estimation-sandwich" class="anchor" aria-hidden="true"></a>Cluster-Robust Covariance Matrix Estimation (sandwich)</h3>
+<h3>Cluster-Robust Covariance Matrix Estimation (sandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-sandwich"></a>
+</h3>
 <p>If a different type of covariance matrix estimation is required, use the <code>vcov_estimation</code>-argument. This argument needs the suffix for the related <code>vcov*()</code>-functions as value, i.e. <code>vcov_estimation = "CL"</code> would call <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code>, or <code>vcov_estimation = "HAC"</code> would call <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">sandwich::vcovHAC()</a></code>.</p>
 <p>The specific estimation type can also be changed with <code>vcov_type</code>. For example, <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> accepts estimation types <code>HC0</code> to <code>HC3</code>. In the next example, we use a clustered covariance matrix estimation with <code>HC1</code>-estimation type.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -251,8 +251,8 @@
 <span class="co">#&gt; [1] 0.337 0.072 0.519 0.264 0.072 0.097 0.051</span></code></pre></div>
 </div>
 <div id="cluster-robust-covariance-matrix-estimation-clubsandwich" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cluster-robust-covariance-matrix-estimation-clubsandwich" class="anchor" aria-hidden="true"></a>Cluster-Robust Covariance Matrix Estimation (clubSandwich)</h3>
+<h3>Cluster-Robust Covariance Matrix Estimation (clubSandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-clubsandwich"></a>
+</h3>
 <p>Cluster-robust estimation of the variance-covariance matrix can also be achieved using <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>. Thus, when <code>vcov_estimation = "CR"</code>, the related function from the <code>clubSandwich</code> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create fake-cluster-variable, to demonstrate cluster robust standard errors</span>
@@ -285,8 +285,8 @@
 <span class="co">#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</span></code></pre></div>
 </div>
 <div id="robust-covariance-matrix-estimation-on-standardized-model-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#robust-covariance-matrix-estimation-on-standardized-model-parameters" class="anchor" aria-hidden="true"></a>Robust Covariance Matrix Estimation on Standardized Model Parameters</h3>
+<h3>Robust Covariance Matrix Estimation on Standardized Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-model-parameters"></a>
+</h3>
 <p>Finally, robust estimation can be combined with <a href="https://easystats.github.io/parameters/articles/model_parameters_standardized.html" class="external-link">standardization</a>. However, robust covariance matrix estimation only works for <code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, robust estimation on standardized model</span>
@@ -303,11 +303,11 @@
 </div>
 </div>
 <div id="linear-mixed-effects-regression-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#linear-mixed-effects-regression-models" class="anchor" aria-hidden="true"></a>Linear Mixed-Effects Regression Models</h2>
+<h2>Linear Mixed-Effects Regression Models<a class="anchor" aria-label="anchor" href="#linear-mixed-effects-regression-models"></a>
+</h2>
 <div id="robust-covariance-matrix-estimation-for-mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#robust-covariance-matrix-estimation-for-mixed-models" class="anchor" aria-hidden="true"></a>Robust Covariance Matrix Estimation for Mixed Models</h3>
+<h3>Robust Covariance Matrix Estimation for Mixed Models<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-for-mixed-models"></a>
+</h3>
 <p>For linear mixed-effects models, that by definition have a clustered (<em>hierarchical</em> or <em>multilevel</em>) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the <code>clubSandwich</code> package, thus we need to define the same arguments as in the above example.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
@@ -371,8 +371,8 @@
 <p>Notice that robust estimation returns different standard errors, confidence intervals, and <em>p</em>-values compared to the standard estimation. Also, note that the coefficient estimate and the statistic associated with it remain unchanged.</p>
 </div>
 <div id="robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters" class="anchor" aria-hidden="true"></a>Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters</h3>
+<h3>Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters"></a>
+</h3>
 <p>Once again, robust estimation can be combined with standardization for linear mixed-effects models as well and works only with <code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, cluster robust estimation of standardized mixed model</span>

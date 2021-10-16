@@ -147,14 +147,14 @@
     
     
 <div id="how-to-perform-a-factor-analysis-fa" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-to-perform-a-factor-analysis-fa" class="anchor" aria-hidden="true"></a>How to perform a Factor Analysis (FA)</h1>
+<h1>How to perform a Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-to-perform-a-factor-analysis-fa"></a>
+</h1>
 <p>The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables.</p>
 <p>This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessarily striving to represent the whole dataset.</p>
 <p>To illustrate EFA, let us use the <a href="https://ipip.ori.org/" class="external-link">International Personality Item Pool</a> data available in the <a href="https://www.personality-project.org/r/html/bfi.html" class="external-link"><code>psych</code></a> package. It includes 25 personality self report items. The authors built these items following the <strong>big 5</strong> personality structure.</p>
 <div id="factor-structure-sphericity-and-kmo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#factor-structure-sphericity-and-kmo" class="anchor" aria-hidden="true"></a>Factor Structure (Sphericity and KMO)</h2>
+<h2>Factor Structure (Sphericity and KMO)<a class="anchor" aria-label="anchor" href="#factor-structure-sphericity-and-kmo"></a>
+</h2>
 <p>The first step is to test if the dataset is suitable for carrying out factor analysis. There are two</p>
 <ul>
 <li><p><strong>Bartlett’s Test of Sphericity</strong>: This tests whether a matrix (of correlations) is significantly different from an identity matrix. The test provides probability that the correlation matrix has significant correlations among at least some of the variables in a dataset, a prerequisite for factor analysis to work. In other words, before starting with factor analysis, one needs to check whether Bartlett’s test of sphericity is significant.</p></li>
@@ -178,8 +178,8 @@
 <span class="co">#&gt;   - Sphericity: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analysis (Chisq(300) = 18146.07, p &lt; .001).</span></code></pre></div>
 </div>
 <div id="exploratory-factor-analysis-efa" class="section level2">
-<h2 class="hasAnchor">
-<a href="#exploratory-factor-analysis-efa" class="anchor" aria-hidden="true"></a>Exploratory Factor Analysis (EFA)</h2>
+<h2>Exploratory Factor Analysis (EFA)<a class="anchor" aria-label="anchor" href="#exploratory-factor-analysis-efa"></a>
+</h2>
 <p>Now that we are confident that our dataset is appropriate, we will explore a factor structure made of 5 latent variables, corresponding to the items’ authors theory of personality.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Fit an EFA</span>
@@ -230,16 +230,16 @@
 <span class="co">#&gt; 5       -0.17            -0.099       -0.460        -0.712     -0.66</span></code></pre></div>
 </div>
 <div id="how-many-factors-to-retain-in-factor-analysis-fa" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor" aria-hidden="true"></a>How many factors to retain in Factor Analysis (FA)</h2>
+<h2>How many factors to retain in Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-many-factors-to-retain-in-factor-analysis-fa"></a>
+</h2>
 <p>When running a <strong>factor analysis (FA)</strong>, one often needs to specify <strong>how many components</strong> (or latent variables) to retain or to extract. This decision is often motivated or supported by some statistical indices and procedures aiming at finding the optimal number of factors.</p>
 <p>There are a huge number of methods exist to statistically address this issue, and they can sometimes give very different results.</p>
 <blockquote>
 <p><strong>Unfortunately, there is no consensus on which method to use, or which is the best.</strong></p>
 </blockquote>
 <div id="the-method-agreement-procedure" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-method-agreement-procedure" class="anchor" aria-hidden="true"></a>The Method Agreement procedure</h3>
+<h3>The Method Agreement procedure<a class="anchor" aria-label="anchor" href="#the-method-agreement-procedure"></a>
+</h3>
 <p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html" class="external-link"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
 <p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters" class="external-link"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -293,14 +293,14 @@
 </div>
 </div>
 <div id="confirmatory-factor-analysis-cfa" class="section level2">
-<h2 class="hasAnchor">
-<a href="#confirmatory-factor-analysis-cfa" class="anchor" aria-hidden="true"></a>Confirmatory Factor Analysis (CFA)</h2>
+<h2>Confirmatory Factor Analysis (CFA)<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis-cfa"></a>
+</h2>
 <p>We’ve seen above that while an EFA with 5 latent variables works great on our dataset, a structure with 6 latent factors might in fact be more appropriate. How can we <strong>statistically test</strong> if that is actually the case? This can be done using <strong>Confirmatory Factor Analysis (CFA)</strong> (as opposed to <strong>Exploratory</strong> FA), which bridges factor analysis with Structural Equation Modelling (SEM).</p>
 <p>However, in order to do that cleanly, EFA should be <strong>independent</strong> from CFA: the factor structure should be explored in a <strong>“training” set</strong>, and then tested (or “confirmed”) in a <strong>“testing” set</strong>.</p>
 <p>In other words, the dataset used for exploration and confirmation should not be the same, a standard widely adopted in the field of machine learning.</p>
 <div id="partition-the-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#partition-the-data" class="anchor" aria-hidden="true"></a>Partition the data</h3>
+<h3>Partition the data<a class="anchor" aria-label="anchor" href="#partition-the-data"></a>
+</h3>
 <p>The data can be easily split into two sets with the <code>data_partition()</code> function, through which we will use 70% of the sample as training and the rest as test.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to have reproducible result, we will also set seed here so that similar</span>
@@ -310,8 +310,8 @@
 <span class="va">test</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">test</span></code></pre></div>
 </div>
 <div id="create-cfa-structures-out-of-efa-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-cfa-structures-out-of-efa-models" class="anchor" aria-hidden="true"></a>Create CFA structures out of EFA models</h3>
+<h3>Create CFA structures out of EFA models<a class="anchor" aria-label="anchor" href="#create-cfa-structures-out-of-efa-models"></a>
+</h3>
 <p>In the next step, we will run two EFA models on the training set, specifying 5 and 6 latent factors respectively, that we will then transform into CFA structures.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">structure_big5</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -339,8 +339,8 @@
 <p>As we can see, a structure is just a string encoding how the <strong>manifest variables</strong> (the observed variables) are integrated into <strong>latent variables</strong>.</p>
 </div>
 <div id="fit-and-compare-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#fit-and-compare-models" class="anchor" aria-hidden="true"></a>Fit and Compare models</h3>
+<h3>Fit and Compare models<a class="anchor" aria-label="anchor" href="#fit-and-compare-models"></a>
+</h3>
 <p>We can finally apply this structure to the testing dataset using the <code>lavaan</code> package, and compare these models against each other:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span>
@@ -361,8 +361,8 @@
 </div>
 </div>
 <div id="structural-equation-modeling" class="section level1">
-<h1 class="hasAnchor">
-<a href="#structural-equation-modeling" class="anchor" aria-hidden="true"></a>Structural Equation Modeling</h1>
+<h1>Structural Equation Modeling<a class="anchor" aria-label="anchor" href="#structural-equation-modeling"></a>
+</h1>
 <!-- TO DO: needs a better intro -->
 <p>The previous example shows one of the enormous amount of modeling possibilities for structural equation models, in particular an example for mediation analysis, i.e. a model that estimates indirect effects in partial mediation structures.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -400,8 +400,8 @@
 <span class="co">#&gt; (total) |        0.41 | 0.12 | [0.17, 0.65] | 3.29 | 0.001</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
+<h1>References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h1>
 <div id="refs" class="references">
 <div id="ref-makowski2018psycho">
 <p>Makowski, Dominique. 2018. “The Psycho Package: An Efficient and Publishing-Oriented Workflow for Psychological Science.” <em>Journal of Open Source Software</em> 3 (22): 470.</p>

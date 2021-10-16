@@ -111,18 +111,23 @@
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">format_order</span><span class="op">(</span><span class="va">order</span>, textual <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>order</th>
       <td><p>value or vector of orders.</p></td>
     </tr><tr><th>textual</th>
       <td><p>Return number as words. If <code>FALSE</code>, will run <code><a href="https://easystats.github.io/insight/reference/format_value.html">insight::format_value()</a></code>.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments to be passed to <code><a href="https://easystats.github.io/insight/reference/format_value.html">format_value()</a></code> if <code>textual</code> is <code>FALSE</code>.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A formatted string.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">format_order</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "second"</span>
 <span class="r-in"><span class="fu">format_order</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
@@ -130,6 +135,7 @@
 <span class="r-in"><span class="fu">format_order</span><span class="op">(</span><span class="fl">25</span>, textual <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "25th"</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

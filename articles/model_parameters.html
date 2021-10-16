@@ -153,11 +153,11 @@
 <li><p>It includes <strong>feature engineering</strong> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_model.html" class="external-link"><strong>bootstrapping</strong></a>.</p></li>
 </ul>
 <div id="correlations-and-t-tests" class="section level2">
-<h2 class="hasAnchor">
-<a href="#correlations-and-t-tests" class="anchor" aria-hidden="true"></a>Correlations and <em>t</em>-tests</h2>
+<h2>Correlations and <em>t</em>-tests<a class="anchor" aria-label="anchor" href="#correlations-and-t-tests"></a>
+</h2>
 <div id="frequentist" class="section level3">
-<h3 class="hasAnchor">
-<a href="#frequentist" class="anchor" aria-hidden="true"></a>Frequentist</h3>
+<h3>Frequentist<a class="anchor" aria-label="anchor" href="#frequentist"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
@@ -180,8 +180,8 @@
 <span class="co">#&gt; Alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0</span></code></pre></div>
 </div>
 <div id="bayesian" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian" class="anchor" aria-hidden="true"></a>Bayesian</h3>
+<h3>Bayesian<a class="anchor" aria-label="anchor" href="#bayesian"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">BayesFactor</a></span><span class="op">)</span>
 
@@ -204,12 +204,12 @@
 </div>
 </div>
 <div id="anovas" class="section level2">
-<h2 class="hasAnchor">
-<a href="#anovas" class="anchor" aria-hidden="true"></a>ANOVAs</h2>
+<h2>ANOVAs<a class="anchor" aria-label="anchor" href="#anovas"></a>
+</h2>
 <p>Indices of effect size for ANOVAs, such as partial and non-partial versions of <code>eta_squared()</code>, <code>epsilon_sqared()</code> or <code>omega_squared()</code> are powered by the <a href="https://easystats.github.io/effectsize/" class="external-link"><strong>effectsize</strong>-package</a>. However, <strong>parameters</strong> uses these function to compute such indices for parameters summaries, including confidence intervals</p>
 <div id="simple" class="section level3">
-<h3 class="hasAnchor">
-<a href="#simple" class="anchor" aria-hidden="true"></a>Simple</h3>
+<h3>Simple<a class="anchor" aria-label="anchor" href="#simple"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>
@@ -241,8 +241,8 @@
 <span class="co">#&gt; Anova Table (Type 1 tests)</span></code></pre></div>
 </div>
 <div id="repeated-measures" class="section level3">
-<h3 class="hasAnchor">
-<a href="#repeated-measures" class="anchor" aria-hidden="true"></a>Repeated measures</h3>
+<h3>Repeated measures<a class="anchor" aria-label="anchor" href="#repeated-measures"></a>
+</h3>
 <p><code><a href="../reference/model_parameters.html">parameters()</a></code> (resp. its alias <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) also works on repeated measures ANOVAs, whether computed from <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> or from a mixed model.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">Error</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -264,12 +264,12 @@
 </div>
 </div>
 <div id="regressions-glms-mixed-models-gams" class="section level2">
-<h2 class="hasAnchor">
-<a href="#regressions-glms-mixed-models-gams" class="anchor" aria-hidden="true"></a>Regressions (GLMs, Mixed Models, GAMs, …)</h2>
+<h2>Regressions (GLMs, Mixed Models, GAMs, …)<a class="anchor" aria-label="anchor" href="#regressions-glms-mixed-models-gams"></a>
+</h2>
 <p><code><a href="../reference/model_parameters.html">parameters()</a></code> (resp. its alias <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) was mainly built with regression models in mind. It works for many types of models and packages, including mixed models and Bayesian models.</p>
 <div id="glms" class="section level3">
-<h3 class="hasAnchor">
-<a href="#glms" class="anchor" aria-hidden="true"></a>GLMs</h3>
+<h3>GLMs<a class="anchor" aria-label="anchor" href="#glms"></a>
+</h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
@@ -305,8 +305,8 @@
 <span class="co">#&gt; Tjur's R2: 0.670</span></code></pre></div>
 </div>
 <div id="mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models" class="anchor" aria-hidden="true"></a>Mixed Models</h3>
+<h3>Mixed Models<a class="anchor" aria-label="anchor" href="#mixed-models"></a>
+</h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 
@@ -327,8 +327,8 @@
 <span class="co">#&gt; SD (Residual)           |        0.32</span></code></pre></div>
 </div>
 <div id="mixed-models-without-random-effects-variances" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models-without-random-effects-variances" class="anchor" aria-hidden="true"></a>Mixed Models, without Random Effects Variances</h3>
+<h3>Mixed Models, without Random Effects Variances<a class="anchor" aria-label="anchor" href="#mixed-models-without-random-effects-variances"></a>
+</h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
@@ -340,8 +340,8 @@
 <span class="co">#&gt; Petal Length |        0.28 | 0.06 | [0.16, 0.40] |   4.75 | &lt; .001</span></code></pre></div>
 </div>
 <div id="mixed-model-with-zero-inflation-model" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-model-with-zero-inflation-model" class="anchor" aria-hidden="true"></a>Mixed Model with Zero-Inflation Model</h3>
+<h3>Mixed Model with Zero-Inflation Model<a class="anchor" aria-label="anchor" href="#mixed-model-with-zero-inflation-model"></a>
+</h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://drizopoulos.github.io/GLMMadaptive/" class="external-link">GLMMadaptive</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span>
@@ -394,8 +394,8 @@
 <span class="co">#&gt; SD (Residual) |        1.61</span></code></pre></div>
 </div>
 <div id="mixed-models-with-dispersion-model" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models-with-dispersion-model" class="anchor" aria-hidden="true"></a>Mixed Models with Dispersion Model</h3>
+<h3>Mixed Models with Dispersion Model<a class="anchor" aria-label="anchor" href="#mixed-models-with-dispersion-model"></a>
+</h3>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span>
 
@@ -439,8 +439,8 @@
 <span class="co">#&gt; SD (Residual)     |        2.60</span></code></pre></div>
 </div>
 <div id="bayesian-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bayesian-models" class="anchor" aria-hidden="true"></a>Bayesian Models</h3>
+<h3>Bayesian Models<a class="anchor" aria-label="anchor" href="#bayesian-models"></a>
+</h3>
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also works with Bayesian models from the <strong>rstanarm</strong> package:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span>
@@ -539,12 +539,12 @@
 </div>
 </div>
 <div id="structural-models-pca-efa-cfa-sem" class="section level2">
-<h2 class="hasAnchor">
-<a href="#structural-models-pca-efa-cfa-sem" class="anchor" aria-hidden="true"></a>Structural Models (PCA, EFA, CFA, SEM…)</h2>
+<h2>Structural Models (PCA, EFA, CFA, SEM…)<a class="anchor" aria-label="anchor" href="#structural-models-pca-efa-cfa-sem"></a>
+</h2>
 <p>The <strong>parameters</strong> package extends the support to structural models.</p>
 <div id="principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="section level3">
-<h3 class="hasAnchor">
-<a href="#principal-component-analysis-pca-and-exploratory-factor-analysis-efa" class="anchor" aria-hidden="true"></a>Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA)</h3>
+<h3>Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA)<a class="anchor" aria-label="anchor" href="#principal-component-analysis-pca-and-exploratory-factor-analysis-efa"></a>
+</h3>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
 
@@ -586,11 +586,11 @@
 <span class="co">#&gt; The 3 latent factors accounted for 96.73% of the total variance of the original data (Dim.1 = 64.50%, Dim.2 = 22.37%, Dim.3 = 9.86%).</span></code></pre></div>
 </div>
 <div id="confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="section level3">
-<h3 class="hasAnchor">
-<a href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem" class="anchor" aria-hidden="true"></a>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)</h3>
+<h3>Confirmatory Factor Analysis (CFA) and Structural Equation Models (SEM)<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis-cfa-and-structural-equation-models-sem"></a>
+</h3>
 <div id="frequentist-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#frequentist-1" class="anchor" aria-hidden="true"></a>Frequentist</h4>
+<h4>Frequentist<a class="anchor" aria-label="anchor" href="#frequentist-1"></a>
+</h4>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span>
 
@@ -624,15 +624,15 @@
 <span class="co">#&gt; textual ~~ speed  |        0.17 | 0.05 | [0.08, 0.27] | 3.52 | &lt; .001</span></code></pre></div>
 </div>
 <div id="bayesian-1" class="section level4">
-<h4 class="hasAnchor">
-<a href="#bayesian-1" class="anchor" aria-hidden="true"></a>Bayesian</h4>
+<h4>Bayesian<a class="anchor" aria-label="anchor" href="#bayesian-1"></a>
+</h4>
 <p><code>blavaan</code> to be done.</p>
 </div>
 </div>
 </div>
 <div id="meta-analysis" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meta-analysis" class="anchor" aria-hidden="true"></a>Meta-Analysis</h2>
+<h2>Meta-Analysis<a class="anchor" aria-label="anchor" href="#meta-analysis"></a>
+</h2>
 <p><code><a href="../reference/model_parameters.html">parameters()</a></code> also works for <code>rma</code>-objects from the <strong>metafor</strong> package.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span>
@@ -655,8 +655,8 @@
 <span class="co">#&gt; Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |</span></code></pre></div>
 </div>
 <div id="plotting-model-parameters" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plotting-model-parameters" class="anchor" aria-hidden="true"></a>Plotting Model Parameters</h2>
+<h2>Plotting Model Parameters<a class="anchor" aria-label="anchor" href="#plotting-model-parameters"></a>
+</h2>
 <p>There is a <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method implemented in the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>. Several examples are shown <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link">in this vignette</a>.</p>
 </div>
   </div>

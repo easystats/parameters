@@ -123,7 +123,8 @@
 <span class="co"># S3 method for parameters_clusters</span>
 <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Cluster model.</p></td>
     </tr><tr><th>...</th>
@@ -132,7 +133,11 @@
       <td><p>A data.frame.</p></td>
     </tr><tr><th>clusters</th>
       <td><p>A vector with clusters assignments (must be same length as rows in data).</p></td>
-    </tr></table><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    </tr></table></div>
+
+
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># kmeans</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -162,6 +167,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            538.6171           142.7535 0.7904906</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

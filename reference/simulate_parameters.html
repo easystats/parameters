@@ -133,7 +133,8 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Statistical model (no Bayesian models).</p></td>
     </tr><tr><th>iterations</th>
@@ -158,35 +159,54 @@ For each "test", the corresponding <span class="pkg">bayestestR</span> function 
 included in the summary output.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with simulated parameters.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
-<h3 class="hasAnchor" id="technical-details"><a class="anchor" aria-hidden="true" href="#technical-details"></a>Technical Details</h3>
+<div id="technical-details">
+<h3></h3><p><code>simulate_parameters()</code> is a computationally faster alternative
+to <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
+on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>) with mean
+<code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
 <p><code>simulate_parameters()</code> is a computationally faster alternative
 to <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
 on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>) with mean
 <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
-<h3 class="hasAnchor" id="models-with-zero-inflation-component"><a class="anchor" aria-hidden="true" href="#models-with-zero-inflation-component"></a>Models with Zero-Inflation Component</h3>
+</div>
+<div id="models-with-zero-inflation-component">
+<h3></h3><p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
+<span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
+which parameters should be simulated. For all other models, parameters
+from the conditional component (fixed effects) are simulated. This may
+include smooth terms, but not random effects.</p>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
 <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
 which parameters should be simulated. For all other models, parameters
 from the conditional component (fixed effects) are simulated. This may
 include smooth terms, but not random effects.</p>
+</div>
 
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
+    </div>
+    <div id="note">
+    <h2>Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="bootstrap_model.html">bootstrap_model()</a></code>, <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>, <code><a href="simulate_model.html">simulate_model()</a></code></p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -215,6 +235,7 @@ include smooth terms, but not random effects.</p>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

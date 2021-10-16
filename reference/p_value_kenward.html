@@ -117,18 +117,22 @@
 
 <span class="fu">se_kenward</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr><tr><th>dof</th>
       <td><p>Degrees of Freedom.</p></td>
-    </tr></table><h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    </tr></table></div>
 
+    <div id="value">
+    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
+    </div>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -139,20 +143,24 @@ also applicable in more complex multilevel designs, e.g. with cross-classified
 clusters. However, the "m-l-1" heuristic also applies to generalized
 mixed models, while approaches like Kenward-Roger or Satterthwaite are limited
 to linear mixed models only.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+    </div>
+    <div id="references">
+    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Kenward, M. G., &amp; Roger, J. H. (1997). Small sample inference for
 fixed effects from restricted maximum likelihood. Biometrics, 983-997.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
+    </div>
+    <div id="see-also">
+    <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code>dof_kenward()</code> and <code>se_kenward()</code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
 <br><br><code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code> and
 <code><a href="p_value_ml1.html">dof_ml1()</a></code> approximate degrees
 of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -163,6 +171,7 @@ of freedom based on Satterthwaite's method or the "m-l-1" rule.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Sepal.Length 8.598429e-29</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

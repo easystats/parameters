@@ -135,7 +135,8 @@ data analysis workflow. <code>reduce_data()</code> is an alias for
 
 <span class="fu">reduce_data</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a statistical model.</p></td>
     </tr><tr><th>method</th>
@@ -156,9 +157,33 @@ correlated) by at least one variable.</p></td>
 can be given.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table><h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    </tr></table></div>
 
-    <p>The different methods available are described below:</p><h3 class="hasAnchor" id="supervised-methods"><a class="anchor" aria-hidden="true" href="#supervised-methods"></a>Supervised Methods</h3>
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The different methods available are described below:</p><div id="supervised-methods">
+<h3>
+<ul><li><p><strong>PCA</strong>: See <code><a href="principal_components.html">principal_components()</a></code>.</p></li>
+<li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a
+set of dissimilarities (i.e., a distance matrix) and returns a set of points
+such that the distances between the points are approximately equal to the
+dissimilarities.</p></li>
+<li><p><strong>DRR</strong>: Dimensionality Reduction via Regression (DRR) is a very
+recent technique extending PCA (Laparra et al., 2015). Starting from a
+rotated PCA, it predicts redundant information from the remaining components
+using non-linear regression. Some of the most notable advantages of
+performing DRR are avoidance of multicollinearity between predictors and
+overfitting mitigation. DRR tends to perform well when the first principal
+component is enough to explain most of the variation in the predictors.
+Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
+<li><p><strong>ICA</strong>: Performs an Independent Component Analysis using the
+FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
+sources (through least squares minimization), ICA attempts to find
+independent sources, i.e., the source space that maximizes the
+"non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
+source, which makes it a poor tool for dimensionality reduction. Requires the
+<span class="pkg">fastICA</span> package to be installed.</p></li>
+</ul><a class="anchor" aria-label="anchor" href="#supervised-methods"></a></h3>
 
 <ul><li><p><strong>PCA</strong>: See <code><a href="principal_components.html">principal_components()</a></code>.</p></li>
 <li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a
@@ -180,16 +205,20 @@ independent sources, i.e., the source space that maximizes the
 "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
 source, which makes it a poor tool for dimensionality reduction. Requires the
 <span class="pkg">fastICA</span> package to be installed.</p></li>
-</ul><p>See also <a href="https://easystats.github.io/parameters/articles/parameters_reduction.html">package vignette</a>.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
+</ul></div><p>See also <a href="https://easystats.github.io/parameters/articles/parameters_reduction.html">package vignette</a>.</p>
+    </div>
+    <div id="references">
+    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     
 <ul><li><p>Nguyen, L. H., \&amp; Holmes, S. (2019). Ten quick tips for effective
 dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
 <li><p>Laparra, V., Malo, J., &amp; Camps-Valls, G. (2015). Dimensionality
 reduction via regression in hyperspectral imagery. IEEE Journal of Selected
 Topics in Signal Processing, 9(6), 1026-1036.</p></li>
-</ul><h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+</ul></div>
+
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">model</span></span>
@@ -240,6 +269,7 @@ Topics in Signal Processing, 9(6), 1026-1036.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5             -0.73579102        0.2543209</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6             -1.14741717        1.0076406</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

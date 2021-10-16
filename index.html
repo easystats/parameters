@@ -144,8 +144,7 @@
   <div class="contents col-md-9">
 
 <div id="parameters-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#parameters-" class="anchor" aria-hidden="true"></a>parameters <img src="reference/figures/logo.png" align="right" height="139">
+<div class="page-header"><h1>parameters <img src="reference/figures/logo.png" align="right" height="139"><a class="anchor" aria-label="anchor" href="#parameters-"></a>
 </h1></div>
 
 <hr>
@@ -155,8 +154,8 @@
 <p><strong>parameters</strong>’ primary goal is to provide utilities for processing the parameters of various statistical models (see <a href="https://easystats.github.io/insight/" class="external-link">here</a> for a list of supported models). Beyond computing <em>p-values</em>, <em>CIs</em>, <em>Bayesian indices</em> and other measures for a wide variety of models, this package implements features like <em>bootstrapping</em> of parameters and models, <em>feature reduction</em> (feature extraction and variable selection), or tools for data reduction like functions to perform cluster, factor or principal component analysis.</p>
 <p>Another important goal of the <strong>parameters</strong> package is to facilitate and streamline the process of reporting results of statistical models, which includes the easy and intuitive calculation of standardized estimates or robust standard errors and p-values. <strong>parameters</strong> therefor offers a simple and unified syntax to process a large variety of (model) objects from many different packages.</p>
 <div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
+<h2>Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p><a href="https://cran.r-project.org/package=parameters" class="external-link"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a> <a href="https://github.com/easystats/parameters/actions" class="external-link"><img src="https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main" alt="R-check"></a></p>
 <p>Run the following to install the stable release of <strong>parameters</strong> from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -170,8 +169,8 @@
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"easystats/parameters"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation" class="anchor" aria-hidden="true"></a>Documentation</h2>
+<h2>Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
 <p><a href="https://easystats.github.io/parameters/" class="external-link"><img src="https://img.shields.io/badge/documentation-parameters-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/" class="external-link"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/parameters/reference/index.html" class="external-link"><img src="https://img.shields.io/badge/features-parameters-orange.svg?colorB=2196F3" alt="Features"></a></p>
 <p>Click on the buttons above to access the package <a href="https://easystats.github.io/parameters/" class="external-link">documentation</a> and the <a href="https://easystats.github.io/blog/posts/" class="external-link">easystats blog</a>, and check-out these vignettes:</p>
 <ul>
@@ -186,21 +185,18 @@
 </ul>
 </div>
 <div id="contributing-and-support" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contributing-and-support" class="anchor" aria-hidden="true"></a>Contributing and Support</h2>
+<h2>Contributing and Support<a class="anchor" aria-label="anchor" href="#contributing-and-support"></a>
+</h2>
 <p>In case you want to file an issue or contribute in another way to the package, please follow <a href="https://github.com/easystats/parameters/blob/master/.github/CONTRIBUTING.md" class="external-link">this guide</a>. For questions about the functionality, you may either contact us via email or also file an issue.</p>
 </div>
 </div>
 <div id="features" class="section level1">
-<h1 class="hasAnchor">
-<a href="#features" class="anchor" aria-hidden="true"></a>Features</h1>
+<h1>Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h1>
 <div id="models-parameters-description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#models-parameters-description" class="anchor" aria-hidden="true"></a>Model’s parameters description</h2>
-<p>
-</p>
-<p><img src="reference/figures/figure1.png" align="center"></p>
-
+<h2>Model’s parameters description<a class="anchor" aria-label="anchor" href="#models-parameters-description"></a>
+</h2>
+<p><img src="reference/figures/figure1.png" width="734" style="display: block; margin: auto;"></p>
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom" class="external-link"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
 <li>The column names of the returned data frame are <em>specific</em> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (however, you can get standardized (generic) column names using <a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link"><code>standardize_names()</code></a>).</li>
@@ -208,8 +204,8 @@
 <li>It includes <em>feature engineering</em> capabilities, including parameters <a href="https://easystats.github.io/parameters/reference/bootstrap_parameters.html" class="external-link">bootstrapping</a>.</li>
 </ul>
 <div id="classical-regression-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#classical-regression-models" class="anchor" aria-hidden="true"></a>Classical Regression Models</h3>
+<h3>Classical Regression Models<a class="anchor" aria-label="anchor" href="#classical-regression-models"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
@@ -224,6 +220,7 @@
 <span class="co">#&gt; Petal Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |   4.41 | &lt; .001</span>
 <span class="co">#&gt; Petal Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 </span>
 <span class="co">#&gt; Petal Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618</span>
+
 <span class="co"># standardized parameters</span>
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span>
 <span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span>
@@ -237,8 +234,8 @@
 <span class="co">#&gt; Petal Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] |  -0.50 | 0.618</span></code></pre></div>
 </div>
 <div id="mixed-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixed-models" class="anchor" aria-hidden="true"></a>Mixed Models</h3>
+<h3>Mixed Models<a class="anchor" aria-label="anchor" href="#mixed-models"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 
@@ -259,6 +256,7 @@
 <span class="co">#&gt; -------------------------------------</span>
 <span class="co">#&gt; SD (Intercept: Species) |        0.89</span>
 <span class="co">#&gt; SD (Residual)           |        0.32</span>
+
 <span class="co"># model parameters with CI, df and p-values based on Kenward-Roger approximation</span>
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, df_method <span class="op">=</span> <span class="st">"kenward"</span><span class="op">)</span>
 <span class="co">#&gt; # Fixed Effects</span>
@@ -276,8 +274,8 @@
 <span class="co">#&gt; SD (Residual)           |        0.32</span></code></pre></div>
 </div>
 <div id="structural-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#structural-models" class="anchor" aria-hidden="true"></a>Structural Models</h3>
+<h3>Structural Models<a class="anchor" aria-label="anchor" href="#structural-models"></a>
+</h3>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html" class="external-link"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
@@ -300,12 +298,9 @@
 </div>
 </div>
 <div id="variable-and-parameters-selection" class="section level2">
-<h2 class="hasAnchor">
-<a href="#variable-and-parameters-selection" class="anchor" aria-hidden="true"></a>Variable and parameters selection</h2>
-<p>
-</p>
-<p><img src="reference/figures/figure2.png" align="center"></p>
-
+<h2>Variable and parameters selection<a class="anchor" aria-label="anchor" href="#variable-and-parameters-selection"></a>
+</h2>
+<p><img src="reference/figures/figure2.png" width="756" style="display: block; margin: auto;"></p>
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html" class="external-link"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
@@ -323,12 +318,12 @@
 <span class="co">#&gt; carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | &lt; .001</span></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
-<h2 class="hasAnchor">
-<a href="#miscellaneous" class="anchor" aria-hidden="true"></a>Miscellaneous</h2>
+<h2>Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"></a>
+</h2>
 <p>This packages also contains a lot of <a href="https://easystats.github.io/parameters/reference/index.html" class="external-link">other useful functions</a>:</p>
 <div id="describe-a-distribution" class="section level3">
-<h3 class="hasAnchor">
-<a href="#describe-a-distribution" class="anchor" aria-hidden="true"></a>Describe a Distribution</h3>
+<h3>Describe a Distribution<a class="anchor" aria-label="anchor" href="#describe-a-distribution"></a>
+</h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
@@ -340,8 +335,8 @@
 <span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span></code></pre></div>
 </div>
 <div id="citation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#citation" class="anchor" aria-hidden="true"></a>Citation</h3>
+<h3>Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h3>
 <p>In order to cite this package, please use the following command:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>

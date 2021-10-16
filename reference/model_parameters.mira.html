@@ -119,7 +119,8 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <div id="arguments">
+    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>An object of class <code>mira</code>.</p></td>
     </tr><tr><th>ci</th>
@@ -146,13 +147,17 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
       <td><p>Toggle warnings and messages.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table><h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    </tr></table></div>
 
+    <div id="details">
+    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code><a href="model_parameters.html">model_parameters()</a></code> for objects of class <code>mira</code> works
 similar to <code>summary(mice::pool())</code>, i.e. it generates the pooled summary
 of multiple imputed repeated regression analyses.</p>
+    </div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <div id="examples">
+    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/amices/mice">"mice"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">nhanes2</span><span class="op">)</span></span>
@@ -199,11 +204,11 @@ of multiple imputed repeated regression analyses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       17.91 | 3.38 | [ 10.59, 25.23] |      5.30 | 12.72 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age40-59    |       -5.98 | 1.93 | [-10.32, -1.64] |     -3.09 |  9.42 | 0.012 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age60-99    |       -7.70 | 3.15 | [-17.06,  1.67] |     -2.44 |  3.43 | 0.082 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hypyes      |        1.82 | 2.47 | [ -4.75,  8.39] |      0.74 |  4.50 | 0.497 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.06 | 0.02 | [  0.02,  0.11] |      3.07 |  9.14 | 0.013 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       20.51 | 3.65 | [ 12.77, 28.26] |      5.62 | 15.57 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age40-59    |       -5.06 | 2.21 | [ -9.91, -0.21] |     -2.29 | 11.27 | 0.042 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age60-99    |       -7.11 | 2.65 | [-13.18, -1.04] |     -2.68 |  8.42 | 0.027 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypyes      |        2.03 | 2.51 | [ -3.63,  7.69] |      0.81 |  9.19 | 0.438 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.05 | 0.02 | [ -0.00,  0.09] |      2.19 | 11.59 | 0.050 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald distribution approximation.</span>
@@ -263,17 +268,18 @@ of multiple imputed repeated regression analyses.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5   5  bmi  hyp  chl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       18.46 | 4.45 | [  6.77, 30.16] |      4.15 |  4.65 | 0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age40-59    |       -5.69 | 2.75 | [-13.65,  2.26] |     -2.07 |  3.62 | 0.114</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age60-99    |       -8.79 | 2.76 | [-16.03, -1.56] |     -3.19 |  4.67 | 0.027</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hypyes      |        2.35 | 1.81 | [ -1.59,  6.29] |      1.30 | 12.05 | 0.218</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.06 | 0.03 | [ -0.01,  0.13] |      2.34 |  4.27 | 0.075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       17.52 | 3.41 | [ 10.28, 24.76] |      5.13 | 15.89 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age40-59    |       -5.03 | 2.52 | [-11.52,  1.45] |     -2.00 |  4.98 | 0.103 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age60-99    |       -7.94 | 2.87 | [-15.46, -0.41] |     -2.76 |  4.71 | 0.042 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hypyes      |        2.06 | 2.07 | [ -2.57,  6.69] |      1.00 |  9.83 | 0.343 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> chl         |        0.06 | 0.02 | [  0.02,  0.11] |      3.05 | 11.02 | 0.011 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald distribution approximation.</span>
 </code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
