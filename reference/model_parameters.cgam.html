@@ -175,8 +175,8 @@ options (which vary depending on the model class): <code>"residual"</code>,
 <code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
 <code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
 <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
-<em>Confidence intervals and approximation of degrees of freedom</em> below for
-further details.</p></td>
+<em>Confidence intervals and approximation of degrees of freedom</em> in
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></td>
     </tr><tr><th>bootstrap</th>
       <td><p>Should estimates be based on bootstrapped model? If
 <code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
@@ -313,18 +313,18 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gu &amp; Wahba 4 term additive model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(385.12) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(384.67) |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.76 | 0.10 | [7.58, 7.95] |     80.99 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.84 | 0.10 | [7.64, 8.03] |     78.87 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Smooth Terms </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |      F |   df |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |   4.54 | 2.50 | 0.003 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) |  96.45 | 2.38 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) | 107.31 | 8.00 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |   0.24 | 1.00 | 0.626 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |     F |   df |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) | 15.10 | 2.90 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 86.18 | 2.61 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) | 97.98 | 7.82 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |  0.06 | 1.00 | 0.803 </span>
 </code></pre></div>
     </div>
   </div>

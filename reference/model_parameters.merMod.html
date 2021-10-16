@@ -255,8 +255,8 @@ options (which vary depending on the model class): <code>"residual"</code>,
 <code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
 <code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
 <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
-<em>Confidence intervals and approximation of degrees of freedom</em> below for
-further details.</p></td>
+<em>Confidence intervals and approximation of degrees of freedom</em> in
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></td>
     </tr><tr><th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html">stats::p.adjust()</a></code> for details. Further
@@ -444,8 +444,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       36.44 | [31.78, 40.05] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.07 | [-6.32, -3.99] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       36.46 | [32.41, 40.47] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.01 | [-6.23, -3.71] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are bootstrap intervals.</span>
 <span class="r-in"><span class="co"># }</span></span>
