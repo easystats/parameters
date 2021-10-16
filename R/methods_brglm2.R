@@ -54,7 +54,7 @@ model_parameters.bracl <- function(model,
 #' @export
 ci.bracl <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
   params <- insight::get_parameters(x)
-  out <- .ci_generic(model = x, ci = ci, dof = Inf, method = method, robust = robust, ...)
+  out <- .ci_generic(model = x, ci = ci, method = method, robust = robust, ...)
   if ("Response" %in% colnames(params)) {
     out$Response <- params$Response
   }
@@ -105,6 +105,24 @@ model_parameters.multinom <- model_parameters.bracl
 
 #' @export
 ci.multinom <- ci.bracl
+
+
+
+
+
+#' @export
+degrees_of_freedom.multinom <- function(model, method = NULL, ...) {
+  if (identical(method, "normal")) {
+    Inf
+  } else {
+    insight::n_obs(model) - model$edf
+  }
+}
+
+#' @export
+degrees_of_freedom.nnet <- degrees_of_freedom.multinom
+
+
 
 
 #' @export

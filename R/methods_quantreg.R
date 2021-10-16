@@ -341,10 +341,4 @@ degrees_of_freedom.rqs <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.rqss <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
-    Inf
-  } else {
-    insight::n_obs(model) - model$edf
-  }
-}
+degrees_of_freedom.rqss <- degrees_of_freedom.multinom

@@ -55,6 +55,16 @@ ci.mhurdle <- function(x, ci = .95, ...) {
 
 
 #' @export
+degrees_of_freedom.mhurdle <- function(model, method = NULL, ...) {
+  if (identical(method, "normal")) {
+    Inf
+  } else {
+    .degrees_of_freedom_analytical(model)
+  }
+}
+
+
+#' @export
 standard_error.mhurdle <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"), ...) {
   component <- match.arg(component)
   s <- summary(model)
