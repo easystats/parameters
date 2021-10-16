@@ -8,22 +8,23 @@
 #'   from the model if available (for Bayesian models, the goal (looking for
 #'   help to make it happen) would be to refit the model as a frequentist one
 #'   before extracting the DoFs), `"ml1"` (see [dof_ml1()]), `"betwithin"`
-#'   (see [dof_betwithin()]), `"satterthwaite"` (see [dof_satterthwaite()]),
-#'   `"kenward"` (see [dof_kenward()]) or `"any"`, which tries to extract DoF
+#'   (see [dof_betwithin()]), `"satterthwaite"` (see [`dof_satterthwaite()`]),
+#'   `"kenward"` (see [`dof_kenward()`]) or `"any"`, which tries to extract DoF
 #'   by any of those methods, whichever succeeds. See 'Details'.
 #' @param ... Currently not used.
 #'
 #' @details Methods for calculating degrees of freedom:
 #' \itemize{
 #' \item `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated degrees of freedoms are calculated, for other models, `n-k` (number of observations minus number of parameters).
-#' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted.
+#' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted (e.g., for models with z-statistic).
 #' \item `"any"` first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 #' \item `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation for models of class `lmerMod`. Instead, always uses `n-k` to calculate df for any model.
-#' \item `"wald"` returns `Inf`.
-#' \item `"kenward"` calls [dof_kenward()].
-#' \item `"satterthwaite"` calls [dof_satterthwaite()].
-#' \item `"ml1"` calls [dof_ml1()].
-#' \item `"betwithin"` calls [dof_betwithin()].
+#' \item `"normal"` returns `Inf`.
+#' \item `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
+#' \item `"kenward"` calls [`dof_kenward()`].
+#' \item `"satterthwaite"` calls [`dof_satterthwaite()`].
+#' \item `"ml1"` calls [`dof_ml1()`].
+#' \item `"betwithin"` calls [`dof_betwithin()`].
 #' }
 #' For models with z-statistic, the returned degrees of freedom for model parameters is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is only one distribution for the related test statistic.
 #'
