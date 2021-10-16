@@ -198,9 +198,9 @@
 
   # ==== degrees of freedom
   if (!is.null(ci_method)) {
-    df_error <- degrees_of_freedom(model, method = ci_method)
+    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
-    df_error <- degrees_of_freedom(model, method = "any")
+    df_error <- degrees_of_freedom(model, method = "any", verbose = FALSE)
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     if (length(df_error) == 1) {
@@ -467,7 +467,7 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    df <- degrees_of_freedom(model, method = ci_method)
+    df <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
     df <- Inf
   }

@@ -8,8 +8,8 @@
 #'   from the model if available (for Bayesian models, the goal (looking for
 #'   help to make it happen) would be to refit the model as a frequentist one
 #'   before extracting the DoFs), `"ml1"` (see [dof_ml1()]), `"betwithin"`
-#'   (see [dof_betwithin()]), `"satterthwaite"` (see [dof_satterthwaite()]),
-#'   `"kenward"` (see [dof_kenward()]) or `"any"`, which tries to extract DoF
+#'   (see [dof_betwithin()]), `"satterthwaite"` (see [`dof_satterthwaite()`]),
+#'   `"kenward"` (see [`dof_kenward()`]) or `"any"`, which tries to extract DoF
 #'   by any of those methods, whichever succeeds. See 'Details'.
 #' @param ... Currently not used.
 #'
@@ -19,11 +19,12 @@
 #' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted.
 #' \item `"any"` first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
 #' \item `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation for models of class `lmerMod`. Instead, always uses `n-k` to calculate df for any model.
-#' \item `"wald"` returns `Inf`.
-#' \item `"kenward"` calls [dof_kenward()].
-#' \item `"satterthwaite"` calls [dof_satterthwaite()].
-#' \item `"ml1"` calls [dof_ml1()].
-#' \item `"betwithin"` calls [dof_betwithin()].
+#' \item `"normal"` returns `Inf`.
+#' \item `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
+#' \item `"kenward"` calls [`dof_kenward()`].
+#' \item `"satterthwaite"` calls [`dof_satterthwaite()`].
+#' \item `"ml1"` calls [`dof_ml1()`].
+#' \item `"betwithin"` calls [`dof_betwithin()`].
 #' }
 #' For models with z-statistic, the returned degrees of freedom for model parameters is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is only one distribution for the related test statistic.
 #'
@@ -79,14 +80,18 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
     "likelihood"
   ))
 
-  if (!.dof_method_ok(model, method) || method %in% c("profile", "likelihood", "boot", "uniroot")) {
+  if (!.dof_method_ok(model, method, ...) || method %in% c("profile", "likelihood", "boot", "uniroot")) {
     method <- "any"
   }
 
   # for z-statistic, always return Inf
   stat <- insight::find_statistic(model)
   if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
-    return(Inf)
+    if (method == "residual") {
+      return(.degrees_of_freedom_residual(model, verbose = FALSE))
+    } else {
+      return(Inf)
+    }
   }
   # Chi2-distributions usually have 1 df
   if (!is.null(stat) && stat == "chi-squared statistic") {
@@ -171,12 +176,12 @@ dof <- degrees_of_freedom
   }
 
   # 3rd try, nlme
-  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
+  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     dof <- try(unname(model$fixDF$X), silent = TRUE)
   }
 
   # last try
-  if (inherits(dof, "try-error") || is.null(dof)|| all(is.na(dof))) {
+  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     dof <- Inf
     if (verbose) {
       warning("Could not extract degrees of freedom.", call. = FALSE)
@@ -209,7 +214,7 @@ dof <- degrees_of_freedom
 
 # Helper, check args ------------------------------
 
-.dof_method_ok <- function(model, method, type = "df_method") {
+.dof_method_ok <- function(model, method, type = "df_method", verbose = TRUE, ...) {
   if (is.null(method)) {
     return(TRUE)
   }
@@ -222,27 +227,42 @@ dof <- degrees_of_freedom
     )) {
       return(TRUE)
     } else {
-      warning(insight::format_message(sprintf("'%s' must be one of 'wald' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
+      if (verbose) {
+        warning(insight::format_message(sprintf("'%s' must be one of 'wald', 'residual' or 'profile'. Using 'wald' now.", type)), call. = FALSE)
+      }
       return(FALSE)
     }
   }
 
   info <- insight::model_info(model, verbose = FALSE)
+  if (!is.null(info) && isFALSE(info$is_mixed) && method == "boot") {
+    if (verbose) {
+      warning(insight::format_message(sprintf("'%s=boot' only works for mixed models of class 'merMod'. To bootstrap this model, use `bootstrap=TRUE, ci_method=\"bcai\"`.", type)), call. = FALSE)
+    }
+    return(TRUE)
+  }
+
   if (is.null(info) || !info$is_mixed) {
     if (!(method %in% c("analytical", "any", "fit", "betwithin", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
-      warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+      if (verbose) {
+        warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', normal', 'profile', 'boot', 'uniroot', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+      }
       return(FALSE)
     }
     return(TRUE)
   }
 
   if (!(method %in% c("analytical", "any", "fit", "satterthwaite", "betwithin", "kenward", "kr", "nokr", "wald", "ml1", "profile", "boot", "uniroot", "residual", "normal"))) {
-    warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', 'normal', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+    if (verbose) {
+      warning(insight::format_message(sprintf("'%s' must be one of 'residual', 'wald', 'normal', 'profile', 'boot', 'uniroot', 'kenward', 'satterthwaite', 'betwithin' or 'ml1'. Using 'wald' now.", type)), call. = FALSE)
+    }
     return(FALSE)
   }
 
   if (!info$is_linear && method %in% c("satterthwaite", "kenward", "kr")) {
-    warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
+    if (verbose) {
+      warning(sprintf("'%s'-degrees of freedoms are only available for linear mixed models.", method), call. = FALSE)
+    }
     return(FALSE)
   }
 

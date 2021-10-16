@@ -225,6 +225,7 @@ model_parameters.merMod <- function(model,
 }
 
 
+#' @rdname ci.default
 #' @export
 ci.merMod <- function(x,
                       ci = 0.95,

@@ -434,7 +434,8 @@ model_parameters.maov <- model_parameters.aov
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
-                                 verbose = TRUE) {
+                                 verbose = TRUE,
+                                 ...) {
   # user actually does not want to compute effect sizes
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(parameters)
