@@ -307,61 +307,57 @@ on different assumptions about the nature of the model and its sampling
 distribution. The <code>ci_method</code> modulates the method for computing degrees
 of freedom (df) that are used to calculate confidence intervals (CI) and the
 related p-values. Following options are allowed, depending on the model
-class:
-<br><br><strong>Classic methods:</strong></p><ul><li><p><code>"residual"</code>: Applies to <strong>non-Bayesian models</strong>; CI computation based on
-<strong>t distribution with residual df</strong>; p-values are <strong>Wald-based p (t-distribution)</strong>;
+class:</p>
+<p><strong>Classic methods:</strong></p><ul><li><p><code>"residual"</code>: Applies to <em>non-Bayesian models</em>; CI computation based on
+<em>t distribution with residual df</em>; p-values are <em>Wald-based p (t-distribution)</em>;
 For models with z-statistics,<code>"residual"</code> will return the same result as
 <code>"normal"</code>.</p></li>
-<li><p><code>"normal"</code>: Applies to <strong>non-Bayesian models</strong>; CI computation based on
-<strong>normal distribution assumptions</strong>; p-values are <strong>Wald-based p (normal-distribution)</strong></p></li>
-<li><p><code>"wald"</code>: Applies to <strong>non-Bayesian models</strong>; CI computation based on
-<strong>t distribution with residual df</strong> for <em>linear models</em>, and on
-<strong>normal distribution assumptions</strong> for all other models; p-values are
-<strong>Wald-based p (t-distribution)</strong> for linear models and
-<strong>Wald-based p (normal-distribution)</strong> for all other models. In other word:
+<li><p><code>"normal"</code>: Applies to <em>non-Bayesian models</em>; CI computation based on
+<em>normal distribution assumptions</em>; p-values are <em>Wald-based p (normal-distribution)</em></p></li>
+<li><p><code>"wald"</code>: Applies to <em>non-Bayesian models</em>; CI computation based on
+<em>t distribution with residual df</em> for <em>linear models</em>, and on
+<em>normal distribution assumptions</em> for all other models; p-values are
+<em>Wald-based p (t-distribution)</em> for linear models and
+<em>Wald-based p (normal-distribution)</em> for all other models. In other word:
 for linear models, <code>"wald"</code> will give the same results as <code>"residual"</code>,
-while for all other models, <code>"wald"</code> is an alias for <code>"normal"</code>.
-<br><br><strong>Methods for mixed models:</strong></p></li>
-<li><p><code>"satterthwaite"</code>: Applies to <strong>linear mixed models</strong>; CI computation
-based on <strong>t distribution with Satterthwaite df</strong>; p-values are
-<strong>Wald-based p (t-distribution with Satterthwaite df)</strong>.</p></li>
-<li><p><code>"kenward"</code>: Applies to <strong>linear mixed models</strong>; CI computation
-based on <strong>t distribution with Kenward-Roger standard errors and df</strong>;  p-values
-are <strong>Wald-based p (t-distribution with Kenward-Roger standard errors and df)</strong>.</p></li>
-<li><p><code>"ml1"</code>: Applies to <strong>linear mixed models</strong>; CI computation
-based on <strong>t distribution with m-l-1 approximated df</strong>;  p-values are
-<strong>Wald-based p (t-distribution with m-l-1 approximated df)</strong>. See
+while for all other models, <code>"wald"</code> is an alias for <code>"normal"</code>.</p></li>
+</ul><p><strong>Methods for mixed models:</strong></p><ul><li><p><code>"satterthwaite"</code>: Applies to <em>linear mixed models</em>; CI computation
+based on <em>t distribution with Satterthwaite df</em>; p-values are
+<em>Wald-based p (t-distribution with Satterthwaite df)</em>.</p></li>
+<li><p><code>"kenward"</code>: Applies to <em>linear mixed models</em>; CI computation
+based on <em>t distribution with Kenward-Roger standard errors and df</em>;  p-values
+are <em>Wald-based p (t-distribution with Kenward-Roger standard errors and df)</em>.</p></li>
+<li><p><code>"ml1"</code>: Applies to <em>linear mixed models</em>; CI computation
+based on <em>t distribution with m-l-1 approximated df</em>;  p-values are
+<em>Wald-based p (t-distribution with m-l-1 approximated df)</em>. See
 <code><a href="p_value_ml1.html">ci_ml1()</a></code>.</p></li>
-<li><p><code>"betwithin"</code>: Applies to <strong>(generalized) linear mixed models</strong>; CI
-computation based on <strong>t distribution with between-with df</strong>;  p-values are
-<strong>Wald-based p (t-distribution with between-with df)</strong>. See <code><a href="p_value_betwithin.html">ci_betwithin()</a></code>.
-<br><br><strong>Special methods for GLM(M)s</strong>:</p></li>
-<li><p><code>"profile"</code>: Applies to <strong>non-Bayesian models</strong> of class <code>glm</code> or <code>polr</code>;
-CI computation based on <strong>profiling the likelihood curve for a parameter</strong>,
+<li><p><code>"betwithin"</code>: Applies to <em>(generalized) linear mixed models</em>; CI
+computation based on <em>t distribution with between-with df</em>;  p-values are
+<em>Wald-based p (t-distribution with between-with df)</em>. See <code><a href="p_value_betwithin.html">ci_betwithin()</a></code>.</p></li>
+</ul><p><strong>Special methods for GLM(M)s:</strong></p><ul><li><p><code>"profile"</code>: Applies to <em>non-Bayesian models</em> of class <code>glm</code> or <code>polr</code>;
+CI computation based on <em>profiling the likelihood curve for a parameter</em>,
 using linear interpolation to find where likelihood ratio equals a
-critical value; p-values are <strong>Wald-based p (normal-distribution)</strong> (note:
+critical value; p-values are <em>Wald-based p (normal-distribution)</em> (note:
 this might change in a future update!).</p></li>
-<li><p><code>"uniroot"</code>: Applies to <strong>non-Bayesian models</strong> of class <code>glmmTMB</code>;
-CI computation based on <strong>profiling the likelihood curve for a parameter</strong>,
+<li><p><code>"uniroot"</code>: Applies to <em>non-Bayesian models</em> of class <code>glmmTMB</code>;
+CI computation based on <em>profiling the likelihood curve for a parameter</em>,
 using root finding to find where likelihood ratio equals a critical value;
-p-values are <strong>Wald-based p (normal-distribution)</strong> (note: this might
-change in a future update!).
-<br><br><strong>Methods for bootstrapped or Bayesian models:</strong></p></li>
-<li><p><code>"quantile"</code>: Applies to <strong>all models (including Bayesian model)</strong>, for
+p-values are <em>Wald-based p (normal-distribution)</em> (note: this might
+change in a future update!).</p></li>
+</ul><p><strong>Methods for bootstrapped or Bayesian models:</strong></p><ul><li><p><code>"quantile"</code>: Applies to <em>all models (including Bayesian model)</em>, for
 non-Bayesian models only if <code>bootstrap=TRUE</code>; CI computation based on
-<strong>equal tailed intervals using the quantiles method</strong>; p-values are based on
-the <strong>probability of direction</strong>. See also <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+<em>equal tailed intervals using the quantiles method</em>; p-values are based on
+the <em>probability of direction</em>. See also <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
 <li><p><code>"eti"</code>: Same as <code>"quantile"</code>.</p></li>
-<li><p><code>"hdi"</code>: Applies to <strong>all models (including Bayesian model)</strong>, for
+<li><p><code>"hdi"</code>: Applies to <em>all models (including Bayesian model)</em>, for
 non-Bayesian models only if <code>bootstrap=TRUE</code>; CI computation based on
-<strong>highest density intervals</strong>; p-values are based on the
-<strong>probability of direction</strong>. See also <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.
-<br><br>
-For all iteration-based methods (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
+<em>highest density intervals</em>; p-values are based on the
+<em>probability of direction</em>. See also <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+</ul><p>For all iteration-based methods (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>,
 <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>), p-values are based on the probability of
 direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>), which is converted into
-p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p></li>
-</ul></div>
+p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+    </div>
     <div id="see-also">
     <h2>See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
@@ -387,9 +383,9 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.78 | [35.44, 43.96] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.25 | [-5.01, -1.86] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.48 | [-2.19, -0.71] | 0.002 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.64 | [35.21, 43.76] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.24 | [-5.13, -1.95] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.46 | [-2.19, -0.65] | 0.002 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are bootstrap intervals.</span>
 <span class="r-in"></span>
