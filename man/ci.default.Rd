@@ -30,13 +30,14 @@ approximation method defined in \code{method}. If not \code{NULL}, use this argu
 to override the default degrees of freedom used to compute confidence
 intervals.}
 
-\item{method}{Method for computing degrees of freedom for confidence
-intervals (CI) or p-values. May be one of \code{"analytical"}, \code{"any"}, \code{"ml1"},
-\code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"},
-\code{"boot"}, \code{"uniroot"}, \code{"residual"}, \code{"normal"}, or \code{"likelihood"}.
-If \code{bootstrap = TRUE}, may be one of \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
-\code{"si"}, \code{"bci"}, or \code{"bcai"}. See argument \code{ci_method} in
-\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+\item{method}{Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): \code{"residual"},
+\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
+\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
+\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
+\emph{Confidence intervals and approximation of degrees of freedom} below for
+further details.}
 
 \item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
 robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
@@ -61,6 +62,38 @@ or \pkg{clubSandwich} package (the latter if \code{vcov_estimation = "CR"} for
 cluster-robust standard errors) and will thus only work for those models
 supported by those packages.
 }
+\section{Confidence intervals and approximation of degrees of freedom}{
+
+There are different ways of approximating the degrees of freedom depending
+on different assumptions about the nature of the model and its sampling
+distribution. The \code{ci_method} modulates the method for computing degrees
+of freedom (df) that are used to calculate confidence intervals (CI) and the
+related p-values. Following options are allowed, depending on the model
+class:
+\itemize{
+\item \code{"residual"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df}; p-value is \strong{Wald-based p (t-distribution)};
+For models with z-statistics,\code{"residual"} will return the same result as
+\code{"normal"}.
+\item \code{"normal"}: Applies to \strong{all models}; CI computation based on
+\strong{normal distribution assumptions}; p-value is \strong{Wald-based p (normal-distribution)}
+\item \code{"wald"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df} for \emph{linear models}, and on
+\strong{normal distribution assumptions} for all other models; p-value is
+\strong{Wald-based p (t-distribution)} for linear models and
+\strong{Wald-based p (normal-distribution)} for all other models. In other word:
+for linear models, \code{"wald"} will give the same results as \code{"residual"},
+while for all other models, \code{"wald"} is an alias for \code{"normal"}.
+\item \code{"satterthwaite"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Satterthwaite df}; p-value is
+\strong{Wald-based p (t-distribution with Satterthwaite df)}.
+\item \code{"kenward"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Kenward-Roger standard errors and df};  p-value
+is \strong{Wald-based p (t-distribution with Kenward-Roger standard errors and df)}.
+\item \code{"hdi"}: See argument \code{ci_method} in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.
+}
+}
+
 \examples{
 \donttest{
 library(parameters)

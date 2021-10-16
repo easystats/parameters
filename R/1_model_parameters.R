@@ -44,6 +44,34 @@
 #'   method for use inside rmarkdown files,
 #'   [`print_md()`][print_md.parameters_model].
 #'
+#' @section Confidence intervals and approximation of degrees of freedom:
+#' There are different ways of approximating the degrees of freedom depending
+#' on different assumptions about the nature of the model and its sampling
+#' distribution. The `ci_method` modulates the method for computing degrees
+#' of freedom (df) that are used to calculate confidence intervals (CI) and the
+#' related p-values. Following options are allowed, depending on the model
+#' class:
+#' - `"residual"`: Applies to **non-Bayesian models**; CI computation based on
+#'   **t distribution with residual df**; p-value is **Wald-based p (t-distribution)**;
+#'   For models with z-statistics,`"residual"` will return the same result as
+#'   `"normal"`.
+#' - `"normal"`: Applies to **all models**; CI computation based on
+#'   **normal distribution assumptions**; p-value is **Wald-based p (normal-distribution)**
+#' - `"wald"`: Applies to **non-Bayesian models**; CI computation based on
+#'   **t distribution with residual df** for *linear models*, and on
+#'   **normal distribution assumptions** for all other models; p-value is
+#'   **Wald-based p (t-distribution)** for linear models and
+#'   **Wald-based p (normal-distribution)** for all other models. In other word:
+#'   for linear models, `"wald"` will give the same results as `"residual"`,
+#'   while for all other models, `"wald"` is an alias for `"normal"`.
+#' - `"satterthwaite"`: Applies to **linear mixed models**; CI computation
+#'   based on **t distribution with Satterthwaite df**; p-value is
+#'   **Wald-based p (t-distribution with Satterthwaite df)**.
+#' - `"kenward"`: Applies to **linear mixed models**; CI computation
+#'   based on **t distribution with Kenward-Roger standard errors and df**;  p-value
+#'   is **Wald-based p (t-distribution with Kenward-Roger standard errors and df)**.
+#' - `"hdi"`: See argument `ci_method` in [bayestestR::describe_posterior()].
+#'
 #' @section Standardization of model coefficients:
 #' Standardization is based on [effectsize::standardize_parameters()]. In case
 #' of `standardize = "refit"`, the data used to fit the model will be
@@ -53,9 +81,6 @@
 #' (i.e. factors), which may be a different behaviour compared to other R
 #' packages or other software packages (like SPSS). To mimic behaviour of SPSS
 #' or packages such as \pkg{lm.beta}, use `standardize = "basic"`.
-#'
-#' @section Confidence intervals and approximation of degrees of freedom:
-#' This still needs to be done.
 #'
 #' @section Standardization Methods:
 #' - **refit**: This method is based on a complete model re-fit with a
@@ -206,12 +231,13 @@ parameters <- model_parameters
 #'   `"sidak"` and `"none"` to explicitly disable adjustment for
 #'   `emmGrid` objects (from \pkg{emmeans}).
 #' @param ci_method Method for computing degrees of freedom for
-#'   confidence intervals (CI). May be one of `"analytical"`, `"any"`, `"ml1"`,
-#'   `"betwithin"`, `"satterthwaite"`, `"kenward"`, `"wald"`, `"profile"`,
-#'   `"boot"`, `"uniroot"`, `"residual"`, `"normal"`, or `"likelihood"`.
-#'   If `bootstrap = TRUE`, may be one of `"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
-#'   `"si"`, `"bci"`, or `"bcai"`. See argument `ci_method` in
-#'   [bayestestR::describe_posterior()].
+#'   confidence intervals (CI) and the related p-values. Allowed are following
+#'   options (which vary depending on the model class): `"residual"`,
+#'   `"normal"`, `"likelihood"`, `"satterthwaite"`, `"kenward"`, `"wald"`,
+#'   `"profile"`, `"boot"`, `"uniroot"`, `"ml1"`, `"betwithin"`, `"hdi"`,
+#'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
+#'   _Confidence intervals and approximation of degrees of freedom_ below for
+#'   further details.
 #' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation

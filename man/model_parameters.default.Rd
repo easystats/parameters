@@ -89,12 +89,13 @@
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{ci_method}{Method for computing degrees of freedom for
-confidence intervals (CI). May be one of \code{"analytical"}, \code{"any"}, \code{"ml1"},
-\code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"},
-\code{"boot"}, \code{"uniroot"}, \code{"residual"}, \code{"normal"}, or \code{"likelihood"}.
-If \code{bootstrap = TRUE}, may be one of \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
-\code{"si"}, \code{"bci"}, or \code{"bcai"}. See argument \code{ci_method} in
-\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): \code{"residual"},
+\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
+\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
+\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
+\emph{Confidence intervals and approximation of degrees of freedom} below for
+further details.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
@@ -196,7 +197,34 @@ linear models (GLMs).
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
-This still needs to be done.
+There are different ways of approximating the degrees of freedom depending
+on different assumptions about the nature of the model and its sampling
+distribution. The \code{ci_method} modulates the method for computing degrees
+of freedom (df) that are used to calculate confidence intervals (CI) and the
+related p-values. Following options are allowed, depending on the model
+class:
+\itemize{
+\item \code{"residual"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df}; p-value is \strong{Wald-based p (t-distribution)};
+For models with z-statistics,\code{"residual"} will return the same result as
+\code{"normal"}.
+\item \code{"normal"}: Applies to \strong{all models}; CI computation based on
+\strong{normal distribution assumptions}; p-value is \strong{Wald-based p (normal-distribution)}
+\item \code{"wald"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df} for \emph{linear models}, and on
+\strong{normal distribution assumptions} for all other models; p-value is
+\strong{Wald-based p (t-distribution)} for linear models and
+\strong{Wald-based p (normal-distribution)} for all other models. In other word:
+for linear models, \code{"wald"} will give the same results as \code{"residual"},
+while for all other models, \code{"wald"} is an alias for \code{"normal"}.
+\item \code{"satterthwaite"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Satterthwaite df}; p-value is
+\strong{Wald-based p (t-distribution with Satterthwaite df)}.
+\item \code{"kenward"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Kenward-Roger standard errors and df};  p-value
+is \strong{Wald-based p (t-distribution with Kenward-Roger standard errors and df)}.
+\item \code{"hdi"}: See argument \code{ci_method} in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.
+}
 }
 
 \examples{

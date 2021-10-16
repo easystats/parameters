@@ -53,6 +53,38 @@ implemented in the
 method for use inside rmarkdown files,
 \code{\link[=print_md.parameters_model]{print_md()}}.
 }
+\section{Confidence intervals and approximation of degrees of freedom}{
+
+There are different ways of approximating the degrees of freedom depending
+on different assumptions about the nature of the model and its sampling
+distribution. The \code{ci_method} modulates the method for computing degrees
+of freedom (df) that are used to calculate confidence intervals (CI) and the
+related p-values. Following options are allowed, depending on the model
+class:
+\itemize{
+\item \code{"residual"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df}; p-value is \strong{Wald-based p (t-distribution)};
+For models with z-statistics,\code{"residual"} will return the same result as
+\code{"normal"}.
+\item \code{"normal"}: Applies to \strong{all models}; CI computation based on
+\strong{normal distribution assumptions}; p-value is \strong{Wald-based p (normal-distribution)}
+\item \code{"wald"}: Applies to \strong{non-Bayesian models}; CI computation based on
+\strong{t distribution with residual df} for \emph{linear models}, and on
+\strong{normal distribution assumptions} for all other models; p-value is
+\strong{Wald-based p (t-distribution)} for linear models and
+\strong{Wald-based p (normal-distribution)} for all other models. In other word:
+for linear models, \code{"wald"} will give the same results as \code{"residual"},
+while for all other models, \code{"wald"} is an alias for \code{"normal"}.
+\item \code{"satterthwaite"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Satterthwaite df}; p-value is
+\strong{Wald-based p (t-distribution with Satterthwaite df)}.
+\item \code{"kenward"}: Applies to \strong{linear mixed models}; CI computation
+based on \strong{t distribution with Kenward-Roger standard errors and df};  p-value
+is \strong{Wald-based p (t-distribution with Kenward-Roger standard errors and df)}.
+\item \code{"hdi"}: See argument \code{ci_method} in \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.
+}
+}
+
 \section{Standardization of model coefficients}{
 
 Standardization is based on \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}. In case
@@ -63,11 +95,6 @@ default, \code{standardize = "refit"}, never standardizes categorical predictors
 (i.e. factors), which may be a different behaviour compared to other R
 packages or other software packages (like SPSS). To mimic behaviour of SPSS
 or packages such as \pkg{lm.beta}, use \code{standardize = "basic"}.
-}
-
-\section{Confidence intervals and approximation of degrees of freedom}{
-
-This still needs to be done.
 }
 
 \section{Standardization Methods}{

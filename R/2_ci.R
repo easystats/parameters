@@ -11,13 +11,14 @@
 #'   approximation method defined in `method`. If not `NULL`, use this argument
 #'   to override the default degrees of freedom used to compute confidence
 #'   intervals.
-#' @param method Method for computing degrees of freedom for confidence
-#'   intervals (CI) or p-values. May be one of `"analytical"`, `"any"`, `"ml1"`,
-#'   `"betwithin"`, `"satterthwaite"`, `"kenward"`, `"wald"`, `"profile"`,
-#'   `"boot"`, `"uniroot"`, `"residual"`, `"normal"`, or `"likelihood"`.
-#'   If `bootstrap = TRUE`, may be one of `"hdi"`, `"quantile"`, `"ci"`, `"eti"`,
-#'   `"si"`, `"bci"`, or `"bcai"`. See argument `ci_method` in
-#'   [bayestestR::describe_posterior()].
+#' @param method Method for computing degrees of freedom for
+#'   confidence intervals (CI) and the related p-values. Allowed are following
+#'   options (which vary depending on the model class): `"residual"`,
+#'   `"normal"`, `"likelihood"`, `"satterthwaite"`, `"kenward"`, `"wald"`,
+#'   `"profile"`, `"boot"`, `"uniroot"`, `"ml1"`, `"betwithin"`, `"hdi"`,
+#'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
+#'   _Confidence intervals and approximation of degrees of freedom_ below for
+#'   further details.
 #' @param robust Logical, if `TRUE`, computes confidence intervals based on
 #'   robust standard errors. See [`standard_error_robust()`][standard_error_robust].
 #' @param component TODO.
@@ -32,6 +33,8 @@
 #'   or \pkg{clubSandwich} package (the latter if `vcov_estimation = "CR"` for
 #'   cluster-robust standard errors) and will thus only work for those models
 #'   supported by those packages.
+#'
+#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @examples
 #' \donttest{

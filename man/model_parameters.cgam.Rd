@@ -64,12 +64,13 @@
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
 \item{ci_method}{Method for computing degrees of freedom for
-confidence intervals (CI). May be one of \code{"analytical"}, \code{"any"}, \code{"ml1"},
-\code{"betwithin"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"}, \code{"profile"},
-\code{"boot"}, \code{"uniroot"}, \code{"residual"}, \code{"normal"}, or \code{"likelihood"}.
-If \code{bootstrap = TRUE}, may be one of \code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"},
-\code{"si"}, \code{"bci"}, or \code{"bcai"}. See argument \code{ci_method} in
-\code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): \code{"residual"},
+\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
+\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
+\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
+\emph{Confidence intervals and approximation of degrees of freedom} below for
+further details.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
