@@ -646,21 +646,23 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
     string_tailed <- switch(toupper(ci_method),
                             "HDI" = "highest-density",
-                            "PROFILE" = "profiled",
+                            "UNIROOT" = ,
+                            "PROFILE" = "profile-likelihood",
                             "equal-tailed")
 
     string_method <- switch(toupper(ci_method),
                             "BCI" = ,
-                            "BCAI" = "accelerated bootstrap",
+                            "BCAI" = "bias-corrected accelerated bootstrap",
                             "SI" = ,
                             "CI" = ,
                             "QUANTILE" = ,
                             "ETI" = ,
-                            "HDI" = ifelse(isTRUE(bootstrap), "bootstrap", "MCMC"),
-                            "NORMAL" = "normal",
+                            "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+                            "NORMAL" = "Wald normal",
+                            "BOOT" = "parametric bootstrap",
                             "Wald")
 
-    if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGERS", "SATTERTHWAITE")) {
+    if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
       string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
     } else {
       string_approx <- ""
@@ -681,7 +683,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     if (isTRUE(bootstrap)) {
       message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")))
     } else {
-      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using ", string_method, "distribution ", string_approx, "approximation.")))
+      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")))
     }
   }
 }

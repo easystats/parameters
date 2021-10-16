@@ -20,6 +20,7 @@ format_df_adjust <- function(method,
 
   out <- switch(method,
     "kr" = ,
+    "kenward-rogers" = ,
     "kenward-roger" = ,
     "kenward" = "Kenward-Roger",
     "ml1" = "m-l-1",
