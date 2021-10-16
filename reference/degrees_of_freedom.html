@@ -133,7 +133,7 @@ by any of those methods, whichever succeeds. See 'Details'.</p></td>
     <div id="details">
     <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Methods for calculating degrees of freedom:</p><ul><li><p><code>"analytical"</code> for models of class <code>lmerMod</code>, Kenward-Roger approximated degrees of freedoms are calculated, for other models, <code>n-k</code> (number of observations minus number of parameters).</p></li>
-<li><p><code>"residual"</code> tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual degrees of freedom could not be extracted (e.g., for models with z-statistic).</p></li>
+<li><p><code>"residual"</code> tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual degrees of freedom could not be extracted.</p></li>
 <li><p><code>"any"</code> first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
 <li><p><code>"nokr"</code> same as <code>"analytical"</code>, but does not Kenward-Roger approximation for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df for any model.</p></li>
 <li><p><code>"normal"</code> returns <code>Inf</code>.</p></li>
