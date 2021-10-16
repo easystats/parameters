@@ -194,4 +194,14 @@ if (require("dbscan", quietly = TRUE)) {
   head(as.data.frame(x))
   plot(x)
 }
+#
+# hclust method -------------------------------
+if (require("pvclust", quietly = TRUE) &&
+    getRversion() >= "3.6.0") {
+  # iterations should be higher for real analyses
+  x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
+  x
+  head(as.data.frame(x), n = 10) # Print 10 first rows
+  plot(x)
+}
 }
