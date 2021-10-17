@@ -111,7 +111,7 @@
     # residual df
     dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
     # make sure we have a value for degrees of freedom
-    if (is.null(dof) || length(dof) == 0) {
+    if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {
       dof <- Inf
     } else if (length(dof) > nrow(params)) {
       # filter non-matching parameters
@@ -140,4 +140,11 @@
   } else {
     out
   }
+}
+
+
+
+.is_chi2_model <- function(model, dof) {
+  statistic <- insight::find_statistic(model)
+  (all(dof == 1) && identical(statistic, "chi-squared statistic"))
 }

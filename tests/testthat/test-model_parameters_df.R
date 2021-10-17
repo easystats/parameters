@@ -170,5 +170,90 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     })
   }
 
-}
 
+
+
+
+  # ivreg ---------------------------
+
+  if (requiet("ivreg")) {
+    data(CigarettesSW)
+    CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
+    CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
+    CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
+
+    model <- ivreg::ivreg(
+      log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
+      data = CigarettesSW,
+      subset = year == "1995"
+    )
+
+    test_that("model_parameters.ivreg", {
+      params <- suppressWarnings(model_parameters(model))
+      expect_equal(params$df_error, c(45L, 45L, 45L), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(7.76291, -1.80753, -0.20009), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 1e-05, 0.24602), tolerance = 1e-3)
+
+      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+      expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(7.82022, -1.79328, -0.18717), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0, 0.23984), tolerance = 1e-3)
+    })
+  }
+
+
+
+
+  # plm ---------------------------
+
+  if (requiet("plm") && getRversion() > "3.5") {
+
+    data("Produc", package = "plm")
+    set.seed(123)
+
+    model <- plm::plm(
+      formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
+      data = Produc,
+      index = c("state", "year")
+    )
+
+    test_that("model_parameters.plm", {
+      params <- suppressWarnings(model_parameters(model))
+      expect_equal(params$df_error, c(764L, 764L, 764L, 764L), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-0.08308, 0.2427, 0.70909, -0.00724), tolerance = 1e-3)
+      expect_equal(params$p, c(0.36752, 0, 0, 0), tolerance = 1e-3)
+
+      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+      expect_equal(params$df_error, c(Inf, Inf, Inf, Inf), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-0.08299, 0.24277, 0.70918, -0.00724), tolerance = 1e-3)
+      expect_equal(params$p, c(0.36724, 0, 0, 0), tolerance = 1e-3)
+    })
+  }
+
+
+
+
+  # nlme ---------------------------
+
+  if (requiet("nlme")) {
+    data(Ovary)
+    model <- gls(
+      follicles ~ sin(2 * pi * Time) + cos(2 * pi * Time),
+      data = Ovary,
+      correlation = corAR1(form = ~ 1 | Mare)
+    )
+
+    test_that("model_parameters.gls", {
+      params <- suppressWarnings(model_parameters(model))
+      expect_equal(params$df_error, c(305L, 305L, 305L), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(10.90853, -4.04402, -2.2722), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 2e-05, 0.19814), tolerance = 1e-3)
+
+      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+      expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(10.91372, -4.03898, -2.26675), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 2e-05, 0.19716), tolerance = 1e-3)
+    })
+  }
+
+}

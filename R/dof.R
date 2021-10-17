@@ -93,9 +93,14 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
       return(Inf)
     }
   }
+
   # Chi2-distributions usually have 1 df
   if (!is.null(stat) && stat == "chi-squared statistic") {
-    return(1)
+    if (method == "residual") {
+      return(.degrees_of_freedom_residual(model, verbose = FALSE))
+    } else {
+      return(1)
+    }
   }
 
   if (method == "any") {

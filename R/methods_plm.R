@@ -5,6 +5,16 @@
 
 
 #' @export
+degrees_of_freedom.plm <- function(model, method = "wald", ...) {
+  if (identical(method, "normal")) {
+    return(Inf)
+  } else {
+    model$df.residual
+  }
+}
+
+
+#' @export
 standard_error.plm <- function(model, ...) {
   se <- stats::coef(summary(model))
 
@@ -16,14 +26,7 @@ standard_error.plm <- function(model, ...) {
 
 
 #' @export
-p_value.plm <- function(model, ...) {
-  p <- stats::coef(summary(model))
-
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(p)),
-    p = as.vector(p[, 4])
-  )
-}
+p_value.plm <- p_value.default
 
 
 

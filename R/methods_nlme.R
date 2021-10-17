@@ -74,14 +74,7 @@ standard_error.gls <- standard_error.default
 
 
 #' @export
-p_value.gls <- function(model, ...) {
-  cs <- summary(model)$tTable
-  p <- cs[, 4]
-  .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
-    p = as.vector(p)
-  )
-}
+p_value.gls <- p_value.default
 
 
 #' @export

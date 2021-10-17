@@ -37,15 +37,15 @@ if (requiet("testthat") &&
   test_that("ci", {
     expect_equal(
       ci(m1)$CI_low,
-      c(-3.73774, -0.12257, -0.0596, -0.13346, -0.1837, -0.17772, -0.11678, -0.03952),
+      c(-3.73825, -0.12292, -0.05971, -0.13356, -0.18381, -0.17782, -0.11688, -0.03962),
       tolerance = 1e-3
     )
     expect_equal(
       ci(m2)$CI_low,
-      c(-0.08299, 0.24277, 0.70918, -0.00724),
+      c(-0.08308, 0.2427, 0.70909, -0.00724),
       tolerance = 1e-3
     )
-    expect_equal(ci(m3)$CI_low, -1.394381, tolerance = 1e-3)
+    expect_equal(ci(m3)$CI_low, -2.60478, tolerance = 1e-3)
   })
 
   test_that("se", {
@@ -65,7 +65,7 @@ if (requiet("testthat") &&
   test_that("p_value", {
     expect_equal(
       p_value(m1)$p,
-      c(0, 0.52827, 0.79447, 0.00252, 0, 0, 0.0153, 0.63378),
+      c(0, 0.5285, 0.79456, 0.00262, 0, 0, 0.01558, 0.63395),
       tolerance = 1e-3
     )
     expect_equal(
@@ -73,7 +73,7 @@ if (requiet("testthat") &&
       c(0.36752, 0, 0, 0),
       tolerance = 1e-3
     )
-    expect_equal(p_value(m3)$p, 0.5369632, tolerance = 1e-3)
+    expect_equal(p_value(m3)$p, 0.53696, tolerance = 1e-3)
   })
 
   test_that("model_parameters", {

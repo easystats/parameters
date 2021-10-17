@@ -117,6 +117,7 @@ Suggests:
     GPArotation,
     gt,
     ivprobit,
+    ivreg,
     knitr,
     lavaan,
     lavaSearch2,

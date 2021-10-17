@@ -36,13 +36,25 @@ p_value.gee <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.geeglm <- function(model, ...) {
+ci.geeglm <- function(model, ci = .95, method = "wald", ...) {
+  .ci_generic(model, ci = ci, method = method, ...)
+}
+
+
+#' @export
+p_value.geeglm <- function(model, method = "wald", ...) {
   stat <- insight::get_statistic(model)
 
   if (!is.null(stat)) {
+    if (identical(method, "residual")) {
+      dof <- degrees_of_freedom(model, method = "residual")
+      p <- as.vector(2 * stats::pt(sqrt(abs(stat$Statistic)), df = dof, lower.tail = FALSE))
+    } else {
+      p <- as.vector(1 - stats::pchisq(stat$Statistic, df = 1))
+    }
     .data_frame(
       Parameter = stat$Parameter,
-      p = as.vector(1 - stats::pchisq(stat$Statistic, df = 1))
+      p = p
     )
   }
 }
