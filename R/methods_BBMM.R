@@ -45,6 +45,8 @@ p_value.BBmm <- function(model, ...) {
   )
 }
 
+## TODO BBreg only ha p based on normal distribution assumptions?
+
 
 #' @export
 p_value.BBreg <- function(model, ...) {

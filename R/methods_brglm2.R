@@ -170,13 +170,9 @@ standard_error.multinom <- function(model, ...) {
 
 
 #' @export
-p_value.multinom <- function(model, ...) {
+p_value.multinom <- function(model, method = "residual", ...) {
   stat <- insight::get_statistic(model)
-  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
-  out <- .data_frame(
-    Parameter = stat$Parameter,
-    p = as.vector(p)
-  )
+  out <- p_value.default(model, method = method, ...)
   if (!is.null(stat$Response)) {
     out$Response <- stat$Response
   }
