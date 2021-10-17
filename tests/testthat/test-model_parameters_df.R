@@ -260,30 +260,30 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
 
 
 
-  # complmrob ---------------------------
-
-  if (requiet("complmrob")) {
-
-    crimes <- data.frame(
-      lifeExp = state.x77[, "Life Exp"],
-      USArrests[, c("Murder", "Assault", "Rape")]
-    )
-
-    # model
-    model <- complmrob::complmrob(formula = lifeExp ~ ., data = crimes)
-
-    test_that("model_parameters.complmrob", {
-      params <- suppressWarnings(model_parameters(model))
-      expect_equal(params$df_error, c(46L, 46L, 46L, 46L), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(69.79492, -3.09088, -2.91019, 2.05479), tolerance = 1e-3)
-      expect_equal(params$p, c(0, 0, 0.26437, 0), tolerance = 1e-3)
-
-      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
-      expect_equal(params$df_error, c(Inf, Inf, Inf, Inf), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(69.81747, -3.06832, -2.86118, 2.087), tolerance = 1e-3)
-      expect_equal(params$p, c(0, 0, 0.25851, 0), tolerance = 1e-3)
-    })
-  }
+  # # complmrob ---------------------------
+  #
+  # if (requiet("complmrob")) {
+  #
+  #   crimes <- data.frame(
+  #     lifeExp = state.x77[, "Life Exp"],
+  #     USArrests[, c("Murder", "Assault", "Rape")]
+  #   )
+  #
+  #   # model
+  #   model <- complmrob::complmrob(formula = lifeExp ~ ., data = crimes)
+  #
+  #   test_that("model_parameters.complmrob", {
+  #     params <- suppressWarnings(model_parameters(model))
+  #     expect_equal(params$df_error, c(46L, 46L, 46L, 46L), tolerance = 1e-3)
+  #     expect_equal(params$CI_low, c(69.79492, -3.09088, -2.91019, 2.05479), tolerance = 1e-3)
+  #     expect_equal(params$p, c(0, 0, 0.26437, 0), tolerance = 1e-3)
+  #
+  #     params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+  #     expect_equal(params$df_error, c(Inf, Inf, Inf, Inf), tolerance = 1e-3)
+  #     expect_equal(params$CI_low, c(69.81747, -3.06832, -2.86118, 2.087), tolerance = 1e-3)
+  #     expect_equal(params$p, c(0, 0, 0.25851, 0), tolerance = 1e-3)
+  #   })
+  # }
 
 
 

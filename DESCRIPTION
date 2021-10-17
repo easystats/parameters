@@ -96,7 +96,6 @@ Suggests:
     ClassDiscovery,
     clubSandwich,
     cluster,
-    complmrob,
     cplm,
     dbscan,
     dplyr,

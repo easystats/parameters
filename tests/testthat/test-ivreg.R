@@ -30,7 +30,7 @@ if (requiet("testthat") &&
 
   test_that("p_value", {
     expect_equal(
-      p_value(m1, method = "normal")$p,
+      p_value(m1)$p,
       c(0, 1e-05, 0.24602),
       tolerance = 1e-4
     )
