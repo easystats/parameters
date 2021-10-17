@@ -115,6 +115,7 @@ Suggests:
     glmmTMB,
     GPArotation,
     gt,
+    ivprobit,
     knitr,
     lavaan,
     lavaSearch2,
