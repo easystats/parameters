@@ -40,7 +40,7 @@ p_value.gee <- function(model, method = NULL, robust = FALSE, ...) {
 
 #' @export
 ci.geeglm <- function(x, ci = .95, method = "wald", ...) {
-  .ci_generic(model, ci = ci, method = method, ...)
+  .ci_generic(x, ci = ci, method = method, ...)
 }
 
 

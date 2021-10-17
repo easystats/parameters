@@ -34,6 +34,14 @@ necessary changes before this breaking change is implemented.
 
 ## General
 
+* The handling to approximate the degrees of freedom in `model_parameters()`, 
+  `ci()` and `p_value()` was revised and should now be more consistent. Some
+  bugs related to the previous computation of confidence intervals and p-values
+  have been fixed. Now it is possible to change the method to approximate 
+  degrees of freedom for CIs and p-values using the `ci_method`, resp. `method`
+  argument. This change has been documented in detail in `?model_parameters`, 
+  and online here: https://easystats.github.io/parameters/reference/model_parameters.html
+
 * Minor changes to `print()` for *glmmTMB* with dispersion parameter.
 
 * Added vignette on printing options for model parameters.
@@ -42,11 +50,14 @@ necessary changes before this breaking change is implemented.
 
 ### `model_parameters()`
 
+* The `df_method` argument in `model_parameters()` is deprecated. Please use
+  `ci_method` now.
+
 * `model_parameters()` with `standardize = "refit"` now returns random effects
   from the standardized model.
 
 * `model_parameters()` and `ci()` for `lmerMod` models gain a `"residuals"`
-  option for the `df_method` (resp. `method`) argument, to explicitly calculate
+  option for the `ci_method` (resp. `method`) argument, to explicitly calculate
   confidence intervals based on the residual degrees of freedom, when present.
 
 * `model_parameters()` supports following new objects:
@@ -62,13 +73,13 @@ necessary changes before this breaking change is implemented.
   regular expression pattern defined in `keep`, `drop` is the counterpart and
   excludes matching parameter names.
 
-* When `model_parameters()` is called with `verbose = TRUE`, and `df_method` is
+* When `model_parameters()` is called with `verbose = TRUE`, and `ci_method` is
   not the default value, the printed output includes a message indicating which
   approximation-method for degrees of freedom was used.
 
-* `model_parameters()` for mixed models with `df_method = "profile` computes 
+* `model_parameters()` for mixed models with `ci_method = "profile` computes 
   (profiled) confidence intervals for both fixed and random effects. Thus, 
-  `df_method = "profile` allows to add confidence intervals to the random
+  `ci_method = "profile` allows to add confidence intervals to the random
   effect variances.
 
 * `model_parameters()` should longer fail for supported model classes when
