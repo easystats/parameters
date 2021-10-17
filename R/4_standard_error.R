@@ -14,12 +14,9 @@
 #'   calling [`standard_error_robust()`][standard_error_robust].
 #'   `standard_error_robust()`, in turn, calls one of the
 #'   `vcov*()`-functions from the \pkg{sandwich} or \pkg{clubSandwich}
-#'   package for robust covariance matrix estimators. For certain mixed models,
-#'   `method` may also be one of `"wald"`,
-#'   [`"ml1"()`][p_value_ml1],
-#'   [`"betwithin"()`][p_value_betwithin],
-#'   [`"satterthwaite"()`][p_value_satterthwaite] or
-#'   [`"kenward"()`][p_value_kenward].
+#'   package for robust covariance matrix estimators. For linar mixed models,
+#'   `method` may also be [`"kenward"`][p_value_kenward] or
+#'   [`"satterthwaite"`][p_value_satterthwaite].
 #' @param ... Arguments passed to or from other methods. For
 #'   `standard_error()`, if `method = "robust"`, arguments
 #'   `vcov_estimation`, `vcov_type` and `vcov_args` can be passed
@@ -51,6 +48,8 @@ standard_error <- function(model, ...) {
 
 # Default methods ---------------------------------------------------------
 
+
+## TODO use "robust" argument instead of method = "robust"
 
 #' @rdname standard_error
 #' @export

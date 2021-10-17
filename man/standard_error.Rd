@@ -86,12 +86,9 @@ down to \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
 \code{standard_error_robust()}, in turn, calls one of the
 \verb{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
-package for robust covariance matrix estimators. For certain mixed models,
-\code{method} may also be one of \code{"wald"},
-\code{\link[=p_value_ml1]{"ml1"()}},
-\code{\link[=p_value_betwithin]{"betwithin"()}},
-\code{\link[=p_value_satterthwaite]{"satterthwaite"()}} or
-\code{\link[=p_value_kenward]{"kenward"()}}.}
+package for robust covariance matrix estimators. For linar mixed models,
+\code{method} may also be \code{\link[=p_value_kenward]{"kenward"}} or
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

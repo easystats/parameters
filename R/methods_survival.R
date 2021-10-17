@@ -101,8 +101,7 @@ standard_error.survreg <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.survreg <- function(model, method = NULL, ...) {
-  robust <- !is.null(method) && method == "robust"
+p_value.survreg <- function(model, method = NULL, robust = FALSE, ...) {
   if (isTRUE(robust)) {
     return(p_value_robust(model, ...))
   }
