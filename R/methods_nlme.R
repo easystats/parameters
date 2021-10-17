@@ -74,10 +74,6 @@ standard_error.gls <- standard_error.default
 
 
 #' @export
-ci.gls <- ci.biglm
-
-
-#' @export
 p_value.gls <- function(model, ...) {
   cs <- summary(model)$tTable
   p <- cs[, 4]

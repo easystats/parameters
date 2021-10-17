@@ -84,6 +84,7 @@ Suggests:
     BayesFM,
     bbmle,
     betareg,
+    biglm,
     blme,
     boot,
     brglm2,

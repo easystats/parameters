@@ -59,7 +59,7 @@ degrees_of_freedom.mhurdle <- function(model, method = NULL, ...) {
   if (identical(method, "normal")) {
     Inf
   } else {
-    .degrees_of_freedom_analytical(model)
+    .degrees_of_freedom_analytical(model, kenward = FALSE)
   }
 }
 

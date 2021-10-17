@@ -139,5 +139,36 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
       expect_equal(params$p, c(0.08316, 0.12684, 0.55668, 0.63355, 0.46571, 0.61479), tolerance = 1e-3)
     })
   }
+
+
+
+
+  # biglm ---------------------------
+
+  if (requiet("biglm")) {
+    set.seed(123)
+    data(trees)
+
+    # model
+    model <- biglm::bigglm(
+      formula = log(Volume) ~ log(Girth) + log(Height),
+      data = trees,
+      chunksize = 10,
+      sandwich = TRUE
+    )
+
+    test_that("model_parameters.bigglm", {
+      params <- suppressWarnings(model_parameters(model))
+      expect_equal(params$df_error, c(28, 28, 28), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-8.12252, 1.86862, 0.72411), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0, 0), tolerance = 1e-3)
+
+      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+      expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-8.05815, 1.87355, 0.74108), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0, 0), tolerance = 1e-3)
+    })
+  }
+
 }
 
