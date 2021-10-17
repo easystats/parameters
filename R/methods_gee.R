@@ -19,13 +19,16 @@ standard_error.gee <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.gee <- function(model, method = NULL, ...) {
+p_value.gee <- function(model, method = NULL, robust = FALSE, ...) {
   cs <- stats::coef(summary(model))
+  if (is.null(method)) {
+    method <- "any"
+  }
 
-  if (!is.null(method) && method == "robust") {
-    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  if (isTRUE(robust)) {
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
   } else {
-    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
   }
 
   .data_frame(

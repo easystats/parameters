@@ -11,6 +11,7 @@ standard_error.fixest <- function(model, ...) {
   )
 }
 
+## TODO add ci_method later?
 
 #' @export
 p_value.fixest <- function(model, ...) {
@@ -40,6 +41,7 @@ standard_error.feglm <- function(model, ...) {
   )
 }
 
+## TODO add ci_method later?
 
 #' @export
 p_value.feglm <- function(model, ...) {

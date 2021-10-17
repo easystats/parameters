@@ -1,3 +1,5 @@
+## TODO add ci_method later?
+
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.betareg <- function(model,

@@ -1,5 +1,6 @@
 # classes: .bracl, .multinom, .brmultinom
 
+## TODO add ci_method later?
 
 ############# .bracl --------------
 

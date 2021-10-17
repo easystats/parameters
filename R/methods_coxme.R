@@ -11,6 +11,7 @@ standard_error.coxme <- function(model, ...) {
   }
 }
 
+## TODO add ci_method later?
 
 #' @export
 p_value.coxme <- function(model, ...) {

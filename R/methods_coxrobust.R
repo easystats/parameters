@@ -9,6 +9,7 @@ standard_error.coxr <- function(model, ...) {
   )
 }
 
+## TODO add ci_method later?
 
 #' @export
 p_value.coxr <- function(model, ...) {

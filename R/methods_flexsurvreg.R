@@ -11,6 +11,8 @@ standard_error.flexsurvreg <- function(model, ...) {
 }
 
 
+## TODO add ci_method later?
+
 #' @export
 p_value.flexsurvreg <- function(model, ...) {
   params <- insight::get_parameters(model)

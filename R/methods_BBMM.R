@@ -33,6 +33,10 @@ standard_error.BBreg <- function(model, ...) {
 }
 
 
+## TODO add ci_method later?
+## TODO BBmm only has p based on normal distribution assumptions?
+
+
 #' @export
 p_value.BBmm <- function(model, ...) {
   .data_frame(
@@ -45,7 +49,9 @@ p_value.BBmm <- function(model, ...) {
   )
 }
 
-## TODO BBreg only ha p based on normal distribution assumptions?
+
+## TODO add ci_method later?
+## TODO BBreg only has p based on normal distribution assumptions?
 
 
 #' @export
