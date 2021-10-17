@@ -13,11 +13,7 @@ standard_error.biglm <- function(model, ...) {
 
 #' @export
 degrees_of_freedom.biglm <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
-    Inf
-  } else {
-    .degrees_of_freedom_analytical(model, kenward = FALSE)
-  }
+  .degrees_of_freedom_no_dfresid_method(model, method)
 }
 
 #' @export

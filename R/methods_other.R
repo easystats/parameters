@@ -13,18 +13,18 @@ standard_error.complmrob <- function(model, ...) {
 
 
 #' @export
-p_value.complmrob <- function(model, ...) {
-  stats <- summary(model)$stats
-  params <- insight::get_parameters(model)
-  .data_frame(
-    Parameter = params$Parameter,
-    p = as.vector(stats[, "Pr(>|t|)"])
-  )
-}
+p_value.complmrob <- p_value.default
 
 
 #' @export
-ci.comlmrob <- ci.default
+ci.complmrob <- ci.default
+
+
+#' @export
+degrees_of_freedom.complmrob <- function(model, method = "wald", ...) {
+  .degrees_of_freedom_no_dfresid_method(model, method)
+}
+
 
 
 

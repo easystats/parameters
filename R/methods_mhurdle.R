@@ -56,11 +56,7 @@ ci.mhurdle <- function(x, ci = .95, ...) {
 
 #' @export
 degrees_of_freedom.mhurdle <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
-    Inf
-  } else {
-    .degrees_of_freedom_analytical(model, kenward = FALSE)
-  }
+  .degrees_of_freedom_no_dfresid_method(model, method)
 }
 
 

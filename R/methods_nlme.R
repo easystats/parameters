@@ -79,11 +79,5 @@ p_value.gls <- p_value.default
 
 #' @export
 degrees_of_freedom.gls <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
-    Inf
-  } else if (!is.null(method) && method %in% c("ml1", "satterthwaite", "betwithin")) {
-    degrees_of_freedom.default(model, method = method, ...)
-  } else {
-    .degrees_of_freedom_analytical(model)
-  }
+  .degrees_of_freedom_no_dfresid_method(model, method)
 }

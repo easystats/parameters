@@ -2,11 +2,7 @@
 
 #' @export
 degrees_of_freedom.rlm <- function(model, method = "residual", ...) {
-  if (identical(method, "normal")) {
-    return(Inf)
-  } else {
-    .degrees_of_freedom_analytical(model, kenward = FALSE)
-  }
+  .degrees_of_freedom_no_dfresid_method(model, method)
 }
 
 

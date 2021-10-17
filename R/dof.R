@@ -65,6 +65,8 @@ degrees_of_freedom <- function(model, ...) {
 }
 
 
+
+
 #' @rdname degrees_of_freedom
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
@@ -140,6 +142,9 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
 dof <- degrees_of_freedom
 
 
+
+
+
 # Analytical approach ------------------------------
 
 
@@ -162,7 +167,11 @@ dof <- degrees_of_freedom
 }
 
 
+
+
+
 # Model approach (Residual df) ------------------------------
+
 
 #' @keywords internal
 .degrees_of_freedom_residual <- function(model, verbose = TRUE) {
@@ -201,6 +210,28 @@ dof <- degrees_of_freedom
 
   dof
 }
+
+
+
+
+# residual df - for models with residual df, but no "df.residual()" method --------------
+
+
+#' @keywords internal
+.degrees_of_freedom_no_dfresid_method <- function(model, method = NULL) {
+  if (identical(method, "normal")) {
+    return(Inf)
+  } else if (!is.null(method) && method %in% c("ml1", "satterthwaite", "betwithin")) {
+    degrees_of_freedom.default(model, method = method)
+  } else {
+    .degrees_of_freedom_analytical(model, kenward = FALSE)
+  }
+}
+
+
+
+
+
 
 # helper --------------
 
