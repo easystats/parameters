@@ -159,28 +159,7 @@ can be given.</p></td>
     <div id="details">
     <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The different methods available are described below:</p><div id="supervised-methods">
-<h3>
-<ul><li><p><strong>PCA</strong>: See <code><a href="principal_components.html">principal_components()</a></code>.</p></li>
-<li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a
-set of dissimilarities (i.e., a distance matrix) and returns a set of points
-such that the distances between the points are approximately equal to the
-dissimilarities.</p></li>
-<li><p><strong>DRR</strong>: Dimensionality Reduction via Regression (DRR) is a very
-recent technique extending PCA (Laparra et al., 2015). Starting from a
-rotated PCA, it predicts redundant information from the remaining components
-using non-linear regression. Some of the most notable advantages of
-performing DRR are avoidance of multicollinearity between predictors and
-overfitting mitigation. DRR tends to perform well when the first principal
-component is enough to explain most of the variation in the predictors.
-Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
-<li><p><strong>ICA</strong>: Performs an Independent Component Analysis using the
-FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
-sources (through least squares minimization), ICA attempts to find
-independent sources, i.e., the source space that maximizes the
-"non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
-source, which makes it a poor tool for dimensionality reduction. Requires the
-<span class="pkg">fastICA</span> package to be installed.</p></li>
-</ul><a class="anchor" aria-label="anchor" href="#supervised-methods"></a></h3>
+<h3>Supervised Methods<a class="anchor" aria-label="anchor" href="#supervised-methods"></a></h3>
 
 <ul><li><p><strong>PCA</strong>: See <code><a href="principal_components.html">principal_components()</a></code>.</p></li>
 <li><p><strong>cMDS / PCoA</strong>: Classical Multidimensional Scaling (cMDS) takes a

@@ -143,21 +143,14 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
     <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
 <div id="technical-details">
-<h3></h3><p><code>simulate_model()</code> is a computationally faster alternative
-to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>. Simulated draws for coefficients are based
-on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>) with mean
-<code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
+<h3>Technical Details<a class="anchor" aria-label="anchor" href="#technical-details"></a></h3>
 <p><code>simulate_model()</code> is a computationally faster alternative
 to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>. Simulated draws for coefficients are based
 on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>) with mean
 <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
 </div>
 <div id="models-with-zero-inflation-component">
-<h3></h3><p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
-<span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
-which parameters should be simulated. For all other models, parameters
-from the conditional component (fixed effects) are simulated. This may
-include smooth terms, but not random effects.</p>
+<h3>Models with Zero-Inflation Component<a class="anchor" aria-label="anchor" href="#models-with-zero-inflation-component"></a></h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
 <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
 which parameters should be simulated. For all other models, parameters

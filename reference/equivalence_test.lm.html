@@ -176,32 +176,7 @@ whether the null hypothesis can be rejected or not, i.e. the classical
 interpretation of the p-value may differ from the results returned from
 the equivalence test.</p>
 <div id="calculation-of-equivalence-testing">
-<h3>
-<dl><dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the “HDI+ROPE decision rule” <cite>(Kruschke,
-2014, 2018)</cite> used for the
-<code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">Bayesian counterpart()</a></code>. This
-means, if the confidence intervals are completely outside the ROPE, the
-"null hypothesis" for this parameter is "rejected". If the ROPE
-completely covers the CI, the null hypothesis is accepted. Else, it's
-undecided whether to accept or reject the null hypothesis. Desirable
-results are low proportions inside the ROPE (the closer to zero the
-better).</p></dd>
-<dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the “TOST rule”, i.e. a two one-sided test
-procedure (<cite>Lakens 2017</cite>). Following this rule, practical
-equivalence of an effect (i.e. H0) is <em>rejected</em>, when the
-coefficient is statistically significant <em>and</em> the narrow
-confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
-<em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
-(i.e. H0 accepted) when the narrow confidence intervals are completely
-inside the ROPE, no matter if the effect is statistically significant
-or not. Else, the decision whether to accept or reject H0 is undecided.</p></dd>
-<dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
-Gustafson 2018</cite>. According to this rule, practical equivalence is
-rejected when the coefficient is statistically significant. When the
-effect is <em>not</em> significant and the narrow confidence intervals are
-completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
-
-</dl><a class="anchor" aria-label="anchor" href="#calculation-of-equivalence-testing"></a></h3>
+<h3>Calculation of equivalence testing<a class="anchor" aria-label="anchor" href="#calculation-of-equivalence-testing"></a></h3>
 
 <dl><dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the “HDI+ROPE decision rule” <cite>(Kruschke,
 2014, 2018)</cite> used for the
@@ -229,12 +204,7 @@ completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
 
 </dl></div>
 <div id="levels-of-confidence-intervals-used-for-equivalence-testing">
-<h3></h3><p>For <code>rule = "classic"</code>, "narrow" confidence intervals are used for
-equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
-but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
-and internally a ci-level of 0.90 is used. <code>rule = "cet"</code> uses
-both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
-only uses the regular intervals.</p>
+<h3>Levels of Confidence Intervals used for Equivalence Testing<a class="anchor" aria-label="anchor" href="#levels-of-confidence-intervals-used-for-equivalence-testing"></a></h3>
 <p>For <code>rule = "classic"</code>, "narrow" confidence intervals are used for
 equivalence testing. "Narrow" means, the the intervals is not 1 - alpha,
 but 1 - 2 * alpha. Thus, if <code>ci = .95</code>, alpha is assumed to be 0.05
@@ -243,23 +213,14 @@ both regular and narrow confidence intervals, while <code>rule = "bayes"</code>
 only uses the regular intervals.</p>
 </div>
 <div id="p-values">
-<h3></h3><p>The equivalence p-value is the area of the (cumulative) confidence
-distribution that is outside of the region of equivalence. It can be
-interpreted as p-value for <em>rejecting</em> the alternative hypothesis
-and <em>accepting</em> the null hypothesis.</p>
+<h3>p-Values<a class="anchor" aria-label="anchor" href="#p-values"></a></h3>
 <p>The equivalence p-value is the area of the (cumulative) confidence
 distribution that is outside of the region of equivalence. It can be
 interpreted as p-value for <em>rejecting</em> the alternative hypothesis
 and <em>accepting</em> the null hypothesis.</p>
 </div>
 <div id="second-generation-p-value-sgpv-">
-<h3></h3><p>Second generation p-values (SGPV) were proposed as a statistic
-that represents “the proportion of data-supported hypotheses
-that are also null hypotheses” <cite>(Blume et al. 2018)</cite>. This statistic
-is actually computed in the same way as the percentage inside the ROPE as
-returned by <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test()</a></code> (see <cite>Lakens and Delacre 2020</cite>
-for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
-column reflects the SGPV.</p>
+<h3>Second Generation p-Value (SGPV)<a class="anchor" aria-label="anchor" href="#second-generation-p-value-sgpv-"></a></h3>
 <p>Second generation p-values (SGPV) were proposed as a statistic
 that represents “the proportion of data-supported hypotheses
 that are also null hypotheses” <cite>(Blume et al. 2018)</cite>. This statistic
@@ -269,9 +230,7 @@ for details on computation of the SGPV). Thus, the <code>"inside ROPE"</code>
 column reflects the SGPV.</p>
 </div>
 <div id="rope-range">
-<h3></h3><p>Some attention is required for finding suitable values for the ROPE limits
-(argument <code>range</code>). See 'Details' in <code><a href="https://easystats.github.io/bayestestR/reference/rope_range.html">bayestestR::rope_range()</a></code>
-for further information.</p>
+<h3>ROPE range<a class="anchor" aria-label="anchor" href="#rope-range"></a></h3>
 <p>Some attention is required for finding suitable values for the ROPE limits
 (argument <code>range</code>). See 'Details' in <code><a href="https://easystats.github.io/bayestestR/reference/rope_range.html">bayestestR::rope_range()</a></code>
 for further information.</p>

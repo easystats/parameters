@@ -132,29 +132,20 @@ observations in the model.</p>
     <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The variance components are obtained from
 <code><a href="https://easystats.github.io/insight/reference/get_variance.html">insight::get_variance()</a></code> and are denoted as following:</p><div id="within-group-or-residual-variance">
-<h3></h3><p>The residual variance, σ<sup>2</sup><sub>ε</sub>,
-is the sum of the distribution-specific variance and the variance due to additive dispersion.
-It indicates the <em>within-group variance</em>.</p>
+<h3>Within-group (or residual) variance<a class="anchor" aria-label="anchor" href="#within-group-or-residual-variance"></a></h3>
 <p>The residual variance, σ<sup>2</sup><sub>ε</sub>,
 is the sum of the distribution-specific variance and the variance due to additive dispersion.
 It indicates the <em>within-group variance</em>.</p>
 </div>
 <div id="between-group-random-intercept-variance">
-<h3></h3><p>The random intercept variance, or <em>between-group</em> variance
-for the intercept (τ<sub>00</sub>),
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. It indicates how much groups
-or subjects differ from each other.</p>
+<h3>Between-group random intercept variance<a class="anchor" aria-label="anchor" href="#between-group-random-intercept-variance"></a></h3>
 <p>The random intercept variance, or <em>between-group</em> variance
 for the intercept (τ<sub>00</sub>),
 is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. It indicates how much groups
 or subjects differ from each other.</p>
 </div>
 <div id="between-group-random-slope-variance">
-<h3></h3><p>The random slope variance, or <em>between-group</em> variance
-for the slopes (τ<sub>11</sub>)
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. This measure is only available
-for mixed models with random slopes. It indicates how much groups
-or subjects differ from each other according to their slopes.</p>
+<h3>Between-group random slope variance<a class="anchor" aria-label="anchor" href="#between-group-random-slope-variance"></a></h3>
 <p>The random slope variance, or <em>between-group</em> variance
 for the slopes (τ<sub>11</sub>)
 is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. This measure is only available
@@ -162,10 +153,7 @@ for mixed models with random slopes. It indicates how much groups
 or subjects differ from each other according to their slopes.</p>
 </div>
 <div id="random-slope-intercept-correlation">
-<h3></h3><p>The random slope-intercept correlation
-(ρ<sub>01</sub>)
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. This measure is only available
-for mixed models with random intercepts and slopes.</p>
+<h3>Random slope-intercept correlation<a class="anchor" aria-label="anchor" href="#random-slope-intercept-correlation"></a></h3>
 <p>The random slope-intercept correlation
 (ρ<sub>01</sub>)
 is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html">VarCorr()</a></code>. This measure is only available

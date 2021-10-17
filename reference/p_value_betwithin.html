@@ -130,17 +130,7 @@
     <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
 <div id="small-sample-cluster-corrected-degrees-of-freedom">
-<h3></h3><p>Inferential statistics (like p-values, confidence intervals and
-standard errors) may be biased in mixed models when the number of clusters
-is small (even if the sample size of level-1 units is high). In such cases
-it is recommended to approximate a more accurate number of degrees of freedom
-for such inferential statistics (see <cite>Li and Redden 2015</cite>). The
-<em>Between-within</em> denominator degrees of freedom approximation is
-recommended in particular for (generalized) linear mixed models with repeated
-measurements (longitudinal design). <code>dof_betwithin()</code> implements a heuristic
-based on the between-within approach. <strong>Note</strong> that this implementation
-does not return exactly the same results as shown in <cite>Li and Redden 2015</cite>,
-but similar.</p>
+<h3>Small Sample Cluster corrected Degrees of Freedom<a class="anchor" aria-label="anchor" href="#small-sample-cluster-corrected-degrees-of-freedom"></a></h3>
 <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -154,10 +144,7 @@ does not return exactly the same results as shown in <cite>Li and Redden 2015</c
 but similar.</p>
 </div>
 <div id="degrees-of-freedom-for-longitudinal-designs-repeated-measures-">
-<h3></h3><p>In particular for repeated measure designs (longitudinal data analysis),
-the <em>between-within</em> heuristic is likely to be more accurate than simply
-using the residual or infinite degrees of freedom, because <code>dof_betwithin()</code>
-returns different degrees of freedom for within-cluster and between-cluster effects.</p>
+<h3>Degrees of Freedom for Longitudinal Designs (Repeated Measures)<a class="anchor" aria-label="anchor" href="#degrees-of-freedom-for-longitudinal-designs-repeated-measures-"></a></h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>between-within</em> heuristic is likely to be more accurate than simply
 using the residual or infinite degrees of freedom, because <code>dof_betwithin()</code>
