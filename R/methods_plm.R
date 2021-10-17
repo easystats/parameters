@@ -5,10 +5,6 @@
 
 
 #' @export
-ci.plm <- ci.tobit
-
-
-#' @export
 standard_error.plm <- function(model, ...) {
   se <- stats::coef(summary(model))
 

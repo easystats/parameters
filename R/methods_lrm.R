@@ -10,24 +10,6 @@ model_parameters.blrm <- model_parameters.bayesQR
 
 
 
-# ci -------------
-
-
-#' @export
-ci.lrm <- ci.tobit
-
-#' @export
-ci.psm <- ci.tobit
-
-#' @export
-ci.ols <- ci.tobit
-
-#' @export
-ci.rms <- ci.tobit
-
-
-
-
 # standard error -------------
 
 

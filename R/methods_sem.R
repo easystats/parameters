@@ -4,10 +4,6 @@ model_parameters.sem <- model_parameters.default
 
 
 #' @export
-ci.sem <- ci.tobit
-
-
-#' @export
 standard_error.sem <- function(model, ...) {
   if (!.is_semLme(model)) {
     return(NULL)

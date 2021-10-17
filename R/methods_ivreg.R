@@ -1,7 +1,4 @@
 #' @export
-ci.ivreg <- ci.tobit
-
-#' @export
 p_value.ivreg <- p_value.default
 
 #' @export

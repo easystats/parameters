@@ -1,10 +1,6 @@
 # .fixest -----------------------
 
 #' @export
-ci.fixest <- ci.tobit
-
-
-#' @export
 standard_error.fixest <- function(model, ...) {
   stats <- summary(model)
   params <- insight::get_parameters(model)
@@ -32,10 +28,6 @@ p_value.fixest <- function(model, ...) {
 
 
 # .feglm -----------------------
-
-#' @export
-ci.feglm <- ci.tobit
-
 
 #' @export
 standard_error.feglm <- function(model, ...) {

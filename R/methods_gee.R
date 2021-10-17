@@ -1,14 +1,3 @@
-#' @export
-ci.gee <- ci.tobit
-
-
-#' @export
-ci.geeglm <- ci.tobit
-
-
-#' @export
-ci.survreg <- ci.tobit
-
 
 #' @export
 standard_error.geeglm <- standard_error.default

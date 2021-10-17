@@ -1,12 +1,3 @@
-
-#' @export
-ci.speedglm <- ci.tobit
-
-
-#' @export
-ci.speedlm <- ci.tobit
-
-
 #' @export
 p_value.speedlm <- function(model, ...) {
   p <- p_value.default(model, ...)

@@ -100,15 +100,6 @@ ci.svyglm <- function(x, ci = .95, method = "wald", ...) {
 #' @export
 ci.svyolr <- ci.svyglm
 
-#' @export
-ci.svyglm.nb <- ci.tobit
-
-#' @export
-ci.svyglm.glimML <- ci.tobit
-
-#' @export
-ci.svyglm.zip <- ci.tobit
-
 
 
 # p values -----------------------------------------------

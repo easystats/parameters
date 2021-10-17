@@ -4,10 +4,6 @@
 #################### .coxph ------
 
 
-#' @export
-ci.coxph <- ci.tobit
-
-
 #' @rdname standard_error
 #' @export
 standard_error.coxph <- function(model, method = NULL, ...) {
@@ -80,9 +76,6 @@ p_value.aareg <- function(model, ...) {
   )
 }
 
-
-#' @export
-ci.aareg <- ci.tobit
 
 
 

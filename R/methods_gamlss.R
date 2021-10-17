@@ -27,7 +27,3 @@ p_value.gamlss <- function(model, ...) {
     Component = parms$Component
   )
 }
-
-
-#' @export
-ci.gamlss <- ci.tobit

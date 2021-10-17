@@ -1,6 +1,3 @@
-#' @export
-ci.crch <- ci.tobit
-
 
 #' @export
 standard_error.crch <- function(model, ...) {

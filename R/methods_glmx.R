@@ -36,10 +36,6 @@ model_parameters.glmx <- function(model,
 
 
 #' @export
-ci.glmx <- ci.tobit
-
-
-#' @export
 standard_error.glmx <- function(model, ...) {
   stats <- stats::coef(summary(model))
   params <- insight::get_parameters(model)

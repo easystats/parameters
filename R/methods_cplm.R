@@ -209,9 +209,6 @@ standard_error.cpglm <- function(model, ...) {
 }
 
 
-#' @export
-ci.cpglm <- ci.tobit
-
 
 
 
@@ -279,10 +276,6 @@ model_parameters.cpglmm <- function(model,
 p_value.cpglmm <- function(model, method = "wald", ...) {
   p_value.default(model, method = method, ...)
 }
-
-
-#' @export
-ci.cpglmm <- ci.tobit
 
 
 #' @export

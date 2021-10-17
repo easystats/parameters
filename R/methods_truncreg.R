@@ -2,10 +2,6 @@
 
 
 #' @export
-ci.truncreg <- ci.tobit
-
-
-#' @export
 standard_error.truncreg <- standard_error.default
 
 

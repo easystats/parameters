@@ -54,10 +54,6 @@ simulate_model.vgam <- function(model, iterations = 1000, ...) {
 
 
 #' @export
-ci.vglm <- ci.tobit
-
-
-#' @export
 p_value.vglm <- function(model, ...) {
   if (!requireNamespace("VGAM", quietly = TRUE)) {
     stop("Package `VGAM` required.", call. = FALSE)

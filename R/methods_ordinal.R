@@ -54,9 +54,7 @@ model_parameters.clmm <- model_parameters.cpglmm
 # CI ---------------------
 
 
-#' @export
-ci.clm <- ci.tobit
-
+## TODO residual df?
 
 #' @export
 ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {

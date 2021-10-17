@@ -1,9 +1,5 @@
 
 #' @export
-ci.LORgee <- ci.tobit
-
-
-#' @export
 standard_error.LORgee <- standard_error.default
 
 
