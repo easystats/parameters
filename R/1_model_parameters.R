@@ -354,7 +354,8 @@ parameters <- model_parameters
 #'   `"profile"`, `"boot"`, `"uniroot"`, `"ml1"`, `"betwithin"`, `"hdi"`,
 #'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
 #'   _Confidence intervals and approximation of degrees of freedom_ in
-#'   [`model_parameters()`] for further details.
+#'   [`model_parameters()`] for further details. When `ci_method=NULL`, in most
+#'   cases `"wald"` is used then.
 #' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
