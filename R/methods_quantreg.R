@@ -342,3 +342,11 @@ degrees_of_freedom.rqs <- function(model, ...) {
 
 #' @export
 degrees_of_freedom.rqss <- degrees_of_freedom.multinom
+
+
+#' @export
+degrees_of_freedom.rq <- degrees_of_freedom.rqs
+
+
+#' @export
+degrees_of_freedom.nlrq <- degrees_of_freedom.mhurdle
