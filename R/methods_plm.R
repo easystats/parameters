@@ -116,5 +116,5 @@ ci.pgmm <- function(x, ci = .95, dof = Inf, method = NULL, robust = FALSE, compo
     method <- "wald"
   }
 
-  .ci_generic(model = x, ci = ci, dof = dof, robust = robust, method == method, component = component)
+  .ci_generic(model = x, ci = ci, dof = dof, robust = robust, method = method, component = component)
 }
