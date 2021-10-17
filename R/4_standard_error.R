@@ -14,7 +14,7 @@
 #'   calling [`standard_error_robust()`][standard_error_robust].
 #'   `standard_error_robust()`, in turn, calls one of the
 #'   `vcov*()`-functions from the \pkg{sandwich} or \pkg{clubSandwich}
-#'   package for robust covariance matrix estimators. For linar mixed models,
+#'   package for robust covariance matrix estimators. For linear mixed models,
 #'   `method` may also be [`"kenward"`][p_value_kenward] or
 #'   [`"satterthwaite"`][p_value_satterthwaite].
 #' @param ... Arguments passed to or from other methods. For
