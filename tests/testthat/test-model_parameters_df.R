@@ -136,7 +136,7 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
       params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
       expect_equal(params$df_error, c(Inf, Inf, Inf, Inf, Inf, Inf), tolerance = 1e-3)
       expect_equal(params$CI_low, c(-35.93553, -0.26895, -0.15522, -1e-05, -15.91859, -1e-05), tolerance = 1e-3)
-      expect_equal(params$p, c(0.08355, 0.12724, 0.55684, 0.63368, 0.46593, 0.61493), tolerance = 1e-3)
+      expect_equal(params$p, c(0.08316, 0.12684, 0.55668, 0.63355, 0.46571, 0.61479), tolerance = 1e-3)
     })
   }
 }

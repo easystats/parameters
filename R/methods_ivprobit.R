@@ -18,12 +18,7 @@ standard_error.ivprobit <- function(model, ...) {
 
 
 #' @export
-p_value.ivprobit <- function(model, ...) {
-  .data_frame(
-    Parameter = model$names,
-    p = as.vector(model$pval)
-  )
-}
+p_value.ivprobit <- p_value.default
 
 
 #' @export
