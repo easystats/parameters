@@ -100,6 +100,7 @@ Suggests:
     cplm,
     dbscan,
     dplyr,
+    drc,
     DRR,
     effectsize (>= 0.5),
     EGAnet (>= 0.7),

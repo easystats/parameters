@@ -285,4 +285,39 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     })
   }
 
+
+
+
+  # drc ---------------------------
+
+  if (requiet("drc")) {
+
+    set.seed(123)
+    data("selenium")
+
+    # model
+    model <- drc::drm(
+      formula = dead / total ~ conc,
+      curveid = type,
+      weights = total,
+      data = selenium,
+      fct = LL.2(),
+      type = "binomial"
+    )
+
+    test_that("model_parameters.drc", {
+      params <- suppressWarnings(model_parameters(model))
+      expect_equal(params$df_error, c(17L, 17L, 17L, 17L, 17L, 17L, 17L, 17L), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-1.83156, -1.13673, -2.4552, -1.80875, 223.0835, 295.39556,
+                                    107.25398, 70.62683), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 1e-05, 0, 0, 0, 0, 0, 0), tolerance = 1e-3)
+
+      params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+      expect_equal(params$df_error, c(Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(-1.80826, -1.11588, -2.43449, -1.78349, 225.15547, 301.29532,
+                                    108.13891, 71.91797), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0, 0, 0, 0, 0, 0, 0), tolerance = 1e-3)
+    })
+  }
+
 }
