@@ -19,7 +19,7 @@
 #' Hence, the values in the the column `df_error` differ from the column
 #' `Ref.df` from the summary, which is intentional, as these reference
 #' degrees of freedom \dQuote{is not very interpretable}
-#' ([web](https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html)).
+#' ([web](https://stat.ethz.ch/pipermail/r-help/2019-March/462135.html)).
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'

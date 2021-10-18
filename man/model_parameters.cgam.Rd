@@ -189,7 +189,7 @@ the residual degrees of freedom that are returned by \code{df.residual()}.
 Hence, the values in the the column \code{df_error} differ from the column
 \code{Ref.df} from the summary, which is intentional, as these reference
 degrees of freedom \dQuote{is not very interpretable}
-(\href{https://r.789695.n4.nabble.com/ref-df-in-mgcv-gam-tp4756194p4756195.html}{web}).
+(\href{https://stat.ethz.ch/pipermail/r-help/2019-March/462135.html}{web}).
 }
 \examples{
 library(parameters)
