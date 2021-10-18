@@ -41,6 +41,7 @@ Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
 
+\donttest{
 # DBSCAN ---------------------------
 if (require("dbscan", quietly = TRUE)) {
   model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
@@ -62,6 +63,8 @@ if (require("dbscan", quietly = TRUE)) {
   model <- dbscan::hdbscan(iris[1:4], minPts = 10)
   model_parameters(model, iris[1:4])
 }
+}
+#
 # Hierarchical clustering (hclust) ---------------------------
 data <- iris[1:4]
 model <- hclust(dist(data))
@@ -79,6 +82,8 @@ attributes(rez)$means
 # Between and Total Sum of Squares
 attributes(rez)$Total_Sum_Squares
 attributes(rez)$Between_Sum_Squares
+\donttest{
+#
 # pvclust (finds "significant" clusters) ---------------------------
 if (require("pvclust", quietly = TRUE)) {
   data <- iris[1:4]
@@ -102,9 +107,9 @@ if (require("pvclust", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Total
   attributes(rez)$Sum_Squares_Between
 }
+}
 \dontrun{
-library(parameters)
-
+#
 # K-means -------------------------------
 model <- kmeans(iris[1:4], centers = 3)
 rez <- model_parameters(model)
@@ -120,6 +125,8 @@ attributes(rez)$means
 attributes(rez)$Sum_Squares_Total
 attributes(rez)$Sum_Squares_Between
 }
+\dontrun{
+#
 # Hierarchical K-means (factoextra::hkclust) ----------------------
 if (require("factoextra", quietly = TRUE)) {
   data <- iris[1:4]
@@ -138,10 +145,13 @@ if (require("factoextra", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Total
   attributes(rez)$Sum_Squares_Between
 }
+}
 if (require("mclust", quietly = TRUE)) {
   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
   model_parameters(model)
 }
+\dontrun{
+#
 # K-Medoids (PAM and HPAM) ==============
 if (require("cluster", quietly = TRUE)) {
   model <- cluster::pam(iris[1:4], k = 3)
@@ -150,5 +160,6 @@ if (require("cluster", quietly = TRUE)) {
 if (require("fpc", quietly = TRUE)) {
   model <- fpc::pamk(iris[1:4], criterion = "ch")
   model_parameters(model)
+}
 }
 }

@@ -161,6 +161,8 @@ if (require("openxlsx", quietly = TRUE) &&
   as.data.frame(x)
   plot(x)
 }
+\donttest{
+#
 # Gap method --------------------
 if (require("see", quietly = TRUE) &&
     require("cluster", quietly = TRUE) &&
@@ -170,6 +172,8 @@ if (require("see", quietly = TRUE) &&
   as.data.frame(x)
   plot(x)
 }
+}
+\donttest{
 #
 # Silhouette method --------------------------
 if (require("factoextra", quietly = TRUE)) {
@@ -178,6 +182,8 @@ if (require("factoextra", quietly = TRUE)) {
   as.data.frame(x)
   plot(x)
 }
+}
+\donttest{
 #
 if (require("dbscan", quietly = TRUE)) {
   # DBSCAN method -------------------------
@@ -193,6 +199,7 @@ if (require("dbscan", quietly = TRUE)) {
   x
   head(as.data.frame(x))
   plot(x)
+}
 }
 #
 # hclust method -------------------------------

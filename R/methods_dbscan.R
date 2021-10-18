@@ -3,6 +3,7 @@
 #'
 #' @examples
 #'
+#' \donttest{
 #' # DBSCAN ---------------------------
 #' if (require("dbscan", quietly = TRUE)) {
 #'   model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
@@ -23,6 +24,7 @@
 #'   # HDBSCAN
 #'   model <- dbscan::hdbscan(iris[1:4], minPts = 10)
 #'   model_parameters(model, iris[1:4])
+#' }
 #' }
 #' @export
 model_parameters.dbscan <- function(model, data = NULL, clusters = NULL, ...) {

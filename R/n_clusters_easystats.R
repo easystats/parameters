@@ -43,6 +43,8 @@ n_clusters_elbow <- function(x,
 
 #' @rdname n_clusters
 #' @examples
+#' \donttest{
+#' #
 #' # Gap method --------------------
 #' if (require("see", quietly = TRUE) &&
 #'     require("cluster", quietly = TRUE) &&
@@ -51,6 +53,7 @@ n_clusters_elbow <- function(x,
 #'   x
 #'   as.data.frame(x)
 #'   plot(x)
+#' }
 #' }
 #' @export
 n_clusters_gap <- function(x,
@@ -86,6 +89,7 @@ n_clusters_gap <- function(x,
 
 #' @rdname n_clusters
 #' @examples
+#' \donttest{
 #' #
 #' # Silhouette method --------------------------
 #' if (require("factoextra", quietly = TRUE)) {
@@ -93,6 +97,7 @@ n_clusters_gap <- function(x,
 #'   x
 #'   as.data.frame(x)
 #'   plot(x)
+#' }
 #' }
 #' @export
 n_clusters_silhouette <- function(x,
@@ -123,6 +128,7 @@ n_clusters_silhouette <- function(x,
 
 #' @rdname n_clusters
 #' @examples
+#' \donttest{
 #' #
 #' if (require("dbscan", quietly = TRUE)) {
 #'   # DBSCAN method -------------------------
@@ -138,6 +144,7 @@ n_clusters_silhouette <- function(x,
 #'   x
 #'   head(as.data.frame(x))
 #'   plot(x)
+#' }
 #' }
 #' @export
 n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {

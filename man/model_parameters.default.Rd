@@ -391,12 +391,14 @@ model_parameters(model, standardize = "refit")
 model_parameters(model, p_digits = 5)
 model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 
+\donttest{
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 model_parameters(model)
 
 # show odds ratio / exponentiated coefficients
 model_parameters(model, exponentiate = TRUE)
+}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to

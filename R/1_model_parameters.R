@@ -407,12 +407,14 @@ parameters <- model_parameters
 #' model_parameters(model, p_digits = 5)
 #' model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
 #'
+#' \donttest{
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' model_parameters(model)
 #'
 #' # show odds ratio / exponentiated coefficients
 #' model_parameters(model, exponentiate = TRUE)
+#' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.default <- function(model,

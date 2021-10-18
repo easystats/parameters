@@ -1,6 +1,8 @@
 #' @rdname model_parameters.kmeans
 #'
 #' @examples
+#' \dontrun{
+#' #
 #' # K-Medoids (PAM and HPAM) ==============
 #' if (require("cluster", quietly = TRUE)) {
 #'   model <- cluster::pam(iris[1:4], k = 3)
@@ -9,6 +11,7 @@
 #' if (require("fpc", quietly = TRUE)) {
 #'   model <- fpc::pamk(iris[1:4], criterion = "ch")
 #'   model_parameters(model)
+#' }
 #' }
 #' @export
 model_parameters.pam <- function(model, data = NULL, clusters = NULL, ...) {

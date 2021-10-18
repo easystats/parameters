@@ -8,8 +8,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' library(parameters)
-#'
+#' #
 #' # K-means -------------------------------
 #' model <- kmeans(iris[1:4], centers = 3)
 #' rez <- model_parameters(model)
@@ -69,6 +68,8 @@ model_parameters.kmeans <- function(model, ...) {
 #' @inheritParams cluster_centers
 #'
 #' @examples
+#' \dontrun{
+#' #
 #' # Hierarchical K-means (factoextra::hkclust) ----------------------
 #' if (require("factoextra", quietly = TRUE)) {
 #'   data <- iris[1:4]
@@ -86,6 +87,7 @@ model_parameters.kmeans <- function(model, ...) {
 #'   # Between and Total Sum of Squares
 #'   attributes(rez)$Sum_Squares_Total
 #'   attributes(rez)$Sum_Squares_Between
+#' }
 #' }
 #' @export
 model_parameters.hkmeans <- model_parameters.kmeans

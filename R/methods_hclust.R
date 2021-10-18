@@ -2,6 +2,7 @@
 #' @inheritParams cluster_centers
 #'
 #' @examples
+#' #
 #' # Hierarchical clustering (hclust) ---------------------------
 #' data <- iris[1:4]
 #' model <- hclust(dist(data))
@@ -55,6 +56,8 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #' @inheritParams n_clusters
 #' @rdname model_parameters.kmeans
 #' @examples
+#' \donttest{
+#' #
 #' # pvclust (finds "significant" clusters) ---------------------------
 #' if (require("pvclust", quietly = TRUE)) {
 #'   data <- iris[1:4]
@@ -77,6 +80,7 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #'   # Between and Total Sum of Squares
 #'   attributes(rez)$Sum_Squares_Total
 #'   attributes(rez)$Sum_Squares_Between
+#' }
 #' }
 #' @export
 model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0.95, ...) {
