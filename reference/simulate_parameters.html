@@ -165,15 +165,15 @@ included in the summary output.</p></td>
     <div id="details">
     <h2>Details</h2>
     
-<div id="technical-details">
-<h3>Technical Details</h3>
+<div class="section">
+<h3 id="technical-details">Technical Details<a class="anchor" aria-label="anchor" href="#technical-details"></a></h3>
 <p><code>simulate_parameters()</code> is a computationally faster alternative
 to <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>. Simulated draws for coefficients are based
 on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html">MASS::mvrnorm()</a></code>) with mean
 <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
 </div>
-<div id="models-with-zero-inflation-component">
-<h3>Models with Zero-Inflation Component</h3>
+<div class="section">
+<h3 id="models-with-zero-inflation-component">Models with Zero-Inflation Component<a class="anchor" aria-label="anchor" href="#models-with-zero-inflation-component"></a></h3>
 <p>For models from packages <span class="pkg">glmmTMB</span>, <span class="pkg">pscl</span>, <span class="pkg">GLMMadaptive</span> and
 <span class="pkg">countreg</span>, the <code>component</code> argument can be used to specify
 which parameters should be simulated. For all other models, parameters

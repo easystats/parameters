@@ -129,8 +129,8 @@
     <div id="details">
     <h2>Details</h2>
     
-<div id="small-sample-cluster-corrected-degrees-of-freedom">
-<h3>Small Sample Cluster corrected Degrees of Freedom</h3>
+<div class="section">
+<h3 id="small-sample-cluster-corrected-degrees-of-freedom">Small Sample Cluster corrected Degrees of Freedom<a class="anchor" aria-label="anchor" href="#small-sample-cluster-corrected-degrees-of-freedom"></a></h3>
 <p>Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
@@ -140,15 +140,15 @@ for such inferential statistics (see <cite>Li and Redden 2015</cite>). The
 fewer degrees of freedom (<code>dof_ml1()</code>) to calculate p-values
 (<code>p_value_ml1()</code>) and confidence intervals (<code>ci(method = "ml1")</code>).</p>
 </div>
-<div id="degrees-of-freedom-for-longitudinal-designs-repeated-measures-">
-<h3>Degrees of Freedom for Longitudinal Designs (Repeated Measures)</h3>
+<div class="section">
+<h3 id="degrees-of-freedom-for-longitudinal-designs-repeated-measures-">Degrees of Freedom for Longitudinal Designs (Repeated Measures)<a class="anchor" aria-label="anchor" href="#degrees-of-freedom-for-longitudinal-designs-repeated-measures-"></a></h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
 residual or infinite degrees of freedom, because <code>dof_ml1()</code> returns
 different degrees of freedom for within-cluster and between-cluster effects.</p>
 </div>
-<div id="limitations-of-the-m-l-heuristic">
-<h3>Limitations of the "m-l-1" Heuristic</h3>
+<div class="section">
+<h3 id="limitations-of-the-m-l-heuristic">Limitations of the "m-l-1" Heuristic<a class="anchor" aria-label="anchor" href="#limitations-of-the-m-l-heuristic"></a></h3>
 <p>Note that the "m-l-1" heuristic is not applicable (or at least less accurate)
 for complex multilevel designs, e.g. with cross-classified clusters. In such cases,
 more accurate approaches like the Kenward-Roger approximation (<code><a href="p_value_kenward.html">dof_kenward()</a></code>)

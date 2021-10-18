@@ -153,14 +153,14 @@ updating and returning the "best" model.</p>
     <div id="details">
     <h2>Details</h2>
     
-<div id="classical-lm-and-glm">
-<h3>Classical lm and glm</h3>
+<div class="section">
+<h3 id="classical-lm-and-glm">Classical lm and glm<a class="anchor" aria-label="anchor" href="#classical-lm-and-glm"></a></h3>
 <p>For frequentist GLMs, <code>select_parameters()</code> performs an AIC-based
 stepwise selection.</p>
 </div>
 
-<div id="mixed-models">
-<h3>Mixed models</h3>
+<div class="section">
+<h3 id="mixed-models">Mixed models<a class="anchor" aria-label="anchor" href="#mixed-models"></a></h3>
 <p>For mixed-effects models of class <code>merMod</code>, stepwise selection is
 based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html">cAIC4::stepcAIC()</a></code>. This step function
 only searches the "best" model based on the random-effects structure,
@@ -168,8 +168,8 @@ i.e. <code>select_parameters()</code> adds or excludes random-effects until
 the cAIC can't be improved further.</p>
 </div>
 
-<div id="bayesian-models">
-<h3>Bayesian models</h3>
+<div class="section">
+<h3 id="bayesian-models">Bayesian models<a class="anchor" aria-label="anchor" href="#bayesian-models"></a></h3>
 <p>For Bayesian models, it uses the <span class="pkg">projpred</span> package.</p>
 </div>
 
