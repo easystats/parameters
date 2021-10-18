@@ -3,6 +3,33 @@
 if (.runThisTest && requiet("testthat") && requiet("parameters")) {
 
 
+  # glm ---------------------------
+
+  set.seed(123)
+  data(mtcars)
+  model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+
+  test_that("model_parameters.glm", {
+    params <- suppressWarnings(model_parameters(model))
+    expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(4.7888, -0.52956, -6.91917), tolerance = 1e-3)
+    expect_equal(params$p, c(0.01084, 0.17431, 0.03362), tolerance = 1e-3)
+
+    params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
+    expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(2.4503, -0.9299, -5.63472), tolerance = 1e-3)
+    expect_equal(params$p, c(0.01084, 0.17431, 0.03362), tolerance = 1e-3)
+
+    params <- suppressWarnings(model_parameters(model, ci_method = "residual"))
+    expect_equal(params$df_error, c(29, 29, 29), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(2.09492, -1.06171, -5.75235), tolerance = 1e-3)
+    expect_equal(params$p, c(0.0164, 0.18479, 0.04227), tolerance = 1e-3)
+  })
+
+
+
+
+
   # PROreg ---------------------------
 
   if (requiet("PROreg")) {
@@ -78,6 +105,8 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     })
 
   }
+
+
 
 
 
