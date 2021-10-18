@@ -32,7 +32,5 @@ iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
 check_heterogeneity(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 }
 \seealso{
-For further details, read the vignette
-\url{https://easystats.github.io/parameters/articles/demean.html} and also
-see documentation for \code{?datawizard::demean}.
+For further details, see documentation for \code{?datawizard::demean}.
 }

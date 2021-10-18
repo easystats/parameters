@@ -86,7 +86,7 @@ these vignettes:
 -   [Parameters
     selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 -   [A Practical Guide for Panel Data
-    Analysis](https://easystats.github.io/parameters/articles/demean.html)
+    Analysis](https://easystats.github.io/datawizard/articles/demean.html)
 
 ## Contributing and Support
 

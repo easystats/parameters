@@ -670,7 +670,7 @@ necessary changes before this breaking change is implemented.
 * `check_heterogeneity()` as a small helper to find variables that have a
   within- and between-effect related to a grouping variable (and thus, may
   result in heterogeneity bias, see [this
-  vignette](https://easystats.github.io/parameters/articles/demean.html)).
+  vignette](https://easystats.github.io/datawizard/articles/demean.html)).
 
 ## Changes to functions
 
