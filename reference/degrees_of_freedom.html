@@ -114,7 +114,7 @@
 <span class="fu">dof</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>...</th>
@@ -131,7 +131,7 @@ by any of those methods, whichever succeeds. See 'Details'.</p></td>
     </tr></table></div>
 
     <div id="details">
-    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <h2>Details</h2>
     <p>Methods for calculating degrees of freedom:</p><ul><li><p><code>"analytical"</code> for models of class <code>lmerMod</code>, Kenward-Roger approximated degrees of freedoms are calculated, for other models, <code>n-k</code> (number of observations minus number of parameters).</p></li>
 <li><p><code>"residual"</code> tries to extract residual degrees of freedom, and returns <code>Inf</code> if residual degrees of freedom could not be extracted.</p></li>
 <li><p><code>"any"</code> first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.</p></li>
@@ -145,7 +145,7 @@ by any of those methods, whichever succeeds. See 'Details'.</p></td>
 </ul><p>For models with z-statistic, the returned degrees of freedom for model parameters is <code>Inf</code> (unless <code>method = "ml1"</code> or <code>method = "betwithin"</code>), because there is only one distribution for the related test statistic.</p>
     </div>
     <div id="note">
-    <h2>Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <h2>Note</h2>
     <p>In many cases, <code>degrees_of_freedom()</code> returns the same as
 <code>df.residuals()</code>, or <code>n-k</code> (number of observations minus number of
 parameters). However, <code>degrees_of_freedom()</code> refers to the model's
@@ -157,7 +157,7 @@ a different degree of freedom.</p>
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">dof</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 144 144 144 144 144 144</span>

@@ -223,7 +223,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
       <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
 <code><a href="simulate_parameters.html">simulate_parameters()</a></code>,
@@ -314,13 +314,13 @@ to the end.</p></td>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>If <code>format = "markdown"</code>, the return value will be a character
 vector in markdown-table format. If <code>format = "html"</code>, an object of
 class <code>gt_tbl</code>.</p>
     </div>
     <div id="details">
-    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <h2>Details</h2>
     <p><code><a href="https://easystats.github.io/insight/reference/display.html">display()</a></code> is useful when the table-output from functions,
 which is usually printed as formatted text-table to console, should
 be formatted for pretty table-rendering in markdown documents, or if
@@ -330,7 +330,7 @@ for examples.</p>
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span>

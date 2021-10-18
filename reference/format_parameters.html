@@ -114,7 +114,7 @@ to make them more human-readable.</p>
 <span class="fu">format_parameters</span><span class="op">(</span><span class="va">model</span>, brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"["</span>, <span class="st">"]"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>...</th>
@@ -124,11 +124,11 @@ to make them more human-readable.</p>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.</p>
     </div>
     <div id="interpretation-of-interaction-terms">
-    <h2>Interpretation of Interaction Terms<a class="anchor" aria-label="anchor" href="#interpretation-of-interaction-terms"></a></h2>
+    <h2>Interpretation of Interaction Terms</h2>
     
 
 <p>Note that the <em>interpretation</em> of interaction terms depends on many
@@ -148,7 +148,7 @@ to add the model-specification to the output of the
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">format_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          (Intercept)                    Speciesversicolor </span>

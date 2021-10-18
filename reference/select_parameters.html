@@ -120,7 +120,7 @@ updating and returning the "best" model.</p>
 <span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model (of class <code>lm</code>, <code>glm</code>,
 <code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></td>
@@ -147,20 +147,20 @@ updating and returning the "best" model.</p>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>The model refitted with optimal number of parameters.</p>
     </div>
     <div id="details">
-    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <h2>Details</h2>
     
 <div id="classical-lm-and-glm">
-<h3>Classical lm and glm<a class="anchor" aria-label="anchor" href="#classical-lm-and-glm"></a></h3>
+<h3>Classical lm and glm</h3>
 <p>For frequentist GLMs, <code>select_parameters()</code> performs an AIC-based
 stepwise selection.</p>
 </div>
 
 <div id="mixed-models">
-<h3>Mixed models<a class="anchor" aria-label="anchor" href="#mixed-models"></a></h3>
+<h3>Mixed models</h3>
 <p>For mixed-effects models of class <code>merMod</code>, stepwise selection is
 based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html">cAIC4::stepcAIC()</a></code>. This step function
 only searches the "best" model based on the random-effects structure,
@@ -169,14 +169,14 @@ the cAIC can't be improved further.</p>
 </div>
 
 <div id="bayesian-models">
-<h3>Bayesian models<a class="anchor" aria-label="anchor" href="#bayesian-models"></a></h3>
+<h3>Bayesian models</h3>
 <p>For Bayesian models, it uses the <span class="pkg">projpred</span> package.</p>
 </div>
 
     </div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

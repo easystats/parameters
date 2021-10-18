@@ -149,7 +149,7 @@ Details section).</p>
 <span class="fu">closest_component</span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
-    <h2>Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <h2>Arguments</h2>
     <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a statistical model.</p></td>
     </tr><tr><th>n</th>
@@ -203,14 +203,14 @@ predicted data and original data is equal.</p></td>
     </tr></table></div>
 
     <div id="value">
-    <h2>Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <h2>Value</h2>
     <p>A data frame of loadings.</p>
     </div>
     <div id="details">
-    <h2>Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <h2>Details</h2>
     
 <div id="methods-and-utilities">
-<h3>Methods and Utilities<a class="anchor" aria-label="anchor" href="#methods-and-utilities"></a></h3>
+<h3>Methods and Utilities</h3>
 
 <ul><li><p><code><a href="n_factors.html">n_components()</a></code> and <code><a href="n_factors.html">n_factors()</a></code> automatically
 estimates the optimal number of dimensions to retain.</p></li>
@@ -236,7 +236,7 @@ visually displays the loadings (that requires the
 </ul></div>
 
 <div id="complexity">
-<h3>Complexity<a class="anchor" aria-label="anchor" href="#complexity"></a></h3>
+<h3>Complexity</h3>
 <p>Complexity represents the number of latent components needed to account
 for the observed variables. Whereas a perfect simple structure solution
 has a complexity of 1 in that each item would only load on one factor,
@@ -245,7 +245,7 @@ a solution with evenly distributed items has a complexity greater than 1
 </div>
 
 <div id="uniqueness">
-<h3>Uniqueness<a class="anchor" aria-label="anchor" href="#uniqueness"></a></h3>
+<h3>Uniqueness</h3>
 <p>Uniqueness represents the variance that is 'unique' to the variable and
 not shared with other variables. It is equal to <code>1 – communality</code>
 (variance that is shared with other variables). A uniqueness of <code>0.20</code>
@@ -255,7 +255,7 @@ the relevance of the variable in the factor model.</p>
 </div>
 
 <div id="msa">
-<h3>MSA<a class="anchor" aria-label="anchor" href="#msa"></a></h3>
+<h3>MSA</h3>
 <p>MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
 (<cite>Kaiser and Rice, 1974</cite>) for each item. It indicates whether there
 is enough data for each factor give reliable results for the PCA. The
@@ -264,7 +264,7 @@ value should be &gt; 0.6, and desirable values are &gt; 0.8
 </div>
 
 <div id="pca-or-fa-">
-<h3>PCA or FA?<a class="anchor" aria-label="anchor" href="#pca-or-fa-"></a></h3>
+<h3>PCA or FA?</h3>
 <p>There is a simplified rule of thumb that may help do decide whether to run
 a factor analysis or a principal component analysis:</p><ul><li><p>Run <em>factor analysis</em> if you assume or wish to test a
 theoretical model of <em>latent factors</em> causing observed variables.</p></li>
@@ -275,7 +275,7 @@ important independent composite variables.</p></li>
 </div>
 
 <div id="computing-item-scores">
-<h3>Computing Item Scores<a class="anchor" aria-label="anchor" href="#computing-item-scores"></a></h3>
+<h3>Computing Item Scores</h3>
 <p>Use <code><a href="get_scores.html">get_scores()</a></code> to compute scores for the "subscales"
 represented by the extracted principal components. <code><a href="get_scores.html">get_scores()</a></code>
 takes the results from <code>principal_components()</code> and extracts the
@@ -290,7 +290,7 @@ components.</p>
 </div>
 
 <div id="explained-variance-and-eingenvalues">
-<h3>Explained Variance and Eingenvalues<a class="anchor" aria-label="anchor" href="#explained-variance-and-eingenvalues"></a></h3>
+<h3>Explained Variance and Eingenvalues</h3>
 <p>Use <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> to get the Eigenvalues and the explained variance
 for each extracted component. The eigenvectors and eigenvalues represent
 the "core" of a PCA: The eigenvectors (the principal components)
@@ -301,7 +301,7 @@ variance of the data along the new feature axes.</p>
 
     </div>
     <div id="references">
-    <h2>References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <h2>References</h2>
     
 <ul><li><p>Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 and Psychological Measurement, 34(1):111–117</p></li>
@@ -316,7 +316,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 </ul></div>
 
     <div id="examples">
-    <h2>Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span class="r-in"></span>
