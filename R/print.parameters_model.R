@@ -165,10 +165,6 @@ print.parameters_model <- function(x,
   )
 
   # get attributes
-  ci_method <- .additional_arguments(x, "ci_method", NULL)
-  df_method <- .additional_arguments(x, "df_method", NULL)
-  test_statistic <- .additional_arguments(x, "test_statistic", NULL)
-  bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
   # print main table
@@ -181,7 +177,7 @@ print.parameters_model <- function(x,
 
   # inform about CI and df approx.
   if (isTRUE(verbose)) {
-    .print_footer_cimethod(ci_method, test_statistic, bootstrap)
+    .print_footer_cimethod(x)
   }
 
   invisible(orig_x)

@@ -639,10 +639,21 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
 
 # footer: type of uncertainty interval
-.print_footer_cimethod <- function(ci_method = NULL, test_statistic = NULL, bootstrap = FALSE) {
+.print_footer_cimethod <- function(x) {
+
+  # get attributes
+  ci_method <- .additional_arguments(x, "ci_method", NULL)
+  test_statistic <- .additional_arguments(x, "test_statistic", NULL)
+  bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
+  residual_df <- .additional_arguments(x, "residual_df", NULL)
 
   # prepare strings
   if (!is.null(ci_method)) {
+
+    # in case of glm's that have df.residual(), and where residual df where requested
+    if (ci_method == "residual" && test_statistic == "z-statistic" && !is.null(residual_df) && !is.infinite(residual_df) && !is.na(residual_df)) {
+      test_statistic <- "t-statistic"
+    }
 
     string_tailed <- switch(toupper(ci_method),
                             "HDI" = "highest-density",
