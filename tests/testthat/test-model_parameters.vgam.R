@@ -1,4 +1,6 @@
-if (requiet("testthat") && requiet("VGAM") && requiet("parameters")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && requiet("testthat") && requiet("VGAM") && requiet("parameters")) {
   data("pneumo")
   data("hunua")
 
