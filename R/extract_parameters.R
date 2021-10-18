@@ -55,6 +55,12 @@
   )
   statistic <- insight::get_statistic(model, component = component)
 
+  ## TODO we may pass down the statistic down to ci(), p_value() and dof()
+  ## to save computation time, since this can avoid multiple calls to
+  ## "insight::find_statistic()"
+
+  # model_stat <- attributes(statistic)$statistic
+
   # check if all estimates are non-NA
   parameters <- .check_rank_deficiency(parameters)
 
