@@ -150,6 +150,7 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
+\donttest{
 #
 # Specific Methods =========================
 # Elbow method --------------------
@@ -160,6 +161,7 @@ if (require("openxlsx", quietly = TRUE) &&
   x
   as.data.frame(x)
   plot(x)
+}
 }
 \donttest{
 #
@@ -201,6 +203,7 @@ if (require("dbscan", quietly = TRUE)) {
   plot(x)
 }
 }
+\donttest{
 #
 # hclust method -------------------------------
 if (require("pvclust", quietly = TRUE) &&
@@ -210,5 +213,6 @@ if (require("pvclust", quietly = TRUE) &&
   x
   head(as.data.frame(x), n = 10) # Print 10 first rows
   plot(x)
+}
 }
 }

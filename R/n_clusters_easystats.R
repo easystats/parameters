@@ -1,5 +1,6 @@
 #' @rdname n_clusters
 #' @examples
+#' \donttest{
 #' #
 #' # Specific Methods =========================
 #' # Elbow method --------------------
@@ -10,6 +11,7 @@
 #'   x
 #'   as.data.frame(x)
 #'   plot(x)
+#' }
 #' }
 #' @export
 n_clusters_elbow <- function(x,
@@ -192,6 +194,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
 
 #' @rdname n_clusters
 #' @examples
+#' \donttest{
 #' #
 #' # hclust method -------------------------------
 #' if (require("pvclust", quietly = TRUE) &&
@@ -201,6 +204,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
 #'   x
 #'   head(as.data.frame(x), n = 10) # Print 10 first rows
 #'   plot(x)
+#' }
 #' }
 #' @export
 n_clusters_hclust <- function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
