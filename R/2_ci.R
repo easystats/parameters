@@ -85,12 +85,14 @@ ci.glm <- function(x,
 
 #' @keywords internal
 .check_component <- function(m, x, verbose = TRUE) {
-  minfo <- insight::model_info(m)
-  if (x %in% c("zi", "zero_inflated") && !isTRUE(minfo$is_zero_inflated)) {
-    if (isTRUE(verbose)) {
-      message("Model has no zero-inflation component!")
+  if (x %in% c("zi", "zero_inflated")) {
+    minfo <- insight::model_info(m)
+    if (!isTRUE(minfo$is_zero_inflated)) {
+      if (isTRUE(verbose)) {
+        message("Model has no zero-inflation component!")
+      }
+      x <- NULL
     }
-    x <- NULL
   }
   x
 }
