@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 1.9000.9000.9000
-pkgdown_sha: cd888beda61ac8855bf823bd0664dd997a32a5f8
+pkgdown_sha: 215f440342e2b34ab92776f9b01d25d3cbf728aa
 articles:
   efa_cfa: efa_cfa.html
   model_parameters: model_parameters.html
@@ -12,5 +12,5 @@ articles:
   overview_of_vignettes: overview_of_vignettes.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2021-10-18T17:59Z
+last_built: 2021-10-19T05:02Z
 
