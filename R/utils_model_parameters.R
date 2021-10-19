@@ -38,7 +38,7 @@
   # add regular attributes
 
   if (is.null(attr(params, "pretty_names", exact = TRUE))) {
-    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model))
+    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info))
   }
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- ci_method

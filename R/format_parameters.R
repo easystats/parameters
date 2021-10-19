@@ -48,7 +48,7 @@ format_parameters <- function(model, ...) {
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   tryCatch(
     {
-      .format_parameter_default(model, brackets = brackets)
+      .format_parameter_default(model, brackets = brackets, ...)
     },
     error = function(e) {
       NULL
@@ -71,9 +71,16 @@ format_parameters.parameters_model <- function(model, ...) {
 # Utilities ---------------------------------------------------------------
 
 
-.format_parameter_default <- function(model, effects = "fixed", brackets = c("[", "]")) {
+.format_parameter_default <- function(model, effects = "fixed", brackets = c("[", "]"), ...) {
   original_names <- names <- insight::find_parameters(model, effects = effects, flatten = TRUE)
-  info <- insight::model_info(model, verbose = FALSE)
+
+  # save some time, if model info is passed as argument
+  dot_args <- list(...)
+  if (!is.null(dot_args$model_info)) {
+    info <- dot_args$model_info
+  } else {
+    info <- insight::model_info(model, verbose = FALSE)
+  }
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
   if (is.null(info) || !is.list(info)) {
