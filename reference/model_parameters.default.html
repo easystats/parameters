@@ -263,7 +263,7 @@ describes the parameters that should be included (for <code>keep</code>) or excl
 named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>keep</code> is a character vector, every parameter
 name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>parameters</code> will be selected from the returned data frame (and vice versa,
+<code>keep</code> will be selected from the returned data frame (and vice versa,
 all parameter names matching <code>drop</code> will be excluded). Furthermore, if
 <code>keep</code> has more than one element, these will be merged with an <code>OR</code>
 operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
@@ -305,7 +305,7 @@ one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">b
 
 <p>There are different ways of approximating the degrees of freedom depending
 on different assumptions about the nature of the model and its sampling
-distribution. The <code>ci_method</code> modulates the method for computing degrees
+distribution. The <code>ci_method</code> argument modulates the method for computing degrees
 of freedom (df) that are used to calculate confidence intervals (CI) and the
 related p-values. Following options are allowed, depending on the model
 class:</p>
@@ -315,20 +315,17 @@ The Wald approach to inference computes a test statistic by dividing the
 parameter estimate by its standard error (Coefficient / SE),
 then comparing this statistic against a t- or normal distribution.
 This approach can be used to compute CIs and p-values.</p>
-<p><code>"wald"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em></p></li>
-<li><p>For <em>linear models</em>, CIs computed using the Wald method (SE and a <em>t-distribution with residual df</em>)</p></li>
-<li><p>For <em>linear models</em>, p-values computed using the Wald method with a <em>t-distribution with residual df</em></p></li>
-<li><p>For other models, CIs computed using the Wald method (SE and a <em>normal distribution</em>)</p></li>
-<li><p>For other models, p-values computed using the Wald method with a <em>normal distribution</em></p></li>
-</ul><p><code>"normal"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em></p></li>
-<li><p>Compute Wald CIs and p values, but always use a normal distribution</p></li>
-<li><p>CIs computed using the Wald method (SE and a <em>normal distribution</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>normal distribution</em></p></li>
-</ul><p><code>"residual"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em></p></li>
-<li><p>Compute Wald CIs and p values, but always use a <em>t-distribution with residual df</em> when possible</p></li>
-<li><p>CIs computed using the Wald method (SE and a <em>t-distribution with residual df</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>t-distribution with residual df</em></p></li>
-<li><p>If the residual df for a model cannot be determined, a normal distribution is used instead</p></li>
+<p><code>"wald"</code>:</p><ul><li><p>Applies to <em>non-Bayesian models</em>. For <em>linear models</em>, CIs
+computed using the Wald method (SE and a <em>t-distribution with residual df</em>);
+p-values computed using the Wald method with a <em>t-distribution with residual df</em>.
+For other models, CIs computed using the Wald method (SE and a <em>normal distribution</em>);
+p-values computed using the Wald method with a <em>normal distribution</em>.</p></li>
+</ul><p><code>"normal"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em>. Compute Wald CIs and p-values,
+but always use a normal distribution.</p></li>
+</ul><p><code>"residual"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em>. Compute Wald CIs and p-values,
+but always use a <em>t-distribution with residual df</em> when possible. If the
+residual df for a model cannot be determined, a normal distribution is
+used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
@@ -337,36 +334,36 @@ for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
 CIs and p-values instead.</p>
-<p><code>"satterthwaite"</code></p><ul><li><p>Applies to <em>linear mixed models</em></p></li>
-<li><p>CIs computed using the Wald method (SE and a <em>t-distribution with Satterthwaite df</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>t-distribution with Satterthwaite df</em></p></li>
-</ul><p><code>"kenward"</code></p><ul><li><p>Applies to <em>linear mixed models</em></p></li>
-<li><p>CIs computed using the Wald method (<em>Kenward-Roger SE</em> and a <em>t-distribution with Kenward-Roger df</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>Kenward-Roger SE and t-distribution with Kenward-Roger df</em></p></li>
-</ul><p><code>"ml1"</code></p><ul><li><p>Applies to <em>linear mixed models</em></p></li>
-<li><p>CIs computed using the Wald method (SE and a <em>t-distribution with m-l-1 approximated df</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>t-distribution with m-l-1 approximated df</em></p></li>
-<li><p>See <code><a href="p_value_ml1.html">ci_ml1()</a></code></p></li>
-</ul><p><code>"betwithin"</code></p><ul><li><p>Applies to <em>linear mixed models</em> and <em>generalized linear mixed models</em></p></li>
-<li><p>CIs computed using the Wald method (SE and a <em>t-distribution with between-within df</em>)</p></li>
-<li><p>p-values computed using the Wald method with a <em>t-distribution with between-within df</em></p></li>
-<li><p>See <code><a href="p_value_betwithin.html">ci_betwithin()</a></code></p></li>
+<p><code>"satterthwaite"</code></p><ul><li><p>Applies to <em>linear mixed models</em>. CIs computed using the
+Wald method (SE and a <em>t-distribution with Satterthwaite df</em>); p-values
+computed using the Wald method with a <em>t-distribution with Satterthwaite df</em>.</p></li>
+</ul><p><code>"kenward"</code></p><ul><li><p>Applies to <em>linear mixed models</em>. CIs computed using the Wald
+method (<em>Kenward-Roger SE</em> and a <em>t-distribution with Kenward-Roger df</em>);
+p-values computed using the Wald method with <em>Kenward-Roger SE and t-distribution with Kenward-Roger df</em>.</p></li>
+</ul><p><code>"ml1"</code></p><ul><li><p>Applies to <em>linear mixed models</em>. CIs computed using the Wald
+method (SE and a <em>t-distribution with m-l-1 approximated df</em>); p-values
+computed using the Wald method with a <em>t-distribution with m-l-1 approximated df</em>.
+See <code><a href="p_value_ml1.html">ci_ml1()</a></code>.</p></li>
+</ul><p><code>"betwithin"</code></p><ul><li><p>Applies to <em>linear mixed models</em> and <em>generalized linear mixed models</em>.
+CIs computed using the Wald method (SE and a <em>t-distribution with between-within df</em>);
+p-values computed using the Wald method with a <em>t-distribution with between-within df</em>.
+See <code><a href="p_value_betwithin.html">ci_betwithin()</a></code>.</p></li>
 </ul><p><strong>Likelihood-based methods:</strong></p>
 <p>Likelihood-based inference is based on comparing the likelihood for the
 maximum-likelihood estimate to the the likelihood for models with one or more
 parameter values changed (e.g., set to zero or a range of alternative values).
 Likelihood ratios for the maximum-likelihood and alternative models are compared
 to a \(\chi\)-squared distribution to compute CIs and p-values.</p>
-<p><code>"profile"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>glm</code>, <code>polr</code> or <code>glmmTMB</code></p></li>
-<li><p>CIs computed by <em>profiling the likelihood curve for a parameter</em>,
-using linear interpolation to find where likelihood ratio equals a critical value</p></li>
-<li><p>p-values computed using the Wald method with a <em>normal-distribution)</em>
-(note: this might change in a future update!)</p></li>
-</ul><p><code>"uniroot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>glmmTMB</code></p></li>
-<li><p>CIs computed by <em>profiling the likelihood curve for a parameter</em>,
-using root finding to find where likelihood ratio equals a critical value;</p></li>
-<li><p>p-values computed using the Wald method with a <em>normal-distribution)</em>
-(note: this might change in a future update!)</p></li>
+<p><code>"profile"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>glm</code>, <code>polr</code> or <code>glmmTMB</code>.
+CIs computed by <em>profiling the likelihood curve for a parameter</em>, using
+linear interpolation to find where likelihood ratio equals a critical value;
+p-values computed using the Wald method with a <em>normal-distribution</em> (note:
+this might change in a future update!)</p></li>
+</ul><p><code>"uniroot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>glmmTMB</code>. CIs
+computed by <em>profiling the likelihood curve for a parameter</em>, using root
+finding to find where likelihood ratio equals a critical value; p-values
+computed using the Wald method with a <em>normal-distribution</em> (note: this
+might change in a future update!)</p></li>
 </ul><p><strong>Methods for bootstrapped or Bayesian models:</strong></p>
 <p>Bootstrap-based inference is based on <strong>resampling</strong> and refitting the model
 to the resampled datasets. The distribution of parameter estimates across resampled
@@ -374,31 +371,27 @@ datasets is used to approximate the parameter's sampling distribution.
 Depending on the type of model, several different methods for bootstrapping
 and constructing CIs and p-values from the bootstrap distribution are available.</p>
 <p>For Bayesian models, inference is based on drawing samples from the model posterior distribution.</p>
-<p><code>"quantile"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em></p></li>
-<li><p>For non-Bayesian models, only applies if <code>bootstrap = TRUE</code></p></li>
-<li><p>CIs computed as <em>equal tailed intervals</em> using the quantiles of the bootstrap or posterior samples</p></li>
-<li><p>p-values are based on the <em>probability of direction</em></p></li>
-<li><p>See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code></p></li>
-</ul><p><code>"eti"</code></p><ul><li><p>Same as <code>"quantile"</code></p></li>
-</ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em></p></li>
-<li><p>For non-Bayesian models, only applies if <code>bootstrap = TRUE</code></p></li>
-<li><p>CIs computed as <em>highest density intervals</em> for the bootstrap or posterior samples</p></li>
-<li><p>p-values are based on the <em>probability of direction</em></p></li>
-<li><p>See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code></p></li>
-</ul><p><code>"bci"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em></p></li>
-<li><p>For non-Bayesian models, only applies if <code>bootstrap = TRUE</code></p></li>
-<li><p>CIs computed as <em>bias corrected and accelerated intervals</em> for the bootstrap or posterior samples</p></li>
-<li><p>p-values are based on the <em>probability of direction</em></p></li>
-<li><p>See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code></p></li>
-</ul><p><code>"bcai"</code></p><ul><li><p>Same as <code>"bci"</code></p></li>
-</ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors</p></li>
-<li><p>CIs computed as <em>support intervals</em> comparing the posterior samples against the prior samples</p></li>
-<li><p>p-values are based on the <em>probability of direction</em></p></li>
-<li><p>See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code></p></li>
-</ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code></p></li>
-<li><p>CIs computed using <em>parametric bootstrapping</em> (simulating data from the fitted model)</p></li>
-<li><p>p-values computed using the Wald method with a <em>normal-distribution)</em>
-(note: this might change in a future update!)</p></li>
+<p><code>"quantile"</code> (or <code>"eti"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
+For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
+as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
+posterior samples; p-values are based on the <em>probability of direction</em>.
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+</ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
+models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
+for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+</ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
+For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
+as <em>bias corrected and accelerated intervals</em> for the bootstrap or
+posterior samples; p-values are based on the <em>probability of direction</em>.
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+</ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
+<em>support intervals</em> comparing the posterior samples against the prior samples;
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+</ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
+using <em>parametric bootstrapping</em> (simulating data from the fitted model);
+p-values computed using the Wald method with a <em>normal-distribution)</em>
+(note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
 p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
@@ -429,9 +422,9 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.60 | [35.19, 44.11] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.20 | [-4.77, -1.88] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.49 | [-2.21, -0.75] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.82 | [35.63, 43.60] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.21 | [-5.03, -1.91] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.48 | [-2.20, -0.65] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
 <span class="r-in"></span>

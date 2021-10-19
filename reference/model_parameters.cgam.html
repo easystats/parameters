@@ -233,7 +233,7 @@ describes the parameters that should be included (for <code>keep</code>) or excl
 named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>keep</code> is a character vector, every parameter
 name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>parameters</code> will be selected from the returned data frame (and vice versa,
+<code>keep</code> will be selected from the returned data frame (and vice versa,
 all parameter names matching <code>drop</code> will be excluded). Furthermore, if
 <code>keep</code> has more than one element, these will be merged with an <code>OR</code>
 operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
@@ -253,7 +253,7 @@ describes the parameters that should be included (for <code>keep</code>) or excl
 named list of regular expressions. All non-matching parameters will be
 removed from the output. If <code>keep</code> is a character vector, every parameter
 name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>parameters</code> will be selected from the returned data frame (and vice versa,
+<code>keep</code> will be selected from the returned data frame (and vice versa,
 all parameter names matching <code>drop</code> will be excluded). Furthermore, if
 <code>keep</code> has more than one element, these will be merged with an <code>OR</code>
 operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
@@ -314,18 +314,18 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gu &amp; Wahba 4 term additive model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(381.94) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(381.45) |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.76 | 0.10 | [7.57, 7.95] |     79.63 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.83 | 0.10 | [7.64, 8.03] |     79.72 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Smooth Terms </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |     F |   df |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |  9.13 | 2.89 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 78.02 | 3.24 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) | 77.36 | 7.92 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |  1.51 | 3.02 | 0.183 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |        F |   df |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |     9.65 | 2.68 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) |    44.00 | 5.80 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) |    88.10 | 8.08 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) | 1.75e-04 | 1.00 | 0.989 </span>
 </code></pre></div>
     </div>
   </div>
