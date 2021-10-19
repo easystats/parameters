@@ -181,9 +181,7 @@ dof <- degrees_of_freedom
 
 #' @keywords internal
 .degrees_of_freedom_residual <- function(model, verbose = TRUE) {
-  info <- insight::model_info(model, verbose = FALSE)
-
-  if (!is.null(info) && info$is_bayesian && !inherits(model, c("bayesx", "blmerMod", "bglmerMod"))) {
+  if (.is_bayesian_model(model) && !inherits(model, c("bayesx", "blmerMod", "bglmerMod"))) {
     model <- bayestestR::bayesian_as_frequentist(model)
   }
 
@@ -309,4 +307,19 @@ dof <- degrees_of_freedom
   }
 
   return(TRUE)
+}
+
+
+
+
+# helper
+
+.is_bayesian_model <- function(x) {
+  inherits(x, c(
+    "brmsfit", "stanfit", "MCMCglmm", "stanreg",
+    "stanmvreg", "bmerMod", "BFBayesFactor", "bamlss",
+    "bayesx", "mcmc", "bcplm", "bayesQR", "BGGM",
+    "meta_random", "meta_fixed", "meta_bma", "blavaan",
+    "blrm"
+  ))
 }
