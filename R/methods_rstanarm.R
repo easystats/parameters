@@ -40,6 +40,8 @@
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
+#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
+#'
 #' @examples
 #' \dontrun{
 #' library(parameters)

@@ -19,6 +19,8 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
+#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
+#'
 #' @section Confidence intervals for random effect variances:
 #' When `ci_method = "profile"` and `effects` is either `"random"` or `"all"`,
 #' profiled confidence intervals are computed for the random effects. For all

@@ -53,185 +53,6 @@ implemented in the
 method for use inside rmarkdown files,
 \code{\link[=print_md.parameters_model]{print_md()}}.
 }
-\section{Confidence intervals and approximation of degrees of freedom}{
-
-There are different ways of approximating the degrees of freedom depending
-on different assumptions about the nature of the model and its sampling
-distribution. The \code{ci_method} modulates the method for computing degrees
-of freedom (df) that are used to calculate confidence intervals (CI) and the
-related p-values. Following options are allowed, depending on the model
-class:
-
-\strong{Classical methods:}
-
-Classical inference is generally based on the \strong{Wald method}.
-The Wald approach to inference computes a test statistic by dividing the
-parameter estimate by its standard error (Coefficient / SE),
-then comparing this statistic against a t- or normal distribution.
-This approach can be used to compute CIs and p-values.
-
-\code{"wald"}
-\itemize{
-\item Applies to \emph{non-Bayesian models}
-\item For \emph{linear models}, CIs computed using the Wald method (SE and a \emph{t-distribution with residual df})
-\item For \emph{linear models}, p-values computed using the Wald method with a \emph{t-distribution with residual df}
-\item For other models, CIs computed using the Wald method (SE and a \emph{normal distribution})
-\item For other models, p-values computed using the Wald method with a \emph{normal distribution}
-}
-
-\code{"normal"}
-\itemize{
-\item Applies to \emph{non-Bayesian models}
-\item Compute Wald CIs and p values, but always use a normal distribution
-\item CIs computed using the Wald method (SE and a \emph{normal distribution})
-\item p-values computed using the Wald method with a \emph{normal distribution}
-}
-
-\code{"residual"}
-\itemize{
-\item Applies to \emph{non-Bayesian models}
-\item Compute Wald CIs and p values, but always use a \emph{t-distribution with residual df} when possible
-\item CIs computed using the Wald method (SE and a \emph{t-distribution with residual df})
-\item p-values computed using the Wald method with a \emph{t-distribution with residual df}
-\item If the residual df for a model cannot be determined, a normal distribution is used instead
-}
-
-\strong{Methods for mixed models:}
-
-Compared to fixed effects (or single-level) models, determining appropriate
-df for Wald-based inference in mixed models is more difficult.
-See \href{https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable}{the R GLMM FAQ}
-for a discussion.
-
-Several approximate methods for computing df are available, but you should
-also consider instead using profile likelihood (\code{"profile"}) or bootstrap ("\verb{boot"})
-CIs and p-values instead.
-
-\code{"satterthwaite"}
-\itemize{
-\item Applies to \emph{linear mixed models}
-\item CIs computed using the Wald method (SE and a \emph{t-distribution with Satterthwaite df})
-\item p-values computed using the Wald method with a \emph{t-distribution with Satterthwaite df}
-}
-
-\code{"kenward"}
-\itemize{
-\item Applies to \emph{linear mixed models}
-\item CIs computed using the Wald method (\emph{Kenward-Roger SE} and a \emph{t-distribution with Kenward-Roger df})
-\item p-values computed using the Wald method with a \emph{Kenward-Roger SE and t-distribution with Kenward-Roger df}
-}
-
-\code{"ml1"}
-\itemize{
-\item Applies to \emph{linear mixed models}
-\item CIs computed using the Wald method (SE and a \emph{t-distribution with m-l-1 approximated df})
-\item p-values computed using the Wald method with a \emph{t-distribution with m-l-1 approximated df}
-\item See \code{\link[=ci_ml1]{ci_ml1()}}
-}
-
-\code{"betwithin"}
-\itemize{
-\item Applies to \emph{linear mixed models} and \emph{generalized linear mixed models}
-\item CIs computed using the Wald method (SE and a \emph{t-distribution with between-within df})
-\item p-values computed using the Wald method with a \emph{t-distribution with between-within df}
-\item See \code{\link[=ci_betwithin]{ci_betwithin()}}
-}
-
-\strong{Likelihood-based methods:}
-
-Likelihood-based inference is based on comparing the likelihood for the
-maximum-likelihood estimate to the the likelihood for models with one or more
-parameter values changed (e.g., set to zero or a range of alternative values).
-Likelihood ratios for the maximum-likelihood and alternative models are compared
-to a \eqn{\chi}-squared distribution to compute CIs and p-values.
-
-\code{"profile"}
-\itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}
-\item CIs computed by \emph{profiling the likelihood curve for a parameter},
-using linear interpolation to find where likelihood ratio equals a critical value
-\item p-values computed using the Wald method with a \emph{normal-distribution)}
-(note: this might change in a future update!)
-}
-
-\code{"uniroot"}
-\itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glmmTMB}
-\item CIs computed by \emph{profiling the likelihood curve for a parameter},
-using root finding to find where likelihood ratio equals a critical value;
-\item p-values computed using the Wald method with a \emph{normal-distribution)}
-(note: this might change in a future update!)
-}
-
-\strong{Methods for bootstrapped or Bayesian models:}
-
-Bootstrap-based inference is based on \strong{resampling} and refitting the model
-to the resampled datasets. The distribution of parameter estimates across resampled
-datasets is used to approximate the parameter's sampling distribution.
-Depending on the type of model, several different methods for bootstrapping
-and constructing CIs and p-values from the bootstrap distribution are available.
-
-For Bayesian models, inference is based on drawing samples from the model posterior distribution.
-
-\code{"quantile"}
-\itemize{
-\item Applies to \emph{all models (including Bayesian models)}
-\item For non-Bayesian models, only applies if \code{bootstrap = TRUE}
-\item CIs computed as \emph{equal tailed intervals} using the quantiles of the bootstrap or posterior samples
-\item p-values are based on the \emph{probability of direction}
-\item See \code{\link[bayestestR:eti]{bayestestR::eti()}}
-}
-
-\code{"eti"}
-\itemize{
-\item Same as \code{"quantile"}
-}
-
-\code{"hdi"}
-\itemize{
-\item Applies to \emph{all models (including Bayesian models)}
-\item For non-Bayesian models, only applies if \code{bootstrap = TRUE}
-\item CIs computed as \emph{highest density intervals} for the bootstrap or posterior samples
-\item p-values are based on the \emph{probability of direction}
-\item See \code{\link[bayestestR:hdi]{bayestestR::hdi()}}
-}
-
-\code{"bci"}
-\itemize{
-\item Applies to \emph{all models (including Bayesian models)}
-\item For non-Bayesian models, only applies if \code{bootstrap = TRUE}
-\item CIs computed as \emph{bias corrected and accelerated intervals} for the bootstrap or posterior samples
-\item p-values are based on the \emph{probability of direction}
-\item See \code{\link[bayestestR:bci]{bayestestR::bci()}}
-}
-
-\code{"bcai"}
-\itemize{
-\item Same as \code{"bci"}
-}
-
-\code{"si"}
-\itemize{
-\item Applies to \emph{Bayesian models} with proper priors
-\item CIs computed as \emph{support intervals} comparing the posterior samples against the prior samples
-\item p-values are based on the \emph{probability of direction}
-\item See \code{\link[bayestestR:si]{bayestestR::si()}}
-}
-
-\code{"boot"}
-\itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{merMod}
-\item CIs computed using \emph{parametric bootstrapping} (simulating data from the fitted model)
-\item p-values computed using the Wald method with a \emph{normal-distribution)}
-(note: this might change in a future update!)
-}
-
-For all iteration-based methods other than \code{"boot"}
-(\code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, \code{"bcai"}),
-p-values are based on the probability of direction (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}),
-which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
-}
-
 \section{Standardization of model coefficients}{
 
 Standardization is based on \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}. In case
@@ -310,6 +131,170 @@ to the estimate error - in a linear model these are the same, but in - for
 instance - any mixed effects model, this isn't strictly true. Hence, we
 think that \code{df_error} is the most generic label for these degrees of
 freedom.
+}
+
+\section{Confidence intervals and approximation of degrees of freedom}{
+
+There are different ways of approximating the degrees of freedom depending
+on different assumptions about the nature of the model and its sampling
+distribution. The \code{ci_method} argument modulates the method for computing degrees
+of freedom (df) that are used to calculate confidence intervals (CI) and the
+related p-values. Following options are allowed, depending on the model
+class:
+
+\strong{Classical methods:}
+
+Classical inference is generally based on the \strong{Wald method}.
+The Wald approach to inference computes a test statistic by dividing the
+parameter estimate by its standard error (Coefficient / SE),
+then comparing this statistic against a t- or normal distribution.
+This approach can be used to compute CIs and p-values.
+
+\code{"wald"}:
+\itemize{
+\item Applies to \emph{non-Bayesian models}. For \emph{linear models}, CIs
+computed using the Wald method (SE and a \emph{t-distribution with residual df});
+p-values computed using the Wald method with a \emph{t-distribution with residual df}.
+For other models, CIs computed using the Wald method (SE and a \emph{normal distribution});
+p-values computed using the Wald method with a \emph{normal distribution}.
+}
+
+\code{"normal"}
+\itemize{
+\item Applies to \emph{non-Bayesian models}. Compute Wald CIs and p-values,
+but always use a normal distribution.
+}
+
+\code{"residual"}
+\itemize{
+\item Applies to \emph{non-Bayesian models}. Compute Wald CIs and p-values,
+but always use a \emph{t-distribution with residual df} when possible. If the
+residual df for a model cannot be determined, a normal distribution is
+used instead.
+}
+
+\strong{Methods for mixed models:}
+
+Compared to fixed effects (or single-level) models, determining appropriate
+df for Wald-based inference in mixed models is more difficult.
+See \href{https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable}{the R GLMM FAQ}
+for a discussion.
+
+Several approximate methods for computing df are available, but you should
+also consider instead using profile likelihood (\code{"profile"}) or bootstrap ("\verb{boot"})
+CIs and p-values instead.
+
+\code{"satterthwaite"}
+\itemize{
+\item Applies to \emph{linear mixed models}. CIs computed using the
+Wald method (SE and a \emph{t-distribution with Satterthwaite df}); p-values
+computed using the Wald method with a \emph{t-distribution with Satterthwaite df}.
+}
+
+\code{"kenward"}
+\itemize{
+\item Applies to \emph{linear mixed models}. CIs computed using the Wald
+method (\emph{Kenward-Roger SE} and a \emph{t-distribution with Kenward-Roger df});
+p-values computed using the Wald method with \emph{Kenward-Roger SE and t-distribution with Kenward-Roger df}.
+}
+
+\code{"ml1"}
+\itemize{
+\item Applies to \emph{linear mixed models}. CIs computed using the Wald
+method (SE and a \emph{t-distribution with m-l-1 approximated df}); p-values
+computed using the Wald method with a \emph{t-distribution with m-l-1 approximated df}.
+See \code{\link[=ci_ml1]{ci_ml1()}}.
+}
+
+\code{"betwithin"}
+\itemize{
+\item Applies to \emph{linear mixed models} and \emph{generalized linear mixed models}.
+CIs computed using the Wald method (SE and a \emph{t-distribution with between-within df});
+p-values computed using the Wald method with a \emph{t-distribution with between-within df}.
+See \code{\link[=ci_betwithin]{ci_betwithin()}}.
+}
+
+\strong{Likelihood-based methods:}
+
+Likelihood-based inference is based on comparing the likelihood for the
+maximum-likelihood estimate to the the likelihood for models with one or more
+parameter values changed (e.g., set to zero or a range of alternative values).
+Likelihood ratios for the maximum-likelihood and alternative models are compared
+to a \eqn{\chi}-squared distribution to compute CIs and p-values.
+
+\code{"profile"}
+\itemize{
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+CIs computed by \emph{profiling the likelihood curve for a parameter}, using
+linear interpolation to find where likelihood ratio equals a critical value;
+p-values computed using the Wald method with a \emph{normal-distribution} (note:
+this might change in a future update!)
+}
+
+\code{"uniroot"}
+\itemize{
+\item Applies to \emph{non-Bayesian models} of class \code{glmmTMB}. CIs
+computed by \emph{profiling the likelihood curve for a parameter}, using root
+finding to find where likelihood ratio equals a critical value; p-values
+computed using the Wald method with a \emph{normal-distribution} (note: this
+might change in a future update!)
+}
+
+\strong{Methods for bootstrapped or Bayesian models:}
+
+Bootstrap-based inference is based on \strong{resampling} and refitting the model
+to the resampled datasets. The distribution of parameter estimates across resampled
+datasets is used to approximate the parameter's sampling distribution.
+Depending on the type of model, several different methods for bootstrapping
+and constructing CIs and p-values from the bootstrap distribution are available.
+
+For Bayesian models, inference is based on drawing samples from the model posterior distribution.
+
+\code{"quantile"} (or \code{"eti"})
+\itemize{
+\item Applies to \emph{all models (including Bayesian models)}.
+For non-Bayesian models, only applies if \code{bootstrap = TRUE}. CIs computed
+as \emph{equal tailed intervals} using the quantiles of the bootstrap or
+posterior samples; p-values are based on the \emph{probability of direction}.
+See \code{\link[bayestestR:eti]{bayestestR::eti()}}.
+}
+
+\code{"hdi"}
+\itemize{
+\item Applies to \emph{all models (including Bayesian models)}. For non-Bayesian
+models, only applies if \code{bootstrap = TRUE}. CIs computed as \emph{highest density intervals}
+for the bootstrap or posterior samples; p-values are based on the \emph{probability of direction}.
+See \code{\link[bayestestR:hdi]{bayestestR::hdi()}}.
+}
+
+\code{"bci"} (or \code{"bcai"})
+\itemize{
+\item Applies to \emph{all models (including Bayesian models)}.
+For non-Bayesian models, only applies if \code{bootstrap = TRUE}. CIs computed
+as \emph{bias corrected and accelerated intervals} for the bootstrap or
+posterior samples; p-values are based on the \emph{probability of direction}.
+See \code{\link[bayestestR:bci]{bayestestR::bci()}}.
+}
+
+\code{"si"}
+\itemize{
+\item Applies to \emph{Bayesian models} with proper priors. CIs computed as
+\emph{support intervals} comparing the posterior samples against the prior samples;
+p-values are based on the \emph{probability of direction}. See \code{\link[bayestestR:si]{bayestestR::si()}}.
+}
+
+\code{"boot"}
+\itemize{
+\item Applies to \emph{non-Bayesian models} of class \code{merMod}. CIs computed
+using \emph{parametric bootstrapping} (simulating data from the fitted model);
+p-values computed using the Wald method with a \emph{normal-distribution)}
+(note: this might change in a future update!).
+}
+
+For all iteration-based methods other than \code{"boot"}
+(\code{"hdi"}, \code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, \code{"bcai"}),
+p-values are based on the probability of direction (\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}),
+which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestestR::pd_to_p()}}.
 }
 
 \section{Interpretation of Interaction Terms}{
