@@ -21,7 +21,7 @@ with the fewer factors."><meta property="og:image" content="/logo.png"><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@ with the fewer factors."><meta property="og:image" content="/logo.png"><!-- math
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,7 +102,7 @@ with the fewer factors."><meta property="og:image" content="/logo.png"><!-- math
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Number of components/factors to retain in PCA/FA</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/n_factors.R"><code>R/n_factors.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/n_factors.R" class="external-link"><code>R/n_factors.R</code></a></small>
     <div class="hidden name"><code>n_factors.Rd</code></div>
     </div>
 
@@ -114,24 +114,25 @@ In case of ties, it will keep the simplest model and select the solution
 with the fewer factors.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">n_factors</span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span>
   <span class="va">x</span>,
   type <span class="op">=</span> <span class="st">"FA"</span>,
   rotation <span class="op">=</span> <span class="st">"varimax"</span>,
   algorithm <span class="op">=</span> <span class="st">"default"</span>,
-  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,
+  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,
   cor <span class="op">=</span> <span class="cn">NULL</span>,
   safe <span class="op">=</span> <span class="cn">TRUE</span>,
   n_max <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu">n_components</span><span class="op">(</span>
+<span class="fu"><a href="../reference/n_factors.html">n_components</a></span><span class="op">(</span>
   <span class="va">x</span>,
   type <span class="op">=</span> <span class="st">"PCA"</span>,
   rotation <span class="op">=</span> <span class="st">"varimax"</span>,
   algorithm <span class="op">=</span> <span class="st">"default"</span>,
-  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,
+  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"nFactors"</span>, <span class="st">"psych"</span><span class="op">)</span>,
   cor <span class="op">=</span> <span class="cn">NULL</span>,
   safe <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
@@ -139,14 +140,14 @@ with the fewer factors.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame.</p></td>
     </tr><tr><th>type</th>
       <td><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to
 do.</p></td>
     </tr><tr><th>rotation</th>
       <td><p>Only used for VSS (Very Simple Structure criterion, see
-<code><a href="https://rdrr.io/pkg/psych/man/VSS.html">psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>,
+<code><a href="https://rdrr.io/pkg/psych/man/VSS.html" class="external-link">psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>,
 <code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>,
 <code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal
 rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
@@ -168,7 +169,7 @@ the respective packages installed for the methods to be used.</p></td>
     </tr><tr><th>cor</th>
       <td><p>An optional correlation matrix that can be used (note that the
 data must still be passed as the first argument). If <code>NULL</code>, will
-compute it by running <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code> on the passed data.</p></td>
+compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></td>
     </tr><tr><th>safe</th>
       <td><p>If <code>TRUE</code>, the function will run all the procedures in try
 blocks, and will only return those that work and silently skip the ones
@@ -194,10 +195,10 @@ different defaults for the function arguments.</p>
     <div id="note">
     <h2>Note</h2>
     <p>There is also a
-<a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a>
+<a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a>
 implemented in the
-<a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.
-<code>n_components()</code> is a convenient short for <code>n_factors(type = "PCA")</code>.</p>
+<a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.
+<code><a href="../reference/n_factors.html">n_components()</a></code> is a convenient short for <code>n_factors(type = "PCA")</code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -238,32 +239,33 @@ matrix of partial correlations. Psychometrika, 41(3), 321-327.</p></li>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"nFactors"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"EGAnet"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">n_factors</span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">n_factors</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"FA"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="http://oompa.r-forge.r-project.org/">"PCDimension"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="co"># Setting package = 'all' will increase the number of methods (but is slow)</span></span>
-<span class="r-in">    <span class="fu">n_factors</span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"PCA"</span>, package <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu">n_factors</span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"FA"</span>, algorithm <span class="op">=</span> <span class="st">"mle"</span>, package <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘nFactors’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:lattice’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     parallel</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> EGAnet (version 0.9.8) </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For help getting started, type browseVignettes("EGAnet")</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  For bugs and errors, submit an issue to &lt;https://github.com/hfgolino/EGAnet/issues&gt; </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> NEW: EGAnet will write your Methods section for you. Type ?methods.section for more details</span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"nFactors"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"EGAnet"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span>
+
+  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"FA"</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://oompa.r-forge.r-project.org/" class="external-link">"PCDimension"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="co"># Setting package = 'all' will increase the number of methods (but is slow)</span>
+    <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"PCA"</span>, package <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+    <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">mtcars</span>, type <span class="op">=</span> <span class="st">"FA"</span>, algorithm <span class="op">=</span> <span class="st">"mle"</span>, package <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+  <span class="op">}</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: ‘nFactors’</span>
+<span class="co">#&gt; The following object is masked from ‘package:lattice’:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     parallel</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; EGAnet (version 0.9.8) </span>
+<span class="co">#&gt; For help getting started, type browseVignettes("EGAnet")</span>
+<span class="co">#&gt;  For bugs and errors, submit an issue to &lt;https://github.com/hfgolino/EGAnet/issues&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; NEW: EGAnet will write your Methods section for you. Type ?methods.section for more details</span>
 </code></pre></div>
     </div>
   </div>

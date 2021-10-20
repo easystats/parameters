@@ -18,7 +18,7 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares."><m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares."><m
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,7 +99,7 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares."><m
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find the cluster centers in your data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/cluster_centers.R"><code>R/cluster_centers.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/cluster_centers.R" class="external-link"><code>R/cluster_centers.R</code></a></small>
     <div class="hidden name"><code>cluster_centers.Rd</code></div>
     </div>
 
@@ -108,11 +108,12 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares."><m
 to retrieve the centers of clusters. Also returns the within Sum of Squares.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">data</span>, <span class="va">clusters</span>, fun <span class="op">=</span> <span class="va">mean</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cluster_centers.html">cluster_centers</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">clusters</span>, fun <span class="op">=</span> <span class="va">mean</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>data</th>
       <td><p>A data.frame.</p></td>
     </tr><tr><th>clusters</th>
       <td><p>A vector with clusters assignments (must be same length as rows in data).</p></td>
@@ -129,17 +130,18 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares.</p>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, clusters <span class="op">=</span> <span class="va">k</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    62    39.82097     5.901613    2.748387     4.393548    1.433871</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    50    15.15100     5.006000    3.428000     1.462000    0.246000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    38    23.87947     6.850000    3.073684     5.742105    2.071053</span>
-<span class="r-in"><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, clusters <span class="op">=</span> <span class="va">k</span><span class="op">$</span><span class="va">cluster</span>, fun <span class="op">=</span> <span class="va">median</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    62    39.82097          5.9         2.8         4.50         1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2    50    15.15100          5.0         3.4         1.50         0.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    38    23.87947          6.7         3.0         5.65         2.1</span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="../reference/cluster_centers.html">cluster_centers</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, clusters <span class="op">=</span> <span class="va">k</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
+<span class="co">#&gt;   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt; 1       1    50    15.15100     5.006000    3.428000     1.462000    0.246000</span>
+<span class="co">#&gt; 2       2    38    23.87947     6.850000    3.073684     5.742105    2.071053</span>
+<span class="co">#&gt; 3       3    62    39.82097     5.901613    2.748387     4.393548    1.433871</span>
+<span class="fu"><a href="../reference/cluster_centers.html">cluster_centers</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, clusters <span class="op">=</span> <span class="va">k</span><span class="op">$</span><span class="va">cluster</span>, fun <span class="op">=</span> <span class="va">median</span><span class="op">)</span>
+<span class="co">#&gt;   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class="co">#&gt; 1       1    50    15.15100          5.0         3.4         1.50         0.2</span>
+<span class="co">#&gt; 2       2    38    23.87947          6.7         3.0         5.65         2.1</span>
+<span class="co">#&gt; 3       3    62    39.82097          5.9         2.8         4.50         1.4</span>
 </code></pre></div>
     </div>
   </div>

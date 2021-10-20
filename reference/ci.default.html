@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Confidence Intervals (CI)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/2_ci.R"><code>R/2_ci.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_lme4.R"><code>R/methods_lme4.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/2_ci.R" class="external-link"><code>R/2_ci.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_lme4.R" class="external-link"><code>R/methods_lme4.R</code></a></small>
     <div class="hidden name"><code>ci.default.Rd</code></div>
     </div>
 
@@ -106,11 +106,12 @@
     <p>Compute confidence intervals (CI) for frequentist models.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for default</span>
-<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="cn">NULL</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for default</span>
+<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="cn">NULL</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for glmmTMB</span>
-<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span>
+<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span>
   <span class="va">x</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   dof <span class="op">=</span> <span class="cn">NULL</span>,
@@ -122,11 +123,11 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for merMod</span>
-<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">"wald"</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">"wald"</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -202,7 +203,7 @@ used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
-See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable">the R GLMM FAQ</a>
+See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable" class="external-link">the R GLMM FAQ</a>
 for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
@@ -248,53 +249,54 @@ and constructing CIs and p-values from the bootstrap distribution are available.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">bayestestR::eti()</a></code>.</p></li>
 </ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
 models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
 for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">bayestestR::hdi()</a></code>.</p></li>
 </ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>bias corrected and accelerated intervals</em> for the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bayestestR::bci()</a></code>.</p></li>
 </ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
 <em>support intervals</em> comparing the posterior samples against the prior samples;
-p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">bayestestR::si()</a></code>.</p></li>
 </ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
 using <em>parametric bootstrapping</em> (simulating data from the fitted model);
 p-values computed using the Wald method with a <em>normal-distribution)</em>
 (note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
-p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
-which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
+which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB">"glmmTMB"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
-<span class="r-in">    ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,</span>
-<span class="r-in">    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">poisson</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">Salamanders</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"zi"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: glmmTMB</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Package version inconsistency detected.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> glmmTMB was built with TMB version 1.7.21</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Current TMB version is 1.7.22</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please re-install glmmTMB from source or restore original ‘TMB’ package (see '?reinstalling' for more information)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter   CI     CI_low   CI_high     Component</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 0.95  0.2552453  1.324754 zero_inflated</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     minedno 0.95 -2.4604492 -1.229369 zero_inflated</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># \donttest{</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span>
+    <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,
+    ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,
+    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>,
+    data <span class="op">=</span> <span class="va">Salamanders</span>
+  <span class="op">)</span>
+
+  <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+  <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"zi"</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Loading required package: glmmTMB</span>
+<span class="co">#&gt; Warning: Package version inconsistency detected.</span>
+<span class="co">#&gt; glmmTMB was built with TMB version 1.7.21</span>
+<span class="co">#&gt; Current TMB version is 1.7.22</span>
+<span class="co">#&gt; Please re-install glmmTMB from source or restore original ‘TMB’ package (see '?reinstalling' for more information)</span>
+<span class="co">#&gt;     Parameter   CI     CI_low   CI_high     Component</span>
+<span class="co">#&gt; 1 (Intercept) 0.95  0.2552453  1.324754 zero_inflated</span>
+<span class="co">#&gt; 2     minedno 0.95 -2.4604492 -1.229369 zero_inflated</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

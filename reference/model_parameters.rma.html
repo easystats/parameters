@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Meta-Analysis</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_metafor.R"><code>R/methods_metafor.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_metafor.R" class="external-link"><code>R/methods_metafor.R</code></a></small>
     <div class="hidden name"><code>model_parameters.rma.Rd</code></div>
     </div>
 
@@ -106,8 +106,9 @@
     <p>Extract and compute indices and measures to describe parameters of meta-analysis models.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for rma</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -121,7 +122,7 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Model object.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -136,7 +137,7 @@ case of bootstrapped frequentist models.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_parameters()</a></code>.
+<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
@@ -168,7 +169,7 @@ for all studies. Else, only parameters for overall-effects are shown.</p></td>
       <td><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></td>
+are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></td>
     </tr></table></div>
 
     <div id="value">
@@ -178,59 +179,60 @@ are passed down to <code><a href="https://easystats.github.io/bayestestR/referen
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mydat</span> <span class="op">&lt;&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  effectsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.393</span>, <span class="fl">0.675</span>, <span class="fl">0.282</span>, <span class="op">-</span><span class="fl">1.398</span><span class="op">)</span>,</span>
-<span class="r-in">  stderr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.317</span>, <span class="fl">0.317</span>, <span class="fl">0.13</span>, <span class="fl">0.36</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://www.metafor-project.org">"metafor"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html">rma</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">effectsize</span>, sei <span class="op">=</span> <span class="va">stderr</span>, method <span class="op">=</span> <span class="st">"REML"</span>, data <span class="op">=</span> <span class="va">mydat</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading the 'metafor' package (version 3.0-2). For an</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> introduction to the package please type: help(metafor)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘metafor’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:mclust’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     hc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Meta-analysis using 'metafor'</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Study 3   |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |       </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald z-distribution approximation.</span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># with subgroups</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://www.metafor-project.org">"metafor"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">dat.bcg</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/escalc.html">escalc</a></span><span class="op">(</span></span>
-<span class="r-in">    measure <span class="op">=</span> <span class="st">"RR"</span>,</span>
-<span class="r-in">    ai <span class="op">=</span> <span class="va">tpos</span>,</span>
-<span class="r-in">    bi <span class="op">=</span> <span class="va">tneg</span>,</span>
-<span class="r-in">    ci <span class="op">=</span> <span class="va">cpos</span>,</span>
-<span class="r-in">    di <span class="op">=</span> <span class="va">cneg</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">dat.bcg</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"random"</span>, <span class="st">"random"</span>, <span class="st">"other"</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span><span class="va">alloc</span>, data <span class="op">=</span> <span class="va">dat</span>, digits <span class="op">=</span> <span class="fl">3</span>, slab <span class="op">=</span> <span class="va">author</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/danheck/metaBMA">"metaBMA"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">towels</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/metaBMA/man/meta_random.html">meta_random</a></span><span class="op">(</span><span class="va">logOR</span>, <span class="va">SE</span>, <span class="va">study</span>, data <span class="op">=</span> <span class="va">towels</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="va">mydat</span> <span class="op">&lt;&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+  effectsize <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.393</span>, <span class="fl">0.675</span>, <span class="fl">0.282</span>, <span class="op">-</span><span class="fl">1.398</span><span class="op">)</span>,
+  stderr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.317</span>, <span class="fl">0.317</span>, <span class="fl">0.13</span>, <span class="fl">0.36</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.metafor-project.org" class="external-link">"metafor"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">effectsize</span>, sei <span class="op">=</span> <span class="va">stderr</span>, method <span class="op">=</span> <span class="st">"REML"</span>, data <span class="op">=</span> <span class="va">mydat</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Loading the 'metafor' package (version 3.0-2). For an</span>
+<span class="co">#&gt; introduction to the package please type: help(metafor)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: ‘metafor’</span>
+<span class="co">#&gt; The following object is masked from ‘package:mclust’:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     hc</span>
+<span class="co">#&gt; Meta-analysis using 'metafor'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter | Coefficient |   SE |         95% CI |     z |      p | Weight</span>
+<span class="co">#&gt; -------------------------------------------------------------------------</span>
+<span class="co">#&gt; Study 1   |       -0.39 | 0.32 | [-1.01,  0.23] | -1.24 | 0.215  |   9.95</span>
+<span class="co">#&gt; Study 2   |        0.68 | 0.32 | [ 0.05,  1.30] |  2.13 | 0.033  |   9.95</span>
+<span class="co">#&gt; Study 3   |        0.28 | 0.13 | [ 0.03,  0.54] |  2.17 | 0.030  |  59.17</span>
+<span class="co">#&gt; Study 4   |       -1.40 | 0.36 | [-2.10, -0.69] | -3.88 | &lt; .001 |   7.72</span>
+<span class="co">#&gt; Overall   |       -0.18 | 0.44 | [-1.05,  0.68] | -0.42 | 0.676  |       </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald z-distribution approximation.</span>
+<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+<span class="co"># with subgroups</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.metafor-project.org" class="external-link">"metafor"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">dat.bcg</span><span class="op">)</span>
+  <span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link">escalc</a></span><span class="op">(</span>
+    measure <span class="op">=</span> <span class="st">"RR"</span>,
+    ai <span class="op">=</span> <span class="va">tpos</span>,
+    bi <span class="op">=</span> <span class="va">tneg</span>,
+    ci <span class="op">=</span> <span class="va">cpos</span>,
+    di <span class="op">=</span> <span class="va">cneg</span>,
+    data <span class="op">=</span> <span class="va">dat.bcg</span>
+  <span class="op">)</span>
+  <span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"random"</span>, <span class="st">"random"</span>, <span class="st">"other"</span><span class="op">)</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span><span class="va">alloc</span>, data <span class="op">=</span> <span class="va">dat</span>, digits <span class="op">=</span> <span class="fl">3</span>, slab <span class="op">=</span> <span class="va">author</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/danheck/metaBMA" class="external-link">"metaBMA"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">towels</span><span class="op">)</span>
+  <span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/metaBMA/man/meta_random.html" class="external-link">meta_random</a></span><span class="op">(</span><span class="va">logOR</span>, <span class="va">SE</span>, <span class="va">study</span>, data <span class="op">=</span> <span class="va">towels</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="op">}</span>
+
 </code></pre></div>
     </div>
   </div>

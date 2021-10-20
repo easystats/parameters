@@ -18,7 +18,7 @@ assignment for each observation as vector."><meta property="og:image" content="/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ assignment for each observation as vector."><meta property="og:image" content="/
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,7 +99,7 @@ assignment for each observation as vector."><meta property="og:image" content="/
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compute cluster analysis and return group indices</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/cluster_analysis.R"><code>R/cluster_analysis.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/cluster_analysis.R" class="external-link"><code>R/cluster_analysis.R</code></a></small>
     <div class="hidden name"><code>cluster_analysis.Rd</code></div>
     </div>
 
@@ -108,23 +108,24 @@ assignment for each observation as vector."><meta property="og:image" content="/
 assignment for each observation as vector.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_analysis</span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span>
   <span class="va">x</span>,
   n_clusters <span class="op">=</span> <span class="cn">NULL</span>,
-  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hclust"</span>, <span class="st">"kmeans"</span><span class="op">)</span>,
-  distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"euclidean"</span>, <span class="st">"maximum"</span>, <span class="st">"manhattan"</span>, <span class="st">"canberra"</span>, <span class="st">"binary"</span>, <span class="st">"minkowski"</span><span class="op">)</span>,
-  agglomeration <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ward"</span>, <span class="st">"ward.D"</span>, <span class="st">"ward.D2"</span>, <span class="st">"single"</span>, <span class="st">"complete"</span>, <span class="st">"average"</span>,
+  method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hclust"</span>, <span class="st">"kmeans"</span><span class="op">)</span>,
+  distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"euclidean"</span>, <span class="st">"maximum"</span>, <span class="st">"manhattan"</span>, <span class="st">"canberra"</span>, <span class="st">"binary"</span>, <span class="st">"minkowski"</span><span class="op">)</span>,
+  agglomeration <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ward"</span>, <span class="st">"ward.D"</span>, <span class="st">"ward.D2"</span>, <span class="st">"single"</span>, <span class="st">"complete"</span>, <span class="st">"average"</span>,
     <span class="st">"mcquitty"</span>, <span class="st">"median"</span>, <span class="st">"centroid"</span><span class="op">)</span>,
   iterations <span class="op">=</span> <span class="fl">20</span>,
-  algorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Hartigan-Wong"</span>, <span class="st">"Lloyd"</span>, <span class="st">"MacQueen"</span><span class="op">)</span>,
+  algorithm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hartigan-Wong"</span>, <span class="st">"Lloyd"</span>, <span class="st">"MacQueen"</span><span class="op">)</span>,
   force <span class="op">=</span> <span class="cn">TRUE</span>,
-  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NbClust"</span>, <span class="st">"mclust"</span><span class="op">)</span>,
+  package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NbClust"</span>, <span class="st">"mclust"</span><span class="op">)</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame.</p></td>
     </tr><tr><th>n_clusters</th>
       <td><p>Number of clusters used for the cluster solution. By default,
@@ -136,20 +137,20 @@ compute a kmeans cluster analysis. You can specify the initial letters only.</p>
     </tr><tr><th>distance</th>
       <td><p>Distance measure to be used when <code>method = "hclust"</code> (for hierarchical
 clustering). Must be one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>,
-<code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/r/stats/dist.html">dist</a></code>.
+<code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></code>.
 If is <code>method = "kmeans"</code> this argument will be ignored.</p></td>
     </tr><tr><th>agglomeration</th>
       <td><p>Agglomeration method to be used when <code>method = "hclust"</code> (for hierarchical
 clustering). This should be one of <code>"ward"</code>, <code>"single"</code>, <code>"complete"</code>, <code>"average"</code>,
-<code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>. Default is <code>"ward"</code> (see <code><a href="https://rdrr.io/r/stats/hclust.html">hclust</a></code>).
+<code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>. Default is <code>"ward"</code> (see <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></code>).
 If <code>method = "kmeans"</code> this argument will be ignored.</p></td>
     </tr><tr><th>iterations</th>
       <td><p>Maximum number of iterations allowed. Only applies, if
-<code>method = "kmeans"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></code> for details on this argument.</p></td>
+<code>method = "kmeans"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> for details on this argument.</p></td>
     </tr><tr><th>algorithm</th>
       <td><p>Algorithm used for calculating kmeans cluster. Only applies, if
 <code>method = "kmeans"</code>. May be one of <code>"Hartigan-Wong"</code> (default),
-<code>"Lloyd"</code> (used by SPSS), or <code>"MacQueen"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html">kmeans</a></code>
+<code>"Lloyd"</code> (used by SPSS), or <code>"MacQueen"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code>
 for details on this argument.</p></td>
     </tr><tr><th>force</th>
       <td><p>Logical, if <code>TRUE</code>, ordered factors (ordinal variables) are
@@ -173,7 +174,7 @@ as <code>nrow(x)</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>The <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> methods show the (standardized)
+    <p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods show the (standardized)
 mean value for each variable within each cluster. Thus, a higher absolute
 value indicates that a certain variable characteristic is more pronounced
 within that specific cluster (as compared to other cluster groups with lower
@@ -181,7 +182,7 @@ absolute mean values).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -194,32 +195,33 @@ absolute mean values).</p>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Hierarchical clustering of mtcars-dataset</span></span>
-<span class="r-in"><span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">groups</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Cluster Analysis (mean z-score by cluster)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Term Group 1 Group 2 Group 3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Sepal.Length   -1.01    0.09    1.24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Sepal.Width    0.85   -0.70    0.07</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Petal.Length   -1.30    0.38    1.14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Width   -1.25    0.31    1.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Accuracy of Cluster Group Classification</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Group Accuracy</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      1  100.00%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      2   95.31%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      3   97.22%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Overall accuracy of classification: 97.33%</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># K-means clustering of mtcars-dataset, auto-detection of cluster-groups</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"k"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">groups</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Hierarchical clustering of mtcars-dataset</span>
+<span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span>
+<span class="va">groups</span>
+<span class="co">#&gt; # Cluster Analysis (mean z-score by cluster)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;          Term Group 1 Group 2 Group 3</span>
+<span class="co">#&gt;  Sepal.Length   -1.01    0.09    1.24</span>
+<span class="co">#&gt;   Sepal.Width    0.85   -0.70    0.07</span>
+<span class="co">#&gt;  Petal.Length   -1.30    0.38    1.14</span>
+<span class="co">#&gt;   Petal.Width   -1.25    0.31    1.19</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Accuracy of Cluster Group Classification</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  Group Accuracy</span>
+<span class="co">#&gt;      1  100.00%</span>
+<span class="co">#&gt;      2   95.31%</span>
+<span class="co">#&gt;      3   97.22%</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Overall accuracy of classification: 97.33%</span>
+<span class="co">#&gt; </span>
+
+<span class="co"># K-means clustering of mtcars-dataset, auto-detection of cluster-groups</span>
+<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+<span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"k"</span><span class="op">)</span>
+<span class="va">groups</span>
+<span class="op">}</span>
 </code></pre></div>
     </div>
   </div>

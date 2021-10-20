@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Between-within approximation for SEs, CIs and p-values</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/ci_betwithin.R"><code>R/ci_betwithin.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/dof_betwithin.R"><code>R/dof_betwithin.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/p_value_betwithin.R"><code>R/p_value_betwithin.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/ci_betwithin.R" class="external-link"><code>R/ci_betwithin.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/dof_betwithin.R" class="external-link"><code>R/dof_betwithin.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/p_value_betwithin.R" class="external-link"><code>R/p_value_betwithin.R</code></a></small>
     <div class="hidden name"><code>p_value_betwithin.Rd</code></div>
     </div>
 
@@ -106,15 +106,16 @@
     <p>Approximation of degrees of freedom based on a "between-within" heuristic.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_betwithin</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/p_value_betwithin.html">ci_betwithin</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
 
-<span class="fu">dof_betwithin</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="../reference/p_value_betwithin.html">dof_betwithin</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu">p_value_betwithin</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/p_value_betwithin.html">p_value_betwithin</a></span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A mixed model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -138,7 +139,7 @@ it is recommended to approximate a more accurate number of degrees of freedom
 for such inferential statistics (see <cite>Li and Redden 2015</cite>). The
 <em>Between-within</em> denominator degrees of freedom approximation is
 recommended in particular for (generalized) linear mixed models with repeated
-measurements (longitudinal design). <code>dof_betwithin()</code> implements a heuristic
+measurements (longitudinal design). <code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code> implements a heuristic
 based on the between-within approach. <strong>Note</strong> that this implementation
 does not return exactly the same results as shown in <cite>Li and Redden 2015</cite>,
 but similar.</p>
@@ -147,7 +148,7 @@ but similar.</p>
 <h3 id="degrees-of-freedom-for-longitudinal-designs-repeated-measures-">Degrees of Freedom for Longitudinal Designs (Repeated Measures)<a class="anchor" aria-label="anchor" href="#degrees-of-freedom-for-longitudinal-designs-repeated-measures-"></a></h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>between-within</em> heuristic is likely to be more accurate than simply
-using the residual or infinite degrees of freedom, because <code>dof_betwithin()</code>
+using the residual or infinite degrees of freedom, because <code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code>
 returns different degrees of freedom for within-cluster and between-cluster effects.</p>
 </div>
 
@@ -156,27 +157,28 @@ returns different degrees of freedom for within-cluster and between-cluster effe
     <h2>References</h2>
     
 <ul><li><p>Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019). Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.</p></li>
-<li><p>Li, P., Redden, D. T. (2015). Comparing denominator degrees of freedom approximations for the generalized linear mixed model in analyzing binary outcome in small sample cluster-randomized trials. BMC Medical Research Methodology, 15(1), 38. doi: <a href="https://doi.org/10.1186/s12874-015-0026-x">10.1186/s12874-015-0026-x</a></p></li>
+<li><p>Li, P., Redden, D. T. (2015). Comparing denominator degrees of freedom approximations for the generalized linear mixed model in analyzing binary outcome in small sample cluster-randomized trials. BMC Medical Research Methodology, 15(1), 38. doi: <a href="https://doi.org/10.1186/s12874-015-0026-x" class="external-link">10.1186/s12874-015-0026-x</a></p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code>dof_betwithin()</code> is a small helper-function to calculate approximated
+    <div class="dont-index"><p><code><a href="../reference/p_value_betwithin.html">dof_betwithin()</a></code> is a small helper-function to calculate approximated
 degrees of freedom of model parameters, based on the "between-within" heuristic.</p></div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">dof_betwithin</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">p_value_betwithin</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Parameter            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 (Intercept) 9.306054e-80</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        Days 6.290140e-06</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># \donttest{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/p_value_betwithin.html">dof_betwithin</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/p_value_betwithin.html">p_value_betwithin</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt;     Parameter            p</span>
+<span class="co">#&gt; 1 (Intercept) 9.306054e-80</span>
+<span class="co">#&gt; 2        Days 6.290140e-06</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

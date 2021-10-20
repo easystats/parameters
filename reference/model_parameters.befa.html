@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Bayesian Exploratory Factor Analysis</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_BayesFM.R"><code>R/methods_BayesFM.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_BayesFM.R" class="external-link"><code>R/methods_BayesFM.R</code></a></small>
     <div class="hidden name"><code>model_parameters.befa.Rd</code></div>
     </div>
 
@@ -106,8 +106,9 @@
     <p>Format Bayesian Exploratory Factor Analysis objects from the BayesFM package.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for befa</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for befa</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   sort <span class="op">=</span> <span class="cn">FALSE</span>,
   centrality <span class="op">=</span> <span class="st">"median"</span>,
@@ -121,8 +122,8 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Bayesian EFA created by the <code><a href="https://rdrr.io/pkg/BayesFM/man/befa.html">BayesFM::befa</a></code>.</p></td>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+      <td><p>Bayesian EFA created by the <code><a href="https://rdrr.io/pkg/BayesFM/man/befa.html" class="external-link">BayesFM::befa</a></code>.</p></td>
     </tr><tr><th>sort</th>
       <td><p>Sort the loadings.</p></td>
     </tr><tr><th>centrality</th>
@@ -134,16 +135,16 @@
 to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></td>
     </tr><tr><th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">hdi()</a></code>), <code>"ETI"</code>
-(see <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">eti()</a></code>), <code>"BCI"</code> (see
-<code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bci()</a></code>) or <code>"SI"</code> (see <code><a href="https://easystats.github.io/bayestestR/reference/si.html">si()</a></code>).</p></td>
+<code>"HDI"</code> (default, see <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">hdi()</a></code>), <code>"ETI"</code>
+(see <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">eti()</a></code>), <code>"BCI"</code> (see
+<code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bci()</a></code>) or <code>"SI"</code> (see <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">si()</a></code>).</p></td>
     </tr><tr><th>test</th>
       <td><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">p_direction()</a></code>) and its results
+(e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>) and its results
 included in the summary output.</p></td>
     </tr><tr><th>verbose</th>
       <td><p>Toggle off warnings.</p></td>
@@ -158,43 +159,44 @@ included in the summary output.</p></td>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"BayesFM"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">BayesFM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFM/man/befa.html">befa</a></span><span class="op">(</span><span class="va">mtcars</span>, iter <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">efa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">results</span></span>
-<span class="r-in">  <span class="fu"><a href="convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BayesFM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> starting MCMC sampling...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     5%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    10%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    15%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    20%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    25%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    30%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    35%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    40%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    45%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> done with burn-in period</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    50%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    55%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    60%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    65%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    70%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    75%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    80%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    85%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    90%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    95%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> done with sampling!</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Latent variables</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F1 =~ am + mpg + vs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F2 =~ carb + cyl + disp + hp + wt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F3 =~ drat + gear + qsec</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="co"># \donttest{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BayesFM"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">BayesFM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFM/man/befa.html" class="external-link">befa</a></span><span class="op">(</span><span class="va">mtcars</span>, iter <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
+  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">efa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  <span class="va">results</span>
+  <span class="fu"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Loading required package: BayesFM</span>
+<span class="co">#&gt; starting MCMC sampling...</span>
+<span class="co">#&gt;     5%</span>
+<span class="co">#&gt;    10%</span>
+<span class="co">#&gt;    15%</span>
+<span class="co">#&gt;    20%</span>
+<span class="co">#&gt;    25%</span>
+<span class="co">#&gt;    30%</span>
+<span class="co">#&gt;    35%</span>
+<span class="co">#&gt;    40%</span>
+<span class="co">#&gt;    45%</span>
+<span class="co">#&gt; done with burn-in period</span>
+<span class="co">#&gt;    50%</span>
+<span class="co">#&gt;    55%</span>
+<span class="co">#&gt;    60%</span>
+<span class="co">#&gt;    65%</span>
+<span class="co">#&gt;    70%</span>
+<span class="co">#&gt;    75%</span>
+<span class="co">#&gt;    80%</span>
+<span class="co">#&gt;    85%</span>
+<span class="co">#&gt;    90%</span>
+<span class="co">#&gt;    95%</span>
+<span class="co">#&gt;   100%</span>
+<span class="co">#&gt; done with sampling!</span>
+<span class="co">#&gt; # Latent variables</span>
+<span class="co">#&gt; F1 =~ am + mpg + vs</span>
+<span class="co">#&gt; F2 =~ carb + cyl + disp + hp + wt</span>
+<span class="co">#&gt; F3 =~ drat + gear + qsec</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

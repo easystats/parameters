@@ -36,7 +36,7 @@ Multiply imputed repeated analyses (mira)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@ Multiply imputed repeated analyses (mira)
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -117,7 +117,7 @@ Multiply imputed repeated analyses (mira)
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Model Parameters</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/1_model_parameters.R"><code>R/1_model_parameters.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a></small>
     <div class="hidden name"><code>model_parameters.Rd</code></div>
     </div>
 
@@ -141,19 +141,20 @@ Multiply imputed repeated analyses (mira)
 <li><p><a href="model_parameters.mira.html">Multiply imputed repeated analyses</a> (<code>mira</code>)</p></li>
 </ul></div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">model_parameters</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu">parameters</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Statistical Model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods. Non-documented
 arguments are <code>digits</code>, <code>p_digits</code>, <code>ci_digits</code> and
 <code>footer_digits</code> to set the number of digits for the output.
-<code>group</code> can also be passed to the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method. See details
+<code>group</code> can also be passed to the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method. See details
 in <code><a href="print.parameters_model.html">print.parameters_model()</a></code> and 'Examples' in
 <code><a href="model_parameters.default.html">model_parameters.default()</a></code>.</p></td>
     </tr></table></div>
@@ -166,9 +167,9 @@ in <code><a href="print.parameters_model.html">print.parameters_model()</a></cod
     <h2>Note</h2>
     <p>The <code><a href="print.parameters_model.html">print()</a></code> method has several
 arguments to tweak the output. There is also a
-<a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a>
+<a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a>
 implemented in the
-<a href="https://easystats.github.io/see/"><strong>see</strong>-package</a>, and a dedicated
+<a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>, and a dedicated
 method for use inside rmarkdown files,
 <code><a href="display.parameters_model.html">print_md()</a></code>.</p>
     </div>
@@ -176,7 +177,7 @@ method for use inside rmarkdown files,
     <h2>Standardization of model coefficients</h2>
     
 
-<p>Standardization is based on <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_parameters()</a></code>. In case
+<p>Standardization is based on <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>. In case
 of <code>standardize = "refit"</code>, the data used to fit the model will be
 standardized and the model is completely refitted. In such cases, standard
 errors and confidence intervals refer to the standardized coefficient. The
@@ -220,7 +221,7 @@ variables as continuous: it also scales the coefficient by the standard
 deviation of model's matrix' parameter of factors levels (transformed to
 integers) or binary predictors. Although being inappropriate for these cases,
 this method is the one implemented by default in other software packages,
-such as <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html">lm.beta::lm.beta()</a></code>.</p></li>
+such as <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta::lm.beta()</a></code>.</p></li>
 <li><p><strong>smart</strong> (Standardization of Model's parameters with Adjustment,
 Reconnaissance and Transformation - <em>experimental</em>): Similar to <code>method = "posthoc"</code> in that it does not involve model refitting. The difference is
 that the SD (or MAD if <code>robust</code>) of the response is computed on the relevant
@@ -231,9 +232,9 @@ As a results, the coefficients for effects of factors are similar to a Glass'
 delta.</p></li>
 <li><p><strong>pseudo</strong> (<em>for 2-level (G)LMMs only</em>): In this (post-hoc) method, the
 response and the predictor are standardized based on the level of prediction
-(levels are detected with <code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html">performance::check_heterogeneity_bias()</a></code>): Predictors
+(levels are detected with <code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html" class="external-link">performance::check_heterogeneity_bias()</a></code>): Predictors
 are standardized based on their SD at level of prediction (see also
-<code><a href="https://easystats.github.io/datawizard/reference/demean.html">datawizard::demean()</a></code>); The outcome (in linear LMMs) is standardized based
+<code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">datawizard::demean()</a></code>); The outcome (in linear LMMs) is standardized based
 on a fitted random-intercept-model, where <code>sqrt(random-intercept-variance)</code>
 is used for level 2 predictors, and <code>sqrt(residual-variance)</code> is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
@@ -281,7 +282,7 @@ used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
-See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable">the R GLMM FAQ</a>
+See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable" class="external-link">the R GLMM FAQ</a>
 for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
@@ -327,27 +328,27 @@ and constructing CIs and p-values from the bootstrap distribution are available.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">bayestestR::eti()</a></code>.</p></li>
 </ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
 models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
 for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">bayestestR::hdi()</a></code>.</p></li>
 </ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>bias corrected and accelerated intervals</em> for the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bayestestR::bci()</a></code>.</p></li>
 </ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
 <em>support intervals</em> comparing the posterior samples against the prior samples;
-p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">bayestestR::si()</a></code>.</p></li>
 </ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
 using <em>parametric bootstrapping</em> (simulating data from the fitted model);
 p-values computed using the Wald method with a <em>normal-distribution)</em>
 (note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
-p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
-which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
+which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
     </div>
     <div id="interpretation-of-interaction-terms">
     <h2>Interpretation of Interaction Terms</h2>
@@ -363,10 +364,10 @@ of covariates, included as main effects or not, etc.). Their interpretation
 depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 that calculate estimated marginal means or marginal effects, such as
-<a href="https://CRAN.R-project.org/package=modelbased"><span class="pkg">modelbased</span></a>, <a href="https://CRAN.R-project.org/package=emmeans"><span class="pkg">emmeans</span></a> or <a href="https://CRAN.R-project.org/package=ggeffects"><span class="pkg">ggeffects</span></a>. To raise
+<a href="https://CRAN.R-project.org/package=modelbased" class="external-link"><span class="pkg">modelbased</span></a>, <a href="https://CRAN.R-project.org/package=emmeans" class="external-link"><span class="pkg">emmeans</span></a> or <a href="https://CRAN.R-project.org/package=ggeffects" class="external-link"><span class="pkg">ggeffects</span></a>. To raise
 awareness for this issue, you may use <code>print(...,show_formula=TRUE)</code>
 to add the model-specification to the output of the
-<code><a href="print.parameters_model.html">print()</a></code> method for <code>model_parameters()</code>.</p>
+<code><a href="print.parameters_model.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -378,7 +379,7 @@ regression models.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
+    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
     </div>
 

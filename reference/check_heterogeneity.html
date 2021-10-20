@@ -19,7 +19,7 @@ between-effect."><meta property="og:image" content="/logo.png"><!-- mathjax --><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@ between-effect."><meta property="og:image" content="/logo.png"><!-- mathjax --><
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -100,21 +100,22 @@ between-effect."><meta property="og:image" content="/logo.png"><!-- mathjax --><
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Check model predictor for heterogeneity bias</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/check_heterogeneity.R"><code>R/check_heterogeneity.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/check_heterogeneity.R" class="external-link"><code>R/check_heterogeneity.R</code></a></small>
     <div class="hidden name"><code>check_heterogeneity.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>check_heterogeneity()</code> checks if model predictors or variables may
+    <p><code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code> checks if model predictors or variables may
 cause a heterogeneity bias, i.e. if variables have a within- and/or
 between-effect.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">check_heterogeneity</span><span class="op">(</span><span class="va">x</span>, select <span class="op">=</span> <span class="cn">NULL</span>, group <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/check_heterogeneity.html">check_heterogeneity</a></span><span class="op">(</span><span class="va">x</span>, select <span class="op">=</span> <span class="cn">NULL</span>, group <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a mixed model object.</p></td>
     </tr><tr><th>select</th>
       <td><p>Character vector (or formula) with names of variables to select
@@ -129,19 +130,20 @@ argument will be ignored.</p></td>
     <div id="note">
     <h2>Note</h2>
     <p>Ths function will be removed in a future update. Please use
-<code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html">performance::check_heterogeneity_bias()</a></code>.</p>
+<code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html" class="external-link">performance::check_heterogeneity_bias()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>For further details, see documentation for <code><a href="https://easystats.github.io/datawizard/reference/demean.html">?datawizard::demean</a></code>.</p></div>
+    <div class="dont-index"><p>For further details, see documentation for <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">?datawizard::demean</a></code>.</p></div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">iris</span><span class="op">$</span><span class="va">ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># fake-ID</span></span>
-<span class="r-in"><span class="fu">check_heterogeneity</span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Possible heterogeneity bias due to following predictors: <span style="color: #BB0000;">Sepal.Length, Petal.Length</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<span class="va">iris</span><span class="op">$</span><span class="va">ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># fake-ID</span>
+<span class="fu"><a href="../reference/check_heterogeneity.html">check_heterogeneity</a></span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span>
+<span class="co">#&gt; Possible heterogeneity bias due to following predictors: Sepal.Length, Petal.Length</span>
 </code></pre></div>
     </div>
   </div>

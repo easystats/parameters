@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Model bootstrapping</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/bootstrap_model.R"><code>R/bootstrap_model.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/bootstrap_model.R" class="external-link"><code>R/bootstrap_model.R</code></a></small>
     <div class="hidden name"><code>bootstrap_model.Rd</code></div>
     </div>
 
@@ -106,25 +106,26 @@
     <p>Bootstrap a statistical model n times to return a data frame of estimates.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">bootstrap_model</span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bootstrap_model.html">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span>, iterations <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
-<span class="fu">bootstrap_model</span><span class="op">(</span>
+<span class="fu"><a href="../reference/bootstrap_model.html">bootstrap_model</a></span><span class="op">(</span>
   <span class="va">model</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
   type <span class="op">=</span> <span class="st">"ordinary"</span>,
-  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,
+  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,
   n_cpus <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
 <span class="co"># S3 method for merMod</span>
-<span class="fu">bootstrap_model</span><span class="op">(</span>
+<span class="fu"><a href="../reference/bootstrap_model.html">bootstrap_model</a></span><span class="op">(</span>
   <span class="va">model</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
   type <span class="op">=</span> <span class="st">"parametric"</span>,
-  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,
+  parallel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"multicore"</span>, <span class="st">"snow"</span><span class="op">)</span>,
   n_cpus <span class="op">=</span> <span class="fl">1</span>,
   verbose <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
@@ -132,7 +133,7 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Statistical model.</p></td>
     </tr><tr><th>iterations</th>
       <td><p>The number of draws to simulate/bootstrap.</p></td>
@@ -141,8 +142,8 @@
     </tr><tr><th>type</th>
       <td><p>Character string specifying the type of bootstrap. For mixed models
 of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"</code> (default) or
-<code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">?lme4::bootMer</a></code> for details). For all
-other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pkg/boot/man/boot.html">?boot::boot</a></code> (defaults to
+<code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code> for details). For all
+other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to
 <code>"ordinary"</code>).</p></td>
     </tr><tr><th>parallel</th>
       <td><p>The type of parallel operation to be used (if any).</p></td>
@@ -158,10 +159,10 @@ other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pk
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>By default, <code><a href="https://rdrr.io/pkg/boot/man/boot.html">boot::boot()</a></code> is used to generate bootstraps from
-the model data, which are then used to <code><a href="https://rdrr.io/r/stats/update.html">update()</a></code> the model, i.e. refit
+    <p>By default, <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">boot::boot()</a></code> is used to generate bootstraps from
+the model data, which are then used to <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code> the model, i.e. refit
 the model with the bootstrapped samples. For <code>merMod</code> objects (<strong>lme4</strong>)
-or models from <strong>glmmTMB</strong>, the <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html">lme4::bootMer()</a></code> function is used to
+or models from <strong>glmmTMB</strong>, the <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">lme4::bootMer()</a></code> function is used to
 obtain bootstrapped samples. <code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code> summarizes the
 bootstrapped model estimates.</p>
     </div>
@@ -188,18 +189,19 @@ to obtain non-parametric p-values.</p>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st">"boot"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">bootstrap_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rvlenth/emmeans">"emmeans"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">consec</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"boot"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap_model.html">bootstrap_model</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span>
+
+  <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rvlenth/emmeans" class="external-link">"emmeans"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">consec</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">}</span>
+<span class="op">}</span>
+<span class="op">}</span>
 </code></pre></div>
     </div>
   </div>

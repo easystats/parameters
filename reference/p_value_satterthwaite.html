@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Satterthwaite approximation for SEs, CIs and p-values</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/ci_satterthwaite.R"><code>R/ci_satterthwaite.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/dof_satterthwaite.R"><code>R/dof_satterthwaite.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/p_value_satterthwaite.R"><code>R/p_value_satterthwaite.R</code></a>, and 1 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/ci_satterthwaite.R" class="external-link"><code>R/ci_satterthwaite.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/dof_satterthwaite.R" class="external-link"><code>R/dof_satterthwaite.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/p_value_satterthwaite.R" class="external-link"><code>R/p_value_satterthwaite.R</code></a>, and 1 more</small>
     <div class="hidden name"><code>p_value_satterthwaite.Rd</code></div>
     </div>
 
@@ -106,17 +106,18 @@
     <p>An approximate F-test based on the Satterthwaite (1946) approach.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_satterthwaite</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/p_value_satterthwaite.html">ci_satterthwaite</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
 
-<span class="fu">dof_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu"><a href="../reference/p_value_satterthwaite.html">p_value_satterthwaite</a></span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-<span class="fu">se_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/p_value_satterthwaite.html">se_satterthwaite</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -146,7 +147,7 @@ Kenward-Roger or Satterthwaite are limited to linear mixed models only.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code>dof_satterthwaite()</code> and <code>se_satterthwaite()</code> are small helper-functions
+    <div class="dont-index"><p><code><a href="../reference/p_value_satterthwaite.html">dof_satterthwaite()</a></code> and <code><a href="../reference/p_value_satterthwaite.html">se_satterthwaite()</a></code> are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Satterthwaite (1946) approach.
 <br><br><code><a href="p_value_kenward.html">dof_kenward()</a></code> and <code><a href="p_value_ml1.html">dof_ml1()</a></code>
@@ -155,15 +156,16 @@ approximate degrees of freedom based on Kenward-Roger's method or the "m-l-1" ru
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Parameter            p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  (Intercept) 9.605145e-01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Sepal.Length 7.882014e-29</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># \donttest{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/p_value_satterthwaite.html">p_value_satterthwaite</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt;      Parameter            p</span>
+<span class="co">#&gt; 1  (Intercept) 9.605145e-01</span>
+<span class="co">#&gt; 2 Sepal.Length 7.882014e-29</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

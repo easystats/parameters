@@ -18,7 +18,7 @@ linear models (GLMs)."><meta property="og:image" content="/logo.png"><!-- mathja
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ linear models (GLMs)."><meta property="og:image" content="/logo.png"><!-- mathja
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,7 +99,7 @@ linear models (GLMs)."><meta property="og:image" content="/logo.png"><!-- mathja
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from (General) Linear Models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/1_model_parameters.R"><code>R/1_model_parameters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_mfx.R"><code>R/methods_mfx.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_mfx.R" class="external-link"><code>R/methods_mfx.R</code></a></small>
     <div class="hidden name"><code>model_parameters.default.Rd</code></div>
     </div>
 
@@ -108,8 +108,9 @@ linear models (GLMs)."><meta property="og:image" content="/logo.png"><!-- mathja
 linear models (GLMs).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for default</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for default</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   ci_method <span class="op">=</span> <span class="cn">NULL</span>,
@@ -128,7 +129,7 @@ linear models (GLMs).</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for glm</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   ci_method <span class="op">=</span> <span class="cn">NULL</span>,
@@ -145,7 +146,7 @@ linear models (GLMs).</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for logitor</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -159,12 +160,12 @@ linear models (GLMs).</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for poissonmfx</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   robust <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -174,12 +175,12 @@ linear models (GLMs).</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for betamfx</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   robust <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -190,7 +191,7 @@ linear models (GLMs).</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Model object.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -215,7 +216,7 @@ case of bootstrapped frequentist models.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_parameters()</a></code>.
+<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
@@ -244,11 +245,11 @@ from non-Gaussian families.</p></td>
 robust standard errors. Additional arguments like <code>vcov_estimation</code> or
 <code>vcov_type</code> are passed down to other methods, see
 <code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
-and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html">this vignette</a>
+and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
 for working examples.</p></td>
     </tr><tr><th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html">stats::p.adjust()</a></code> for details. Further
+adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
@@ -284,7 +285,7 @@ names.</p></td>
       <td><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html">bayestestR::describe_posterior()</a></code>.</p></td>
+are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></td>
     </tr><tr><th>df_method</th>
       <td><p>Deprecated. Please use <code>ci_method</code>.</p></td>
     </tr><tr><th>component</th>
@@ -292,7 +293,7 @@ are passed down to <code><a href="https://easystats.github.io/bayestestR/referen
 one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
 <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
 <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
-<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
+<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
     </tr></table></div>
 
     <div id="value">
@@ -329,7 +330,7 @@ used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
-See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable">the R GLMM FAQ</a>
+See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable" class="external-link">the R GLMM FAQ</a>
 for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
@@ -375,114 +376,115 @@ and constructing CIs and p-values from the bootstrap distribution are available.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">bayestestR::eti()</a></code>.</p></li>
 </ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
 models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
 for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">bayestestR::hdi()</a></code>.</p></li>
 </ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>bias corrected and accelerated intervals</em> for the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bayestestR::bci()</a></code>.</p></li>
 </ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
 <em>support intervals</em> comparing the posterior samples against the prior samples;
-p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">bayestestR::si()</a></code>.</p></li>
 </ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
 using <em>parametric bootstrapping</em> (simulating data from the fitted model);
 p-values computed using the Wald method with a <em>normal-distribution)</em>
 (note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
-p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
-which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
+which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
+    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.001 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># bootstrapped parameters</span></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.64 | [35.25, 43.90] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.23 | [-4.87, -1.89] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.49 | [-2.23, -0.64] | 0.002 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># standardized parameters</span></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># different p-value style in output</span></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, p_digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |           p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 3.04318e-20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 0.00022    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.00106    </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">3</span>, ci_digits <span class="op">=</span> <span class="fl">4</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |    SE |             95% CI |  t(29) |           p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 3.04318e-20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 2.22020e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 1.06428e-03</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># logistic regression model</span></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Log-Odds |   SE |         95% CI |     z |     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |    10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># show odds ratio / exponentiated coefficients</span></span>
-<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Odds Ratio |       SE |             95% CI |     z |     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |   40911.34 | 1.71e+05 | [120.16, 6.95e+09] |  2.55 | 0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       8.17 |    12.63 | [  0.59,   514.10] |  1.36 | 0.174</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       0.05 |     0.07 | [  0.00,     0.34] | -2.12 | 0.034</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(29) |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | &lt; .001</span>
+<span class="co">#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | &lt; .001</span>
+<span class="co">#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.001 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald t-distribution approximation.</span>
+
+<span class="co"># bootstrapped parameters</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |         95% CI |      p</span>
+<span class="co">#&gt; ---------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       39.71 | [35.27, 43.88] | &lt; .001</span>
+<span class="co">#&gt; wt          |       -3.22 | [-5.02, -1.96] | &lt; .001</span>
+<span class="co">#&gt; cyl         |       -1.47 | [-2.22, -0.71] | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
+
+<span class="co"># standardized parameters</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI |    t(29) |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | &gt; .999</span>
+<span class="co">#&gt; wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001</span>
+<span class="co">#&gt; cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald t-distribution approximation.</span>
+
+<span class="co"># different p-value style in output</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, p_digits <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(29) |           p</span>
+<span class="co">#&gt; -----------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       39.69 | 1.71 | [36.18, 43.19] | 23.14 | 3.04318e-20</span>
+<span class="co">#&gt; wt          |       -3.19 | 0.76 | [-4.74, -1.64] | -4.22 | 0.00022    </span>
+<span class="co">#&gt; cyl         |       -1.51 | 0.41 | [-2.36, -0.66] | -3.64 | 0.00106    </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald t-distribution approximation.</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">3</span>, ci_digits <span class="op">=</span> <span class="fl">4</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Coefficient |    SE |             95% CI |  t(29) |           p</span>
+<span class="co">#&gt; -----------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |      39.686 | 1.715 | [36.1787, 43.1938] | 23.141 | 3.04318e-20</span>
+<span class="co">#&gt; wt          |      -3.191 | 0.757 | [-4.7390, -1.6429] | -4.216 | 2.22020e-04</span>
+<span class="co">#&gt; cyl         |      -1.508 | 0.415 | [-2.3559, -0.6597] | -3.636 | 1.06428e-03</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald t-distribution approximation.</span>
+
+<span class="co"># \donttest{</span>
+<span class="co"># logistic regression model</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |     p</span>
+<span class="co">#&gt; --------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |    10.62 | 4.17 | [ 4.79, 22.66] |  2.55 | 0.011</span>
+<span class="co">#&gt; wt          |     2.10 | 1.55 | [-0.53,  6.24] |  1.36 | 0.174</span>
+<span class="co">#&gt; cyl         |    -2.93 | 1.38 | [-6.92, -1.07] | -2.12 | 0.034</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
+<span class="co">#&gt;   using a Wald z-distribution approximation.</span>
+
+<span class="co"># show odds ratio / exponentiated coefficients</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; Parameter   | Odds Ratio |       SE |             95% CI |     z |     p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |   40911.34 | 1.71e+05 | [120.16, 6.95e+09] |  2.55 | 0.011</span>
+<span class="co">#&gt; wt          |       8.17 |    12.63 | [  0.59,   514.10] |  1.36 | 0.174</span>
+<span class="co">#&gt; cyl         |       0.05 |     0.07 | [  0.00,     0.34] | -2.12 | 0.034</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (profile-likelihood) and p values (two-tailed) computed</span>
+<span class="co">#&gt;   using a Wald z-distribution approximation.</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

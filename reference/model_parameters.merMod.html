@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Mixed Models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_cplm.R"><code>R/methods_cplm.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_lme4.R"><code>R/methods_lme4.R</code></a>, and 2 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_cplm.R" class="external-link"><code>R/methods_cplm.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_lme4.R" class="external-link"><code>R/methods_lme4.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>model_parameters.merMod.Rd</code></div>
     </div>
 
@@ -106,8 +106,9 @@
     <p>Parameters from (linear) mixed models.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for cpglmm</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for cpglmm</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -124,7 +125,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for glmmTMB</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -147,7 +148,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for merMod</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -170,7 +171,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for mixor</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   effects <span class="op">=</span> <span class="st">"all"</span>,
@@ -183,7 +184,7 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for clmm</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -201,7 +202,7 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A mixed model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -215,7 +216,7 @@
       <td><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_parameters()</a></code>.
+<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
@@ -260,7 +261,7 @@ options (which vary depending on the model class): <code>"residual"</code>,
 cases <code>"wald"</code> is used then.</p></td>
     </tr><tr><th>p_adjust</th>
       <td><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html">stats::p.adjust()</a></code> for details. Further
+adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
@@ -278,7 +279,7 @@ with zero-inflated component. <code>component</code> may be one of <code>"condit
 (default). May be abbreviated.</p></td>
     </tr><tr><th>wb_component</th>
       <td><p>Logical, if <code>TRUE</code> and models contains within- and
-between-effects (see <code><a href="https://easystats.github.io/datawizard/reference/demean.html">datawizard::demean()</a></code>), the <code>Component</code> column
+between-effects (see <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">datawizard::demean()</a></code>), the <code>Component</code> column
 will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 <code>Component</code> column indicates, which parameters belong to the
@@ -335,7 +336,7 @@ names.</p></td>
 robust standard errors. Additional arguments like <code>vcov_estimation</code> or
 <code>vcov_type</code> are passed down to other methods, see
 <code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
-and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html">this vignette</a>
+and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
 for working examples.</p></td>
     </tr></table></div>
 
@@ -345,7 +346,7 @@ for working examples.</p></td>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
     <div id="confidence-intervals-for-random-effect-variances">
     <h2>Confidence intervals for random effect variances</h2>
@@ -386,7 +387,7 @@ used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
-See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable">the R GLMM FAQ</a>
+See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable" class="external-link">the R GLMM FAQ</a>
 for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
@@ -432,122 +433,123 @@ and constructing CIs and p-values from the bootstrap distribution are available.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">bayestestR::eti()</a></code>.</p></li>
 </ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
 models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
 for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">bayestestR::hdi()</a></code>.</p></li>
 </ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>bias corrected and accelerated intervals</em> for the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bayestestR::bci()</a></code>.</p></li>
 </ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
 <em>support intervals</em> comparing the posterior samples against the prior samples;
-p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">bayestestR::si()</a></code>.</p></li>
 </ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
 using <em>parametric bootstrapping</em> (simulating data from the fitted model);
 p-values computed using the Wald method with a <em>normal-distribution)</em>
 (note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
-p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
-which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
+which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
+    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: lme4</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘lme4’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:nlme’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     lmList</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(28) |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       36.19 | 2.19 | [31.70, 40.68] | 16.52 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.05 | 0.64 | [-6.36, -3.73] | -7.89 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: gear) |        1.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual)        |        2.91</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
-<span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB">"glmmTMB"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html">glmmTMB</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
-<span class="r-in">    ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,</span>
-<span class="r-in">    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">poisson</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">Salamanders</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects (Count Model) </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Log-Mean |   SE |         95% CI |     z |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |    -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [PR]    |    -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [DM]    |     0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [EC-A]  |    -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [EC-L]  |     0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [DES-L] |     0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> spp [DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mined [no]  |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects (Zero-Inflated Model) </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects Variances </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: site) |        0.33</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual)        |        1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects (Zero-Inflated Model) </span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter     | Coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual) |        1.00</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span>, iterations <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bootstrapping only returns fixed effects of the mixed model.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       35.80 | [32.13, 39.17] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.04 | [-5.93, -4.22] | &lt; .001</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
-<span class="r-in"><span class="co"># }</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Loading required package: lme4</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: ‘lme4’</span>
+<span class="co">#&gt; The following object is masked from ‘package:nlme’:</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     lmList</span>
+<span class="co">#&gt; # Fixed Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       36.19 | 2.19 | [31.70, 40.68] | 16.52 | &lt; .001</span>
+<span class="co">#&gt; wt          |       -5.05 | 0.64 | [-6.36, -3.73] | -7.89 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Coefficient</span>
+<span class="co">#&gt; ----------------------------------</span>
+<span class="co">#&gt; SD (Intercept: gear) |        1.26</span>
+<span class="co">#&gt; SD (Residual)        |        2.91</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="co">#&gt;   Wald t-distribution approximation.</span>
+<span class="co"># \donttest{</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">)</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span>
+    <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,
+    ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,
+    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>,
+    data <span class="op">=</span> <span class="va">Salamanders</span>
+  <span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; # Fixed Effects (Count Model) </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Mean |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |    -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 </span>
+<span class="co">#&gt; spp [PR]    |    -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001</span>
+<span class="co">#&gt; spp [DM]    |     0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 </span>
+<span class="co">#&gt; spp [EC-A]  |    -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 </span>
+<span class="co">#&gt; spp [EC-L]  |     0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001</span>
+<span class="co">#&gt; spp [DES-L] |     0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001</span>
+<span class="co">#&gt; spp [DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
+<span class="co">#&gt; mined [no]  |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model) </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
+<span class="co">#&gt; mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects Variances </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Coefficient</span>
+<span class="co">#&gt; ----------------------------------</span>
+<span class="co">#&gt; SD (Intercept: site) |        0.33</span>
+<span class="co">#&gt; SD (Residual)        |        1.00</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects (Zero-Inflated Model) </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter     | Coefficient</span>
+<span class="co">#&gt; ---------------------------</span>
+<span class="co">#&gt; SD (Residual) |        1.00</span>
+
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, bootstrap <span class="op">=</span> <span class="cn">TRUE</span>, iterations <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Warning: Bootstrapping only returns fixed effects of the mixed model.</span>
+<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |         95% CI |      p</span>
+<span class="co">#&gt; ---------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       35.62 | [32.19, 39.94] | &lt; .001</span>
+<span class="co">#&gt; wt          |       -5.02 | [-6.49, -3.78] | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
+<span class="co"># }</span>
 </code></pre></div>
     </div>
   </div>

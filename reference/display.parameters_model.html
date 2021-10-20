@@ -18,7 +18,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,17 +99,18 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Print tables in different output formats</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/display.R"><code>R/display.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/format.R"><code>R/format.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/print_html.R"><code>R/print_html.R</code></a>, and 1 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/display.R" class="external-link"><code>R/display.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/format.R" class="external-link"><code>R/format.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/print_html.R" class="external-link"><code>R/print_html.R</code></a>, and 1 more</small>
     <div class="hidden name"><code>display.parameters_model.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Prints tables (i.e. data frame) in different output formats.
-<code><a href="https://easystats.github.io/insight/reference/display.html">print_md()</a></code> is a alias for <code>display(format = "markdown")</code>.</p>
+<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> is a alias for <code>display(format = "markdown")</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for parameters_model</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for parameters_model</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>
   <span class="va">object</span>,
   format <span class="op">=</span> <span class="st">"markdown"</span>,
   pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -123,7 +124,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   ci_digits <span class="op">=</span> <span class="fl">2</span>,
   p_digits <span class="op">=</span> <span class="fl">3</span>,
   footer_digits <span class="op">=</span> <span class="fl">3</span>,
-  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
+  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
   show_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   show_formula <span class="op">=</span> <span class="cn">FALSE</span>,
   zap_small <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -132,21 +133,21 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span class="op">)</span>
 
 <span class="co"># S3 method for parameters_sem</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>
   <span class="va">object</span>,
   format <span class="op">=</span> <span class="st">"markdown"</span>,
   digits <span class="op">=</span> <span class="fl">2</span>,
   ci_digits <span class="op">=</span> <span class="fl">2</span>,
   p_digits <span class="op">=</span> <span class="fl">3</span>,
-  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
+  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
 <span class="co"># S3 method for parameters_efa_summary</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">3</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_efa</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>
   <span class="va">object</span>,
   format <span class="op">=</span> <span class="st">"markdown"</span>,
   digits <span class="op">=</span> <span class="fl">2</span>,
@@ -157,10 +158,10 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span class="op">)</span>
 
 <span class="co"># S3 method for equivalence_test_lm</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">object</span>, format <span class="op">=</span> <span class="st">"markdown"</span>, digits <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_model</span>
-<span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span>
+<span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span>
   <span class="va">x</span>,
   pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,
   split_components <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -177,7 +178,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span class="op">)</span>
 
 <span class="co"># S3 method for parameters_model</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_html</a></span><span class="op">(</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span>
   <span class="va">x</span>,
   pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,
   split_components <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -190,7 +191,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   ci_digits <span class="op">=</span> <span class="fl">2</span>,
   p_digits <span class="op">=</span> <span class="fl">3</span>,
   footer_digits <span class="op">=</span> <span class="fl">3</span>,
-  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
+  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
   show_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   show_formula <span class="op">=</span> <span class="cn">FALSE</span>,
   zap_small <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -200,7 +201,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span class="op">)</span>
 
 <span class="co"># S3 method for parameters_model</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md</a></span><span class="op">(</span>
   <span class="va">x</span>,
   pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,
   split_components <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -213,7 +214,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   ci_digits <span class="op">=</span> <span class="fl">2</span>,
   p_digits <span class="op">=</span> <span class="fl">3</span>,
   footer_digits <span class="op">=</span> <span class="fl">3</span>,
-  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
+  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span>,
   show_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   show_formula <span class="op">=</span> <span class="cn">FALSE</span>,
   zap_small <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -224,7 +225,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
       <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
 <code><a href="simulate_parameters.html">simulate_parameters()</a></code>,
 <code><a href="equivalence_test.lm.html">equivalence_test()</a></code> or
@@ -264,7 +265,7 @@ significant figures. May also be <code>"signif"</code> to return significant
 figures or <code>"scientific"</code> to return scientific notation. Control the
 number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
 to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
-for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html">signif()</a></code>).</p></td>
+for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></td>
     </tr><tr><th>footer_digits</th>
       <td><p>Number of decimal places for values in the footer summary.</p></td>
     </tr><tr><th>ci_brackets</th>
@@ -321,26 +322,27 @@ class <code>gt_tbl</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code><a href="https://easystats.github.io/insight/reference/display.html">display()</a></code> is useful when the table-output from functions,
+    <p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> is useful when the table-output from functions,
 which is usually printed as formatted text-table to console, should
 be formatted for pretty table-rendering in markdown documents, or if
 knitted from rmarkdown to PDF or Word files. See
-<a href="https://easystats.github.io/parameters/articles/model_parameters_formatting.html">vignette</a>
+<a href="https://easystats.github.io/parameters/articles/model_parameters_formatting.html" class="external-link">vignette</a>
 for examples.</p>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
+<span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |</span>
+<span class="co">#&gt; |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|</span>
+<span class="co">#&gt; |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |</span>
+<span class="co">#&gt; |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
+<span class="co">#&gt; |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
 </code></pre></div>
     </div>
   </div>

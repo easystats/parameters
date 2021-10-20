@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/easystats/parameters/">
+  <a href="https://github.com/easystats/parameters/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Bayesian Models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_base.R"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_brms.R"><code>R/methods_brms.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_rstanarm.R"><code>R/methods_rstanarm.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_brms.R" class="external-link"><code>R/methods_brms.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_rstanarm.R" class="external-link"><code>R/methods_rstanarm.R</code></a></small>
     <div class="hidden name"><code>model_parameters.stanreg.Rd</code></div>
     </div>
 
@@ -106,14 +106,15 @@
     <p>Parameters from Bayesian models.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for data.frame</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># S3 method for data.frame</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   centrality <span class="op">=</span> <span class="st">"median"</span>,
   dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   ci_method <span class="op">=</span> <span class="st">"hdi"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
+  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
   rope_range <span class="op">=</span> <span class="st">"default"</span>,
   rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
   keep <span class="op">=</span> <span class="cn">NULL</span>,
@@ -124,17 +125,17 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for brmsfit</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   centrality <span class="op">=</span> <span class="st">"median"</span>,
   dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   ci_method <span class="op">=</span> <span class="st">"hdi"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
+  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
   rope_range <span class="op">=</span> <span class="st">"default"</span>,
   rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
   bf_prior <span class="op">=</span> <span class="cn">NULL</span>,
-  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,
+  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,
   priors <span class="op">=</span> <span class="cn">FALSE</span>,
   effects <span class="op">=</span> <span class="st">"fixed"</span>,
   component <span class="op">=</span> <span class="st">"all"</span>,
@@ -149,17 +150,17 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for stanreg</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   centrality <span class="op">=</span> <span class="st">"median"</span>,
   dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
   ci_method <span class="op">=</span> <span class="st">"hdi"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
+  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
   rope_range <span class="op">=</span> <span class="st">"default"</span>,
   rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
   bf_prior <span class="op">=</span> <span class="cn">NULL</span>,
-  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,
+  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,
   priors <span class="op">=</span> <span class="cn">TRUE</span>,
   effects <span class="op">=</span> <span class="st">"fixed"</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -174,7 +175,7 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Bayesian model (including SEM from <span class="pkg">blavaan</span>. May also be
 a data frame with posterior samples.</p></td>
     </tr><tr><th>centrality</th>
@@ -183,7 +184,7 @@ a data frame with posterior samples.</p></td>
       <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
     </tr><tr><th>ci</th>
       <td><p>Credible Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>). See
-<code><a href="https://easystats.github.io/bayestestR/reference/ci.html">bayestestR::ci()</a></code> for further details.</p></td>
+<code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">bayestestR::ci()</a></code> for further details.</p></td>
     </tr><tr><th>ci_method</th>
       <td><p>Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
@@ -200,7 +201,7 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">p_direction()</a></code>) and its results
+(e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>) and its results
 included in the summary output.</p></td>
     </tr><tr><th>rope_range</th>
       <td><p>ROPE's lower and higher bounds. Should be a list of two
@@ -297,7 +298,7 @@ from non-Gaussian families.</p></td>
       <td><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_parameters()</a></code>.
+<code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
@@ -326,9 +327,9 @@ are shown.</p></td>
 <code>bf_prior</code> and <code>priors</code> refer to the <em>original</em>
 <code>model</code>. If <code>model</code> is a data frame, arguments <code>diagnostic</code>,
 <code>bf_prior</code> and <code>priors</code> are ignored. <br><br> There is also a
-<a href="https://easystats.github.io/see/articles/parameters.html"><code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method</a>
+<a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a>
 implemented in the
-<a href="https://easystats.github.io/see/"><span class="pkg">see</span>-package</a>.</p>
+<a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
     <div id="confidence-intervals-and-approximation-of-degrees-of-freedom">
     <h2>Confidence intervals and approximation of degrees of freedom</h2>
@@ -360,7 +361,7 @@ used instead.</p></li>
 </ul><p><strong>Methods for mixed models:</strong></p>
 <p>Compared to fixed effects (or single-level) models, determining appropriate
 df for Wald-based inference in mixed models is more difficult.
-See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable">the R GLMM FAQ</a>
+See <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#what-are-the-p-values-listed-by-summaryglmerfit-etc.-are-they-reliable" class="external-link">the R GLMM FAQ</a>
 for a discussion.</p>
 <p>Several approximate methods for computing df are available, but you should
 also consider instead using profile likelihood (<code>"profile"</code>) or bootstrap ("<code>boot"</code>)
@@ -406,46 +407,47 @@ and constructing CIs and p-values from the bootstrap distribution are available.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html">bayestestR::eti()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">bayestestR::eti()</a></code>.</p></li>
 </ul><p><code>"hdi"</code></p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>. For non-Bayesian
 models, only applies if <code>bootstrap = TRUE</code>. CIs computed as <em>highest density intervals</em>
 for the bootstrap or posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html">bayestestR::hdi()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">bayestestR::hdi()</a></code>.</p></li>
 </ul><p><code>"bci"</code> (or <code>"bcai"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>bias corrected and accelerated intervals</em> for the bootstrap or
 posterior samples; p-values are based on the <em>probability of direction</em>.
-See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html">bayestestR::bci()</a></code>.</p></li>
+See <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bayestestR::bci()</a></code>.</p></li>
 </ul><p><code>"si"</code></p><ul><li><p>Applies to <em>Bayesian models</em> with proper priors. CIs computed as
 <em>support intervals</em> comparing the posterior samples against the prior samples;
-p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html">bayestestR::si()</a></code>.</p></li>
+p-values are based on the <em>probability of direction</em>. See <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">bayestestR::si()</a></code>.</p></li>
 </ul><p><code>"boot"</code></p><ul><li><p>Applies to <em>non-Bayesian models</em> of class <code>merMod</code>. CIs computed
 using <em>parametric bootstrapping</em> (simulating data from the fitted model);
 p-values computed using the Wald method with a <em>normal-distribution)</em>
 (note: this might change in a future update!).</p></li>
 </ul><p>For all iteration-based methods other than <code>"boot"</code>
 (<code>"hdi"</code>, <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, <code>"bcai"</code>),
-p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html">bayestestR::p_direction()</a></code>),
-which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html">bayestestR::pd_to_p()</a></code>.</p>
+p-values are based on the probability of direction (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>),
+which is converted into a p-value using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::pd_to_p()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html">insight::standardize_names()</a></code> to
+    <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/">"rstanarm"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">iris</span>, iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
+<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span>
+    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span>,
+    data <span class="op">=</span> <span class="va">iris</span>, iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>
+  <span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="op">}</span>
 </code></pre></div>
     </div>
   </div>
