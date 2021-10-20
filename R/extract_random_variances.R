@@ -90,7 +90,8 @@
                                              ci = .95,
                                              effects = "random",
                                              component = "conditional",
-                                             ci_method = NULL, ...) {
+                                             ci_method = NULL,
+                                             ...) {
   ran_intercept <- tryCatch(
     {
       data.frame(
@@ -253,7 +254,6 @@
 
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param) {
-  add_ci <- FALSE
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -267,36 +267,60 @@
 
       var_ci_corr_param <- grepl("^cor ", rn)
       var_ci_sigma_param <- rn == "sigma"
-      add_ci <- TRUE
+
+      out$CI <- ci
+
+      out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
+      out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
+      out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
+
+      out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
+      out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
+      out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
     }
   } else if (inherits(model, "glmmTMB")) {
-
-    return(out)
-
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
-    var_ci <- rbind(
-      as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
-      as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+    out <- tryCatch(
+      {
+        var_ci <- rbind(
+          as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
+          as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+        )
+        colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
+        var_ci$Component <- "conditional"
+
+        var_ci$Parameter <- row.names(var_ci)
+        zi_rows <- grepl("^zi\\.", var_ci$Parameter)
+        if (any(zi_rows)) {
+          var_ci$Component[zi_rows] <- "zero_inflated"
+        }
+
+        # remove cond/zi prefix
+        var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
+        # fix SD and Cor names
+        var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
+        var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1:", var_ci$Parameter)
+        # minor cleaning
+        var_ci$Parameter <- gsub("((", "(", var_ci$Parameter, fixed = TRUE)
+        var_ci$Parameter <- gsub("))", ")", var_ci$Parameter, fixed = TRUE)
+        var_ci$Parameter <- gsub(")~", "~", var_ci$Parameter, fixed = TRUE)
+        # fix sigma
+        var_ci$Parameter[var_ci$Parameter == "sigma"] <- "SD (Observations)"
+        # add name of group factor to cor
+        cor_params <- grepl("^Cor ", var_ci$Parameter)
+        if (any(cor_params)) {
+          group_factor <- insight::find_random(model, flatten = TRUE)
+          var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
+        }
+
+        out$CI_low <- NULL
+        out$CI_high <- NULL
+        merge(out, var_ci, sort = FALSE)
+      },
+      error = function(e) {
+        out
+      }
     )
-    colnames(var_ci) <- c("CI_low", "CI_high")
-
-    rn <- row.names(var_ci)
-    var_ci_corr_param <- grepl("^Cor\\.", rn)
-    var_ci_sigma_param <- rn == "sigma"
-    add_ci <- TRUE
-  }
-
-  # only add CI if we reliably found that information
-  if (add_ci) {
-    out$CI <- ci
-
-    out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
-    out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
-    out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
-
-    out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
-    out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
-    out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
   }
 
   out

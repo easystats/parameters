@@ -112,10 +112,13 @@ model_parameters.glmmTMB <- function(model,
 
   if (effects %in% c("random", "all") && isTRUE(group_level)) {
     params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
+    if (length(insight::find_random(model, flatten = TRUE)) > 1) {
+      warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
+    }
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, verbose = verbose)
   }
 
 
