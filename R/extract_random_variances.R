@@ -274,12 +274,17 @@
       var_ci_sigma_param <- rn == "sigma"
 
       out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
-      out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
-      out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
-
       out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
-      out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
-      out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+
+      if (any(sigma_param) && any(var_ci_sigma_param)) {
+        out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
+        out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
+      }
+
+      if (any(corr_param) && any(var_ci_corr_param)) {
+        out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
+        out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+      }
     }
   } else if (inherits(model, "glmmTMB")) {
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
