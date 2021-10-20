@@ -247,10 +247,10 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 }
 \section{Confidence intervals for random effect variances}{
 
-When \code{ci_method = "profile"} and \code{effects} is either \code{"random"} or \code{"all"},
-profiled confidence intervals are computed for the random effects. For all
-other options of \code{ci_method}, confidence intervals for random effects will
-be missing.
+When \code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
+\code{"random"} or \code{"all"}, profiled resp. bootstrapped confidence intervals are
+computed for the random effects. For all other options of \code{ci_method},
+confidence intervals for random effects will be missing.
 }
 
 \section{Confidence intervals and approximation of degrees of freedom}{

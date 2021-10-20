@@ -24,6 +24,8 @@
 #' @param component Model component for which parameters should be shown. See
 #'   the documentation for your object's class in [`model_parameters()`] for
 #'   further details.
+#' @param iterations The number of bootstrap replicates. Only applies to models
+#'   of class `merMod` when `method=boot`.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed down to [`standard_error_robust()`]
 #'   when confidence intervals or p-values based on robust standard errors
@@ -31,8 +33,8 @@
 #'
 #' @return A data frame containing the CI bounds.
 #'
-#' @note `ci_robust()` resp. `ci(robust = TRUE)` rely on the \pkg{sandwich}
-#'   or \pkg{clubSandwich} package (the latter if `vcov_estimation = "CR"` for
+#' @note `ci_robust()` resp. `ci(robust=TRUE)` rely on the \pkg{sandwich}
+#'   or \pkg{clubSandwich} package (the latter if `vcov_estimation="CR"` for
 #'   cluster-robust standard errors) and will thus only work for those models
 #'   supported by those packages.
 #'

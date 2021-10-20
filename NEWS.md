@@ -4,6 +4,16 @@
 
 * Improved speed performance for `model_parameters()`, in particular for glm's.
 
+## Changes to functions
+
+* `model_parameters()` for `merMod` models now also computes CIs for the
+  random SD parameters when `ci_method="boot"` (previously, this was only
+  possible when `ci_method` was `"profile"`).
+
+## Bug fixes 
+
+* Fixed bug with `ci()` for class `merMod` when `method="boot"`.
+
 # parameters 0.15.0
 
 ## Breaking changes

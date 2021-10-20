@@ -229,8 +229,8 @@
   out[ci_cols] <- NA
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(ci_method) && ci_method == "profile") {
-    var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = "profile", level = ci)))
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(ci_method) && ci_method %in% c("profile", "boot")) {
+    var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
     colnames(var_ci) <- c("CI_low", "CI_high")
 
     rn <- row.names(var_ci)

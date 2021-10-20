@@ -19,7 +19,15 @@
   ...
 )
 
-\method{ci}{merMod}(x, ci = 0.95, dof = NULL, method = "wald", robust = FALSE, ...)
+\method{ci}{merMod}(
+  x,
+  ci = 0.95,
+  dof = NULL,
+  method = "wald",
+  robust = FALSE,
+  iterations = 500,
+  ...
+)
 }
 \arguments{
 \item{x}{A statistical model.}
@@ -54,6 +62,9 @@ the documentation for your object's class in \code{\link[=model_parameters]{mode
 further details.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{iterations}{The number of bootstrap replicates. Only applies to models
+of class \code{merMod} when \code{method=boot}.}
 }
 \value{
 A data frame containing the CI bounds.
@@ -62,8 +73,8 @@ A data frame containing the CI bounds.
 Compute confidence intervals (CI) for frequentist models.
 }
 \note{
-\code{ci_robust()} resp. \code{ci(robust = TRUE)} rely on the \pkg{sandwich}
-or \pkg{clubSandwich} package (the latter if \code{vcov_estimation = "CR"} for
+\code{ci_robust()} resp. \code{ci(robust=TRUE)} rely on the \pkg{sandwich}
+or \pkg{clubSandwich} package (the latter if \code{vcov_estimation="CR"} for
 cluster-robust standard errors) and will thus only work for those models
 supported by those packages.
 }

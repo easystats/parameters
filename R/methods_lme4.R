@@ -22,10 +22,10 @@
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @section Confidence intervals for random effect variances:
-#' When `ci_method = "profile"` and `effects` is either `"random"` or `"all"`,
-#' profiled confidence intervals are computed for the random effects. For all
-#' other options of `ci_method`, confidence intervals for random effects will
-#' be missing.
+#' When `ci_method` is either `"profile"` or `"boot"`, and `effects` is either
+#' `"random"` or `"all"`, profiled resp. bootstrapped confidence intervals are
+#' computed for the random effects. For all other options of `ci_method`,
+#' confidence intervals for random effects will be missing.
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
@@ -234,6 +234,7 @@ ci.merMod <- function(x,
                       dof = NULL,
                       method = "wald",
                       robust = FALSE,
+                      iterations = 500,
                       ...) {
 
   method <- tolower(method)
@@ -243,7 +244,7 @@ ci.merMod <- function(x,
 
   # bootstrapping
   if (method == "boot") {
-    out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, ...), x = x)
+    out <- lapply(ci, function(ci, x) .ci_boot_merMod(x, ci, iterations, ...), x = x)
     out <- do.call(rbind, out)
     row.names(out) <- NULL
 
