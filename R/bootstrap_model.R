@@ -178,8 +178,7 @@ bootstrap_model.merMod <- function(model,
       nsim = iterations,
       type = type,
       parallel = parallel,
-      ncpus = n_cpus,
-      ...
+      ncpus = n_cpus
     )
   } else {
     results <- suppressMessages(lme4::bootMer(
@@ -189,8 +188,7 @@ bootstrap_model.merMod <- function(model,
       verbose = FALSE,
       type = type,
       parallel = parallel,
-      ncpus = n_cpus,
-      ...
+      ncpus = n_cpus
     ))
   }
 
