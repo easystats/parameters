@@ -270,6 +270,9 @@
       add_ci <- TRUE
     }
   } else if (inherits(model, "glmmTMB")) {
+
+    return(out)
+
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
     var_ci <- rbind(
       as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
