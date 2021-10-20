@@ -140,7 +140,12 @@
     }
   )
 
-  ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
+  # sigma/dispersion only once
+  if (component == "conditional") {
+    ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
+  } else {
+    ran_sigma <- NULL
+  }
 
   # random intercept - tau00
   if (!is.null(ran_intercept) && nrow(ran_intercept) > 0) {
@@ -193,7 +198,7 @@
   }
 
   # residuals - sigma
-  if (nrow(ran_sigma) > 0) {
+  if (!is.null(ran_sigma) && nrow(ran_sigma) > 0) {
     colnames(ran_sigma) <- "Coefficient"
     ran_sigma$Group <- "Residual"
     ran_sigma$Parameter <- "SD (Observations)"
@@ -233,7 +238,7 @@
 
   # add confidence intervals?
   if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param)
+    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -253,7 +258,7 @@
 # extract CI for random SD ------------------------
 
 
-.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param) {
+.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL) {
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -292,12 +297,13 @@
         var_ci$Parameter <- row.names(var_ci)
         zi_rows <- grepl("^zi\\.", var_ci$Parameter)
         if (any(zi_rows)) {
-          var_ci$Component[zi_rows] <- "zero_inflated"
+          var_ci$Component[zi_rows] <- "zi"
         }
 
         # remove cond/zi prefix
         var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
         # fix SD and Cor names
+        var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
         var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1:", var_ci$Parameter)
         # minor cleaning
@@ -313,9 +319,16 @@
           var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
         }
 
+        # remove unused columns (that are added back after merging)
         out$CI_low <- NULL
         out$CI_high <- NULL
-        merge(out, var_ci, sort = FALSE)
+
+        # filter component
+        var_ci <- var_ci[var_ci$Component == component, ]
+        var_ci$not_used <- NULL
+        var_ci$Component <- NULL
+
+        merge(out, var_ci, sort = FALSE, all.x = TRUE)
       },
       error = function(e) {
         out
