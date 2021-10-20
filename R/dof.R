@@ -86,12 +86,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
     method <- "any"
   }
 
-  dot_args <- list(...)
-  if ("statistic" %in% names(dot_args)) {
-    stat <- dot_args[["statistic"]]
-  } else {
-    stat <- insight::find_statistic(model)
-  }
+  stat <- insight::find_statistic(model)
 
   # for z-statistic, always return Inf
   if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
