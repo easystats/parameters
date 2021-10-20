@@ -1,3 +1,9 @@
+# parameters 0.15.1
+
+## General
+
+* Improved speed performance for `model_parameters()`, in particular for glm's.
+
 # parameters 0.15.0
 
 ## Breaking changes
