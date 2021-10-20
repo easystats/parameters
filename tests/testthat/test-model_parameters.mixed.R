@@ -18,7 +18,7 @@ if (.runThisTest &&
     expect_equal(params$CI_high, c(1.68181, 0.56083), tolerance = 1e-3)
 
     params <- model_parameters(m1, ci = c(0.8, 0.9), ci_method = "normal", effects = "fixed")
-    expect_equal(c(nrow(params), ncol(params)), c(2, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 11))
     expect_equal(params$CI_high_0.8, c(1.29595665381331, 0.502185700948862), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.47875781798108, 0.529969433080186), tolerance = 1e-3)
 
@@ -27,12 +27,12 @@ if (.runThisTest &&
     expect_equal(params$CI_low, lme4_ci$`2.5 %`, tolerance = 1e-4)
 
     params <- model_parameters(m1, ci = c(0.8, 0.9), ci_method = "wald", effects = "fixed")
-    expect_equal(c(nrow(params), ncol(params)), c(2, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 11))
     expect_equal(params$CI_high_0.8, c(1.31154, 0.50455), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.50707, 0.53427), tolerance = 1e-3)
 
     params <- model_parameters(m1, ci = c(0.8, 0.9), effects = "fixed")
-    expect_equal(c(nrow(params), ncol(params)), c(2, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 11))
     expect_equal(params$CI_high_0.8, c(1.31154, 0.50455), tolerance = 1e-3)
     expect_equal(params$CI_high_0.9, c(1.50707, 0.53427), tolerance = 1e-3)
 
