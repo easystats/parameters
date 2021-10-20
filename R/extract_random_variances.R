@@ -273,8 +273,6 @@
       var_ci_corr_param <- grepl("^cor ", rn)
       var_ci_sigma_param <- rn == "sigma"
 
-      out$CI <- ci
-
       out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
       out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
       out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
@@ -293,15 +291,18 @@
         )
         colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
         var_ci$Component <- "conditional"
+        group_factor <- insight::find_random(model, flatten = TRUE)
 
         var_ci$Parameter <- row.names(var_ci)
-        zi_rows <- grepl("^zi\\.", var_ci$Parameter)
+        pattern <- paste0("^(zi\\.|", group_factor, "\\.zi\\.)")
+        zi_rows <- grepl(pattern, var_ci$Parameter)
         if (any(zi_rows)) {
           var_ci$Component[zi_rows] <- "zi"
         }
 
         # remove cond/zi prefix
-        var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
+        pattern <- paste0("^(cond\\.|zi\\.|", group_factor, "\\.cond\\.|", group_factor, "\\.zi\\.)(.*)")
+        var_ci$Parameter <- gsub(pattern, "\\2", var_ci$Parameter)
         # fix SD and Cor names
         var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
@@ -315,7 +316,6 @@
         # add name of group factor to cor
         cor_params <- grepl("^Cor ", var_ci$Parameter)
         if (any(cor_params)) {
-          group_factor <- insight::find_random(model, flatten = TRUE)
           var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
         }
 

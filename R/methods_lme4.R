@@ -207,7 +207,7 @@ model_parameters.merMod <- function(model,
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci = ifelse(effects == "random" && isFALSE(group_level), NA, ci),
+    ci = ci,
     exponentiate,
     bootstrap,
     iterations,

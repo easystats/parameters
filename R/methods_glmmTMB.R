@@ -160,7 +160,7 @@ model_parameters.glmmTMB <- function(model,
   params <- .add_model_parameters_attributes(
     params,
     model,
-    ci = ifelse(effects == "random" && isFALSE(group_level), NA, ci),
+    ci = ci,
     exponentiate,
     ci_method = ci_method,
     p_adjust = p_adjust,
