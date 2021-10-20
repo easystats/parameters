@@ -10,9 +10,15 @@
   random SD parameters when `ci_method="boot"` (previously, this was only
   possible when `ci_method` was `"profile"`).
 
+* `model_parameters()` for `glmmTMB` models now computes CIs for the
+  random SD parameters. Note that these are based on a Wald-z-distribution.
+
 ## Bug fixes 
 
 * Fixed bug with `ci()` for class `merMod` when `method="boot"`.
+
+* Confidence intervals for random parameters in `model_parameters()` failed for
+  (some?) `glmer` models.
 
 # parameters 0.15.0
 
