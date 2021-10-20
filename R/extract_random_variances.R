@@ -231,28 +231,8 @@
   out[ci_cols] <- NA
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !is.null(ci_method) && ci_method %in% c("profile", "boot")) {
-    var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
-    colnames(var_ci) <- c("CI_low", "CI_high")
-
-    rn <- row.names(var_ci)
-    rn <- gsub("sd_(.*)(\\|)(.*)", "\\1: \\3", rn)
-    rn <- gsub("|", ":", rn, fixed = TRUE)
-    rn <- gsub("[\\(\\)]", "", rn)
-    rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
-
-    var_ci_corr_param <- grepl("^cor ", rn)
-    var_ci_sigma_param <- rn == "sigma"
-
-    out$CI <- ci
-
-    out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
-    out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
-    out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
-
-    out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
-    out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
-    out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
+    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -273,6 +253,7 @@
 
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param) {
+  add_ci <- FALSE
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -286,23 +267,33 @@
 
       var_ci_corr_param <- grepl("^cor ", rn)
       var_ci_sigma_param <- rn == "sigma"
-
-      out$CI <- ci
-
-      out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
-      out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
-      out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
-
-      out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
-      out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
-      out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+      add_ci <- TRUE
     }
+  } else if (inherits(model, "glmmTMB")) {
+    ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
+    var_ci <- rbind(
+      as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
+      as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+    )
+    colnames(var_ci) <- c("CI_low", "CI_high")
+
+    rn <- row.names(var_ci)
+    var_ci_corr_param <- grepl("^Cor\\.", rn)
+    var_ci_sigma_param <- rn == "sigma"
+    add_ci <- TRUE
   }
 
-  if (inherits(model, "glmmTMB")) {
-    ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
-    var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
-    var_sig <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+  # only add CI if we reliably found that information
+  if (add_ci) {
+    out$CI <- ci
+
+    out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
+    out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
+    out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
+
+    out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
+    out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
+    out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
   }
 
   out
