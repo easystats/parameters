@@ -352,10 +352,10 @@ for working examples.</p></td>
     <h2>Confidence intervals for random effect variances</h2>
     
 
-<p>When <code>ci_method = "profile"</code> and <code>effects</code> is either <code>"random"</code> or <code>"all"</code>,
-profiled confidence intervals are computed for the random effects. For all
-other options of <code>ci_method</code>, confidence intervals for random effects will
-be missing.</p>
+<p>When <code>ci_method</code> is either <code>"profile"</code> or <code>"boot"</code>, and <code>effects</code> is either
+<code>"random"</code> or <code>"all"</code>, profiled resp. bootstrapped confidence intervals are
+computed for the random effects. For all other options of <code>ci_method</code>,
+confidence intervals for random effects will be missing.</p>
     </div>
     <div id="confidence-intervals-and-approximation-of-degrees-of-freedom">
     <h2>Confidence intervals and approximation of degrees of freedom</h2>
@@ -545,8 +545,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter   | Coefficient |         95% CI |      p</span>
 <span class="co">#&gt; ---------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |       36.20 | [32.67, 40.72] | &lt; .001</span>
-<span class="co">#&gt; wt          |       -5.12 | [-6.39, -4.01] | &lt; .001</span>
+<span class="co">#&gt; (Intercept) |       36.78 | [32.36, 40.37] | &lt; .001</span>
+<span class="co">#&gt; wt          |       -5.26 | [-6.36, -4.08] | &lt; .001</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
 <span class="co"># }</span>

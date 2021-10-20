@@ -107,6 +107,15 @@
 <h3 id="general-0-15-1">General<a class="anchor" aria-label="anchor" href="#general-0-15-1"></a></h3>
 <ul><li>Improved speed performance for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, in particular for glm’s.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="changes-to-functions-0-15-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-15-1"></a></h3>
+<ul><li>
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
+<ul><li>Fixed bug with <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for class <code>merMod</code> when <code>method="boot"</code>.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.15.0" id="parameters-0150">parameters 0.15.0<small>2021-10-18</small><a class="anchor" aria-label="anchor" href="#parameters-0150"></a></h2>
