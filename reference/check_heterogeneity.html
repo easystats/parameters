@@ -129,7 +129,7 @@ argument will be ignored.</p></td>
     <div id="ref-sections">
     <div id="note">
     <h2>Note</h2>
-    <p>Ths function will be removed in a future update. Please use
+    <p>This function will be removed in a future update. Please use
 <code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html" class="external-link">performance::check_heterogeneity_bias()</a></code>.</p>
     </div>
     <div id="see-also">
@@ -138,14 +138,6 @@ argument will be ignored.</p></td>
     </div>
     </div>
 
-    <div id="examples">
-    <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">iris</span><span class="op">$</span><span class="va">ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># fake-ID</span></span>
-<span class="r-in"><span class="fu">check_heterogeneity</span><span class="op">(</span><span class="va">iris</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Possible heterogeneity bias due to following predictors: <span style="color: #BB0000;">Sepal.Length, Petal.Length</span></span>
-</code></pre></div>
-    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
