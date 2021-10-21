@@ -23,13 +23,8 @@ cause a heterogeneity bias, i.e. if variables have a within- and/or
 between-effect.
 }
 \note{
-Ths function will be removed in a future update. Please use
+This function will be removed in a future update. Please use
 \code{performance::check_heterogeneity_bias()}.
-}
-\examples{
-data(iris)
-iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
-check_heterogeneity(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 }
 \seealso{
 For further details, see documentation for \code{?datawizard::demean}.

@@ -16,15 +16,14 @@
 #' For further details, see documentation for `?datawizard::demean`.
 #'
 #' @note
-#' Ths function will be removed in a future update. Please use
+#' This function will be removed in a future update. Please use
 #' `performance::check_heterogeneity_bias()`.
 #'
-#' @examples
-#' data(iris)
-#' iris$ID <- sample(1:4, nrow(iris), replace = TRUE) # fake-ID
-#' check_heterogeneity(iris, select = c("Sepal.Length", "Petal.Length"), group = "ID")
 #' @export
 check_heterogeneity <- function(x, select = NULL, group = NULL) {
+
+  .Deprecated("performance::check_heterogeneity_bias()")
+
   if (insight::is_model(x)) {
     group <- insight::find_random(x, split_nested = TRUE, flatten = TRUE)
     if (is.null(group)) {
