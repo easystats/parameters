@@ -131,7 +131,21 @@ if (requiet("testthat") &&
     )
   })
 
-  if (.runThisTest && requiet("glmmTMB")) {
+  win_os <- tryCatch(
+    {
+      si <- Sys.info()
+      if (!is.null(si["sysname"])) {
+        si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+      } else {
+        FALSE
+      }
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
+
+  if (.runThisTest && requiet("glmmTMB") && win_os) {
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,
