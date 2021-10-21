@@ -106,18 +106,17 @@
     <p>Reshape loadings between wide/long formats.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reshape_loadings.html">reshape_loadings</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">reshape_loadings</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_efa</span>
-<span class="fu"><a href="../reference/reshape_loadings.html">reshape_loadings</a></span><span class="op">(</span><span class="va">x</span>, threshold <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">reshape_loadings</span><span class="op">(</span><span class="va">x</span>, threshold <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for data.frame</span>
-<span class="fu"><a href="../reference/reshape_loadings.html">reshape_loadings</a></span><span class="op">(</span><span class="va">x</span>, threshold <span class="op">=</span> <span class="cn">NULL</span>, loadings_columns <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">reshape_loadings</span><span class="op">(</span><span class="va">x</span>, threshold <span class="op">=</span> <span class="cn">NULL</span>, loadings_columns <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a statistical model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
@@ -131,50 +130,51 @@ structure).</p></td>
       <td><p>Vector indicating the columns corresponding to loadings.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
-
-<span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="va">loadings</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reshape_loadings.html">reshape_loadings</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
-
-<span class="va">loadings</span>
-<span class="co">#&gt; Component |   Variable | Loading | Complexity | Uniqueness</span>
-<span class="co">#&gt; ----------------------------------------------------------</span>
-<span class="co">#&gt; MR1       |     rating |    0.90 |       1.02 |       0.23</span>
-<span class="co">#&gt; MR1       | complaints |    0.97 |       1.01 |       0.10</span>
-<span class="co">#&gt; MR1       | privileges |    0.44 |       1.64 |       0.65</span>
-<span class="co">#&gt; MR1       |   learning |    0.47 |       2.51 |       0.24</span>
-<span class="co">#&gt; MR1       |     raises |    0.55 |       2.35 |       0.23</span>
-<span class="co">#&gt; MR1       |   critical |    0.16 |       1.46 |       0.67</span>
-<span class="co">#&gt; MR1       |    advance |   -0.11 |       1.04 |       0.22</span>
-<span class="co">#&gt; MR2       |     rating |   -0.07 |       1.02 |       0.23</span>
-<span class="co">#&gt; MR2       | complaints |   -0.06 |       1.01 |       0.10</span>
-<span class="co">#&gt; MR2       | privileges |    0.25 |       1.64 |       0.65</span>
-<span class="co">#&gt; MR2       |   learning |    0.54 |       2.51 |       0.24</span>
-<span class="co">#&gt; MR2       |     raises |    0.43 |       2.35 |       0.23</span>
-<span class="co">#&gt; MR2       |   critical |    0.17 |       1.46 |       0.67</span>
-<span class="co">#&gt; MR2       |    advance |    0.91 |       1.04 |       0.22</span>
-<span class="co">#&gt; MR3       |     rating |   -0.05 |       1.02 |       0.23</span>
-<span class="co">#&gt; MR3       | complaints |    0.04 |       1.01 |       0.10</span>
-<span class="co">#&gt; MR3       | privileges |   -0.05 |       1.64 |       0.65</span>
-<span class="co">#&gt; MR3       |   learning |   -0.28 |       2.51 |       0.24</span>
-<span class="co">#&gt; MR3       |     raises |    0.25 |       2.35 |       0.23</span>
-<span class="co">#&gt; MR3       |   critical |    0.48 |       1.46 |       0.67</span>
-<span class="co">#&gt; MR3       |    advance |    0.07 |       1.04 |       0.22</span>
-<span class="fu"><a href="../reference/reshape_loadings.html">reshape_loadings</a></span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span>
-<span class="co">#&gt; Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness</span>
-<span class="co">#&gt; ------------------------------------------------------------</span>
-<span class="co">#&gt; rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23</span>
-<span class="co">#&gt; complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10</span>
-<span class="co">#&gt; privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65</span>
-<span class="co">#&gt; learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24</span>
-<span class="co">#&gt; raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23</span>
-<span class="co">#&gt; critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span>
-<span class="co">#&gt; advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">loadings</span> <span class="op">&lt;-</span> <span class="fu">reshape_loadings</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">loadings</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Component |   Variable | Loading | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       |     rating |    0.90 |       1.02 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       | complaints |    0.97 |       1.01 |       0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       | privileges |    0.44 |       1.64 |       0.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       |   learning |    0.47 |       2.51 |       0.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       |     raises |    0.55 |       2.35 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       |   critical |    0.16 |       1.46 |       0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR1       |    advance |   -0.11 |       1.04 |       0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       |     rating |   -0.07 |       1.02 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       | complaints |   -0.06 |       1.01 |       0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       | privileges |    0.25 |       1.64 |       0.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       |   learning |    0.54 |       2.51 |       0.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       |     raises |    0.43 |       2.35 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       |   critical |    0.17 |       1.46 |       0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR2       |    advance |    0.91 |       1.04 |       0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       |     rating |   -0.05 |       1.02 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       | complaints |    0.04 |       1.01 |       0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       | privileges |   -0.05 |       1.64 |       0.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       |   learning |   -0.28 |       2.51 |       0.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       |     raises |    0.25 |       2.35 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       |   critical |    0.48 |       1.46 |       0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MR3       |    advance |    0.07 |       1.04 |       0.22</span>
+<span class="r-in"><span class="fu">reshape_loadings</span><span class="op">(</span><span class="va">loadings</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22</span>
 </code></pre></div>
     </div>
   </div>

@@ -106,24 +106,23 @@
     <p>Compute performance indices for clustering solutions.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for kmeans</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for hclust</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for dbscan</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_clusters</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Cluster model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
@@ -133,38 +132,39 @@
       <td><p>A vector with clusters assignments (must be same length as rows in data).</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># kmeans</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt;   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="co">#&gt; 1          681.3706            602.5192           78.85144 0.8842753</span>
-<span class="co"># hclust</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>
-<span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">model</span>, <span class="fl">3</span><span class="op">)</span>
-
-<span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span><span class="op">)</span>
-<span class="va">rez</span>
-<span class="co">#&gt;   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="co">#&gt; 1          681.3706            591.8456           89.52501 0.8686104</span>
-<span class="co"># DBSCAN</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, eps <span class="op">=</span> <span class="fl">1.45</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-
-  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">rez</span>
-<span class="op">}</span>
-<span class="co">#&gt;   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="co">#&gt; 1          681.3706            526.4236            154.947 0.7725951</span>
-<span class="co"># Retrieve performance from parameters</span>
-<span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cluster_performance.html">cluster_performance</a></span><span class="op">(</span><span class="va">params</span><span class="op">)</span>
-<span class="co">#&gt;   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="co">#&gt; 1          681.3706            538.6171           142.7535 0.7904906</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># kmeans</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
+<span class="r-in"><span class="co"># hclust</span></span>
+<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">model</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rez</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            591.8456           89.52501 0.8686104</span>
+<span class="r-in"><span class="co"># DBSCAN</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, eps <span class="op">=</span> <span class="fl">1.45</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">rez</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            526.4236            154.947 0.7725951</span>
+<span class="r-in"><span class="co"># Retrieve performance from parameters</span></span>
+<span class="r-in"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
 </code></pre></div>
     </div>
   </div>

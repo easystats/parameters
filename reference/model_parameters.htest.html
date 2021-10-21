@@ -106,9 +106,8 @@
     <p>Parameters of h-tests (correlations, t-tests, chi-squared, ...).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># S3 method for htest</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for htest</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   cramers_v <span class="op">=</span> <span class="cn">NULL</span>,
   phi <span class="op">=</span> <span class="cn">NULL</span>,
@@ -129,11 +128,11 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for pairwise.htest</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></td>
     </tr><tr><th>cramers_v, phi</th>
       <td><p>Compute Cramer's V or phi as index of effect size.
@@ -181,100 +180,101 @@ the <a href="https://easystats.github.io/effectsize/" class="external-link">effe
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; Pearson's product-moment correlation</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter1 | Parameter2 |     r |         95% CI | t(30) |      p</span>
-<span class="co">#&gt; -----------------------------------------------------------------</span>
-<span class="co">#&gt; mtcars$mpg | mtcars$cyl | -0.85 | [-0.93, -0.72] | -8.92 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Alternative hypothesis: true correlation is not equal to 0</span>
-<span class="co">#&gt; </span>
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; Welch Two Sample t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | t(225.68) |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -36.46 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Alternative hypothesis: true difference in means is not equal to 0</span>
-<span class="co">#&gt; </span>
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; Welch Two Sample t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter  |     Group | mtcars$vs = 0 | mtcars$vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; mtcars$mpg | mtcars$vs |         16.62 |         24.56 |      -7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0</span>
-<span class="co">#&gt; </span>
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, mu <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; One Sample t-test</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter        | Mean |   mu | Difference |       95% CI | t(149) |      p</span>
-<span class="co">#&gt; ----------------------------------------------------------------------------</span>
-<span class="co">#&gt; iris$Sepal.Width | 3.06 | 1.00 |       2.06 | [2.99, 3.13] |  57.81 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Alternative hypothesis: true mean is not equal to 1</span>
-<span class="co">#&gt; </span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span>
-<span class="va">airquality</span><span class="op">$</span><span class="va">Month</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Month</span>, labels <span class="op">=</span> <span class="va">month.abb</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/pairwise.t.test.html" class="external-link">pairwise.t.test</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Ozone</span>, <span class="va">airquality</span><span class="op">$</span><span class="va">Month</span><span class="op">)</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Group1 | Group2 |      p</span>
-<span class="co">#&gt; ------------------------</span>
-<span class="co">#&gt; Jun    |    May | &gt; .999</span>
-<span class="co">#&gt; Jul    |    May | &lt; .001</span>
-<span class="co">#&gt; Jul    |    Jun | 0.051 </span>
-<span class="co">#&gt; Aug    |    May | &lt; .001</span>
-<span class="co">#&gt; Aug    |    Jun | 0.050 </span>
-<span class="co">#&gt; Aug    |    Jul | &gt; .999</span>
-<span class="co">#&gt; Sep    |    May | &gt; .999</span>
-<span class="co">#&gt; Sep    |    Jun | &gt; .999</span>
-<span class="co">#&gt; Sep    |    Jul | 0.005 </span>
-<span class="co">#&gt; Sep    |    Aug | 0.004 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; p-value adjustment method: Holm (1979)</span>
-<span class="co">#&gt; </span>
-
-<span class="va">smokers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">83</span>, <span class="fl">90</span>, <span class="fl">129</span>, <span class="fl">70</span><span class="op">)</span>
-<span class="va">patients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">93</span>, <span class="fl">136</span>, <span class="fl">82</span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/pairwise.prop.test.html" class="external-link">pairwise.prop.test</a></span><span class="op">(</span><span class="va">smokers</span>, <span class="va">patients</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Chi-squared approximation may be incorrect</span>
-<span class="co">#&gt; Warning: Chi-squared approximation may be incorrect</span>
-<span class="co">#&gt; Warning: Chi-squared approximation may be incorrect</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Group1 | Group2 |      p</span>
-<span class="co">#&gt; ------------------------</span>
-<span class="co">#&gt; 2      |      1 | &gt; .999</span>
-<span class="co">#&gt; 3      |      1 | &gt; .999</span>
-<span class="co">#&gt; 3      |      2 | &gt; .999</span>
-<span class="co">#&gt; 4      |      1 | 0.119 </span>
-<span class="co">#&gt; 4      |      2 | 0.093 </span>
-<span class="co">#&gt; 4      |      3 | 0.124 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; p-value adjustment method: Holm (1979)</span>
-<span class="co">#&gt; </span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Pearson's product-moment correlation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter1 | Parameter2 |     r |         95% CI | t(30) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mtcars$mpg | mtcars$cyl | -0.85 | [-0.93, -0.72] | -8.92 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Alternative hypothesis: true correlation is not equal to 0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Welch Two Sample t-test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | t(225.68) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -36.46 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Alternative hypothesis: true difference in means is not equal to 0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Welch Two Sample t-test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |     Group | mtcars$vs = 0 | mtcars$vs = 1 | Difference |          95% CI | t(22.72) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mtcars$mpg | mtcars$vs |         16.62 |         24.56 |      -7.94 | [-11.46, -4.42] |    -4.67 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, mu <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One Sample t-test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Mean |   mu | Difference |       95% CI | t(149) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | 3.06 | 1.00 |       2.06 | [2.99, 3.13] |  57.81 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Alternative hypothesis: true mean is not equal to 1</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">airquality</span><span class="op">$</span><span class="va">Month</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Month</span>, labels <span class="op">=</span> <span class="va">month.abb</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/pairwise.t.test.html" class="external-link">pairwise.t.test</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Ozone</span>, <span class="va">airquality</span><span class="op">$</span><span class="va">Month</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Group1 | Group2 |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Jun    |    May | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Jul    |    May | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Jul    |    Jun | 0.051 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aug    |    May | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aug    |    Jun | 0.050 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aug    |    Jul | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sep    |    May | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sep    |    Jun | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sep    |    Jul | 0.005 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sep    |    Aug | 0.004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">p-value adjustment method: Holm (1979)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">smokers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">83</span>, <span class="fl">90</span>, <span class="fl">129</span>, <span class="fl">70</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">patients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>, <span class="fl">93</span>, <span class="fl">136</span>, <span class="fl">82</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/pairwise.prop.test.html" class="external-link">pairwise.prop.test</a></span><span class="op">(</span><span class="va">smokers</span>, <span class="va">patients</span><span class="op">)</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Group1 | Group2 |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      |      1 | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      |      1 | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      |      2 | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      |      1 | 0.119 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      |      2 | 0.093 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      |      3 | 0.124 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">p-value adjustment method: Holm (1979)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>

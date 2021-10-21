@@ -141,14 +141,13 @@ Multiply imputed repeated analyses (mira)
 <li><p><a href="model_parameters.mira.html">Multiply imputed repeated analyses</a> (<code>mira</code>)</p></li>
 </ul></div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">model_parameters</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">parameters</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Statistical Model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods. Non-documented
@@ -159,6 +158,7 @@ in <code><a href="print.parameters_model.html">print.parameters_model()</a></cod
 <code><a href="model_parameters.default.html">model_parameters.default()</a></code>.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>
@@ -367,7 +367,7 @@ that calculate estimated marginal means or marginal effects, such as
 <a href="https://CRAN.R-project.org/package=modelbased" class="external-link"><span class="pkg">modelbased</span></a>, <a href="https://CRAN.R-project.org/package=emmeans" class="external-link"><span class="pkg">emmeans</span></a> or <a href="https://CRAN.R-project.org/package=ggeffects" class="external-link"><span class="pkg">ggeffects</span></a>. To raise
 awareness for this issue, you may use <code>print(...,show_formula=TRUE)</code>
 to add the model-specification to the output of the
-<code><a href="print.parameters_model.html">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
+<code><a href="print.parameters_model.html">print()</a></code> method for <code>model_parameters()</code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -381,6 +381,7 @@ regression models.</p></li>
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">insight::standardize_names()</a></code> to
 rename columns into a consistent, standardized naming scheme.</p></div>
+    </div>
     </div>
 
   </div>

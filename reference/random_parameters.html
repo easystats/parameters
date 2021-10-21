@@ -108,12 +108,11 @@ mixed model and returns the result as a data frame."><meta property="og:image" c
 mixed model and returns the result as a data frame.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A mixed effects model (including <code>stanreg</code> models).</p></td>
     </tr><tr><th>component</th>
       <td><p>Should all parameters, parameters for the conditional model,
@@ -123,6 +122,7 @@ with zero-inflated component. <code>component</code> may be one of
 May be abbreviated.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with random effects statistics for the variance components,
@@ -163,26 +163,26 @@ for mixed models with random intercepts and slopes.</p>
 and standard deviations (which are simply the square root of the variance)
 are shown.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; # Random Effects</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Within-Group Variance          654.94 (25.59)</span>
-<span class="co">#&gt; Between-Group Variance</span>
-<span class="co">#&gt;   Random Intercept (Subject)    612.1 (24.74)</span>
-<span class="co">#&gt;   Random Slope (Subject.Days)   35.07  (5.92)</span>
-<span class="co">#&gt; Correlations</span>
-<span class="co">#&gt;   Subject.Days                   0.07</span>
-<span class="co">#&gt; N (groups per factor)</span>
-<span class="co">#&gt;   Subject                          18</span>
-<span class="co">#&gt; Observations                      180</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Within-Group Variance          </span>654.94 (25.59)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Between-Group Variance</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Random Intercept (Subject)    612.1 (24.74)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Random Slope (Subject.Days)   35.07  (5.92)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Correlations</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Subject.Days                   0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">N (groups per factor)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Subject                          18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Observations                   </span>   180</span>
 </code></pre></div>
     </div>
   </div>

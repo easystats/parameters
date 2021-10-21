@@ -105,31 +105,30 @@ standard errors."><meta property="og:image" content="/logo.png"><!-- mathjax -->
     </div>
 
     <div class="ref-description">
-    <p><code><a href="../reference/standard_error.html">standard_error()</a></code> attempts to return standard errors of model
+    <p><code>standard_error()</code> attempts to return standard errors of model
 parameters, while <code><a href="standard_error_robust.html">standard_error_robust()</a></code> attempts to return robust
 standard errors.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for DirichletRegModel</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for averaging</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"full"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"full"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for factor</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for betareg</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for glmmTMB</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span>
+<span class="fu">standard_error</span><span class="op">(</span>
   <span class="va">model</span>,
   effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>,
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"dispersion"</span><span class="op">)</span>,
@@ -138,20 +137,20 @@ standard errors.</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for merMod</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for poissonmfx</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for betamfx</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span>
+<span class="fu">standard_error</span><span class="op">(</span>
   <span class="va">model</span>,
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
 <span class="co"># S3 method for MixMod</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span>
+<span class="fu">standard_error</span><span class="op">(</span>
   <span class="va">model</span>,
   effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>,
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
@@ -160,13 +159,13 @@ standard errors.</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for mixor</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for clm2</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"scale"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"scale"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for zeroinfl</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span>
+<span class="fu">standard_error</span><span class="op">(</span>
   <span class="va">model</span>,
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
   method <span class="op">=</span> <span class="cn">NULL</span>,
@@ -175,15 +174,15 @@ standard errors.</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for coxph</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods. For
-<code><a href="../reference/standard_error.html">standard_error()</a></code>, if <code>method = "robust"</code>, arguments
+<code>standard_error()</code>, if <code>method = "robust"</code>, arguments
 <code>vcov_estimation</code>, <code>vcov_type</code> and <code>vcov_args</code> can be passed
 down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></td>
     </tr><tr><th>method</th>
@@ -216,6 +215,7 @@ standard errors (per group level) for random intercepts and slopes is
 returned.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with at least two columns: the parameter names and the
@@ -227,19 +227,19 @@ components etc.</p>
     <p>For Bayesian models (from <span class="pkg">rstanarm</span> or <span class="pkg">brms</span>), the standard
 error is the SD of the posterior samples.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="../reference/standard_error.html">standard_error</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt;                        Parameter        SE</span>
-<span class="co">#&gt; 1                    (Intercept) 0.5310388</span>
-<span class="co">#&gt; 2                   Sepal.Length 0.1058237</span>
-<span class="co">#&gt; 3              Speciesversicolor 0.6836543</span>
-<span class="co">#&gt; 4               Speciesvirginica 0.6578142</span>
-<span class="co">#&gt; 5 Sepal.Length:Speciesversicolor 0.1281447</span>
-<span class="co">#&gt; 6  Sepal.Length:Speciesvirginica 0.1209952</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        Parameter        SE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    (Intercept) 0.5310388</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                   Sepal.Length 0.1058237</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3              Speciesversicolor 0.6836543</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4               Speciesvirginica 0.6578142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Sepal.Length:Speciesversicolor 0.1281447</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  Sepal.Length:Speciesvirginica 0.1209952</span>
 </code></pre></div>
     </div>
   </div>

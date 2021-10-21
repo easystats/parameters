@@ -132,8 +132,7 @@ Elbow or the Gap method, with their own visualization functionalities. See
 the examples below for more details.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/n_clusters.html">n_clusters</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">n_clusters</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -144,7 +143,7 @@ the examples below for more details.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/n_clusters.html">n_clusters_elbow</a></span><span class="op">(</span>
+<span class="fu">n_clusters_elbow</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -153,7 +152,7 @@ the examples below for more details.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/n_clusters.html">n_clusters_gap</a></span><span class="op">(</span>
+<span class="fu">n_clusters_gap</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -163,7 +162,7 @@ the examples below for more details.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/n_clusters.html">n_clusters_silhouette</a></span><span class="op">(</span>
+<span class="fu">n_clusters_silhouette</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -172,7 +171,7 @@ the examples below for more details.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/n_clusters.html">n_clusters_dbscan</a></span><span class="op">(</span>
+<span class="fu">n_clusters_dbscan</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -183,7 +182,7 @@ the examples below for more details.</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/n_clusters.html">n_clusters_hclust</a></span><span class="op">(</span>
+<span class="fu">n_clusters_hclust</span><span class="op">(</span>
   <span class="va">x</span>,
   standardize <span class="op">=</span> <span class="cn">TRUE</span>,
   include_factors <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -196,7 +195,7 @@ the examples below for more details.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame.</p></td>
     </tr><tr><th>standardize</th>
       <td><p>Standardize the dataframe before clustering (default).</p></td>
@@ -241,109 +240,110 @@ algorithms relying on the distance matrix, such as <code>hclust</code> or <code>
 case of bootstrapped frequentist models.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="note">
     <h2>Note</h2>
     <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
-
-<span class="co"># The main 'n_clusters' function ===============================</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mclust-org.github.io/mclust/" class="external-link">"mclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://sites.google.com/site/malikacharrad/research/nbclust-package" class="external-link">"NbClust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NbClust"</span>, <span class="st">"mclust"</span>, <span class="st">"cluster"</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">n</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-  <span class="co"># The following runs all the method but it significantly slower</span>
-  <span class="co"># n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)</span>
-<span class="op">}</span>
-<span class="op">}</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="co"># Specific Methods =========================</span>
-<span class="co"># Elbow method --------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">"openxlsx"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_elbow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: ‘ggplot2’</span>
-<span class="co">#&gt; The following objects are masked from ‘package:psych’:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     %+%, alpha</span>
-<span class="co">#&gt; Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span>
-
-<span class="co"># }</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="co"># Gap method --------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_gap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># }</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="co"># Silhouette method --------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_silhouette</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># }</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># DBSCAN method -------------------------</span>
-  <span class="co"># NOTE: This actually primarily estimates the 'eps' parameter, the number of</span>
-  <span class="co"># clusters is a side effect (it's the number of clusters corresponding to</span>
-  <span class="co"># this 'optimal' EPS parameter).</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"kNN"</span>, min_size <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="co"># 5 percent</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"SS"</span>, eps_n <span class="op">=</span> <span class="fl">100</span>, eps_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="co"># }</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="co"># hclust method -------------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/" class="external-link">"pvclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">getRversion</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"3.6.0"</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># iterations should be higher for real analyses</span>
-  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_hclust</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, iterations <span class="op">=</span> <span class="fl">50</span>, ci <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span>
-  <span class="va">x</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Print 10 first rows</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; Warning: inappropriate distance matrices are omitted in computation: r =  0.5</span>
-<span class="co">#&gt; Warning: inappropriate distance matrices are omitted in computation: r =  0.75</span>
-<span class="co">#&gt; Warning: inappropriate distance matrices are omitted in computation: r =  1</span>
-
-<span class="co"># }</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># The main 'n_clusters' function ===============================</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mclust-org.github.io/mclust/" class="external-link">"mclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://sites.google.com/site/malikacharrad/research/nbclust-package" class="external-link">"NbClust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu">n_clusters</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NbClust"</span>, <span class="st">"mclust"</span>, <span class="st">"cluster"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">n</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># The following runs all the method but it significantly slower</span></span>
+<span class="r-in">  <span class="co"># n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># Specific Methods =========================</span></span>
+<span class="r-in"><span class="co"># Elbow method --------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ycphs.github.io/openxlsx/index.html" class="external-link">"openxlsx"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_elbow</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘ggplot2’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:psych’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     %+%, alpha</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</span>
+<span class="r-plt"><img src="n_clusters-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># Gap method --------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_gap</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-plt"><img src="n_clusters-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># Silhouette method --------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_silhouette</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-plt"><img src="n_clusters-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="co"># DBSCAN method -------------------------</span></span>
+<span class="r-in">  <span class="co"># NOTE: This actually primarily estimates the 'eps' parameter, the number of</span></span>
+<span class="r-in">  <span class="co"># clusters is a side effect (it's the number of clusters corresponding to</span></span>
+<span class="r-in">  <span class="co"># this 'optimal' EPS parameter).</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_dbscan</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"kNN"</span>, min_size <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span> <span class="co"># 5 percent</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_dbscan</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"SS"</span>, eps_n <span class="op">=</span> <span class="fl">100</span>, eps_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-plt"><img src="n_clusters-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># hclust method -------------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/" class="external-link">"pvclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">getRversion</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"3.6.0"</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="co"># iterations should be higher for real analyses</span></span>
+<span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">n_clusters_hclust</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, iterations <span class="op">=</span> <span class="fl">50</span>, ci <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">x</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Print 10 first rows</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>inappropriate distance matrices are omitted in computation: r =  0.5</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>inappropriate distance matrices are omitted in computation: r =  0.75</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>inappropriate distance matrices are omitted in computation: r =  1</span>
+<span class="r-plt"><img src="n_clusters-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </div>

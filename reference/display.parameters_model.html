@@ -108,8 +108,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> is a alias for <code>display(format = "markdown")</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># S3 method for parameters_model</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for parameters_model</span>
 <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>
   <span class="va">object</span>,
   format <span class="op">=</span> <span class="st">"markdown"</span>,
@@ -225,7 +224,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
       <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
 <code><a href="simulate_parameters.html">simulate_parameters()</a></code>,
 <code><a href="equivalence_test.lm.html">equivalence_test()</a></code> or
@@ -314,6 +313,7 @@ order used in <code>groups</code>, while all non-matching parameters will be add
 to the end.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>If <code>format = "markdown"</code>, the return value will be a character
@@ -329,20 +329,20 @@ knitted from rmarkdown to PDF or Word files. See
 <a href="https://easystats.github.io/parameters/articles/model_parameters_formatting.html" class="external-link">vignette</a>
 for examples.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
-<span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |</span>
-<span class="co">#&gt; |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|</span>
-<span class="co">#&gt; |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |</span>
-<span class="co">#&gt; |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
-<span class="co">#&gt; |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span><span class="va">mp</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |Parameter   | Coefficient |   SE |         95% CI | t(29) |      p |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |:-----------|:-----------:|:----:|:--------------:|:-----:|:------:|</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |(Intercept) |       39.69 | 1.71 | (36.18, 43.19) | 23.14 | &lt; .001 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |wt          |       -3.19 | 0.76 | (-4.74, -1.64) | -4.22 | &lt; .001 |</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> |cyl         |       -1.51 | 0.41 | (-2.36, -0.66) | -3.64 | 0.001  |</span>
 </code></pre></div>
     </div>
   </div>

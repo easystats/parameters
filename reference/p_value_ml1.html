@@ -106,16 +106,15 @@
     <p>Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/p_value_ml1.html">ci_ml1</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_ml1</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/p_value_ml1.html">dof_ml1</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu">dof_ml1</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/p_value_ml1.html">p_value_ml1</a></span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<span class="fu">p_value_ml1</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A mixed model.</p></td>
     </tr><tr><th>ci</th>
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
@@ -123,6 +122,7 @@
       <td><p>Degrees of Freedom.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame.</p>
@@ -138,14 +138,14 @@ is small (even if the sample size of level-1 units is high). In such cases
 it is recommended to approximate a more accurate number of degrees of freedom
 for such inferential statistics (see <cite>Li and Redden 2015</cite>). The
 <em>m-l-1</em> heuristic is such an approach that uses a t-distribution with
-fewer degrees of freedom (<code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code>) to calculate p-values
-(<code><a href="../reference/p_value_ml1.html">p_value_ml1()</a></code>) and confidence intervals (<code>ci(method = "ml1")</code>).</p>
+fewer degrees of freedom (<code>dof_ml1()</code>) to calculate p-values
+(<code>p_value_ml1()</code>) and confidence intervals (<code>ci(method = "ml1")</code>).</p>
 </div>
 <div class="section">
 <h3 id="degrees-of-freedom-for-longitudinal-designs-repeated-measures-">Degrees of Freedom for Longitudinal Designs (Repeated Measures)<a class="anchor" aria-label="anchor" href="#degrees-of-freedom-for-longitudinal-designs-repeated-measures-"></a></h3>
 <p>In particular for repeated measure designs (longitudinal data analysis),
 the <em>m-l-1</em> heuristic is likely to be more accurate than simply using the
-residual or infinite degrees of freedom, because <code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> returns
+residual or infinite degrees of freedom, because <code>dof_ml1()</code> returns
 different degrees of freedom for within-cluster and between-cluster effects.</p>
 </div>
 <div class="section">
@@ -167,22 +167,22 @@ to linear mixed models only.</p>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="../reference/p_value_ml1.html">dof_ml1()</a></code> is a small helper-function to calculate approximated
+    <div class="dont-index"><p><code>dof_ml1()</code> is a small helper-function to calculate approximated
 degrees of freedom of model parameters, based on the "m-l-1" heuristic.</p></div>
+    </div>
     </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># \donttest{</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/p_value_ml1.html">p_value_ml1</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt;      Parameter          p</span>
-<span class="co">#&gt; 1  (Intercept) 0.96504927</span>
-<span class="co">#&gt; 2 Sepal.Length 0.04534945</span>
-<span class="co"># }</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">p_value_ml1</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Parameter          p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  (Intercept) 0.96504927</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Sepal.Length 0.04534945</span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </div>

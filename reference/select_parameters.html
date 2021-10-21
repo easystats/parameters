@@ -108,21 +108,20 @@ updating and returning the &quot;best&quot; model."><meta property="og:image" co
 updating and returning the "best" model.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for lm</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"both"</span>, steps <span class="op">=</span> <span class="fl">1000</span>, k <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"both"</span>, steps <span class="op">=</span> <span class="fl">1000</span>, k <span class="op">=</span> <span class="fl">2</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for merMod</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"backward"</span>, steps <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"backward"</span>, steps <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for stanreg</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model (of class <code>lm</code>, <code>glm</code>,
 <code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></td>
     </tr><tr><th>...</th>
@@ -147,6 +146,7 @@ updating and returning the "best" model.</p>
       <td><p>Select with cross-validation.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>The model refitted with optimal number of parameters.</p>
@@ -156,7 +156,7 @@ updating and returning the "best" model.</p>
     
 <div class="section">
 <h3 id="classical-lm-and-glm">Classical lm and glm<a class="anchor" aria-label="anchor" href="#classical-lm-and-glm"></a></h3>
-<p>For frequentist GLMs, <code><a href="../reference/select_parameters.html">select_parameters()</a></code> performs an AIC-based
+<p>For frequentist GLMs, <code>select_parameters()</code> performs an AIC-based
 stepwise selection.</p>
 </div>
 
@@ -165,7 +165,7 @@ stepwise selection.</p>
 <p>For mixed-effects models of class <code>merMod</code>, stepwise selection is
 based on <code><a href="https://rdrr.io/pkg/cAIC4/man/stepcAIC.html" class="external-link">cAIC4::stepcAIC()</a></code>. This step function
 only searches the "best" model based on the random-effects structure,
-i.e. <code><a href="../reference/select_parameters.html">select_parameters()</a></code> adds or excludes random-effects until
+i.e. <code>select_parameters()</code> adds or excludes random-effects until
 the cAIC can't be improved further.</p>
 </div>
 
@@ -175,86 +175,86 @@ the cAIC can't be improved further.</p>
 </div>
 
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = mpg ~ wt + qsec + am, data = mtcars)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt; (Intercept)           wt         qsec           am  </span>
-<span class="co">#&gt;       9.618       -3.917        1.226        2.936  </span>
-<span class="co">#&gt; </span>
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">*</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">hp</span> <span class="op">*</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span>
-<span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = mpg ~ cyl + disp + hp + wt + cyl:disp + cyl:hp + </span>
-<span class="co">#&gt;     disp:hp + cyl:wt + disp:wt + hp:wt + cyl:disp:hp + cyl:hp:wt, </span>
-<span class="co">#&gt;     data = mtcars)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt; (Intercept)          cyl         disp           hp           wt     cyl:disp  </span>
-<span class="co">#&gt;  49.1436077   -3.6167276   -1.2955318   -0.0004854   58.8328841    0.1704703  </span>
-<span class="co">#&gt;      cyl:hp      disp:hp       cyl:wt      disp:wt        hp:wt  cyl:disp:hp  </span>
-<span class="co">#&gt;  -0.0134573    0.0132124   -7.4915051   -0.0167172   -0.6524341   -0.0016542  </span>
-<span class="co">#&gt;   cyl:hp:wt  </span>
-<span class="co">#&gt;   0.0850798  </span>
-<span class="co">#&gt; </span>
-<span class="co"># \donttest{</span>
-<span class="co"># lme4 -------------------------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span>
-    <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">*</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>,
-    data <span class="op">=</span> <span class="va">iris</span>
-  <span class="op">)</span>
-  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span>
-<span class="co">#&gt; Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  </span>
-<span class="co">#&gt;     Species)</span>
-<span class="co">#&gt;    Data: iris</span>
-<span class="co">#&gt; REML criterion at convergence: 50.9896</span>
-<span class="co">#&gt; Random effects:</span>
-<span class="co">#&gt;  Groups   Name        Std.Dev.</span>
-<span class="co">#&gt;  Species  (Intercept) 0.8259  </span>
-<span class="co">#&gt;  Residual             0.2536  </span>
-<span class="co">#&gt; Number of obs: 150, groups:  Species, 3</span>
-<span class="co">#&gt; Fixed Effects:</span>
-<span class="co">#&gt;                           (Intercept)                           Sepal.Length  </span>
-<span class="co">#&gt;                             -2.000229                               0.936730  </span>
-<span class="co">#&gt;                           Petal.Width                           Petal.Length  </span>
-<span class="co">#&gt;                              1.575526                               0.265556  </span>
-<span class="co">#&gt;              Sepal.Length:Petal.Width              Sepal.Length:Petal.Length  </span>
-<span class="co">#&gt;                             -0.282960                              -0.088409  </span>
-<span class="co">#&gt;              Petal.Width:Petal.Length  Sepal.Length:Petal.Width:Petal.Length  </span>
-<span class="co">#&gt;                              0.001866                               0.023319  </span>
-<span class="co"># }</span>
-
-<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="co"># rstanarm -------------------------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/projpred/" class="external-link">"projpred"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span>
-    <span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>,
-    data <span class="op">=</span> <span class="va">mtcars</span>,
-    iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span>
-  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span>
-    <span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">*</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">hp</span>,
-    data <span class="op">=</span> <span class="va">mtcars</span>,
-    iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span>
-  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="op">}</span>
-
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = mpg ~ wt + qsec + am, data = mtcars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)           wt         qsec           am  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       9.618       -3.917        1.226        2.936  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">*</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">hp</span> <span class="op">*</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = mpg ~ cyl + disp + hp + wt + cyl:disp + cyl:hp + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     disp:hp + cyl:wt + disp:wt + hp:wt + cyl:disp:hp + cyl:hp:wt, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data = mtcars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          cyl         disp           hp           wt     cyl:disp  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  49.1436077   -3.6167276   -1.2955318   -0.0004854   58.8328841    0.1704703  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      cyl:hp      disp:hp       cyl:wt      disp:wt        hp:wt  cyl:disp:hp  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.0134573    0.0132124   -7.4915051   -0.0167172   -0.6524341   -0.0016542  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cyl:hp:wt  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.0850798  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co"># lme4 -------------------------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
+<span class="r-in">    <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">*</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>,</span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">iris</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in">  <span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed model fit by REML ['lmerMod']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 |  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Species)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Data: iris</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> REML criterion at convergence: 50.9896</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Groups   Name        Std.Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Species  (Intercept) 0.8259  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Residual             0.2536  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of obs: 150, groups:  Species, 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed Effects:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           (Intercept)                           Sepal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             -2.000229                               0.936730  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                           Petal.Width                           Petal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              1.575526                               0.265556  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Sepal.Length:Petal.Width              Sepal.Length:Petal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             -0.282960                              -0.088409  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Petal.Width:Petal.Length  Sepal.Length:Petal.Width:Petal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                              0.001866                               0.023319  </span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># rstanarm -------------------------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/projpred/" class="external-link">"projpred"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span>
+<span class="r-in">    <span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">mtcars</span>,</span>
+<span class="r-in">    iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in">  <span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span>
+<span class="r-in">    <span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">*</span> <span class="va">disp</span> <span class="op">*</span> <span class="va">hp</span>,</span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">mtcars</span>,</span>
+<span class="r-in">    iter <span class="op">=</span> <span class="fl">500</span>, refresh <span class="op">=</span> <span class="fl">0</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in">  <span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>

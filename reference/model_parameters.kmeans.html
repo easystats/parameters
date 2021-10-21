@@ -106,31 +106,30 @@
     <p>Format cluster models obtained for example by <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># S3 method for dbscan</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for dbscan</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for hclust</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for pvclust</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for kmeans</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for hkmeans</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for Mclust</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for pam</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="cn">NULL</span>, clusters <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>Cluster model.</p></td>
     </tr><tr><th>data</th>
       <td><p>A data.frame.</p></td>
@@ -142,191 +141,192 @@
       <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># \donttest{</span>
-<span class="co"># DBSCAN ---------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, eps <span class="op">=</span> <span class="fl">1.45</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-
-  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-  <span class="va">rez</span>
-
-  <span class="co"># Get clusters</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span>
-
-  <span class="co"># Clusters centers in long form</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span>
-
-  <span class="co"># Between and Total Sum of Squares</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span>
-
-  <span class="co"># HDBSCAN</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/hdbscan.html" class="external-link">hdbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; # Clustering Solution</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The 2 clusters accounted for 77.26% of the total variance of the original data.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; 1       |   100 |      139.80 |         6.26 |        2.87 |         4.91 |        1.68</span>
-<span class="co">#&gt; 2       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
-<span class="co"># }</span>
-<span class="co">#</span>
-<span class="co"># Hierarchical clustering (hclust) ---------------------------</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>
-<span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">model</span>, <span class="fl">3</span><span class="op">)</span>
-
-<span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span><span class="op">)</span>
-<span class="va">rez</span>
-<span class="co">#&gt; # Clustering Solution</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 clusters accounted for 86.86% of the total variance of the original data.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
-<span class="co">#&gt; 2       |    72 |       64.62 |         6.55 |        2.96 |         5.27 |        1.85</span>
-<span class="co">#&gt; 3       |    28 |        9.75 |         5.53 |        2.64 |         3.96 |        1.23</span>
-
-<span class="co"># Get clusters</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span>
-<span class="co">#&gt;   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
-<span class="co">#&gt;  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3 2 3 2 2</span>
-<span class="co">#&gt;  [75] 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3 2 2 2 2 2 2 3 2 2 2 2</span>
-<span class="co">#&gt; [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
-<span class="co">#&gt; [149] 2 2</span>
-
-<span class="co"># Clusters centers in long form</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span>
-<span class="co">#&gt;    Cluster n_Obs Sum_Squares     Variable     Mean</span>
-<span class="co">#&gt; 1        1    50   15.151000 Sepal.Length 5.006000</span>
-<span class="co">#&gt; 2        1    50   15.151000  Sepal.Width 3.428000</span>
-<span class="co">#&gt; 3        1    50   15.151000 Petal.Length 1.462000</span>
-<span class="co">#&gt; 4        1    50   15.151000  Petal.Width 0.246000</span>
-<span class="co">#&gt; 5        2    72   64.624722 Sepal.Length 6.545833</span>
-<span class="co">#&gt; 6        2    72   64.624722  Sepal.Width 2.963889</span>
-<span class="co">#&gt; 7        2    72   64.624722 Petal.Length 5.273611</span>
-<span class="co">#&gt; 8        2    72   64.624722  Petal.Width 1.850000</span>
-<span class="co">#&gt; 9        3    28    9.749286 Sepal.Length 5.532143</span>
-<span class="co">#&gt; 10       3    28    9.749286  Sepal.Width 2.635714</span>
-<span class="co">#&gt; 11       3    28    9.749286 Petal.Length 3.960714</span>
-<span class="co">#&gt; 12       3    28    9.749286  Petal.Width 1.228571</span>
-
-<span class="co"># Between and Total Sum of Squares</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Total_Sum_Squares</span>
-<span class="co">#&gt; NULL</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Between_Sum_Squares</span>
-<span class="co">#&gt; NULL</span>
-<span class="co"># \donttest{</span>
-<span class="co">#</span>
-<span class="co"># pvclust (finds "significant" clusters) ---------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/" class="external-link">"pvclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-  <span class="co"># NOTE: pvclust works on transposed data</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">pvclust</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust</a></span><span class="op">(</span><span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_transpose.html" class="external-link">data_transpose</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,
-    method.dist <span class="op">=</span> <span class="st">"euclidean"</span>,
-    nboot <span class="op">=</span> <span class="fl">50</span>,
-    quiet <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span>
-
-  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, ci <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span>
-  <span class="va">rez</span>
-
-  <span class="co"># Get clusters</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span>
-
-  <span class="co"># Clusters centers in long form</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span>
-
-  <span class="co"># Between and Total Sum of Squares</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span>
-<span class="op">}</span>
-<span class="co">#&gt; [1] 530.4793</span>
-<span class="co"># }</span>
-<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="co">#</span>
-<span class="co"># K-means -------------------------------</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, centers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="va">rez</span>
-
-<span class="co"># Get clusters</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span>
-
-<span class="co"># Clusters centers in long form</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span>
-
-<span class="co"># Between and Total Sum of Squares</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span>
-<span class="op">}</span>
-<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="co">#</span>
-<span class="co"># Hierarchical K-means (factoextra::hkclust) ----------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">factoextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/hkmeans.html" class="external-link">hkmeans</a></span><span class="op">(</span><span class="va">data</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-
-  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-  <span class="va">rez</span>
-
-  <span class="co"># Get clusters</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span>
-
-  <span class="co"># Clusters centers in long form</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span>
-
-  <span class="co"># Between and Total Sum of Squares</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span>
-<span class="op">}</span>
-<span class="op">}</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mclust-org.github.io/mclust/" class="external-link">"mclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">mclust</span><span class="fu">::</span><span class="fu"><a href="https://mclust-org.github.io/mclust/reference/Mclust.html" class="external-link">Mclust</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; Package 'mclust' version 5.4.7</span>
-<span class="co">#&gt; Type 'citation("mclust")' for citing this R package in publications.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: ‘mclust’</span>
-<span class="co">#&gt; The following object is masked from ‘package:mvtnorm’:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     dmvnorm</span>
-<span class="co">#&gt; The following object is masked from ‘package:mgcv’:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     mvn</span>
-<span class="co">#&gt; The following object is masked from ‘package:psych’:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     sim</span>
-<span class="co">#&gt; # Clustering Solution</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The 2 clusters accounted for 77.26% of the total variance of the original data.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
-<span class="co">#&gt; 2       |   100 |      139.80 |         6.26 |        2.87 |         4.91 |        1.68</span>
-<span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span>
-<span class="co">#</span>
-<span class="co"># K-Medoids (PAM and HPAM) ==============</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">cluster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">pam</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.unibo.it/sitoweb/christian.hennig/en/" class="external-link">"fpc"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">fpc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fpc/man/pamk.html" class="external-link">pamk</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, criterion <span class="op">=</span> <span class="st">"ch"</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="op">}</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co"># DBSCAN ---------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, eps <span class="op">=</span> <span class="fl">1.45</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">rez</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Get clusters</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Clusters centers in long form</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Between and Total Sum of Squares</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># HDBSCAN</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/hdbscan.html" class="external-link">hdbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 clusters accounted for 77.26% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |   100 |      139.80 |         6.26 |        2.87 |         4.91 |        1.68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># Hierarchical clustering (hclust) ---------------------------</span></span>
+<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html" class="external-link">cutree</a></span><span class="op">(</span><span class="va">model</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rez</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 3 clusters accounted for 86.86% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    72 |       64.62 |         6.55 |        2.96 |         5.27 |        1.85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    28 |        9.75 |         5.53 |        2.64 |         3.96 |        1.23</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Get clusters</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3 2 3 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3 2 2 2 2 2 2 3 2 2 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [149] 2 2</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Clusters centers in long form</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Cluster n_Obs Sum_Squares     Variable     Mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        1    50   15.151000 Sepal.Length 5.006000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        1    50   15.151000  Sepal.Width 3.428000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        1    50   15.151000 Petal.Length 1.462000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        1    50   15.151000  Petal.Width 0.246000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        2    72   64.624722 Sepal.Length 6.545833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        2    72   64.624722  Sepal.Width 2.963889</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        2    72   64.624722 Petal.Length 5.273611</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        2    72   64.624722  Petal.Width 1.850000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        3    28    9.749286 Sepal.Length 5.532143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       3    28    9.749286  Sepal.Width 2.635714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       3    28    9.749286 Petal.Length 3.960714</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       3    28    9.749286  Petal.Width 1.228571</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Between and Total Sum of Squares</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Total_Sum_Squares</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Between_Sum_Squares</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># pvclust (finds "significant" clusters) ---------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://stat.sys.i.kyoto-u.ac.jp/prog/pvclust/" class="external-link">"pvclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in">  <span class="co"># NOTE: pvclust works on transposed data</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">pvclust</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust</a></span><span class="op">(</span><span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_transpose.html" class="external-link">data_transpose</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>,</span>
+<span class="r-in">    method.dist <span class="op">=</span> <span class="st">"euclidean"</span>,</span>
+<span class="r-in">    nboot <span class="op">=</span> <span class="fl">50</span>,</span>
+<span class="r-in">    quiet <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, ci <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">rez</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Get clusters</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Clusters centers in long form</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Between and Total Sum of Squares</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 327.6877</span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># K-means -------------------------------</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, centers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">rez</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Get clusters</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Clusters centers in long form</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Between and Total Sum of Squares</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># Hierarchical K-means (factoextra::hkclust) ----------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">factoextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/hkmeans.html" class="external-link">hkmeans</a></span><span class="op">(</span><span class="va">data</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">rez</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Get clusters</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Clusters centers in long form</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Between and Total Sum of Squares</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mclust-org.github.io/mclust/" class="external-link">"mclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">mclust</span><span class="fu">::</span><span class="fu"><a href="https://mclust-org.github.io/mclust/reference/Mclust.html" class="external-link">Mclust</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Package 'mclust' version 5.4.7</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Type 'citation("mclust")' for citing this R package in publications.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘mclust’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:mvtnorm’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     dmvnorm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:mgcv’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     mvn</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:psych’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     sim</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 clusters accounted for 77.26% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |   100 |      139.80 |         6.26 |        2.87 |         4.91 |        1.68</span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co">#</span></span>
+<span class="r-in"><span class="co"># K-Medoids (PAM and HPAM) ==============</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">cluster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">pam</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.unibo.it/sitoweb/christian.hennig/en/" class="external-link">"fpc"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">fpc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fpc/man/pamk.html" class="external-link">pamk</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, criterion <span class="op">=</span> <span class="st">"ch"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>

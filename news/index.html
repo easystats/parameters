@@ -109,12 +109,13 @@
 </ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-0-15-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-15-1"></a></h3>
-<ul><li>
-<code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</li>
+<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>glmmTMB</code> models now computes CIs for the random SD parameters. Note that these are based on a Wald-z-distribution.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
-<ul><li>Fixed bug with <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for class <code>merMod</code> when <code>method="boot"</code>.</li>
+<ul><li><p>Fixed bug with <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for class <code>merMod</code> when <code>method="boot"</code>.</p></li>
+<li><p>Confidence intervals for random parameters in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> failed for (some?) <code>glmer</code> models.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

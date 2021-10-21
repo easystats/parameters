@@ -107,15 +107,14 @@ Details section)."><meta property="og:image" content="/logo.png"><!-- mathjax --
     </div>
 
     <div class="ref-description">
-    <p>The functions <code><a href="../reference/principal_components.html">principal_components()</a></code> and <code><a href="../reference/principal_components.html">factor_analysis()</a></code> can
+    <p>The functions <code>principal_components()</code> and <code>factor_analysis()</code> can
 be used to perform a principal component analysis (PCA) or a factor analysis
 (FA). They return the loadings as a data frame, and various methods and
 functions are available to access / display other information (see the
 Details section).</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">factor_analysis</span><span class="op">(</span>
   <span class="va">x</span>,
   n <span class="op">=</span> <span class="st">"auto"</span>,
   rotation <span class="op">=</span> <span class="st">"none"</span>,
@@ -126,7 +125,7 @@ Details section).</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span>
+<span class="fu">principal_components</span><span class="op">(</span>
   <span class="va">x</span>,
   n <span class="op">=</span> <span class="st">"auto"</span>,
   rotation <span class="op">=</span> <span class="st">"none"</span>,
@@ -136,7 +135,7 @@ Details section).</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/principal_components.html">rotated_data</a></span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span>
+<span class="fu">rotated_data</span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_efa</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">object</span>, newdata <span class="op">=</span> <span class="cn">NULL</span>, names <span class="op">=</span> <span class="cn">NULL</span>, keep_na <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
@@ -147,11 +146,11 @@ Details section).</p>
 <span class="co"># S3 method for parameters_efa</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span></code></pre></div>
+<span class="fu">closest_component</span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a statistical model.</p></td>
     </tr><tr><th>n</th>
       <td><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
@@ -185,7 +184,7 @@ compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="ex
     </tr><tr><th>...</th>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr><tr><th>pca_results</th>
-      <td><p>The output of the <code><a href="../reference/principal_components.html">principal_components()</a></code> function.</p></td>
+      <td><p>The output of the <code>principal_components()</code> function.</p></td>
     </tr><tr><th>object</th>
       <td><p>An object of class <code>parameters_pca</code> or
 <code>parameters_efa</code></p></td>
@@ -203,6 +202,7 @@ predicted data and original data is equal.</p></td>
       <td><p>Arguments for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of loadings.</p>
@@ -225,10 +225,10 @@ extracted from the PCA.</p></li>
 <li><p>Running <code>summary</code> returns information related to each
 component/factor, such as the explained variance and the Eivenvalues.</p></li>
 <li><p>Running <code><a href="get_scores.html">get_scores()</a></code> computes scores for each subscale.</p></li>
-<li><p>Running <code><a href="../reference/principal_components.html">closest_component()</a></code> will return a numeric vector
+<li><p>Running <code>closest_component()</code> will return a numeric vector
 with the assigned component index for each column from the original data
 frame.</p></li>
-<li><p>Running <code><a href="../reference/principal_components.html">rotated_data()</a></code> will return the rotated data,
+<li><p>Running <code>rotated_data()</code> will return the rotated data,
 including missing values, so it matches the original data frame.</p></li>
 <li><p>Running
 <a href="https://easystats.github.io/see/articles/parameters.html#principal-component-analysis" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></a>
@@ -279,7 +279,7 @@ important independent composite variables.</p></li>
 <h3 id="computing-item-scores">Computing Item Scores<a class="anchor" aria-label="anchor" href="#computing-item-scores"></a></h3>
 <p>Use <code><a href="get_scores.html">get_scores()</a></code> to compute scores for the "subscales"
 represented by the extracted principal components. <code><a href="get_scores.html">get_scores()</a></code>
-takes the results from <code><a href="../reference/principal_components.html">principal_components()</a></code> and extracts the
+takes the results from <code>principal_components()</code> and extracts the
 variables for each component found by the PCA. Then, for each of these
 "subscales", raw means are calculated (which equals adding up the single
 items and dividing by the number of items). This results in a sum score
@@ -315,79 +315,79 @@ personality, 44(4), 407-420, doi: <a href="https://doi.org/10.1016/j.jrp.2010.03
 <li><p>Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 statistics (6th ed.). Boston: Pearson Education.</p></li>
 </ul></div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
-
-<span class="co"># \donttest{</span>
-<span class="co"># Principal Component Analysis (PCA) -------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,
-    n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>,
-    threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span>
-  <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span>
-  <span class="va">pca</span> <span class="co"># Print loadings</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Component1"</span>, <span class="st">"Component2"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Back-predict scores</span>
-
-  <span class="co"># which variables from the original data belong to which extracted component?</span>
-  <span class="fu"><a href="../reference/principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
-  <span class="co"># rotated_data(pca)  # TODO: doesn't work</span>
-<span class="op">}</span>
-<span class="co">#&gt;  mpg  cyl disp   hp drat </span>
-<span class="co">#&gt;    1    1    1    1    2 </span>
-
-<span class="co"># Automated number of components</span>
-<span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>
-<span class="co">#&gt; # Loadings from Principal Component Analysis (no rotation)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Variable |  PC1  | Complexity</span>
-<span class="co">#&gt; -----------------------------</span>
-<span class="co">#&gt; mpg      | -0.93 |    1.00   </span>
-<span class="co">#&gt; cyl      | 0.96  |    1.00   </span>
-<span class="co">#&gt; disp     | 0.95  |    1.00   </span>
-<span class="co">#&gt; hp       | 0.91  |    1.00   </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The unique principal component accounted for 87.55% of the total variance of the original data.</span>
-<span class="co">#&gt; </span>
-<span class="co"># }</span>
-
-
-
-<span class="co"># Factor Analysis (FA) ------------------------</span>
-<span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>, threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-  <span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span>
-<span class="co"># \donttest{</span>
-  <span class="co"># Automated number of components</span>
-  <span class="fu"><a href="../reference/principal_components.html">factor_analysis</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span>
-<span class="co"># }</span>
-<span class="op">}</span>
-<span class="co">#&gt; Warning: Could not retrieve information about missing data. Returning only complete</span>
-<span class="co">#&gt;   cases.</span>
-<span class="co">#&gt; # Loadings from Factor Analysis (no rotation)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Variable |  MR1  | Complexity | Uniqueness</span>
-<span class="co">#&gt; ------------------------------------------</span>
-<span class="co">#&gt; mpg      | -0.90 |    1.00    |    0.19   </span>
-<span class="co">#&gt; cyl      | 0.96  |    1.00    |    0.08   </span>
-<span class="co">#&gt; disp     | 0.93  |    1.00    |    0.13   </span>
-<span class="co">#&gt; hp       | 0.86  |    1.00    |    0.26   </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; The unique latent factor accounted for 83.55% of the total variance of the original data.</span>
-<span class="co">#&gt; </span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co"># Principal Component Analysis (PCA) -------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span>
+<span class="r-in">    n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>,</span>
+<span class="r-in">    threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
+<span class="r-in">  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">pca</span> <span class="co"># Print loadings</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Component1"</span>, <span class="st">"Component2"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Back-predict scores</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># which variables from the original data belong to which extracted component?</span></span>
+<span class="r-in">  <span class="fu">closest_component</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
+<span class="r-in">  <span class="co"># rotated_data(pca)  # TODO: doesn't work</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  mpg  cyl disp   hp drat </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1    1    1    1    2 </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Automated number of components</span></span>
+<span class="r-in"><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.91  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique principal component accounted for 87.55% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"></span>
+<span class="r-in"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># Factor Analysis (FA) ------------------------</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>, threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in">  <span class="co"># Automated number of components</span></span>
+<span class="r-in">  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not retrieve information about missing data. Returning only complete</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   cases.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Factor Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.90 |    1.00    |    0.19   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00    |    0.08   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.93  |    1.00    |    0.13   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.86  |    1.00    |    0.26   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique latent factor accounted for 83.55% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>

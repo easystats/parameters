@@ -115,11 +115,10 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
 <li><p><a href="p_value.DirichletRegModel.html">Models with special components</a> (<code>DirichletRegModel</code>, <code>clm2</code>, <code>cgam</code>, ...)</p></li>
 </ul></div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">p_value</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
-<span class="fu"><a href="../reference/p_value.html">p_value</a></span><span class="op">(</span>
+<span class="fu">p_value</span><span class="op">(</span>
   <span class="va">model</span>,
   dof <span class="op">=</span> <span class="cn">NULL</span>,
   method <span class="op">=</span> <span class="cn">NULL</span>,
@@ -130,11 +129,11 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
 <span class="op">)</span>
 
 <span class="co"># S3 method for emmGrid</span>
-<span class="fu"><a href="../reference/p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, adjust <span class="op">=</span> <span class="st">"none"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">p_value</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, adjust <span class="op">=</span> <span class="st">"none"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
       <td><p>A statistical model.</p></td>
     </tr><tr><th>...</th>
       <td><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></td>
@@ -162,6 +161,7 @@ further details.</p></td>
       <td><p>Character value naming the method used to adjust p-values or confidence intervals. See <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">?emmeans::summary.emmGrid</a></code> for details.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.</p>
@@ -173,18 +173,18 @@ rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich<
 <code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
 thus only work for those models supported by those packages.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="../reference/p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt;           Parameter            p</span>
-<span class="co">#&gt; 1       (Intercept) 1.005180e-11</span>
-<span class="co">#&gt; 2      Sepal.Length 1.121002e-28</span>
-<span class="co">#&gt; 3 Speciesversicolor 9.645641e-67</span>
-<span class="co">#&gt; 4  Speciesvirginica 4.917626e-71</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">p_value</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter            p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       (Intercept) 1.005180e-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Sepal.Length 1.121002e-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Speciesversicolor 9.645641e-67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Speciesvirginica 4.917626e-71</span>
 </code></pre></div>
     </div>
   </div>

@@ -105,17 +105,16 @@ average."><meta property="og:image" content="/logo.png"><!-- mathjax --><script 
     </div>
 
     <div class="ref-description">
-    <p><code><a href="../reference/get_scores.html">get_scores()</a></code> takes <code>n_items</code> amount of items that load the most
+    <p><code>get_scores()</code> takes <code>n_items</code> amount of items that load the most
 (either by loading cutoff or number) on a component, and then computes their
 average.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_scores.html">get_scores</a></span><span class="op">(</span><span class="va">x</span>, n_items <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">get_scores</span><span class="op">(</span><span class="va">x</span>, n_items <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>An object returned by <code><a href="principal_components.html">principal_components()</a></code>.</p></td>
     </tr><tr><th>n_items</th>
       <td><p>Number of required (i.e. non-missing) items to build the sum
@@ -123,6 +122,7 @@ score. If <code>NULL</code>, the value is chosen to match half of the number of
 columns in a data frame.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with subscales, which are average sum scores for all
@@ -130,7 +130,7 @@ items from each component.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code><a href="../reference/get_scores.html">get_scores()</a></code> takes the results from
+    <p><code>get_scores()</code> takes the results from
 <code><a href="principal_components.html">principal_components()</a></code> and extracts the variables for each
 component found by the PCA. Then, for each of these "subscales", row means
 are calculated (which equals adding up the single items and dividing by the
@@ -138,30 +138,30 @@ number of items). This results in a sum score for each component from the
 PCA, which is on the same scale as the original, single items that were
 used to compute the PCA.</p>
     </div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span>
-
-  <span class="co"># PCA extracted two components</span>
-  <span class="va">pca</span>
-
-  <span class="co"># assignment of items to each component</span>
-  <span class="fu"><a href="../reference/principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
-
-  <span class="co"># now we want to have sum scores for each component</span>
-  <span class="fu"><a href="../reference/get_scores.html">get_scores</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
-
-  <span class="co"># compare to manually computed sum score for 2nd component, which</span>
-  <span class="co"># consists of items "hp" and "qsec"</span>
-  <span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span> <span class="op">+</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>
-<span class="op">}</span>
-<span class="co">#&gt;  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950</span>
-<span class="co">#&gt; [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735</span>
-<span class="co">#&gt; [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850</span>
-<span class="co">#&gt; [28]  64.950 139.250  95.250 174.800  63.800</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># PCA extracted two components</span></span>
+<span class="r-in">  <span class="va">pca</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># assignment of items to each component</span></span>
+<span class="r-in">  <span class="fu"><a href="principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># now we want to have sum scores for each component</span></span>
+<span class="r-in">  <span class="fu">get_scores</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># compare to manually computed sum score for 2nd component, which</span></span>
+<span class="r-in">  <span class="co"># consists of items "hp" and "qsec"</span></span>
+<span class="r-in">  <span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span> <span class="op">+</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span class="r-in"><span class="op">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [28]  64.950 139.250  95.250 174.800  63.800</span>
 </code></pre></div>
     </div>
   </div>

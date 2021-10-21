@@ -124,18 +124,17 @@ V4 variables correlate maximally (with respective coefficients of .97 and
 -.88) with this dimension. Although this function can be useful in
 exploratory data analysis, it's best to perform the dimension reduction step
 in a separate and dedicated stage, as this is a very important process in the
-data analysis workflow. <code><a href="../reference/reduce_parameters.html">reduce_data()</a></code> is an alias for
+data analysis workflow. <code>reduce_data()</code> is an alias for
 <code>reduce_parameters.data.frame()</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">reduce_parameters</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/reduce_parameters.html">reduce_data</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">reduce_data</span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span>, distance <span class="op">=</span> <span class="st">"euclidean"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="table ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
+    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
       <td><p>A data frame or a statistical model.</p></td>
     </tr><tr><th>method</th>
       <td><p>The feature reduction method. Can be one of 'PCA', 'cMDS',
@@ -145,7 +144,7 @@ data analysis workflow. <code><a href="../reference/reduce_parameters.html">redu
 set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
 <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is
 selected through <code><a href="n_factors.html">n_factors()</a></code> resp. <code><a href="n_factors.html">n_components()</a></code>.
-In <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code>, can also be <code>"max"</code>, in which case
+In <code>reduce_parameters()</code>, can also be <code>"max"</code>, in which case
 it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.</p></td>
     </tr><tr><th>distance</th>
@@ -157,6 +156,7 @@ can be given.</p></td>
       <td><p>Arguments passed to or from other methods.</p></td>
     </tr></table></div>
 
+    <div id="ref-sections">
     <div id="details">
     <h2>Details</h2>
     <p>The different methods available are described below:</p><div class="section">
@@ -193,59 +193,59 @@ dimensionality reduction. PLOS Computational Biology, 15(6).</p></li>
 reduction via regression in hyperspectral imagery. IEEE Journal of Selected
 Topics in Signal Processing, 9(6), 1026-1036.</p></li>
 </ul></div>
+    </div>
 
     <div id="examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="va">model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = Sepal.Width ~ Species * Sepal.Length + Petal.Width, </span>
-<span class="co">#&gt;     data = iris)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                    (Intercept)               Speciesversicolor  </span>
-<span class="co">#&gt;                        -0.4731                          1.2981  </span>
-<span class="co">#&gt;               Speciesvirginica                    Sepal.Length  </span>
-<span class="co">#&gt;                         1.2252                          0.7515  </span>
-<span class="co">#&gt;                    Petal.Width  Speciesversicolor:Sepal.Length  </span>
-<span class="co">#&gt;                         0.5662                         -0.5503  </span>
-<span class="co">#&gt;  Speciesvirginica:Sepal.Length  </span>
-<span class="co">#&gt;                        -0.5883  </span>
-<span class="co">#&gt; </span>
-<span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; lm(formula = Sepal.Width ~ `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78` + </span>
-<span class="co">#&gt;     `Species.versicolor_-0.99`, data = cbind(data, y))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                                                                      (Intercept)  </span>
-<span class="co">#&gt;                                                                          3.05733  </span>
-<span class="co">#&gt; `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78`  </span>
-<span class="co">#&gt;                                                                         -0.08903  </span>
-<span class="co">#&gt;                                                       `Species.versicolor_-0.99`  </span>
-<span class="co">#&gt;                                                                          0.14879  </span>
-<span class="co">#&gt; </span>
-
-<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_data</a></span><span class="op">(</span><span class="va">iris</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt;   Petal.Length_0.99/Petal.Width_0.97/Species.setosa_-0.94/Sepal.Length_0.86/Species.virginica_0.73</span>
-<span class="co">#&gt; 1                                                                                        -2.803852</span>
-<span class="co">#&gt; 2                                                                                        -2.633035</span>
-<span class="co">#&gt; 3                                                                                        -2.866923</span>
-<span class="co">#&gt; 4                                                                                        -2.808656</span>
-<span class="co">#&gt; 5                                                                                        -2.907343</span>
-<span class="co">#&gt; 6                                                                                        -2.668523</span>
-<span class="co">#&gt;   Species.versicolor_0.93 Sepal.Width_0.62</span>
-<span class="co">#&gt; 1             -0.65195900        0.1365792</span>
-<span class="co">#&gt; 2             -0.09924539       -0.8296167</span>
-<span class="co">#&gt; 3             -0.26560467       -0.5984029</span>
-<span class="co">#&gt; 4             -0.14622405       -0.8154592</span>
-<span class="co">#&gt; 5             -0.73579102        0.2543209</span>
-<span class="co">#&gt; 6             -1.14741717        1.0076406</span>
+    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">model</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Width ~ Species * Sepal.Length + Petal.Width, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data = iris)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    (Intercept)               Speciesversicolor  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        -0.4731                          1.2981  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               Speciesvirginica                    Sepal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         1.2252                          0.7515  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    Petal.Width  Speciesversicolor:Sepal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         0.5662                         -0.5503  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Speciesvirginica:Sepal.Length  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        -0.5883  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="fu">reduce_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = Sepal.Width ~ `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78` + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     `Species.versicolor_-0.99`, data = cbind(data, y))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                      (Intercept)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          3.05733  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> `Petal.Width_0.98/Species.setosa_-0.90/Sepal.Length_0.89/Species.virginica_0.78`  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                         -0.08903  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                       `Species.versicolor_-0.99`  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                          0.14879  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">reduce_data</span><span class="op">(</span><span class="va">iris</span>, method <span class="op">=</span> <span class="st">"PCA"</span>, n <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Petal.Length_0.99/Petal.Width_0.97/Species.setosa_-0.94/Sepal.Length_0.86/Species.virginica_0.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                                                                        -2.803852</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                                                                        -2.633035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                                                                                        -2.866923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                                                                                        -2.808656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                                                                                        -2.907343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                                                                        -2.668523</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Species.versicolor_0.93 Sepal.Width_0.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1             -0.65195900        0.1365792</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             -0.09924539       -0.8296167</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3             -0.26560467       -0.5984029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             -0.14622405       -0.8154592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5             -0.73579102        0.2543209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6             -1.14741717        1.0076406</span>
 </code></pre></div>
     </div>
   </div>
