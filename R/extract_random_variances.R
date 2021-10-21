@@ -48,7 +48,7 @@
   )
   out$Component <- "conditional"
 
-  if (insight::model_info(model)$is_zero_inflated) {
+  if (insight::model_info(model)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
     zi_var <- suppressWarnings(
       .extract_random_variances_helper(
         model,
@@ -210,7 +210,10 @@
   # variances to SD (sqrt), except correlations and Sigma
   corr_param <- grepl("Cor (Intercept~", out$Parameter, fixed = TRUE)
   sigma_param <- out$Parameter == "SD (Observations)"
-  out$Coefficient[!corr_param & !sigma_param] <- sqrt(out$Coefficient[!corr_param])
+  not_cor_and_sigma <- !corr_param & !sigma_param
+  if (any(not_cor_and_sigma)) {
+    out$Coefficient[not_cor_and_sigma] <- sqrt(out$Coefficient[not_cor_and_sigma])
+  }
 
   stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
 

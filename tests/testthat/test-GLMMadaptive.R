@@ -145,7 +145,7 @@ if (requiet("testthat") &&
 
     test_that("model_parameters.mixed-ran_pars", {
       params <- model_parameters(model, effects = "random")
-      expect_equal(c(nrow(params), ncol(params)), c(8, 9))
+      expect_equal(c(nrow(params), ncol(params)), c(7, 9))
       expect_equal(
         colnames(params),
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
@@ -154,19 +154,19 @@ if (requiet("testthat") &&
         params$Parameter,
         c(
           "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY: site)", "SD (Observations)",
-          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP: site)", "SD (Observations)"
+          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP: site)"
         )
       )
       expect_equal(
         params$Component,
         c(
           "conditional", "conditional", "conditional", "conditional",
-          "zero_inflated", "zero_inflated", "zero_inflated", "zero_inflated"
+          "zero_inflated", "zero_inflated", "zero_inflated"
         )
       )
       expect_equal(
         params$Coefficient,
-        c(0.56552, 0.29951, 0.06307, 1.61936, 1.02233, 0.38209, -0.17162, 1.61936),
+        c(0.56552, 0.29951, 0.06307, 1.61936, 1.02233, 0.38209, -0.17162),
         tolerance = 1e-2
       )
     })
