@@ -103,7 +103,6 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
       expect_equal(params$CI_low, c(-11.08069, 1.84749), tolerance = 1e-3)
       expect_equal(params$p, c(0, 0), tolerance = 1e-3)
     })
-
   }
 
 
@@ -126,17 +125,25 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     test_that("model_parameters.multinom", {
       params <- suppressWarnings(model_parameters(model))
       expect_equal(params$df_error, c(178, 178, 178, 178, 178, 178, 178, 178, 178, 178, 178), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(-1.6332, -0.11362, -0.02963, 0.13471, -0.17058,
-                                    -0.08325, 0.39528, 0.49086, -0.23614, -1.38245, -0.72163), tolerance = 1e-3)
-      expect_equal(params$p, c(0.50926, 0.33729, 0.02833, 0.02736, 0.11049, 0.07719, 0.00575,
-                               0.00866, 0.14473, 0.36392, 0.69537), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(
+        -1.6332, -0.11362, -0.02963, 0.13471, -0.17058,
+        -0.08325, 0.39528, 0.49086, -0.23614, -1.38245, -0.72163
+      ), tolerance = 1e-3)
+      expect_equal(params$p, c(
+        0.50926, 0.33729, 0.02833, 0.02736, 0.11049, 0.07719, 0.00575,
+        0.00866, 0.14473, 0.36392, 0.69537
+      ), tolerance = 1e-3)
 
       params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
       expect_equal(params$df_error, c(Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(-1.6165, -0.1131, -0.02953, 0.1419, -0.16439, -0.07755, 0.40173,
-                                    0.50053, -0.22991, -1.37601, -0.71551), tolerance = 1e-3)
-      expect_equal(params$p, c(0.5084, 0.33599, 0.02706, 0.0261, 0.10872, 0.07548, 0.00518,
-                               0.00794, 0.14296, 0.36269, 0.6949), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(
+        -1.6165, -0.1131, -0.02953, 0.1419, -0.16439, -0.07755, 0.40173,
+        0.50053, -0.22991, -1.37601, -0.71551
+      ), tolerance = 1e-3)
+      expect_equal(params$p, c(
+        0.5084, 0.33599, 0.02706, 0.0261, 0.10872, 0.07548, 0.00518,
+        0.00794, 0.14296, 0.36269, 0.6949
+      ), tolerance = 1e-3)
     })
   }
 
@@ -236,7 +243,6 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
   # plm ---------------------------
 
   if (requiet("plm") && getRversion() > "3.5") {
-
     data("Produc", package = "plm")
     set.seed(123)
 
@@ -320,7 +326,6 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
   # drc ---------------------------
 
   if (requiet("drc")) {
-
     set.seed(123)
     data("selenium")
 
@@ -337,16 +342,19 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     test_that("model_parameters.drc", {
       params <- suppressWarnings(model_parameters(model))
       expect_equal(params$df_error, c(17L, 17L, 17L, 17L, 17L, 17L, 17L, 17L), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(-1.83156, -1.13673, -2.4552, -1.80875, 223.0835, 295.39556,
-                                    107.25398, 70.62683), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(
+        -1.83156, -1.13673, -2.4552, -1.80875, 223.0835, 295.39556,
+        107.25398, 70.62683
+      ), tolerance = 1e-3)
       expect_equal(params$p, c(0, 1e-05, 0, 0, 0, 0, 0, 0), tolerance = 1e-3)
 
       params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
       expect_equal(params$df_error, c(Inf, Inf, Inf, Inf, Inf, Inf, Inf, Inf), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(-1.80826, -1.11588, -2.43449, -1.78349, 225.15547, 301.29532,
-                                    108.13891, 71.91797), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(
+        -1.80826, -1.11588, -2.43449, -1.78349, 225.15547, 301.29532,
+        108.13891, 71.91797
+      ), tolerance = 1e-3)
       expect_equal(params$p, c(0, 0, 0, 0, 0, 0, 0, 0), tolerance = 1e-3)
     })
   }
-
 }

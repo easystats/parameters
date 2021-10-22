@@ -1,4 +1,3 @@
-Analysing
 Anova
 BGGM
 BLUPs
@@ -15,6 +14,7 @@ CFA
 CNG
 Cattell
 Cattell's
+Cohens
 Cramer's
 CrossValidated
 D'Agostino
@@ -35,6 +35,7 @@ Epskamp
 FastICA
 Fidell
 GJRM
+GLMM
 GLMMadaptive
 Garrido
 Gelman
@@ -99,7 +100,6 @@ Sadana
 Satterthwaite
 Satterthwaite's
 Schaeffer
-Shachar
 Shi
 Shikano
 Sphericity
@@ -108,7 +108,6 @@ Struyf
 TOST
 Tabachnick
 Thiyagarajan
-Ths
 Timepoint
 Turkheimer
 VSS
@@ -139,7 +138,6 @@ cMDS
 canberra
 centre
 centred
-centroid
 ci
 clara
 clubSandwich
@@ -147,7 +145,6 @@ clusterable
 cmprsk
 coxrobust
 cplm
-datanovia
 datawizard
 df
 doi
@@ -156,7 +153,6 @@ effectsize
 emmGrid
 emmeans
 epiR
-eps
 equivariance
 ergm
 et
@@ -166,6 +162,7 @@ gamm
 gaussianity
 github
 glm
+glm's
 glmm
 glmmTMB
 heteroskedasticity
@@ -194,7 +191,6 @@ lqmm
 merMod
 merTools
 metaBMA
-metacluster
 metaclustering
 metafor
 metaplus
@@ -203,7 +199,6 @@ mhurdle
 minkowski
 mira
 mlm
-modelling
 modelsummary
 multcomp
 multicollinearity
@@ -211,7 +206,6 @@ mvord
 nubmer
 occurence
 pam
-pamk
 panelr
 performant
 plm
@@ -229,14 +223,12 @@ robmixglm
 rownumbers
 rstanarm
 sampleSelection
-setosa
 smicd
 spaMM
 spatialreg
 sphericity
 stanreg
 statitics
-subclusters
 subscale
 subscales
 th

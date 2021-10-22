@@ -44,7 +44,6 @@ ci.betareg <- function(x,
                        ci = .95,
                        component = "all",
                        ...) {
-
   component <- match.arg(component, choices = c("all", "conditional", "precision"))
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

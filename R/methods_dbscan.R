@@ -2,7 +2,6 @@
 #' @inheritParams cluster_centers
 #'
 #' @examples
-#'
 #' \donttest{
 #' # DBSCAN ---------------------------
 #' if (require("dbscan", quietly = TRUE)) {

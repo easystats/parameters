@@ -656,22 +656,24 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
     }
 
     string_tailed <- switch(toupper(ci_method),
-                            "HDI" = "highest-density",
-                            "UNIROOT" = ,
-                            "PROFILE" = "profile-likelihood",
-                            "equal-tailed")
+      "HDI" = "highest-density",
+      "UNIROOT" = ,
+      "PROFILE" = "profile-likelihood",
+      "equal-tailed"
+    )
 
     string_method <- switch(toupper(ci_method),
-                            "BCI" = ,
-                            "BCAI" = "bias-corrected accelerated bootstrap",
-                            "SI" = ,
-                            "CI" = ,
-                            "QUANTILE" = ,
-                            "ETI" = ,
-                            "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
-                            "NORMAL" = "Wald normal",
-                            "BOOT" = "parametric bootstrap",
-                            "Wald")
+      "BCI" = ,
+      "BCAI" = "bias-corrected accelerated bootstrap",
+      "SI" = ,
+      "CI" = ,
+      "QUANTILE" = ,
+      "ETI" = ,
+      "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+      "NORMAL" = "Wald normal",
+      "BOOT" = "parametric bootstrap",
+      "Wald"
+    )
 
     if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
       string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
@@ -681,10 +683,11 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
     if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
       string_statistic <- switch(tolower(test_statistic),
-                                 "t-statistic" = "t",
-                                 "chi-squared statistic" = ,
-                                 "z-statistic" = "z",
-                                 "")
+        "t-statistic" = "t",
+        "chi-squared statistic" = ,
+        "z-statistic" = "z",
+        ""
+      )
       string_method <- paste0(string_method, " ", string_statistic, "-")
     } else {
       string_method <- paste0(string_method, " ")

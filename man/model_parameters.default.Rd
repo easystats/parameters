@@ -375,7 +375,6 @@ model_parameters(model, standardize = "refit")
 # different p-value style in output
 model_parameters(model, p_digits = 5)
 model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
-
 \donttest{
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")

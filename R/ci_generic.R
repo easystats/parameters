@@ -12,9 +12,11 @@
     method <- "wald"
   }
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "kr",
-                                          "satterthwaite", "kenward", "boot",
-                                          "profile", "residual", "normal"))
+  method <- match.arg(method, choices = c(
+    "wald", "ml1", "betwithin", "kr",
+    "satterthwaite", "kenward", "boot",
+    "profile", "residual", "normal"
+  ))
 
   effects <- match.arg(effects)
   component <- match.arg(component)

@@ -14,6 +14,8 @@
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
+  cohens_d = NULL,
+  cramers_v = NULL,
   verbose = TRUE,
   ...
 )
@@ -50,6 +52,14 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
+\item{cohens_d}{If \code{TRUE}, compute Cohens' \emph{d} as index of effect size. Only
+applies to objects from \code{ttestBF()}. See \code{effectsize::cohens_d()} for
+details.}
+
+\item{cramers_v}{Compute Cramer's V or phi as index of effect size.
+Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
+Only applies to objects from \code{chisq.test()}.}
+
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
@@ -58,7 +68,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from BayesFactor objects.
+Parameters from \code{BFBayesFactor} objects from \code{{BayesFactor}} package.
 }
 \details{
 The meaning of the extracted parameters:
@@ -81,6 +91,7 @@ parameters; See the \emph{Bayes Factors for ANOVAs} paper
 if (require("BayesFactor")) {
   model <- ttestBF(x = rnorm(100, 1, 1))
   model_parameters(model)
+  model_parameters(model, cohens_d = TRUE, ci = .9)
 }
 }
 }

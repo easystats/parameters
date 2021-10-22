@@ -68,7 +68,6 @@ ci.glm <- function(x,
                    method = "profile",
                    robust = FALSE,
                    ...) {
-
   method <- match.arg(method, choices = c("profile", "wald", "normal", "residual"))
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))

@@ -232,4 +232,3 @@ print.cluster_analysis <- function(x, digits = 2, ...) {
 
   list(model = model, clusters = model$cluster)
 }
-
