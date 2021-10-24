@@ -11,8 +11,7 @@
   if (is.null(method)) {
     method <- "wald"
   }
-  method <- tolower(method)
-  method <- match.arg(method, choices = c(
+  method <- match.arg(tolower(method), choices = c(
     "wald", "ml1", "betwithin", "kr",
     "satterthwaite", "kenward", "boot",
     "profile", "residual", "normal"
