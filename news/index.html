@@ -111,6 +111,7 @@
 <h3 id="changes-to-functions-0-15-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-15-1"></a></h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>glmmTMB</code> models now computes CIs for the random SD parameters. Note that these are based on a Wald-z-distribution.</p></li>
+<li><p>Similar to <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code>, the <code><a href="../reference/model_parameters.BFBayesFactor.html">model_parameters.BFBayesFactor()</a></code> method gains <code>cohens_d</code> and <code>cramers_v</code> arguments to control if you need to add frequentist effect size estimates to the returned summary dataframe. Previously, this was done by default.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
