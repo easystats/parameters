@@ -169,7 +169,7 @@ on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <c
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
-with <code>effectsize::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
+with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
 effects will be returned.</p></li>
 <li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
