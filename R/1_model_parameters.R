@@ -303,7 +303,7 @@ parameters <- model_parameters
 #'   factors), which may be a different behaviour compared to other R packages
 #'   (such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
 #'   such behaviours, either use `standardize="basic"` or standardize the data
-#'   with `effectsize::standardize(force=TRUE)` *before* fitting the model.
+#'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
 #'   effects will be returned.
 #'   - Robust estimation (i.e. `robust=TRUE`) of standardized parameters only

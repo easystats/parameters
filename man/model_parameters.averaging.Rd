@@ -96,7 +96,7 @@ on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"}
 factors), which may be a different behaviour compared to other R packages
 (such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
-with \code{effectsize::standardize(force=TRUE)} \emph{before} fitting the model.
+with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
 \item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only

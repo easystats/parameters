@@ -109,14 +109,6 @@ model_parameters.merMod <- function(model,
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   params <- params_random <- params_variance <- NULL
 
-  # check if standardization is required and package available
-  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
-    if (verbose) {
-      warning("Package 'effectsize' required to calculate standardized coefficients. Please install it.", call. = FALSE)
-    }
-    standardize <- NULL
-  }
-
   # post hoc standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
@@ -128,7 +120,7 @@ model_parameters.merMod <- function(model,
   # for refit, we completely refit the model, than extract parameters,
   # ci etc. as usual - therefor, we set "standardize" to NULL
   if (!is.null(standardize) && standardize == "refit") {
-    model <- effectsize::standardize(model, verbose = FALSE)
+    model <- datawizard::standardize(model, verbose = FALSE)
     standardize <- NULL
   }
 

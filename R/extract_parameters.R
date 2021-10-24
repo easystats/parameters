@@ -44,7 +44,7 @@
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
   if (!is.null(standardize) && standardize == "refit") {
-    model <- effectsize::standardize(model, verbose = FALSE, ...)
+    model <- datawizard::standardize(model, verbose = FALSE, ...)
     standardize <- NULL
   }
 
