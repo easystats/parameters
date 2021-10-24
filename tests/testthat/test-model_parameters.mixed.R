@@ -113,9 +113,7 @@ if (.runThisTest &&
     out <- utils::capture.output(print(model_parameters(model, effects = "fixed")))
     expect_equal(
       out,
-      c("# Fixed Effects",
-        "",
-        "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
+      c("Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
         "-------------------------------------------------------------------",
         "(Intercept) |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001",
         "time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 ",
