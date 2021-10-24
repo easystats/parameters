@@ -26,7 +26,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   comment = "#>",
-  out.width = "100%"
+  out.width = "100%",
+  tidy.opts = list(width.cutoff = 120)
 )
 
 if (!requireNamespace("dplyr", quietly = TRUE) ||
