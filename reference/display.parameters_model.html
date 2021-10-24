@@ -246,10 +246,12 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 </dl><dl><dt>caption</dt><dd><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></dd>
 </dl><dl><dt>subtitle</dt><dd><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
 no title or subtitle is printed, unless it is stored as attributes (<code>table_title</code>,
-or its alias <code>table_caption</code>, and <code>table_subtitle</code>).</p></dd>
+or its alias <code>table_caption</code>, and <code>table_subtitle</code>). If <code>x</code> is a list of
+data frames, <code>caption</code> may be a list of table captions, one for each table.</p></dd>
 </dl><dl><dt>footer</dt><dd><p>Table footer, as string. For markdown-formatted tables, table
 footers, due to the limitation in markdown rendering, are actually just a
-new text line under the table.</p></dd>
+new text line under the table. If <code>x</code> is a list of data frames, <code>footer</code>
+may be a list of table captions, one for each table.</p></dd>
 </dl><dl><dt>align</dt><dd><p>Only applies to HTML tables. May be one of <code>"left"</code>,
 <code>"right"</code> or <code>"center"</code>.</p></dd>
 </dl><dl><dt>digits, ci_digits, p_digits</dt><dd><p>Number of digits for rounding or
