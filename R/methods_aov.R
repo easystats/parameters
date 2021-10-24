@@ -124,6 +124,7 @@ model_parameters.aov <- function(model,
                                  ...) {
   # save model object, for later checks
   original_model <- model
+  object_name <- deparse(substitute(model), width.cutoff = 500)
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
@@ -186,6 +187,7 @@ model_parameters.aov <- function(model,
   params <- .add_anova_attributes(params, model, ci, test = test, ...)
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
+  attr(params, "object_name") <- object_name
   params
 }
 
@@ -306,6 +308,7 @@ model_parameters.afex_aov <- function(model,
   }
 
   attr(out, "title") <- unique(out$Method)
+  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(out) <- unique(c("parameters_model", "see_parameters_model", class(out)))
 
   out
