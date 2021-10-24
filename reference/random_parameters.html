@@ -110,19 +110,18 @@ mixed model and returns the result as a data frame.</p>
 
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A mixed effects model (including <code>stanreg</code> models).</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
+    
+
+<dl><dt>model</dt><dd><p>A mixed effects model (including <code>stanreg</code> models).</p></dd>
+</dl><dl><dt>component</dt><dd><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of
 <code>"conditional"</code> (default), <code>"zi"</code> or <code>"zero_inflated"</code>.
-May be abbreviated.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+May be abbreviated.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with random effects statistics for the variance components,

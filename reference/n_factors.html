@@ -137,52 +137,44 @@ with the fewer factors.</p>
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A data frame.</p></td>
-    </tr><tr><th>type</th>
-      <td><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to
-do.</p></td>
-    </tr><tr><th>rotation</th>
-      <td><p>Only used for VSS (Very Simple Structure criterion, see
+    
+
+<dl><dt>x</dt><dd><p>A data frame.</p></dd>
+</dl><dl><dt>type</dt><dd><p>Can be <code>"FA"</code> or <code>"PCA"</code>, depending on what you want to
+do.</p></dd>
+</dl><dl><dt>rotation</dt><dd><p>Only used for VSS (Very Simple Structure criterion, see
 <code><a href="https://rdrr.io/pkg/psych/man/VSS.html" class="external-link">psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>,
 <code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>,
 <code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal
 rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
 <code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and
-<code>"cluster"</code> for oblique transformations.</p></td>
-    </tr><tr><th>algorithm</th>
-      <td><p>Factoring method used by VSS. Can be <code>"pa"</code> for
+<code>"cluster"</code> for oblique transformations.</p></dd>
+</dl><dl><dt>algorithm</dt><dd><p>Factoring method used by VSS. Can be <code>"pa"</code> for
 Principal Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS)
 factoring, <code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for
 Principal Components. <code>"default"</code> will select <code>"minres"</code> if
-<code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></td>
-    </tr><tr><th>package</th>
-      <td><p>Package from which respective methods are used. Can be
+<code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></dd>
+</dl><dl><dt>package</dt><dd><p>Package from which respective methods are used. Can be
 <code>"all"</code> or a vector containing <code>"nFactors"</code>, <code>"psych"</code>, <code>"PCDimension"</code>, <code>"fit"</code> or
 <code>"EGAnet"</code>. Note that <code>"fit"</code> (which actually also relies on the <code>psych</code>
 package) and <code>"EGAnet"</code> can be very slow for bigger
 datasets. Thus, the default is <code>c("nFactors", "psych")</code>. You must have
-the respective packages installed for the methods to be used.</p></td>
-    </tr><tr><th>cor</th>
-      <td><p>An optional correlation matrix that can be used (note that the
+the respective packages installed for the methods to be used.</p></dd>
+</dl><dl><dt>cor</dt><dd><p>An optional correlation matrix that can be used (note that the
 data must still be passed as the first argument). If <code>NULL</code>, will
-compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></td>
-    </tr><tr><th>safe</th>
-      <td><p>If <code>TRUE</code>, the function will run all the procedures in try
+compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></dd>
+</dl><dl><dt>safe</dt><dd><p>If <code>TRUE</code>, the function will run all the procedures in try
 blocks, and will only return those that work and silently skip the ones
-that may fail.</p></td>
-    </tr><tr><th>n_max</th>
-      <td><p>If set to a value (e.g., <code>10</code>), will drop from the results all
+that may fail.</p></dd>
+</dl><dl><dt>n_max</dt><dd><p>If set to a value (e.g., <code>10</code>), will drop from the results all
 methods that suggest a higher number of components. The interpretation becomes
 'from all the methods that suggested a number lower than n_max, the results
-are ...'.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+are ...'.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame.</p>

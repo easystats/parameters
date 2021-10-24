@@ -109,12 +109,13 @@
     <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for t1way</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, keep <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Object from <code>WRS2</code> package.</p></td>
-    </tr><tr><th>keep</th>
-      <td><p>Character containing a regular expression pattern that
+    
+
+<dl><dt>model</dt><dd><p>Object from <code>WRS2</code> package.</p></dd>
+</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -132,14 +133,10 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+names.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>
@@ -157,7 +154,7 @@ names.</p></td>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> F    | df | df (error) |     p | Estimate |       95% CI |                         Effectsize</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3.00 |  2 |          4 | 0.160 |     0.79 | [0.52, 1.28] | Explanatory measure of effect size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3.00 |  2 |          4 | 0.160 |     0.79 | [0.41, 1.36] | Explanatory measure of effect size</span>
 </code></pre></div>
     </div>
   </div>

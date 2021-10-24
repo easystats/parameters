@@ -120,19 +120,16 @@
 <span class="co"># S3 method for parameters_clusters</span>
 <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Cluster model.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>data</th>
-      <td><p>A data.frame.</p></td>
-    </tr><tr><th>clusters</th>
-      <td><p>A vector with clusters assignments (must be same length as rows in data).</p></td>
-    </tr></table></div>
+    
 
-    <div id="ref-sections">
+<dl><dt>model</dt><dd><p>Cluster model.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>data</dt><dd><p>A data.frame.</p></dd>
+</dl><dl><dt>clusters</dt><dd><p>A vector with clusters assignments (must be same length as rows in data).</p></dd>
+</dl></div>
     </div>
 
     <div id="examples">
@@ -141,7 +138,7 @@
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            538.6171           142.7535 0.7904906</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
 <span class="r-in"><span class="co"># hclust</span></span>
 <span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
@@ -164,7 +161,7 @@
 <span class="r-in"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            538.6171           142.7535 0.7904906</span>
 </code></pre></div>
     </div>
   </div>

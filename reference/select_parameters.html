@@ -119,34 +119,28 @@ updating and returning the "best" model.</p>
 <span class="co"># S3 method for stanreg</span>
 <span class="fu">select_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, cross_validation <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A statistical model (of class <code>lm</code>, <code>glm</code>,
-<code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>direction</th>
-      <td><p>the mode of stepwise search, can be one of <code>"both"</code>,
+    
+
+<dl><dt>model</dt><dd><p>A statistical model (of class <code>lm</code>, <code>glm</code>,
+<code>merMod</code>, <code>stanreg</code> or <code>brmsfit</code>).</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>direction</dt><dd><p>the mode of stepwise search, can be one of <code>"both"</code>,
     <code>"backward"</code>, or <code>"forward"</code>, with a default of <code>"both"</code>.
     If the <code>scope</code> argument is missing the default for
-    <code>direction</code> is <code>"backward"</code>.  Values can be abbreviated.</p></td>
-    </tr><tr><th>steps</th>
-      <td><p>the maximum number of steps to be considered.  The default is 1000
+    <code>direction</code> is <code>"backward"</code>.  Values can be abbreviated.</p></dd>
+</dl><dl><dt>steps</dt><dd><p>the maximum number of steps to be considered.  The default is 1000
     (essentially as many as required).  It is typically used to stop the
-    process early.</p></td>
-    </tr><tr><th>k</th>
-      <td><p>the multiple of the number of degrees of freedom used for the penalty.
+    process early.</p></dd>
+</dl><dl><dt>k</dt><dd><p>the multiple of the number of degrees of freedom used for the penalty.
     Only <code>k = 2</code> gives the genuine AIC: <code>k = log(n)</code> is sometimes
-    referred to as BIC or SBC.</p></td>
-    </tr><tr><th>method</th>
-      <td><p>The method used in the variable selection. Can be <code>NULL</code>
-(default), <code>"forward"</code> or <code>"L1"</code>. See <code><a href="https://mc-stan.org/projpred/reference/varsel.html" class="external-link">projpred::varsel</a></code>.</p></td>
-    </tr><tr><th>cross_validation</th>
-      <td><p>Select with cross-validation.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+    referred to as BIC or SBC.</p></dd>
+</dl><dl><dt>method</dt><dd><p>The method used in the variable selection. Can be <code>NULL</code>
+(default), <code>"forward"</code> or <code>"L1"</code>. See <code><a href="https://mc-stan.org/projpred/reference/varsel.html" class="external-link">projpred::varsel</a></code>.</p></dd>
+</dl><dl><dt>cross_validation</dt><dd><p>Select with cross-validation.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>The model refitted with optimal number of parameters.</p>

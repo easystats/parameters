@@ -122,50 +122,41 @@ assignment for each observation as vector.</p>
   verbose <span class="op">=</span> <span class="cn">TRUE</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A data frame.</p></td>
-    </tr><tr><th>n_clusters</th>
-      <td><p>Number of clusters used for the cluster solution. By default,
-the number of clusters to extract is determined by calling <code><a href="n_clusters.html">n_clusters</a></code>.</p></td>
-    </tr><tr><th>method</th>
-      <td><p>Method for computing the cluster analysis. By default (<code>"hclust"</code>), a
+    
+
+<dl><dt>x</dt><dd><p>A data frame.</p></dd>
+</dl><dl><dt>n_clusters</dt><dd><p>Number of clusters used for the cluster solution. By default,
+the number of clusters to extract is determined by calling <code><a href="n_clusters.html">n_clusters</a></code>.</p></dd>
+</dl><dl><dt>method</dt><dd><p>Method for computing the cluster analysis. By default (<code>"hclust"</code>), a
 hierarchical cluster analysis, will be computed. Use <code>"kmeans"</code> to
-compute a kmeans cluster analysis. You can specify the initial letters only.</p></td>
-    </tr><tr><th>distance</th>
-      <td><p>Distance measure to be used when <code>method = "hclust"</code> (for hierarchical
+compute a kmeans cluster analysis. You can specify the initial letters only.</p></dd>
+</dl><dl><dt>distance</dt><dd><p>Distance measure to be used when <code>method = "hclust"</code> (for hierarchical
 clustering). Must be one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>,
 <code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></code>.
-If is <code>method = "kmeans"</code> this argument will be ignored.</p></td>
-    </tr><tr><th>agglomeration</th>
-      <td><p>Agglomeration method to be used when <code>method = "hclust"</code> (for hierarchical
+If is <code>method = "kmeans"</code> this argument will be ignored.</p></dd>
+</dl><dl><dt>agglomeration</dt><dd><p>Agglomeration method to be used when <code>method = "hclust"</code> (for hierarchical
 clustering). This should be one of <code>"ward"</code>, <code>"single"</code>, <code>"complete"</code>, <code>"average"</code>,
 <code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>. Default is <code>"ward"</code> (see <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></code>).
-If <code>method = "kmeans"</code> this argument will be ignored.</p></td>
-    </tr><tr><th>iterations</th>
-      <td><p>Maximum number of iterations allowed. Only applies, if
-<code>method = "kmeans"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> for details on this argument.</p></td>
-    </tr><tr><th>algorithm</th>
-      <td><p>Algorithm used for calculating kmeans cluster. Only applies, if
+If <code>method = "kmeans"</code> this argument will be ignored.</p></dd>
+</dl><dl><dt>iterations</dt><dd><p>Maximum number of iterations allowed. Only applies, if
+<code>method = "kmeans"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> for details on this argument.</p></dd>
+</dl><dl><dt>algorithm</dt><dd><p>Algorithm used for calculating kmeans cluster. Only applies, if
 <code>method = "kmeans"</code>. May be one of <code>"Hartigan-Wong"</code> (default),
 <code>"Lloyd"</code> (used by SPSS), or <code>"MacQueen"</code>. See <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code>
-for details on this argument.</p></td>
-    </tr><tr><th>force</th>
-      <td><p>Logical, if <code>TRUE</code>, ordered factors (ordinal variables) are
+for details on this argument.</p></dd>
+</dl><dl><dt>force</dt><dd><p>Logical, if <code>TRUE</code>, ordered factors (ordinal variables) are
 converted to numeric values, while character vectors and factors are converted
 to dummy-variables (numeric 0/1) and are included in the cluster analysis.
 If <code>FALSE</code>, factors and character vectors are removed before computing
-the cluster analysis.</p></td>
-    </tr><tr><th>package</th>
-      <td><p>Package from which methods are to be called to determine the
+the cluster analysis.</p></dd>
+</dl><dl><dt>package</dt><dd><p>Package from which methods are to be called to determine the
 number of clusters. Can be <code>"all"</code> or a vector containing
-<code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>The group classification for each observation as vector. The

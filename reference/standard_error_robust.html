@@ -140,49 +140,42 @@ matrix, using the packages <span class="pkg">sandwich</span> and <span class="pk
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A model.</p></td>
-    </tr><tr><th>vcov_estimation</th>
-      <td><p>String, indicating the suffix of the
+    
+
+<dl><dt>model</dt><dd><p>A model.</p></dd>
+</dl><dl><dt>vcov_estimation</dt><dd><p>String, indicating the suffix of the
 <code>vcov*()</code>-function from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span>
 package, e.g. <code>vcov_estimation = "CL"</code> (which calls
 <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> to compute clustered covariance matrix
 estimators), or <code>vcov_estimation = "HC"</code> (which calls
 <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">sandwich::vcovHC()</a></code> to compute
-heteroskedasticity-consistent covariance matrix estimators).</p></td>
-    </tr><tr><th>vcov_type</th>
-      <td><p>Character vector, specifying the estimation type for the
+heteroskedasticity-consistent covariance matrix estimators).</p></dd>
+</dl><dl><dt>vcov_type</dt><dd><p>Character vector, specifying the estimation type for the
 robust covariance matrix estimation (see
 <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">sandwich::vcovHC()</a></code> or <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>
-for details).</p></td>
-    </tr><tr><th>vcov_args</th>
-      <td><p>List of named vectors, used as additional arguments that are
+for details).</p></dd>
+</dl><dl><dt>vcov_args</dt><dd><p>List of named vectors, used as additional arguments that are
 passed down to the <span class="pkg">sandwich</span>-function specified in
-<code>vcov_estimation</code>.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Should all parameters or parameters for specific model
-components be returned?</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods. For
+<code>vcov_estimation</code>.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Should all parameters or parameters for specific model
+components be returned?</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods. For
 <code><a href="standard_error.html">standard_error()</a></code>, if <code>method = "robust"</code>, arguments
 <code>vcov_estimation</code>, <code>vcov_type</code> and <code>vcov_args</code> can be passed
-down to <code>standard_error_robust()</code>.</p></td>
-    </tr><tr><th>method</th>
-      <td><p>Method for computing degrees of freedom for
+down to <code>standard_error_robust()</code>.</p></dd>
+</dl><dl><dt>method</dt><dd><p>Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
 options (which vary depending on the model class): <code>"residual"</code>,
 <code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
 <code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
 <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
 <em>Confidence intervals and approximation of degrees of freedom</em> in
-<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame.</p>

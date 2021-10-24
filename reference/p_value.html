@@ -131,37 +131,29 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
 <span class="co"># S3 method for emmGrid</span>
 <span class="fu">p_value</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, adjust <span class="op">=</span> <span class="st">"none"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A statistical model.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></td>
-    </tr><tr><th>dof</th>
-      <td><p>Number of degrees of freedom to be used when calculating
+    
+
+<dl><dt>model</dt><dd><p>A statistical model.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></dd>
+</dl><dl><dt>dof</dt><dd><p>Number of degrees of freedom to be used when calculating
 confidence intervals. If <code>NULL</code> (default), the degrees of freedom are
 retrieved by calling <code><a href="degrees_of_freedom.html">degrees_of_freedom()</a></code> with
 approximation method defined in <code>method</code>. If not <code>NULL</code>, use this argument
 to override the default degrees of freedom used to compute confidence
-intervals.</p></td>
-    </tr><tr><th>method</th>
-      <td><p>If <code>"robust"</code>, and if model is supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, computes p-values based on robust covariance matrix estimation.</p></td>
-    </tr><tr><th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, computes confidence intervals based on
-robust standard errors. See <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Model component for which parameters should be shown. See
+intervals.</p></dd>
+</dl><dl><dt>method</dt><dd><p>If <code>"robust"</code>, and if model is supported by the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> packages, computes p-values based on robust covariance matrix estimation.</p></dd>
+</dl><dl><dt>robust</dt><dd><p>Logical, if <code>TRUE</code>, computes confidence intervals based on
+robust standard errors. See <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Model component for which parameters should be shown. See
 the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> for
-further details.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
-    </tr><tr><th>adjust</th>
-      <td><p>Character value naming the method used to adjust p-values or confidence intervals. See <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">?emmeans::summary.emmGrid</a></code> for details.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+further details.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+</dl><dl><dt>adjust</dt><dd><p>Character value naming the method used to adjust p-values or confidence intervals. See <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">?emmeans::summary.emmGrid</a></code> for details.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.</p>

@@ -121,14 +121,15 @@ as <code><a href="https://amices.org/mice/reference/pool.html" class="external-l
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x</th>
-      <td><p>A list of <code>parameters_model</code> objects, as returned by
+    
+
+<dl><dt>x</dt><dd><p>A list of <code>parameters_model</code> objects, as returned by
 <code><a href="model_parameters.html">model_parameters()</a></code>, or a list of model-objects that is
-supported by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></td>
-    </tr><tr><th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the
+supported by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
+</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -138,24 +139,18 @@ as Stata, but these standard errors poorly estimate uncertainty for the
 transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></td>
-    </tr><tr><th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+from non-Gaussian families.</p></dd>
+</dl><dl><dt>effects</dt><dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
 effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
-to mixed models. May be abbreviated.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Model component for which parameters should be shown. May be
+to mixed models. May be abbreviated.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Model component for which parameters should be shown. May be
 one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
 <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
 <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
-<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Currently not used.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Currently not used.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>

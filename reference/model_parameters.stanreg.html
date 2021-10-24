@@ -172,20 +172,18 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Bayesian model (including SEM from <span class="pkg">blavaan</span>. May also be
-a data frame with posterior samples.</p></td>
-    </tr><tr><th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
-    </tr><tr><th>dispersion</th>
-      <td><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Credible Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>). See
-<code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">bayestestR::ci()</a></code> for further details.</p></td>
-    </tr><tr><th>ci_method</th>
-      <td><p>Method for computing degrees of freedom for
+    
+
+<dl><dt>model</dt><dd><p>Bayesian model (including SEM from <span class="pkg">blavaan</span>. May also be
+a data frame with posterior samples.</p></dd>
+</dl><dl><dt>centrality</dt><dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+</dl><dl><dt>dispersion</dt><dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Credible Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>). See
+<code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">bayestestR::ci()</a></code> for further details.</p></dd>
+</dl><dl><dt>ci_method</dt><dd><p>Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
 options (which vary depending on the model class): <code>"residual"</code>,
 <code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
@@ -193,24 +191,20 @@ options (which vary depending on the model class): <code>"residual"</code>,
 <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
 <em>Confidence intervals and approximation of degrees of freedom</em> in
 <code><a href="model_parameters.html">model_parameters()</a></code> for further details. When <code>ci_method=NULL</code>, in most
-cases <code>"wald"</code> is used then.</p></td>
-    </tr><tr><th>test</th>
-      <td><p>The indices of effect existence to compute. Character (vector) or
+cases <code>"wald"</code> is used then.</p></dd>
+</dl><dl><dt>test</dt><dd><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>) and its results
-included in the summary output.</p></td>
-    </tr><tr><th>rope_range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two
+included in the summary output.</p></dd>
+</dl><dl><dt>rope_range</dt><dd><p>ROPE's lower and higher bounds. Should be a list of two
 values (e.g., <code>c(-0.1, 0.1)</code>) or <code>"default"</code>. If <code>"default"</code>,
-the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
-    </tr><tr><th>rope_ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the
-proportion of HDI, to use for the percentage in ROPE.</p></td>
-    </tr><tr><th>keep</th>
-      <td><p>Character containing a regular expression pattern that
+the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
+</dl><dl><dt>rope_ci</dt><dd><p>The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.</p></dd>
+</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -228,9 +222,8 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>drop</th>
-      <td><p>Character containing a regular expression pattern that
+names.</p></dd>
+</dl><dl><dt>drop</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -248,27 +241,19 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>parameters</th>
-      <td><p>Deprecated, alias for <code>keep</code>.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle messages and warnings.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Currently not used.</p></td>
-    </tr><tr><th>bf_prior</th>
-      <td><p>Distribution representing a prior for the computation of
+names.</p></dd>
+</dl><dl><dt>parameters</dt><dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle messages and warnings.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Currently not used.</p></dd>
+</dl><dl><dt>bf_prior</dt><dd><p>Distribution representing a prior for the computation of
 Bayes factors / SI. Used if the input is a posterior, otherwise (in the
-case of models) ignored.</p></td>
-    </tr><tr><th>diagnostic</th>
-      <td><p>Diagnostic metrics to compute.  Character (vector) or list
-with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
-    </tr><tr><th>priors</th>
-      <td><p>Add the prior used for each parameter.</p></td>
-    </tr><tr><th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Which type of parameters to return, such as parameters for the
+case of models) ignored.</p></dd>
+</dl><dl><dt>diagnostic</dt><dd><p>Diagnostic metrics to compute.  Character (vector) or list
+with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
+</dl><dl><dt>priors</dt><dd><p>Add the prior used for each parameter.</p></dd>
+</dl><dl><dt>effects</dt><dd><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Which type of parameters to return, such as parameters for the
 conditional model, the zero-inflated part of the model, the dispersion
 term, or other auxiliary parameters be returned? Applies to models with
 zero-inflated and/or dispersion formula, or if parameters such as <code>sigma</code>
@@ -280,9 +265,8 @@ such as <code>conditional</code>, <code>zero_inflated</code>, or <code>smooth_te
 (everything that are fixed or random effects - depending on the <code>effects</code>
 argument - but no auxiliary parameters). For <code>component = "distributional"</code>
 (or <code>"auxiliary"</code>), components like <code>sigma</code>, <code>dispersion</code>, or <code>beta</code>
-(and other auxiliary parameters) are returned.</p></td>
-    </tr><tr><th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the
+(and other auxiliary parameters) are returned.</p></dd>
+</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -292,13 +276,13 @@ as Stata, but these standard errors poorly estimate uncertainty for the
 transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></td>
-    </tr><tr><th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be
+from non-Gaussian families.</p></dd>
+</dl><dl><dt>standardize</dt><dd><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
+<strong>Important:</strong>
+</p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
@@ -307,16 +291,13 @@ with <code>effectsize::standardize(force=TRUE)</code> <em>before</em> fitting th
 effects will be returned.</p></li>
 <li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
-</ul></td>
-    </tr><tr><th>group_level</th>
-      <td><p>Logical, for multilevel models (i.e. models with random
+</ul></dd>
+</dl><dl><dt>group_level</dt><dd><p>Logical, for multilevel models (i.e. models with random
 effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
 include the parameters for each group level from random effects. If
 <code>group_level = FALSE</code> (the default), only information on SD and COR
-are shown.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+are shown.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>

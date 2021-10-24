@@ -127,45 +127,37 @@
 <span class="co"># S3 method for parameters_model</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>x, object</th>
-      <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></td>
-    </tr><tr><th>pretty_names</th>
-      <td><p>Return "pretty" (i.e. more human readable) parameter
-names.</p></td>
-    </tr><tr><th>split_components</th>
-      <td><p>Logical, if <code>TRUE</code> (default), For models with
+    
+
+<dl><dt>x, object</dt><dd><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
+</dl><dl><dt>pretty_names</dt><dd><p>Return "pretty" (i.e. more human readable) parameter
+names.</p></dd>
+</dl><dl><dt>split_components</dt><dd><p>Logical, if <code>TRUE</code> (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If <code>FALSE</code>, model parameters are printed
-in a single table and a <code>Component</code> column is added to the output.</p></td>
-    </tr><tr><th>select</th>
-      <td><p>Character vector (or numeric index) of column names that should
+in a single table and a <code>Component</code> column is added to the output.</p></dd>
+</dl><dl><dt>select</dt><dd><p>Character vector (or numeric index) of column names that should
 be printed. If <code>NULL</code> (default), all columns are printed. The shortcut
 <code>select = "minimal"</code> prints coefficient, confidence intervals and p-values,
-while <code>select = "short"</code> prints coefficient, standard errors and p-values.</p></td>
-    </tr><tr><th>caption</th>
-      <td><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></td>
-    </tr><tr><th>digits, ci_digits, p_digits</th>
-      <td><p>Number of digits for rounding or
+while <code>select = "short"</code> prints coefficient, standard errors and p-values.</p></dd>
+</dl><dl><dt>caption</dt><dd><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></dd>
+</dl><dl><dt>digits, ci_digits, p_digits</dt><dd><p>Number of digits for rounding or
 significant figures. May also be <code>"signif"</code> to return significant
 figures or <code>"scientific"</code> to return scientific notation. Control the
 number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
 to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
-for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></td>
-    </tr><tr><th>footer_digits</th>
-      <td><p>Number of decimal places for values in the footer summary.</p></td>
-    </tr><tr><th>show_sigma</th>
-      <td><p>Logical, if <code>TRUE</code>, adds information about the residual
-standard deviation.</p></td>
-    </tr><tr><th>show_formula</th>
-      <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
-    </tr><tr><th>zap_small</th>
-      <td><p>Logical, if <code>TRUE</code>, small values are rounded after
+for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></dd>
+</dl><dl><dt>footer_digits</dt><dd><p>Number of decimal places for values in the footer summary.</p></dd>
+</dl><dl><dt>show_sigma</dt><dd><p>Logical, if <code>TRUE</code>, adds information about the residual
+standard deviation.</p></dd>
+</dl><dl><dt>show_formula</dt><dd><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></dd>
+</dl><dl><dt>zap_small</dt><dd><p>Logical, if <code>TRUE</code>, small values are rounded after
 <code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal
-places than <code>digits</code> are printed in scientific notation.</p></td>
-    </tr><tr><th>groups</th>
-      <td><p>Named list, can be used to group parameters in the printed output.
+places than <code>digits</code> are printed in scientific notation.</p></dd>
+</dl><dl><dt>groups</dt><dd><p>Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those
 parameters that belong to one group, or list elements can be row numbers
 of those parameter rows that should belong to one group. The names of the
@@ -173,12 +165,9 @@ list elements will be used as group names, which will be inserted as "header
 row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in <code>groups</code>, while all non-matching parameters will be added
-to the end.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+to the end.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>Invisibly returns the original input object.</p>

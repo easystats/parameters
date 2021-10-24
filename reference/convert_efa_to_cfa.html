@@ -115,23 +115,20 @@ Confirmatory Factor Analysis (CFA) <code>lavaan</code>-ready structure.</p>
 
 <span class="fu">efa_to_cfa</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>An EFA model (e.g., a <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa</a></code> object).</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values
+    
+
+<dl><dt>model</dt><dd><p>An EFA model (e.g., a <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa</a></code> object).</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
-structure).</p></td>
-    </tr><tr><th>names</th>
-      <td><p>Vector containing dimension names.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+structure).</p></dd>
+</dl><dl><dt>names</dt><dd><p>Vector containing dimension names.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>Converted index.</p>

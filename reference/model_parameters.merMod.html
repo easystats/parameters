@@ -199,24 +199,23 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A mixed model.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
-    </tr><tr><th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If
+    
+
+<dl><dt>model</dt><dd><p>A mixed model.</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+</dl><dl><dt>bootstrap</dt><dd><p>Should estimates be based on bootstrapped model? If
 <code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
-<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></td>
-    </tr><tr><th>iterations</th>
-      <td><p>The number of draws to simulate/bootstrap.</p></td>
-    </tr><tr><th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be
+<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
+</dl><dl><dt>iterations</dt><dd><p>The number of draws to simulate/bootstrap.</p></dd>
+</dl><dl><dt>standardize</dt><dd><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
+<strong>Important:</strong>
+</p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
@@ -225,19 +224,16 @@ with <code>effectsize::standardize(force=TRUE)</code> <em>before</em> fitting th
 effects will be returned.</p></li>
 <li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
-</ul></td>
-    </tr><tr><th>effects</th>
-      <td><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+</ul></dd>
+</dl><dl><dt>effects</dt><dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
 effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
-to mixed models. May be abbreviated.</p></td>
-    </tr><tr><th>group_level</th>
-      <td><p>Logical, for multilevel models (i.e. models with random
+to mixed models. May be abbreviated.</p></dd>
+</dl><dl><dt>group_level</dt><dd><p>Logical, for multilevel models (i.e. models with random
 effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
 include the parameters for each group level from random effects. If
 <code>group_level = FALSE</code> (the default), only information on SD and COR
-are shown.</p></td>
-    </tr><tr><th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the
+are shown.</p></dd>
+</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -247,9 +243,8 @@ as Stata, but these standard errors poorly estimate uncertainty for the
 transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></td>
-    </tr><tr><th>ci_method</th>
-      <td><p>Method for computing degrees of freedom for
+from non-Gaussian families.</p></dd>
+</dl><dl><dt>ci_method</dt><dd><p>Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
 options (which vary depending on the model class): <code>"residual"</code>,
 <code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
@@ -257,38 +252,30 @@ options (which vary depending on the model class): <code>"residual"</code>,
 <code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
 <em>Confidence intervals and approximation of degrees of freedom</em> in
 <code><a href="model_parameters.html">model_parameters()</a></code> for further details. When <code>ci_method=NULL</code>, in most
-cases <code>"wald"</code> is used then.</p></td>
-    </tr><tr><th>p_adjust</th>
-      <td><p>Character vector, if not <code>NULL</code>, indicates the method to
+cases <code>"wald"</code> is used then.</p></dd>
+</dl><dl><dt>p_adjust</dt><dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>df_method</th>
-      <td><p>Deprecated. Please use <code>ci_method</code>.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Should all parameters, parameters for the conditional model,
+<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>df_method</dt><dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
-(default). May be abbreviated.</p></td>
-    </tr><tr><th>wb_component</th>
-      <td><p>Logical, if <code>TRUE</code> and models contains within- and
+(default). May be abbreviated.</p></dd>
+</dl><dl><dt>wb_component</dt><dd><p>Logical, if <code>TRUE</code> and models contains within- and
 between-effects (see <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">datawizard::demean()</a></code>), the <code>Component</code> column
 will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 <code>Component</code> column indicates, which parameters belong to the
-conditional or zero-inflated component of the model.</p></td>
-    </tr><tr><th>summary</th>
-      <td><p>Logical, if <code>TRUE</code>, prints summary information about the
+conditional or zero-inflated component of the model.</p></dd>
+</dl><dl><dt>summary</dt><dd><p>Logical, if <code>TRUE</code>, prints summary information about the
 model (model formula, number of observations, residual standard deviation
-and more).</p></td>
-    </tr><tr><th>keep</th>
-      <td><p>Character containing a regular expression pattern that
+and more).</p></dd>
+</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -306,9 +293,8 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>drop</th>
-      <td><p>Character containing a regular expression pattern that
+names.</p></dd>
+</dl><dl><dt>drop</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -326,20 +312,16 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>parameters</th>
-      <td><p>Deprecated, alias for <code>keep</code>.</p></td>
-    </tr><tr><th>robust</th>
-      <td><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
+names.</p></dd>
+</dl><dl><dt>parameters</dt><dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
+</dl><dl><dt>robust</dt><dd><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
 (if possible), and confidence intervals and p-values are based on these
 robust standard errors. Additional arguments like <code>vcov_estimation</code> or
 <code>vcov_type</code> are passed down to other methods, see
 <code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
 and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
-for working examples.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+for working examples.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>
@@ -539,8 +521,8 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       35.99 | [32.88, 40.29] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.05 | [-6.35, -4.19] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       36.46 | [32.10, 40.00] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -5.05 | [-6.20, -3.98] | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
 <span class="r-in"><span class="co"># }</span></span>

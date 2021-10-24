@@ -222,87 +222,67 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>object</th>
-      <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
+    
+
+<dl><dt>object</dt><dd><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>,
 <code><a href="simulate_parameters.html">simulate_parameters()</a></code>,
 <code><a href="equivalence_test.lm.html">equivalence_test()</a></code> or
-<code><a href="principal_components.html">principal_components()</a></code>.</p></td>
-    </tr><tr><th>format</th>
-      <td><p>String, indicating the output format. Can be <code>"markdown"</code>
-or <code>"html"</code>.</p></td>
-    </tr><tr><th>pretty_names</th>
-      <td><p>Return "pretty" (i.e. more human readable) parameter
-names.</p></td>
-    </tr><tr><th>split_components</th>
-      <td><p>Logical, if <code>TRUE</code> (default), For models with
+<code><a href="principal_components.html">principal_components()</a></code>.</p></dd>
+</dl><dl><dt>format</dt><dd><p>String, indicating the output format. Can be <code>"markdown"</code>
+or <code>"html"</code>.</p></dd>
+</dl><dl><dt>pretty_names</dt><dd><p>Return "pretty" (i.e. more human readable) parameter
+names.</p></dd>
+</dl><dl><dt>split_components</dt><dd><p>Logical, if <code>TRUE</code> (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If <code>FALSE</code>, model parameters are printed
-in a single table and a <code>Component</code> column is added to the output.</p></td>
-    </tr><tr><th>select</th>
-      <td><p>Character vector (or numeric index) of column names that should
+in a single table and a <code>Component</code> column is added to the output.</p></dd>
+</dl><dl><dt>select</dt><dd><p>Character vector (or numeric index) of column names that should
 be printed. If <code>NULL</code> (default), all columns are printed. The shortcut
 <code>select = "minimal"</code> prints coefficient, confidence intervals and p-values,
-while <code>select = "short"</code> prints coefficient, standard errors and p-values.</p></td>
-    </tr><tr><th>caption</th>
-      <td><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></td>
-    </tr><tr><th>subtitle</th>
-      <td><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
+while <code>select = "short"</code> prints coefficient, standard errors and p-values.</p></dd>
+</dl><dl><dt>caption</dt><dd><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></dd>
+</dl><dl><dt>subtitle</dt><dd><p>Table title (same as caption) and subtitle, as strings. If <code>NULL</code>,
 no title or subtitle is printed, unless it is stored as attributes (<code>table_title</code>,
-or its alias <code>table_caption</code>, and <code>table_subtitle</code>).</p></td>
-    </tr><tr><th>footer</th>
-      <td><p>Table footer, as string. For markdown-formatted tables, table
+or its alias <code>table_caption</code>, and <code>table_subtitle</code>).</p></dd>
+</dl><dl><dt>footer</dt><dd><p>Table footer, as string. For markdown-formatted tables, table
 footers, due to the limitation in markdown rendering, are actually just a
-new text line under the table.</p></td>
-    </tr><tr><th>align</th>
-      <td><p>Only applies to HTML tables. May be one of <code>"left"</code>,
-<code>"right"</code> or <code>"center"</code>.</p></td>
-    </tr><tr><th>digits, ci_digits, p_digits</th>
-      <td><p>Number of digits for rounding or
+new text line under the table.</p></dd>
+</dl><dl><dt>align</dt><dd><p>Only applies to HTML tables. May be one of <code>"left"</code>,
+<code>"right"</code> or <code>"center"</code>.</p></dd>
+</dl><dl><dt>digits, ci_digits, p_digits</dt><dd><p>Number of digits for rounding or
 significant figures. May also be <code>"signif"</code> to return significant
 figures or <code>"scientific"</code> to return scientific notation. Control the
 number of digits by adding the value as suffix, e.g. <code>digits = "scientific4"</code>
 to have scientific notation with 4 decimal places, or <code>digits = "signif5"</code>
-for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></td>
-    </tr><tr><th>footer_digits</th>
-      <td><p>Number of decimal places for values in the footer summary.</p></td>
-    </tr><tr><th>ci_brackets</th>
-      <td><p>Logical, if <code>TRUE</code> (default), CI-values are
-encompassed in square brackets (else in parentheses).</p></td>
-    </tr><tr><th>show_sigma</th>
-      <td><p>Logical, if <code>TRUE</code>, adds information about the residual
-standard deviation.</p></td>
-    </tr><tr><th>show_formula</th>
-      <td><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></td>
-    </tr><tr><th>zap_small</th>
-      <td><p>Logical, if <code>TRUE</code>, small values are rounded after
+for 5 significant figures (see also <code><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif()</a></code>).</p></dd>
+</dl><dl><dt>footer_digits</dt><dd><p>Number of decimal places for values in the footer summary.</p></dd>
+</dl><dl><dt>ci_brackets</dt><dd><p>Logical, if <code>TRUE</code> (default), CI-values are
+encompassed in square brackets (else in parentheses).</p></dd>
+</dl><dl><dt>show_sigma</dt><dd><p>Logical, if <code>TRUE</code>, adds information about the residual
+standard deviation.</p></dd>
+</dl><dl><dt>show_formula</dt><dd><p>Logical, if <code>TRUE</code>, adds the model formula to the output.</p></dd>
+</dl><dl><dt>zap_small</dt><dd><p>Logical, if <code>TRUE</code>, small values are rounded after
 <code>digits</code> decimal places. If <code>FALSE</code>, values with more decimal
-places than <code>digits</code> are printed in scientific notation.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle messages and warnings.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>sort</th>
-      <td><p>Sort the loadings.</p></td>
-    </tr><tr><th>threshold</th>
-      <td><p>A value between 0 and 1 indicates which (absolute) values
+places than <code>digits</code> are printed in scientific notation.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle messages and warnings.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>sort</dt><dd><p>Sort the loadings.</p></dd>
+</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
-structure).</p></td>
-    </tr><tr><th>labels</th>
-      <td><p>A character vector containing labels to be added to the
-loadings data. Usually, the question related to the item.</p></td>
-    </tr><tr><th>x</th>
-      <td><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></td>
-    </tr><tr><th>ci_width</th>
-      <td><p>Minimum width of the returned string for confidence
+structure).</p></dd>
+</dl><dl><dt>labels</dt><dd><p>A character vector containing labels to be added to the
+loadings data. Usually, the question related to the item.</p></dd>
+</dl><dl><dt>x</dt><dd><p>An object returned by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
+</dl><dl><dt>ci_width</dt><dd><p>Minimum width of the returned string for confidence
 intervals. If not <code>NULL</code> and width is larger than the string's length,
 leading whitespaces are added to the string. If <code>width="auto"</code>, width
-will be set to the length of the longest string.</p></td>
-    </tr><tr><th>groups</th>
-      <td><p>Named list, can be used to group parameters in the printed output.
+will be set to the length of the longest string.</p></dd>
+</dl><dl><dt>groups</dt><dd><p>Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those
 parameters that belong to one group, or list elements can be row numbers
 of those parameter rows that should belong to one group. The names of the
@@ -310,10 +290,8 @@ list elements will be used as group names, which will be inserted as "header
 row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in <code>groups</code>, while all non-matching parameters will be added
-to the end.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+to the end.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>If <code>format = "markdown"</code>, the return value will be a character

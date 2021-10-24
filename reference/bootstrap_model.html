@@ -130,29 +130,23 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Statistical model.</p></td>
-    </tr><tr><th>iterations</th>
-      <td><p>The number of draws to simulate/bootstrap.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr><tr><th>type</th>
-      <td><p>Character string specifying the type of bootstrap. For mixed models
+    
+
+<dl><dt>model</dt><dd><p>Statistical model.</p></dd>
+</dl><dl><dt>iterations</dt><dd><p>The number of draws to simulate/bootstrap.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl><dl><dt>type</dt><dd><p>Character string specifying the type of bootstrap. For mixed models
 of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"</code> (default) or
 <code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code> for details). For all
 other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to
-<code>"ordinary"</code>).</p></td>
-    </tr><tr><th>parallel</th>
-      <td><p>The type of parallel operation to be used (if any).</p></td>
-    </tr><tr><th>n_cpus</th>
-      <td><p>Number of processes to be used in parallel operation.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code>"ordinary"</code>).</p></dd>
+</dl><dl><dt>parallel</dt><dd><p>The type of parallel operation to be used (if any).</p></dd>
+</dl><dl><dt>n_cpus</dt><dd><p>Number of processes to be used in parallel operation.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of bootstrapped estimates.</p>

@@ -162,31 +162,29 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>A model with multinomial or categorical response value.</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></td>
-    </tr><tr><th>bootstrap</th>
-      <td><p>Should estimates be based on bootstrapped model? If
+    
+
+<dl><dt>model</dt><dd><p>A model with multinomial or categorical response value.</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+</dl><dl><dt>bootstrap</dt><dd><p>Should estimates be based on bootstrapped model? If
 <code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
-<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></td>
-    </tr><tr><th>iterations</th>
-      <td><p>The number of bootstrap replicates. This only apply in the
-case of bootstrapped frequentist models.</p></td>
-    </tr><tr><th>component</th>
-      <td><p>Model component for which parameters should be shown. May be
+<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
+</dl><dl><dt>iterations</dt><dd><p>The number of bootstrap replicates. This only apply in the
+case of bootstrapped frequentist models.</p></dd>
+</dl><dl><dt>component</dt><dd><p>Model component for which parameters should be shown. May be
 one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
 <code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
 <code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
-<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></td>
-    </tr><tr><th>standardize</th>
-      <td><p>The method used for standardizing the parameters. Can be
+<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></dd>
+</dl><dl><dt>standardize</dt><dd><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
+<strong>Important:</strong>
+</p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
@@ -195,9 +193,8 @@ with <code>effectsize::standardize(force=TRUE)</code> <em>before</em> fitting th
 effects will be returned.</p></li>
 <li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
-</ul></td>
-    </tr><tr><th>exponentiate</th>
-      <td><p>Logical, indicating whether or not to exponentiate the
+</ul></dd>
+</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -207,23 +204,18 @@ as Stata, but these standard errors poorly estimate uncertainty for the
 transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods. For instance, when
+from non-Gaussian families.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></td>
-    </tr><tr><th>p_adjust</th>
-      <td><p>Character vector, if not <code>NULL</code>, indicates the method to
+are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
+</dl><dl><dt>p_adjust</dt><dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>

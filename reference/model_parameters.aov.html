@@ -126,54 +126,46 @@
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
+    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    <table class="ref-arguments"><colgroup><col class="name"><col class="desc"></colgroup><tr><th>model</th>
-      <td><p>Object of class <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code>,
+    
+
+<dl><dt>model</dt><dd><p>Object of class <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>, <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code>,
 <code>aovlist</code>, <code>Gam</code>, <code><a href="https://rdrr.io/r/stats/manova.html" class="external-link">manova()</a></code>, <code>Anova.mlm</code>,
-<code>afex_aov</code> or <code>maov</code>.</p></td>
-    </tr><tr><th>omega_squared</th>
-      <td><p>Compute omega squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></td>
-    </tr><tr><th>eta_squared</th>
-      <td><p>Compute eta squared as index of effect size. Can be
+<code>afex_aov</code> or <code>maov</code>.</p></dd>
+</dl><dl><dt>omega_squared</dt><dd><p>Compute omega squared as index of effect size. Can be
+<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></dd>
+</dl><dl><dt>eta_squared</dt><dd><p>Compute eta squared as index of effect size. Can be
 <code>"partial"</code> (the default, adjusted for effect size), <code>"raw"</code>  or
 <code>"adjusted"</code> (the latter option only for ANOVA-tables from mixed
-models).</p></td>
-    </tr><tr><th>epsilon_squared</th>
-      <td><p>Compute epsilon squared as index of effect size. Can
+models).</p></dd>
+</dl><dl><dt>epsilon_squared</dt><dd><p>Compute epsilon squared as index of effect size. Can
 be <code>"partial"</code> (the default, adjusted for effect size) or
-<code>"raw"</code>.</p></td>
-    </tr><tr><th>df_error</th>
-      <td><p>Denominator degrees of freedom (or degrees of freedom of the
+<code>"raw"</code>.</p></dd>
+</dl><dl><dt>df_error</dt><dd><p>Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-<code>afex_aov</code>.)</p></td>
-    </tr><tr><th>type</th>
-      <td><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+<code>afex_aov</code>.)</p></dd>
+</dl><dl><dt>type</dt><dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
-<code>afex_aov</code>.)</p></td>
-    </tr><tr><th>ci</th>
-      <td><p>Confidence Interval (CI) level for effect sizes
+<code>afex_aov</code>.)</p></dd>
+</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level for effect sizes
 <code>omega_squared</code>, <code>eta_squared</code> etc. The default, <code>NULL</code>,
 will compute no confidence intervals. <code>ci</code> should be a scalar between
-0 and 1.</p></td>
-    </tr><tr><th>alternative</th>
-      <td><p>A character string specifying the alternative hypothesis;
+0 and 1.</p></dd>
+</dl><dl><dt>alternative</dt><dd><p>A character string specifying the alternative hypothesis;
 Controls the type of CI returned: <code>"two.sided"</code> (default, two-sided CI),
 <code>"greater"</code> or <code>"less"</code> (one-sided CI). Partial matching is allowed
 (e.g., <code>"g"</code>, <code>"l"</code>, <code>"two"</code>...). See section <em>One-Sided CIs</em> in
-the <a href="https://easystats.github.io/effectsize/" class="external-link">effectsize_CIs vignette</a>.</p></td>
-    </tr><tr><th>test</th>
-      <td><p>String, indicating the type of test for <code>Anova.mlm</code> to be
+the <a href="https://easystats.github.io/effectsize/" class="external-link">effectsize_CIs vignette</a>.</p></dd>
+</dl><dl><dt>test</dt><dd><p>String, indicating the type of test for <code>Anova.mlm</code> to be
 returned. If <code>"multivariate"</code> (or <code>NULL</code>), returns the summary of
 the multivariate test (that is also given by the <code>print</code>-method). If
-<code>test = "univariate"</code>, returns the summary of the univariate test.</p></td>
-    </tr><tr><th>power</th>
-      <td><p>Logical, if <code>TRUE</code>, adds a column with power for each
-parameter.</p></td>
-    </tr><tr><th>keep</th>
-      <td><p>Character containing a regular expression pattern that
+<code>test = "univariate"</code>, returns the summary of the univariate test.</p></dd>
+</dl><dl><dt>power</dt><dd><p>Logical, if <code>TRUE</code>, adds a column with power for each
+parameter.</p></dd>
+</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -191,9 +183,8 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>drop</th>
-      <td><p>Character containing a regular expression pattern that
+names.</p></dd>
+</dl><dl><dt>drop</dt><dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -211,20 +202,14 @@ returns multiple columns with parameter components, like in
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></td>
-    </tr><tr><th>parameters</th>
-      <td><p>Deprecated, alias for <code>keep</code>.</p></td>
-    </tr><tr><th>table_wide</th>
-      <td><p>Logical that decides whether the ANOVA table should be in
+names.</p></dd>
+</dl><dl><dt>parameters</dt><dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
+</dl><dl><dt>table_wide</dt><dd><p>Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
-be in the same row. Default: <code>FALSE</code>.</p></td>
-    </tr><tr><th>verbose</th>
-      <td><p>Toggle warnings and messages.</p></td>
-    </tr><tr><th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
-    </tr></table></div>
-
-    <div id="ref-sections">
+be in the same row. Default: <code>FALSE</code>.</p></dd>
+</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+</dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>A data frame of indices related to the model's parameters.</p>
