@@ -16,13 +16,13 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   dpi = 300,
-  tidy.opts = list(width.cutoff = 80),
+  tidy.opts = list(width.cutoff = 100),
   fig.path = "man/figures/",
   comment = "#>"
 )
 options(knitr.kable.NA = '',
         digits = 1,
-        width = 80)
+        width = 100)
 
 set.seed(333)
 library(parameters)

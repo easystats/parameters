@@ -100,7 +100,7 @@ email or also file an issue.
 
 ## Model’s parameters description
 
-<img src="man/figures/figure1.png" width="734" style="display: block; margin: auto;" />
+<img src="man/figures/figure1.png" style="display: block; margin: auto;" />
 
 The
 [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html)
@@ -220,7 +220,7 @@ model_parameters(model)
 
 ## Variable and parameters selection
 
-<img src="man/figures/figure2.png" width="756" style="display: block; margin: auto;" />
+<img src="man/figures/figure2.png" style="display: block; margin: auto;" />
 
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
 can help you quickly select and retain the most relevant predictors
@@ -267,10 +267,10 @@ In order to cite this package, please use the following command:
 ``` r
 citation("parameters")
 
-Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting,
-Computing and Exploring the Parameters of Statistical Models using R."
-_Journal of Open Source Software_, *5*(53), 2445. doi:
-10.21105/joss.02445 (URL: https://doi.org/10.21105/joss.02445).
+Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
+Exploring the Parameters of Statistical Models using R." _Journal of Open Source
+Software_, *5*(53), 2445. doi: 10.21105/joss.02445 (URL:
+https://doi.org/10.21105/joss.02445).
 
 A BibTeX entry for LaTeX users is
 
