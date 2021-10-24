@@ -38,7 +38,7 @@ p_value.coxph <- function(model, ...) {
 
   # convert in case of z
   if (identical(statistic, "z-statistic")) {
-    params$Statistic <- params$Statistic ^ 2
+    params$Statistic <- params$Statistic^2
   }
 
   .data_frame(

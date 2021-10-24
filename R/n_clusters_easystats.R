@@ -5,8 +5,8 @@
 #' # Specific Methods =========================
 #' # Elbow method --------------------
 #' if (require("openxlsx", quietly = TRUE) &&
-#'     require("see", quietly = TRUE) &&
-#'     require("factoextra", quietly = TRUE)) {
+#'   require("see", quietly = TRUE) &&
+#'   require("factoextra", quietly = TRUE)) {
 #'   x <- n_clusters_elbow(iris[1:4])
 #'   x
 #'   as.data.frame(x)
@@ -49,8 +49,8 @@ n_clusters_elbow <- function(x,
 #' #
 #' # Gap method --------------------
 #' if (require("see", quietly = TRUE) &&
-#'     require("cluster", quietly = TRUE) &&
-#'     require("factoextra", quietly = TRUE)) {
+#'   require("cluster", quietly = TRUE) &&
+#'   require("factoextra", quietly = TRUE)) {
 #'   x <- n_clusters_gap(iris[1:4])
 #'   x
 #'   as.data.frame(x)
@@ -198,7 +198,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
 #' #
 #' # hclust method -------------------------------
 #' if (require("pvclust", quietly = TRUE) &&
-#'     getRversion() >= "3.6.0") {
+#'   getRversion() >= "3.6.0") {
 #'   # iterations should be higher for real analyses
 #'   x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
 #'   x

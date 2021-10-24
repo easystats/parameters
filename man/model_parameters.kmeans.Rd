@@ -40,7 +40,6 @@
 Format cluster models obtained for example by \code{\link[=kmeans]{kmeans()}}.
 }
 \examples{
-
 \donttest{
 # DBSCAN ---------------------------
 if (require("dbscan", quietly = TRUE)) {

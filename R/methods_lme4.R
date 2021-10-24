@@ -90,8 +90,8 @@ model_parameters.merMod <- function(model,
       ci_method <- "quantile"
     } else {
       ci_method <- switch(insight::find_statistic(model),
-                          "t-statistic" = "residual",
-                          "wald"
+        "t-statistic" = "residual",
+        "wald"
       )
     }
   }
@@ -236,11 +236,12 @@ ci.merMod <- function(x,
                       robust = FALSE,
                       iterations = 500,
                       ...) {
-
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "ml1", "betwithin", "kr",
-                                          "satterthwaite", "kenward", "boot",
-                                          "profile", "residual", "normal"))
+  method <- match.arg(method, choices = c(
+    "wald", "ml1", "betwithin", "kr",
+    "satterthwaite", "kenward", "boot",
+    "profile", "residual", "normal"
+  ))
 
   # bootstrapping
   if (method == "boot") {

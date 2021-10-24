@@ -3,11 +3,15 @@
 
 #' Parameters from BayesFactor objects
 #'
-#' Parameters from BayesFactor objects.
+#' Parameters from `BFBayesFactor` objects from `{BayesFactor}` package.
 #'
 #' @param model Object of class `BFBayesFactor`.
+#' @param cohens_d If `TRUE`, compute Cohens' *d* as index of effect size. Only
+#'   applies to objects from `ttestBF()`. See `effectsize::cohens_d()` for
+#'   details.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
+#' @inheritParams model_parameters.htest
 #'
 #' @details
 #' The meaning of the extracted parameters:
@@ -30,6 +34,7 @@
 #' if (require("BayesFactor")) {
 #'   model <- ttestBF(x = rnorm(100, 1, 1))
 #'   model_parameters(model)
+#'   model_parameters(model, cohens_d = TRUE, ci = .9)
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
@@ -43,6 +48,8 @@ model_parameters.BFBayesFactor <- function(model,
                                            rope_range = "default",
                                            rope_ci = 0.95,
                                            priors = TRUE,
+                                           cohens_d = NULL,
+                                           cramers_v = NULL,
                                            verbose = TRUE,
                                            ...) {
   if (any(grepl("^Null", names(model@numerator)))) {
@@ -103,7 +110,11 @@ model_parameters.BFBayesFactor <- function(model,
   )
 
   # Effect size?
-  if (requireNamespace("effectsize", quietly = TRUE) && bf_type %in% c("ttest1", "ttest2", "xtable")) {
+  if (bf_type %in% c("ttest1", "ttest2") && !is.null(cohens_d) ||
+    bf_type == "xtable" && !is.null(cramers_v)) {
+    # needs {effectsize} to be installed
+    insight::check_if_installed("effectsize")
+
     tryCatch(
       {
         effsize <- effectsize::effectsize(model,

@@ -146,8 +146,10 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m1, effects = "all")$Coefficient,
-      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
-        1, 1.17399),
+      c(
+        1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
+        1, 1.17399
+      ),
       tolerance = 1e-3
     )
     expect_equal(
@@ -360,35 +362,38 @@ if (.runThisTest &&
   })
 
 
-    # proper printing ---------------------
+  # proper printing ---------------------
 
   if (win_os) {
-
     test_that("print-model_parameters glmmTMB", {
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-5],
-        c("# Fixed Effects",
+        c(
+          "# Fixed Effects",
           "",
           "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
           "----------------------------------------------------------------",
           "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001",
-          "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 ")
+          "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 "
+        )
       )
 
       mp <- model_parameters(m4, effects = "random", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out,
-        c("# Random Effects",
+        c(
+          "# Random Effects",
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
           "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              ")
+          "SD (Residual)               |        1.00 |              "
+        )
       )
 
       mp <- model_parameters(m4, effects = "fixed", component = "zero_inflated")
@@ -409,20 +414,23 @@ if (.runThisTest &&
       out <- utils::capture.output(print(mp))
       expect_equal(
         out,
-        c("# Random Effects (Zero-Inflated Model)",
+        c(
+          "# Random Effects (Zero-Inflated Model)",
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
           "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]")
+          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
+        )
       )
 
       mp <- model_parameters(m4, effects = "all", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-5],
-        c("# Fixed Effects",
+        c(
+          "# Fixed Effects",
           "",
           "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
           "----------------------------------------------------------------",
@@ -436,14 +444,16 @@ if (.runThisTest &&
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
           "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              ")
+          "SD (Residual)               |        1.00 |              "
+        )
       )
 
       mp <- model_parameters(m4, effects = "all", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-6],
-        c("# Fixed Effects (Zero-Inflated Model)",
+        c(
+          "# Fixed Effects (Zero-Inflated Model)",
           "",
           "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
           "-------------------------------------------------------------",
@@ -456,7 +466,8 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
           "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]")
+          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
+        )
       )
 
       mp <- model_parameters(m4, effects = "all", component = "all")
@@ -490,7 +501,8 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
           "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]")
+          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
+        )
       )
     })
 
@@ -688,7 +700,8 @@ if (.runThisTest &&
         "",
         "Parameter               | Coefficient |       95% CI",
         "----------------------------------------------------",
-        "SD (Intercept: persons) |        1.17 | [0.54, 2.57]")
+        "SD (Intercept: persons) |        1.17 | [0.54, 2.57]"
+      )
     )
   })
 }

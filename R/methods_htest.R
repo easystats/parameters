@@ -239,9 +239,22 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     # chi2- and mcnemar-test -----------
     out <- .extract_htest_chi2(model)
     if (grepl("^McNemar", model$method)) {
-      out <- .add_effectsize_mcnemar(model, out, cohens_g = cohens_g, ci = ci, verbose = verbose)
+      out <- .add_effectsize_mcnemar(model,
+        out,
+        cohens_g = cohens_g,
+        ci = ci,
+        verbose = verbose
+      )
     } else {
-      out <- .add_effectsize_chi2(model, out, cramers_v = cramers_v, phi = phi, ci = ci, alternative = alternative, verbose = verbose)
+      out <- .add_effectsize_chi2(
+        model,
+        out,
+        cramers_v = cramers_v,
+        phi = phi,
+        ci = ci,
+        alternative = alternative,
+        verbose = verbose
+      )
     }
   } else if (m_info$is_proptest) {
 

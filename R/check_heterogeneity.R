@@ -21,7 +21,6 @@
 #'
 #' @export
 check_heterogeneity <- function(x, select = NULL, group = NULL) {
-
   .Deprecated("performance::check_heterogeneity_bias()")
 
   if (insight::is_model(x)) {

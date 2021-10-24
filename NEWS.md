@@ -6,12 +6,17 @@
 
 ## Changes to functions
 
-* `model_parameters()` for `merMod` models now also computes CIs for the
-  random SD parameters when `ci_method="boot"` (previously, this was only
-  possible when `ci_method` was `"profile"`).
+* `model_parameters()` for `merMod` models now also computes CIs for the random
+  SD parameters when `ci_method="boot"` (previously, this was only possible when
+  `ci_method` was `"profile"`).
 
-* `model_parameters()` for `glmmTMB` models now computes CIs for the
-  random SD parameters. Note that these are based on a Wald-z-distribution.
+* `model_parameters()` for `glmmTMB` models now computes CIs for the random SD
+  parameters. Note that these are based on a Wald-z-distribution.
+
+* Similar to `model_parameters.htest()`, the `model_parameters.BFBayesFactor()`
+  method gains `cohens_d` and `cramers_v` arguments to control if you need to
+  add frequentist effect size estimates to the returned summary dataframe.
+  Previously, this was done by default.
 
 ## Bug fixes 
 
@@ -56,13 +61,14 @@ necessary changes before this breaking change is implemented.
 
 ## General
 
-* The handling to approximate the degrees of freedom in `model_parameters()`, 
+* The handling to approximate the degrees of freedom in `model_parameters()`,
   `ci()` and `p_value()` was revised and should now be more consistent. Some
   bugs related to the previous computation of confidence intervals and p-values
-  have been fixed. Now it is possible to change the method to approximate 
+  have been fixed. Now it is possible to change the method to approximate
   degrees of freedom for CIs and p-values using the `ci_method`, resp. `method`
-  argument. This change has been documented in detail in `?model_parameters`, 
-  and online here: https://easystats.github.io/parameters/reference/model_parameters.html
+  argument. This change has been documented in detail in `?model_parameters`,
+  and online here:
+  https://easystats.github.io/parameters/reference/model_parameters.html
 
 * Minor changes to `print()` for *glmmTMB* with dispersion parameter.
 
@@ -82,8 +88,8 @@ necessary changes before this breaking change is implemented.
   option for the `ci_method` (resp. `method`) argument, to explicitly calculate
   confidence intervals based on the residual degrees of freedom, when present.
 
-* `model_parameters()` supports following new objects:
-  `trimcibt`, `wmcpAKP`, `dep.effect` (in *WRS2* package), `systemfit`
+* `model_parameters()` supports following new objects: `trimcibt`, `wmcpAKP`,
+  `dep.effect` (in *WRS2* package), `systemfit`
 
 * `model_parameters()` gains a new argument `table_wide` for ANOVA tables. This
   can be helpful for users who may wish to report ANOVA table in wide format
@@ -99,19 +105,19 @@ necessary changes before this breaking change is implemented.
   not the default value, the printed output includes a message indicating which
   approximation-method for degrees of freedom was used.
 
-* `model_parameters()` for mixed models with `ci_method = "profile` computes 
-  (profiled) confidence intervals for both fixed and random effects. Thus, 
-  `ci_method = "profile` allows to add confidence intervals to the random
-  effect variances.
+* `model_parameters()` for mixed models with `ci_method = "profile` computes
+  (profiled) confidence intervals for both fixed and random effects. Thus,
+  `ci_method = "profile` allows to add confidence intervals to the random effect
+  variances.
 
 * `model_parameters()` should longer fail for supported model classes when
   robust standard errors are not available.
 
 ### Other functions
 
-* `n_factors()` the methods based on fit indices have been fixed and can be 
-  included separately (`package = "fit"`). Also added a `n_max` argument to 
-  crop the output.  
+* `n_factors()` the methods based on fit indices have been fixed and can be
+  included separately (`package = "fit"`). Also added a `n_max` argument to crop
+  the output.
 
 * `compare_parameters()` now also accepts a list of model objects.
 
@@ -121,9 +127,9 @@ necessary changes before this breaking change is implemented.
 * `format_parameters()` removes dots and underscores from parameter names, to
   make these more "human readable".
 
-* The experimental calculation of p-values in `equivalence_test()` was 
-  replaced by a proper calculation p-values. The argument `p_value` was removed
-  and p-values are now always included.
+* The experimental calculation of p-values in `equivalence_test()` was replaced
+  by a proper calculation p-values. The argument `p_value` was removed and
+  p-values are now always included.
 
 * Minor improvements to `print()`, `print_html()` and `print_md()`.
 
@@ -139,7 +145,7 @@ necessary changes before this breaking change is implemented.
   returned residual degrees of freedom in the statistic column, but confidence
   intervals were based on `Inf` degrees of freedom instead.
 
-* Fixed issue in `ci_satterthwaite()`, which used `Inf` degrees of freedom 
+* Fixed issue in `ci_satterthwaite()`, which used `Inf` degrees of freedom
   instead of the Satterthwaite approximation.
 
 * Fixed issue in `model_parameters.mlm()` when model contained interaction
@@ -151,8 +157,8 @@ necessary changes before this breaking change is implemented.
 * Fixed sign error for `model_parameters.htest()` for objects created with
   `t.test.formula()` (issue #552)
 
-* Fixed issue when computing random effect variances in `model_parameters()` 
-  for mixed models with categorical random slopes.
+* Fixed issue when computing random effect variances in `model_parameters()` for
+  mixed models with categorical random slopes.
 
 # parameters 0.14.0
 

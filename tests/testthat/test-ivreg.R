@@ -48,7 +48,8 @@ if (requiet("testthat") &&
     out <- utils::capture.output(print(model_parameters(m1)))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter     | Coefficient |   SE |         95% CI | t(45) |      p",
         "--------------------------------------------------------------------",
