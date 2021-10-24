@@ -144,11 +144,13 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
 \item{subtitle}{Table title (same as caption) and subtitle, as strings. If \code{NULL},
 no title or subtitle is printed, unless it is stored as attributes (\code{table_title},
-or its alias \code{table_caption}, and \code{table_subtitle}).}
+or its alias \code{table_caption}, and \code{table_subtitle}). If \code{x} is a list of
+data frames, \code{caption} may be a list of table captions, one for each table.}
 
 \item{footer}{Table footer, as string. For markdown-formatted tables, table
 footers, due to the limitation in markdown rendering, are actually just a
-new text line under the table.}
+new text line under the table. If \code{x} is a list of data frames, \code{footer}
+may be a list of table captions, one for each table.}
 
 \item{align}{Only applies to HTML tables. May be one of \code{"left"},
 \code{"right"} or \code{"center"}.}

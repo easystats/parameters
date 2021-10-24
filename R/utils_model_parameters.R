@@ -73,9 +73,9 @@
     }
   }
 
-  # here we add exception for objects that should not have a
-  # table headline
-  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph"))) {
+  # Models for which titles should be removed
+  # here we add exception for objects that should not have a table headline
+  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl"))) {
     attr(params, "title") <- ""
   }
 
