@@ -175,7 +175,7 @@ Suggests:
     VGAM,
     WRS2
 Remotes:
-    easystats/effectsize
+    easystats/effectsize,
     easystats/see
 VignetteBuilder: 
     knitr
