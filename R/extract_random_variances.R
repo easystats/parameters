@@ -153,12 +153,16 @@
     ran_intercept$Group <- rownames(ran_intercept)
     ran_intercept$Parameter <- "SD (Intercept)"
   }
+  ran_groups <- ran_intercept$Group
 
   # random slope - tau11
   if (!is.null(ran_slope) && nrow(ran_slope) > 0) {
     colnames(ran_slope) <- "Coefficient"
     ran_slope$Group <- rownames(ran_slope)
-    for (i in unique(ran_intercept$Group)) {
+    if (is.null(ran_groups)) {
+      ran_groups <- gsub("\\..*", "", ran_slope$Group)
+    }
+    for (i in unique(ran_groups)) {
       slopes <- which(grepl(paste0("^\\Q", i, "\\E"), ran_slope$Group))
       if (length(slopes)) {
         ran_slope$Parameter[slopes] <- paste0(
@@ -171,14 +175,14 @@
 
   # random slope-intercept correlation - rho01
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
-    if (colnames(ran_corr)[1] == ran_intercept$Group[1]) {
+    if (!is.null(ran_intercept$Group) && colnames(ran_corr)[1] == ran_intercept$Group[1]) {
       colnames(ran_corr)[1] <- "Coefficient"
       ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ")")
       ran_corr$Group <- ran_intercept$Group[1]
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
-      for (i in unique(ran_intercept$Group)) {
+      for (i in unique(ran_groups)) {
         corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
         if (length(corrs)) {
           param_name <- i
