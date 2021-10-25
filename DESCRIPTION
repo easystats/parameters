@@ -176,6 +176,7 @@ Suggests:
     WRS2
 Remotes:
     easystats/effectsize
+    easystats/see
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

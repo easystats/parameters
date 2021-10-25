@@ -10,23 +10,32 @@
 #'
 #' @examples
 #' if (requireNamespace("MASS", quietly = TRUE)) {
-#'   # retrieve group classification from hierarchical cluster analysis
-#'   groups <- cluster_analysis(iris[, 1:4], n = 2)
+#'   # Retrieve group classification from hierarchical cluster analysis
+#'   clustering <- cluster_analysis(iris[, 1:4], n = 3)
 #'
-#'   # goodness of group classificatoin
-#'   cluster_discrimination(iris[, 1:4], cluster_groups = groups)
+#'   # Goodness of group classification
+#'   cluster_discrimination(clustering)
 #' }
 #' @export
-cluster_discrimination <- function(x, cluster_groups) {
+cluster_discrimination <- function(x, cluster_groups = NULL, ...) {
+  UseMethod("cluster_discrimination")
+}
+
+#' @export
+cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {
-    cluster_groups <- cluster_analysis(x)
+    cluster_groups <- predict(x)
   }
+  cluster_discrimination(attributes(x)$data, cluster_groups, ...)
+}
 
-  ## TODO fix when WIP cluster_analysis_new is re-implemented.
 
-  # if (inherits(cluster_groups, "cluster_analysis")) {
-  #   cluster_groups <- attributes(cluster_groups)$clusters
-  # }
+
+#' @export
+cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
+  if (is.null(cluster_groups)) {
+    stop("Please provide cluster assignments via 'cluster_groups'.")
+  }
 
   x <- stats::na.omit(x)
   cluster_groups <- stats::na.omit(cluster_groups)
@@ -49,6 +58,9 @@ cluster_discrimination <- function(x, cluster_groups) {
     stringsAsFactors = FALSE
   )
 
+    # Sort according to accuracy
+  out <- out[order(out$Group) , ]
+
   attr(out, "Overall_Accuracy") <- total_correct
   class(out) <- c("cluster_discrimination", class(out))
 
@@ -56,10 +68,13 @@ cluster_discrimination <- function(x, cluster_groups) {
 }
 
 
+# Utils -------------------------------------------------------------------
+
+
 #' @export
 print.cluster_discrimination <- function(x, ...) {
   orig_x <- x
-  insight::print_color("# Accuracy of Cluster Group Classification\n\n", "blue")
+  insight::print_color("# Accuracy of Cluster Group Classification via Linear Discriminant Analysis (LDA)\n\n", "blue")
 
   total_accuracy <- attributes(x)$Overall_Accuracy
   x$Accuracy <- sprintf("%.2f%%", 100 * x$Accuracy)

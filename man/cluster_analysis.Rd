@@ -2,61 +2,60 @@
 % Please edit documentation in R/cluster_analysis.R
 \name{cluster_analysis}
 \alias{cluster_analysis}
-\title{Compute cluster analysis and return group indices}
+\title{Cluster Analysis}
 \usage{
 cluster_analysis(
   x,
-  n_clusters = NULL,
-  method = c("hclust", "kmeans"),
-  distance = c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"),
-  agglomeration = c("ward", "ward.D", "ward.D2", "single", "complete", "average",
-    "mcquitty", "median", "centroid"),
-  iterations = 20,
-  algorithm = c("Hartigan-Wong", "Lloyd", "MacQueen"),
-  force = TRUE,
-  package = c("NbClust", "mclust"),
-  verbose = TRUE
+  n = NULL,
+  method = "kmeans",
+  include_factors = FALSE,
+  standardize = TRUE,
+  verbose = TRUE,
+  distance_method = "euclidean",
+  hclust_method = "complete",
+  kmeans_method = "Hartigan-Wong",
+  dbscan_eps = 15,
+  iterations = 100,
+  ...
 )
 }
 \arguments{
 \item{x}{A data frame.}
 
-\item{n_clusters}{Number of clusters used for the cluster solution. By default,
-the number of clusters to extract is determined by calling \code{\link{n_clusters}}.}
+\item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
+the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}. Note
+that this argument does not apply for unsupervised clustering methods like
+\code{dbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
-\item{method}{Method for computing the cluster analysis. By default (\code{"hclust"}), a
-hierarchical cluster analysis, will be computed. Use \code{"kmeans"} to
-compute a kmeans cluster analysis. You can specify the initial letters only.}
+\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}), \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"} (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}), \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using \code{mclust::Mclust()}, which requires the user to run \code{library(mclust)} before).}
 
-\item{distance}{Distance measure to be used when \code{method = "hclust"} (for hierarchical
-clustering). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
-\code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link{dist}}.
-If is \code{method = "kmeans"} this argument will be ignored.}
+\item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
+values in order to be included in the data for determining the number of
+clusters. By default, factors are removed, because most methods that
+determine the number of clusters need numeric input only.}
 
-\item{agglomeration}{Agglomeration method to be used when \code{method = "hclust"} (for hierarchical
-clustering). This should be one of \code{"ward"}, \code{"single"}, \code{"complete"}, \code{"average"},
-\code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"ward"} (see \code{\link{hclust}}).
-If \code{method = "kmeans"} this argument will be ignored.}
-
-\item{iterations}{Maximum number of iterations allowed. Only applies, if
-\code{method = "kmeans"}. See \code{\link{kmeans}} for details on this argument.}
-
-\item{algorithm}{Algorithm used for calculating kmeans cluster. Only applies, if
-\code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
-\code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link{kmeans}}
-for details on this argument.}
-
-\item{force}{Logical, if \code{TRUE}, ordered factors (ordinal variables) are
-converted to numeric values, while character vectors and factors are converted
-to dummy-variables (numeric 0/1) and are included in the cluster analysis.
-If \code{FALSE}, factors and character vectors are removed before computing
-the cluster analysis.}
-
-\item{package}{Package from which methods are to be called to determine the
-number of clusters. Can be \code{"all"} or a vector containing
-\code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
+\item{standardize}{Standardize the dataframe before clustering (default).}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{distance_method}{Distance measure to be used for methods based on distances (e.g., when \code{method = "hclust"} for hierarchical clustering. For other methods, such as \code{"kmeans"}, this argument will be ignored). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}} and \code{pvclust::pvclust()} for more information.}
+
+\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"}
+(for hierarchical clustering). This should be one of \code{"ward"}, \code{"single"},
+\code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
+Default is \code{"ward"} (see \code{\link[=hclust]{hclust()}}). If \code{method = "kmeans"} this argument
+will be ignored.}
+
+\item{kmeans_method}{Algorithm used for calculating kmeans cluster. Only applies,
+if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
+\code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}} for details on
+this argument.}
+
+\item{dbscan_eps}{The 'eps' argument for DBSCAN method. See \code{\link[=n_clusters_dbscan]{n_clusters_dbscan()}}.}
+
+\item{iterations}{The number of replications.}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 The group classification for each observation as vector. The
@@ -68,29 +67,79 @@ Compute hierarchical or kmeans cluster analysis and return the group
 assignment for each observation as vector.
 }
 \details{
-The \code{print()} and \code{plot()} methods show the (standardized)
-mean value for each variable within each cluster. Thus, a higher absolute
-value indicates that a certain variable characteristic is more pronounced
-within that specific cluster (as compared to other cluster groups with lower
-absolute mean values).
+The \code{print()} and \code{plot()} methods show the (standardized) mean value for
+each variable within each cluster. Thus, a higher absolute value indicates
+that a certain variable characteristic is more pronounced within that
+specific cluster (as compared to other cluster groups with lower absolute
+mean values).
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
-# Hierarchical clustering of mtcars-dataset
-groups <- cluster_analysis(iris[, 1:4], 3)
-groups
+set.seed(33)
+# K-Means ====================================================
+rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
+rez # Show results
+predict(rez) # Get clusters
+cluster_discrimination(rez) # Perform LDA
 
-# K-means clustering of mtcars-dataset, auto-detection of cluster-groups
-\dontrun{
-groups <- cluster_analysis(iris[, 1:4], method = "k")
-groups
+# Hierarchical k-means (more robust k-means)
+if (require("factoextra", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "hkmeans")
+  rez # Show results
+  predict(rez) # Get clusters
+}
+
+# Hierarchical Clustering (hclust) ===========================
+rez <- cluster_analysis(iris[1:4], n = 3, method = "hclust")
+rez # Show results
+predict(rez) # Get clusters
+
+# K-Medoids (pam) ============================================
+if (require("cluster", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], n = 3, method = "pam")
+  rez # Show results
+  predict(rez) # Get clusters
+}
+
+# PAM with automated number of clusters
+if (require("fpc", quietly = TRUE)) {
+  rez <- cluster_analysis(iris[1:4], method = "pamk")
+  rez # Show results
+  predict(rez) # Get clusters
+}
+
+# DBSCAN ====================================================
+if (require("dbscan", quietly = TRUE)) {
+  # Note that you can assimilate more outliers (cluster 0) to neighbouring
+  # clusters by setting borderPoints = TRUE.
+  rez <- cluster_analysis(iris[1:4], method = "dbscan", dbscan_eps = 1.45)
+  rez # Show results
+  predict(rez) # Get clusters
+}
+
+# Mixture ====================================================
+if (require("mclust", quietly = TRUE)) {
+  library(mclust) # Needs the package to be loaded
+  rez <- cluster_analysis(iris[1:4], method = "mixture")
+  rez # Show results
+  predict(rez) # Get clusters
 }
 }
 \references{
-Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster Analysis Basics and Extensions. R package.
+\itemize{
+\item Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
+Analysis Basics and Extensions. R package.
+}
 }
 \seealso{
-\code{\link{n_clusters}} to determine the number of clusters to extract, \code{\link{cluster_discrimination}} to determine the accuracy of cluster group classification and \code{\link{check_clusterstructure}} to check suitability of data for clustering.
+\itemize{
+\item \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
+\code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group
+classification via linear discriminant analysis (LDA) and
+\code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data
+for clustering.
+\item https://www.datanovia.com/en/lessons/
+}
 }

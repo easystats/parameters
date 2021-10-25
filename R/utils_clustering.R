@@ -1,3 +1,32 @@
+
+
+# #' @export
+# print.cluster_analysis <- function(x, digits = 2, ...) {
+#   # retrieve data
+#   dat <- attr(x, "data", exact = TRUE)
+#
+#   if (is.null(dat)) {
+#     stop("Could not find data frame that was used for cluster analysis.", call. = FALSE)
+#   }
+#
+#   # save output from cluster_discrimination()
+#   accuracy <- attributes(x)$accuracy
+#
+#   # headline
+#   insight::print_color("# Cluster Analysis (mean z-score by cluster)\n\n", "blue")
+#
+#   # round numeric variables (i.e. all but first term column)
+#   dat[2:ncol(dat)] <- sapply(dat[2:ncol(dat)], round, digits = digits)
+#   print.data.frame(dat, row.names = FALSE)
+#
+#   if (!is.null(accuracy)) {
+#     cat("\n")
+#     print(accuracy)
+#   }
+#   invisible(x)
+# }
+
+
 # Utils -------------------------------------------------------------------
 
 #' @keywords internal
