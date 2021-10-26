@@ -72,6 +72,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          remotes::install_github("crj32/M3C") # package is not on CRAN but bioconductor
         shell: Rscript {0}
 
       - name: Session info

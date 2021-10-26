@@ -75,6 +75,7 @@ plot.parameters_efa <- function(x, ...) {
 }
 
 
+#' @importFrom graphics plot
 #' @export
 plot.cluster_analysis <- function(x, ...) {
   insight::check_if_installed("see")
