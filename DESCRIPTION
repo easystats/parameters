@@ -128,7 +128,6 @@ Suggests:
     lmerTest,
     logspline,
     lqmm,
-    M3C,
     magrittr,
     MASS,
     Matrix,

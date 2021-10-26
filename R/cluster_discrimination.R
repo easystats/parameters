@@ -5,6 +5,7 @@
 #' @param x A data frame
 #' @param cluster_groups Group classification of the cluster analysis, which can
 #'   be retrieved from the [cluster_analysis()] function.
+#' @param ... Other arguments to be passed to or from.
 #'
 #' @seealso [n_clusters()] to determine the number of clusters to extract, [cluster_analysis()] to compute a cluster analysis and [check_clusterstructure()] to check suitability of data for clustering.
 #'
@@ -24,7 +25,7 @@ cluster_discrimination <- function(x, cluster_groups = NULL, ...) {
 #' @export
 cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {
-    cluster_groups <- predict(x)
+    cluster_groups <- stats::predict(x)
   }
   cluster_discrimination(attributes(x)$data, cluster_groups, ...)
 }
