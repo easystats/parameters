@@ -147,6 +147,7 @@ Suggests:
     nlme,
     nnet,
     openxlsx,
+    ordinal,
     panelr,
     pbkrtest,
     PCDimension,

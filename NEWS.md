@@ -22,6 +22,9 @@
 
 * Fixed bug with `ci()` for class `merMod` when `method="boot"`.
 
+* Fixed issue with correct association of components for ordinal models of 
+  classes `clm` and `clm2`.
+
 * Confidence intervals for random parameters in `model_parameters()` failed for
   (some?) `glmer` models.
 

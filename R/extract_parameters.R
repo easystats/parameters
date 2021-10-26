@@ -80,7 +80,9 @@
     intercept_groups <- which(grepl("^Intercept:", parameters$Parameter))
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
-    intercept_groups <- match(names(model$alpha), parameters$Parameter)
+    intercept_groups <- rep(c("intercept", "location", "scale"), vapply(model[c("alpha", "beta", "zeta")], length, numeric(1)))
+  } else if (inherits(model, "clm2") && !is.null(model$Alpha)) {
+    intercept_groups <- rep(c("intercept", "location", "scale"), vapply(model[c("Alpha", "beta", "zeta")], length, numeric(1)))
   } else {
     intercept_groups <- NULL
   }
@@ -233,13 +235,11 @@
 
   # ==== add intercept groups for ordinal models
 
-  if (inherits(model, c("polr", "clm")) && !is.null(intercept_groups)) {
+  if (inherits(model, "polr") && !is.null(intercept_groups)) {
     parameters$Component <- "beta"
     parameters$Component[intercept_groups] <- "alpha"
-  } else if (inherits(model, "clm2") && !is.null(model$Alpha)) {
-    intercept_groups <- match(names(model$Alpha), parameters$Parameter)
-    parameters$Component[parameters$Component == "conditional"] <- "beta"
-    parameters$Component[intercept_groups] <- "alpha"
+  } else if (inherits(model, c("clm", "clm2")) && !is.null(intercept_groups)) {
+    parameters$Component <- intercept_groups
   }
 
 
