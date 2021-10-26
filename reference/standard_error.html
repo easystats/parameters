@@ -103,7 +103,7 @@ standard errors."><meta property="og:image" content="/logo.png"><!-- mathjax -->
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Standard Errors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_DirichletReg.R" class="external-link"><code>R/methods_DirichletReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_averaging.R" class="external-link"><code>R/methods_averaging.R</code></a>, and 10 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_DirichletReg.R" class="external-link"><code>R/methods_DirichletReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_averaging.R" class="external-link"><code>R/methods_averaging.R</code></a>, and 10 more</small>
     <div class="hidden name"><code>standard_error.Rd</code></div>
     </div>
 
@@ -182,32 +182,37 @@ standard errors.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>A model.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods. For
+    <dl><dt>model</dt>
+<dd><p>A model.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods. For
 <code>standard_error()</code>, if <code>method = "robust"</code>, arguments
 <code>vcov_estimation</code>, <code>vcov_type</code> and <code>vcov_args</code> can be passed
 down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></dd>
-</dl><dl><dt>method</dt><dd><p>If <code>"robust"</code>, robust standard errors are computed by
+<dt>method</dt>
+<dd><p>If <code>"robust"</code>, robust standard errors are computed by
 calling <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.
 <code><a href="standard_error_robust.html">standard_error_robust()</a></code>, in turn, calls one of the
 <code>vcov*()</code>-functions from the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span>
 package for robust covariance matrix estimators. For linear mixed models,
 <code>method</code> may also be <code><a href="p_value_kenward.html">"kenward"</a></code> or
 <code><a href="p_value_satterthwaite.html">"satterthwaite"</a></code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>component</dt><dd><p>Should all parameters, parameters for the conditional model,
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>component</dt>
+<dd><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
 (default). May be abbreviated.</p></dd>
-</dl><dl><dt>force</dt><dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
+<dt>force</dt>
+<dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
 values to calculate the standard error, with the lowest level being the
 value <code>1</code> (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, <code>NA</code> is returned for
 factors or character vectors.</p></dd>
-</dl><dl><dt>effects</dt><dd><p>Should standard errors for fixed effects or random effects be
+<dt>effects</dt>
+<dd><p>Should standard errors for fixed effects or random effects be
 returned? Only applies to mixed models. May be abbreviated. When standard
 errors for random effects are requested, for each grouping factor a list of
 standard errors (per group level) for random intercepts and slopes is

@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from BayesFactor objects</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_BayesFactor.R" class="external-link"><code>R/methods_BayesFactor.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_BayesFactor.R" class="external-link"><code>R/methods_BayesFactor.R</code></a></small>
     <div class="hidden name"><code>model_parameters.BFBayesFactor.Rd</code></div>
     </div>
 
@@ -129,38 +129,49 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Object of class <code>BFBayesFactor</code>.</p></dd>
-</dl><dl><dt>centrality</dt><dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
-</dl><dl><dt>dispersion</dt><dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Value or vector of probability of the CI (between 0 and 1)
+    <dl><dt>model</dt>
+<dd><p>Object of class <code>BFBayesFactor</code>.</p></dd>
+<dt>centrality</dt>
+<dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+<dt>dispersion</dt>
+<dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
+<dt>ci</dt>
+<dd><p>Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>ci_method</dt><dd><p>The type of index used for Credible Interval. Can be
+<dt>ci_method</dt>
+<dd><p>The type of index used for Credible Interval. Can be
 <code>"HDI"</code> (default, see <code><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">hdi()</a></code>), <code>"ETI"</code>
 (see <code><a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link">eti()</a></code>), <code>"BCI"</code> (see
 <code><a href="https://easystats.github.io/bayestestR/reference/bci.html" class="external-link">bci()</a></code>) or <code>"SI"</code> (see <code><a href="https://easystats.github.io/bayestestR/reference/si.html" class="external-link">si()</a></code>).</p></dd>
-</dl><dl><dt>test</dt><dd><p>The indices of effect existence to compute. Character (vector) or
+<dt>test</dt>
+<dd><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link">rope()</a></code> or <code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">p_direction()</a></code>) and its results
 included in the summary output.</p></dd>
-</dl><dl><dt>rope_range</dt><dd><p>ROPE's lower and higher bounds. Should be a list of two
+<dt>rope_range</dt>
+<dd><p>ROPE's lower and higher bounds. Should be a list of two
 values (e.g., <code>c(-0.1, 0.1)</code>) or <code>"default"</code>. If <code>"default"</code>,
 the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
-</dl><dl><dt>rope_ci</dt><dd><p>The Credible Interval (CI) probability, corresponding to the
+<dt>rope_ci</dt>
+<dd><p>The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.</p></dd>
-</dl><dl><dt>priors</dt><dd><p>Add the prior used for each parameter.</p></dd>
-</dl><dl><dt>cohens_d</dt><dd><p>If <code>TRUE</code>, compute Cohens' <em>d</em> as index of effect size. Only
+<dt>priors</dt>
+<dd><p>Add the prior used for each parameter.</p></dd>
+<dt>cohens_d</dt>
+<dd><p>If <code>TRUE</code>, compute Cohens' <em>d</em> as index of effect size. Only
 applies to objects from <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF()</a></code>. See <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">effectsize::cohens_d()</a></code> for
 details.</p></dd>
-</dl><dl><dt>cramers_v</dt><dd><p>Compute Cramer's V or phi as index of effect size.
+<dt>cramers_v</dt>
+<dd><p>Compute Cramer's V or phi as index of effect size.
 Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
 Only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle off warnings.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Additional arguments to be passed to or from methods.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle off warnings.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments to be passed to or from methods.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

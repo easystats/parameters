@@ -112,7 +112,7 @@ reduce_parameters.data.frame()."><meta property="og:image" content="/logo.png"><
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Dimensionality reduction (DR) / Features Reduction</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/reduce_parameters.R" class="external-link"><code>R/reduce_parameters.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/reduce_parameters.R" class="external-link"><code>R/reduce_parameters.R</code></a></small>
     <div class="hidden name"><code>reduce_parameters.Rd</code></div>
     </div>
 
@@ -138,23 +138,26 @@ data analysis workflow. <code>reduce_data()</code> is an alias for
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A data frame or a statistical model.</p></dd>
-</dl><dl><dt>method</dt><dd><p>The feature reduction method. Can be one of 'PCA', 'cMDS',
+    <dl><dt>x</dt>
+<dd><p>A data frame or a statistical model.</p></dd>
+<dt>method</dt>
+<dd><p>The feature reduction method. Can be one of 'PCA', 'cMDS',
 'DRR', 'ICA' (see the Details section).</p></dd>
-</dl><dl><dt>n</dt><dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
+<dt>n</dt>
+<dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
 set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
 <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is
 selected through <code><a href="n_factors.html">n_factors()</a></code> resp. <code><a href="n_factors.html">n_components()</a></code>.
 In <code>reduce_parameters()</code>, can also be <code>"max"</code>, in which case
 it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.</p></dd>
-</dl><dl><dt>distance</dt><dd><p>The distance measure to be used. Only applies when
+<dt>distance</dt>
+<dd><p>The distance measure to be used. Only applies when
 <code>method = "cMDS"</code>. This must be one of "euclidean", "maximum",
 "manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring
 can be given.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>

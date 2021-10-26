@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simulated draws from model coefficients</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/5_simulate_model.R" class="external-link"><code>R/5_simulate_model.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/5_simulate_model.R" class="external-link"><code>R/5_simulate_model.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a></small>
     <div class="hidden name"><code>simulate_model.Rd</code></div>
     </div>
 
@@ -123,17 +123,20 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Statistical model (no Bayesian models).</p></dd>
-</dl><dl><dt>iterations</dt><dd><p>The number of draws to simulate/bootstrap.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>component</dt><dd><p>Should all parameters, parameters for the conditional model,
+    <dl><dt>model</dt>
+<dd><p>Statistical model (no Bayesian models).</p></dd>
+<dt>iterations</dt>
+<dd><p>The number of draws to simulate/bootstrap.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>component</dt>
+<dd><p>Should all parameters, parameters for the conditional model,
 or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
 (default). May be abbreviated.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

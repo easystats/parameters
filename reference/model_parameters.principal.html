@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Structural Models (PCA, EFA, ...)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_FactoMineR.R" class="external-link"><code>R/methods_FactoMineR.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_psych.R" class="external-link"><code>R/methods_psych.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_FactoMineR.R" class="external-link"><code>R/methods_FactoMineR.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_psych.R" class="external-link"><code>R/methods_psych.R</code></a></small>
     <div class="hidden name"><code>model_parameters.principal.Rd</code></div>
     </div>
 
@@ -135,20 +135,24 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>PCA or FA created by the <span class="pkg">psych</span> or <span class="pkg">FactoMineR</span>
+    <dl><dt>model</dt>
+<dd><p>PCA or FA created by the <span class="pkg">psych</span> or <span class="pkg">FactoMineR</span>
 packages (e.g. through <code><a href="https://rdrr.io/pkg/psych/man/principal.html" class="external-link">psych::principal</a></code>,  <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa</a></code> or <code><a href="https://rdrr.io/pkg/psych/man/omega.html" class="external-link">psych::omega</a></code>).</p></dd>
-</dl><dl><dt>sort</dt><dd><p>Sort the loadings.</p></dd>
-</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
+<dt>sort</dt>
+<dd><p>Sort the loadings.</p></dd>
+<dt>threshold</dt>
+<dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
 structure).</p></dd>
-</dl><dl><dt>labels</dt><dd><p>A character vector containing labels to be added to the
+<dt>labels</dt>
+<dd><p>A character vector containing labels to be added to the
 loadings data. Usually, the question related to the item.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

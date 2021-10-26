@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Reshape loadings between wide/long formats</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/reshape_loadings.R" class="external-link"><code>R/reshape_loadings.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/reshape_loadings.R" class="external-link"><code>R/reshape_loadings.R</code></a></small>
     <div class="hidden name"><code>reshape_loadings.Rd</code></div>
     </div>
 
@@ -120,16 +120,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A data frame or a statistical model.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
+    <dl><dt>x</dt>
+<dd><p>A data frame or a statistical model.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>threshold</dt>
+<dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
 structure).</p></dd>
-</dl><dl><dt>loadings_columns</dt><dd><p>Vector indicating the columns corresponding to loadings.</p></dd>
+<dt>loadings_columns</dt>
+<dd><p>Vector indicating the columns corresponding to loadings.</p></dd>
 </dl></div>
     </div>
 

@@ -102,7 +102,7 @@ with special model components."><meta property="og:image" content="/logo.png"><!
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>p-values for Models with Special Components</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_DirichletReg.R" class="external-link"><code>R/methods_DirichletReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_averaging.R" class="external-link"><code>R/methods_averaging.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_betareg.R" class="external-link"><code>R/methods_betareg.R</code></a>, and 2 more</small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_DirichletReg.R" class="external-link"><code>R/methods_DirichletReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_averaging.R" class="external-link"><code>R/methods_averaging.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_betareg.R" class="external-link"><code>R/methods_betareg.R</code></a>, and 2 more</small>
     <div class="hidden name"><code>p_value.DirichletRegModel.Rd</code></div>
     </div>
 
@@ -129,14 +129,15 @@ with special model components.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>A statistical model.</p></dd>
-</dl><dl><dt>component</dt><dd><p>Should all parameters, parameters for the conditional model,
+    <dl><dt>model</dt>
+<dd><p>A statistical model.</p></dd>
+<dt>component</dt>
+<dd><p>Should all parameters, parameters for the conditional model,
 precision- or scale-component or smooth_terms be returned? <code>component</code>
 may be one of <code>"conditional"</code>, <code>"precision"</code>, <code>"scale"</code>,
 <code>"smooth_terms"</code>, <code>"full"</code> or <code>"all"</code> (default).</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where <code>method = "robust"</code> is supported.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

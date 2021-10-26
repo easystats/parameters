@@ -105,7 +105,7 @@ Details section)."><meta property="og:image" content="/logo.png"><!-- mathjax --
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Principal Component Analysis (PCA) and Factor Analysis (FA)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/utils_pca_efa.R" class="external-link"><code>R/utils_pca_efa.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/factor_analysis.R" class="external-link"><code>R/factor_analysis.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/principal_components.R" class="external-link"><code>R/principal_components.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/utils_pca_efa.R" class="external-link"><code>R/utils_pca_efa.R</code></a></small>
     <div class="hidden name"><code>principal_components.Rd</code></div>
     </div>
 
@@ -154,44 +154,56 @@ Details section).</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A data frame or a statistical model.</p></dd>
-</dl><dl><dt>n</dt><dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
+    <dl><dt>x</dt>
+<dd><p>A data frame or a statistical model.</p></dd>
+<dt>n</dt>
+<dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
 set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
 <code>n="auto"</code> (default) or <code>n=NULL</code>, the number of components is
 selected through <code><a href="n_factors.html">n_factors()</a></code> resp. <code><a href="n_factors.html">n_components()</a></code>.
 In <code><a href="reduce_parameters.html">reduce_parameters()</a></code>, can also be <code>"max"</code>, in which case
 it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.</p></dd>
-</dl><dl><dt>rotation</dt><dd><p>If not <code>"none"</code>, the PCA / FA will be computed using the
+<dt>rotation</dt>
+<dd><p>If not <code>"none"</code>, the PCA / FA will be computed using the
 <span class="pkg">psych</span> package. Possible options include <code>"varimax"</code>,
 <code>"quartimax"</code>, <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
 or <code>"cluster"</code> (and more). See <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa()</a></code> for details.</p></dd>
-</dl><dl><dt>sort</dt><dd><p>Sort the loadings.</p></dd>
-</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
+<dt>sort</dt>
+<dd><p>Sort the loadings.</p></dd>
+<dt>threshold</dt>
+<dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
 structure).</p></dd>
-</dl><dl><dt>standardize</dt><dd><p>A logical value indicating whether the variables should be
+<dt>standardize</dt>
+<dd><p>A logical value indicating whether the variables should be
 standardized (centered and scaled) to have unit variance before the
 analysis (in general, such scaling is advisable).</p></dd>
-</dl><dl><dt>cor</dt><dd><p>An optional correlation matrix that can be used (note that the
+<dt>cor</dt>
+<dd><p>An optional correlation matrix that can be used (note that the
 data must still be passed as the first argument). If <code>NULL</code>, will
 compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor()</a></code> on the passed data.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>pca_results</dt><dd><p>The output of the <code>principal_components()</code> function.</p></dd>
-</dl><dl><dt>object</dt><dd><p>An object of class <code>parameters_pca</code> or
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>pca_results</dt>
+<dd><p>The output of the <code>principal_components()</code> function.</p></dd>
+<dt>object</dt>
+<dd><p>An object of class <code>parameters_pca</code> or
 <code>parameters_efa</code></p></dd>
-</dl><dl><dt>newdata</dt><dd><p>An optional data frame in which to look for variables with
+<dt>newdata</dt>
+<dd><p>An optional data frame in which to look for variables with
 which to predict. If omitted, the fitted values are used.</p></dd>
-</dl><dl><dt>names</dt><dd><p>Optional character vector to name columns of the returned data
+<dt>names</dt>
+<dd><p>Optional character vector to name columns of the returned data
 frame.</p></dd>
-</dl><dl><dt>keep_na</dt><dd><p>Logical, if <code>TRUE</code>, predictions also return observations
+<dt>keep_na</dt>
+<dd><p>Logical, if <code>TRUE</code>, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.</p></dd>
-</dl><dl><dt>digits, labels</dt><dd><p>Arguments for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>.</p></dd>
+<dt>digits, labels</dt>
+<dd><p>Arguments for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

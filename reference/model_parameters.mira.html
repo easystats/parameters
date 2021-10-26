@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from multiply imputed repeated analyses</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_mice.R" class="external-link"><code>R/methods_mice.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_mice.R" class="external-link"><code>R/methods_mice.R</code></a></small>
     <div class="hidden name"><code>model_parameters.mira.Rd</code></div>
     </div>
 
@@ -122,11 +122,12 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>An object of class <code>mira</code>.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
+    <dl><dt>model</dt>
+<dd><p>An object of class <code>mira</code>.</p></dd>
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>exponentiate</dt>
+<dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -137,13 +138,16 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
 from non-Gaussian families.</p></dd>
-</dl><dl><dt>p_adjust</dt><dd><p>Character vector, if not <code>NULL</code>, indicates the method to
+<dt>p_adjust</dt>
+<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="details">
     <h2>Details</h2>

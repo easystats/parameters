@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from Hypothesis Testing</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_PMCMRplus.R" class="external-link"><code>R/methods_PMCMRplus.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/methods_multcomp.R" class="external-link"><code>R/methods_multcomp.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_PMCMRplus.R" class="external-link"><code>R/methods_PMCMRplus.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_multcomp.R" class="external-link"><code>R/methods_multcomp.R</code></a></small>
     <div class="hidden name"><code>model_parameters.glht.Rd</code></div>
     </div>
 
@@ -118,16 +118,18 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Object of class <code><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">multcomp::glht()</a></code> (<span class="pkg">multcomp</span>)
+    <dl><dt>model</dt>
+<dd><p>Object of class <code><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">multcomp::glht()</a></code> (<span class="pkg">multcomp</span>)
 or of class <code>PMCMR</code>, <code>trendPMCMR</code> or <code>osrt</code> (<span class="pkg">PMCMRplus</span>).</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods. For instance, when
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
 are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>exponentiate</dt>
+<dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -138,7 +140,8 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
 from non-Gaussian families.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

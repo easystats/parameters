@@ -102,7 +102,7 @@ models. See model_parameters() for further details."><meta property="og:image" c
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compare model parameters of multiple models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/compare_parameters.R" class="external-link"><code>R/compare_parameters.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/compare_parameters.R" class="external-link"><code>R/compare_parameters.R</code></a></small>
     <div class="hidden name"><code>compare_parameters.Rd</code></div>
     </div>
 
@@ -150,25 +150,27 @@ models. See <code><a href="model_parameters.html">model_parameters()</a></code> 
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>...</dt><dd><p>One or more regression model objects, or objects returned by
+    <dl><dt>...</dt>
+<dd><p>One or more regression model objects, or objects returned by
 <code><a href="model_parameters.html">model_parameters()</a></code>. Regression models may be of different model
 types. Model objects may be passed comma separated, or as a list.
 If model objects are passed with names or the list has named elements,
 these names will be used as column names.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>effects</dt><dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>effects</dt>
+<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
 effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
 to mixed models. May be abbreviated.</p></dd>
-</dl><dl><dt>component</dt><dd><p>Model component for which parameters should be shown. See
+<dt>component</dt>
+<dd><p>Model component for which parameters should be shown. See
 documentation for related model class in <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
-</dl><dl><dt>standardize</dt><dd><p>The method used for standardizing the parameters. Can be
+<dt>standardize</dt>
+<dd><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
-<strong>Important:</strong>
-</p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
+<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
@@ -178,7 +180,8 @@ effects will be returned.</p></li>
 <li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
 </ul></dd>
-</dl><dl><dt>exponentiate</dt><dd><p>Logical, indicating whether or not to exponentiate the
+<dt>exponentiate</dt>
+<dd><p>Logical, indicating whether or not to exponentiate the
 the coefficients (and related confidence intervals). This is typical for
 logistic regression, or more generally speaking, for models with log
 or logit links. <strong>Note:</strong> Delta-method standard errors are also
@@ -189,26 +192,30 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code>compare_parameters()</code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
 from non-Gaussian families.</p></dd>
-</dl><dl><dt>ci_method</dt><dd><p>Method for computing degrees of freedom for p values
+<dt>ci_method</dt>
+<dd><p>Method for computing degrees of freedom for p values
 and confidence intervals (CI). See documentation for related model class
 in <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
-</dl><dl><dt>p_adjust</dt><dd><p>Character vector, if not <code>NULL</code>, indicates the method to
+<dt>p_adjust</dt>
+<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
 <code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
-</dl><dl><dt>style</dt><dd><p>String, indicating which style of output is requested. Following
-templates are possible:
-</p><ul><li><p><code>"ci"</code>: Estimate and confidence intervals, no asterisks for p-values.</p></li>
+<dt>style</dt>
+<dd><p>String, indicating which style of output is requested. Following
+templates are possible:</p><ul><li><p><code>"ci"</code>: Estimate and confidence intervals, no asterisks for p-values.</p></li>
 <li><p><code>"se"</code>: Estimate and standard errors, no asterisks for p-values.</p></li>
 <li><p><code>"ci_p"</code>: Estimate, confidence intervals and asterisks for p-values.</p></li>
 <li><p><code>"se_p"</code>: Estimate, standard errors and asterisks for p-values.</p></li>
 <li><p><code>"ci_p2"</code>: Estimate, confidence intervals and numeric p-values, in two columns.</p></li>
 <li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.</p></li>
 </ul></dd>
-</dl><dl><dt>column_names</dt><dd><p>Character vector with strings that should be used as
+<dt>column_names</dt>
+<dd><p>Character vector with strings that should be used as
 column headers. Must be of same length as number of models in <code>...</code>.</p></dd>
-</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
+<dt>keep</dt>
+<dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -227,7 +234,8 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
-</dl><dl><dt>drop</dt><dd><p>Character containing a regular expression pattern that
+<dt>drop</dt>
+<dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -246,9 +254,12 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
-</dl><dl><dt>parameters</dt><dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>df_method</dt><dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
+<dt>parameters</dt>
+<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>df_method</dt>
+<dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

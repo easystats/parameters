@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Model bootstrapping</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/bootstrap_model.R" class="external-link"><code>R/bootstrap_model.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/bootstrap_model.R" class="external-link"><code>R/bootstrap_model.R</code></a></small>
     <div class="hidden name"><code>bootstrap_model.Rd</code></div>
     </div>
 
@@ -136,19 +136,24 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Statistical model.</p></dd>
-</dl><dl><dt>iterations</dt><dd><p>The number of draws to simulate/bootstrap.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>type</dt><dd><p>Character string specifying the type of bootstrap. For mixed models
+    <dl><dt>model</dt>
+<dd><p>Statistical model.</p></dd>
+<dt>iterations</dt>
+<dd><p>The number of draws to simulate/bootstrap.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>type</dt>
+<dd><p>Character string specifying the type of bootstrap. For mixed models
 of class <code>merMod</code> or <code>glmmTMB</code>, may be <code>"parametric"</code> (default) or
 <code>"semiparametric"</code> (see <code><a href="https://rdrr.io/pkg/lme4/man/bootMer.html" class="external-link">?lme4::bootMer</a></code> for details). For all
 other models, see argument <code>sim</code> in <code><a href="https://rdrr.io/pkg/boot/man/boot.html" class="external-link">?boot::boot</a></code> (defaults to
 <code>"ordinary"</code>).</p></dd>
-</dl><dl><dt>parallel</dt><dd><p>The type of parallel operation to be used (if any).</p></dd>
-</dl><dl><dt>n_cpus</dt><dd><p>Number of processes to be used in parallel operation.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
+<dt>parallel</dt>
+<dd><p>The type of parallel operation to be used (if any).</p></dd>
+<dt>n_cpus</dt>
+<dd><p>Number of processes to be used in parallel operation.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

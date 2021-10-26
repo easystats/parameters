@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from CFA/SEM models</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_lavaan.R" class="external-link"><code>R/methods_lavaan.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_lavaan.R" class="external-link"><code>R/methods_lavaan.R</code></a></small>
     <div class="hidden name"><code>model_parameters.lavaan.Rd</code></div>
     </div>
 
@@ -125,12 +125,13 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>CFA or SEM created by the <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa</a></code> or <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem</a></code>
+    <dl><dt>model</dt>
+<dd><p>CFA or SEM created by the <code><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">lavaan::cfa</a></code> or <code><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">lavaan::sem</a></code>
 functions.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>standardize</dt><dd><p>Return standardized parameters (standardized coefficients).
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>standardize</dt>
+<dd><p>Return standardized parameters (standardized coefficients).
 Can be <code>TRUE</code> (or <code>"all"</code> or <code>"std.all"</code>) for standardized
 estimates based on both the variances of observed and latent variables;
 <code>"latent"</code> (or <code>"std.lv"</code>) for standardized estimates based
@@ -138,8 +139,10 @@ on the variances of the latent variables only; or <code>"no_exogenous"</code>
 (or <code>"std.nox"</code>) for standardized estimates based on both the
 variances of observed and latent variables, but not the variances of
 exogenous covariates. See <code><a href="https://rdrr.io/pkg/lavaan/man/standardizedSolution.html" class="external-link">lavaan::standardizedsolution</a></code> for details.</p></dd>
-</dl><dl><dt>component</dt><dd><p>What type of links to return. Can be <code>"all"</code> or some of <code>c("regression", "correlation", "loading", "variance", "mean")</code>.</p></dd>
-</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
+<dt>component</dt>
+<dd><p>What type of links to return. Can be <code>"all"</code> or some of <code>c("regression", "correlation", "loading", "variance", "mean")</code>.</p></dd>
+<dt>keep</dt>
+<dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -158,7 +161,8 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
-</dl><dl><dt>drop</dt><dd><p>Character containing a regular expression pattern that
+<dt>drop</dt>
+<dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -177,9 +181,12 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
-</dl><dl><dt>parameters</dt><dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>parameters</dt>
+<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

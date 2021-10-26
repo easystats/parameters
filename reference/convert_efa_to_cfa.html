@@ -102,7 +102,7 @@ Confirmatory Factor Analysis (CFA) lavaan-ready structure."><meta property="og:i
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Conversion between EFA results and CFA structure</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/convert_efa_to_cfa.R" class="external-link"><code>R/convert_efa_to_cfa.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/convert_efa_to_cfa.R" class="external-link"><code>R/convert_efa_to_cfa.R</code></a></small>
     <div class="hidden name"><code>convert_efa_to_cfa.Rd</code></div>
     </div>
 
@@ -121,16 +121,18 @@ Confirmatory Factor Analysis (CFA) <code>lavaan</code>-ready structure.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>An EFA model (e.g., a <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa</a></code> object).</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>threshold</dt><dd><p>A value between 0 and 1 indicates which (absolute) values
+    <dl><dt>model</dt>
+<dd><p>An EFA model (e.g., a <code><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">psych::fa</a></code> object).</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>threshold</dt>
+<dd><p>A value between 0 and 1 indicates which (absolute) values
 from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be <code>"max"</code>, in which case it
 will only display the maximum loading per variable (the most simple
 structure).</p></dd>
-</dl><dl><dt>names</dt><dd><p>Vector containing dimension names.</p></dd>
+<dt>names</dt>
+<dd><p>Vector containing dimension names.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Degrees of Freedom (DoF)</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/dof.R" class="external-link"><code>R/dof.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/dof.R" class="external-link"><code>R/dof.R</code></a></small>
     <div class="hidden name"><code>degrees_of_freedom.Rd</code></div>
     </div>
 
@@ -119,11 +119,12 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>A statistical model.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Currently not used.</p></dd>
-</dl><dl><dt>method</dt><dd><p>Can be <code>"analytical"</code> (default, DoFs are estimated based
+    <dl><dt>model</dt>
+<dd><p>A statistical model.</p></dd>
+<dt>...</dt>
+<dd><p>Currently not used.</p></dd>
+<dt>method</dt>
+<dd><p>Can be <code>"analytical"</code> (default, DoFs are estimated based
 on the model type), <code>"residual"</code> in which case they are directly taken
 from the model if available (for Bayesian models, the goal (looking for
 help to make it happen) would be to refit the model as a frequentist one

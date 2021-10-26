@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Equivalence test</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/equivalence_test.R" class="external-link"><code>R/equivalence_test.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/equivalence_test.R" class="external-link"><code>R/equivalence_test.R</code></a></small>
     <div class="hidden name"><code>equivalence_test.lm.Rd</code></div>
     </div>
 
@@ -133,19 +133,24 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A statistical model.</p></dd>
-</dl><dl><dt>range</dt><dd><p>The range of practical equivalence of an effect. May be
+    <dl><dt>x</dt>
+<dd><p>A statistical model.</p></dd>
+<dt>range</dt>
+<dd><p>The range of practical equivalence of an effect. May be
 <code>"default"</code>, to automatically define this range based on properties of the
 model's data.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>rule</dt><dd><p>Character, indicating the rules when testing for practical
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>rule</dt>
+<dd><p>Character, indicating the rules when testing for practical
 equivalence. Can be <code>"bayes"</code>, <code>"classic"</code> or <code>"cet"</code>. See
 'Details'.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>effects</dt><dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>effects</dt>
+<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
 effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
 to mixed models. May be abbreviated.</p></dd>
 </dl></div>
@@ -176,7 +181,8 @@ the equivalence test.</p>
 <div class="section">
 <h3 id="calculation-of-equivalence-testing">Calculation of equivalence testing<a class="anchor" aria-label="anchor" href="#calculation-of-equivalence-testing"></a></h3>
 
-<dl><dt>"bayes" - Bayesian rule (Kruschke 2018)</dt><dd><p>This rule follows the “HDI+ROPE decision rule” <cite>(Kruschke,
+<dl><dt>"bayes" - Bayesian rule (Kruschke 2018)</dt>
+<dd><p>This rule follows the “HDI+ROPE decision rule” <cite>(Kruschke,
 2014, 2018)</cite> used for the
 <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">Bayesian counterpart()</a></code>. This
 means, if the confidence intervals are completely outside the ROPE, the
@@ -185,7 +191,9 @@ completely covers the CI, the null hypothesis is accepted. Else, it's
 undecided whether to accept or reject the null hypothesis. Desirable
 results are low proportions inside the ROPE (the closer to zero the
 better).</p></dd>
-<dt>"classic" - The TOST rule (Lakens 2017)</dt><dd><p>This rule follows the “TOST rule”, i.e. a two one-sided test
+
+<dt>"classic" - The TOST rule (Lakens 2017)</dt>
+<dd><p>This rule follows the “TOST rule”, i.e. a two one-sided test
 procedure (<cite>Lakens 2017</cite>). Following this rule, practical
 equivalence of an effect (i.e. H0) is <em>rejected</em>, when the
 coefficient is statistically significant <em>and</em> the narrow
@@ -194,11 +202,14 @@ confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
 (i.e. H0 accepted) when the narrow confidence intervals are completely
 inside the ROPE, no matter if the effect is statistically significant
 or not. Else, the decision whether to accept or reject H0 is undecided.</p></dd>
-<dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt><dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
+
+<dt>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</dt>
+<dd><p>The Conditional Equivalence Testing as described by <cite>Campbell and
 Gustafson 2018</cite>. According to this rule, practical equivalence is
 rejected when the coefficient is statistically significant. When the
 effect is <em>not</em> significant and the narrow confidence intervals are
 completely inside the ROPE, we accept H0, else it is undecided.</p></dd>
+
 
 </dl></div>
 <div class="section">

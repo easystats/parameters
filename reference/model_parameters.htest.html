@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from hypothesis tests</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_htest.R" class="external-link"><code>R/methods_htest.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_htest.R" class="external-link"><code>R/methods_htest.R</code></a></small>
     <div class="hidden name"><code>model_parameters.htest.Rd</code></div>
     </div>
 
@@ -136,40 +136,52 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></dd>
-</dl><dl><dt>cramers_v, phi</dt><dd><p>Compute Cramer's V or phi as index of effect size.
+    <dl><dt>model</dt>
+<dd><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></dd>
+<dt>cramers_v, phi</dt>
+<dd><p>Compute Cramer's V or phi as index of effect size.
 Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
 Only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>.</p></dd>
-</dl><dl><dt>standardized_d</dt><dd><p>If <code>TRUE</code>, compute standardized d as index of
+<dt>standardized_d</dt>
+<dd><p>If <code>TRUE</code>, compute standardized d as index of
 effect size. Only applies to objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>. Calculation of
 <code>d</code> is based on the t-value (see <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">effectsize::t_to_d()</a></code>)
 for details.</p></dd>
-</dl><dl><dt>hedges_g</dt><dd><p>If <code>TRUE</code>, compute Hedge's g as index of effect size.
+<dt>hedges_g</dt>
+<dd><p>If <code>TRUE</code>, compute Hedge's g as index of effect size.
 Only applies to objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>.</p></dd>
-</dl><dl><dt>omega_squared, eta_squared, epsilon_squared</dt><dd><p>Logical, if <code>TRUE</code>,
+<dt>omega_squared, eta_squared, epsilon_squared</dt>
+<dd><p>Logical, if <code>TRUE</code>,
 returns the non-partial effect size Omega, Eta or Epsilon squared. Only
 applies to objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html" class="external-link">oneway.test()</a></code>.</p></dd>
-</dl><dl><dt>cohens_g</dt><dd><p>If <code>TRUE</code>, compute Cohen's g as index of effect size.
+<dt>cohens_g</dt>
+<dd><p>If <code>TRUE</code>, compute Cohen's g as index of effect size.
 Only applies to objects from <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code>.</p></dd>
-</dl><dl><dt>rank_biserial</dt><dd><p>If <code>TRUE</code>, compute the rank-biserial correlation as
+<dt>rank_biserial</dt>
+<dd><p>If <code>TRUE</code>, compute the rank-biserial correlation as
 effect size measure. Only applies to objects from <code><a href="https://rdrr.io/r/stats/wilcox.test.html" class="external-link">wilcox.test()</a></code>.</p></dd>
-</dl><dl><dt>rank_epsilon_squared</dt><dd><p>If <code>TRUE</code>, compute the rank epsilon squared
+<dt>rank_epsilon_squared</dt>
+<dd><p>If <code>TRUE</code>, compute the rank epsilon squared
 as effect size measure. Only applies to objects from <code><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test()</a></code>.</p></dd>
-</dl><dl><dt>kendalls_w</dt><dd><p>If <code>TRUE</code>, compute the Kendall's coefficient of
+<dt>kendalls_w</dt>
+<dd><p>If <code>TRUE</code>, compute the Kendall's coefficient of
 concordance as effect size measure. Only applies to objects from
 <code><a href="https://rdrr.io/r/stats/friedman.test.html" class="external-link">friedman.test()</a></code>.</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Level of confidence intervals for effect size statistic. Currently
+<dt>ci</dt>
+<dd><p>Level of confidence intervals for effect size statistic. Currently
 only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code> or <code><a href="https://rdrr.io/r/stats/oneway.test.html" class="external-link">oneway.test()</a></code>.</p></dd>
-</dl><dl><dt>alternative</dt><dd><p>A character string specifying the alternative hypothesis;
+<dt>alternative</dt>
+<dd><p>A character string specifying the alternative hypothesis;
 Controls the type of CI returned: <code>"two.sided"</code> (default, two-sided CI),
 <code>"greater"</code> or <code>"less"</code> (one-sided CI). Partial matching is allowed
 (e.g., <code>"g"</code>, <code>"l"</code>, <code>"two"</code>...). See section <em>One-Sided CIs</em> in
 the <a href="https://easystats.github.io/effectsize/" class="external-link">effectsize_CIs vignette</a>.</p></dd>
-</dl><dl><dt>bootstrap</dt><dd><p>Should estimates be bootstrapped?</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>bootstrap</dt>
+<dd><p>Should estimates be bootstrapped?</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

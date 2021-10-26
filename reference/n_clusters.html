@@ -114,7 +114,7 @@ the examples below for more details."><meta property="og:image" content="/logo.p
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find number of clusters in your data</h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/n_clusters.R" class="external-link"><code>R/n_clusters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/master/R/n_clusters_easystats.R" class="external-link"><code>R/n_clusters_easystats.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/n_clusters.R" class="external-link"><code>R/n_clusters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/n_clusters_easystats.R" class="external-link"><code>R/n_clusters_easystats.R</code></a></small>
     <div class="hidden name"><code>n_clusters.Rd</code></div>
     </div>
 
@@ -199,36 +199,48 @@ the examples below for more details.</p>
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>x</dt><dd><p>A data frame.</p></dd>
-</dl><dl><dt>standardize</dt><dd><p>Standardize the dataframe before clustering (default).</p></dd>
-</dl><dl><dt>include_factors</dt><dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
+    <dl><dt>x</dt>
+<dd><p>A data frame.</p></dd>
+<dt>standardize</dt>
+<dd><p>Standardize the dataframe before clustering (default).</p></dd>
+<dt>include_factors</dt>
+<dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
 values in order to be included in the data for determining the number of
 clusters. By default, factors are removed, because most methods that
 determine the number of clusters need numeric input only.</p></dd>
-</dl><dl><dt>package</dt><dd><p>Package from which methods are to be called to determine the
+<dt>package</dt>
+<dd><p>Package from which methods are to be called to determine the
 number of clusters. Can be <code>"all"</code> or a vector containing
 <code>"NbClust"</code>, <code>"mclust"</code>, <code>"cluster"</code> and <code>"M3C"</code>.</p></dd>
-</dl><dl><dt>fast</dt><dd><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index = "allong"</code>
+<dt>fast</dt>
+<dd><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index = "allong"</code>
 in <code>NbClust</code>). This has been deactivated by default as it is
 computationally heavy.</p></dd>
-</dl><dl><dt>nbclust_method</dt><dd><p>The clustering method (passed to <code><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html" class="external-link">NbClust::NbClust()</a></code>
+<dt>nbclust_method</dt>
+<dd><p>The clustering method (passed to <code><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html" class="external-link">NbClust::NbClust()</a></code>
 as <code>method</code>).</p></dd>
-</dl><dl><dt>n_max</dt><dd><p>Maximal number of clusters to test.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
-</dl><dl><dt>clustering_function, gap_method</dt><dd><p>Other arguments passed to other
+<dt>n_max</dt>
+<dd><p>Maximal number of clusters to test.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>clustering_function, gap_method</dt>
+<dd><p>Other arguments passed to other
 functions. <code>clustering_function</code> is used by <code>fviz_nbclust</code> and
 can be <code>kmeans</code>, codecluster::pam, codecluster::clara,
 codecluster::fanny, and more. <code>gap_method</code> is used by
 <code><a href="https://rdrr.io/pkg/cluster/man/clusGap.html" class="external-link">cluster::maxSE</a></code> to extract the optimal numbers of clusters (see its
 <code>method</code> argument).</p></dd>
-</dl><dl><dt>method, min_size, eps_n, eps_range</dt><dd><p>Arguments for DBSCAN algorithm.</p></dd>
-</dl><dl><dt>distance_method</dt><dd><p>The distance method (passed to <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code>). Used by
+<dt>method, min_size, eps_n, eps_range</dt>
+<dd><p>Arguments for DBSCAN algorithm.</p></dd>
+<dt>distance_method</dt>
+<dd><p>The distance method (passed to <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code>). Used by
 algorithms relying on the distance matrix, such as <code>hclust</code> or <code>dbscan</code>.</p></dd>
-</dl><dl><dt>hclust_method</dt><dd><p>The hierarchical clustering method (passed to <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code>).</p></dd>
-</dl><dl><dt>ci</dt><dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-</dl><dl><dt>iterations</dt><dd><p>The number of bootstrap replicates. This only apply in the
+<dt>hclust_method</dt>
+<dd><p>The hierarchical clustering method (passed to <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code>).</p></dd>
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>iterations</dt>
+<dd><p>The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.</p></dd>
 </dl></div>
     <div id="note">

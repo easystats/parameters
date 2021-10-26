@@ -101,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameters from robust statistical objects in <code>WRS2</code></h1>
-    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/R/methods_wrs2.R" class="external-link"><code>R/methods_wrs2.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_wrs2.R" class="external-link"><code>R/methods_wrs2.R</code></a></small>
     <div class="hidden name"><code>model_parameters.t1way.Rd</code></div>
     </div>
 
@@ -115,10 +115,10 @@
     <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>model</dt><dd><p>Object from <code>WRS2</code> package.</p></dd>
-</dl><dl><dt>keep</dt><dd><p>Character containing a regular expression pattern that
+    <dl><dt>model</dt>
+<dd><p>Object from <code>WRS2</code> package.</p></dd>
+<dt>keep</dt>
+<dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -137,8 +137,10 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
-</dl><dl><dt>verbose</dt><dd><p>Toggle warnings and messages.</p></dd>
-</dl><dl><dt>...</dt><dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
