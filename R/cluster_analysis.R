@@ -246,6 +246,28 @@ cluster_analysis <- function(x,
 }
 
 #' @keywords internal
+.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.1, borderPoints = FALSE, ...) {
+  insight::check_if_installed("dbscan")
+
+  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  model <- dbscan::dbscan(data, eps = dbscan_eps, minPts = min_size, borderPoints = borderPoints, ...)
+
+  list(model = model, clusters = model$cluster)
+}
+
+
+#' @keywords internal
+.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
+  insight::check_if_installed("dbscan")
+
+  if(min_size < 1) min_size <- round(min_size * nrow(data))
+  model <- dbscan::hdbscan(data, minPts = min_size, ...)
+
+  list(model = model, clusters = model$cluster)
+}
+
+
+#' @keywords internal
 .cluster_analysis_mixture <- function(data = NULL, ...) {
   insight::check_if_installed("mclust")
 

@@ -123,11 +123,20 @@ rez_kmeans <- cluster_analysis(data, n = 3, method = "kmeans")
 rez_kmeans  # Show results
 ```
 
+Note that we can also visualize the **centers** (i.e., the "average" of each variable for each cluster):
+
+
+```{r}
+plot(summary(rez_kmeans))  # Visualize cluster centers
+```
+
 One can extract the cluster assignments to use it as a new variable by using `predict()`.
 
 ```{r}
 predict(rez_kmeans)  # Get clusters
 ```
+
+
 
 ### Hierarchical Clustering
 
