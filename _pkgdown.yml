@@ -157,5 +157,5 @@ navbar:
         href: articles/efa_cfa.html
       - text: Parameters Selection
         href: articles/parameters_selection.html
-      # - text: Clustering with easystats
-      #   href: articles/clustering.html
+      - text: Clustering with easystats
+        href: articles/clustering.html
