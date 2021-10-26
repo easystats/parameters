@@ -57,6 +57,7 @@
 #' rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 #' rez # Show results
 #' predict(rez) # Get clusters
+#' summary(rez) # Extract the centers values (can use 'plot()' on that)
 #' cluster_discrimination(rez) # Perform LDA
 #'
 #' # Hierarchical k-means (more robust k-means)
@@ -278,29 +279,24 @@ print.cluster_analysis <- function(x, ...) {
   invisible(x)
 }
 
+#' @export
+summary.cluster_analysis <- function(object, ...) {
+  data <- as.data.frame(object)
+  cols <- names(attributes(object)$data)
+  data <- data[names(data) %in% c(cols, "Cluster")]  # Keep only data
 
+  class(data) <- c("cluster_analysis_summary", class(data))
+  data
+}
 
 
 # Plotting ----------------------------------------------------------------
 
 #' @export
-visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
-  p1 <- .vr_cluster_centers(x, show_data = show_data, ...)
-  p2 <- .vr_cluster_bars(x, ...)
-  out <- list(p1 = p1, p2 = p2)
-  class(out) <- c("see_visualisation_recipes", class(out))
-  out
-}
-
-
-
-.vr_cluster_bars <- function(x, ...) {
-  data <- as.data.frame(x)
-  cols <- names(attributes(x)$data)
-  data <- data[names(data) %in% c(cols, "Cluster")]  # Keep only data
+visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
   data <- datawizard::data_to_long(
-    data,
-    cols = cols,
+    x,
+    cols = names(x)[-1], # skip 'Cluster' column
     names_to = "Group",
     values_to = "Center"
   )
@@ -337,8 +333,8 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 }
 
 
-
-.vr_cluster_centers <- function(x, show_data, ...) {
+#' @export
+visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   ori_data <- stats::na.omit(attributes(x)$data)
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)

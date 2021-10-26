@@ -80,3 +80,9 @@ plot.cluster_analysis <- function(x, ...) {
   insight::check_if_installed("see")
   plot(datawizard::visualisation_recipe(x, ...))
 }
+
+#' @export
+plot.cluster_analysis_summary <- function(x, ...) {
+  insight::check_if_installed("see")
+  plot(datawizard::visualisation_recipe(x, ...))
+}

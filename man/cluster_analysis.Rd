@@ -82,6 +82,7 @@ set.seed(33)
 rez <- cluster_analysis(iris[1:4], n = 3, method = "kmeans")
 rez # Show results
 predict(rez) # Get clusters
+summary(rez) # Extract the centers values (can use 'plot()' on that)
 cluster_discrimination(rez) # Perform LDA
 
 # Hierarchical k-means (more robust k-means)
