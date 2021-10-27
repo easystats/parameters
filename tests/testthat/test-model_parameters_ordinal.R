@@ -16,11 +16,11 @@ if (.runThisTest &&
 
   m1 <-  clm(ordered(Response) ~ Stim, scale = ~ Stim,
              link = "probit",
-             data = STD_data, weights = w)
+             data = d, weights = w)
 
   m2 <- clm2(ordered(Response) ~ Stim, scale = ~ Stim,
              link = "probit",
-             data = STD_data, weights = w)
+             data = d, weights = w)
 
 
   test_that("model_parameters.clm", {
