@@ -35,7 +35,7 @@
   group_level = FALSE,
   standardize = NULL,
   exponentiate = FALSE,
-  ci_method = NULL,
+  ci_method = "wald",
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,

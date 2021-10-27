@@ -646,6 +646,8 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
   test_statistic <- .additional_arguments(x, "test_statistic", NULL)
   bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
   residual_df <- .additional_arguments(x, "residual_df", NULL)
+  random_variances <- .additional_arguments(x, "ran_pars", FALSE)
+  model_class <- .additional_arguments(x, "model_class", NULL)
 
   # prepare strings
   if (!is.null(ci_method)) {
@@ -695,9 +697,16 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
 
     # bootstrapped intervals
     if (isTRUE(bootstrap)) {
-      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")))
+      msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
     } else {
-      message(insight::format_message(paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")))
+      msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
     }
+
+    # do we have random effect variances from glmmTMB?
+    if (identical(model_class, "glmmTMB") && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects && (string_method != "Wald z-" || ci_method != "wald")) {
+      msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
+    }
+
+    message(insight::format_message(msg))
   }
 }
