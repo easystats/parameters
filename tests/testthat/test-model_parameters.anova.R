@@ -61,7 +61,7 @@ if (.runThisTest && requiet("insight") && requiet("testthat") && requiet("parame
 
     m <- lm(cbind(hp, mpg) ~ factor(cyl) * am, data = mtcars)
     a <- car::Anova(m, type = 3, test.statistic = "Pillai")
-    mp <- model_parameters(a)
+    mp <- model_parameters(a, verbose = FALSE)
 
     test_that("model_parameters_Anova.mlm", {
       expect_equal(colnames(mp), c("Parameter", "df", "Statistic", "df_num", "df_error", "F", "p"))
