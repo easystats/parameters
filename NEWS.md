@@ -25,6 +25,9 @@
 * Fixed issue with correct association of components for ordinal models of 
   classes `clm` and `clm2`.
 
+* Fixed issues in `random_parameters()` and  `model_parameters()` for mixed 
+  models without random intercept.
+
 * Confidence intervals for random parameters in `model_parameters()` failed for
   (some?) `glmer` models.
 
