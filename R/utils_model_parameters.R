@@ -112,7 +112,7 @@
   if (inherits(model, c("rma", "rma.uni"))) {
     rma_data <- tryCatch(
       {
-        insight::get_data(model)
+        insight::get_data(model, verbose = FALSE)
       },
       error = function(e) {
         NULL
@@ -127,7 +127,7 @@
   if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
     rma_data <- tryCatch(
       {
-        insight::get_data(model)
+        insight::get_data(model, verbose = FALSE)
       },
       error = function(e) {
         NULL
