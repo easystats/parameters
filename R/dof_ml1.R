@@ -1,7 +1,7 @@
 #' @rdname p_value_ml1
 #' @export
 dof_ml1 <- function(model) {
-  if (!insight::model_info(model)$is_mixed) {
+  if (!insight::model_info(model, verbose = FALSE)$is_mixed) {
     stop("Model must be a mixed model.")
   }
 
@@ -11,7 +11,7 @@ dof_ml1 <- function(model) {
   predictors <- insight::find_predictors(model, effects = "fixed", component = "conditional", flatten = TRUE)
   predictors <- setdiff(predictors, names(re_groups))
 
-  model_data <- insight::get_data(model)[predictors]
+  model_data <- insight::get_data(model, verbose = FALSE)[predictors]
   has_intcp <- insight::has_intercept(model)
 
   term_assignment <- .find_term_assignment(model_data, predictors, parameters)

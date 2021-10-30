@@ -16,8 +16,6 @@ model_parameters.bamlss <- function(model,
                                     parameters = keep,
                                     verbose = TRUE,
                                     ...) {
-  modelinfo <- insight::model_info(model)
-
   # Processing
   params <- .extract_parameters_bayesian(
     model,

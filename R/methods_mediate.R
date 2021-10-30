@@ -29,7 +29,7 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verb
 
 #' @export
 ci.mediate <- function(x, ci = .95, ...) {
-  info <- insight::model_info(x$model.y)
+  info <- insight::model_info(x$model.y, verbose = FALSE)
   alpha <- (1 + ci) / 2
   if (info$is_linear && !x$INT) {
     out <- data.frame(
@@ -103,7 +103,7 @@ degrees_of_freedom.mediate <- function(model, ...) {
 
 #' @export
 p_value.mediate <- function(model, ...) {
-  info <- insight::model_info(model$model.y)
+  info <- insight::model_info(model$model.y, verbose = FALSE)
   if (info$is_linear && !model$INT) {
     out <- data.frame(
       Parameter = c("ACME", "ADE", "Total Effect", "Prop. Mediated"),

@@ -223,7 +223,7 @@
 
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
-  if (!is.null(model) && insight::model_info(model)$is_linear && identical(exponentiate, "nongaussian")) {
+  if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear && identical(exponentiate, "nongaussian")) {
     return(params)
   }
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))

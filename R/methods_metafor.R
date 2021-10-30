@@ -127,7 +127,7 @@ model_parameters.rma <- function(model,
 
   # subgroup analyses?
   if (!is.null(subgroups)) {
-    meta_analysis_studies$Subgroup <- insight::get_data(model)[[group_variable]]
+    meta_analysis_studies$Subgroup <- insight::get_data(model, verbose = FALSE)[[group_variable]]
   }
 
   original_attributes <- attributes(meta_analysis_overall)

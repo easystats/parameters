@@ -164,7 +164,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
                                       alternative = NULL,
                                       verbose = TRUE,
                                       ...) {
-  m_info <- insight::model_info(model)
+  m_info <- insight::model_info(model, verbose = FALSE)
 
   if (m_info$is_correlation) {
 

@@ -1,7 +1,7 @@
 #' @rdname p_value_betwithin
 #' @export
 dof_betwithin <- function(model) {
-  if (!insight::model_info(model)$is_mixed) {
+  if (!insight::model_info(model, verbose = FALSE)$is_mixed) {
     stop("Model must be a mixed model.")
   }
 

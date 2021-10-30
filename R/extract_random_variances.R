@@ -48,7 +48,7 @@
   )
   out$Component <- "conditional"
 
-  if (insight::model_info(model)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
+  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
     zi_var <- suppressWarnings(
       .extract_random_variances_helper(
         model,
