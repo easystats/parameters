@@ -159,15 +159,15 @@
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001
-#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 
-#&gt; age60-99    |       -7.87 | 2.17 | [-12.99, -2.76] |     -3.63 |  7.05 | 0.008 
-#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,  5.86] |      1.33 | 12.84 | 0.208 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.09] |      3.51 | 17.27 | 0.003</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001</span>
+<span class="co">#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 </span>
+<span class="co">#&gt; age60-99    |       -7.87 | 2.17 | [-12.99, -2.76] |     -3.63 |  7.05 | 0.008 </span>
+<span class="co">#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,  5.86] |      1.33 | 12.84 | 0.208 </span>
+<span class="co">#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.09] |      3.51 | 17.27 | 0.003</span></code></pre>
 <p>Not all packages work with <code><a href="https://amices.org/mice/reference/with.mids.html" class="external-link">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadaptive</em> package here.</p>
 <p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -204,14 +204,14 @@
   <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p
-#&gt; -------------------------------------------------------------------
-#&gt; (Intercept) |    -1.45 | 0.24 | [-1.93, -0.97] |     -5.93 | &lt; .001
-#&gt; period [2]  |    -0.88 | 0.34 | [-1.55, -0.20] |     -2.55 | 0.011 
-#&gt; period [3]  |    -1.41 | 0.38 | [-2.16, -0.66] |     -3.70 | &lt; .001
-#&gt; period [4]  |    -1.65 | 0.62 | [-2.87, -0.43] |     -2.66 | 0.008</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |    -1.45 | 0.24 | [-1.93, -0.97] |     -5.93 | &lt; .001</span>
+<span class="co">#&gt; period [2]  |    -0.88 | 0.34 | [-1.55, -0.20] |     -2.55 | 0.011 </span>
+<span class="co">#&gt; period [3]  |    -1.41 | 0.38 | [-2.16, -0.66] |     -3.70 | &lt; .001</span>
+<span class="co">#&gt; period [4]  |    -1.65 | 0.62 | [-2.87, -0.43] |     -2.66 | 0.008</span></code></pre>
 <p>For comparison and to show that the results from <code>mice:pool()</code> and <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> are identical, we take an example that also works with the <em>mice</em> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span>
@@ -223,27 +223,27 @@
 <span class="co"># approach when model is supported by "mice"</span>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;          term estimate std.error statistic df p.value
-#&gt; 1 (Intercept)   19.667     3.373       5.8 11 0.00013
-#&gt; 2    age40-59   -5.705     1.711      -3.3 14 0.00475
-#&gt; 3    age60-99   -7.007     1.783      -3.9 18 0.00099
-#&gt; 4      hypyes    2.713     1.829       1.5 11 0.16544
-#&gt; 5         chl    0.051     0.017       2.9 12 0.01290</code></pre>
+<pre><code><span class="co">#&gt;          term estimate std.error statistic df p.value</span>
+<span class="co">#&gt; 1 (Intercept)   19.667     3.373       5.8 11 0.00013</span>
+<span class="co">#&gt; 2    age40-59   -5.705     1.711      -3.3 14 0.00475</span>
+<span class="co">#&gt; 3    age60-99   -7.007     1.783      -3.9 18 0.00099</span>
+<span class="co">#&gt; 4      hypyes    2.713     1.829       1.5 11 0.16544</span>
+<span class="co">#&gt; 5         chl    0.051     0.017       2.9 12 0.01290</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># approach when model is *not* supported by "mice"</span>
 <span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span>, data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imp</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       19.67 | 3.37 | [ 12.21, 27.13] |      5.83 | 10.62 | &lt; .001
-#&gt; age [40-59] |       -5.71 | 1.71 | [ -9.37, -2.04] |     -3.33 | 14.41 | 0.005 
-#&gt; age [60-99] |       -7.01 | 1.78 | [-10.76, -3.26] |     -3.93 | 17.88 | &lt; .001
-#&gt; hyp [yes]   |        2.71 | 1.83 | [ -1.30,  6.73] |      1.48 | 11.24 | 0.165 
-#&gt; chl         |        0.05 | 0.02 | [  0.01,  0.09] |      2.90 | 12.34 | 0.013</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       19.67 | 3.37 | [ 12.21, 27.13] |      5.83 | 10.62 | &lt; .001</span>
+<span class="co">#&gt; age [40-59] |       -5.71 | 1.71 | [ -9.37, -2.04] |     -3.33 | 14.41 | 0.005 </span>
+<span class="co">#&gt; age [60-99] |       -7.01 | 1.78 | [-10.76, -3.26] |     -3.93 | 17.88 | &lt; .001</span>
+<span class="co">#&gt; hyp [yes]   |        2.71 | 1.83 | [ -1.30,  6.73] |      1.48 | 11.24 | 0.165 </span>
+<span class="co">#&gt; chl         |        0.05 | 0.02 | [  0.01,  0.09] |      2.90 | 12.34 | 0.013</span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="model-parameters-from-mipo-objects">Model Parameters from <code>mipo</code> objects<a class="anchor" aria-label="anchor" href="#model-parameters-from-mipo-objects"></a>
@@ -256,15 +256,15 @@
 <span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
-#&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept) |       17.10 | 3.87 | [  8.63, 25.58] |  4.42 | 11.51 | &lt; .001
-#&gt; age [40-59] |       -5.03 | 2.55 | [-11.44,  1.38] | -1.97 |  5.42 | 0.101 
-#&gt; age [60-99] |       -7.39 | 2.70 | [-13.87, -0.92] | -2.73 |  6.59 | 0.031 
-#&gt; hyp [yes]   |        1.36 | 2.44 | [ -4.27,  6.99] |  0.56 |  8.03 | 0.593 
-#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.12] |  2.68 |  8.34 | 0.027</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       17.10 | 3.87 | [  8.63, 25.58] |  4.42 | 11.51 | &lt; .001</span>
+<span class="co">#&gt; age [40-59] |       -5.03 | 2.55 | [-11.44,  1.38] | -1.97 |  5.42 | 0.101 </span>
+<span class="co">#&gt; age [60-99] |       -7.39 | 2.70 | [-13.87, -0.92] | -2.73 |  6.59 | 0.031 </span>
+<span class="co">#&gt; hyp [yes]   |        1.36 | 2.44 | [ -4.27,  6.99] |  0.56 |  8.03 | 0.593 </span>
+<span class="co">#&gt; chl         |        0.06 | 0.02 | [  0.01,  0.12] |  2.68 |  8.34 | 0.027</span></code></pre>
 </div>
   </div>
 
