@@ -103,7 +103,7 @@
   attr(params, "model_formula") <- model_formula
 
   # column name for coefficients
-  coef_col <- .find_coefficient_type(info, exponentiate)
+  coef_col <- .find_coefficient_type(info, exponentiate, model)
   attr(params, "coefficient_name") <- coef_col
   attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
 
@@ -189,10 +189,20 @@
 
 
 
-.find_coefficient_type <- function(info, exponentiate) {
+.find_coefficient_type <- function(info, exponentiate, model = NULL) {
   # column name for coefficients
   coef_col <- "Coefficient"
-  if (!is.null(info)) {
+  if (!is.null(model) && inherits(model, "emmGrid")) {
+    s <- summary(model)
+    name <- attributes(s)$estName
+    if (!is.null(name)) {
+      coef_col <- switch(name,
+                         "prob" = "Probability",
+                         "odds.ratio" = "Odds Ratio",
+                         "emmean" = "Marginal Means",
+                         "Coefficient")
+    }
+  } else if (!is.null(info)) {
     if (!info$family == "unknown") {
       if (isTRUE(exponentiate)) {
         if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
@@ -211,12 +221,13 @@
       }
     }
   }
+
   coef_col
 }
 
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean")
+  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means")
 }
 
 
