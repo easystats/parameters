@@ -18,6 +18,7 @@ format.parameters_model <- function(x,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
+  coef_name2 <- attributes(x)$coefficient_name2
   s_value <- attributes(x)$s_value
   m_class <- attributes(x)$model_class
   htest_type <- attributes(x)$htest_type
@@ -32,7 +33,9 @@ format.parameters_model <- function(x,
 
   if (identical(format, "html")) {
     coef_name <- NULL
+    coef_name2 <- NULL
     attr(x, "coefficient_name") <- NULL
+    attr(x, "coefficient_name2") <- NULL
     attr(x, "zi_coefficient_name") <- NULL
   }
 

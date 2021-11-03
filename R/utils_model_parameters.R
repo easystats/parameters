@@ -103,9 +103,16 @@
   attr(params, "model_formula") <- model_formula
 
   # column name for coefficients
-  coef_col <- .find_coefficient_type(info, exponentiate, model)
-  attr(params, "coefficient_name") <- coef_col
-  attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+  if (inherits(model, "emm_list")) {
+    coef_col1 <- .find_coefficient_type(info, exponentiate, model[[1]])
+    coef_col2 <- .find_coefficient_type(info, exponentiate, model[[2]])
+    attr(params, "coefficient_name") <- coef_col1
+    attr(params, "coefficient_name2") <- coef_col2
+  } else {
+    coef_col <- .find_coefficient_type(info, exponentiate, model)
+    attr(params, "coefficient_name") <- coef_col
+    attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+  }
 
   # special handling for meta analysis. we need additional information
   # about study weights
@@ -200,8 +207,8 @@
                          "prob" = "Probability",
                          "odds.ratio" = "Odds Ratio",
                          "emmean" = "Marginal Means",
-                         "rate" = "Mean Count",
-                         "ratio" = "IRR",
+                         "rate" = "Estimated Counts",
+                         "ratio" = "Ratio",
                          "Coefficient")
     }
   } else if (!is.null(info)) {
@@ -229,7 +236,7 @@
 
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means")
+  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
 }
 
 

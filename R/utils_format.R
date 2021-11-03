@@ -525,6 +525,9 @@
   is_zero_inflated <- (!is.null(x$Component) & "zero_inflated" %in% x$Component)
   zi_coef_name <- attributes(x)$zi_coefficient_name
 
+  # other special model-components, like emm_list
+  coef_name2 <- attributes(x)$coefficient_name2
+
   # make sure we have correct order of levels from split-factor
   if (!is.null(attributes(x)$model_class) && all(attributes(x)$model_class == "mediate")) {
     x$Component <- factor(x$Component, levels = c("control", "treated", "average", "Total Effect"))
@@ -580,6 +583,11 @@
 
   for (type in names(tables)) {
 
+    # do we have emmeans emlist? and contrasts?
+    model_class <- attributes(tables[[type]])$model_class
+    em_list_coef_name <- (!is.null(model_class) && "emm_list" %in% model_class &&
+                            "contrasts" %in% tables[[type]]$Component)
+
     # Don't print Component column
     for (i in split_column) {
       tables[[type]][[i]] <- NULL
@@ -625,6 +633,11 @@
     if (all(c("Parameter", "Level") %in% colnames(tables[[type]]))) {
       tables[[type]]$Parameter <- paste0(tables[[type]]$Parameter, " ", ci_brackets[1], tables[[type]]$Level, ci_brackets[2])
       tables[[type]]$Level <- NULL
+    }
+
+    # rename columns for emmeans contrast part
+    if (em_list_coef_name && !is.null(coef_column)) {
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- coef_name2
     }
 
     # rename columns for zero-inflation part
