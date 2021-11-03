@@ -109,11 +109,11 @@
     <p>An approximate F-test based on the Satterthwaite (1946) approach.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_satterthwaite</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span>
+    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_satterthwaite</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">dof_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">se_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 
@@ -124,6 +124,13 @@
 <dd><p>A statistical model.</p></dd>
 <dt>ci</dt>
 <dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+<dt>robust</dt>
+<dd><p>Logical, if <code>TRUE</code>, computes confidence intervals (or p-values)
+based on robust standard errors. See <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></dd>
+<dt>...</dt>
+<dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code>
+when confidence intervals or p-values based on robust standard errors
+should be computed.</p></dd>
 <dt>dof</dt>
 <dd><p>Degrees of Freedom.</p></dd>
 </dl></div>

@@ -160,7 +160,10 @@ heteroskedasticity-consistent covariance matrix estimators).</p></dd>
 <dd><p>Character vector, specifying the estimation type for the
 robust covariance matrix estimation (see
 <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">sandwich::vcovHC()</a></code> or <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>
-for details).</p></dd>
+for details). Passed down as <code>type</code> argument to the related <code>vcov*()</code>-function
+from the  <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package and hence will be
+ignored if there is no <code>type</code> argument (e.g., <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">sandwich::vcovHAC()</a></code> will
+ignore that argument).</p></dd>
 <dt>vcov_args</dt>
 <dd><p>List of named vectors, used as additional arguments that are
 passed down to the <span class="pkg">sandwich</span>-function specified in
