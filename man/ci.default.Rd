@@ -50,8 +50,8 @@ options (which vary depending on the model class): \code{"residual"},
 \emph{Confidence intervals and approximation of degrees of freedom} in
 \code{\link[=model_parameters]{model_parameters()}} for further details.}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
-robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
+based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 
 \item{...}{Arguments passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}
 when confidence intervals or p-values based on robust standard errors

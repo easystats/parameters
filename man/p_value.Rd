@@ -34,8 +34,8 @@ intervals.}
 
 \item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals based on
-robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
+based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for

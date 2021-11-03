@@ -6,16 +6,23 @@
 \alias{p_value_ml1}
 \title{"m-l-1" approximation for SEs, CIs and p-values}
 \usage{
-ci_ml1(model, ci = 0.95)
+ci_ml1(model, ci = 0.95, robust = FALSE, ...)
 
 dof_ml1(model)
 
-p_value_ml1(model, dof = NULL)
+p_value_ml1(model, dof = NULL, robust = FALSE, ...)
 }
 \arguments{
 \item{model}{A mixed model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
+based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+
+\item{...}{Arguments passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}
+when confidence intervals or p-values based on robust standard errors
+should be computed.}
 
 \item{dof}{Degrees of Freedom.}
 }
