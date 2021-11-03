@@ -200,6 +200,8 @@
                          "prob" = "Probability",
                          "odds.ratio" = "Odds Ratio",
                          "emmean" = "Marginal Means",
+                         "rate" = "Mean Count",
+                         "ratio" = "IRR",
                          "Coefficient")
     }
   } else if (!is.null(info)) {
