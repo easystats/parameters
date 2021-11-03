@@ -105,7 +105,7 @@ format_p_adjust <- function(method) {
 
       if (isTRUE(all.equal(old_p_vals, params$p)) && !identical(p_adjust, "none")) {
         if (verbose) {
-          warning(paste0("Something went wrong. Could not apply ", p_adjust, "-adjustment."), call. = FALSE)
+          warning(insight::format_message(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large.")), call. = FALSE)
         }
       }
     } else if (verbose) {
