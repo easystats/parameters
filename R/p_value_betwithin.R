@@ -44,9 +44,9 @@
 #'   \item Li, P., Redden, D. T. (2015). Comparing denominator degrees of freedom approximations for the generalized linear mixed model in analyzing binary outcome in small sample cluster-randomized trials. BMC Medical Research Methodology, 15(1), 38. \doi{10.1186/s12874-015-0026-x}
 #' }
 #' @export
-p_value_betwithin <- function(model, dof = NULL) {
+p_value_betwithin <- function(model, dof = NULL, robust = FALSE, ...) {
   if (is.null(dof)) {
     dof <- dof_betwithin(model)
   }
-  .p_value_dof(model, dof, method = "betwithin")
+  .p_value_dof(model, dof, method = "betwithin", robust = robust, ...)
 }

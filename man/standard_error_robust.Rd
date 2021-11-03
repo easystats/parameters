@@ -50,7 +50,10 @@ heteroskedasticity-consistent covariance matrix estimators).}
 \item{vcov_type}{Character vector, specifying the estimation type for the
 robust covariance matrix estimation (see
 \code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} or \code{clubSandwich::vcovCR()}
-for details).}
+for details). Passed down as \code{type} argument to the related \verb{vcov*()}-function
+from the  \pkg{sandwich} or \pkg{clubSandwich} package and hence will be
+ignored if there is no \code{type} argument (e.g., \code{sandwich::vcovHAC()} will
+ignore that argument).}
 
 \item{vcov_args}{List of named vectors, used as additional arguments that are
 passed down to the \pkg{sandwich}-function specified in

@@ -34,22 +34,9 @@
 #' @return A data frame.
 #' @references Satterthwaite FE (1946) An approximate distribution of estimates of variance components. Biometrics Bulletin 2 (6):110–4.
 #' @export
-p_value_satterthwaite <- function(model, dof = NULL) {
-  UseMethod("p_value_satterthwaite")
-}
-
-
-#' @export
-p_value_satterthwaite.lmerMod <- function(model, dof = NULL) {
+p_value_satterthwaite <- function(model, dof = NULL, robust = FALSE, ...) {
   if (is.null(dof)) {
     dof <- dof_satterthwaite(model)
   }
-  .p_value_dof(model, dof, method = "satterthwaite")
+  .p_value_dof(model, dof, method = "satterthwaite", robust = robust, ...)
 }
-
-
-#' @export
-p_value_satterthwaite.lme <- p_value_satterthwaite.lmerMod
-
-#' @export
-p_value_satterthwaite.gls <- p_value_satterthwaite.lmerMod

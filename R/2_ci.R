@@ -19,8 +19,8 @@
 #'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details.
-#' @param robust Logical, if `TRUE`, computes confidence intervals based on
-#'   robust standard errors. See [`standard_error_robust()`].
+#' @param robust Logical, if `TRUE`, computes confidence intervals (or p-values)
+#'   based on robust standard errors. See [`standard_error_robust()`].
 #' @param component Model component for which parameters should be shown. See
 #'   the documentation for your object's class in [`model_parameters()`] for
 #'   further details.

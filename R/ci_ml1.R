@@ -1,6 +1,6 @@
 #' @rdname p_value_ml1
 #' @export
-ci_ml1 <- function(model, ci = .95) {
+ci_ml1 <- function(model, ci = .95, robust = FALSE, ...) {
   df_ml1 <- dof_ml1(model)
   out <- lapply(ci, function(i) {
     .ci_dof(
@@ -9,7 +9,9 @@ ci_ml1 <- function(model, ci = .95) {
       effects = "fixed",
       component = "all",
       dof = df_ml1,
-      method = "ml1"
+      method = "ml1",
+      robust = robust,
+      ...
     )
   })
   out <- do.call(rbind, out)
