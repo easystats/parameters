@@ -180,8 +180,18 @@ model_parameters.BFBayesFactor <- function(model,
     ci_method = ci_method,
     verbose = verbose
   )
-  class(out) <- c("parameters_model", "see_parameters_model", class(out))
 
+  # reorder
+  col_order <- c(
+    "Parameter", "Mean", "Median", "MAD",
+    "Cohens_d", "Cramers_v", "CI", "CI_low", "CI_high", "SD",
+    "pd", "ROPE_Percentage", "Prior_Distribution", "Prior_Location", "Prior_Scale",
+    "Effects", "Component", "BF", "Method"
+  )
+  out <- out[col_order[col_order %in% names(out)]]
+
+
+  class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
 
