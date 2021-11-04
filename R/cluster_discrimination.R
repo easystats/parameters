@@ -59,8 +59,8 @@ cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
     stringsAsFactors = FALSE
   )
 
-    # Sort according to accuracy
-  out <- out[order(out$Group) , ]
+  # Sort according to accuracy
+  out <- out[order(out$Group), ]
 
   attr(out, "Overall_Accuracy") <- total_correct
   class(out) <- c("cluster_discrimination", class(out))

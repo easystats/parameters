@@ -586,7 +586,7 @@
     # do we have emmeans emlist? and contrasts?
     model_class <- attributes(tables[[type]])$model_class
     em_list_coef_name <- (!is.null(model_class) && "emm_list" %in% model_class &&
-                            "contrasts" %in% tables[[type]]$Component)
+      "contrasts" %in% tables[[type]]$Component)
 
     # Don't print Component column
     for (i in split_column) {

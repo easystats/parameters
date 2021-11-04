@@ -40,7 +40,8 @@ if (.runThisTest &&
     out <- capture.output(print(mp))
     expect_equal(
       out,
-      c("machine | Marginal Means |   SE |         95% CI | t(11) |      p",
+      c(
+        "machine | Marginal Means |   SE |         95% CI | t(11) |      p",
         "-----------------------------------------------------------------",
         "A       |          40.38 | 0.72 | [38.79, 41.98] | 55.81 | < .001",
         "B       |          41.42 | 0.74 | [39.78, 43.06] | 55.64 | < .001",

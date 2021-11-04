@@ -51,13 +51,21 @@ if (requiet("testthat") &&
   if (.runThisTest) {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
-    mp <- suppressWarnings(model_parameters(bf, centrality = "mean", dispersion = TRUE, verbose = FALSE))
+    mp <- suppressWarnings(model_parameters(bf,
+      centrality = "mean",
+      dispersion = TRUE,
+      verbose = FALSE,
+      cramers_v = TRUE
+    ))
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c(
-        "Parameter", "Mean", "SD", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
-        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+        "Parameter", "Mean", "Cramers_v", "CI", "CI_low", "CI_high", "SD", "pd",
+        "ROPE_Percentage", "Prior_Distribution", "Prior_Location", "Prior_Scale",
+        "BF", "Method"
       ))
+
+      expect_equal(dim(mp), c(6L, 14L))
     })
 
     data(puzzles)
@@ -111,9 +119,8 @@ if (requiet("testthat") &&
   expect_identical(
     colnames(df_t_es),
     c(
-      "CI", "CI_low", "CI_high", "Parameter", "Median", "pd", "ROPE_Percentage",
-      "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
-      "Cohens_d", "Method"
+      "Parameter", "Median", "Cohens_d", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+      "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
     )
   )
 
