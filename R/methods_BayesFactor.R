@@ -9,6 +9,10 @@
 #' @param cohens_d If `TRUE`, compute Cohens' *d* as index of effect size. Only
 #'   applies to objects from `ttestBF()`. See `effectsize::cohens_d()` for
 #'   details.
+#' @param include_proportions Logical that decides whether to include posterior
+#'   cell proportions/counts for Bayesian contingency table analysis (from
+#'   `BayesFactor::contingencyTableBF()`). Defaults to `FALSE`, as this
+#'   information is often redundant.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest
@@ -32,9 +36,20 @@
 #' @examples
 #' \donttest{
 #' if (require("BayesFactor")) {
+#'   # Bayesian t-test
 #'   model <- ttestBF(x = rnorm(100, 1, 1))
 #'   model_parameters(model)
 #'   model_parameters(model, cohens_d = TRUE, ci = .9)
+#'
+#'   # Bayesian contingency table analysis
+#'   data(raceDolls)
+#'   bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
+#'   model_parameters(bf,
+#'     centrality = "mean",
+#'     dispersion = TRUE,
+#'     verbose = FALSE,
+#'     cramers_v = TRUE
+#'   )
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
@@ -50,6 +65,7 @@ model_parameters.BFBayesFactor <- function(model,
                                            priors = TRUE,
                                            cohens_d = NULL,
                                            cramers_v = NULL,
+                                           include_proportions = FALSE,
                                            verbose = TRUE,
                                            ...) {
   if (any(grepl("^Null", names(model@numerator)))) {
@@ -132,6 +148,10 @@ model_parameters.BFBayesFactor <- function(model,
     )
   }
 
+  # leave out redundant posterior cell proportions/counts
+  if (bf_type == "xtable" && isFALSE(include_proportions)) {
+    out <- out[which(!grepl("cell", out$Parameter)), , drop = FALSE]
+  }
 
 
   # # Remove unnecessary columns
@@ -203,7 +223,11 @@ model_parameters.BFBayesFactor <- function(model,
 #' @param model A statistical model.
 #' @inheritParams p_value
 #'
-#' @details For Bayesian models, the p-values corresponds to the *probability of direction* ([bayestestR::p_direction()]), which is converted to a p-value using `bayestestR::convert_pd_to_p()`.
+#' @details
+#'
+#' For Bayesian models, the p-values corresponds to the *probability of
+#' direction* ([bayestestR::p_direction()]), which is converted to a p-value
+#' using `bayestestR::convert_pd_to_p()`.
 #'
 #' @return The p-values.
 #'

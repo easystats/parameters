@@ -55,17 +55,31 @@ if (requiet("testthat") &&
       centrality = "mean",
       dispersion = TRUE,
       verbose = FALSE,
-      cramers_v = TRUE
+      cramers_v = TRUE,
+      include_proportions = TRUE
     ))
+    mp2 <- suppressWarnings(model_parameters(bf, verbose = FALSE))
 
     test_that("model_parameters.BFBayesFactor", {
-      expect_equal(colnames(mp), c(
-        "Parameter", "Mean", "Cramers_v", "CI", "CI_low", "CI_high", "SD", "pd",
-        "ROPE_Percentage", "Prior_Distribution", "Prior_Location", "Prior_Scale",
-        "BF", "Method"
-      ))
-
+      expect_equal(
+        colnames(mp),
+        c(
+          "Parameter", "Mean", "Cramers_v", "CI", "CI_low", "CI_high", "SD", "pd",
+          "ROPE_Percentage", "Prior_Distribution", "Prior_Location", "Prior_Scale",
+          "BF", "Method"
+        )
+      )
       expect_equal(dim(mp), c(6L, 14L))
+
+      expect_equal(
+        colnames(mp2),
+        c(
+          "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+          "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
+          "Method"
+        )
+      )
+      expect_equal(dim(mp2), c(1L, 12L))
     })
 
     data(puzzles)
