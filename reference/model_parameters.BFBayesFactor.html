@@ -122,6 +122,7 @@
   priors <span class="op">=</span> <span class="cn">TRUE</span>,
   cohens_d <span class="op">=</span> <span class="cn">NULL</span>,
   cramers_v <span class="op">=</span> <span class="cn">NULL</span>,
+  include_proportions <span class="op">=</span> <span class="cn">FALSE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
@@ -168,6 +169,11 @@ details.</p></dd>
 <dd><p>Compute Cramer's V or phi as index of effect size.
 Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
 Only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>.</p></dd>
+<dt>include_proportions</dt>
+<dd><p>Logical that decides whether to include posterior
+cell proportions/counts for Bayesian contingency table analysis (from
+<code><a href="https://rdrr.io/pkg/BayesFactor/man/contingencyTableBF.html" class="external-link">BayesFactor::contingencyTableBF()</a></code>). Defaults to <code>FALSE</code>, as this
+information is often redundant.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle off warnings.</p></dd>
 <dt>...</dt>
@@ -200,9 +206,20 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
     <h2>Examples</h2>
     <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">"BayesFactor"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="co"># Bayesian t-test</span></span>
 <span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, cohens_d <span class="op">=</span> <span class="cn">TRUE</span>, ci <span class="op">=</span> <span class="fl">.9</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Bayesian contingency table analysis</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">raceDolls</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/contingencyTableBF.html" class="external-link">contingencyTableBF</a></span><span class="op">(</span><span class="va">raceDolls</span>, sampleType <span class="op">=</span> <span class="st">"indepMulti"</span>, fixedMargin <span class="op">=</span> <span class="st">"cols"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">bf</span>,</span>
+<span class="r-in">    centrality <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span class="r-in">    dispersion <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">    verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span class="r-in">    cramers_v <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BayesFactor</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: coda</span>
@@ -214,10 +231,10 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ************</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median | Cohen's d |       90% CI |   pd | % in ROPE |              Prior |     BF |          Method</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.12 |           | [0.92, 1.30] | 100% |        0% | Cauchy (0 +- 0.71) | &gt; 1000 | Bayesian t-test</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            |        |      0.98 | [0.78, 1.18] |      |           |                    |        | Bayesian t-test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Cramer's V |       95% CI |   SD |                            Prior |   BF |                              Method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ratio     |            |              |      | Independent multinomial (0 +- 1) | 1.81 | Bayesian contingency table analysis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           |       0.16 | [0.03, 0.31] | 0.07 |                                  |      | Bayesian contingency table analysis</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
