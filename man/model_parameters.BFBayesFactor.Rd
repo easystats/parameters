@@ -16,6 +16,7 @@
   priors = TRUE,
   cohens_d = NULL,
   cramers_v = NULL,
+  include_proportions = FALSE,
   verbose = TRUE,
   ...
 )
@@ -60,6 +61,11 @@ details.}
 Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
 Only applies to objects from \code{chisq.test()}.}
 
+\item{include_proportions}{Logical that decides whether to include posterior
+cell proportions/counts for Bayesian contingency table analysis (from
+\code{BayesFactor::contingencyTableBF()}). Defaults to \code{FALSE}, as this
+information is often redundant.}
+
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
@@ -89,9 +95,20 @@ parameters; See the \emph{Bayes Factors for ANOVAs} paper
 \examples{
 \donttest{
 if (require("BayesFactor")) {
+  # Bayesian t-test
   model <- ttestBF(x = rnorm(100, 1, 1))
   model_parameters(model)
   model_parameters(model, cohens_d = TRUE, ci = .9)
+
+  # Bayesian contingency table analysis
+  data(raceDolls)
+  bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
+  model_parameters(bf,
+    centrality = "mean",
+    dispersion = TRUE,
+    verbose = FALSE,
+    cramers_v = TRUE
+  )
 }
 }
 }
