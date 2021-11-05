@@ -56,7 +56,7 @@ if (requiet("testthat") &&
       dispersion = TRUE,
       verbose = FALSE,
       cramers_v = TRUE,
-      include_proportions = FALSE
+      include_proportions = TRUE
     ))
     mp2 <- suppressWarnings(model_parameters(bf, verbose = FALSE))
 
@@ -79,7 +79,7 @@ if (requiet("testthat") &&
           "Method"
         )
       )
-      expect_equal(dim(mp2), c(2L, 12L))
+      expect_equal(dim(mp2), c(1L, 12L))
     })
 
     data(puzzles)
