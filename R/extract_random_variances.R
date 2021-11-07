@@ -237,7 +237,7 @@
 
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now."), call. = FALSE)
+      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
     }
     return(NULL)
   }
