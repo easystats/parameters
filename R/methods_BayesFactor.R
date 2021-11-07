@@ -156,7 +156,7 @@ model_parameters.BFBayesFactor <- function(model,
           }
           ci_cols <- grepl("^CI_", colnames(effsize))
           colnames(effsize)[ci_cols] <- paste0(prefix, colnames(effsize)[ci_cols])
-          effsize$CI <- NULL
+          out$CI <- NULL
           out <- cbind(out, effsize)
         }
       },
@@ -202,6 +202,16 @@ model_parameters.BFBayesFactor <- function(model,
     out$Method <- .method_BFBayesFactor(model)
   }
 
+  # reorder
+  col_order <- c(
+    "Parameter", "Mean", "Median", "MAD",
+    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "d_CI_low", "d_CI_high",
+    "Cramers_CI_low", "Cramers_CI_high", "pd", "ROPE_Percentage", "Prior_Distribution",
+    "Prior_Location", "Prior_Scale", "Effects", "Component", "BF", "Method"
+  )
+  out <- out[col_order[col_order %in% names(out)]]
+
+
   attr(out, "title") <- unique(out$Method)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
@@ -214,16 +224,6 @@ model_parameters.BFBayesFactor <- function(model,
     ci_method = ci_method,
     verbose = verbose
   )
-
-  # reorder
-  col_order <- c(
-    "Parameter", "Mean", "Median", "MAD",
-    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "d_CI_low", "d_CI_high",
-    "Cramers_CI_low", "Cramers_CI_high", "pd", "ROPE_Percentage", "Prior_Distribution",
-    "Prior_Location", "Prior_Scale", "Effects", "Component", "BF", "Method"
-  )
-  out <- out[col_order[col_order %in% names(out)]]
-
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
