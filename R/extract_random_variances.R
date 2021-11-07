@@ -9,6 +9,7 @@
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
+                                              verbose = FALSE,
                                               ...) {
   suppressWarnings(
     .extract_random_variances_helper(
@@ -17,6 +18,7 @@
       effects = effects,
       component = component,
       ci_method = ci_method,
+      verbose = verbose,
       ...
     )
   )
@@ -33,6 +35,7 @@
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
+                                              verbose = FALSE,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
 
@@ -43,6 +46,7 @@
       effects = effects,
       component = "conditional",
       ci_method = ci_method,
+      verbose = verbose,
       ...
     )
   )
@@ -62,6 +66,7 @@
         effects = effects,
         component = "zi",
         ci_method = ci_method,
+        verbose = FALSE,
         ...
       )
     )
@@ -101,6 +106,7 @@
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
+                                             verbose = FALSE,
                                              ...) {
   ran_intercept <- tryCatch(
     {
@@ -230,6 +236,9 @@
   )
 
   if (is.null(out)) {
+    if (isTRUE(verbose)) {
+      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now."), call. = FALSE)
+    }
     return(NULL)
   }
 
