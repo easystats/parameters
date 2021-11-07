@@ -127,7 +127,8 @@ works when \code{standardize="refit"}.
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated.}
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{group_level}{Logical, for multilevel models (i.e. models with random
 effects) and when \code{effects = "all"} or \code{effects = "random"},
@@ -243,7 +244,8 @@ A data frame of indices related to the model's parameters.
 Parameters from (linear) mixed models.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+If the calculation of random effects parameters takes too long, you may
+use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \section{Confidence intervals for random effect variances}{
 

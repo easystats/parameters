@@ -32,7 +32,8 @@ from non-Gaussian families.}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated.}
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Model component for which parameters should be shown. May be
 one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),

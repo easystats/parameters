@@ -43,7 +43,8 @@ equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated.}
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 }
 \value{
 A data frame.

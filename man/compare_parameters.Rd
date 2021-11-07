@@ -52,7 +52,8 @@ these names will be used as column names.}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
-to mixed models. May be abbreviated.}
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Model component for which parameters should be shown. See
 documentation for related model class in \code{\link[=model_parameters]{model_parameters()}}.}

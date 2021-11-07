@@ -46,6 +46,12 @@
       ...
     )
   )
+
+  # check for errors
+  if (is.null(out)) {
+    return(NULL)
+  }
+
   out$Component <- "conditional"
 
   if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
@@ -59,8 +65,12 @@
         ...
       )
     )
-    zi_var$Component <- "zero_inflated"
-    out <- rbind(out, zi_var)
+
+    # bind if any zi-components could be extracted
+    if (!is.null(zi_var)) {
+      zi_var$Component <- "zero_inflated"
+      out <- rbind(out, zi_var)
+    }
   }
 
   # filter
@@ -208,7 +218,21 @@
     ran_sigma$Parameter <- "SD (Observations)"
   }
 
-  out <- rbind(ran_intercept, ran_slope, ran_corr, ran_sigma)
+  # row bind all random effect variances, if possible
+  out <- tryCatch(
+    {
+      out_list <- .compact_list(list(ran_intercept, ran_slope, ran_corr, ran_sigma))
+      do.call(rbind, out_list)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  if (is.null(out)) {
+    return(NULL)
+  }
+
   rownames(out) <- NULL
 
   # variances to SD (sqrt), except correlations and Sigma
