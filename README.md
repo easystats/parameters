@@ -1,4 +1,6 @@
 
+    ## Warning: package 'parameters' was built under R version 4.1.2
+
 # parameters <img src="man/figures/logo.png" align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
@@ -38,6 +40,8 @@ of (model) objects from many different packages.
 ## Installation
 
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
+[![parameters status
+badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
 [![R-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
 Run the following to install the stable release of **parameters** from
