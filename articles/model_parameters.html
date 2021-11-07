@@ -187,19 +187,19 @@
 
 <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html" class="external-link">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; Bayesian correlation analysis</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter | Median |        95% CI |     pd | % in ROPE |         Prior |    BF |                        Method</span>
-<span class="co">#&gt; ---------------------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; rho       |  -0.11 | [-0.27, 0.04] | 92.25% |    19.65% | Beta (3 +- 3) | 0.509 | Bayesian correlation analysis</span></code></pre></div>
+<span class="co">#&gt; Parameter | Median |        95% CI |     pd | % in ROPE |         Prior |    BF</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------</span>
+<span class="co">#&gt; rho       |  -0.11 | [-0.27, 0.04] | 92.25% |    19.65% | Beta (3 +- 3) | 0.509</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; Bayesian t-test</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter  | Median |          95% CI |     pd | % in ROPE |              Prior |     BF |          Method</span>
-<span class="co">#&gt; ----------------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; Difference |  -7.31 | [-10.73, -3.72] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27 | Bayesian t-test</span></code></pre></div>
+<span class="co">#&gt; Parameter  | Median |          95% CI |     pd | % in ROPE |              Prior |     BF</span>
+<span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
+<span class="co">#&gt; Difference |  -7.31 | [-10.73, -3.72] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
