@@ -11,7 +11,7 @@
                                               ci_method = NULL,
                                               verbose = FALSE,
                                               ...) {
-  suppressWarnings(
+  out <- suppressWarnings(
     .extract_random_variances_helper(
       model,
       ci = ci,
@@ -22,6 +22,15 @@
       ...
     )
   )
+
+  # check for errors
+  if (is.null(out)) {
+    if (isTRUE(verbose)) {
+      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+    }
+  }
+
+  out
 }
 
 
@@ -53,6 +62,9 @@
 
   # check for errors
   if (is.null(out)) {
+    if (isTRUE(verbose)) {
+      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+    }
     return(NULL)
   }
 
@@ -236,9 +248,6 @@
   )
 
   if (is.null(out)) {
-    if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
-    }
     return(NULL)
   }
 
