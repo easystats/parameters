@@ -233,7 +233,8 @@ works when <code>standardize="refit"</code>.</p></li>
 <dt>effects</dt>
 <dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
 effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
-to mixed models. May be abbreviated.</p></dd>
+to mixed models. May be abbreviated. If the calculation of random effects
+parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
 <dt>group_level</dt>
 <dd><p>Logical, for multilevel models (i.e. models with random
 effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
@@ -348,7 +349,8 @@ for working examples.</p></dd>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
+    <p>If the calculation of random effects parameters takes too long, you may
+use <code>effects = "fixed"</code>. There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><span class="pkg">see</span>-package</a>.</p>
     </div>
     <div id="confidence-intervals-for-random-effect-variances">
     <h2>Confidence intervals for random effect variances</h2>
