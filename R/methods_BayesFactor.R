@@ -125,6 +125,11 @@ model_parameters.BFBayesFactor <- function(model,
     }
   )
 
+  # leave out redundant posterior cell proportions/counts
+  if (bf_type == "xtable" && isFALSE(include_proportions)) {
+    out <- out[which(!grepl("^cell\\[", out$Parameter)), , drop = FALSE]
+  }
+
   # Effect size?
   if (bf_type %in% c("ttest1", "ttest2") && !is.null(cohens_d) ||
     bf_type == "xtable" && !is.null(cramers_v)) {
@@ -140,19 +145,26 @@ model_parameters.BFBayesFactor <- function(model,
           ci_method = ci_method,
           rope_ci = rope_ci
         )
-        out <- merge(out, effsize, sort = FALSE, all = TRUE)
+
+        if (bf_type == "xtable" && isTRUE(include_proportions)) {
+          out <- merge(out, effsize, sort = FALSE, all = TRUE)
+        } else {
+          if (bf_type == "xtable") {
+            prefix <- "Cramers_"
+          } else {
+            prefix <- "d_"
+          }
+          ci_cols <- grepl("^CI_", colnames(effsize))
+          colnames(effsize)[ci_cols] <- paste0(prefix, colnames(effsize)[ci_cols])
+          effsize$CI <- NULL
+          out <- cbind(out, effsize)
+        }
       },
       error = function(e) {
         NULL
       }
     )
   }
-
-  # leave out redundant posterior cell proportions/counts
-  if (bf_type == "xtable" && isFALSE(include_proportions)) {
-    out <- out[which(!grepl("cell", out$Parameter)), , drop = FALSE]
-  }
-
 
   # # Remove unnecessary columns
   # if ("CI" %in% names(out) && length(stats::na.omit(unique(out$CI))) == 1) {
@@ -193,6 +205,8 @@ model_parameters.BFBayesFactor <- function(model,
   attr(out, "title") <- unique(out$Method)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "pretty_names") <- pretty_names
+  attr(out, "ci_test") <- ci
+
   out <- .add_model_parameters_attributes(
     params = out,
     model = model,
@@ -204,9 +218,9 @@ model_parameters.BFBayesFactor <- function(model,
   # reorder
   col_order <- c(
     "Parameter", "Mean", "Median", "MAD",
-    "Cohens_d", "Cramers_v", "CI", "CI_low", "CI_high", "SD",
-    "pd", "ROPE_Percentage", "Prior_Distribution", "Prior_Location", "Prior_Scale",
-    "Effects", "Component", "BF", "Method"
+    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "d_CI_low", "d_CI_high",
+    "Cramers_CI_low", "Cramers_CI_high", "pd", "ROPE_Percentage", "Prior_Distribution",
+    "Prior_Location", "Prior_Scale", "Effects", "Component", "BF", "Method"
   )
   out <- out[col_order[col_order %in% names(out)]]
 
