@@ -40,11 +40,10 @@ determine the number of clusters need numeric input only.}
 
 \item{distance_method}{Distance measure to be used for methods based on distances (e.g., when \code{method = "hclust"} for hierarchical clustering. For other methods, such as \code{"kmeans"}, this argument will be ignored). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}} and \code{pvclust::pvclust()} for more information.}
 
-\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"}
-(for hierarchical clustering). This should be one of \code{"ward"}, \code{"single"},
+\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"} or \code{method = "hkmeans"}
+(for hierarchical clustering). This should be one of \code{"ward"}, \code{"ward.D2"}, \code{"single"},
 \code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
-Default is \code{"ward"} (see \code{\link[=hclust]{hclust()}}). If \code{method = "kmeans"} this argument
-will be ignored.}
+Default is \code{"complete"} (see \code{\link[=hclust]{hclust()}}).}
 
 \item{kmeans_method}{Algorithm used for calculating kmeans cluster. Only applies,
 if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),

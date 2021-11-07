@@ -14,11 +14,10 @@
 #' `dbscan`, `mixture`, `pvclust`, or `pamk`.
 #' @param method Method for computing the cluster analysis. Can be `"kmeans"` (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`), `pamk` (K-Medoids that finds out the number of clusters), `"hclust"` (hierarchical clustering using `hclust()` or `pvclust::pvclust()`), `dbscan` (DBSCAN using `dbscan::dbscan()`), `hdbscan` (Hierarchical DBSCAN using `dbscan::hdbscan()`), or `mixture` (Mixture modelling using `mclust::Mclust()`, which requires the user to run `library(mclust)` before).
 #' @param distance_method Distance measure to be used for methods based on distances (e.g., when `method = "hclust"` for hierarchical clustering. For other methods, such as `"kmeans"`, this argument will be ignored). Must be one of `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. See [dist()] and `pvclust::pvclust()` for more information.
-#' @param hclust_method Agglomeration method to be used when `method = "hclust"`
-#'   (for hierarchical clustering). This should be one of `"ward"`, `"single"`,
+#' @param hclust_method Agglomeration method to be used when `method = "hclust"` or `method = "hkmeans"`
+#'   (for hierarchical clustering). This should be one of `"ward"`, `"ward.D2"`, `"single"`,
 #'   `"complete"`, `"average"`, `"mcquitty"`, `"median"` or `"centroid"`.
-#'   Default is `"ward"` (see [hclust()]). If `method = "kmeans"` this argument
-#'   will be ignored.
+#'   Default is `"complete"` (see [hclust()]).
 #' @param kmeans_method Algorithm used for calculating kmeans cluster. Only applies,
 #'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
 #'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
