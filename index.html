@@ -143,6 +143,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">## Warning: package 'parameters' was built under R version 4.1.2</span></span></code></pre></div>
 <div class="section level1">
 <div class="page-header"><h1 id="parameters-">parameters <img src="reference/figures/logo.png" align="right" height="139"><a class="anchor" aria-label="anchor" href="#parameters-"></a>
 </h1></div>
@@ -156,15 +157,15 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><a href="https://cran.r-project.org/package=parameters" class="external-link"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a> <a href="https://github.com/easystats/parameters/actions" class="external-link"><img src="https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main" alt="R-check"></a></p>
+<p><a href="https://cran.r-project.org/package=parameters" class="external-link"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a> <a href="https://easystats.r-universe.dev" class="external-link"><img src="https://easystats.r-universe.dev/badges/parameters" alt="parameters status badge"></a> <a href="https://github.com/easystats/parameters/actions" class="external-link"><img src="https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main" alt="R-check"></a></p>
 <p>Run the following to install the stable release of <strong>parameters</strong> from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"parameters"</span><span class="op">)</span></code></pre></div>
 <p>Or this one to install the latest development version from R-universe…</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"parameters"</span>, repos <span class="op">=</span> <span class="st">"https://easystats.r-universe.dev"</span><span class="op">)</span></code></pre></div>
 <p>…or from GitHub:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"easystats/parameters"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -206,7 +207,7 @@
 <div class="section level3">
 <h3 id="classical-regression-models">Classical Regression Models<a class="anchor" aria-label="anchor" href="#classical-regression-models"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
 <span class="co"># regular model parameters</span>
@@ -236,7 +237,7 @@
 <div class="section level3">
 <h3 id="mixed-models">Mixed Models<a class="anchor" aria-label="anchor" href="#mixed-models"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
@@ -277,7 +278,7 @@
 <h3 id="structural-models">Structural Models<a class="anchor" aria-label="anchor" href="#structural-models"></a>
 </h3>
 <p>Besides many types of regression models and packages, it also works for other types of models, such as <a href="https://easystats.github.io/parameters/articles/efa_cfa.html" class="external-link"><strong>structural models</strong></a> (EFA, CFA, SEM…).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -302,7 +303,7 @@
 </h2>
 <p><img src="reference/figures/figure2.png" style="display: block; margin: auto;"></p>
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html" class="external-link"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -324,7 +325,7 @@
 <div class="section level3">
 <h3 id="describe-a-distribution">Describe a Distribution<a class="anchor" aria-label="anchor" href="#describe-a-distribution"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="co">#&gt; Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing</span>
@@ -338,25 +339,25 @@
 <h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h3>
 <p>In order to cite this package, please use the following command:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
-<span id="cb9-5"><a href="#cb9-5"></a>Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="st"> </span><span class="fl">10.21105</span><span class="op">/</span><span class="kw">joss.02445</span> (URL<span class="op">:</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>).</span>
-<span id="cb9-7"><a href="#cb9-7"></a></span>
-<span id="cb9-8"><a href="#cb9-8"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  <span class="op">@</span>Article{,</span>
-<span id="cb9-11"><a href="#cb9-11"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
-<span id="cb9-12"><a href="#cb9-12"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
-<span id="cb9-13"><a href="#cb9-13"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
-<span id="cb9-14"><a href="#cb9-14"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
-<span id="cb9-15"><a href="#cb9-15"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
-<span id="cb9-16"><a href="#cb9-16"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
-<span id="cb9-17"><a href="#cb9-17"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
-<span id="cb9-18"><a href="#cb9-18"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
-<span id="cb9-19"><a href="#cb9-19"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
+<span id="cb10-5"><a href="#cb10-5"></a>Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="st"> </span><span class="fl">10.21105</span><span class="op">/</span><span class="kw">joss.02445</span> (URL<span class="op">:</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>).</span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="op">@</span>Article{,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
+<span id="cb10-12"><a href="#cb10-12"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
+<span id="cb10-13"><a href="#cb10-13"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
+<span id="cb10-14"><a href="#cb10-14"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
+<span id="cb10-15"><a href="#cb10-15"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
+<span id="cb10-16"><a href="#cb10-16"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
+<span id="cb10-17"><a href="#cb10-17"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
+<span id="cb10-18"><a href="#cb10-18"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
+<span id="cb10-19"><a href="#cb10-19"></a>  }</span></code></pre></div>
 </div>
 </div>
 </div>
