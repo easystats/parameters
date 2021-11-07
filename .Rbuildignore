@@ -12,6 +12,7 @@
 ^WIP/.
 ^.github/.
 ^vignettes/b.
+^vignettes/c.
 ^vignettes/d.
 ^vignettes/e.
 ^vignettes/m.
