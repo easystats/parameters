@@ -1,6 +1,4 @@
 
-    ## Warning: package 'parameters' was built under R version 4.1.2
-
 # parameters <img src="man/figures/logo.png" align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
