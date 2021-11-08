@@ -69,7 +69,7 @@ model_parameters.brmsfit <- function(model,
     )
 
     if (!(effects == "fixed" && component == "conditional")) {
-      random_effect_levels <- which(params$Effects %in% "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE))
+      random_effect_levels <- which(params$Effects == "random" & grepl("^(?!sd_|cor_)(.*)", params$Parameter, perl = TRUE) & !(params$Parameter %in% c("car", "sdcar")))
       if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
     }
 
