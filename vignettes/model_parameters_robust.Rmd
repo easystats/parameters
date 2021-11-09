@@ -46,11 +46,11 @@ The
 [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html)
 function also allows the computation of standard errors, confidence intervals,
 and *p*-values based on robust covariance matrix estimation from model
-parameters. Robust estimation is relies on
-[`sandwich`](https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf)
+parameters. Robust estimation relies on
+the [`sandwich`](https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf)
 and
 [`clubSandwich`](https://cran.r-project.org/web/packages/clubSandwich/index.html)
-package. This means that all models supported by either of these packages will
+packages. This means that all models supported by either of these packages should work
 with `model_parameters()` when `robust = TRUE`.
 
 ## Linear Regression Models
