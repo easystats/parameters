@@ -172,7 +172,8 @@ print.parameters_model <- function(x,
     formatted_table,
     format = "text",
     caption = table_caption,
-    footer = footer
+    footer = footer,
+    ...
   ))
 
   # inform about CI and df approx.

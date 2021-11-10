@@ -171,6 +171,7 @@ model_parameters.glmmTMB <- function(model,
     verbose = verbose,
     group_level = group_level,
     summary = summary,
+    wb_component = wb_component,
     ...
   )
 

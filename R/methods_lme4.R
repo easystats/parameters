@@ -218,6 +218,7 @@ model_parameters.merMod <- function(model,
     verbose = verbose,
     summary = summary,
     group_level = group_level,
+    wb_component = wb_component,
     ...
   )
 

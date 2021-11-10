@@ -11,6 +11,7 @@
                                              summary = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
+                                             wb_component = FALSE,
                                              ...) {
   # capture additional arguments
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
@@ -36,7 +37,6 @@
 
 
   # add regular attributes
-
   if (is.null(attr(params, "pretty_names", exact = TRUE))) {
     attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info))
   }
@@ -59,6 +59,14 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
 
+
+  # if we have a complex random-within-between model, don't show first title element
+  if (isTRUE(wb_component) && !is.null(params$Component) && any(c("within", "between") %in% params$Component)) {
+    attr(params, "no_caption") <- TRUE
+  }
+
+
+  # for summaries, add R2
   if (isTRUE(summary)) {
     if (requireNamespace("performance", quietly = TRUE)) {
       rsq <- tryCatch(
@@ -73,11 +81,14 @@
     }
   }
 
-  # Models for which titles should be removed
-  # here we add exception for objects that should not have a table headline
+
+  # Models for which titles should be removed -
+  # here we add exceptions for objects that should
+  # not have a table headline
   if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl"))) {
     attr(params, "title") <- ""
   }
+
 
   # weighted nobs
   weighted_nobs <- tryCatch(
@@ -91,6 +102,7 @@
   )
   attr(params, "weighted_nobs") <- weighted_nobs
 
+
   # model formula
   model_formula <- tryCatch(
     {
@@ -102,7 +114,10 @@
   )
   attr(params, "model_formula") <- model_formula
 
-  # column name for coefficients
+
+  # column name for coefficients - for emm_list, we can have
+  # multiple different names for the parameter column. for other
+  # models, check whether we have coefficient, odds ratios, IRR etc.
   if (inherits(model, "emm_list")) {
     coef_col1 <- .find_coefficient_type(info, exponentiate, model[[1]])
     coef_col2 <- .find_coefficient_type(info, exponentiate, model[[2]])
@@ -114,8 +129,9 @@
     attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
   }
 
-  # special handling for meta analysis. we need additional information
-  # about study weights
+
+  # special handling for meta analysis. we need additional
+  # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
     rma_data <- tryCatch(
       {
@@ -128,6 +144,7 @@
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
+
 
   # special handling for meta analysis again, but these objects save the
   # inverse weighting information in a different column.
@@ -144,10 +161,12 @@
     attr(params, "study_weights") <- 1 / params$SE^2
   }
 
+  # should coefficients be grouped?
   if ("groups" %in% names(dot.arguments)) {
     attr(params, "coef_groups") <- eval(dot.arguments[["groups"]])
   }
 
+  # now comes all the digits stuff...
   if ("digits" %in% names(dot.arguments)) {
     attr(params, "digits") <- eval(dot.arguments[["digits"]])
   } else {
@@ -175,6 +194,7 @@
   if ("s_value" %in% names(dot.arguments)) {
     attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
   }
+
 
   # add CI, and reorder
   if (!"CI" %in% colnames(params) && length(ci) == 1) {
