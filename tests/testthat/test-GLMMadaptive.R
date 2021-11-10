@@ -57,28 +57,28 @@ if (requiet("testthat") &&
   test_that("se", {
     expect_equal(
       standard_error(m1)$SE,
-      c(0.54002, 0.09485, 0.09356, 0.46812, 0.29416, 0.50763),
+      c(0.540016, 0.094847, 0.09356, 0.468122, 0.29416, 0.507634),
       tolerance = 1e-3
     )
     expect_equal(
       standard_error(m1, component = "cond")$SE,
-      c(0.54002, 0.09485, 0.09356),
+      c(0.540016, 0.094847, 0.09356),
       tolerance = 1e-3
     )
     expect_equal(
       standard_error(m1, component = "zi")$SE,
-      c(0.46812, 0.29416, 0.50763),
+      c(0.468122, 0.29416, 0.507634),
       tolerance = 1e-3
     )
 
     expect_equal(
       standard_error(m2)$SE,
-      c(0.23354, 0.30678, 0.32678, 0.42761),
+      c(0.233543, 0.306776, 0.326777, 0.427606),
       tolerance = 1e-3
     )
     expect_equal(
       standard_error(m2, component = "cond")$SE,
-      c(0.23354, 0.30678, 0.32678, 0.42761),
+      c(0.233543, 0.306776, 0.326777, 0.427606),
       tolerance = 1e-3
     )
 
