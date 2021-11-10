@@ -123,6 +123,7 @@
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -138,6 +139,7 @@
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   ci_method <span class="op">=</span> <span class="st">"wald"</span>,
+  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   wb_component <span class="op">=</span> <span class="cn">TRUE</span>,
   summary <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -146,6 +148,7 @@
   parameters <span class="op">=</span> <span class="va">keep</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -169,6 +172,7 @@
   parameters <span class="op">=</span> <span class="va">keep</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -182,6 +186,7 @@
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -199,6 +204,7 @@
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
 
@@ -273,6 +279,12 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <dd><p>Toggle warnings and messages.</p></dd>
 <dt>df_method</dt>
 <dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
+<dt>include_sigma</dt>
+<dd><p>Logical, if <code>TRUE</code>, includes the residual standard
+deviation. For mixed models, this is defined as the sum of the distribution-specific
+variance and the variance for the additive overdispersion term (see
+<code><a href="https://easystats.github.io/insight/reference/get_variance.html" class="external-link">insight::get_variance()</a></code> for details). Defaults to <code>FALSE</code> for mixed models
+due to the longer computation time.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
 <dt>component</dt>
@@ -281,6 +293,14 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
 <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
 (default). May be abbreviated.</p></dd>
+<dt>robust</dt>
+<dd><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like <code>vcov_estimation</code> or
+<code>vcov_type</code> are passed down to other methods, see
+<code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
+and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
+for working examples.</p></dd>
 <dt>wb_component</dt>
 <dd><p>Logical, if <code>TRUE</code> and models contains within- and
 between-effects (see <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">datawizard::demean()</a></code>), the <code>Component</code> column
@@ -334,14 +354,6 @@ frame, which can be different from how they are printed. Inspect the
 names.</p></dd>
 <dt>parameters</dt>
 <dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-<dt>robust</dt>
-<dd><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like <code>vcov_estimation</code> or
-<code>vcov_type</code> are passed down to other methods, see
-<code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
-and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
-for working examples.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

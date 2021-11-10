@@ -114,10 +114,12 @@
 <h3 id="changes-to-functions-0-15-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-15-1"></a></h3>
 <div class="section level4">
 <h4 id="model_parameters-0-15-1"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-15-1"></a></h4>
-<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</p></li>
+<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gains an <code>include_sigma</code> argument. If <code>TRUE</code>, adds the residual variance, computed from the random effects variances, as attribute to the returned data frame. This was the default behaviour, but now is only included for <code>include_sigma</code>, because the calculation was very time consuming.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>glmmTMB</code> models now computes CIs for the random SD parameters. Note that these are based on a Wald-z-distribution.</p></li>
 <li><p>Similar to <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code>, the <code><a href="../reference/model_parameters.BFBayesFactor.html">model_parameters.BFBayesFactor()</a></code> method gains <code>cohens_d</code> and <code>cramers_v</code> arguments to control if you need to add frequentist effect size estimates to the returned summary data frame. Previously, this was done by default.</p></li>
 <li><p>Column name for coefficients from <em>emmeans</em> objects are now more specific.</p></li>
+<li><p><code>model_prameters()</code> for <code>MixMod</code> objects (package <em>GLMMadaptive</em>) gains a <code>robust</code> argument, to compute robust standard errors.</p></li>
 </ul></div>
 </div>
 <div class="section level3">
