@@ -7,6 +7,7 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 ci.MixMod <- function(x,
                       ci = .95,
                       component = c("all", "conditional", "zi", "zero_inflated"),
+                      robust = FALSE,
                       verbose = TRUE,
                       ...) {
   component <- match.arg(component)
@@ -19,7 +20,8 @@ ci.MixMod <- function(x,
     model = x,
     ci = ci,
     dof = Inf,
-    component = component
+    component = component,
+    robust = robust
   )
 }
 
@@ -29,6 +31,7 @@ ci.MixMod <- function(x,
 standard_error.MixMod <- function(model,
                                   effects = c("fixed", "random"),
                                   component = c("all", "conditional", "zi", "zero_inflated"),
+                                  robust = FALSE,
                                   verbose = TRUE,
                                   ...) {
   component <- match.arg(component)
@@ -58,56 +61,23 @@ standard_error.MixMod <- function(model,
       return(NULL)
     }
 
-    s <- summary(model)
-    cs <- list(s$coef_table, s$coef_table_zi)
-    names(cs) <- c("conditional", "zero_inflated")
-    cs <- .compact_list(cs)
-    x <- lapply(names(cs), function(i) {
-      .data_frame(
-        Parameter = insight::find_parameters(model,
-          effects = "fixed",
-          component = i,
-          flatten = TRUE
-        ),
-        SE = as.vector(cs[[i]][, 2]),
-        Component = i
-      )
-    })
+    vc <- insight::get_varcov(model, effects = "fixed", component = "all", robust = robust)
+    se <- sqrt(diag(vc))
 
-    se <- do.call(rbind, x)
-    .filter_component(se, component)
-  }
-}
-
-
-#' @export
-p_value.MixMod <- function(model,
-                           component = c("all", "conditional", "zi", "zero_inflated"),
-                           verbose = TRUE,
-                           ...) {
-  component <- match.arg(component)
-  if (is.null(.check_component(model, component, verbose = verbose))) {
-    return(NULL)
-  }
-
-  s <- summary(model)
-  cs <- list(s$coef_table, s$coef_table_zi)
-  names(cs) <- c("conditional", "zero_inflated")
-  cs <- .compact_list(cs)
-  x <- lapply(names(cs), function(i) {
-    .data_frame(
-      Parameter = insight::find_parameters(model,
-        effects = "fixed",
-        component = i,
-        flatten = TRUE
-      ),
-      p = as.vector(cs[[i]][, 4]),
-      Component = i
+    x <- .data_frame(
+      Parameter = names(se),
+      SE = as.vector(se),
+      Component = "conditional"
     )
-  })
 
-  p <- do.call(rbind, x)
-  .filter_component(p, component)
+    zi_parms <- grepl("^zi_", x$Parameter)
+    if (any(zi_parms)) {
+      x$Component[zi_parms] <- "zero_inflated"
+      x$Parameter[zi_parms] <- gsub("^zi_(.*)", "\\1", x$Parameter[zi_parms])
+    }
+
+    .filter_component(x, component)
+  }
 }
 
 

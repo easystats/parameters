@@ -9,6 +9,7 @@ model_parameters.mixor <- function(model,
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    verbose = TRUE,
+                                   include_sigma = FALSE,
                                    ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
 
@@ -30,6 +31,7 @@ model_parameters.mixor <- function(model,
     exponentiate = exponentiate,
     effects = effects,
     robust = FALSE,
+    include_sigma = include_sigma,
     ...
   )
 

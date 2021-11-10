@@ -17,6 +17,7 @@ model_parameters.glmmTMB <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      ci_method = "wald",
+                                     robust = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = FALSE,
@@ -25,6 +26,7 @@ model_parameters.glmmTMB <- function(model,
                                      parameters = keep,
                                      verbose = TRUE,
                                      df_method = ci_method,
+                                     include_sigma = FALSE,
                                      ...) {
 
   ## TODO remove later
@@ -80,13 +82,14 @@ model_parameters.glmmTMB <- function(model,
         ci = ci,
         component = component,
         standardize = standardize,
-        robust = FALSE,
+        robust = robust,
         ci_method = ci_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
         keep_parameters = NULL,
         drop_parameters = NULL,
         keep_component_column = component != "conditional",
+        include_sigma = include_sigma,
         ...
       )
     }

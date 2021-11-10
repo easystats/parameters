@@ -14,6 +14,7 @@ model_parameters.wbm <- function(model,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
                                  verbose = TRUE,
+                                 include_sigma = FALSE,
                                  ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
@@ -30,6 +31,7 @@ model_parameters.wbm <- function(model,
     p_adjust = p_adjust,
     group_level = group_level,
     ci_method = NULL,
+    include_sigma = include_sigma,
     ...
   )
 
@@ -117,6 +119,7 @@ p_value.wbgee <- p_value.wbm
                                             p_adjust,
                                             group_level,
                                             ci_method,
+                                            include_sigma = FALSE,
                                             ...) {
   params <- params_random <- params_variance <- att <- NULL
 
@@ -133,6 +136,7 @@ p_value.wbgee <- p_value.wbm
       robust = FALSE,
       p_adjust = p_adjust,
       ci_method = ci_method,
+      include_sigma = include_sigma,
       ...
     )
     params$Effects <- "fixed"

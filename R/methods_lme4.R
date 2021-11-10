@@ -17,6 +17,11 @@
 #'   between-effects, and cross-level interactions. By default, the
 #'   `Component` column indicates, which parameters belong to the
 #'   conditional or zero-inflated component of the model.
+#' @param include_sigma Logical, if `TRUE`, includes the residual standard
+#'   deviation. For mixed models, this is defined as the sum of the distribution-specific
+#'   variance and the variance for the additive overdispersion term (see
+#'   [insight::get_variance()] for details). Defaults to `FALSE` for mixed models
+#'   due to the longer computation time.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
@@ -78,6 +83,7 @@ model_parameters.merMod <- function(model,
                                     parameters = keep,
                                     verbose = TRUE,
                                     df_method = ci_method,
+                                    include_sigma = FALSE,
                                     ...) {
 
   ## TODO remove later
@@ -153,6 +159,7 @@ model_parameters.merMod <- function(model,
         keep_parameters = keep,
         drop_parameters = drop,
         verbose = verbose,
+        include_sigma = include_sigma,
         ...
       )
     }

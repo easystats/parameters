@@ -8,6 +8,12 @@
 
 ### `model_parameters()`
 
+* `model_parameters()` for mixed models gains an `include_sigma` argument. If
+  `TRUE`, adds the residual variance, computed from the random effects variances,
+  as attribute to the returned data frame. This was the default behaviour, but
+  now is only included for `include_sigma`, because the calculation was very
+  time consuming.
+
 * `model_parameters()` for `merMod` models now also computes CIs for the random
   SD parameters when `ci_method="boot"` (previously, this was only possible when
   `ci_method` was `"profile"`).
@@ -21,6 +27,9 @@
   Previously, this was done by default.
 
 * Column name for coefficients from *emmeans* objects are now more specific.
+
+* `model_prameters()` for `MixMod` objects (package *GLMMadaptive*) gains a
+  `robust` argument, to compute robust standard errors.
 
 ## Bug fixes 
 

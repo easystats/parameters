@@ -64,8 +64,13 @@ standard_error_robust <- function(model,
                                   ...) {
   # exceptions
   if (inherits(model, "gee")) {
-    return(standard_error(model, method = "robust", ...))
+    return(standard_error(model, robust = TRUE, ...))
   }
+
+  if (inherits(model, "MixMod")) {
+    return(standard_error(model, robust = TRUE, ...))
+  }
+
 
   # check for existing vcov-prefix
   if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_estimation)) {
@@ -101,8 +106,13 @@ p_value_robust <- function(model,
                            ...) {
   # exceptions
   if (inherits(model, "gee")) {
-    return(p_value(model, method = "robust", ...))
+    return(p_value(model, robust = TRUE, ...))
   }
+
+  if (inherits(model, "MixMod")) {
+    return(p_value(model, robust = TRUE, ...))
+  }
+
 
   # check for existing vcov-prefix
   if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_estimation)) {

@@ -4,9 +4,8 @@ standard_error.geeglm <- standard_error.default
 
 
 #' @export
-standard_error.gee <- function(model, method = NULL, ...) {
+standard_error.gee <- function(model, method = NULL, robust = FALSE, ...) {
   cs <- stats::coef(summary(model))
-  robust <- !is.null(method) && method == "robust"
 
   if (isTRUE(robust)) {
     se <- as.vector(cs[, "Robust S.E."])

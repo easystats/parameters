@@ -22,6 +22,7 @@
   p_adjust = NULL,
   verbose = TRUE,
   df_method = ci_method,
+  include_sigma = FALSE,
   ...
 )
 
@@ -36,6 +37,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   ci_method = "wald",
+  robust = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = FALSE,
@@ -44,6 +46,7 @@
   parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
+  include_sigma = FALSE,
   ...
 )
 
@@ -66,6 +69,7 @@
   parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
+  include_sigma = FALSE,
   ...
 )
 
@@ -78,6 +82,7 @@
   standardize = NULL,
   exponentiate = FALSE,
   verbose = TRUE,
+  include_sigma = FALSE,
   ...
 )
 
@@ -94,6 +99,7 @@
   p_adjust = NULL,
   verbose = TRUE,
   df_method = ci_method,
+  include_sigma = FALSE,
   ...
 )
 }
@@ -168,6 +174,12 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 
+\item{include_sigma}{Logical, if \code{TRUE}, includes the residual standard
+deviation. For mixed models, this is defined as the sum of the distribution-specific
+variance and the variance for the additive overdispersion term (see
+\code{\link[insight:get_variance]{insight::get_variance()}} for details). Defaults to \code{FALSE} for mixed models
+due to the longer computation time.}
+
 \item{...}{Arguments passed to or from other methods.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
@@ -175,6 +187,14 @@ or for the zero-inflated part of the model be returned? Applies to models
 with zero-inflated component. \code{component} may be one of \code{"conditional"},
 \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
 (default). May be abbreviated.}
+
+\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
+(if possible), and confidence intervals and p-values are based on these
+robust standard errors. Additional arguments like \code{vcov_estimation} or
+\code{vcov_type} are passed down to other methods, see
+\code{\link[=standard_error_robust]{standard_error_robust()}} for details
+and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
+for working examples.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column
@@ -228,14 +248,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
-
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like \code{vcov_estimation} or
-\code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details
-and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
-for working examples.}
 }
 \value{
 A data frame of indices related to the model's parameters.

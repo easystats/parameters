@@ -56,6 +56,7 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
+  robust = FALSE,
   verbose = TRUE,
   ...
 )
@@ -109,6 +110,9 @@ returned? Only applies to mixed models. May be abbreviated. When standard
 errors for random effects are requested, for each grouping factor a list of
 standard errors (per group level) for random intercepts and slopes is
 returned.}
+
+\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
+based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the
