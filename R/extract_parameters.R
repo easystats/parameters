@@ -17,6 +17,7 @@
                                         keep_parameters = NULL,
                                         drop_parameters = NULL,
                                         include_sigma = TRUE,
+                                        summary = FALSE,
                                         ...) {
 
   # ==== check if standardization is required and package available
@@ -304,7 +305,7 @@
 
   # ==== add sigma and residual df
 
-  if (isTRUE(include_sigma)) {
+  if (isTRUE(include_sigma) || isTRUE(summary)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 
@@ -448,6 +449,7 @@
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       include_sigma = FALSE,
+                                      summary = FALSE,
                                       verbose = TRUE,
                                       ...) {
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
@@ -608,7 +610,7 @@
 
 
   # add sigma
-  if (isTRUE(include_sigma)) {
+  if (isTRUE(include_sigma) || isTRUE(summary)) {
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 

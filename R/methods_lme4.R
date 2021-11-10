@@ -88,7 +88,7 @@ model_parameters.merMod <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
     ci_method <- df_method
   }
 
@@ -160,6 +160,7 @@ model_parameters.merMod <- function(model,
         drop_parameters = drop,
         verbose = verbose,
         include_sigma = include_sigma,
+        summary = summary,
         ...
       )
     }
