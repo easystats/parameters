@@ -11,7 +11,7 @@ dof_betwithin <- function(model) {
   has_intcp <- insight::has_intercept(model)
 
   ddf_within <- ngrps - n_parameters(model)
-  ddf_between <- insight::n_obs(model) - ngrps - n_parameters(model)
+  ddf_between <- insight::n_obs(model, disaggregate = TRUE) - ngrps - n_parameters(model)
 
   if (has_intcp) {
     ddf_between <- ddf_between - 1
