@@ -234,7 +234,7 @@ model_parameters.cpglmm <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    message(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."))
+    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
     ci_method <- df_method
   }
 
