@@ -175,9 +175,7 @@ Suggests:
     truncreg,
     VGAM,
     WRS2
-Remotes:
-    easystats/effectsize,
-    easystats/see
+Remotes: easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
