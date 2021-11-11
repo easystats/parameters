@@ -201,7 +201,7 @@ documents. The data frame then looks more "table-like".
 
 ```{r}
 data(mtcars)
-cat(export_table(mtcars[1:8, 1:5]))
+export_table(mtcars[1:8, 1:5])
 ```
 
 Putting all this together allows us to create nice tabular outputs of parameters
@@ -211,8 +211,7 @@ tables. This can be done using *broom*:
 model %>%
   tidy(conf.int = TRUE) %>%
   format_table() %>%
-  export_table() %>%
-  cat()
+  export_table()
 ```
 
 Or, in a simpler way and with much more options (like standardizing, robust

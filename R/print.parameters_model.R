@@ -31,8 +31,7 @@
 #'   adjusted to the minimum required width. If a named numeric vector, value
 #'   names are matched against column names, and for each match, the specified
 #'   width is used. If `"fixed"`, and table is split into multiple components,
-#'   table columns width across table components are adjusted to have the same
-#'   width.
+#'   columns across all table components are adjusted to have the same width.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
 #'   significant figures. May also be `"signif"` to return significant
 #'   figures or `"scientific"` to return scientific notation. Control the

@@ -111,6 +111,39 @@ p-values can be displayed in exact, scientific notation if required.
 model_parameters(model, p_digits = "scientific")
 ```
 
+## Fixing column widths
+
+By default, the width of table columns is set to the minimum required width. This works well for models that produce just one table. However, for models with multiple components, where each component is shown as separate table, columns are possibly no longer aligned across tables. See the following example from a zero-inflated mixed model that has three components (fixed count, fixed zero-inflated, random effects):
+
+```{r}
+data("Salamanders")
+# we create very long parameter names for this predictor here
+levels(Salamanders$spp) <- paste("long", levels(Salamanders$spp))
+
+model <- glmmTMB(
+ count ~ spp + mined + (1 | site),
+ ziformula = ~mined,
+ family = poisson(),
+ data = Salamanders
+)
+
+# default printing
+model_parameters(model) 
+```
+
+The `column_width` argument can be used to either define the width of specific columns, or to fix column widths of the same columns across tables to have the same width. In the latter case, use `column_width = "fixed"` in the `print()` method.
+
+```{r}
+mp <- model_parameters(model)
+print(mp, column_width = "fixed")
+```
+
+If `column_width` is a named vector, names are matched against column names, and those columns gain the specified minimum width.
+
+```{r}
+print(mp, column_width = c(SE = 8, `95% CI` = 10, p = 6))
+```
+
 ## Group parameters
 
 The `groups` argument can be used to group parameters in the table. `groups` must be a named list, where the names of the list elements equal the header of each group, while the values of the list elements equal the parameter names, or the position of the parameters in the table (data frame).
