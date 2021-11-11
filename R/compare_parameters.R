@@ -147,10 +147,21 @@ compare_parameters <- function(...,
   m <- lapply(1:length(models), function(i) {
     model <- models[[i]]
     model_name <- model_names[[i]]
-    # model parameters
+
     if (inherits(model, "parameters_model")) {
+
+      # we already have model parameters object...
       dat <- model
     } else {
+
+      # set default-ci_type for Bayesian models
+      if (.is_bayesian_model(model) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) {
+        ci_method_tmp <- "hdi"
+      } else {
+        ci_method_tmp <- ci_method
+      }
+
+      # here we have a model object that needs to be passed to model_parameters
       dat <- model_parameters(
         model,
         ci = ci,
@@ -158,7 +169,7 @@ compare_parameters <- function(...,
         component = component,
         standardize = standardize,
         exponentiate = exponentiate,
-        ci_method = ci_method,
+        ci_method = ci_method_tmp,
         p_adjust = p_adjust,
         keep = keep,
         drop = drop,

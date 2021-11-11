@@ -47,7 +47,7 @@
 * Confidence intervals for random parameters in `model_parameters()` failed for
   (some?) `glmer` models.
 
-
+* Fix issue with default `ci_type` in `compare_parameters()` for Bayesian models.
 
 # parameters 0.15.0
 
