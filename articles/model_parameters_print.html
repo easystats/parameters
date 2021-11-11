@@ -301,11 +301,115 @@
 <span class="co">#&gt; Species [virginica]  |        1.58 | 0.10 | [1.38, 1.79] |  15.37 | 2.21482e-32</span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="fixing-column-widths">Fixing column widths<a class="anchor" aria-label="anchor" href="#fixing-column-widths"></a>
+</h2>
+<p>By default, the width of table columns is set to the minimum required width. This works well for models that produce just one table. However, for models with multiple components, where each component is shown as separate table, columns are possibly no longer aligned across tables. See the following example from a zero-inflated mixed model that has three components (fixed count, fixed zero-inflated, random effects):</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span>
+<span class="co"># we create very long parameter names for this predictor here</span>
+<span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span>
+ <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,
+ ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,
+ family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>,
+ data <span class="op">=</span> <span class="va">Salamanders</span>
+<span class="op">)</span>
+
+<span class="co"># default printing</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> 
+<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter        | Log-Mean |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; --------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)      |    -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 </span>
+<span class="co">#&gt; spp [long PR]    |    -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001</span>
+<span class="co">#&gt; spp [long DM]    |     0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 </span>
+<span class="co">#&gt; spp [long EC-A]  |    -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 </span>
+<span class="co">#&gt; spp [long EC-L]  |     0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001</span>
+<span class="co">#&gt; spp [long DES-L] |     0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001</span>
+<span class="co">#&gt; spp [long DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
+<span class="co">#&gt; mined [no]       |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
+<span class="co">#&gt; mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
+<span class="co">#&gt; -------------------------------------------------</span>
+<span class="co">#&gt; SD (Intercept: site) |        0.33 | [0.18, 0.63]</span>
+<span class="co">#&gt; SD (Residual)        |        1.00 |</span></code></pre></div>
+<p>The <code>column_width</code> argument can be used to either define the width of specific columns, or to fix column widths of the same columns across tables to have the same width. In the latter case, use <code>column_width = "fixed"</code> in the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Log-Mean |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)          |    -0.36 | 0.28 | [-0.90,  0.18] | -1.30 | 0.194 </span>
+<span class="co">#&gt; spp [long PR]        |    -1.27 | 0.24 | [-1.74, -0.80] | -5.27 | &lt; .001</span>
+<span class="co">#&gt; spp [long DM]        |     0.27 | 0.14 | [ 0.00,  0.54] |  1.95 | 0.051 </span>
+<span class="co">#&gt; spp [long EC-A]      |    -0.57 | 0.21 | [-0.97, -0.16] | -2.75 | 0.006 </span>
+<span class="co">#&gt; spp [long EC-L]      |     0.67 | 0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001</span>
+<span class="co">#&gt; spp [long DES-L]     |     0.63 | 0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001</span>
+<span class="co">#&gt; spp [long DF]        |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
+<span class="co">#&gt; mined [no]           |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Log-Odds |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)          |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
+<span class="co">#&gt; mined [no]           |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Coefficient |         95% CI</span>
+<span class="co">#&gt; ---------------------------------------------------</span>
+<span class="co">#&gt; SD (Intercept: site) |        0.33 |   [0.18, 0.63]</span>
+<span class="co">#&gt; SD (Residual)        |        1.00 |</span></code></pre></div>
+<p>If <code>column_width</code> is a named vector, names are matched against column names, and those columns gain the specified minimum width.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SE <span class="op">=</span> <span class="fl">8</span>, `95% CI` <span class="op">=</span> <span class="fl">10</span>, p <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter        | Log-Mean |       SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)      |    -0.36 |     0.28 | [-0.90,  0.18] | -1.30 |  0.194</span>
+<span class="co">#&gt; spp [long PR]    |    -1.27 |     0.24 | [-1.74, -0.80] | -5.27 | &lt; .001</span>
+<span class="co">#&gt; spp [long DM]    |     0.27 |     0.14 | [ 0.00,  0.54] |  1.95 |  0.051</span>
+<span class="co">#&gt; spp [long EC-A]  |    -0.57 |     0.21 | [-0.97, -0.16] | -2.75 |  0.006</span>
+<span class="co">#&gt; spp [long EC-L]  |     0.67 |     0.13 | [ 0.41,  0.92] |  5.20 | &lt; .001</span>
+<span class="co">#&gt; spp [long DES-L] |     0.63 |     0.13 | [ 0.38,  0.87] |  4.96 | &lt; .001</span>
+<span class="co">#&gt; spp [long DF]    |     0.12 |     0.15 | [-0.17,  0.40] |  0.78 |  0.435</span>
+<span class="co">#&gt; mined [no]       |     1.27 |     0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |       SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |     0.79 |     0.27 | [ 0.26,  1.32] |  2.90 |  0.004</span>
+<span class="co">#&gt; mined [no]  |    -1.84 |     0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
+<span class="co">#&gt; -------------------------------------------------</span>
+<span class="co">#&gt; SD (Intercept: site) |        0.33 | [0.18, 0.63]</span>
+<span class="co">#&gt; SD (Residual)        |        1.00 |</span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="group-parameters">Group parameters<a class="anchor" aria-label="anchor" href="#group-parameters"></a>
 </h2>
 <p>The <code>groups</code> argument can be used to group parameters in the table. <code>groups</code> must be a named list, where the names of the list elements equal the header of each group, while the values of the list elements equal the parameter names, or the position of the parameters in the table (data frame).</p>
 <p>In the following example, we see the names of the parameters in the <code>Parameter</code> column, while the rownumbers indicate their position.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
 <span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span>
@@ -328,7 +432,7 @@
 <span class="co">#&gt; 9  gear5:vs       2.588 4.537 0.95  -6.82  11.998  0.57       22 0.5741</span></code></pre></div>
 <p>Now we create a group named <code>"Engine"</code>, which encompasses the parameters <code>"cyl6"</code>, <code>"cyl8"</code>, <code>"vs"</code> and <code>"hp"</code>. The <code>"Interactions"</code> group includes <code>"gear4:vs"</code> and <code>"gear5:vs"</code>. The group <code>"controls"</code> has the parameters from rows 2, 3 and 7.</p>
 <p>Note that the parameters in the table summary are re-ordered according to the order specified in <code>groups</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># group parameters, either by parameter name or position</span>
 <span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,
                         <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>, 
@@ -354,7 +458,7 @@
 </h1>
 <p><code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> (or its alias <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) allows to create tables for multiple models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
@@ -374,7 +478,7 @@
 <h2 id="changing-style-of-column-output">Changing style of column output<a class="anchor" aria-label="anchor" href="#changing-style-of-column-output"></a>
 </h2>
 <p>By default, estimates and confidence intervals are shown. Using <code>style</code> allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, style <span class="op">=</span> <span class="st">"se_p"</span><span class="op">)</span>
 <span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
@@ -391,7 +495,7 @@
 <h2 id="defining-column-names">Defining column names<a class="anchor" aria-label="anchor" href="#defining-column-names"></a>
 </h2>
 <p>The column names for the models are by default the objects’ names. You can define own names using the <code>column_names</code> argument.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span>
   <span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>,
   column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First Model"</span>, <span class="st">"Second Model"</span>, <span class="st">"Third Model"</span><span class="op">)</span>
@@ -411,7 +515,7 @@
 <h2 id="group-parameters-of-multiple-model-tables">Group parameters of multiple model tables<a class="anchor" aria-label="anchor" href="#group-parameters-of-multiple-model-tables"></a>
 </h2>
 <p>Grouping parameters works for <code><a href="../reference/compare_parameters.html">compare_models()</a></code> in the same way as shown above for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 

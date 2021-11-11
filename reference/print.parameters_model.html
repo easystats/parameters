@@ -125,6 +125,7 @@
   zap_small <span class="op">=</span> <span class="cn">FALSE</span>,
   groups <span class="op">=</span> <span class="cn">NULL</span>,
   column_width <span class="op">=</span> <span class="cn">NULL</span>,
+  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"["</span>, <span class="st">"]"</span><span class="op">)</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -185,8 +186,10 @@ numeric vector, or <code>"fixed"</code>. If <code>NULL</code>, the width for eac
 adjusted to the minimum required width. If a named numeric vector, value
 names are matched against column names, and for each match, the specified
 width is used. If <code>"fixed"</code>, and table is split into multiple components,
-table columns width across table components are adjusted to have the same
-width.</p></dd>
+columns across all table components are adjusted to have the same width.</p></dd>
+<dt>ci_brackets</dt>
+<dd><p>Logical, if <code>TRUE</code> (default), CI-values are
+encompassed in square brackets (else in parentheses).</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
