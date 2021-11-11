@@ -20,6 +20,7 @@
   zap_small = FALSE,
   groups = NULL,
   column_width = NULL,
+  ci_brackets = c("[", "]"),
   ...
 )
 
@@ -78,6 +79,9 @@ names are matched against column names, and for each match, the specified
 width is used. If \code{"fixed"}, and table is split into multiple components,
 table columns width across table components are adjusted to have the same
 width.}
+
+\item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
+encompassed in square brackets (else in parentheses).}
 
 \item{...}{Arguments passed to or from other methods.}
 }

@@ -125,6 +125,7 @@ print.parameters_model <- function(x,
                                    zap_small = FALSE,
                                    groups = NULL,
                                    column_width = NULL,
+                                   ci_brackets = c("[", "]"),
                                    ...) {
   # save original input
   orig_x <- x
@@ -143,7 +144,6 @@ print.parameters_model <- function(x,
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
   }
 
-
   # table caption
   table_caption <- .print_caption(x, caption, format = "text")
 
@@ -158,7 +158,7 @@ print.parameters_model <- function(x,
     p_digits = p_digits,
     zap_small = zap_small,
     ci_width = "auto",
-    ci_brackets = TRUE,
+    ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
     ...
