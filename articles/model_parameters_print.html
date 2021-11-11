@@ -451,6 +451,27 @@
 <span class="co">#&gt;   gear [4]       |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482</span>
 <span class="co">#&gt;   gear [5]       |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182</span>
 <span class="co">#&gt;   drat           |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198</span></code></pre></div>
+<p>If you prefer tables without vertical borders, use the <code>sep</code> argument to define the string that is used as border-separator. This argument is passed down to <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># group parameters, either by parameter name or position</span>
+<span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, sep <span class="op">=</span> <span class="st">"  "</span>,
+      groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,
+                    <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>, 
+                    <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Parameter         Coefficient    SE           95% CI  t(22)      p</span>
+<span class="co">#&gt; ------------------------------------------------------------------</span>
+<span class="co">#&gt; Engine                                                            </span>
+<span class="co">#&gt;   cyl [6]               -2.47  2.21  [ -7.05,  2.12]  -1.12  0.276</span>
+<span class="co">#&gt;   cyl [8]                1.97  5.11  [ -8.63, 12.58]   0.39  0.703</span>
+<span class="co">#&gt;   vs                     3.18  3.79  [ -4.68, 11.04]   0.84  0.410</span>
+<span class="co">#&gt;   hp                    -0.06  0.02  [ -0.11, -0.02]  -2.91  0.008</span>
+<span class="co">#&gt; Interactions                                                      </span>
+<span class="co">#&gt;   gear [4] * vs         -2.90  4.67  [-12.57,  6.78]  -0.62  0.541</span>
+<span class="co">#&gt;   gear [5] * vs          2.59  4.54  [ -6.82, 12.00]   0.57  0.574</span>
+<span class="co">#&gt; Controls                                                          </span>
+<span class="co">#&gt;   gear [4]               3.10  4.34  [ -5.90, 12.10]   0.71  0.482</span>
+<span class="co">#&gt;   gear [5]               4.80  3.48  [ -2.42, 12.01]   1.38  0.182</span>
+<span class="co">#&gt;   drat                   2.70  2.03  [ -1.52,  6.91]   1.33  0.198</span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
@@ -458,7 +479,7 @@
 </h1>
 <p><code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> (or its alias <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) allows to create tables for multiple models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
@@ -478,7 +499,7 @@
 <h2 id="changing-style-of-column-output">Changing style of column output<a class="anchor" aria-label="anchor" href="#changing-style-of-column-output"></a>
 </h2>
 <p>By default, estimates and confidence intervals are shown. Using <code>style</code> allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, style <span class="op">=</span> <span class="st">"se_p"</span><span class="op">)</span>
 <span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span>
 <span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
@@ -495,7 +516,7 @@
 <h2 id="defining-column-names">Defining column names<a class="anchor" aria-label="anchor" href="#defining-column-names"></a>
 </h2>
 <p>The column names for the models are by default the objects’ names. You can define own names using the <code>column_names</code> argument.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span>
   <span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>,
   column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First Model"</span>, <span class="st">"Second Model"</span>, <span class="st">"Third Model"</span><span class="op">)</span>
@@ -515,7 +536,7 @@
 <h2 id="group-parameters-of-multiple-model-tables">Group parameters of multiple model tables<a class="anchor" aria-label="anchor" href="#group-parameters-of-multiple-model-tables"></a>
 </h2>
 <p>Grouping parameters works for <code><a href="../reference/compare_parameters.html">compare_models()</a></code> in the same way as shown above for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
