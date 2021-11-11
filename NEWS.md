@@ -4,15 +4,18 @@
 
 * Improved speed performance for `model_parameters()`, in particular for glm's.
 
+* Added more options for printing `model_parameters()`. See also revised vignette:
+  https://easystats.github.io/parameters/articles/model_parameters_print.html
+
 ## Changes to functions
 
 ### `model_parameters()`
 
 * `model_parameters()` for mixed models gains an `include_sigma` argument. If
   `TRUE`, adds the residual variance, computed from the random effects variances,
-  as attribute to the returned data frame. This was the default behaviour, but
-  now is only included for `include_sigma`, because the calculation was very
-  time consuming.
+  as an attribute to the returned data frame. Including sigma was the default 
+  behaviour, but now defaults to `FALSE` and is only included when 
+  `include_sigma = TRUE`, because the calculation was very time consuming.
 
 * `model_parameters()` for `merMod` models now also computes CIs for the random
   SD parameters when `ci_method="boot"` (previously, this was only possible when
