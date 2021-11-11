@@ -427,8 +427,13 @@ summary.parameters_stan <- function(object, ...) {
   col_width <- rep(NA, length(shared_cols))
   for (i in 1:length(shared_cols)) {
     col_width[i] <- max(unlist(lapply(formatted_table, function(j) {
-      max(nchar(j[[shared_cols[i]]]))
+      col <- j[[shared_cols[i]]]
+      if (!is.null(col)) {
+        max(nchar(col))
+      } else {
+        NA
+      }
     })))
   }
-  stats::setNames(col_width, shared_cols)
+  stats::na.omit(stats::setNames(col_width, shared_cols))
 }
