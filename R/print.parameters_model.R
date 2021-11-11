@@ -26,6 +26,13 @@
 #'   variables, see 'Examples'. Parameters will be re-ordered according to the
 #'   order used in `groups`, while all non-matching parameters will be added
 #'   to the end.
+#' @param column_width Width of table columns. Can be either `NULL`, a named
+#'   numeric vector, or `"fixed"`. If `NULL`, the width for each table column is
+#'   adjusted to the minimum required width. If a named numeric vector, value
+#'   names are matched against column names, and for each match, the specified
+#'   width is used. If `"fixed"`, and table is split into multiple components,
+#'   table columns width across table components are adjusted to have the same
+#'   width.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
 #'   significant figures. May also be `"signif"` to return significant
 #'   figures or `"scientific"` to return scientific notation. Control the
@@ -117,6 +124,7 @@ print.parameters_model <- function(x,
                                    show_formula = FALSE,
                                    zap_small = FALSE,
                                    groups = NULL,
+                                   column_width = NULL,
                                    ...) {
   # save original input
   orig_x <- x
@@ -156,6 +164,11 @@ print.parameters_model <- function(x,
     ...
   )
 
+  # if we have multiple components, we can align colum width across components here
+  if (!is.null(column_width) && all(column_width == "fixed") && is.list(formatted_table)) {
+    column_width <- .find_min_colwidth(formatted_table)
+  }
+
   # footer
   footer <- .print_footer(
     x,
@@ -173,6 +186,7 @@ print.parameters_model <- function(x,
     format = "text",
     caption = table_caption,
     footer = footer,
+    width = column_width,
     ...
   ))
 
@@ -404,4 +418,17 @@ summary.parameters_stan <- function(object, ...) {
       cat(sprintf("%s\n", i$Value))
     }
   }
+}
+
+
+
+.find_min_colwidth <- function(formatted_table) {
+  shared_cols <- unique(unlist(lapply(formatted_table, colnames)))
+  col_width <- rep(NA, length(shared_cols))
+  for (i in 1:length(shared_cols)) {
+    col_width[i] <- max(unlist(lapply(formatted_table, function(j) {
+      max(nchar(j[[shared_cols[i]]]))
+    })))
+  }
+  stats::setNames(col_width, shared_cols)
 }
