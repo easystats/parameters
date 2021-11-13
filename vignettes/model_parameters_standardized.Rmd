@@ -29,14 +29,16 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("lme4", quietly = TRUE) ||
   !requireNamespace("effectsize", quietly = TRUE) ||
   !requireNamespace("lm.beta", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-  library(dplyr)
+  library(poorman)
+  library(effectsize)
+  library(lm.beta)
 }
 
 set.seed(333)

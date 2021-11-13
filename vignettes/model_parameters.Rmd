@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 120)
 )
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("effectsize", quietly = TRUE) ||
   !requireNamespace("BayesFactor", quietly = TRUE) ||
   !requireNamespace("lme4", quietly = TRUE) ||
@@ -47,8 +47,16 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-  library(dplyr)
+  library(poorman)
   library(effectsize)
+  library(brms)
+    library(EGAnet)
+  library(psych)
+  library(nFactors)
+  library(brms)
+  library(GLMMadaptive)
+  library(FactoMineR)
+  
 }
 
 set.seed(333)

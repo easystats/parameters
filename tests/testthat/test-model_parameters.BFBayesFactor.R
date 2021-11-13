@@ -63,9 +63,11 @@ if (requiet("testthat") &&
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(
         colnames(mp),
-        c("Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v",
+        c(
+          "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v",
           "pd", "ROPE_Percentage", "Prior_Distribution", "Prior_Location",
-          "Prior_Scale", "BF", "Method")
+          "Prior_Scale", "BF", "Method"
+        )
       )
       expect_equal(dim(mp), c(6L, 14L))
 

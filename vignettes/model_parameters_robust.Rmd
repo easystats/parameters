@@ -29,14 +29,14 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("clubSandwich", quietly = TRUE) ||
   !requireNamespace("sandwich", quietly = TRUE) ||
   !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-  library(dplyr)
+  library(poorman)
 }
 
 set.seed(333)
