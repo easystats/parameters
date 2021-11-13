@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("lavaan", quietly = TRUE) ||
   !requireNamespace("performance", quietly = TRUE) ||
@@ -38,6 +38,14 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
   !requireNamespace("GPArotation", quietly = TRUE) ||
   !requireNamespace("psych", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+  library(performance)
+  library(GPArotation)
+  library(psych)
+  library(nFactors)
+  library(poorman)
+  library(lavaan)
 }
 
 set.seed(333)
@@ -88,7 +96,6 @@ Both tests can be performed by using the `check_factorstructure()` function.
 
 ```{r}
 library(parameters)
-library(dplyr)
 library(psych)
 
 # Load the data

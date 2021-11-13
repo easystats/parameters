@@ -158,7 +158,7 @@ knitr::include_graphics("man/figures/figure2.png")
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}
-library(dplyr)
+library(poorman)
 
 lm(disp ~ ., data = mtcars) %>% 
   select_parameters() %>% 

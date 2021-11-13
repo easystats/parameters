@@ -25,6 +25,18 @@ options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
+if (!requireNamespace("ggplot2", quietly = TRUE) ||
+  !requireNamespace("parameters", quietly = TRUE) ||
+  !requireNamespace("poorman", quietly = TRUE) ||
+  !requireNamespace("tidyr", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(parameters)
+library(ggplot2)
+library(poorman)
+library(tidyr)
+}
+
 set.seed(333)
 ```
 
@@ -42,7 +54,7 @@ The data is available on githuband the code to generate it is available [here](h
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
-library(dplyr)
+library(poorman)
 library(tidyr)
 
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bootstrapped.csv")

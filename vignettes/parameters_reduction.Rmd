@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("nFactors", quietly = TRUE) ||
   !requireNamespace("EGAnet", quietly = TRUE) ||
   !requireNamespace("parameters", quietly = TRUE) ||
@@ -38,7 +38,10 @@ if (!requireNamespace("dplyr", quietly = TRUE) ||
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-  library(dplyr)
+  library(poorman)
+  library(EGAnet)
+  library(psych)
+  library(nFactors)
 }
 
 set.seed(333)

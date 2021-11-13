@@ -25,14 +25,16 @@ options(knitr.kable.NA = '')
 options(digits = 2)
 knitr::opts_chunk$set(comment = "#>")
 
-if (!requireNamespace("dplyr", quietly = TRUE) ||
+if (!requireNamespace("poorman", quietly = TRUE) ||
     !requireNamespace("clubSandwich", quietly = TRUE) ||
     !requireNamespace("sandwich", quietly = TRUE) ||
     !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-  library(dplyr)
+  library(poorman)
+  library(clubSandwich)
+  library(lme4)
 }
 
 set.seed(333)
