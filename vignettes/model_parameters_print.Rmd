@@ -141,7 +141,7 @@ print(mp, column_width = "fixed")
 If `column_width` is a named vector, names are matched against column names, and those columns gain the specified minimum width.
 
 ```{r}
-print(mp, column_width = c(SE = 8, `95% CI` = 10, p = 6))
+print(mp, column_width = c(SE = 8, `95% CI` = 12, p = 7))
 ```
 
 ## Group parameters
