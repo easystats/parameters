@@ -197,22 +197,33 @@ compare_parameters <- function(...,
     # save model number, for sorting
     dat$model <- i
     dat$model[.in_intercepts(dat$Parameter)] <- 0
+
+    ## NOT SURE why we needed this? It duplicates parameters when
+    ## these are in different order in different models
+
     # add index for row order. needed later, because "merge()" sometimes
     # messes up the correct row sorting, despite setting "sort = FALSE"
-    dat$.row_index <- 1:nrow(dat)
+    # dat$.row_index <- 1:nrow(dat)
+
     dat
   })
 
   object_attributes <- lapply(m, attributes)
   names(object_attributes) <- model_names
 
-  # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", ".row_index")), m))
+  ## NOT SURE why we needed this? It duplicates parameters when
+  ## these are in different order in different models
 
-  # fix row order
-  row_order <- order(all_models$.row_index)
-  all_models <- all_models[row_order, ]
-  all_models$.row_index <- NULL
+  # # merge all data frames
+  # all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", ".row_index")), m))
+  #
+  # # fix row order
+  # row_order <- order(all_models$.row_index)
+  # all_models <- all_models[row_order, ]
+  # all_models$.row_index <- NULL
+
+  # merge all data frames
+  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m))
 
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of
