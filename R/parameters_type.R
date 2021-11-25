@@ -97,6 +97,16 @@ parameters_type <- function(model, ...) {
   if (is.null(data) || inherits(data, "ts") || nrow(data) == 0) {
     return(NULL)
   }
+
+  # convert on-the-fly-factors back from numeric to factors
+  data[] <- lapply(data, function(i) {
+    if (isTRUE(attributes(i)$factor)) {
+      as.factor(i)
+    } else {
+      i
+    }
+  })
+
   reference <- .list_factors_numerics(data, model)
 
   # Get types
@@ -312,7 +322,12 @@ parameters_type <- function(model, ...) {
 #' @keywords internal
 .list_factors_numerics <- function(data, model) {
   out <- list()
-  out$numeric <- names(data[sapply(data, is.numeric)])
+
+  # retrieve numerics
+  .check_for_numerics <- function(x) {
+    is.numeric(x) && !isTRUE(attributes(x)$factor)
+  }
+  out$numeric <- names(data[sapply(data, .check_for_numerics)])
 
   # get contrast coding
   contrast_coding <- tryCatch(
