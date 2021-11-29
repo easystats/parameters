@@ -59,6 +59,10 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
 
+  # save if model is multivariate response model
+  if (isTRUE(info$is_multivariate)) {
+    attr(params, "multivariate_response") <- TRUE
+  }
 
   # if we have a complex random-within-between model, don't show first title element
   if (isTRUE(wb_component) && !is.null(params$Component) && any(c("within", "between") %in% params$Component)) {

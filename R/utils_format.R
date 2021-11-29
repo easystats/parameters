@@ -151,6 +151,7 @@
                                            split_column,
                                            is_zero_inflated,
                                            is_ordinal_model,
+                                           is_multivariate = FALSE,
                                            ran_pars,
                                            formatted_table = NULL) {
   component_name <- switch(type,
@@ -268,6 +269,14 @@
       s1 <- component_name
       s2 <- ""
     }
+  } else if (length(split_column) > 1 && "Response" %in% split_column && is_multivariate) {
+    # This here only applies to brms multivariate response models
+    component_name <- gsub("^conditional\\.(.*)", "Response level: \\1", component_name)
+    component_name <- gsub("^sigma\\.(.*)", "Auxilliary parameters, response level: \\1", component_name)
+    component_name <- gsub("(.*)fixed\\.(.*)", "\\1\\2", component_name)
+    component_name <- gsub("(.*)random\\.(.*)", "Random effects, \\1\\2", component_name)
+    s1 <- component_name
+    s2 <- ""
   } else if (length(split_column) > 1 ||
     split_column %in% c("Subgroup", "Type", "Group") ||
     grepl(tolower(split_column), tolower(component_name), fixed = TRUE) ||
@@ -517,9 +526,9 @@
   }
 
 
-  # check if user supplied digits attributes
-  is_ordinal_model <- attributes(x)$ordinal_model
-  if (is.null(is_ordinal_model)) is_ordinal_model <- FALSE
+  # check ordinal / multivariate
+  is_ordinal_model <- isTRUE(attributes(x)$ordinal_model)
+  is_multivariate <- isTRUE(attributes(x)$multivariate_response)
 
   # zero-inflated stuff
   is_zero_inflated <- (!is.null(x$Component) & "zero_inflated" %in% x$Component)
@@ -676,7 +685,7 @@
     }
 
     formatted_table <- insight::format_table(tables[[type]], digits = digits, ci_digits = ci_digits, p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
-    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, ran_pars, formatted_table)
+    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, is_multivariate, ran_pars, formatted_table)
 
     # exceptions for random effects
     if (.n_unique(formatted_table$Group) == 1) {
