@@ -111,9 +111,8 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares."><m
 to retrieve the centers of clusters. Also returns the within Sum of Squares.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">data</span>, <span class="va">clusters</span>, fun <span class="op">=</span> <span class="va">mean</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">data</span>, <span class="va">clusters</span>, fun <span class="op">=</span> <span class="va">mean</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
@@ -129,11 +128,10 @@ to retrieve the centers of clusters. Also returns the within Sum of Squares.</p>
     <h2>Value</h2>
     <p>A dataframe containing the cluster centers. Attributes include performance statistics and distance between each observation and its respective cluster centre.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">k</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_centers</span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, clusters <span class="op">=</span> <span class="va">k</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Cluster n_Obs Sum_Squares Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1    62    39.82097     5.901613    2.748387     4.393548    1.433871</span>

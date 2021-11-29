@@ -109,10 +109,9 @@
     <p>This function attempts to return, or compute, p-values of Bayesian models.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BFBayesFactor</span>
-<span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BFBayesFactor</span>
+<span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
@@ -130,11 +129,10 @@
 direction</em> (<code><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link">bayestestR::p_direction()</a></code>), which is converted to a p-value
 using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::convert_pd_to_p()</a></code>.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter            p</span>

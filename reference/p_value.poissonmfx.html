@@ -111,7 +111,7 @@ models from package mfx."><meta property="og:image" content="/logo.png"><!-- mat
 models from package <span class="pkg">mfx</span>.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for poissonmfx</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for poissonmfx</span>
 <span class="fu"><a href="p_value.html">p_value</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for betaor</span>
@@ -122,9 +122,8 @@ models from package <span class="pkg">mfx</span>.</p>
   <span class="va">model</span>,
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
@@ -142,11 +141,10 @@ of <code>"conditional"</code>, <code>"precision"</code>, <code>"marginal"</code>
 p-values. Depending on the model, may also include columns for model
 components etc.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"mfx"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"mfx"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
 <span class="r-in">  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>

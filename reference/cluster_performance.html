@@ -109,7 +109,7 @@
     <p>Compute performance indices for clustering solutions.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for kmeans</span>
 <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
@@ -121,9 +121,8 @@
 <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for parameters_clusters</span>
-<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
@@ -135,11 +134,10 @@
 <dt>clusters</dt>
 <dd><p>A vector with clusters assignments (must be same length as rows in data).</p></dd>
 </dl></div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># kmeans</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># kmeans</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Indices of model performance</span></span>

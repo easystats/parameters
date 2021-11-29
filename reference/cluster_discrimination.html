@@ -109,9 +109,8 @@
     <p>Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See <code><a href="https://rdrr.io/pkg/MASS/man/lda.html" class="external-link">MASS::lda()</a></code> for details.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_discrimination</span><span class="op">(</span><span class="va">x</span>, cluster_groups <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cluster_discrimination</span><span class="op">(</span><span class="va">x</span>, cluster_groups <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
@@ -126,11 +125,10 @@ be retrieved from the <code><a href="cluster_analysis.html">cluster_analysis()</
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="n_clusters.html">n_clusters()</a></code> to determine the number of clusters to extract, <code><a href="cluster_analysis.html">cluster_analysis()</a></code> to compute a cluster analysis and <code><a href="check_clusterstructure.html">check_clusterstructure()</a></code> to check suitability of data for clustering.</p></div>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"MASS"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"MASS"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="co"># Retrieve group classification from hierarchical cluster analysis</span></span>
 <span class="r-in">  <span class="va">clustering</span> <span class="op">&lt;-</span> <span class="fu"><a href="cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"></span>

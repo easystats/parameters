@@ -113,7 +113,7 @@ parameters, while <code><a href="standard_error_robust.html">standard_error_robu
 standard errors.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
 <span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
@@ -178,9 +178,8 @@ standard errors.</p>
 <span class="op">)</span>
 
 <span class="co"># S3 method for coxph</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
@@ -233,11 +232,10 @@ components etc.</p>
     <p>For Bayesian models (from <span class="pkg">rstanarm</span> or <span class="pkg">brms</span>), the standard
 error is the SD of the posterior samples.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Petal.Length</span> <span class="op">~</span> <span class="va">Sepal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        Parameter        SE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                    (Intercept) 0.5310388</span>

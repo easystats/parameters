@@ -109,7 +109,7 @@
     <p>Parameters from <code>BFBayesFactor</code> objects from <code>{BayesFactor}</code> package.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BFBayesFactor</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BFBayesFactor</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   centrality <span class="op">=</span> <span class="st">"median"</span>,
@@ -125,9 +125,8 @@
   include_proportions <span class="op">=</span> <span class="cn">FALSE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
@@ -200,11 +199,10 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 (doi: <a href="https://doi.org/10.1016/j.jmp.2012.08.001" class="external-link">10.1016/j.jmp.2012.08.001</a>
 ).</p></li>
 </ul></div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">"BayesFactor"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="co"># Bayesian t-test</span></span>
 <span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
