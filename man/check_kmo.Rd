@@ -44,13 +44,10 @@ check_kmo(mtcars)
 \itemize{
 \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
 and data reduction.
-
 \item Kaiser, H. F. (1970). A second generation little jiffy.
 Psychometrika, 35(4), 401-415.
-
 \item Kaiser, H. F., & Rice, J. (1974). Little jiffy, mark IV. Educational
 and psychological measurement, 34(1), 111-117.
-
 \item Kaiser, H. F. (1974). An index of factorial simplicity.
 Psychometrika, 39(1), 31-36.
 }

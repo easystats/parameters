@@ -27,7 +27,15 @@ the number of clusters to extract is determined by calling \code{\link[=n_cluste
 that this argument does not apply for unsupervised clustering methods like
 \code{dbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
-\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"} (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}), \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"} (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}), \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using \code{mclust::Mclust()}, which requires the user to run \code{library(mclust)} before).}
+\item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"}
+(default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means
+using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::pam()}),
+\code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"}
+(hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}),
+\code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN
+using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using
+\code{mclust::Mclust()}, which requires the user to run \code{library(mclust)}
+before).}
 
 \item{include_factors}{Logical, if \code{TRUE}, factors are converted to numerical
 values in order to be included in the data for determining the number of
@@ -38,12 +46,18 @@ determine the number of clusters need numeric input only.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{distance_method}{Distance measure to be used for methods based on distances (e.g., when \code{method = "hclust"} for hierarchical clustering. For other methods, such as \code{"kmeans"}, this argument will be ignored). Must be one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. See \code{\link[=dist]{dist()}} and \code{pvclust::pvclust()} for more information.}
+\item{distance_method}{Distance measure to be used for methods based on
+distances (e.g., when \code{method = "hclust"} for hierarchical clustering. For
+other methods, such as \code{"kmeans"}, this argument will be ignored). Must be
+one of \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, \code{"canberra"}, \code{"binary"}
+or \code{"minkowski"}. See \code{\link[=dist]{dist()}} and \code{pvclust::pvclust()} for more
+information.}
 
-\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"} or \code{method = "hkmeans"}
-(for hierarchical clustering). This should be one of \code{"ward"}, \code{"ward.D2"}, \code{"single"},
-\code{"complete"}, \code{"average"}, \code{"mcquitty"}, \code{"median"} or \code{"centroid"}.
-Default is \code{"complete"} (see \code{\link[=hclust]{hclust()}}).}
+\item{hclust_method}{Agglomeration method to be used when \code{method = "hclust"}
+or \code{method = "hkmeans"} (for hierarchical clustering). This should be one
+of \code{"ward"}, \code{"ward.D2"}, \code{"single"}, \code{"complete"}, \code{"average"},
+\code{"mcquitty"}, \code{"median"} or \code{"centroid"}. Default is \code{"complete"} (see
+\code{\link[=hclust]{hclust()}}).}
 
 \item{kmeans_method}{Algorithm used for calculating kmeans cluster. Only applies,
 if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),

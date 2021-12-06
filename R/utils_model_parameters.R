@@ -228,11 +228,11 @@
     name <- attributes(s)$estName
     if (!is.null(name)) {
       coef_col <- switch(name,
-        "prob" = "Probability",
+        "prob"       = "Probability",
         "odds.ratio" = "Odds Ratio",
-        "emmean" = "Marginal Means",
-        "rate" = "Estimated Counts",
-        "ratio" = "Ratio",
+        "emmean"     = "Marginal Means",
+        "rate"       = "Estimated Counts",
+        "ratio"      = "Ratio",
         "Coefficient"
       )
     }

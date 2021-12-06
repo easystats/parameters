@@ -1,7 +1,8 @@
 #' @title "m-l-1" approximation for SEs, CIs and p-values
 #' @name p_value_ml1
 #'
-#' @description Approximation of degrees of freedom based on a "m-l-1" heuristic as suggested by Elff et al. (2019).
+#' @description Approximation of degrees of freedom based on a "m-l-1" heuristic
+#'   as suggested by Elff et al. (2019).
 #'
 #' @param model A mixed model.
 #' @param dof Degrees of Freedom.
@@ -42,10 +43,17 @@
 #' }
 #' }
 #' @return A data frame.
-#' @references \itemize{
-#'   \item Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019). Multilevel Analysis with Few Clusters: Improving Likelihood-based Methods to Provide Unbiased Estimates and Accurate Inference, British Journal of Political Science.
-#'   \item Li, P., Redden, D. T. (2015). Comparing denominator degrees of freedom approximations for the generalized linear mixed model in analyzing binary outcome in small sample cluster-randomized trials. BMC Medical Research Methodology, 15(1), 38. \doi{10.1186/s12874-015-0026-x}
-#' }
+#' @references
+#'   - Elff, M.; Heisig, J.P.; Schaeffer, M.; Shikano, S. (2019). Multilevel
+#'   Analysis with Few Clusters: Improving Likelihood-based Methods to Provide
+#'   Unbiased Estimates and Accurate Inference, British Journal of Political
+#'   Science.
+#'
+#'   - Li, P., Redden, D. T. (2015). Comparing denominator degrees of freedom
+#'   approximations for the generalized linear mixed model in analyzing binary
+#'   outcome in small sample cluster-randomized trials. BMC Medical Research
+#'   Methodology, 15(1), 38. \doi{10.1186/s12874-015-0026-x}
+#'
 #' @export
 p_value_ml1 <- function(model, dof = NULL, robust = FALSE, ...) {
   if (is.null(dof)) {

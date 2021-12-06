@@ -35,7 +35,6 @@ check_sphericity_bartlett(mtcars)
 \itemize{
 \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis
 and data reduction.
-
 \item Bartlett, M. S. (1951). The effect of standardization on a Chi-square
 approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 }

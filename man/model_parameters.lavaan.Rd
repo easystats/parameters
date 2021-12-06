@@ -138,7 +138,6 @@ if (require("lavaan", quietly = TRUE)) {
 \itemize{
 \item Rosseel Y (2012). lavaan: An R Package for Structural Equation
 Modeling. Journal of Statistical Software, 48(2), 1-36.
-
 \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
 Models via Parameter Expansion. Journal of Statistical Software, 85(4),
 1-30. http://www.jstatsoft.org/v85/i04/

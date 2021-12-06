@@ -558,7 +558,7 @@ model_parameters.maov <- model_parameters.aov
   inherits(x, "anova") && !is.null(attributes(x)$heading) && all(isTRUE(grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)))
 }
 
-# TODO: decide whether to move to `datawizard`?
+
 # data: A dataframe from `model_parameters`
 # ... Currently ignored
 

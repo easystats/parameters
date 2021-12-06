@@ -71,14 +71,13 @@
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #'
-#' @references \itemize{
-#'   \item Rosseel Y (2012). lavaan: An R Package for Structural Equation
+#' @references
+#' - Rosseel Y (2012). lavaan: An R Package for Structural Equation
 #'   Modeling. Journal of Statistical Software, 48(2), 1-36.
 #'
-#'   \item Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
+#' - Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
 #'   Models via Parameter Expansion. Journal of Statistical Software, 85(4),
 #'   1-30. http://www.jstatsoft.org/v85/i04/
-#' }
 #' @export
 model_parameters.lavaan <- function(model,
                                     ci = 0.95,
