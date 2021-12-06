@@ -117,7 +117,15 @@ the number of clusters to extract is determined by calling <code><a href="n_clus
 that this argument does not apply for unsupervised clustering methods like
 <code>dbscan</code>, <code>mixture</code>, <code>pvclust</code>, or <code>pamk</code>.</p></dd>
 <dt>method</dt>
-<dd><p>Method for computing the cluster analysis. Can be <code>"kmeans"</code> (default; k-means using <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code>), <code>"hkmeans"</code> (hierarchical k-means using <code><a href="https://rdrr.io/pkg/factoextra/man/hkmeans.html" class="external-link">factoextra::hkmeans()</a></code>), <code>pam</code> (K-Medoids using <code><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">cluster::pam()</a></code>), <code>pamk</code> (K-Medoids that finds out the number of clusters), <code>"hclust"</code> (hierarchical clustering using <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code> or <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code>), <code>dbscan</code> (DBSCAN using <code><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan::dbscan()</a></code>), <code>hdbscan</code> (Hierarchical DBSCAN using <code><a href="https://rdrr.io/pkg/dbscan/man/hdbscan.html" class="external-link">dbscan::hdbscan()</a></code>), or <code>mixture</code> (Mixture modelling using <code><a href="https://mclust-org.github.io/mclust/reference/Mclust.html" class="external-link">mclust::Mclust()</a></code>, which requires the user to run <code><a href="https://mclust-org.github.io/mclust/" class="external-link">library(mclust)</a></code> before).</p></dd>
+<dd><p>Method for computing the cluster analysis. Can be <code>"kmeans"</code>
+(default; k-means using <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code>), <code>"hkmeans"</code> (hierarchical k-means
+using <code><a href="https://rdrr.io/pkg/factoextra/man/hkmeans.html" class="external-link">factoextra::hkmeans()</a></code>), <code>pam</code> (K-Medoids using <code><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">cluster::pam()</a></code>),
+<code>pamk</code> (K-Medoids that finds out the number of clusters), <code>"hclust"</code>
+(hierarchical clustering using <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code> or <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code>),
+<code>dbscan</code> (DBSCAN using <code><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan::dbscan()</a></code>), <code>hdbscan</code> (Hierarchical DBSCAN
+using <code><a href="https://rdrr.io/pkg/dbscan/man/hdbscan.html" class="external-link">dbscan::hdbscan()</a></code>), or <code>mixture</code> (Mixture modelling using
+<code><a href="https://mclust-org.github.io/mclust/reference/Mclust.html" class="external-link">mclust::Mclust()</a></code>, which requires the user to run <code><a href="https://mclust-org.github.io/mclust/" class="external-link">library(mclust)</a></code>
+before).</p></dd>
 <dt>include_factors</dt>
 <dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
 values in order to be included in the data for determining the number of
@@ -128,12 +136,18 @@ determine the number of clusters need numeric input only.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
 <dt>distance_method</dt>
-<dd><p>Distance measure to be used for methods based on distances (e.g., when <code>method = "hclust"</code> for hierarchical clustering. For other methods, such as <code>"kmeans"</code>, this argument will be ignored). Must be one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code> and <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code> for more information.</p></dd>
+<dd><p>Distance measure to be used for methods based on
+distances (e.g., when <code>method = "hclust"</code> for hierarchical clustering. For
+other methods, such as <code>"kmeans"</code>, this argument will be ignored). Must be
+one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code>
+or <code>"minkowski"</code>. See <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code> and <code><a href="https://rdrr.io/pkg/pvclust/man/pvclust.html" class="external-link">pvclust::pvclust()</a></code> for more
+information.</p></dd>
 <dt>hclust_method</dt>
-<dd><p>Agglomeration method to be used when <code>method = "hclust"</code> or <code>method = "hkmeans"</code>
-(for hierarchical clustering). This should be one of <code>"ward"</code>, <code>"ward.D2"</code>, <code>"single"</code>,
-<code>"complete"</code>, <code>"average"</code>, <code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>.
-Default is <code>"complete"</code> (see <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code>).</p></dd>
+<dd><p>Agglomeration method to be used when <code>method = "hclust"</code>
+or <code>method = "hkmeans"</code> (for hierarchical clustering). This should be one
+of <code>"ward"</code>, <code>"ward.D2"</code>, <code>"single"</code>, <code>"complete"</code>, <code>"average"</code>,
+<code>"mcquitty"</code>, <code>"median"</code> or <code>"centroid"</code>. Default is <code>"complete"</code> (see
+<code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code>).</p></dd>
 <dt>kmeans_method</dt>
 <dd><p>Algorithm used for calculating kmeans cluster. Only applies,
 if <code>method = "kmeans"</code>. May be one of <code>"Hartigan-Wong"</code> (default),
