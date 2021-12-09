@@ -78,13 +78,11 @@ include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
 \code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
-\itemize{
-\item \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
+\strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
 \code{standardize()}; \code{standardize_parameters()} used the data used by the model
 fitting function, which might not be same data if there are missing values.
 see the \code{remove_na} argument in \code{standardize()}.
-}
 \item \strong{posthoc}: Post-hoc standardization of the parameters, aiming at
 emulating the results obtained by "refit" without refitting the model. The
 coefficients are divided by the standard deviation (or MAD if \code{robust}) of
@@ -243,12 +241,14 @@ might change in a future update!)
 \strong{Methods for bootstrapped or Bayesian models:}
 
 Bootstrap-based inference is based on \strong{resampling} and refitting the model
-to the resampled datasets. The distribution of parameter estimates across resampled
-datasets is used to approximate the parameter's sampling distribution.
-Depending on the type of model, several different methods for bootstrapping
-and constructing CIs and p-values from the bootstrap distribution are available.
+to the resampled datasets. The distribution of parameter estimates across
+resampled datasets is used to approximate the parameter's sampling
+distribution. Depending on the type of model, several different methods for
+bootstrapping and constructing CIs and p-values from the bootstrap
+distribution are available.
 
-For Bayesian models, inference is based on drawing samples from the model posterior distribution.
+For Bayesian models, inference is based on drawing samples from the model
+posterior distribution.
 
 \code{"quantile"} (or \code{"eti"})
 \itemize{

@@ -188,12 +188,14 @@ might change in a future update!)
 \strong{Methods for bootstrapped or Bayesian models:}
 
 Bootstrap-based inference is based on \strong{resampling} and refitting the model
-to the resampled datasets. The distribution of parameter estimates across resampled
-datasets is used to approximate the parameter's sampling distribution.
-Depending on the type of model, several different methods for bootstrapping
-and constructing CIs and p-values from the bootstrap distribution are available.
+to the resampled datasets. The distribution of parameter estimates across
+resampled datasets is used to approximate the parameter's sampling
+distribution. Depending on the type of model, several different methods for
+bootstrapping and constructing CIs and p-values from the bootstrap
+distribution are available.
 
-For Bayesian models, inference is based on drawing samples from the model posterior distribution.
+For Bayesian models, inference is based on drawing samples from the model
+posterior distribution.
 
 \code{"quantile"} (or \code{"eti"})
 \itemize{

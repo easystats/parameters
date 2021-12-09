@@ -1,6 +1,7 @@
 #' p-values
 #'
-#' This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
+#' This function attempts to return, or compute, p-values of a model's
+#' parameters. See the documentation for your object's class:
 #' \itemize{
 #'  \item{[Bayesian models][p_value.BFBayesFactor] (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
 #'  \item{[Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)}
@@ -9,9 +10,14 @@
 #'  }
 #'
 #' @param model A statistical model.
-#' @param method If `"robust"`, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.
-#' @param adjust Character value naming the method used to adjust p-values or confidence intervals. See `?emmeans::summary.emmGrid` for details.
-#' @param ... Arguments passed down to `standard_error_robust()` when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where `method = "robust"` is supported.
+#' @param method If `"robust"`, and if model is supported by the \pkg{sandwich}
+#'   or \pkg{clubSandwich} packages, computes p-values based on robust
+#'   covariance matrix estimation.
+#' @param adjust Character value naming the method used to adjust p-values or
+#'   confidence intervals. See `?emmeans::summary.emmGrid` for details.
+#' @param ... Arguments passed down to `standard_error_robust()` when confidence
+#'   intervals or p-values based on robust standard errors should be computed.
+#'   Only available for models where `method = "robust"` is supported.
 #' @inheritParams ci.default
 #'
 #' @note `p_value_robust()` resp. `p_value(robust = TRUE)`
@@ -19,7 +25,9 @@
 #'   `vcov_estimation = "CR"` for cluster-robust standard errors) and will
 #'   thus only work for those models supported by those packages.
 #'
-#' @return A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+#' @return A data frame with at least two columns: the parameter names and the
+#'   p-values. Depending on the model, may also include columns for model
+#'   components etc.
 #'
 #' @examples
 #' data(iris)
@@ -64,7 +72,17 @@ p_value.default <- function(model,
     if (is.null(dof)) {
       dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
     }
-    return(.p_value_dof(model, dof = dof, method = method, component = component, verbose = verbose, robust = robust, ...))
+    return(
+      .p_value_dof(
+        model,
+        dof = dof,
+        method = method,
+        component = component,
+        verbose = verbose,
+        robust = robust,
+        ...
+      )
+    )
   } else if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
     return(bayestestR::p_direction(model, ...))
   } else {

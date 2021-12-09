@@ -18,19 +18,20 @@
 #'   in [model_parameters()].
 #' @param style String, indicating which style of output is requested. Following
 #'   templates are possible:
-#'   \itemize{
-#'     \item `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
-#'     \item `"se"`: Estimate and standard errors, no asterisks for p-values.
-#'     \item `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
-#'     \item `"se_p"`: Estimate, standard errors and asterisks for p-values.
-#'     \item `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
-#'     \item `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
-#'   }
+#'
+#'  - `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
+#'  - `"se"`: Estimate and standard errors, no asterisks for p-values.
+#'  - `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
+#'  - `"se_p"`: Estimate, standard errors and asterisks for p-values.
+#'  - `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
+#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
+#'
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
 #'
 #' @details
+#'
 #' This function is in an early stage and does not yet cope with more complex
 #' models, and probably does not yet properly render all model components. It
 #' should also be noted that when including models with interaction terms, not

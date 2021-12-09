@@ -23,7 +23,9 @@ p_value(model, ...)
 \arguments{
 \item{model}{A statistical model.}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence intervals or p-values based on robust standard errors should be computed. Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
+intervals or p-values based on robust standard errors should be computed.
+Only available for models where \code{method = "robust"} is supported.}
 
 \item{dof}{Number of degrees of freedom to be used when calculating
 confidence intervals. If \code{NULL} (default), the degrees of freedom are
@@ -32,7 +34,9 @@ approximation method defined in \code{method}. If not \code{NULL}, use this argu
 to override the default degrees of freedom used to compute confidence
 intervals.}
 
-\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich} or \pkg{clubSandwich} packages, computes p-values based on robust covariance matrix estimation.}
+\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich}
+or \pkg{clubSandwich} packages, computes p-values based on robust
+covariance matrix estimation.}
 
 \item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
 based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
@@ -45,13 +49,17 @@ further details.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
-\item{adjust}{Character value naming the method used to adjust p-values or confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
+\item{adjust}{Character value naming the method used to adjust p-values or
+confidence intervals. See \code{?emmeans::summary.emmGrid} for details.}
 }
 \value{
-A data frame with at least two columns: the parameter names and the p-values. Depending on the model, may also include columns for model components etc.
+A data frame with at least two columns: the parameter names and the
+p-values. Depending on the model, may also include columns for model
+components etc.
 }
 \description{
-This function attempts to return, or compute, p-values of a model's parameters. See the documentation for your object's class:
+This function attempts to return, or compute, p-values of a model's
+parameters. See the documentation for your object's class:
 \itemize{
 \item{\link[=p_value.BFBayesFactor]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
 \item{\link[=p_value.zeroinfl]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount}, ...)}

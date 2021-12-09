@@ -46,14 +46,14 @@ Methods for calculating degrees of freedom:
 For models with z-statistic, the returned degrees of freedom for model parameters is \code{Inf} (unless \code{method = "ml1"} or \code{method = "betwithin"}), because there is only one distribution for the related test statistic.
 }
 \note{
-In many cases, \code{degrees_of_freedom()} returns the same as
-\code{df.residuals()}, or \code{n-k} (number of observations minus number of
-parameters). However, \code{degrees_of_freedom()} refers to the model's
-\emph{parameters} degrees of freedom of the distribution for the related test
-statistic. Thus, for models with z-statistic, results from \code{degrees_of_freedom()}
-and \code{df.residuals()} differ. Furthermore, for other approximation methods
-like \code{"kenward"} or \code{"satterthwaite"}, each model parameter can have
-a different degree of freedom.
+In many cases, \code{degrees_of_freedom()} returns the same as \code{df.residuals()},
+or \code{n-k} (number of observations minus number of parameters). However,
+\code{degrees_of_freedom()} refers to the model's \emph{parameters} degrees of freedom
+of the distribution for the related test statistic. Thus, for models with
+z-statistic, results from \code{degrees_of_freedom()} and \code{df.residuals()} differ.
+Furthermore, for other approximation methods like \code{"kenward"} or
+\code{"satterthwaite"}, each model parameter can have a different degree of
+freedom.
 }
 \examples{
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)

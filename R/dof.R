@@ -28,14 +28,16 @@
 #' }
 #' For models with z-statistic, the returned degrees of freedom for model parameters is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is only one distribution for the related test statistic.
 #'
-#' @note In many cases, `degrees_of_freedom()` returns the same as
-#' `df.residuals()`, or `n-k` (number of observations minus number of
-#' parameters). However, `degrees_of_freedom()` refers to the model's
-#' *parameters* degrees of freedom of the distribution for the related test
-#' statistic. Thus, for models with z-statistic, results from `degrees_of_freedom()`
-#' and `df.residuals()` differ. Furthermore, for other approximation methods
-#' like `"kenward"` or `"satterthwaite"`, each model parameter can have
-#' a different degree of freedom.
+#' @note
+#'
+#' In many cases, `degrees_of_freedom()` returns the same as `df.residuals()`,
+#' or `n-k` (number of observations minus number of parameters). However,
+#' `degrees_of_freedom()` refers to the model's *parameters* degrees of freedom
+#' of the distribution for the related test statistic. Thus, for models with
+#' z-statistic, results from `degrees_of_freedom()` and `df.residuals()` differ.
+#' Furthermore, for other approximation methods like `"kenward"` or
+#' `"satterthwaite"`, each model parameter can have a different degree of
+#' freedom.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
