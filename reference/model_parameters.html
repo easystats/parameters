@@ -199,12 +199,12 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The <code>robust</code> (default to <code>FALSE</code>) argument enables a robust standardization
 of data, i.e., based on the <code>median</code> and <code>MAD</code> instead of the <code>mean</code> and
-<code>SD</code>. <strong>See <code>standardize()</code> for more details.</strong></p><ul><li><p><strong>Note</strong> that <code>standardize_parameters(method = "refit")</code> may not return
+<code>SD</code>. <strong>See <code>standardize()</code> for more details.</strong>
+<strong>Note</strong> that <code>standardize_parameters(method = "refit")</code> may not return
 the same results as fitting a model on data that has been standardized with
 <code>standardize()</code>; <code>standardize_parameters()</code> used the data used by the model
 fitting function, which might not be same data if there are missing values.
 see the <code>remove_na</code> argument in <code>standardize()</code>.</p></li>
-</ul></li>
 <li><p><strong>posthoc</strong>: Post-hoc standardization of the parameters, aiming at
 emulating the results obtained by "refit" without refitting the model. The
 coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of
@@ -319,11 +319,13 @@ computed using the Wald method with a <em>normal-distribution</em> (note: this
 might change in a future update!)</p></li>
 </ul><p><strong>Methods for bootstrapped or Bayesian models:</strong></p>
 <p>Bootstrap-based inference is based on <strong>resampling</strong> and refitting the model
-to the resampled datasets. The distribution of parameter estimates across resampled
-datasets is used to approximate the parameter's sampling distribution.
-Depending on the type of model, several different methods for bootstrapping
-and constructing CIs and p-values from the bootstrap distribution are available.</p>
-<p>For Bayesian models, inference is based on drawing samples from the model posterior distribution.</p>
+to the resampled datasets. The distribution of parameter estimates across
+resampled datasets is used to approximate the parameter's sampling
+distribution. Depending on the type of model, several different methods for
+bootstrapping and constructing CIs and p-values from the bootstrap
+distribution are available.</p>
+<p>For Bayesian models, inference is based on drawing samples from the model
+posterior distribution.</p>
 <p><code>"quantile"</code> (or <code>"eti"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or

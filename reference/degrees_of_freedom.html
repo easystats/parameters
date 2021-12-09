@@ -128,14 +128,14 @@ by any of those methods, whichever succeeds. See 'Details'.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>In many cases, <code>degrees_of_freedom()</code> returns the same as
-<code>df.residuals()</code>, or <code>n-k</code> (number of observations minus number of
-parameters). However, <code>degrees_of_freedom()</code> refers to the model's
-<em>parameters</em> degrees of freedom of the distribution for the related test
-statistic. Thus, for models with z-statistic, results from <code>degrees_of_freedom()</code>
-and <code>df.residuals()</code> differ. Furthermore, for other approximation methods
-like <code>"kenward"</code> or <code>"satterthwaite"</code>, each model parameter can have
-a different degree of freedom.</p>
+    <p>In many cases, <code>degrees_of_freedom()</code> returns the same as <code>df.residuals()</code>,
+or <code>n-k</code> (number of observations minus number of parameters). However,
+<code>degrees_of_freedom()</code> refers to the model's <em>parameters</em> degrees of freedom
+of the distribution for the related test statistic. Thus, for models with
+z-statistic, results from <code>degrees_of_freedom()</code> and <code>df.residuals()</code> differ.
+Furthermore, for other approximation methods like <code>"kenward"</code> or
+<code>"satterthwaite"</code>, each model parameter can have a different degree of
+freedom.</p>
     </div>
 
     <div class="section level2">

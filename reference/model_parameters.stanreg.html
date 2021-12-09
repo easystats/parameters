@@ -379,11 +379,13 @@ computed using the Wald method with a <em>normal-distribution</em> (note: this
 might change in a future update!)</p></li>
 </ul><p><strong>Methods for bootstrapped or Bayesian models:</strong></p>
 <p>Bootstrap-based inference is based on <strong>resampling</strong> and refitting the model
-to the resampled datasets. The distribution of parameter estimates across resampled
-datasets is used to approximate the parameter's sampling distribution.
-Depending on the type of model, several different methods for bootstrapping
-and constructing CIs and p-values from the bootstrap distribution are available.</p>
-<p>For Bayesian models, inference is based on drawing samples from the model posterior distribution.</p>
+to the resampled datasets. The distribution of parameter estimates across
+resampled datasets is used to approximate the parameter's sampling
+distribution. Depending on the type of model, several different methods for
+bootstrapping and constructing CIs and p-values from the bootstrap
+distribution are available.</p>
+<p>For Bayesian models, inference is based on drawing samples from the model
+posterior distribution.</p>
 <p><code>"quantile"</code> (or <code>"eti"</code>)</p><ul><li><p>Applies to <em>all models (including Bayesian models)</em>.
 For non-Bayesian models, only applies if <code>bootstrap = TRUE</code>. CIs computed
 as <em>equal tailed intervals</em> using the quantiles of the bootstrap or
