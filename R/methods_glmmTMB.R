@@ -88,7 +88,7 @@ model_parameters.glmmTMB <- function(model,
         wb_component = wb_component,
         keep_parameters = NULL,
         drop_parameters = NULL,
-        keep_component_column = component != "conditional",
+        keep_component_column = component == "conditional",
         include_sigma = include_sigma,
         summary = summary,
         ...
@@ -103,6 +103,7 @@ model_parameters.glmmTMB <- function(model,
         params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
         params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
         params[nrow(params), "Component"] <- dispersion_param$Component[1]
+        params[nrow(params), c("2.5 %", "97.5 %")] = log(stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2])
       }
     }
 
