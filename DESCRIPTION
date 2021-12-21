@@ -75,7 +75,8 @@ Imports:
     graphics,
     methods,
     stats,
-    utils
+    utils,
+    dplyr
 Suggests:
     AER,
     afex,
@@ -186,3 +187,4 @@ Language: en-US
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+LazyData: true

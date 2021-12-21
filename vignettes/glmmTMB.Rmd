@@ -22,7 +22,30 @@ library(glmmTMB)
 
 ```{r}
 
+load(url("https://github.com/d-morrison/parameters/raw/glmmTMB/data/pressure_durations.RData"))
 
+pressure1 = glmmTMB(
+  family = nbinom2,
+  data  = pressure_durations,
+  formula = n_samples ~ Surface + Side + Jaw + (1 | Participant / Session),
+  ziformula = ~ Surface + Side + Jaw + (1 | Participant / Session),
+  dispformula = ~ 1)
+
+parameters(pressure1, component = "zi", effects = "random")
 
 ```
+
+The confidence interval for the `Participant`-level SD appears to be accidentally copied from the `Session:Participant` level SD.
+The correct confidence intervals are given by `confint`:
+
+```{r}
+
+confint(pressure1, parm = "theta_")[3:4,]
+
+```
+
+I tracked the error into `.random_sd_ci()`, where the line `pattern <- paste0("^(zi\\.|", group_factor, "\\.zi\\.)")`
+appears to have trouble when `group_factor` has more than one element.
+It seems like that regexp (and another one a few lines down) would need to be modified to look for either grouping level.
+I'll attempt a fix.
 
