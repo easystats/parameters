@@ -5,6 +5,8 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
+    code:
+      width: 120
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
   %\VignetteIndexEntry{Summary of Model Parameters}
