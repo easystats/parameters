@@ -307,19 +307,6 @@
 # extract CI for random SD ------------------------
 
 
-#' (Not exporting; just using importFrom and document())
-#'
-#' @param model
-#' @param out
-#' @param ci_method
-#' @param ci
-#' @param corr_param
-#' @param sigma_param
-#' @param component
-#' @return
-#'
-#' @importFrom dplyr rename mutate if_else
-
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL) {
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
@@ -353,18 +340,16 @@
     out <- tryCatch(
       {
 
-        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))) |>
-          cbind(
-            insight::find_random(model, flatten = FALSE) |>
-              stack() |>
-              dplyr::rename(Group = values, Component = ind) |>
-              dplyr::mutate(
-                Component = dplyr::if_else(Component == "random", "conditional", "zi")
-              )
-          )
+        groups <- stack(insight::find_random(model, flatten = FALSE))
+        colnames(groups) = c("Group", "Component")
+        groups$Component = ifelse(groups$Component == "random", "conditional", "zi")
 
-        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci))) |>
-          dplyr::mutate(Group = "Residual", Component = "conditional")
+        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
+        thetas = cbind(thetas, groups)
+
+        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+        sigma$Group = "Residual"
+        sigma$Component = "conditional"
 
         var_ci <- rbind(thetas, sigma)
 
