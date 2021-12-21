@@ -53,7 +53,12 @@ Authors@R:
       person(given = "Niels",
              family = "Ohlsen",
              role = "rev",
-             comment = c(Twitter = "@Niels_Bremen")))
+             comment = c(Twitter = "@Niels_Bremen")),
+      person(given = "Douglas Ezra",
+             family = "Morrison",
+             role = "ctb",
+             email = "dmorrison01@ucla.edu",
+             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Utilities for processing the parameters of various
     statistical models. Beyond computing p values, CIs, and other indices
