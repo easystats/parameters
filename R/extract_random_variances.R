@@ -341,21 +341,21 @@
       {
 
         groups <- stack(insight::find_random(model, flatten = FALSE))
-        colnames(groups) = c("Group", "Component")
-        groups$Component = ifelse(groups$Component == "random", "conditional", "zi")
+        colnames(groups) <- c("Group", "Component")
+        groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
 
         thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
         thetas = cbind(thetas, groups)
 
         sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
-        sigma$Group = "Residual"
-        sigma$Component = "conditional"
+        sigma$Group <- "Residual"
+        sigma$Component <- "conditional"
 
         var_ci <- rbind(thetas, sigma)
 
         colnames(var_ci) <- c("CI_low", "CI_high", "not_used", "Group", "Component")
         group_factor <- insight::find_random(model, flatten = TRUE)
-        group_factor2 = paste0("(", paste(group_factor, collapse = "|"), ")")
+        group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
         var_ci$Parameter <- row.names(var_ci)
 
         # remove cond/zi prefix
