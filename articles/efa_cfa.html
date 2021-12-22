@@ -26,8 +26,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.15.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.15.0.1</span>
       </span>
     </div>
 
@@ -118,13 +116,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://twitter.com/easystats4u" class="external-link">
+  <a href="http://twitter.com/easystats4u">
     <span class="fa fa-twitter"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/easystats/parameters/" class="external-link">
+  <a href="https://github.com/easystats/parameters/">
     <span class="fa fa-github"></span>
      
   </a>
@@ -145,22 +143,22 @@
       <h1 data-toc-skip>Structural Models (EFA, CFA, SEM…)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/vignettes/efa_cfa.Rmd" class="external-link"><code>vignettes/efa_cfa.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/vignettes/efa_cfa.Rmd"><code>vignettes/efa_cfa.Rmd</code></a></small>
       <div class="hidden name"><code>efa_cfa.Rmd</code></div>
 
     </div>
 
     
     
-<div class="section level1">
-<h1 id="how-to-perform-a-factor-analysis-fa">How to perform a Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-to-perform-a-factor-analysis-fa"></a>
-</h1>
+<div id="how-to-perform-a-factor-analysis-fa" class="section level1">
+<h1 class="hasAnchor">
+<a href="#how-to-perform-a-factor-analysis-fa" class="anchor"></a>How to perform a Factor Analysis (FA)</h1>
 <p>The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables.</p>
 <p>This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessarily striving to represent the whole dataset.</p>
-<p>To illustrate EFA, let us use the <a href="https://ipip.ori.org/" class="external-link">International Personality Item Pool</a> data available in the <a href="https://www.personality-project.org/r/html/bfi.html" class="external-link"><code>psych</code></a> package. It includes 25 personality self report items. The authors built these items following the <strong>big 5</strong> personality structure.</p>
-<div class="section level2">
-<h2 id="factor-structure-sphericity-and-kmo">Factor Structure (Sphericity and KMO)<a class="anchor" aria-label="anchor" href="#factor-structure-sphericity-and-kmo"></a>
-</h2>
+<p>To illustrate EFA, let us use the <a href="https://ipip.ori.org/">International Personality Item Pool</a> data available in the <a href="https://www.personality-project.org/r/html/bfi.html"><code>psych</code></a> package. It includes 25 personality self report items. The authors built these items following the <strong>big 5</strong> personality structure.</p>
+<div id="factor-structure-sphericity-and-kmo" class="section level2">
+<h2 class="hasAnchor">
+<a href="#factor-structure-sphericity-and-kmo" class="anchor"></a>Factor Structure (Sphericity and KMO)</h2>
 <p>The first step is to test if the dataset is suitable for carrying out factor analysis. There are two</p>
 <ul>
 <li><p><strong>Bartlett’s Test of Sphericity</strong>: This tests whether a matrix (of correlations) is significantly different from an identity matrix. The test provides probability that the correlation matrix has significant correlations among at least some of the variables in a dataset, a prerequisite for factor analysis to work. In other words, before starting with factor analysis, one needs to check whether Bartlett’s test of sphericity is significant.</p></li>
@@ -168,12 +166,12 @@
 </ul>
 <p>Both tests can be performed by using the <code><a href="../reference/check_factorstructure.html">check_factorstructure()</a></code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/">psych</a></span><span class="op">)</span>
 
 <span class="co"># Load the data</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/psych/man/bfi.html" class="external-link">bfi</a></span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span> <span class="co"># Select only the 25 first columns corresponding to the items</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="co"># remove missing values</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/psych/man/bfi.html">bfi</a></span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">]</span> <span class="co"># Select only the 25 first columns corresponding to the items</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="co"># remove missing values</span>
 
 <span class="co"># Check factor structure</span>
 <span class="fu"><a href="../reference/check_factorstructure.html">check_factorstructure</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
@@ -182,13 +180,13 @@
 <span class="co">#&gt;   - KMO: The Kaiser, Meyer, Olkin (KMO) measure of sampling adequacy suggests that data seems appropriate for factor analysis (KMO = 0.85).</span>
 <span class="co">#&gt;   - Sphericity: Bartlett's test of sphericity suggests that there is sufficient significant correlation in the data for factor analysis (Chisq(300) = 18146.07, p &lt; .001).</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="exploratory-factor-analysis-efa">Exploratory Factor Analysis (EFA)<a class="anchor" aria-label="anchor" href="#exploratory-factor-analysis-efa"></a>
-</h2>
+<div id="exploratory-factor-analysis-efa" class="section level2">
+<h2 class="hasAnchor">
+<a href="#exploratory-factor-analysis-efa" class="anchor"></a>Exploratory Factor Analysis (EFA)</h2>
 <p>Now that we are confident that our dataset is appropriate, we will explore a factor structure made of 5 latent variables, corresponding to the items’ authors theory of personality.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Fit an EFA</span>
-<span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">data</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">data</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span>, threshold <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>
 
 <span class="va">efa</span>
@@ -226,7 +224,7 @@
 <p>As we can see, the 25 items nicely spread on the 5 latent factors, the famous <strong>big 5</strong>. Based on this model, we can now predict back the scores for each individual for these new variables:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># let's look only at the first five individuals</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">efa</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt;   Neuroticism Conscientiousness Extraversion Agreeableness Opennness</span>
 <span class="co">#&gt; 1       -0.22            -1.327       -0.128        -0.855     -1.61</span>
 <span class="co">#&gt; 2        0.16            -0.572       -0.466        -0.072     -0.17</span>
@@ -234,19 +232,19 @@
 <span class="co">#&gt; 4       -0.12            -1.063       -0.058        -0.091     -1.06</span>
 <span class="co">#&gt; 5       -0.17            -0.099       -0.460        -0.712     -0.66</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="how-many-factors-to-retain-in-factor-analysis-fa">How many factors to retain in Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-many-factors-to-retain-in-factor-analysis-fa"></a>
-</h2>
+<div id="how-many-factors-to-retain-in-factor-analysis-fa" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-many-factors-to-retain-in-factor-analysis-fa" class="anchor"></a>How many factors to retain in Factor Analysis (FA)</h2>
 <p>When running a <strong>factor analysis (FA)</strong>, one often needs to specify <strong>how many components</strong> (or latent variables) to retain or to extract. This decision is often motivated or supported by some statistical indices and procedures aiming at finding the optimal number of factors.</p>
 <p>There are a huge number of methods exist to statistically address this issue, and they can sometimes give very different results.</p>
 <blockquote>
 <p><strong>Unfortunately, there is no consensus on which method to use, or which is the best.</strong></p>
 </blockquote>
-<div class="section level3">
-<h3 id="the-method-agreement-procedure">The Method Agreement procedure<a class="anchor" aria-label="anchor" href="#the-method-agreement-procedure"></a>
-</h3>
-<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html" class="external-link"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
-<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters" class="external-link"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
+<div id="the-method-agreement-procedure" class="section level3">
+<h3 class="hasAnchor">
+<a href="#the-method-agreement-procedure" class="anchor"></a>The Method Agreement procedure</h3>
+<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
+<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>
 <span class="va">n</span>
@@ -256,7 +254,7 @@
 <p>Interestingly, the smallest nubmer of factors that most methods suggest is 6, which is consistent with the newer models of personality (e.g., HEXACO).</p>
 <p>More details, as well as a summary table can be obtained as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
 <span class="co">#&gt;    n_Factors              Method              Family</span>
 <span class="co">#&gt; 1          1 Acceleration factor               Scree</span>
 <span class="co">#&gt; 2          3                 CNG                 CNG</span>
@@ -277,7 +275,7 @@
 <span class="co">#&gt; 17        24            Bartlett             Barlett</span>
 <span class="co">#&gt; 18        24            Anderson             Barlett</span>
 <span class="co">#&gt; 19        24              Lawley             Barlett</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
 <span class="co">#&gt;    n_Factors n_Methods</span>
 <span class="co">#&gt; 1          1         1</span>
 <span class="co">#&gt; 2          3         1</span>
@@ -291,37 +289,37 @@
 <span class="co">#&gt; 10        24         3</span></code></pre></div>
 <p>A plot can also be obtained (the <code>see</code> package must be loaded):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html">theme_modern</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="efa_cfa_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 </div>
-<div class="section level2">
-<h2 id="confirmatory-factor-analysis-cfa">Confirmatory Factor Analysis (CFA)<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis-cfa"></a>
-</h2>
+<div id="confirmatory-factor-analysis-cfa" class="section level2">
+<h2 class="hasAnchor">
+<a href="#confirmatory-factor-analysis-cfa" class="anchor"></a>Confirmatory Factor Analysis (CFA)</h2>
 <p>We’ve seen above that while an EFA with 5 latent variables works great on our dataset, a structure with 6 latent factors might in fact be more appropriate. How can we <strong>statistically test</strong> if that is actually the case? This can be done using <strong>Confirmatory Factor Analysis (CFA)</strong> (as opposed to <strong>Exploratory</strong> FA), which bridges factor analysis with Structural Equation Modelling (SEM).</p>
 <p>However, in order to do that cleanly, EFA should be <strong>independent</strong> from CFA: the factor structure should be explored in a <strong>“training” set</strong>, and then tested (or “confirmed”) in a <strong>“testing” set</strong>.</p>
 <p>In other words, the dataset used for exploration and confirmation should not be the same, a standard widely adopted in the field of machine learning.</p>
-<div class="section level3">
-<h3 id="partition-the-data">Partition the data<a class="anchor" aria-label="anchor" href="#partition-the-data"></a>
-</h3>
+<div id="partition-the-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#partition-the-data" class="anchor"></a>Partition the data</h3>
 <p>The data can be easily split into two sets with the <code>data_partition()</code> function, through which we will use 70% of the sample as training and the rest as test.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to have reproducible result, we will also set seed here so that similar</span>
 <span class="co"># portions of the data are used each time we run the following code</span>
-<span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_partition.html" class="external-link">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span>
+<span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_partition.html">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span>
 <span class="va">training</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">training</span>
 <span class="va">test</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">test</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="create-cfa-structures-out-of-efa-models">Create CFA structures out of EFA models<a class="anchor" aria-label="anchor" href="#create-cfa-structures-out-of-efa-models"></a>
-</h3>
+<div id="create-cfa-structures-out-of-efa-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-cfa-structures-out-of-efa-models" class="anchor"></a>Create CFA structures out of EFA models</h3>
 <p>In the next step, we will run two EFA models on the training set, specifying 5 and 6 latent factors respectively, that we will then transform into CFA structures.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">structure_big5</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">structure_big5</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">structure_big6</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<span class="va">structure_big6</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Investigate how the models look</span>
@@ -343,18 +341,18 @@
 <span class="co">#&gt; MR6 =~ O5</span></code></pre></div>
 <p>As we can see, a structure is just a string encoding how the <strong>manifest variables</strong> (the observed variables) are integrated into <strong>latent variables</strong>.</p>
 </div>
-<div class="section level3">
-<h3 id="fit-and-compare-models">Fit and Compare models<a class="anchor" aria-label="anchor" href="#fit-and-compare-models"></a>
-</h3>
+<div id="fit-and-compare-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fit-and-compare-models" class="anchor"></a>Fit and Compare models</h3>
 <p>We can finally apply this structure to the testing dataset using the <code>lavaan</code> package, and compare these models against each other:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be">lavaan</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 
-<span class="va">big5</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">structure_big5</span>, data <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
-<span class="va">big6</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">structure_big6</span>, data <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
+<span class="va">big5</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">structure_big5</span>, data <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
+<span class="va">big6</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html">cfa</a></span><span class="op">(</span><span class="va">structure_big6</span>, data <span class="op">=</span> <span class="va">test</span><span class="op">)</span>
 
-<span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/compare_performance.html" class="external-link">compare_performance</a></span><span class="op">(</span><span class="va">big5</span>, <span class="va">big6</span><span class="op">)</span>
+<span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/compare_performance.html">compare_performance</a></span><span class="op">(</span><span class="va">big5</span>, <span class="va">big6</span><span class="op">)</span>
 <span class="co">#&gt; # Comparison of Model Performance Indices</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Name |  Model |     Chi2 | Chi2_df | p (Chi2) | Baseline(300) | p (Baseline) |   GFI |  AGFI |   NFI |  NNFI |   CFI | RMSEA |    RMSEA  CI | p (RMSEA) |   RMR |  SRMR |   RFI |  PNFI |   IFI |   RNI | Loglikelihood |       AIC | AIC weights |       BIC | BIC weights | BIC_adjusted</span>
@@ -365,17 +363,17 @@
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="structural-equation-modeling">Structural Equation Modeling<a class="anchor" aria-label="anchor" href="#structural-equation-modeling"></a>
-</h1>
+<div id="structural-equation-modeling" class="section level1">
+<h1 class="hasAnchor">
+<a href="#structural-equation-modeling" class="anchor"></a>Structural Equation Modeling</h1>
 <!-- TO DO: needs a better intro -->
 <p>The previous example shows one of the enormous amount of modeling possibilities for structural equation models, in particular an example for mediation analysis, i.e. a model that estimates indirect effects in partial mediation structures.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
-<span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">M</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">Y</span> <span class="op">&lt;-</span> <span class="fl">0.7</span> <span class="op">*</span> <span class="va">M</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, M <span class="op">=</span> <span class="va">M</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
+<span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">M</span> <span class="op">&lt;-</span> <span class="fl">0.5</span> <span class="op">*</span> <span class="va">X</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">Y</span> <span class="op">&lt;-</span> <span class="fl">0.7</span> <span class="op">*</span> <span class="va">M</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">X</span>, Y <span class="op">=</span> <span class="va">Y</span>, M <span class="op">=</span> <span class="va">M</span><span class="op">)</span>
 
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="st">" # direct effect
              Y ~ c*X
@@ -387,7 +385,7 @@
            # total effect
              total := c + (a*b)
          "</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">df</span>, test <span class="op">=</span> <span class="st">"Satorra-Bentler"</span><span class="op">)</span>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">df</span>, test <span class="op">=</span> <span class="st">"Satorra-Bentler"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 <span class="co">#&gt; # Regression</span>
 <span class="co">#&gt; </span>
@@ -404,9 +402,9 @@
 <span class="co">#&gt; (ab)    |        0.37 | 0.09 | [0.19, 0.55] | 4.06 | &lt; .001</span>
 <span class="co">#&gt; (total) |        0.41 | 0.12 | [0.17, 0.65] | 3.29 | 0.001</span></code></pre></div>
 </div>
-<div class="section level1 unnumbered">
-<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
+<div id="references" class="section level1 unnumbered">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-makowski2018psycho">
 <p>Makowski, Dominique. 2018. “The Psycho Package: An Efficient and Publishing-Oriented Workflow for Psychological Science.” <em>Journal of Open Source Software</em> 3 (22): 470.</p>
@@ -426,13 +424,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
+  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -440,8 +436,6 @@
 
   
 
-
-  
 
   </body>
 </html>
