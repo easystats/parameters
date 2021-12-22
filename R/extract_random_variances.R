@@ -339,13 +339,12 @@
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
     out <- tryCatch(
       {
-
         groups <- stack(insight::find_random(model, flatten = FALSE))
         colnames(groups) <- c("Group", "Component")
         groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
 
         thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
-        thetas = cbind(thetas, groups)
+        thetas <- cbind(thetas, groups)
 
         sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
         sigma$Group <- "Residual"
