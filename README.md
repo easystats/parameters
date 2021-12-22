@@ -229,7 +229,7 @@ can help you quickly select and retain the most relevant predictors
 using methods tailored for the model type.
 
 ``` r
-library(dplyr)
+library(poorman)
 
 lm(disp ~ ., data = mtcars) %>% 
   select_parameters() %>% 
