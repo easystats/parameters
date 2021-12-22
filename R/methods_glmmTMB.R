@@ -88,17 +88,28 @@ model_parameters.glmmTMB <- function(model,
         wb_component = wb_component,
         keep_parameters = NULL,
         drop_parameters = NULL,
-        keep_component_column = component == "conditional",
+        keep_component_column = component != "conditional",
         include_sigma = include_sigma,
         summary = summary,
         ...
       )
     }
 
-    # add dispersion parameter
-    if (inherits(model, "glmmTMB") && !is.null(params$Component) && !"dispersion" %in% params$Component) {
+    # add dispersion parameter, but only to table for full or conditional model
+    if (
+      # must be glmmTMB
+      inherits(model, "glmmTMB") &&
+      # don't print dispersion for zi-component
+      component %in% c("conditional", "all", "dispersion") &&
+      # don't print dispersion if already present
+      (!is.null(component) && !"dispersion" %in% params$Component)
+    ) {
       dispersion_param <- insight::get_parameters(model, component = "dispersion")
       if (!is.null(dispersion_param)) {
+        # add component column
+        if (is.null(params$Component)) {
+          params$Component <- "conditional"
+        }
         params[nrow(params) + 1, ] <- NA
         params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
         params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
