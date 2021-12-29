@@ -63,7 +63,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
     skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
-    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
+    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9, alternative = "two", verbose = FALSE)
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
