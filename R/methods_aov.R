@@ -532,25 +532,28 @@ model_parameters.maov <- model_parameters.aov
 # add effect size column and related CI to the parameters
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
-  fx_params <- fx$Parameter
-  if (is.null(fx_params)) {
-    fx_params <- params$Parameter
-  }
-  fx$Parameter <- NULL
-  fx$Response <- NULL
-  fx$Group <- NULL
-  es <- colnames(fx)[1]
-  valid_rows <- .valid_effectsize_rows(params, fx_params)
-  params[[es]][valid_rows] <- fx[[es]]
+  merge(params, fx, all.x = TRUE, by = c("Group", "Parameter"))
 
-  if (!is.null(fx$CI_low)) {
-    ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
-    ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
-    params[[ci_low]][valid_rows] <- fx$CI_low
-    params[[ci_high]][valid_rows] <- fx$CI_high
-  }
 
-  params
+  # fx_params <- fx$Parameter
+  # if (is.null(fx_params)) {
+  #   fx_params <- params$Parameter
+  # }
+  # fx$Parameter <- NULL
+  # fx$Response <- NULL
+  # fx$Group <- NULL
+  # es <- colnames(fx)[1]
+  # valid_rows <- .valid_effectsize_rows(params, fx_params)
+  # params[[es]][valid_rows] <- fx[[es]]
+  #
+  # if (!is.null(fx$CI_low)) {
+  #   ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
+  #   ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
+  #   params[[ci_low]][valid_rows] <- fx$CI_low
+  #   params[[ci_high]][valid_rows] <- fx$CI_high
+  # }
+  #
+  # params
 }
 
 

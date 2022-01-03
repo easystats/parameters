@@ -42,7 +42,8 @@ jobs:
           remotes::install_version("clubSandwich", version = "0.5.1")
           # remotes::install_version("V8", version = "3.2.0")
           remotes::install_deps(dependencies = TRUE, quiet = TRUE)
-          remotes::install_dev("pkgdown")
+          # remotes::install_dev("pkgdown")
+          remotes::install_version("pkgdown", "1.6.1")
         shell: Rscript {0}
 
       - name: Install package
