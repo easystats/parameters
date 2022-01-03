@@ -626,12 +626,17 @@
 
     # Don't print se and ci if all are missing
     if (all(is.na(tables[[type]]$SE))) tables[[type]]$SE <- NULL
-    if (all(is.na(tables[[type]]$CI_low))) tables[[type]]$CI_low <- NULL
-    if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
+    if (all(is.na(tables[[type]]$CI_low)) && all(is.na(tables[[type]]$CI_high))) {
+      tables[[type]]$CI_low <- NULL
+      tables[[type]]$CI_high <- NULL
+    }
+    # if (all(is.na(tables[[type]]$CI_low))) tables[[type]]$CI_low <- NULL
+    # if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][sapply(tables[[type]], function(x) {
-      all(x == "") | all(is.na(x))
+    tables[[type]][sapply(colnames(tables[[type]]), function(x) {
+      col <- tables[[type]][[x]]
+      (all(col == "") | all(is.na(col))) && !grepl("_CI_(high|low)$", x)
     })] <- NULL
 
     attr(tables[[type]], "digits") <- digits
