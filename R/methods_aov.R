@@ -532,7 +532,30 @@ model_parameters.maov <- model_parameters.aov
 # add effect size column and related CI to the parameters
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
+
+  if (!is.null(fx$CI_low)) {
+
+    # find name of current effect size
+    es <- effectsize::get_effectsize_name(colnames(fx))
+
+    # and add CI-name to effect size, to have specific
+    # CI columns for this particular effect size
+    ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
+    ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
+
+    # rename columns
+    fx[[ci_low]] <- fx$CI_low
+    fx[[ci_high]] <- fx$CI_high
+
+    # delete old or duplicated columns
+    fx$CI_low <- NULL
+    fx$CI_high <- NULL
+    fx$CI <- NULL
+    fx$Response <- NULL
+  }
+
   merge(params, fx, all.x = TRUE, by = c("Group", "Parameter"))
+
 
 
   # fx_params <- fx$Parameter
