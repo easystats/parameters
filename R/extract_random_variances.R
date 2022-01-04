@@ -339,49 +339,34 @@
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
     out <- tryCatch(
       {
-        groups <- utils::stack(insight::find_random(model, flatten = FALSE))
-        colnames(groups) <- c("Group", "Component")
-        groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
-
-        # regex-pattern to find conditional and ZI components
+        var_ci <- rbind(
+          as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
+          as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+        )
+        colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
+        var_ci$Component <- "conditional"
+        # # regex-pattern to find conditional and ZI components
         group_factor <- insight::find_random(model, flatten = TRUE)
         group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
 
-        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
-        thetas$Parameter <- row.names(thetas)
-        thetas$Component <- "conditional"
-        # find zi-prefix, to set correct component value
+        var_ci$Parameter <- row.names(var_ci)
         pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
-        thetas$Component[grepl(pattern, row.names(thetas))] <- "zi"
-
-        if (nrow(thetas) == nrow(groups)) {
-          thetas <- cbind(thetas, groups)
-        } else {
-          thetas <- merge(thetas, groups, sort = FALSE)
+        zi_rows <- grepl(pattern, var_ci$Parameter)
+        if (any(zi_rows)) {
+          var_ci$Component[zi_rows] <- "zi"
         }
 
-        # reorder columns
-        thetas <- datawizard::data_relocate(thetas, cols = "Component", after = "Group")
-        thetas <- datawizard::data_relocate(thetas, cols = "Parameter")
-
-        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
-
-        # check for sigma component
-        if (nrow(sigma) > 0) {
-          sigma$Parameter <- row.names(sigma)
-          sigma$Group <- "Residual"
-          sigma$Component <- "conditional"
-          sigma <- datawizard::data_relocate(sigma, cols = "Parameter")
-          var_ci <- rbind(thetas, sigma)
-        } else {
-          var_ci <- thetas
-        }
-
-        colnames(var_ci) <- c("Parameter", "CI_low", "CI_high", "not_used", "Group", "Component")
+        # add Group
+        var_ci$Group <- NA
+        var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
+        var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+        var_ci$Group[var_ci$Group == "sigma"] <- "Residual"
 
         # remove cond/zi prefix
-        pattern <- paste0("^(cond\\.|zi\\.|", group_factor2, "\\.cond\\.|", group_factor2, "\\.zi\\.)")
-        var_ci$Parameter <- gsub(pattern, "", var_ci$Parameter)
+        pattern <- paste0("^(cond\\.|zi\\.|", group_factor, "\\.cond\\.|", group_factor, "\\.zi\\.)(.*)")
+        for (p in pattern) {
+          var_ci$Parameter <- gsub(p, "\\2", var_ci$Parameter)
+        }
         # fix SD and Cor names
         var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
@@ -395,7 +380,6 @@
         # add name of group factor to cor
         cor_params <- grepl("^Cor ", var_ci$Parameter)
         if (any(cor_params)) {
-          # this might break if length(group_factor) > 1; I don't have a test case handy
           var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
         }
 
@@ -409,6 +393,77 @@
         var_ci$Component <- NULL
 
         merge(out, var_ci, sort = FALSE, all.x = TRUE)
+        #
+        # groups <- utils::stack(insight::find_random(model, flatten = FALSE))
+        # colnames(groups) <- c("Group", "Component")
+        # groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
+        #
+        # # regex-pattern to find conditional and ZI components
+        # group_factor <- insight::find_random(model, flatten = TRUE)
+        # group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
+        #
+        # thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
+        # thetas$Parameter <- row.names(thetas)
+        # thetas$Component <- "conditional"
+        # # find zi-prefix, to set correct component value
+        # pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
+        # thetas$Component[grepl(pattern, row.names(thetas))] <- "zi"
+        #
+        # if (nrow(thetas) == nrow(groups)) {
+        #   thetas <- cbind(thetas, groups)
+        # } else {
+        #   thetas <- merge(thetas, groups, sort = FALSE)
+        # }
+        #
+        # # reorder columns
+        # thetas <- datawizard::data_relocate(thetas, cols = "Component", after = "Group")
+        # thetas <- datawizard::data_relocate(thetas, cols = "Parameter")
+        #
+        # sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+        #
+        # # check for sigma component
+        # if (nrow(sigma) > 0) {
+        #   sigma$Parameter <- row.names(sigma)
+        #   sigma$Group <- "Residual"
+        #   sigma$Component <- "conditional"
+        #   sigma <- datawizard::data_relocate(sigma, cols = "Parameter")
+        #   var_ci <- rbind(thetas, sigma)
+        # } else {
+        #   var_ci <- thetas
+        # }
+        #
+        # colnames(var_ci) <- c("Parameter", "CI_low", "CI_high", "not_used", "Group", "Component")
+        #
+        # # remove cond/zi prefix
+        # pattern <- paste0("^(cond\\.|zi\\.|", group_factor2, "\\.cond\\.|", group_factor2, "\\.zi\\.)")
+        # var_ci$Parameter <- gsub(pattern, "", var_ci$Parameter)
+        # # fix SD and Cor names
+        # var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
+        # var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
+        # var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1:", var_ci$Parameter)
+        # # minor cleaning
+        # var_ci$Parameter <- gsub("((", "(", var_ci$Parameter, fixed = TRUE)
+        # var_ci$Parameter <- gsub("))", ")", var_ci$Parameter, fixed = TRUE)
+        # var_ci$Parameter <- gsub(")~", "~", var_ci$Parameter, fixed = TRUE)
+        # # fix sigma
+        # var_ci$Parameter[var_ci$Parameter == "sigma"] <- "SD (Observations)"
+        # # add name of group factor to cor
+        # cor_params <- grepl("^Cor ", var_ci$Parameter)
+        # if (any(cor_params)) {
+        #   # this might break if length(group_factor) > 1; I don't have a test case handy
+        #   var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
+        # }
+        #
+        # # remove unused columns (that are added back after merging)
+        # out$CI_low <- NULL
+        # out$CI_high <- NULL
+        #
+        # # filter component
+        # var_ci <- var_ci[var_ci$Component == component, ]
+        # var_ci$not_used <- NULL
+        # var_ci$Component <- NULL
+        #
+        # merge(out, var_ci, sort = FALSE, all.x = TRUE)
       },
       error = function(e) {
         out
