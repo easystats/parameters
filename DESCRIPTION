@@ -177,7 +177,6 @@ Suggests:
     WRS2
 Remotes: 
     easystats/insight, 
-    easystats/datawizard,
     easystats/effectsize
 VignetteBuilder: 
     knitr
