@@ -584,17 +584,27 @@ if (.runThisTest &&
       )
     })
 
-    tryCatch(
+
+    # proper alignment of CIs ---------------------
+
+    model_pr <- tryCatch(
       {
         load(url("https://github.com/d-morrison/parameters/raw/glmmTMB/data/pressure_durations.RData"))
-        model_pr <- glmmTMB(
+        glmmTMB(
           formula = n_samples ~ Surface + Side + Jaw + (1 | Participant / Session),
           ziformula = ~ Surface + Side + Jaw + (1 | Participant / Session),
           dispformula = ~ 1,
           family = nbinom2(),
           data  = pressure_durations
         )
+      },
+      error = function(e) {
+        NULL
+      }
+    )
 
+    if (!is.null(model_pr)) {
+      test_that("print-model_parameters glmmTMB CI alignment", {
         mp <- model_parameters(model_pr, effects = "random", component = "all")
         out <- utils::capture.output(print(mp))
         expect_equal(
@@ -615,9 +625,8 @@ if (.runThisTest &&
             "SD (Intercept: Participant)         |        2.39 | [1.25, 4.57]"
           )
         )
-      }
-    )
-
+      })
+    }
   }
 
 
