@@ -339,7 +339,7 @@
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
     out <- tryCatch(
       {
-        groups <- stack(insight::find_random(model, flatten = FALSE))
+        groups <- utils::stack(insight::find_random(model, flatten = FALSE))
         colnames(groups) <- c("Group", "Component")
         groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
 
