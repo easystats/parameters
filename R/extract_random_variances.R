@@ -339,24 +339,27 @@
     ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
     out <- tryCatch(
       {
-        var_ci <- rbind(
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
-          as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
-        )
-        colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
-        var_ci$Component <- "conditional"
-        group_factor <- insight::find_random(model, flatten = TRUE)
+        groups <- stack(insight::find_random(model, flatten = FALSE))
+        colnames(groups) <- c("Group", "Component")
+        groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
 
+        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
+        thetas <- cbind(thetas, groups)
+
+        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+        sigma$Group <- "Residual"
+        sigma$Component <- "conditional"
+
+        var_ci <- rbind(thetas, sigma)
+
+        colnames(var_ci) <- c("CI_low", "CI_high", "not_used", "Group", "Component")
+        group_factor <- insight::find_random(model, flatten = TRUE)
+        group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
         var_ci$Parameter <- row.names(var_ci)
-        pattern <- paste0("^(zi\\.|", group_factor, "\\.zi\\.)")
-        zi_rows <- grepl(pattern, var_ci$Parameter)
-        if (any(zi_rows)) {
-          var_ci$Component[zi_rows] <- "zi"
-        }
 
         # remove cond/zi prefix
-        pattern <- paste0("^(cond\\.|zi\\.|", group_factor, "\\.cond\\.|", group_factor, "\\.zi\\.)(.*)")
-        var_ci$Parameter <- gsub(pattern, "\\2", var_ci$Parameter)
+        pattern <- paste0("^(cond\\.|zi\\.|", group_factor2, "\\.cond\\.|", group_factor2, "\\.zi\\.)")
+        var_ci$Parameter <- gsub(pattern, "", var_ci$Parameter)
         # fix SD and Cor names
         var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
@@ -370,6 +373,7 @@
         # add name of group factor to cor
         cor_params <- grepl("^Cor ", var_ci$Parameter)
         if (any(cor_params)) {
+          # this might break if length(group_factor) > 1; I don't have a test case handy
           var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
         }
 
