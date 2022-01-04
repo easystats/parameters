@@ -343,19 +343,41 @@
         colnames(groups) <- c("Group", "Component")
         groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
 
-        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
-        thetas <- cbind(thetas, groups)
-
-        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
-        sigma$Group <- "Residual"
-        sigma$Component <- "conditional"
-
-        var_ci <- rbind(thetas, sigma)
-
-        colnames(var_ci) <- c("CI_low", "CI_high", "not_used", "Group", "Component")
+        # regex-pattern to find conditional and ZI components
         group_factor <- insight::find_random(model, flatten = TRUE)
         group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
-        var_ci$Parameter <- row.names(var_ci)
+
+        thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
+        thetas$Parameter <- row.names(thetas)
+        thetas$Component <- "conditional"
+        # find zi-prefix, to set correct component value
+        pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
+        thetas$Component[grepl(pattern, row.names(thetas))] <- "zi"
+
+        if (nrow(thetas) == nrow(groups)) {
+          thetas <- cbind(thetas, groups)
+        } else {
+          thetas <- merge(thetas, groups, sort = FALSE)
+        }
+
+        # reorder columns
+        thetas <- datawizard::data_relocate(thetas, cols = "Component", after = "Group")
+        thetas <- datawizard::data_relocate(thetas, cols = "Parameter")
+
+        sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
+
+        # check for sigma component
+        if (nrow(sigma) > 0) {
+          sigma$Parameter <- row.names(sigma)
+          sigma$Group <- "Residual"
+          sigma$Component <- "conditional"
+          sigma <- datawizard::data_relocate(sigma, cols = "Parameter")
+          var_ci <- rbind(thetas, sigma)
+        } else {
+          var_ci <- thetas
+        }
+
+        colnames(var_ci) <- c("Parameter", "CI_low", "CI_high", "not_used", "Group", "Component")
 
         # remove cond/zi prefix
         pattern <- paste0("^(cond\\.|zi\\.|", group_factor2, "\\.cond\\.|", group_factor2, "\\.zi\\.)")
