@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
+if (FALSE && requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
