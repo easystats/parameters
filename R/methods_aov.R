@@ -444,7 +444,7 @@ model_parameters.maov <- model_parameters.aov
     return(parameters)
   }
 
-  insight::check_if_installed("effectsize")
+  insight::check_if_installed("effectsize", minimum_version = "0.5.0")
 
   # set error-df, when provided.
   if (!is.null(df_error) && is.data.frame(model) && !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
@@ -551,12 +551,13 @@ model_parameters.maov <- model_parameters.aov
     fx$CI_low <- NULL
     fx$CI_high <- NULL
     fx$CI <- NULL
-    fx$Response <- NULL
   }
 
-  merge(params, fx, all.x = TRUE, sort = FALSE, by = intersect(c("Group", "Parameter"), intersect(colnames(params), colnames(fx))))
-
-
+  params$.id  <- 1:nrow(params)
+  params <- merge(params, fx, all.x = TRUE, sort = FALSE, by = intersect(c("Response", "Group", "Parameter"), intersect(colnames(params), colnames(fx))))
+  params <- params[order(params$.id), ]
+  params$.id <- NULL
+  params
 
   # fx_params <- fx$Parameter
   # if (is.null(fx_params)) {
