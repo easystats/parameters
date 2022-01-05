@@ -554,7 +554,7 @@ model_parameters.maov <- model_parameters.aov
     fx$Response <- NULL
   }
 
-  merge(params, fx, all.x = TRUE, by = intersect(c("Group", "Parameter"), intersect(colnames(params), colnames(fx))))
+  merge(params, fx, all.x = TRUE, sort = FALSE, by = intersect(c("Group", "Parameter"), intersect(colnames(params), colnames(fx))))
 
 
 
