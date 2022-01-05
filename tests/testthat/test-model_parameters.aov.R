@@ -9,6 +9,16 @@ if (.runThisTest) {
       iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
       iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
 
+      # aov ----------------------------------
+
+      test_that("model_parameters.aov", {
+        skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+        model <- aov(Sepal.Width ~ Species, data = iris)
+        mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE))
+        expect_equal(mp$Parameter, c("Species", "Residuals"))
+        expect_equal(mp$Sum_Squares, c(11.34493, 16.962), tolerance = 1e-3)
+      })
+
       test_that("model_parameters.aov", {
         model <- aov(Sepal.Width ~ Species, data = iris)
         mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE))
