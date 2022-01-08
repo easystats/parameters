@@ -765,3 +765,90 @@
 
   sapply(vars, function(i) i)
 }
+
+
+
+
+# slope-intercept-correlations (rho 01) ----
+# ----------------------------------------------
+.random_slope_intercept_corr <- function(model, varcorr) {
+  if (inherits(model, "lme")) {
+    rho01 <- unlist(sapply(varcorr, function(i) attr(i, "cor_slope_intercept")))
+    if (is.null(rho01)) {
+      vc <- lme4::VarCorr(model)
+      if ("Corr" %in% colnames(vc)) {
+        re_name <- insight::find_random(model, split_nested = FALSE, flatten = TRUE)
+        rho01 <- as.vector(suppressWarnings(stats::na.omit(as.numeric(vc[, "Corr"]))))
+        if (length(re_name) == length(rho01)) {
+          names(rho01) <- re_name
+        }
+      }
+    }
+    rho01
+  } else {
+    corrs <- lapply(varcorr, attr, "correlation")
+    rho01 <- sapply(corrs, function(i) {
+      if (!is.null(i)) {
+        i[-1, 1]
+      } else {
+        NULL
+      }
+    })
+    unlist(rho01)
+  }
+}
+
+
+
+
+
+# slope-slope-correlations (rho 00) ----
+# ----------------------------------------------
+.random_slopes_corr <- function(model, varcorr) {
+  corrs <- lapply(varcorr, attr, "correlation")
+  rnd_slopes <- unlist(insight::find_random_slopes(model))
+
+  if (length(rnd_slopes) < 2) {
+    return(NULL)
+  }
+
+  rho00 <- tryCatch(
+    {
+      lapply(corrs, function(d) {
+        d[upper.tri(d, diag = TRUE)] <- NA
+        d <- as.data.frame(d)
+
+        d <- datawizard::reshape_longer(d, colnames_to = "Parameter1", rows_to = "Parameter2")
+        d <- d[stats::complete.cases(d), ]
+        d <- d[!d$Parameter1 %in% c("Intercept", "(Intercept)"), ]
+
+        d$Parameter <- paste0(d$Parameter1, "-", d$Parameter2)
+        d$Parameter1 <- d$Parameter2 <- NULL
+        stats::setNames(d$Value, d$Parameter)
+      })
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  # rho01 <- tryCatch(
+  #   {
+  #     sapply(corrs, function(i) {
+  #       if (!is.null(i)) {
+  #         slope_pairs <- utils::combn(x = rnd_slopes, m = 2, simplify = FALSE)
+  #         lapply(slope_pairs, function(j) {
+  #           stats::setNames(i[j[1], j[2]], paste0("..", paste0(j, collapse = "-")))
+  #         })
+  #       } else {
+  #         NULL
+  #       }
+  #     })
+  #   },
+  #   error = function(e) {
+  #     NULL
+  #   }
+  # )
+
+  unlist(rho00)
+}
