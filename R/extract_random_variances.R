@@ -482,6 +482,254 @@
 
 
 
+
+
+
+# Extract Variance and Correlation Components ----
+
+# store essential information about variance components...
+# basically, this function should return lme4::VarCorr(x)
+.get_variance_information <- function(x, model_component = "conditional") {
+
+  # reason to be installed
+  reason <- "to compute random effect variances for mixed models"
+
+  # installed?
+  insight::check_if_installed("lme4", reason = reason)
+
+  if (inherits(x, "lme")) {
+    insight::check_if_installed("nlme", reason = reason)
+  }
+
+  if (inherits(x, "clmm")) {
+    insight::check_if_installed("ordinal", reason = reason)
+  }
+
+  if (inherits(x, "brmsfit")) {
+    insight::check_if_installed("brms", reason = reason)
+  }
+
+  if (inherits(x, "cpglmm")) {
+    insight::check_if_installed("cplm", reason = reason)
+  }
+
+  if (inherits(x, "rstanarm")) {
+    insight::check_if_installed("rstanarm", reason = reason)
+  }
+
+  # stanreg
+  # ---------------------------
+  if (inherits(x, "stanreg")) {
+    varcorr <- lme4::VarCorr(x)
+
+    # GLMMapdative
+    # ---------------------------
+  } else if (inherits(x, "MixMod")) {
+    vc1 <- vc2 <- NULL
+    re_names <- insight::find_random(x)
+
+    vc_cond <- !grepl("^zi_", colnames(x$D))
+    if (any(vc_cond)) {
+      vc1 <- x$D[vc_cond, vc_cond, drop = FALSE]
+      attr(vc1, "stddev") <- sqrt(diag(vc1))
+      attr(vc1, "correlation") <- stats::cov2cor(x$D[vc_cond, vc_cond, drop = FALSE])
+    }
+
+    vc_zi <- grepl("^zi_", colnames(x$D))
+    if (any(vc_zi)) {
+      colnames(x$D) <- gsub("^zi_(.*)", "\\1", colnames(x$D))
+      rownames(x$D) <- colnames(x$D)
+      vc2 <- x$D[vc_zi, vc_zi, drop = FALSE]
+      attr(vc2, "stddev") <- sqrt(diag(vc2))
+      attr(vc2, "correlation") <- stats::cov2cor(x$D[vc_zi, vc_zi, drop = FALSE])
+    }
+
+    vc1 <- list(vc1)
+    names(vc1) <- re_names[[1]]
+    attr(vc1, "sc") <- sqrt(insight::get_deviance(x, verbose = FALSE) / insight::get_df(x, type = "residual", verbose = FALSE))
+
+    if (!is.null(vc2)) {
+      vc2 <- list(vc2)
+      names(vc2) <- re_names[[2]]
+      attr(vc2, "sc") <- sqrt(insight::get_deviance(x, verbose = FALSE) / insight::get_df(x, type = "residual", verbose = FALSE))
+    }
+
+    varcorr <- .compact_list(list(vc1, vc2))
+    names(varcorr) <- c("cond", "zi")[1:length(varcorr)]
+
+    # joineRML
+    # ---------------------------
+  } else if (inherits(x, "mjoint")) {
+    re_names <- insight::find_random(x, flatten = TRUE)
+    varcorr <- summary(x)$D
+    attr(varcorr, "stddev") <- sqrt(diag(varcorr))
+    attr(varcorr, "correlation") <- stats::cov2cor(varcorr)
+    varcorr <- list(varcorr)
+    names(varcorr) <- re_names[1]
+    attr(varcorr, "sc") <- x$coef$sigma2[[1]]
+
+    # nlme
+    # ---------------------------
+  } else if (inherits(x, "lme")) {
+    re_names <- insight::find_random(x, split_nested = TRUE, flatten = TRUE)
+    if (.is_nested_lme(x)) {
+      varcorr <- .get_nested_lme_varcorr(x)
+    } else {
+      varcorr <- list(nlme::getVarCov(x))
+    }
+    names(varcorr) <- re_names
+
+    # ordinal
+    # ---------------------------
+  } else if (inherits(x, "clmm")) {
+    varcorr <- ordinal::VarCorr(x)
+
+    # glmmadmb
+    # ---------------------------
+  } else if (inherits(x, "glmmadmb")) {
+    varcorr <- lme4::VarCorr(x)
+
+    # brms
+    # ---------------------------
+  } else if (inherits(x, "brmsfit")) {
+    varcorr <- lapply(names(lme4::VarCorr(x)), function(i) {
+      element <- lme4::VarCorr(x)[[i]]
+      if (i != "residual__") {
+        if (!is.null(element$cov)) {
+          out <- as.matrix(drop(element$cov[, 1, ]))
+          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
+        } else {
+          out <- as.matrix(drop(element$sd[, 1])^2)
+          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
+        }
+        attr(out, "sttdev") <- element$sd[, 1]
+      } else {
+        out <- NULL
+      }
+      out
+    })
+    varcorr <- .compact_list(varcorr)
+    names(varcorr) <- setdiff(names(lme4::VarCorr(x)), "residual__")
+    attr(varcorr, "sc") <- lme4::VarCorr(x)$residual__$sd[1, 1]
+
+    # cpglmm
+    # ---------------------------
+  } else if (inherits(x, "cpglmm")) {
+    varcorr <- cplm::VarCorr(x)
+
+    # lme4 / glmmTMB
+    # ---------------------------
+  } else {
+    varcorr <- lme4::VarCorr(x)
+  }
+
+
+  # for glmmTMB, tell user that dispersion model is ignored
+
+  if (inherits(x, c("glmmTMB", "MixMod"))) {
+    if (is.null(model_component) || model_component == "conditional") {
+      varcorr <- lapply(varcorr, .collapse_cond)
+    } else {
+      varcorr <- lapply(varcorr, .collapse_zi)
+    }
+  }
+
+  varcorr
+}
+
+
+
+
+# Caution! this is somewhat experimental...
+# It retrieves the variance-covariance matrix of random effects
+# from nested lme-models.
+.get_nested_lme_varcorr <- function(x) {
+  # installed?
+  insight::check_if_installed("lme4")
+
+  vcor <- lme4::VarCorr(x)
+  class(vcor) <- "matrix"
+
+  re_index <- (which(rownames(vcor) == "(Intercept)") - 1)[-1]
+  vc_list <- split(data.frame(vcor, stringsAsFactors = FALSE), findInterval(1:nrow(vcor), re_index))
+  vc_rownames <- split(rownames(vcor), findInterval(1:nrow(vcor), re_index))
+  re_pars <- unique(unlist(insight::find_parameters(x)["random"]))
+  re_names <- insight::find_random(x, split_nested = TRUE, flatten = TRUE)
+
+  names(vc_list) <- re_names
+
+  mapply(
+    function(x, y) {
+      if ("Corr" %in% colnames(x)) {
+        g_cor <- suppressWarnings(stats::na.omit(as.numeric(x[, "Corr"])))
+      } else {
+        g_cor <- NULL
+      }
+      row.names(x) <- as.vector(y)
+      vl <- rownames(x) %in% re_pars
+      x <- suppressWarnings(apply(x[vl, vl, drop = FALSE], MARGIN = c(1, 2), FUN = as.numeric))
+      m1 <- matrix(, nrow = nrow(x), ncol = ncol(x))
+      m1[1:nrow(m1), 1:ncol(m1)] <- as.vector(x[, 1])
+      rownames(m1) <- rownames(x)
+      colnames(m1) <- rownames(x)
+
+      if (!is.null(g_cor)) {
+        m1_cov <- sqrt(prod(diag(m1))) * g_cor
+        for (j in 1:ncol(m1)) {
+          m1[j, nrow(m1) - j + 1] <- m1_cov[1]
+        }
+      }
+
+      attr(m1, "cor_slope_intercept") <- g_cor
+      m1
+    },
+    vc_list,
+    vc_rownames,
+    SIMPLIFY = FALSE
+  )
+}
+
+
+.is_nested_lme <- function(x) {
+  sapply(insight::find_random(x), function(i) any(grepl(":", i, fixed = TRUE)))
+}
+
+
+
+
+# glmmTMB returns a list of model information, one for conditional
+# and one for zero-inflated part, so here we "unlist" it, returning
+# only the conditional part.
+.collapse_cond <- function(x) {
+  if (is.list(x) && "cond" %in% names(x)) {
+    x[["cond"]]
+  } else {
+    x
+  }
+}
+
+
+
+
+.collapse_zi <- function(x) {
+  if (is.list(x) && "zi" %in% names(x)) {
+    x[["zi"]]
+  } else {
+    x
+  }
+}
+
+
+
+
+
+
+
+
+#### helper to extract various random effect variances -----------------------
+
+
+
 # random slope-variances (tau 11) ----
 # ----------------------------------------------
 .random_slope_variance <- function(model, varcorr) {
@@ -499,4 +747,21 @@
     }
     out
   }
+}
+
+
+
+
+# random intercept-variances, i.e.
+# between-subject-variance (tau 00) ----
+# ----------------------------------------------
+.random_intercept_variance <- function(model) {
+  vars <- lapply(varcorr, function(i) i[1])
+  # check for uncorrelated random slopes-intercept
+  non_intercepts <- which(sapply(varcorr, function(i) !grepl("^\\(Intercept\\)", dimnames(i)[[1]][1])))
+  if (length(non_intercepts)) {
+    vars <- vars[-non_intercepts]
+  }
+
+  sapply(vars, function(i) i)
 }
