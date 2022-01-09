@@ -123,14 +123,7 @@
   varcorr <- .get_variance_information(model, component)
   ran_intercept <- tryCatch(
     {
-      data.frame(
-        insight::get_variance(
-          model,
-          component = "intercept",
-          verbose = FALSE,
-          model_component = component
-        )
-      )
+      data.frame(.random_intercept_variance(varcorr))
     },
     error = function(e) {
       NULL
@@ -139,14 +132,7 @@
 
   ran_slope <- tryCatch(
     {
-      data.frame(
-        insight::get_variance(
-          model,
-          component = "slope",
-          verbose = FALSE,
-          model_component = component
-        )
-      )
+      data.frame(.random_slope_variance(model, varcorr))
     },
     error = function(e) {
       NULL
@@ -155,14 +141,7 @@
 
   ran_corr <- tryCatch(
     {
-      data.frame(
-        insight::get_variance(
-          model,
-          component = "rho01",
-          verbose = FALSE,
-          model_component = component
-        )
-      )
+      data.frame(.random_slope_intercept_corr(model, varcorr))
     },
     error = function(e) {
       NULL
