@@ -1,4 +1,4 @@
-if (FALSE && requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
+if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
@@ -62,9 +62,11 @@ if (FALSE && requiet("insight") && requiet("effectsize") && requiet("testthat") 
   test_that("model_parameters.anova", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.0")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
-    mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
-    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9, alternative = "two", verbose = FALSE)
-    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
+    suppressWarnings({
+      mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
+      es <- effectsize::omega_squared(model, partial = TRUE, ci = .9, verbose = FALSE)
+    })
+    expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low[2], tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
     expect_equal(colnames(mp), c(
@@ -117,7 +119,7 @@ if (FALSE && requiet("insight") && requiet("effectsize") && requiet("testthat") 
     mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
-    expect_equal(mp$Omega2_CI_low, c(0.74092, NA, 0.55331, NA, 0.58067, NA), tolerance = 1e-3, ignore_attr = TRUE)
+    expect_equal(mp$Omega2_CI_low, c(0.58067, NA, 0.74092, NA, 0.55331, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), rep(1, 3), tolerance = 1e-3, ignore_attr = TRUE)
 
@@ -290,66 +292,6 @@ if (FALSE && requiet("insight") && requiet("effectsize") && requiet("testthat") 
           class = "data.frame",
           ci = 0.99,
           model_class = c("manova", "maov", "aov", "mlm", "lm"),
-          digits = 2,
-          ci_digits = 2,
-          p_digits = 3
-        ),
-        tolerance = 0.1,
-        ignore_attr = TRUE
-      )
-    })
-
-    # maov ------------------------------------------------
-
-    test_that("works with maov", {
-      skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
-
-      set.seed(123)
-      fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
-      m <- aov(fit)
-
-      set.seed(123)
-      df_maov <-
-        as.data.frame(model_parameters(m,
-          ci = 0.95,
-          eta_squared = "partial",
-          omega_squared = "raw",
-          epsilon_squared = "raw"
-        ))
-
-      expect_equal(
-        df_maov,
-        structure(
-          list(
-            Response = c("mpg", "mpg", "disp", "disp", "hp", "hp"),
-            Parameter = c(
-              "factor(cyl)",
-              "Residuals",
-              "factor(cyl)",
-              "Residuals",
-              "factor(cyl)",
-              "Residuals"
-            ),
-            Sum_Squares = c(824.78, 301.26, 398890.96, 77293.83, 104030.54, 41696.33),
-            df = c(2, 29, 2, 29, 2, 29),
-            Mean_Square = c(412.39, 10.39, 199445.48, 2665.3, 52015.27, 1437.8),
-            F = c(39.7, NA, 74.83, NA, 36.18, NA),
-            p = c(0, NA, 0, NA, 0, NA),
-            Omega2 = c(0.82, NA, 0.69, NA, 0.71, NA),
-            Omega2_CI_low = c(0.68, NA, 0.47, NA, 0.5, NA),
-            Omega2_CI_high = c(1, NA, 1, NA, 1, NA),
-            Eta2 = c(0.84, NA, 0.71, NA, 0.73, NA),
-            Eta2_CI_low = c(0.71, NA, 0.51, NA, 0.54, NA),
-            Eta2_CI_high = c(1, NA, 1, NA, 1, NA),
-            Epsilon2 = c(0.83, NA, 0.69, NA, 0.71, NA),
-            Epsilon2_CI_low = c(0.69, NA, 0.48, NA, 0.51, NA),
-            Epsilon2_CI_high = c(1, NA, 1, NA, 1, NA)
-          ),
-          row.names = c(NA, 6L),
-          class = "data.frame",
-          ci = 0.95,
-          model_class = c("maov", "aov", "mlm", "lm"),
           digits = 2,
           ci_digits = 2,
           p_digits = 3
