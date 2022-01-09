@@ -2,7 +2,8 @@
 
 ## General
 
-* Improved speed performance for `model_parameters()`, in particular for glm's.
+* Improved speed performance for `model_parameters()`, in particular for glm's
+  and mixed models where random effect variances were calculated.
 
 * Added more options for printing `model_parameters()`. See also revised vignette:
   https://easystats.github.io/parameters/articles/model_parameters_print.html
