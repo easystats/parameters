@@ -261,10 +261,14 @@ use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/
 }
 \section{Confidence intervals for random effect variances}{
 
-When \code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
+For models of class \code{merMod} and \code{glmmTMB}, confidence intervals for random
+effect variances can be calculated. For models of class \code{lme4}, when
+\code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
 \code{"random"} or \code{"all"}, profiled resp. bootstrapped confidence intervals are
 computed for the random effects. For all other options of \code{ci_method},
-confidence intervals for random effects will be missing.
+confidence intervals for random effects will be missing. For models of class
+\code{glmmTMB}, confidence intervals for random effect variances always use a
+Wald t-distribution approximation.
 }
 
 \section{Confidence intervals and approximation of degrees of freedom}{

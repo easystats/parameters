@@ -316,7 +316,7 @@
       }
     }
   } else if (inherits(model, "glmmTMB")) {
-    ## TODO "profile" seems to be less stable, so only wald? Need to mention in docs!
+    ## TODO "profile" seems to be less stable, so only wald?
     out <- tryCatch(
       {
         var_ci <- rbind(

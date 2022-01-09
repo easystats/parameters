@@ -28,10 +28,14 @@
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @section Confidence intervals for random effect variances:
-#' When `ci_method` is either `"profile"` or `"boot"`, and `effects` is either
+#' For models of class `merMod` and `glmmTMB`, confidence intervals for random
+#' effect variances can be calculated. For models of class `lme4`, when
+#' `ci_method` is either `"profile"` or `"boot"`, and `effects` is either
 #' `"random"` or `"all"`, profiled resp. bootstrapped confidence intervals are
 #' computed for the random effects. For all other options of `ci_method`,
-#' confidence intervals for random effects will be missing.
+#' confidence intervals for random effects will be missing. For models of class
+#' `glmmTMB`, confidence intervals for random effect variances always use a
+#' Wald t-distribution approximation.
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.
