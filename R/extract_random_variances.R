@@ -608,9 +608,9 @@
 
   if (inherits(model, c("glmmTMB", "MixMod"))) {
     if (is.null(model_component) || model_component == "conditional") {
-      varcorr <- lapply(varcorr, .collapse_cond)
+      varcorr <- .collapse_cond(varcorr)
     } else {
-      varcorr <- lapply(varcorr, .collapse_zi)
+      varcorr <- .collapse_zi(varcorr)
     }
   }
 
