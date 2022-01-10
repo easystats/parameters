@@ -1,24 +1,14 @@
 authors:
   Daniel Lüdecke:
-    href: https://github.com/strengejacke/
+    href: https://github.com/strengejacke
   Dominique Makowski:
     href: https://dominiquemakowski.github.io/
+  Mattan S. Ben-Shachar:
+    href: https://github.com/mattansb
   Indrajeet Patil:
     href: https://sites.google.com/site/indrajeetspatilmorality/
-  Mattan S. Ben-Shachar:
-    href: https://sites.google.com/view/mattansb/
   Brenton M. Wiernik:
     href: https://wiernik.org/
-
-navbar:
-  structure:
-    right: [twitter, github]
-  components:
-    twitter:
-      icon: fa-twitter
-      href: http://twitter.com/easystats4u
-      aria-label: Twitter
-
 
 template:
   bootstrap: 5
@@ -30,127 +20,156 @@ template:
     twitter:
       creator: "@easystats4u"
       card: summary_large_image
+
 reference:
-- title: "Comprehensive Information from Model Objects"
+- title: "Comprehensive Model Parameters"
   contents:
-  - model_info
+  - compare_parameters
+  - model_parameters
+  - model_parameters.aov
+  - model_parameters.befa
+  - model_parameters.default
+  - model_parameters.zcpglm
+  - model_parameters.gam
+  - model_parameters.mlm
+  - model_parameters.merMod
+  - model_parameters.lavaan
+  - model_parameters.kmeans
+  - model_parameters.Mclust
+  - model_parameters.mira
+  - model_parameters.PCA
+  - model_parameters.principal
+  - model_parameters.stanreg
+  - model_parameters.BFBayesFactor
+  - model_parameters.rma
+  - model_parameters.htest
+  - model_parameters.glht
+  - model_parameters.averaging
+  - model_parameters.t1way
+  - pool_parameters
+  - random_parameters
+  - print.parameters_model
 
-- title: "Find Information from Model Objects"
-  desc: >
-    Functions to access names or information from model objects. These
-    functions have no `get_*()`-counterpart.
+- title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
   contents:
-  - find_algorithm
-  - find_formula
-  - find_interactions
-  - find_offset
-  - find_random_slopes
-  - find_smooth
-  - find_terms
-  - find_variables
+  - standard_error
+  - ci.default
+  - ci.glmmTMB
+  - p_value
+  - p_value.BFBayesFactor
+  - p_value.zeroinfl
+  - p_value.poissonmfx
+  - p_value.DirichletRegModel
+  - degrees_of_freedom
+  - n_parameters
+- subtitle: "Robust Estimation Methods"
+  contents:
+  - standard_error_robust
+- subtitle: "Approximation Methods"
+  contents:
+  - p_value_kenward
+  - p_value_satterthwaite
+  - p_value_betwithin
+  - p_value_ml1
 
-- title: "Get Data from Model Objects"
-  desc: >
-    Functions to get values or data from model objects. These functions
-    have no `find_*()`-counterpart.
+- title: "Effect Existence and Significance"
   contents:
-  - get_auxiliary
-  - get_data
-  - get_df
-  - get_intercept
-  - get_loglikelihood
-  - get_modelmatrix
-  - get_predicted
-  - get_predicted_ci
-  - get_priors
-  - get_residuals
-  - get_sigma
-  - get_variance
-  - get_varcov
-  - get_deviance
-  - get_family
+  - equivalence_test
+  - equivalence_test.lm
 
-- title: "Find Information or Get Data from Model Objects"
-  desc: >
-    Functions to list model-specific objects or to extract values (or data)
-    associated with model-specific objects.
+- title: "Parameter Sampling"
   contents:
-  - find_parameters
-  - get_parameters
-  - find_predictors
-  - get_predictors
-  - find_random
-  - get_random
-  - find_response
-  - get_response
-  - find_statistic
-  - get_statistic
-  - find_transformation
-  - get_transformation
-  - find_weights
-  - get_weights
+  - bootstrap_model
+  - bootstrap_parameters
+  - simulate_model
+  - simulate_parameters
 
-- title: "Access Further Information from Model Objects"
-  desc: >
-    Functions to access specific information from model objects.
+- title: "Feature Reduction"
   contents:
-  - get_call
-  - starts_with("link_")
-  - model_name
-  - starts_with("n_")
+  - reduce_parameters
+  - select_parameters
 
-- title: "Test Model Properties"
-  desc: >
-    Functions to test specific properties of model objects.
+- title: "Data Reduction"
+- subtitle: "Cluster Analysis"
   contents:
-  - all_models_same_class
-  - has_intercept
-  - starts_with("is_")
+  - check_clusterstructure
+  - cluster_analysis
+  - cluster_centers
+  - cluster_discrimination
+  - cluster_meta
+  - cluster_performance
+  - n_clusters
+- subtitle: "Factors and Principal Components"
+  contents:
+  - check_factorstructure
+  - check_kmo
+  - check_sphericity_bartlett
+  - convert_efa_to_cfa
+  - factor_analysis
+  - get_scores
+  - n_factors
+  - principal_components
+  - reduce_data
+  - reshape_loadings
 
-- title: "Value Formatting"
-  desc: >
-    Functions for formatting (summary) output for printing
+- title: "Table and Value Formatting"
   contents:
-  - color_if
-  - starts_with("format_")
-  - parameters_table
-  - print_color
+  - display.parameters_model
+  - format_order
+  - format_parameters
+  - format_p_adjust
+  - format_df_adjust
+  - parameters_type
+  - print_md
 
-- title: "Utilities"
-  desc: >
-    Functions that are not specifically related to access model information,
-    but rather small utility functions (mostly for printing)
+- title: "Example Data Sets"
   contents:
-  - starts_with("clean_")
-  - display
-  - download_model
-  - ellipsis_info
-  - export_table
-  - null_model
-  - print_parameters
-  - starts_with("standardize_")
-  - check_if_installed
-
-- title: "Example Datasets"
-  desc: >
-    Used in examples or for testing
-  contents:
+  - qol_cancer
   - fish
 
-- title: "Documentation of Specific Class Objects"
+- title: "Deprecated"
   contents:
-  - find_parameters.BGGM
-  - find_parameters.emmGrid
-  - find_parameters.gamlss
-  - find_parameters.betamfx
-  - find_parameters.glmmTMB
-  - find_parameters.zeroinfl
-  - find_parameters.averaging
-  - get_parameters.BGGM
-  - get_parameters.emmGrid
-  - get_parameters.gamm
-  - get_parameters.betamfx
-  - get_parameters.glmm
-  - get_parameters.zeroinfl
-  - get_parameters.betareg
-  - get_parameters.htest
+  - check_heterogeneity
+
+navbar:
+  type: default
+  right:
+  - icon: fa-twitter
+    href: http://twitter.com/easystats4u
+    aria-label: Twitter
+  - icon: fa-github
+    href: https://github.com/easystats/parameters/
+    aria-label: GitHub
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: News
+    href: news/index.html
+  - text: Features
+    href: reference/index.html
+  - text: Parameters Description
+    menu:
+      - text: Summary of Model Parameters
+        href: articles/model_parameters.html
+      - text: Standardized Model Parameters
+        href: articles/model_parameters_standardized.html
+      - text: Robust Estimation of Standard Errors
+        href: articles/model_parameters_robust.html
+      - text: Model Parameters and Missing Data
+        href: articles/model_parameters_mice.html
+  - text: Formatting and Printing
+    menu:
+      - text: Formatting Model Parameters
+        href: articles/model_parameters_formatting.html
+      - text: Printing Model Parameters
+        href: articles/model_parameters_print.html
+  - text: Dimension Reduction and Clustering
+    menu:
+      - text: 'Feature reduction (PCA, cMDS, ICA...)'
+        href: articles/parameters_reduction.html
+      - text: 'Structural models (EFA, CFA, SEM...)'
+        href: articles/efa_cfa.html
+      - text: Parameters Selection
+        href: articles/parameters_selection.html
+      - text: Clustering with easystats
+        href: articles/clustering.html
