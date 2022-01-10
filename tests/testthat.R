@@ -34,7 +34,8 @@ if (require("testthat")) {
     }
   )
 
-  if (!osx && !solaris) {
-    test_check("parameters")
-  }
+  # if (!osx && !solaris) {
+  #   test_check("parameters")
+  # }
+  test_check("parameters")
 }
