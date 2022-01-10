@@ -254,7 +254,8 @@ lm4 <- lm(Sepal.Length ~ Species * Petal.Length + Petal.Width, data = iris)
 compare_parameters(lm1, lm2, lm3, lm4)
 
 # table split into two parts
-compare_parameters(lm1, lm2, lm3, lm4) |> print(table_width = 80)
+tab <- compare_parameters(lm1, lm2, lm3, lm4)
+print(tab, table_width = 80)
 ```
 
 # More advances tables and markdown / HTML formatting
