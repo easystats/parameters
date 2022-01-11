@@ -100,7 +100,7 @@ Suggests:
     dbscan,
     drc,
     DRR,
-    effectsize (>= 0.5.1),
+    effectsize (>= 0.5.0),
     EGAnet (>= 0.7),
     emmeans (>= 1.7.0),
     factoextra,
