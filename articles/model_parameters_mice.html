@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="parameters">
 <title>Model Parameters for Multiply Imputed Repeated Analyses • parameters</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -12,180 +13,147 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Model Parameters for Multiply Imputed Repeated Analyses">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Model Parameters for Multiply Imputed Repeated Analyses">
 <meta property="og:description" content="parameters">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="/reference/figures/card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@easystats4u">
+<meta name="twitter:site" content="@easystats4u">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">parameters</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.15.0.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">parameters</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.15.0.3</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-2">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">News</a>
 </li>
-<li>
-  <a href="../reference/index.html">Features</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Features</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Parameters Description
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/model_parameters.html">Summary of Model Parameters</a>
-    </li>
-    <li>
-      <a href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
-    </li>
-    <li>
-      <a href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
-    </li>
-    <li>
-      <a href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
-    </li>
-  </ul>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-parameters-description">Parameters Description</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-parameters-description">
+    <a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a>
+    <a class="dropdown-item" href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    <a class="dropdown-item" href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors</a>
+    <a class="dropdown-item" href="../articles/model_parameters_mice.html">Model Parameters and Missing Data</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Formatting and Printing
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
-    </li>
-    <li>
-      <a href="../articles/model_parameters_print.html">Printing Model Parameters</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-formatting-and-printing">Formatting and Printing</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-formatting-and-printing">
+    <a class="dropdown-item" href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a>
+    <a class="dropdown-item" href="../articles/model_parameters_print.html">Printing Model Parameters</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Dimension Reduction and Clustering
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA...)</a>
-    </li>
-    <li>
-      <a href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
-    </li>
-    <li>
-      <a href="../articles/parameters_selection.html">Parameters Selection</a>
-    </li>
-    <li>
-      <a href="../articles/clustering.html">Clustering with easystats</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-dimension-reduction-and-clustering">Dimension Reduction and Clustering</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-dimension-reduction-and-clustering">
+    <a class="dropdown-item" href="../articles/parameters_reduction.html">Feature reduction (PCA, cMDS, ICA...)</a>
+    <a class="dropdown-item" href="../articles/efa_cfa.html">Structural models (EFA, CFA, SEM...)</a>
+    <a class="dropdown-item" href="../articles/parameters_selection.html">Parameters Selection</a>
+    <a class="dropdown-item" href="../articles/clustering.html">Clustering with easystats</a>
+  </div>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="http://twitter.com/easystats4u">
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="http://twitter.com/easystats4u" aria-label="Twitter">
     <span class="fa fa-twitter"></span>
      
   </a>
 </li>
-<li>
-  <a href="https://github.com/easystats/parameters/">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/easystats/parameters/" aria-label="GitHub">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
-
-      </header><script src="model_parameters_mice_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Model Parameters for Multiply Imputed Repeated Analyses</h1>
+<div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>Model Parameters for Multiply Imputed Repeated Analyses</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/master/vignettes/model_parameters_mice.Rmd"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
-      <div class="hidden name"><code>model_parameters_mice.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/vignettes/model_parameters_mice.Rmd" class="external-link"><code>vignettes/model_parameters_mice.Rmd</code></a></small>
+      <div class="d-none name"><code>model_parameters_mice.Rmd</code></div>
     </div>
 
     
     
-<div id="model-parameters-from-mira-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-parameters-from-mira-objects" class="anchor"></a>Model Parameters from <code>mira</code> objects</h2>
-<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> can be used in combination with the <em>mice</em> package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class <code>mira</code>. Thus, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>mira</code>-objects is comparable to the <code><a href="https://amices.org/mice/reference/pool.html">pool()</a></code>-function from <em>mice</em>, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.</p>
+<div class="section level2">
+<h2 id="model-parameters-from-mira-objects">Model Parameters from <code>mira</code> objects<a class="anchor" aria-label="anchor" href="#model-parameters-from-mira-objects"></a>
+</h2>
+<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> can be used in combination with the <em>mice</em> package to deal with missing data, in particular to summaries regression models used with multiple imputed datasets. It computes pooled summaries of multiple imputed repeated regression analyses, i.e. of objects of class <code>mira</code>. Thus, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>mira</code>-objects is comparable to the <code><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool()</a></code>-function from <em>mice</em>, but only focuses on the final summary of parameters and does not include the diagnostic statistic per estimate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice">mice</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
-<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
+<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001
-#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 
-#&gt; age60-99    |       -7.87 | 2.17 | [-12.99, -2.76] |     -3.63 |  7.05 | 0.008 
-#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,  5.86] |      1.33 | 12.84 | 0.208 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.09] |      3.51 | 17.27 | 0.003</code></pre>
-<p>Not all packages work with <code><a href="https://amices.org/mice/reference/with.mids.html">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadaptive</em> package here.</p>
-<p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="https://amices.org/mice/reference/mice.html">mice()</a></code> from package <em>mice</em>.</p>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       18.93 | 2.89 | [ 12.82, 25.03] |      6.54 | 16.91 | &lt; .001</span>
+<span class="co">#&gt; age40-59    |       -6.16 | 1.65 | [ -9.74, -2.58] |     -3.73 | 12.59 | 0.003 </span>
+<span class="co">#&gt; age60-99    |       -7.87 | 2.17 | [-12.99, -2.76] |     -3.63 |  7.05 | 0.008 </span>
+<span class="co">#&gt; hypyes      |        2.23 | 1.68 | [ -1.40,  5.86] |      1.33 | 12.84 | 0.208 </span>
+<span class="co">#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.09] |      3.51 | 17.27 | 0.003</span></code></pre>
+<p>Not all packages work with <code><a href="https://amices.org/mice/reference/with.mids.html" class="external-link">with.mids()</a></code> from package <em>mice</em>. Thus, for some modeling packages, it’s not possible to perform multiply imputed repeated analyses, i.e. you cannot work with imputed data for such models. We give an example for the <em>GLMMadaptive</em> package here.</p>
+<p>First, we generate a dataset with missing values. We take the data <code>cbpp</code> from <em>lme4</em> and randomly assign some missing values into one of the predictors. Then we impute the data, using <code><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice()</a></code> from package <em>mice</em>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://drizopoulos.github.io/GLMMadaptive/">GLMMadaptive</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://drizopoulos.github.io/GLMMadaptive/" class="external-link">GLMMadaptive</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span>
-<span class="va">cbpp</span><span class="op">$</span><span class="va">period</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span>
+<span class="va">cbpp</span><span class="op">$</span><span class="va">period</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cbpp</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
 
-<span class="va">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html">mice</a></span><span class="op">(</span><span class="va">cbpp</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="va">imputed_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">cbpp</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Using <code>with</code> to compute multiple regression analyses for each imputed dataset fails.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imputed_data</span>, expr <span class="op">=</span> <span class="fu">GLMMadaptive</span><span class="fu">::</span><span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html">mixed_model</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://amices.org/mice/reference/cbind.html">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imputed_data</span>, expr <span class="op">=</span> <span class="fu">GLMMadaptive</span><span class="fu">::</span><span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html" class="external-link">mixed_model</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,
   random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">herd</span>,
   family <span class="op">=</span> <span class="va">binomial</span>
 <span class="op">)</span><span class="op">)</span>
@@ -194,107 +162,104 @@
 <p>However, we can use a workaround by using <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>, which works on a list of model objects. So whenever a model-object is not yet supported by <code>mice::with()</code>, you can instead fit multiple models to the imputed datasets and pool all parameters with <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>:</p>
 <p>The steps would be:</p>
 <ol style="list-style-type: decimal">
-<li><p>Calculate the regression models for each imputed dataset manually (either by using <code><a href="https://amices.org/mice/reference/complete.mids.html">complete()</a></code> from package <em>mice</em> to get the imputed datasets, or by accessing the datasets directly from the <code>mids</code> object)</p></li>
+<li><p>Calculate the regression models for each imputed dataset manually (either by using <code><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete()</a></code> from package <em>mice</em> to get the imputed datasets, or by accessing the datasets directly from the <code>mids</code> object)</p></li>
 <li><p>Save all model objects in a list.</p></li>
 <li><p>Pass the list to <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code>.</p></li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">imputed_data</span><span class="op">$</span><span class="va">m</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html">mixed_model</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://amices.org/mice/reference/cbind.html">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,
+<code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">imputed_data</span><span class="op">$</span><span class="va">m</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/mixed_model.html" class="external-link">mixed_model</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">incidence</span>, <span class="va">size</span> <span class="op">-</span> <span class="va">incidence</span><span class="op">)</span> <span class="op">~</span> <span class="va">period</span>,
     random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">herd</span>,
-    data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imputed_data</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span>,
+    data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imputed_data</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span>,
     family <span class="op">=</span> <span class="va">binomial</span>
   <span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p
-#&gt; -------------------------------------------------------------------
-#&gt; (Intercept) |    -1.27 | 0.22 | [-1.71, -0.83] |     -5.68 | &lt; .001
-#&gt; period [2]  |    -1.12 | 0.35 | [-1.80, -0.43] |     -3.19 | 0.001 
-#&gt; period [3]  |    -1.91 | 0.43 | [-2.74, -1.07] |     -4.48 | &lt; .001
-#&gt; period [4]  |    -1.36 | 0.52 | [-2.38, -0.34] |     -2.62 | 0.009</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI | Statistic |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |    -1.27 | 0.22 | [-1.71, -0.83] |     -5.68 | &lt; .001</span>
+<span class="co">#&gt; period [2]  |    -1.12 | 0.35 | [-1.80, -0.43] |     -3.19 | 0.001 </span>
+<span class="co">#&gt; period [3]  |    -1.91 | 0.43 | [-2.74, -1.07] |     -4.48 | &lt; .001</span>
+<span class="co">#&gt; period [4]  |    -1.36 | 0.52 | [-2.38, -0.34] |     -2.62 | 0.009</span></code></pre>
 <p>For comparison and to show that the results from <code>mice:pool()</code> and <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> are identical, we take an example that also works with the <em>mice</em> package:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice">mice</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amices/mice" class="external-link">mice</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
-<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
+<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># approach when model is supported by "mice"</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt;          term estimate std.error statistic   df p.value
-#&gt; 1 (Intercept)    17.81      3.60      4.95 12.3 0.00031
-#&gt; 2    age40-59    -4.66      1.77     -2.63 15.0 0.01880
-#&gt; 3    age60-99    -7.46      2.37     -3.14  9.9 0.01064
-#&gt; 4      hypyes     1.83      2.39      0.76  7.9 0.46686
-#&gt; 5         chl     0.06      0.02      2.99 12.0 0.01126</code></pre>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">#&gt;          term estimate std.error statistic   df p.value</span>
+<span class="co">#&gt; 1 (Intercept)    17.81      3.60      4.95 12.3 0.00031</span>
+<span class="co">#&gt; 2    age40-59    -4.66      1.77     -2.63 15.0 0.01880</span>
+<span class="co">#&gt; 3    age60-99    -7.46      2.37     -3.14  9.9 0.01064</span>
+<span class="co">#&gt; 4      hypyes     1.83      2.39      0.76  7.9 0.46686</span>
+<span class="co">#&gt; 5         chl     0.06      0.02      2.99 12.0 0.01126</span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># approach when model is *not* supported by "mice"</span>
-<span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span>, data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html">complete</a></span><span class="op">(</span><span class="va">imp</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
+<span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span>, data <span class="op">=</span> <span class="fu"><a href="https://amices.org/mice/reference/complete.mids.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">imp</span>, action <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span>
 <span class="fu"><a href="../reference/pool_parameters.html">pool_parameters</a></span><span class="op">(</span><span class="va">models</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p
-#&gt; -------------------------------------------------------------------------------
-#&gt; (Intercept) |       17.81 | 3.60 | [  9.99, 25.63] |      4.95 | 12.25 | &lt; .001
-#&gt; age [40-59] |       -4.66 | 1.77 | [ -8.43, -0.89] |     -2.63 | 15.00 | 0.019 
-#&gt; age [60-99] |       -7.46 | 2.37 | [-12.76, -2.16] |     -3.14 |  9.90 | 0.011 
-#&gt; hyp [yes]   |        1.83 | 2.39 | [ -3.70,  7.36] |      0.76 |  7.88 | 0.467 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |      2.99 | 11.99 | 0.011</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | Statistic |    df |      p</span>
+<span class="co">#&gt; -------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       17.81 | 3.60 | [  9.99, 25.63] |      4.95 | 12.25 | &lt; .001</span>
+<span class="co">#&gt; age [40-59] |       -4.66 | 1.77 | [ -8.43, -0.89] |     -2.63 | 15.00 | 0.019 </span>
+<span class="co">#&gt; age [60-99] |       -7.46 | 2.37 | [-12.76, -2.16] |     -3.14 |  9.90 | 0.011 </span>
+<span class="co">#&gt; hyp [yes]   |        1.83 | 2.39 | [ -3.70,  7.36] |      0.76 |  7.88 | 0.467 </span>
+<span class="co">#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |      2.99 | 11.99 | 0.011</span></code></pre>
 </div>
-<div id="model-parameters-from-mipo-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-parameters-from-mipo-objects" class="anchor"></a>Model Parameters from <code>mipo</code> objects</h2>
+<div class="section level2">
+<h2 id="model-parameters-from-mipo-objects">Model Parameters from <code>mipo</code> objects<a class="anchor" aria-label="anchor" href="#model-parameters-from-mipo-objects"></a>
+</h2>
 <p>It is also possible to compute summaries of pooled objects of class <code>mipo</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
-<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"nhanes2"</span><span class="op">)</span>
+<span class="va">imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/mice.html" class="external-link">mice</a></span><span class="op">(</span><span class="va">nhanes2</span>, printFlag <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">imp</span>, exp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">bmi</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">hyp</span> <span class="op">+</span> <span class="va">chl</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pooled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/pool.html" class="external-link">pool</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">pooled</span><span class="op">)</span></code></pre></div>
-<pre><code>#&gt; # Fixed Effects
-#&gt; 
-#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p
-#&gt; ---------------------------------------------------------------------------
-#&gt; (Intercept) |       17.81 | 3.60 | [  9.99, 25.63] |  4.95 | 12.25 | &lt; .001
-#&gt; age [40-59] |       -4.66 | 1.77 | [ -8.43, -0.89] | -2.63 | 15.00 | 0.019 
-#&gt; age [60-99] |       -7.46 | 2.37 | [-12.76, -2.16] | -3.14 |  9.90 | 0.011 
-#&gt; hyp [yes]   |        1.83 | 2.39 | [ -3.70,  7.36] |  0.76 |  7.88 | 0.467 
-#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |  2.99 | 11.99 | 0.011</code></pre>
+<pre><code><span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI |     t |    df |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |       17.81 | 3.60 | [  9.99, 25.63] |  4.95 | 12.25 | &lt; .001</span>
+<span class="co">#&gt; age [40-59] |       -4.66 | 1.77 | [ -8.43, -0.89] | -2.63 | 15.00 | 0.019 </span>
+<span class="co">#&gt; age [60-99] |       -7.46 | 2.37 | [-12.76, -2.16] | -3.14 |  9.90 | 0.011 </span>
+<span class="co">#&gt; hyp [yes]   |        1.83 | 2.39 | [ -3.70,  7.36] |  0.76 |  7.88 | 0.467 </span>
+<span class="co">#&gt; chl         |        0.06 | 0.02 | [  0.02,  0.10] |  2.99 | 11.99 | 0.011</span></code></pre>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/">Brenton M. Wiernik</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, Søren Højsgaard, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>
