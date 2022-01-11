@@ -161,12 +161,10 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt;                 (Intercept)      poly(Sepal.Length, 2)1 </span>
-<span class="co">#&gt;               "(Intercept)" "Sepal Length [1st degree]" </span>
-<span class="co">#&gt;      poly(Sepal.Length, 2)2           Speciesversicolor </span>
-<span class="co">#&gt; "Sepal Length [2nd degree]"      "Species [versicolor]" </span>
-<span class="co">#&gt;            Speciesvirginica                 Petlen(3,7] </span>
-<span class="co">#&gt;       "Species [virginica]"              "Petlen [4-7]"</span></code></pre></div>
+<span class="co">#&gt;                 (Intercept)      poly(Sepal.Length, 2)1      poly(Sepal.Length, 2)2 </span>
+<span class="co">#&gt;               "(Intercept)" "Sepal Length [1st degree]" "Sepal Length [2nd degree]" </span>
+<span class="co">#&gt;           Speciesversicolor            Speciesvirginica                 Petlen(3,7] </span>
+<span class="co">#&gt;      "Species [versicolor]"       "Species [virginica]"              "Petlen [4-7]"</span></code></pre></div>
 <p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> returns a (named) character vector with the original coefficients as <em>names</em> of each character element, and the formatted names of the coefficients as values of the character vector. Let’s look at the results again:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span>
@@ -185,8 +183,8 @@
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     </span>
-<span class="co">#&gt; [6] "CI_high"     "t"           "df_error"    "p"</span></code></pre></div>
+<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"      "CI_high"    </span>
+<span class="co">#&gt; [7] "t"           "df_error"    "p"</span></code></pre></div>
 <p>For Bayesian models, <code>Coefficient</code> is usually named <code>Median</code> etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the <em>broom</em> package, where you get “standardized” column names:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/" class="external-link">broom</a></span><span class="op">)</span>
@@ -200,16 +198,16 @@
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     </span>
-<span class="co">#&gt; [6] "CI_high"     "Statistic"   "df"          "p"</span></code></pre></div>
+<span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"      "CI_high"    </span>
+<span class="co">#&gt; [7] "Statistic"   "df"          "p"</span></code></pre></div>
 <p>Furthermore, you can request “broom”-style for column names:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"broom"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "term"       "estimate"   "std.error"  "conf.level" "conf.low"  </span>
-<span class="co">#&gt; [6] "conf.high"  "statistic"  "df.error"   "p.value"</span></code></pre></div>
+<span class="co">#&gt; [1] "term"       "estimate"   "std.error"  "conf.level" "conf.low"   "conf.high"  "statistic" </span>
+<span class="co">#&gt; [8] "df.error"   "p.value"</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="formatting-column-names-and-columns">Formatting Column Names and Columns<a class="anchor" aria-label="anchor" href="#formatting-column-names-and-columns"></a>
@@ -228,14 +226,14 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span>
-<span class="co">#&gt;   term                 estimate std.error statistic   p.value conf.low conf.high</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)             3.81     0.058<span style="text-decoration: underline;">2</span>    65.5   4.61<span style="color: #949494;">e</span><span style="color: #BB0000;">-109</span>    3.70      3.93 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> poly(Sepal.Length, …    4.06     0.467      8.70  7.00<span style="color: #949494;">e</span><span style="color: #BB0000;">- 15</span>    3.14      4.98 </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> poly(Sepal.Length, …   -<span style="color: #BB0000;">1.30</span>     0.315     -<span style="color: #BB0000;">4.14</span>  5.98<span style="color: #949494;">e</span><span style="color: #BB0000;">-  5</span>   -<span style="color: #BB0000;">1.92</span>     -<span style="color: #BB0000;">0.680</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Speciesversicolor      -<span style="color: #BB0000;">1.01</span>     0.278     -<span style="color: #BB0000;">3.62</span>  4.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.56</span>     -<span style="color: #BB0000;">0.456</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Speciesvirginica       -<span style="color: #BB0000;">0.991</span>    0.285     -<span style="color: #BB0000;">3.48</span>  6.72<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.55</span>     -<span style="color: #BB0000;">0.428</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Petlen(3,7]            -<span style="color: #BB0000;">0.136</span>    0.282     -<span style="color: #BB0000;">0.482</span> 6.30<span style="color: #949494;">e</span><span style="color: #BB0000;">-  1</span>   -<span style="color: #BB0000;">0.693</span>     0.421</span></code></pre></div>
+<span class="co">#&gt;   term                   estimate std.error statistic   p.value conf.low conf.high</span>
+<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)               3.81     0.058<span style="text-decoration: underline;">2</span>    65.5   4.61<span style="color: #949494;">e</span><span style="color: #BB0000;">-109</span>    3.70      3.93 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">2</span> poly(Sepal.Length, 2)1    4.06     0.467      8.70  7.00<span style="color: #949494;">e</span><span style="color: #BB0000;">- 15</span>    3.14      4.98 </span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">3</span> poly(Sepal.Length, 2)2   -<span style="color: #BB0000;">1.30</span>     0.315     -<span style="color: #BB0000;">4.14</span>  5.98<span style="color: #949494;">e</span><span style="color: #BB0000;">-  5</span>   -<span style="color: #BB0000;">1.92</span>     -<span style="color: #BB0000;">0.680</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Speciesversicolor        -<span style="color: #BB0000;">1.01</span>     0.278     -<span style="color: #BB0000;">3.62</span>  4.12<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.56</span>     -<span style="color: #BB0000;">0.456</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Speciesvirginica         -<span style="color: #BB0000;">0.991</span>    0.285     -<span style="color: #BB0000;">3.48</span>  6.72<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.55</span>     -<span style="color: #BB0000;">0.428</span></span>
+<span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Petlen(3,7]              -<span style="color: #BB0000;">0.136</span>    0.282     -<span style="color: #BB0000;">0.482</span> 6.30<span style="color: #949494;">e</span><span style="color: #BB0000;">-  1</span>   -<span style="color: #BB0000;">0.693</span>     0.421</span></code></pre></div>
 <p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that does all the work for you.</p>
 <p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em> packages</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
