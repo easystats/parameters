@@ -19,6 +19,9 @@ template:
       creator: "@easystats4u"
       card: summary_large_image
 
+code:
+  width: 100
+
 reference:
 - title: "Comprehensive Model Parameters"
   contents:

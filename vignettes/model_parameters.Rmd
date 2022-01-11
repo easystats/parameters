@@ -5,6 +5,8 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
+code:
+  width: 50
 tags: [r, parameters, variable selection, feature selection]
 vignette: >
   %\VignetteIndexEntry{Summary of Model Parameters}
@@ -50,7 +52,7 @@ if (!requireNamespace("poorman", quietly = TRUE) ||
   library(poorman)
   library(effectsize)
   library(brms)
-    library(EGAnet)
+  library(EGAnet)
   library(psych)
   library(nFactors)
   library(brms)
@@ -89,9 +91,14 @@ cor.test(iris$Sepal.Length, iris$Sepal.Width) %>%
   parameters()
 ```
 
-```{r}
+```{r eval=FALSE}
 t.test(mpg ~ vs, data = mtcars) %>%
   parameters()
+```
+```{r eval=TRUE, echo=FALSE}
+t.test(mpg ~ vs, data = mtcars) %>%
+  parameters() %>%
+  print(table_width = "auto")
 ```
 
 ### Bayesian

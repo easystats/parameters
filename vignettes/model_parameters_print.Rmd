@@ -5,6 +5,8 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
+code:
+  width: 50
 tags: [r, parameters, table layout]
 vignette: >
   %\VignetteIndexEntry{Printing Model Parameters}
@@ -238,6 +240,7 @@ print(cp, groups = list(Species = c("Species (versicolor)",
                                          "Species (virginica) * Petal Length"),
                         Controls = "Petal Length"))
 ```
+
 
 # Splitting wide tables into multiple table parts
 
