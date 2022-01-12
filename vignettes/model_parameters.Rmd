@@ -15,6 +15,13 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
+```{bslib}
+.sourceCode {
+  overflow: auto;
+  width: 120%
+}
+```
+
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = "")
