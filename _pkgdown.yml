@@ -12,15 +12,15 @@ authors:
 
 template:
   bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    code-font-size: 0.7em
   opengraph:
     image:
       src: man/figures/card.png
     twitter:
       creator: "@easystats4u"
       card: summary_large_image
-
-code:
-  width: 100
 
 reference:
 - title: "Comprehensive Model Parameters"

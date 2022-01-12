@@ -5,8 +5,6 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-code:
-  width: 50
 tags: [r, parameters, table layout]
 vignette: >
   %\VignetteIndexEntry{Formatting Model Parameters}
