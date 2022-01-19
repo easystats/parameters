@@ -7,12 +7,6 @@
 }
 
 
-
-
-
-
-
-
 #' Flatten a list
 #'
 #' @param object A list.
@@ -54,42 +48,13 @@
   # check if factor
   if (is.factor(x) || is.character(x)) {
     # try to convert to numeric
-    x <- .factor_to_numeric(x)
+    x <- datawizard::convert_data_to_numeric(x)
   }
 
   # retrieve lowest category
   minval <- min(x, na.rm = TRUE)
   sapply(x, function(y) y - minval)
 }
-
-
-
-#' Safe transformation from factor/character to numeric
-#' @keywords internal
-.factor_to_numeric <- function(x, lowest = NULL) {
-  if (is.numeric(x)) {
-    return(x)
-  }
-  if (is.logical(x)) {
-    return(as.numeric(x))
-  }
-
-  if (anyNA(suppressWarnings(as.numeric(as.character(stats::na.omit(x)))))) {
-    if (is.character(x)) {
-      x <- as.factor(x)
-    }
-    x <- droplevels(x)
-    levels(x) <- 1:nlevels(x)
-  }
-
-  out <- as.numeric(as.character(x))
-  if (!is.null(lowest)) {
-    difference <- min(out) - lowest
-    out <- out - difference
-  }
-  out
-}
-
 
 
 #' Safe transformation from factor/character to numeric
@@ -184,20 +149,6 @@
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
 }
-
-
-
-#' @keywords internal
-.remove_columns <- function(data, variables) {
-  to_remove <- which(colnames(data) %in% variables)
-  if (length(to_remove)) {
-    data[, -to_remove, drop = FALSE]
-  } else {
-    data
-  }
-}
-
-
 
 
 #' @keywords internal
