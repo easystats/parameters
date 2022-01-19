@@ -465,7 +465,7 @@
   original_order <- parameters$.id <- 1:nrow(parameters)
 
   # remove SE column
-  parameters <- datawizard::data_remove(parameters, c("SE", "Std. Error"))
+  parameters <- .remove_columns(parameters, c("SE", "Std. Error"))
 
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
