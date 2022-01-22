@@ -219,7 +219,7 @@
   # row bind all random effect variances, if possible
   out <- tryCatch(
     {
-      out_list <- .compact_list(list(ran_intercept, ran_slope, ran_corr, ran_sigma))
+      out_list <- datawizard::compact_list(list(ran_intercept, ran_slope, ran_corr, ran_sigma))
       do.call(rbind, out_list)
     },
     error = function(e) {
@@ -534,7 +534,7 @@
       attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
     }
 
-    varcorr <- .compact_list(list(vc1, vc2))
+    varcorr <- datawizard::compact_list(list(vc1, vc2))
     names(varcorr) <- c("cond", "zi")[1:length(varcorr)]
 
     # joineRML
@@ -588,7 +588,7 @@
       }
       out
     })
-    varcorr <- .compact_list(varcorr)
+    varcorr <- datawizard::compact_list(varcorr)
     names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
     attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
 

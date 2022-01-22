@@ -70,7 +70,7 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.11.5),
-    datawizard (>= 0.2.1),
+    datawizard (>= 0.2.2.9000),
     insight (>= 0.14.5),
     graphics,
     methods,
@@ -175,6 +175,8 @@ Suggests:
     truncreg,
     VGAM,
     WRS2
+Remotes:
+    easystats/datawizard
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

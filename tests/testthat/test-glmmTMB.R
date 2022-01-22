@@ -593,9 +593,9 @@ if (.runThisTest &&
         glmmTMB(
           formula = n_samples ~ Surface + Side + Jaw + (1 | Participant / Session),
           ziformula = ~ Surface + Side + Jaw + (1 | Participant / Session),
-          dispformula = ~ 1,
+          dispformula = ~1,
           family = nbinom2(),
-          data  = pressure_durations
+          data = pressure_durations
         )
       },
       error = function(e) {
@@ -609,7 +609,8 @@ if (.runThisTest &&
         out <- utils::capture.output(print(mp))
         expect_equal(
           out,
-          c("# Random Effects: conditional",
+          c(
+            "# Random Effects: conditional",
             "",
             "Parameter                           | Coefficient |       95% CI",
             "----------------------------------------------------------------",

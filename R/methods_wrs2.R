@@ -33,7 +33,7 @@ model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
       "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
       "Estimate" = model$effsize,
       "CI" = 1 - model$alpha,
-      "CI_low" =  model$effsize_ci[1],
+      "CI_low" = model$effsize_ci[1],
       "CI_high" = model$effsize_ci[2],
       "Effectsize" = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
@@ -143,8 +143,8 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "Method" = "Yuen's test on trimmed means for independent samples",
       "Difference" = model$diff,
       "CI" = 0.95,
-      "Difference_CI_low" =  model$conf.int[1],
-      "Difference_CI_high" =  model$conf.int[2],
+      "Difference_CI_low" = model$conf.int[1],
+      "Difference_CI_high" = model$conf.int[2],
       "Estimate" = model$effsize,
       "Effectsize" = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
@@ -158,8 +158,8 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
       "Method" = "Yuen's test on trimmed means for dependent samples",
       "Difference" = model$diff,
       "CI" = 0.95,
-      "Difference_CI_low" =  model$conf.int[1],
-      "Difference_CI_high" =  model$conf.int[2],
+      "Difference_CI_low" = model$conf.int[1],
+      "Difference_CI_high" = model$conf.int[2],
       "Estimate" = model$effsize,
       "Effectsize" = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
@@ -254,8 +254,8 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
   data.frame(
     "Estimate" = model$estimate,
     "CI" = 1 - model$alpha,
-    "CI_low" =  model$ci[1],
-    "CI_high" =  model$ci[2],
+    "CI_low" = model$ci[1],
+    "CI_high" = model$ci[2],
     "p" = model$p.value,
     "n_Obs" = model$n,
     "Effectsize" = "Robust location measure",
@@ -280,8 +280,8 @@ model_parameters.trimcibt <- function(model, verbose = TRUE, ...) {
     "Method" = "Bootstrap-t method for one-sample test",
     "Estimate" = model$estimate[[1]],
     "CI" = 1 - model$alpha,
-    "CI_low" =  model$ci[1],
-    "CI_high" =  model$ci[2],
+    "CI_low" = model$ci[1],
+    "CI_high" = model$ci[2],
     "Effectsize" = "Trimmed mean",
     stringsAsFactors = FALSE
   )
@@ -302,8 +302,8 @@ model_parameters.AKP <- function(model, verbose = TRUE, ...) {
   data.frame(
     "Estimate" = model$AKPeffect,
     "CI" = 1 - model$alpha,
-    "CI_low" =  model$AKPci[1],
-    "CI_high" =  model$AKPci[2],
+    "CI_low" = model$AKPci[1],
+    "CI_high" = model$AKPci[2],
     "Effectsize" = "Algina-Keselman-Penfield robust standardized difference",
     stringsAsFactors = FALSE
   )
@@ -320,8 +320,8 @@ model_parameters.wmcpAKP <- function(model, verbose = TRUE, ...) {
   data.frame(
     "Estimate" = model[[1]],
     "CI" = 0.95,
-    "CI_low" =  model[[2]],
-    "CI_high" =  model[[3]],
+    "CI_low" = model[[2]],
+    "CI_high" = model[[3]],
     "Effectsize" = "Algina-Keselman-Penfield robust standardized difference average",
     stringsAsFactors = FALSE
   )

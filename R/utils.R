@@ -131,13 +131,6 @@
 }
 
 
-
-#' remove NULL elements from lists
-#' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
-
-
-
 #' remove empty string from character
 #' @keywords internal
 .compact_character <- function(x) x[!sapply(x, function(i) nchar(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
@@ -184,41 +177,6 @@
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
 }
-
-
-
-#' @keywords internal
-.remove_columns <- function(data, variables) {
-  to_remove <- which(colnames(data) %in% variables)
-  if (length(to_remove)) {
-    data[, -to_remove, drop = FALSE]
-  } else {
-    data
-  }
-}
-
-
-
-
-#' @keywords internal
-.is_empty_object <- function(x) {
-  if (is.list(x)) {
-    x <- tryCatch(
-      {
-        .compact_list(x)
-      },
-      error = function(x) {
-        x
-      }
-    )
-  }
-  # this is an ugly fix because of ugly tibbles
-  if (inherits(x, c("tbl_df", "tbl"))) x <- as.data.frame(x)
-  x <- suppressWarnings(x[!is.na(x)])
-  length(x) == 0 || is.null(x)
-}
-
-
 
 
 #' @keywords internal

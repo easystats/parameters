@@ -51,7 +51,7 @@ standard_error.zeroinfl <- function(model,
     return(standard_error_robust(model, ...))
   }
 
-  cs <- .compact_list(stats::coef(summary(model)))
+  cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
 
@@ -104,7 +104,7 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
     return(p_value_robust(model, ...))
   }
 
-  cs <- .compact_list(stats::coef(summary(model)))
+  cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     comp <- ifelse(i == "count", "conditional", "zi")
     stats <- cs[[i]]

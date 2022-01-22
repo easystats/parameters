@@ -744,7 +744,7 @@
     final_table <- .fix_nonmatching_columns(final_table, is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan")))
     do.call(rbind, final_table)
   } else {
-    .compact_list(final_table)
+    datawizard::compact_list(final_table)
   }
 }
 
