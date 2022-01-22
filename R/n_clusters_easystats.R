@@ -278,7 +278,7 @@ print.n_clusters_hclust <- function(x, ...) {
 #' @export
 visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   data <- as.data.frame(x)
-  data$Gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$WSS, max(data$WSS))))
+  data$Gradient <- datawizard::data_rescale(attributes(x)$gradient, c(min(data$WSS, max(data$WSS))))
   layers <- list()
 
   # Layers -----------------------
@@ -404,7 +404,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
   # Layers -----------------------
   if ("gradient" %in% names(attributes(x))) {
-    data$gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
+    data$gradient <- datawizard::data_rescale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
 
     layers[["l1"]] <- list(
       geom = "line",
@@ -432,7 +432,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
       title = "DBSCAN Method"
     )
   } else {
-    data$y <- datawizard::change_scale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
+    data$y <- datawizard::data_rescale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
 
     layers[["l1"]] <- list(
       geom = "line",
