@@ -12,9 +12,7 @@ authors:
 
 template:
   bootstrap: 5
-  bootswatch: flatly
-  bslib:
-    code-font-size: 0.7em
+  bootswatch: Superhero
   opengraph:
     image:
       src: man/figures/card.png
