@@ -791,7 +791,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
     es <- effectsize::effectsize(model,
-      type = "r_rank_biserial",
+      type = "rank_biserial",
       ci = ci,
       verbose = verbose,
       ...
