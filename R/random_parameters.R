@@ -81,21 +81,21 @@ random_parameters <- function(model, component = "conditional") {
     out$Sigma2 <- re_variances$var.residual
 
     # Random Intercept Variance
-    if (!.is_empty_object(re_variances$var.intercept)) {
+    if (!datawizard::is_empty_object(re_variances$var.intercept)) {
       var_intercept <- as.list(re_variances$var.intercept)
       names(var_intercept) <- paste0("tau00_", names(re_variances$var.intercept))
       out <- c(out, var_intercept)
     }
 
     # Random Slope Variance
-    if (!.is_empty_object(re_variances$var.slope) && !.is_empty_object(model_rs)) {
+    if (!datawizard::is_empty_object(re_variances$var.slope) && !datawizard::is_empty_object(model_rs)) {
       var_slope <- as.list(re_variances$var.slope)
       names(var_slope) <- paste0("tau11_", names(re_variances$var.slope))
       out <- c(out, var_slope)
     }
 
     # Slope-Intercept Correlation
-    if (!.is_empty_object(re_variances$cor.slope_intercept) && !.is_empty_object(model_rs)) {
+    if (!datawizard::is_empty_object(re_variances$cor.slope_intercept) && !datawizard::is_empty_object(model_rs)) {
       cor_slope_intercept <- as.list(re_variances$cor.slope_intercept)
       csi_names <- gsub("(.*)(\\.\\d)(.*)", "\\1\\3", names(re_variances$var.slope))
       # csi_names <- names(re_variances$var.slope)
@@ -104,7 +104,7 @@ random_parameters <- function(model, component = "conditional") {
     }
 
     # Slopes Correlation
-    if (!.is_empty_object(re_variances$cor.slopes) && !.is_empty_object(model_rs)) {
+    if (!datawizard::is_empty_object(re_variances$cor.slopes) && !datawizard::is_empty_object(model_rs)) {
       cor_slopes <- as.list(re_variances$cor.slopes)
       names(cor_slopes) <- paste0("rho00_", names(cor_slopes))
       out <- c(out, cor_slopes)
@@ -113,7 +113,7 @@ random_parameters <- function(model, component = "conditional") {
 
   # Number of levels per random-effect groups
   n_re <- as.list(.n_randomeffects(model))
-  if (.is_empty_object(n_re)) {
+  if (datawizard::is_empty_object(n_re)) {
     n_re <- stats::setNames(as.numeric(NA), "N")
   } else {
     names(n_re) <- paste0("N_", names(n_re))

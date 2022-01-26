@@ -97,7 +97,7 @@
       )
     }
 
-    if (.is_empty_object(stderror)) {
+    if (datawizard::is_empty_object(stderror)) {
       return(NULL)
     }
 

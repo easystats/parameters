@@ -256,7 +256,7 @@ standard_error.glmmTMB <- function(model,
       return(NULL)
     }
 
-    cs <- .compact_list(stats::coef(summary(model)))
+    cs <- datawizard::compact_list(stats::coef(summary(model)))
     x <- lapply(names(cs), function(i) {
       .data_frame(
         Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),

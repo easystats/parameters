@@ -79,7 +79,7 @@ pool_parameters <- function(x,
   # only pool for specific component -----
 
   original_x <- x
-  if ("Component" %in% colnames(x[[1]]) && !.is_empty_object(component) && component != "all") {
+  if ("Component" %in% colnames(x[[1]]) && !datawizard::is_empty_object(component) && component != "all") {
     x <- lapply(x, function(i) {
       i <- i[i$Component == component, ]
       i$Component <- NULL
@@ -194,11 +194,11 @@ pool_parameters <- function(x,
 
   # pool sigma ----
 
-  sig <- unlist(.compact_list(lapply(original_x, function(i) {
+  sig <- unlist(datawizard::compact_list(lapply(original_x, function(i) {
     attributes(i)$sigma
   })))
 
-  if (!.is_empty_object(sig)) {
+  if (!datawizard::is_empty_object(sig)) {
     attr(pooled_params, "sigma") <- mean(sig, na.rm = TRUE)
   }
 
