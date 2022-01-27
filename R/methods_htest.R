@@ -560,7 +560,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "CI_high" = model$conf.int[2],
         "p" = model$p.value,
         "Method" = model$method,
-        stringsAsFactors = FALSE
+        stringsAsFactors = FALSE,
+        check.names = FALSE
       )
     } else {
       data.frame(
