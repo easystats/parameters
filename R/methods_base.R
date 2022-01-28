@@ -134,7 +134,7 @@ standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
     SE = as.vector(se)
   )
 
-  text_remove_backticks(out)
+  insight::text_remove_backticks(out)
 }
 
 

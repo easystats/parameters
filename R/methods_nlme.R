@@ -31,7 +31,7 @@ ci.lme <- function(x, ci = .95, method = "wald", ...) {
           CI_high = as.vector(ci_list$fixed[, "upper"])
         )
       })
-      text_remove_backticks(do.call(rbind, out))
+      insight::text_remove_backticks(do.call(rbind, out))
     }
     # ml1 approx
   } else if (method == "ml1") {

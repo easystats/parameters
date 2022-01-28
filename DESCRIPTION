@@ -176,7 +176,7 @@ Suggests:
     VGAM,
     WRS2
 Remotes:
-    easystats/datawizard
+    easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
