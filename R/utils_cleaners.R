@@ -57,14 +57,6 @@
 }
 
 #' @keywords internal
-insight::text_remove_backticks <- function(x) {
-  if (is.data.frame(x) && "Parameter" %in% colnames(x)) {
-    x$Parameter <- gsub("`", "", x$Parameter, fixed = TRUE)
-  }
-  x
-}
-
-#' @keywords internal
 .intercepts <- function() {
   c(
     "(intercept)_zi",
