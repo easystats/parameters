@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.16.0.1
+Version: 0.16.0.2
 Authors@R: 
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -70,8 +70,8 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.11.5),
-    datawizard (>= 0.2.2.9000),
-    insight (>= 0.14.5),
+    datawizard (>= 0.2.3),
+    insight (>= 0.15.0.5),
     graphics,
     methods,
     stats,
@@ -176,7 +176,7 @@ Suggests:
     VGAM,
     WRS2
 Remotes:
-    easystats/datawizard
+    easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

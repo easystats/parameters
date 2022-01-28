@@ -41,7 +41,7 @@ ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
     )
   })
 
-  .remove_backticks_from_parameter_names(do.call(rbind, out))
+  insight::text_remove_backticks(do.call(rbind, out), verbose = FALSE)
 }
 
 

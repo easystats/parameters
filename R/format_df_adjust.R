@@ -28,7 +28,7 @@ format_df_adjust <- function(method,
     "bw" = "Between-within",
     "fit" = "Residual",
     "boot" = "Bootstrapped",
-    .capitalize(method)
+    insight::format_capitalize(method)
   )
 
   paste0(out, approx_string, dof_string)

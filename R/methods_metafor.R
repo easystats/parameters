@@ -185,7 +185,7 @@ ci.rma <- function(x, ci = .95, ...) {
           CI_high = as.vector(model$ci.ub)
         )
       })
-      .remove_backticks_from_parameter_names(do.call(rbind, tmp))
+      insight::text_remove_backticks(do.call(rbind, tmp), verbose = FALSE)
     },
     error = function(e) {
       NULL
@@ -203,7 +203,7 @@ ci.rma <- function(x, ci = .95, ...) {
         CI_high = params$Estimate + as.vector(se$SE) * fac
       )
     })
-    out <- .remove_backticks_from_parameter_names(do.call(rbind, out))
+    out <- insight::text_remove_backticks(do.call(rbind, out), verbose = FALSE)
   }
   out
 }

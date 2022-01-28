@@ -36,7 +36,7 @@ standard_error.merModList <- function(model, ...) {
     Parameter = s$fe$term,
     SE = s$fe$std.error
   )
-  .remove_backticks_from_parameter_names(out)
+  insight::text_remove_backticks(out, verbose = FALSE)
 }
 
 

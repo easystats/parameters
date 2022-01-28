@@ -38,7 +38,7 @@ p_value.SemiParBIV <- function(model, ...) {
   }))
   colnames(params)[4] <- "p"
   rownames(params) <- NULL
-  .remove_backticks_from_parameter_names(params[c("Parameter", "p", "Component")])
+  insight::text_remove_backticks(params[c("Parameter", "p", "Component")], verbose = FALSE)
 }
 
 
@@ -54,5 +54,5 @@ standard_error.SemiParBIV <- function(model, ...) {
   }))
   colnames(params)[2] <- "SE"
   rownames(params) <- NULL
-  .remove_backticks_from_parameter_names(params[c("Parameter", "SE", "Component")])
+  insight::text_remove_backticks(params[c("Parameter", "SE", "Component")], verbose = FALSE)
 }
