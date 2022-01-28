@@ -126,7 +126,7 @@
 
 # capitalize first character in string
 #' @keywords internal
-.capitalize <- function(x) {
+format_capitalize <- function(x) {
   capped <- grep("^[A-Z]", x, invert = TRUE)
   substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
   x
@@ -188,7 +188,7 @@
 
 
 # capitalizes the first letter in a string
-.capitalize <- function(x) {
+format_capitalize <- function(x) {
   capped <- grep("^[A-Z]", x, invert = TRUE)
   substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
   x

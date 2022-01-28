@@ -57,7 +57,7 @@
 }
 
 #' @keywords internal
-.remove_backticks_from_parameter_names <- function(x) {
+text_remove_backticks <- function(x) {
   if (is.data.frame(x) && "Parameter" %in% colnames(x)) {
     x$Parameter <- gsub("`", "", x$Parameter, fixed = TRUE)
   }
