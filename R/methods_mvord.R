@@ -53,7 +53,7 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
     params <- params[params$Component == component, , drop = FALSE]
   }
 
-  insight::text_remove_backticks(params)
+  insight::text_remove_backticks(params, verbose = FALSE)
 }
 
 
@@ -79,7 +79,7 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
     params <- params[params$Component == component, , drop = FALSE]
   }
 
-  insight::text_remove_backticks(params)
+  insight::text_remove_backticks(params, verbose = FALSE)
 }
 
 

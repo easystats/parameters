@@ -48,7 +48,7 @@ p_value.selection <- function(model, component = c("all", "selection", "outcome"
     params <- params[params$Component == component, , drop = FALSE]
   }
 
-  insight::text_remove_backticks(params)
+  insight::text_remove_backticks(params, verbose = FALSE)
 }
 
 
@@ -72,7 +72,7 @@ standard_error.selection <- function(model, component = c("all", "selection", "o
     params <- params[params$Component == component, , drop = FALSE]
   }
 
-  insight::text_remove_backticks(params)
+  insight::text_remove_backticks(params, verbose = FALSE)
 }
 
 
