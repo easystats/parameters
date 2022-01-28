@@ -123,16 +123,6 @@
   gsub("^log\\((.*)\\)", "\\1", x[grepl("^log\\((.*)\\)", x)])
 }
 
-
-# capitalize first character in string
-#' @keywords internal
-format_capitalize <- function(x) {
-  capped <- grep("^[A-Z]", x, invert = TRUE)
-  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
-  x
-}
-
-
 #' @keywords internal
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
@@ -147,8 +137,6 @@ format_capitalize <- function(x) {
   if (isTRUE(na.rm)) x <- stats::na.omit(x)
   length(unique(x))
 }
-
-
 
 
 #' @keywords internal
@@ -179,17 +167,7 @@ format_capitalize <- function(x) {
 }
 
 
-
-
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
 
-
-
-# capitalizes the first letter in a string
-format_capitalize <- function(x) {
-  capped <- grep("^[A-Z]", x, invert = TRUE)
-  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
-  x
-}

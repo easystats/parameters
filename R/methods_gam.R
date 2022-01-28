@@ -47,7 +47,7 @@ p_value.gam <- function(model, ...) {
     Component = "smooth_terms"
   )
 
-  text_remove_backticks(rbind(d1, d2))
+  insight::text_remove_backticks(rbind(d1, d2))
 }
 
 

@@ -73,7 +73,7 @@ standard_error.mlm <- function(model, ...) {
       Response = gsub("^Response (.*)", "\\1", x)
     )
   })
-  text_remove_backticks(do.call(rbind, se))
+  insight::text_remove_backticks(do.call(rbind, se))
 }
 
 
@@ -88,7 +88,7 @@ p_value.mlm <- function(model, ...) {
       Response = gsub("^Response (.*)", "\\1", x)
     )
   })
-  text_remove_backticks(do.call(rbind, p))
+  insight::text_remove_backticks(do.call(rbind, p))
 }
 
 
@@ -106,7 +106,7 @@ ci.mlm <- function(x, ci = .95, ...) {
         Response = gsub("([^\\:]+)(\\:)(.*)", "\\1", rn)
       )
     })
-    out <- text_remove_backticks(do.call(rbind, out))
+    out <- insight::text_remove_backticks(do.call(rbind, out))
   } else {
     out <- .data_frame(.ci_generic(x, ci = ci, ...), Response = insight::get_parameters(x)$Response)
   }
