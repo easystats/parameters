@@ -178,7 +178,7 @@
 <span class="va">n</span>
 <span class="co">#&gt; # Method Agreement Procedure:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The choice of 2 clusters is supported by 15 (53.57%) methods out of 28 (Elbow, Silhouette, Gap_Maechler2012, Gap_Dudoit2002, Ch, DB, Duda, Pseudot2, Beale, Ratkowsky, PtBiserial, Mcclain, Dunn, SDindex, Mixture).</span>
+<span class="co">#&gt; The choice of 2 clusters is supported by 15 (51.72%) methods out of 29 (Elbow, Silhouette, Gap_Maechler2012, Gap_Dudoit2002, Ch, DB, Duda, Pseudot2, Beale, Ratkowsky, PtBiserial, Mcclain, Dunn, SDindex, Mixture (VVV)).</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>As we can see, most methods suggest the existence of <strong>2 clusters</strong>, followed by a <strong>3-clusters</strong> solution. It seems like the data does not clearly discriminate between the 3 species of flowers. This discrepancy between what is, and what we can recover from real-world data, is a fundamental issue in data science.</p>
@@ -390,19 +390,19 @@
 <span class="va">rez_dbscan</span>  <span class="co"># Show results</span>
 <span class="co">#&gt; # Clustering Solution</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 clusters accounted for 58.75% of the total variance of the original data.</span>
+<span class="co">#&gt; The 3 clusters accounted for 61.14% of the total variance of the original data.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
 <span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; 0       |     8 |       77.55 |         0.75 |        0.41 |         0.31 |        0.13</span>
-<span class="co">#&gt; 1       |    47 |       30.99 |        -1.03 |        0.82 |        -1.30 |       -1.26</span>
-<span class="co">#&gt; 2       |    95 |      137.29 |         0.45 |       -0.44 |         0.62 |        0.61</span>
+<span class="co">#&gt; 0       |     5 |       47.84 |         1.03 |        0.74 |         0.45 |        0.32</span>
+<span class="co">#&gt; 1       |    48 |       34.54 |        -1.02 |        0.86 |        -1.30 |       -1.26</span>
+<span class="co">#&gt; 2       |    97 |      149.21 |         0.45 |       -0.46 |         0.62 |        0.61</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Indices of model performance</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
-<span class="co">#&gt; 596.000           |             350.173 |            168.280 | 0.588</span>
+<span class="co">#&gt; 596.000           |             364.406 |            183.751 | 0.611</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_dbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize</span></code></pre></div>
@@ -418,19 +418,19 @@
 <span class="va">rez_hdbscan</span>  <span class="co"># Show results</span>
 <span class="co">#&gt; # Clustering Solution</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 clusters accounted for 61.82% of the total variance of the original data.</span>
+<span class="co">#&gt; The 3 clusters accounted for 66.08% of the total variance of the original data.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
 <span class="co">#&gt; ---------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; 0       |     4 |       38.23 |         0.73 |        1.19 |         0.12 |        0.03</span>
+<span class="co">#&gt; 0       |     2 |        0.08 |         2.36 |        1.70 |         1.58 |        1.18</span>
 <span class="co">#&gt; 1       |    98 |      154.76 |         0.47 |       -0.47 |         0.63 |        0.61</span>
-<span class="co">#&gt; 2       |    48 |       34.54 |        -1.02 |        0.86 |        -1.30 |       -1.26</span>
+<span class="co">#&gt; 2       |    50 |       47.35 |        -1.01 |        0.85 |        -1.30 |       -1.25</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Indices of model performance</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
-<span class="co">#&gt; 596.000           |             368.469 |            189.302 | 0.618</span>
+<span class="co">#&gt; 596.000           |             393.813 |            202.108 | 0.661</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span>
 

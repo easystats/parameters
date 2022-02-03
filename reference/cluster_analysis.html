@@ -115,7 +115,7 @@ assignment for each observation as vector.</p>
 <dd><p>Number of clusters used for supervised cluster methods. If <code>NULL</code>,
 the number of clusters to extract is determined by calling <code><a href="n_clusters.html">n_clusters()</a></code>. Note
 that this argument does not apply for unsupervised clustering methods like
-<code>dbscan</code>, <code>mixture</code>, <code>pvclust</code>, or <code>pamk</code>.</p></dd>
+<code>dbscan</code>, <code>hdbscan</code>, <code>mixture</code>, <code>pvclust</code>, or <code>pamk</code>.</p></dd>
 <dt>method</dt>
 <dd><p>Method for computing the cluster analysis. Can be <code>"kmeans"</code>
 (default; k-means using <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans()</a></code>), <code>"hkmeans"</code> (hierarchical k-means
@@ -320,10 +320,10 @@ for clustering.</p></li>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:fpc’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     dbscan</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 1 1 1 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 2 2 2 2 2 2 0 0 2 2 2 0 2 2 2 2 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 2 2 2 2 2 2 0 0 2 2 2 2 2 2 2 2 2 2 2 2 0 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [149] 2 2</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Mixture ====================================================</span></span>
