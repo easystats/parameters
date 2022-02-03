@@ -140,7 +140,7 @@ library(parameters)
 # The main 'n_clusters' function ===============================
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
-  n <- n_clusters(iris[, 1:4], package = "all")
+  n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
   n
   summary(n)
   as.data.frame(n)  # Duration is the time elapsed for each method in seconds
