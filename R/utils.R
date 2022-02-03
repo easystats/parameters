@@ -123,6 +123,20 @@
   gsub("^log\\((.*)\\)", "\\1", x[grepl("^log\\((.*)\\)", x)])
 }
 
+
+# Execute a function but store warnings (https://stackoverflow.com/a/4947528/4198688)
+#' @keywords internal
+.catch_warnings <- function(expr) {
+  myWarnings <- NULL
+  wHandler <- function(w) {
+    myWarnings <<- c(myWarnings, list(w))
+    invokeRestart("muffleWarning")
+  }
+  val <- withCallingHandlers(expr, warning = wHandler)
+  list(out = val, warnings = myWarnings)
+}
+
+
 #' @keywords internal
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
