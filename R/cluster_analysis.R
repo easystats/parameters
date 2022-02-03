@@ -11,7 +11,7 @@
 #' @param n Number of clusters used for supervised cluster methods. If `NULL`,
 #' the number of clusters to extract is determined by calling [n_clusters()]. Note
 #' that this argument does not apply for unsupervised clustering methods like
-#' `dbscan`, `mixture`, `pvclust`, or `pamk`.
+#' `dbscan`, `hdbscan`, `mixture`, `pvclust`, or `pamk`.
 #' @param method Method for computing the cluster analysis. Can be `"kmeans"`
 #'   (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means
 #'   using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`),
@@ -181,7 +181,7 @@ cluster_analysis <- function(x,
   } else if (any(method == "hdbscan")) {
     rez <- .cluster_analysis_hdbscan(data, ...)
   } else if (any(method %in% c("mixture", "mclust"))) {
-    rez <- .cluster_analysis_mixture(data, ...)
+    rez <- .cluster_analysis_mixture(data, n = n, ...)
   } else {
     stop("Did not find 'method' argument. Could be misspecified.")
   }
@@ -259,7 +259,7 @@ cluster_analysis <- function(x,
 }
 
 #' @keywords internal
-.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.1, borderPoints = FALSE, ...) {
+.cluster_analysis_dbscan <- function(data = NULL, dbscan_eps = 0.15, min_size = 0.05, borderPoints = FALSE, ...) {
   insight::check_if_installed("dbscan")
 
   if (min_size < 1) min_size <- round(min_size * nrow(data))
@@ -270,7 +270,7 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.1, ...) {
+.cluster_analysis_hdbscan <- function(data = NULL, min_size = 0.05, ...) {
   insight::check_if_installed("dbscan")
 
   if (min_size < 1) min_size <- round(min_size * nrow(data))
@@ -281,10 +281,10 @@ cluster_analysis <- function(x,
 
 
 #' @keywords internal
-.cluster_analysis_mixture <- function(data = NULL, ...) {
+.cluster_analysis_mixture <- function(data = NULL, n = NULL, ...) {
   insight::check_if_installed("mclust")
 
-  model <- mclust::Mclust(data, verbose = FALSE, ...)
+  model <- mclust::Mclust(data, G=n, verbose = FALSE, ...)
 
   list(model = model, clusters = model$classification)
 }

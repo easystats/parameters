@@ -25,7 +25,7 @@ cluster_analysis(
 \item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
 the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}. Note
 that this argument does not apply for unsupervised clustering methods like
-\code{dbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
+\code{dbscan}, \code{hdbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
 \item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"}
 (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means

@@ -52,7 +52,7 @@
 #' # The main 'n_clusters' function ===============================
 #' if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
 #'   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
-#'   n <- n_clusters(iris[, 1:4], package = "all")
+#'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
 #'   n
 #'   summary(n)
 #'   as.data.frame(n)  # Duration is the time elapsed for each method in seconds
@@ -88,11 +88,11 @@ n_clusters <- function(x,
   }
 
   if ("mclust" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_mclust(x, ...))
+    out <- rbind(out, .n_clusters_mclust(x, n_max = n_max, ...))
   }
 
   if ("M3C" %in% tolower(package)) {
-    out <- rbind(out, .n_clusters_M3C(x, fast = fast))
+    out <- rbind(out, .n_clusters_M3C(x, n_max = n_max, fast = fast))
   }
 
   # Drop Nans
@@ -135,14 +135,21 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_mclust <- function(x, ...) {
+.n_clusters_mclust <- function(x, n_max = 10, ...) {
   insight::check_if_installed("mclust")
   t0 <- Sys.time()
   mclustBIC <- mclust::mclustBIC # this is needed as it is internally required by the following function
-  BIC <- mclust::mclustBIC(x, verbose = FALSE)
-  out <- data.frame(unclass(BIC))
-  n <- which(out == max(out, na.rm = TRUE), arr.ind = TRUE)[1]
-  data.frame(n_Clusters = n, Method = "Mixture", Package = "mclust", Duration = as.numeric(difftime(Sys.time(), t0, units = "secs")))
+  BIC <- mclust::mclustBIC(x, G = 1:n_max, verbose = FALSE)
+  # Extract the best solutions as shown in summary(BIC)
+  out <- strsplit(names(unclass(summary(BIC))), split = ",", fixed = TRUE)
+  # Get separated vectors
+  models <- as.character(sapply(out, function(x) x[[1]]))
+  n <- as.numeric(sapply(out, function(x) x[[2]]))
+
+  data.frame(n_Clusters = n,
+             Method = paste0("Mixture (", models, ")"),
+             Package = "mclust",
+             Duration = as.numeric(difftime(Sys.time(), t0, units = "secs")))
 }
 
 
@@ -170,7 +177,7 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", n_max = 15, indices = "all", ...) {
+.n_clusters_NbClust <- function(x, fast = TRUE, nbclust_method = "kmeans", n_max = 10, indices = "all", ...) {
   insight::check_if_installed("NbClust")
 
   if (all(indices == "all")) {
@@ -223,29 +230,34 @@ n_clusters <- function(x,
 
 
 #' @keywords internal
-.n_clusters_M3C <- function(x, fast = TRUE, ...) {
+.n_clusters_M3C <- function(x, n_max = 10, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
-    stop("Package 'M3C' required for this function to work. Please install it from Bioconductor by first running `remotes::install_github('https://github.com/crj32/M3C')`.") # Not on CRAN (but on github and bioconductor)
+    stop("Package 'M3C' required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN).") # Not on CRAN (but on github and bioconductor)
   }
 
   data <- data.frame(t(x))
   colnames(data) <- paste0("x", seq(1, ncol(data))) # Add columns names as required by the package
 
   t0 <- Sys.time()
-  suppressMessages(out <- M3C::M3C(data, method = 2))
+  out <- M3C::M3C(data, method = 2, maxK = n_max, removeplots = TRUE, silent = TRUE)
 
   out <- data.frame(
-    n_Clusters = which.max(out$scores$PCSI),
+    n_Clusters = out$scores[which.min(out$scores$PCSI), "K"],
     Method = "Consensus clustering algorithm (penalty term)",
     Package = "M3C",
     Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))
   )
 
-  # Doesn't work
-  # if (fast == FALSE){
-  #   suppressMessages(out <- M3C::M3C(data, method=1))
-  #   out <- rbind(out, data.frame(n_Clusters = which.max(out$scores$RCSI), Method = "Consensus clustering algorithm (Monte Carlo)", Package = "M3C"))
-  # }
+  # Monte Carlo Version (Super slow)
+  if (fast == FALSE){
+    t0 <- Sys.time()
+    out2 <- M3C::M3C(data, method=1, maxK = n_max, removeplots = TRUE, silent = TRUE)
+    out <- rbind(out,
+                 data.frame(n_Clusters = out2$scores[which.max(out2$scores$RCSI), "K"],
+                            Method = "Consensus clustering algorithm (Monte Carlo)",
+                            Package = "M3C",
+                            Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))))
+  }
 
   out
 }
