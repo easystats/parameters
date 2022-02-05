@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,16 +82,28 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.15.1" id="parameters-0151">parameters 0.15.1<a class="anchor" aria-label="anchor" href="#parameters-0151"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.16.1" id="parameters-0161">parameters 0.16.1<a class="anchor" aria-label="anchor" href="#parameters-0161"></a></h2>
 <div class="section level3">
-<h3 id="general-0-15-1">General<a class="anchor" aria-label="anchor" href="#general-0-15-1"></a></h3>
+<h3 id="general-0-16-1">General<a class="anchor" aria-label="anchor" href="#general-0-16-1"></a></h3>
+<ul><li>Added options to set defaults for different arguments. Currently supported:
+<ul><li>
+<code>options("parameters_summary" = TRUE/FALSE)</code>, which sets the default value for the <code>summary</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-mixed.</li>
+<li>
+<code>options("parameters_mixed_summary" = TRUE/FALSE)</code>, which sets the default value for the <code>summary</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-mixed.</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.0" id="parameters-0160">parameters 0.16.0<a class="anchor" aria-label="anchor" href="#parameters-0160"></a></h2><p class="text-muted">CRAN release: 2022-01-12</p>
+<div class="section level3">
+<h3 id="general-0-16-0">General<a class="anchor" aria-label="anchor" href="#general-0-16-0"></a></h3>
 <ul><li><p>Improved speed performance for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, in particular for glm’s and mixed models where random effect variances were calculated.</p></li>
 <li><p>Added more options for printing <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. See also revised vignette: <a href="https://easystats.github.io/parameters/articles/model_parameters_print.html" class="external-link uri">https://easystats.github.io/parameters/articles/model_parameters_print.html</a></p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-functions-0-15-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-15-1"></a></h3>
+<h3 id="changes-to-functions-0-16-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-16-0"></a></h3>
 <div class="section level4">
-<h4 id="model_parameters-0-15-1"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-15-1"></a></h4>
+<h4 id="model_parameters-0-16-0"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-16-0"></a></h4>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gains an <code>include_sigma</code> argument. If <code>TRUE</code>, adds the residual variance, computed from the random effects variances, as an attribute to the returned data frame. Including sigma was the default behaviour, but now defaults to <code>FALSE</code> and is only included when <code>include_sigma = TRUE</code>, because the calculation was very time consuming.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>merMod</code> models now also computes CIs for the random SD parameters when <code>ci_method="boot"</code> (previously, this was only possible when <code>ci_method</code> was <code>"profile"</code>).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>glmmTMB</code> models now computes CIs for the random SD parameters. Note that these are based on a Wald-z-distribution.</p></li>
@@ -101,7 +113,7 @@
 </ul></div>
 </div>
 <div class="section level3">
-<h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
+<h3 id="bug-fixes-0-16-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-16-0"></a></h3>
 <ul><li><p>Fixed bug with <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for class <code>merMod</code> when <code>method="boot"</code>.</p></li>
 <li><p>Fixed issue with correct association of components for ordinal models of classes <code>clm</code> and <code>clm2</code>.</p></li>
 <li><p>Fixed issues in <code><a href="../reference/random_parameters.html">random_parameters()</a></code> and <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models without random intercept.</p></li>
