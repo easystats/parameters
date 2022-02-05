@@ -12,8 +12,9 @@ p_value(model, ...)
   model,
   dof = NULL,
   method = NULL,
-  robust = FALSE,
   component = "all",
+  vcov_estimation = NULL,
+  vcov_args = NULL,
   verbose = TRUE,
   ...
 )
@@ -23,9 +24,7 @@ p_value(model, ...)
 \arguments{
 \item{model}{A statistical model.}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Additional arguments}
 
 \item{dof}{Number of degrees of freedom to be used when calculating
 confidence intervals. If \code{NULL} (default), the degrees of freedom are
@@ -34,16 +33,25 @@ approximation method defined in \code{method}. If not \code{NULL}, use this argu
 to override the default degrees of freedom used to compute confidence
 intervals.}
 
-\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich}
-or \pkg{clubSandwich} packages, computes p-values based on robust
-covariance matrix estimation.}
-
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
-based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{method}{string For linear mixed models, \code{method} can be
+\code{\link[=p_value_kenward]{"kenward"}} or
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
 further details.}
+
+\item{vcov_estimation}{String, indicating the suffix of the
+\verb{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
+package, e.g. \code{vcov_estimation = "CL"} (which calls
+\code{\link[sandwich:vcovCL]{sandwich::vcovCL()}} to compute clustered covariance matrix
+estimators), or \code{vcov_estimation = "HC"} (which calls
+\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} to compute
+heteroskedasticity-consistent covariance matrix estimators).}
+
+\item{vcov_args}{List of named vectors, used as additional arguments that are
+passed down to the \pkg{sandwich}-function specified in
+\code{vcov_estimation}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -66,12 +74,6 @@ parameters. See the documentation for your object's class:
 \item{\link[=p_value.poissonmfx]{Marginal effects models} (\pkg{mfx})}
 \item{\link[=p_value.DirichletRegModel]{Models with special components} (\code{DirichletRegModel}, \code{clm2}, \code{cgam}, ...)}
 }
-}
-\note{
-\code{p_value_robust()} resp. \code{p_value(robust = TRUE)}
-rely on the \pkg{sandwich} or \pkg{clubSandwich} package (the latter if
-\code{vcov_estimation = "CR"} for cluster-robust standard errors) and will
-thus only work for those models supported by those packages.
 }
 \examples{
 data(iris)

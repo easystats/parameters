@@ -294,6 +294,7 @@ cluster_analysis <- function(x,
 # Methods ----------------------------------------------------------------
 
 #' @export
+#' @inheritParams stats::predict
 predict.cluster_analysis <- function(object, newdata = NULL, ...) {
   if (is.null(newdata)) {
     attributes(object)$clusters

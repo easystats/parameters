@@ -4,7 +4,8 @@
                         dof = NULL,
                         effects = c("fixed", "random", "all"),
                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
-                        robust = FALSE,
+                        vcov_estimation = NULL,
+                        vcov_args = NULL,
                         ...) {
 
   # check method
@@ -37,8 +38,9 @@
       dof = dof,
       effects = effects,
       component = component,
-      robust = robust,
       method = method,
+      vcov_estimation = vcov_estimation,
+      vcov_args = vcov_args,
       ...
     )
   })
@@ -55,10 +57,12 @@
                     dof,
                     effects,
                     component,
-                    robust = FALSE,
                     method = "wald",
                     se = NULL,
+                    vcov_estimation = NULL,
+                    vcov_args = NULL,
                     ...) {
+
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
@@ -86,14 +90,18 @@
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
   # standard errors to save time...
   if (is.null(se)) {
-    stderror <- if (isTRUE(robust)) {
-      standard_error_robust(model, component = component, ...)
+    if (!is.null(vcov_estimation) || isTRUE(list(...)[["robust"]])) {
+      stderror <- standard_error(model,
+                                 component = component,
+                                 vcov_estimation = vcov_estimation,
+                                 vcov_args = vcov_args,
+                                 ...)
     } else {
-      switch(method,
-        "kenward" = ,
-        "kr" = se_kenward(model),
-        "satterthwaite" = se_satterthwaite(model),
-        standard_error(model, component = component)
+      stderror <- switch(method,
+            "kenward" = se_kenward(model),
+            "kr" = se_kenward(model),
+            "satterthwaite" = se_satterthwaite(model),
+            standard_error(model, component = component)
       )
     }
 

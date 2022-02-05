@@ -317,7 +317,7 @@ parameters <- model_parameters
 #'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
 #'   effects will be returned.
-#'   - Robust estimation (i.e. `robust=TRUE`) of standardized parameters only
+#'   - Robust estimation (i.e. `robust = TRUE`) of standardized parameters only
 #'   works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
@@ -330,13 +330,6 @@ parameters <- model_parameters
 #'   captures this uncertainty. For `compare_parameters()`,
 #'   `exponentiate = "nongaussian"` will only exponentiate coefficients
 #'   from non-Gaussian families.
-#' @param robust Logical, if `TRUE`, robust standard errors are calculated
-#'   (if possible), and confidence intervals and p-values are based on these
-#'   robust standard errors. Additional arguments like `vcov_estimation` or
-#'   `vcov_type` are passed down to other methods, see
-#'   [`standard_error_robust()`][standard_error_robust] for details
-#'   and [this vignette](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
-#'   for working examples.
 #' @param component Model component for which parameters should be shown. May be
 #'   one of `"conditional"`, `"precision"` (\pkg{betareg}),
 #'   `"scale"` (\pkg{ordinal}), `"extra"` (\pkg{glmx}),
@@ -381,6 +374,7 @@ parameters <- model_parameters
 #'   names.
 #' @param parameters Deprecated, alias for `keep`.
 #' @param verbose Toggle warnings and messages.
+#' @inheritParams standard_error
 #' @param ... Arguments passed to or from other methods. For instance, when
 #'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
 #'   passed down to `bootstrap_model()`, and arguments like `ci_method`
@@ -423,14 +417,18 @@ model_parameters.default <- function(model,
                                      iterations = 1000,
                                      standardize = NULL,
                                      exponentiate = FALSE,
-                                     robust = FALSE,
                                      p_adjust = NULL,
                                      summary = getOption("parameters_summary", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
+                                     vcov_estimation = NULL,
+                                     vcov_args = NULL,
                                      ...) {
+
+  dots <- list(...)
+
   out <- tryCatch(
     {
       .model_parameters_generic(
@@ -442,12 +440,13 @@ model_parameters.default <- function(model,
         merge_by = "Parameter",
         standardize = standardize,
         exponentiate = exponentiate,
-        robust = robust,
         p_adjust = p_adjust,
         summary = summary,
         keep_parameters = keep,
         drop_parameters = drop,
         verbose = verbose,
+        vcov_estimation = vcov_estimation,
+        vcov_args = vcov_args,
         ...
       )
     },
@@ -482,7 +481,6 @@ model_parameters.default <- function(model,
                                       exponentiate = FALSE,
                                       effects = "fixed",
                                       component = "conditional",
-                                      robust = FALSE,
                                       ci_method = NULL,
                                       p_adjust = NULL,
                                       summary = FALSE,
@@ -490,7 +488,12 @@ model_parameters.default <- function(model,
                                       drop_parameters = NULL,
                                       verbose = TRUE,
                                       df_method = ci_method,
+                                      vcov_estimation = NULL,
+                                      vcov_args = NULL,
                                       ...) {
+
+
+  dots <- list(...)
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
@@ -505,34 +508,35 @@ model_parameters.default <- function(model,
       ci_method <- "quantile"
     }
 
-    params <- bootstrap_parameters(
+    args <- list(
       model,
       iterations = iterations,
       ci = ci,
-      ci_method = ci_method,
-      ...
-    )
+      ci_method = ci_method)
+    args <- c(args, dots)
+    params <- do.call("bootstrap_parameters", args)
   } else {
     # set default method for CI
     if (is.null(ci_method) || missing(ci_method)) {
       ci_method <- "wald"
     }
 
-    params <- .extract_parameters_generic(
+    args <- list(
       model,
       ci = ci,
       component = component,
       merge_by = merge_by,
       standardize = standardize,
       effects = effects,
-      robust = robust,
       ci_method = ci_method,
       p_adjust = p_adjust,
       keep_parameters = keep_parameters,
       drop_parameters = drop_parameters,
       verbose = verbose,
-      ...
-    )
+      vcov_estimation = vcov_estimation,
+      vcov_args = vcov_args)
+    args <- c(args, dots)
+    params <- do.call(".extract_parameters_generic", args)
   }
 
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
@@ -548,7 +552,6 @@ model_parameters.default <- function(model,
     iterations,
     ci_method = ci_method,
     p_adjust = p_adjust,
-    robust = robust,
     summary = summary,
     verbose = verbose,
     ...
@@ -573,12 +576,16 @@ model_parameters.glm <- function(model,
                                  iterations = 1000,
                                  standardize = NULL,
                                  exponentiate = FALSE,
-                                 robust = FALSE,
                                  p_adjust = NULL,
                                  summary = getOption("parameters_summary", FALSE),
                                  verbose = TRUE,
                                  df_method = ci_method,
+                                 vcov_estimation = NULL,
+                                 vcov_args = NULL,
                                  ...) {
+
+
+  dots <- list(...)
 
   # set default
   if (is.null(ci_method)) {
@@ -595,7 +602,7 @@ model_parameters.glm <- function(model,
     message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."))
   }
 
-  out <- .model_parameters_generic(
+  args <- list(
     model = model,
     ci = ci,
     ci_method = ci_method,
@@ -604,11 +611,12 @@ model_parameters.glm <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = robust,
     p_adjust = p_adjust,
     summary = summary,
-    ...
-  )
+    vcov_estimation = vcov_estimation,
+    vcov_args = vcov_args)
+  args <- c(args, dots)
+  out <- do.call(".model_parameters_generic", args)
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out

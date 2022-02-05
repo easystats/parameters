@@ -17,13 +17,13 @@ ci.negbin <- ci.glm
 
 
 #' @export
-ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", robust = FALSE, ...) {
+ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
   method <- match.arg(method, choices = c("profile", "wald"))
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
     out <- do.call(rbind, out)
   } else {
-    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
+    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
   }
 
   # for polr, profiled CI do not return CI for response levels
@@ -52,7 +52,7 @@ ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", robust = FALSE,
 standard_error.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(standard_error_robust(model, ...))
+    return(standard_error(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
@@ -91,7 +91,7 @@ p_value.rlm <- function(model, ...) {
 p_value.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(standard_error_robust(model, ...))
+    return(standard_error(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))

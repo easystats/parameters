@@ -30,7 +30,6 @@ model_parameters.mixor <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     effects = effects,
-    robust = FALSE,
     include_sigma = include_sigma,
     ...
   )
@@ -44,7 +43,7 @@ model_parameters.mixor <- function(model,
 #' @export
 ci.mixor <- function(x, ci = .95, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
-  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE, ...)
+  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, ...)
 }
 
 

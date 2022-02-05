@@ -18,7 +18,6 @@ model_parameters.glmm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     effects = effects,
-    robust = FALSE,
     ...
   )
 
@@ -30,7 +29,7 @@ model_parameters.glmm <- function(model,
 #' @export
 ci.glmm <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
-  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, robust = FALSE)
+  .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, ...)
 }
 
 

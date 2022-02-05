@@ -13,7 +13,6 @@ model_parameters.merModList <- function(model,
     merge_by = "Parameter",
     standardize = NULL,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
@@ -25,7 +24,7 @@ model_parameters.merModList <- function(model,
 
 #' @export
 ci.merModList <- function(x, ci = .95, ...) {
-  .ci_generic(model = x, ci = ci, dof = NULL, robust = FALSE, component = "conditional")
+  .ci_generic(model = x, ci = ci, dof = NULL, component = "conditional", ...)
 }
 
 

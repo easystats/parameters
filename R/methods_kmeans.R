@@ -124,6 +124,8 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 
 
 #' @export
+#' @param names character vector or list
+#' @inheritParams stats::predict
 predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {
     out <- attributes(object)$scores
@@ -154,6 +156,7 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
 
 
 #' @export
+#' @inheritParams stats::predict
 predict.kmeans <- function(object, newdata = NULL, ...) {
   if (is.null(newdata)) {
     return(object$cluster)

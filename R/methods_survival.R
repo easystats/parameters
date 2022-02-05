@@ -9,7 +9,7 @@
 standard_error.coxph <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(standard_error_robust(model, ...))
+    return(standard_error(model, ...))
   }
 
   params <- insight::get_parameters(model)
@@ -87,7 +87,7 @@ p_value.aareg <- function(model, ...) {
 standard_error.survreg <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(standard_error_robust(model, ...))
+    return(standard_error(model, ...))
   }
 
   s <- summary(model)
@@ -101,9 +101,10 @@ standard_error.survreg <- function(model, method = NULL, ...) {
 
 
 #' @export
-p_value.survreg <- function(model, method = NULL, robust = FALSE, ...) {
-  if (isTRUE(robust)) {
-    return(p_value_robust(model, ...))
+p_value.survreg <- function(model, method = NULL, ...) {
+
+  if (isTRUE(list(...)$robust) || "vcov_estimation" %in% names(list(...))) {
+    return(p_value(model, ...))
   }
   s <- summary(model)
   p <- s$table[, "p"]

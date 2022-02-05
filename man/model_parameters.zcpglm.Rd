@@ -12,7 +12,6 @@
   component = c("all", "conditional", "zi", "zero_inflated"),
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
@@ -53,7 +52,7 @@ such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
-\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+\item Robust estimation (i.e. \code{robust = TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.
 }}
 
@@ -68,14 +67,6 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
-
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like \code{vcov_estimation} or
-\code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details
-and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
-for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further

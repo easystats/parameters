@@ -12,7 +12,6 @@ model_parameters.gamm <- function(model,
     ci = ci,
     bootstrap = bootstrap,
     iterations = iterations,
-    robust = FALSE,
     ...
   )
 }

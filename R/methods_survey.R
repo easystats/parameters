@@ -8,7 +8,6 @@ model_parameters.svyglm <- function(model,
                                     iterations = 1000,
                                     standardize = NULL,
                                     exponentiate = FALSE,
-                                    robust = FALSE,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
@@ -25,7 +24,6 @@ model_parameters.svyglm <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = robust,
     p_adjust = p_adjust,
     ...
   )

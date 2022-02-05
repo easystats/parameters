@@ -55,9 +55,9 @@
 #'   Methodology, 15(1), 38. \doi{10.1186/s12874-015-0026-x}
 #'
 #' @export
-p_value_ml1 <- function(model, dof = NULL, robust = FALSE, ...) {
+p_value_ml1 <- function(model, dof = NULL, ...) {
   if (is.null(dof)) {
     dof <- dof_ml1(model)
   }
-  .p_value_dof(model, dof, method = "ml1", robust = robust, ...)
+  .p_value_dof(model, dof, method = "ml1", ...)
 }

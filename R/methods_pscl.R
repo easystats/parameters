@@ -48,7 +48,7 @@ standard_error.zeroinfl <- function(model,
 
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(standard_error_robust(model, ...))
+    return(standard_error(model, ...))
   }
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
@@ -101,7 +101,7 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
 
   robust <- !is.null(method) && method == "robust"
   if (isTRUE(robust)) {
-    return(p_value_robust(model, ...))
+    return(p_value(model, ...))
   }
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))

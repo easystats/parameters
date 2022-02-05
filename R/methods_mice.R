@@ -137,7 +137,6 @@ model_parameters.mira <- function(model,
     merge_by = "Parameter",
     standardize = NULL,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )

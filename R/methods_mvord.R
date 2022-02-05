@@ -22,7 +22,6 @@ model_parameters.mvord <- function(model,
     merge_by = c("Parameter", "Component", "Response"),
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )

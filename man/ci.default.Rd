@@ -6,28 +6,19 @@
 \alias{ci.merMod}
 \title{Confidence Intervals (CI)}
 \usage{
-\method{ci}{default}(x, ci = 0.95, dof = NULL, method = NULL, robust = FALSE, ...)
+\method{ci}{default}(x, ci = 0.95, dof = NULL, method = NULL, ...)
 
 \method{ci}{glmmTMB}(
   x,
   ci = 0.95,
   dof = NULL,
   method = "wald",
-  robust = FALSE,
   component = "all",
   verbose = TRUE,
   ...
 )
 
-\method{ci}{merMod}(
-  x,
-  ci = 0.95,
-  dof = NULL,
-  method = "wald",
-  robust = FALSE,
-  iterations = 500,
-  ...
-)
+\method{ci}{merMod}(x, ci = 0.95, dof = NULL, method = "wald", iterations = 500, ...)
 }
 \arguments{
 \item{x}{A statistical model.}
@@ -50,12 +41,7 @@ options (which vary depending on the model class): \code{"residual"},
 \emph{Confidence intervals and approximation of degrees of freedom} in
 \code{\link[=model_parameters]{model_parameters()}} for further details.}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
-based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
-
-\item{...}{Arguments passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}
-when confidence intervals or p-values based on robust standard errors
-should be computed.}
+\item{...}{Additional arguments}
 
 \item{component}{Model component for which parameters should be shown. See
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
@@ -71,12 +57,6 @@ A data frame containing the CI bounds.
 }
 \description{
 Compute confidence intervals (CI) for frequentist models.
-}
-\note{
-\code{ci_robust()} resp. \code{ci(robust=TRUE)} rely on the \pkg{sandwich}
-or \pkg{clubSandwich} package (the latter if \code{vcov_estimation="CR"} for
-cluster-robust standard errors) and will thus only work for those models
-supported by those packages.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
