@@ -18,7 +18,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
-  summary = FALSE,
+  summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
   parameters = keep,
@@ -36,7 +36,7 @@
   exponentiate = FALSE,
   robust = FALSE,
   p_adjust = NULL,
-  summary = FALSE,
+  summary = getOption("parameters_summary", FALSE),
   verbose = TRUE,
   df_method = ci_method,
   ...

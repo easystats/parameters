@@ -76,14 +76,7 @@
   # for summaries, add R2
   if (isTRUE(summary)) {
     if (requireNamespace("performance", quietly = TRUE)) {
-      rsq <- tryCatch(
-        {
-          suppressWarnings(performance::r2(model))
-        },
-        error = function(e) {
-          NULL
-        }
-      )
+      rsq <- tryCatch(suppressWarnings(performance::r2(model)), error = function(e) NULL)
       attr(params, "r2") <- rsq
     }
   }
