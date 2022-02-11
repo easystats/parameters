@@ -2,14 +2,16 @@ if (requiet("testthat") &&
   requiet("parameters") &&
   requiet("mgcv")) {
   set.seed(123)
-  dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
+  void <- capture.output(
+    dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
+  )
   m1 <-
     gamm(
       y ~ s(x0) + s(x1) + s(x2),
       family = poisson,
       data = dat,
-      random = list(fac = ~1)
-    )
+      random = list(fac = ~1),
+      verbosePQL = FALSE)
 
 
   test_that("ci", {
