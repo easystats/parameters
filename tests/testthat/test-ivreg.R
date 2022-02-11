@@ -45,7 +45,8 @@ if (requiet("testthat") &&
   })
 
   test_that("print-model_parameters", {
-    out <- utils::capture.output(print(model_parameters(m1)))
+    tmp <- model_parameters(m1)
+    out <- utils::capture.output(print(tmp))
     expect_equal(
       out,
       c(

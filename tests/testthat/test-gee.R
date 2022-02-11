@@ -2,11 +2,13 @@ if (requiet("testthat") &&
   requiet("parameters") &&
   requiet("gee")) {
   data(warpbreaks)
-  m1 <- gee(breaks ~ tension, id = wool, data = warpbreaks)
+  void <- capture.output(
+    m1 <- suppressMessages(gee(breaks ~ tension, id = wool, data = warpbreaks))
+  )
 
   test_that("ci", {
     expect_equal(
-      ci(m1)$CI_low,
+      suppressMessages(ci(m1))$CI_low,
       c(30.90044, -17.76184, -22.48406),
       tolerance = 1e-3
     )
