@@ -2,17 +2,14 @@
 
 # .lm ---------------------
 
-#' @export
-standard_error.lm <- standard_error.glm
-
 
 #' @export
 p_value.lm <- p_value.default
 
 
 #' @export
-ci.lm <- function(x, ci = .95, method = "residual", robust = FALSE, ...) {
-  .ci_generic(model = x, ci = ci, method = method, robust = robust, ...)
+ci.lm <- function(x, ci = .95, method = "residual", ...) {
+  .ci_generic(model = x, ci = ci, method = method, ...)
 }
 
 

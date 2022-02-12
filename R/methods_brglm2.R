@@ -42,7 +42,6 @@ model_parameters.bracl <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
@@ -53,9 +52,9 @@ model_parameters.bracl <- function(model,
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
+ci.bracl <- function(x, ci = .95, method = NULL, ...) {
   params <- insight::get_parameters(x)
-  out <- .ci_generic(model = x, ci = ci, method = method, robust = robust, ...)
+  out <- .ci_generic(model = x, ci = ci, method = method, ...)
   if ("Response" %in% colnames(params)) {
     out$Response <- params$Response
   }

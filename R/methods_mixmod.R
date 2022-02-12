@@ -7,7 +7,6 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 ci.MixMod <- function(x,
                       ci = .95,
                       component = c("all", "conditional", "zi", "zero_inflated"),
-                      robust = FALSE,
                       verbose = TRUE,
                       ...) {
   component <- match.arg(component)
@@ -21,7 +20,7 @@ ci.MixMod <- function(x,
     ci = ci,
     dof = Inf,
     component = component,
-    robust = robust
+    ...
   )
 }
 
@@ -31,7 +30,6 @@ ci.MixMod <- function(x,
 standard_error.MixMod <- function(model,
                                   effects = c("fixed", "random"),
                                   component = c("all", "conditional", "zi", "zero_inflated"),
-                                  robust = FALSE,
                                   verbose = TRUE,
                                   ...) {
   component <- match.arg(component)
@@ -61,7 +59,7 @@ standard_error.MixMod <- function(model,
       return(NULL)
     }
 
-    vc <- insight::get_varcov(model, effects = "fixed", component = "all", robust = robust)
+    vc <- insight::get_varcov(model, effects = "fixed", component = "all", ...)
     se <- sqrt(diag(vc))
 
     x <- .data_frame(

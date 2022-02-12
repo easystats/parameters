@@ -52,11 +52,8 @@ model_parameters.mlm <- function(model,
     merge_by = c("Parameter", "Response"),
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
-    ...
-  )
-
+    ...)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
