@@ -24,7 +24,7 @@
 \usage{
 standard_error(model, ...)
 
-\method{standard_error}{default}(model, method = NULL, verbose = TRUE, ...)
+\method{standard_error}{default}(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...)
 
 \method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 
@@ -42,7 +42,14 @@ standard_error(model, ...)
   ...
 )
 
-\method{standard_error}{merMod}(model, effects = c("fixed", "random"), method = NULL, ...)
+\method{standard_error}{merMod}(
+  model,
+  effects = c("fixed", "random"),
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+)
 
 \method{standard_error}{poissonmfx}(model, component = c("all", "conditional", "marginal"), ...)
 
@@ -56,7 +63,6 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
-  robust = FALSE,
   verbose = TRUE,
   ...
 )
@@ -78,18 +84,19 @@ standard_error(model, ...)
 \arguments{
 \item{model}{A model.}
 
-\item{...}{Arguments passed to or from other methods. For
-\code{standard_error()}, if \code{method = "robust"}, arguments
-\code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
-down to \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{...}{Arguments passed to or from other methods.}
 
-\item{method}{If \code{"robust"}, robust standard errors are computed by
-calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
-\code{standard_error_robust()}, in turn, calls one of the
-\verb{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
-package for robust covariance matrix estimators. For linear mixed models,
-\code{method} may also be \code{\link[=p_value_kenward]{"kenward"}} or
-\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
+\item{vcov}{String, indicating the suffix of the
+\verb{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
+package, e.g. \code{vcov = "CL"} (which calls
+\code{\link[sandwich:vcovCL]{sandwich::vcovCL()}} to compute clustered covariance matrix
+estimators), or \code{vcov = "HC"} (which calls
+\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} to compute
+heteroskedasticity-consistent covariance matrix estimators).}
+
+\item{vcov_args}{List of named vectors, used as additional arguments that are
+passed down to the \pkg{sandwich}-function specified in
+\code{vcov}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -111,8 +118,9 @@ errors for random effects are requested, for each grouping factor a list of
 standard errors (per group level) for random intercepts and slopes is
 returned.}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
-based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{method}{string For linear mixed models, \code{method} can be
+\code{\link[=p_value_kenward]{"kenward"}} or
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the
@@ -121,8 +129,7 @@ components etc.
 }
 \description{
 \code{standard_error()} attempts to return standard errors of model
-parameters, while \code{standard_error_robust()} attempts to return robust
-standard errors.
+parameters
 }
 \note{
 For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard

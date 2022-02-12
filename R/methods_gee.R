@@ -7,7 +7,7 @@ standard_error.geeglm <- standard_error.default
 standard_error.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
 
-  if (isTRUE(list(...)$robust) || "vcov_estimation" %in% names(list(...))) {
+  if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     se <- as.vector(cs[, "Robust S.E."])
   } else {
     se <- as.vector(cs[, "Naive S.E."])
@@ -24,7 +24,7 @@ p_value.gee <- function(model, method = NULL, ...) {
     method <- "any"
   }
 
-  if (isTRUE(list(...)$robust) || "vcov_estimation" %in% names(list(...))) {
+  if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
   } else {
     p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)

@@ -27,9 +27,7 @@ precision- or scale-component or smooth_terms be returned? \code{component}
 may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"},
 \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Additional arguments}
 }
 \value{
 The p-values.

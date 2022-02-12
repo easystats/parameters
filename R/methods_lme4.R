@@ -87,7 +87,7 @@ model_parameters.merMod <- function(model,
                                     verbose = TRUE,
                                     df_method = ci_method,
                                     include_sigma = FALSE,
-                                    vcov_estimation = NULL,
+                                    vcov = NULL,
                                     vcov_args = NULL,
                                     ...) {
 
@@ -167,7 +167,7 @@ model_parameters.merMod <- function(model,
         verbose = verbose,
         include_sigma = include_sigma,
         summary = summary,
-        vcov_estimation = vcov_estimation,
+        vcov = vcov,
         vcov_args = vcov_args
       )
       args <- c(args, dots)
@@ -280,7 +280,7 @@ ci.merMod <- function(x,
 standard_error.merMod <- function(model,
                                   effects = c("fixed", "random"),
                                   method = NULL,
-                                  vcov_estimation = NULL,
+                                  vcov = NULL,
                                   vcov_args = NULL,
                                   ...) {
 
@@ -296,15 +296,15 @@ standard_error.merMod <- function(model,
 
   if (is.null(method)) {
     method <- "wald"
-  } else if ((method == "robust" && is.null(vcov_estimation)) ||
+  } else if ((method == "robust" && is.null(vcov)) ||
              # deprecated argument
              isTRUE(list(...)[["robust"]])) {
-    vcov_estimation <- "vcovHC"
+    vcov <- "vcovHC"
   }
 
-  if (!is.null(vcov_estimation) || isTRUE(dots[["robust"]])) {
+  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
-                 vcov_estimation = vcov_estimation,
+                 vcov = vcov,
                  vcov_args = vcov_args)
     args <- c(args, dots)
     out <- do.call("standard_error.default", args)

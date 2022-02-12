@@ -9,16 +9,16 @@
 #'   value `1` (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
-#' @param vcov_estimation String, indicating the suffix of the
+#' @param vcov String, indicating the suffix of the
 #'   `vcov*()`-function from the \pkg{sandwich} or \pkg{clubSandwich}
-#'   package, e.g. `vcov_estimation = "CL"` (which calls
+#'   package, e.g. `vcov = "CL"` (which calls
 #'   [sandwich::vcovCL()] to compute clustered covariance matrix
-#'   estimators), or `vcov_estimation = "HC"` (which calls
+#'   estimators), or `vcov = "HC"` (which calls
 #'   [sandwich::vcovHC()] to compute
 #'   heteroskedasticity-consistent covariance matrix estimators).
 #' @param vcov_args List of named vectors, used as additional arguments that are
 #'   passed down to the \pkg{sandwich}-function specified in
-#'   `vcov_estimation`.
+#'   `vcov`.
 #' @param effects Should standard errors for fixed effects or random effects be
 #'   returned? Only applies to mixed models. May be abbreviated. When standard
 #'   errors for random effects are requested, for each grouping factor a list of
@@ -50,7 +50,7 @@ standard_error <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model,
-                                   vcov_estimation = NULL,
+                                   vcov = NULL,
                                    vcov_args = NULL,
                                    verbose = TRUE,
                                    ...) {
@@ -60,21 +60,21 @@ standard_error.default <- function(model,
   se <- NULL
 
   # vcov: matrix
-  if (is.matrix(vcov_estimation)) {
-    se <- sqrt(diag(vcov_estimation))
+  if (is.matrix(vcov)) {
+    se <- sqrt(diag(vcov))
   }
 
   # vcov: function which returns a matrix
-  if (is.function(vcov_estimation)) {
+  if (is.function(vcov)) {
     args <- c(list(model), vcov_args, dots)
-    se <- tryCatch(sqrt(diag(do.call("vcov_estimation", args))),
+    se <- tryCatch(sqrt(diag(do.call("vcov", args))),
                    error = function(x) NULL)
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
-  if (is.character(vcov_estimation) || isTRUE(dots[["robust"]])) {
+  if (is.character(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
-                 vcov_fun = vcov_estimation,
+                 vcov_fun = vcov,
                  vcov_args = vcov_args)
     args <- c(args, dots)
     .vcov <- do.call(".get_vcov", args)
@@ -155,29 +155,28 @@ standard_error.default <- function(model,
                       method = "any",
                       ...) {
 
-  # backward compatibility with deprecated `method` argument
   dots <- list(...)
-  if (isTRUE(dots[["robust"]]) && is.null(vcov_fun)) {
-    dots[["robust"]] <- NULL
-    vcov_fun <- "HC3"
-  }
-  if ("vcov_type" %in% names(dots)) {
-    if (is.null(vcov_args)) {
-      vcov_args <- list()
-    }
-    if (!"type" %in% names(vcov_args)) {
-      vcov_args[["type"]] <- dots[["vcov_type"]]
-    }
-  }
 
   if (is.null(vcov_args)) {
     vcov_args <- list()
   }
 
-  # backward compatibility for deprecated argument `vcov_type`
-  dots <- list(...)
+  # deprecated: `vcov_estimation`
+  if (is.null(vcov_fun) && "vcov_estimation" %in% names(dots)) {
+    vcov_fun <- dots[["vcov_estimation"]]
+  }
+
+  # deprecated: `robust`
+  if (isTRUE(dots[["robust"]]) && is.null(vcov_fun)) {
+    dots[["robust"]] <- NULL
+    vcov_fun <- "HC3"
+  }
+
+  # deprecated: `vcov_type`
   if ("vcov_type" %in% names(dots)) {
-    vcov_args[["type"]] <- dots[["vcov_type"]]
+    if (!"type" %in% names(vcov_args)) {
+      vcov_args[["type"]] <- dots[["vcov_type"]]
+    }
   }
 
   # type shortcuts: overwrite only if not supplied explicitly by the user

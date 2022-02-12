@@ -56,7 +56,7 @@
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "p_adjust") <- p_adjust
-  attr(params, "robust_vcov") <- isTRUE(list(...)$robust) || "vcov_estimation" %in% names(list(...))
+  attr(params, "robust_vcov") <- isTRUE(list(...)$robust) || "vcov" %in% names(list(...))
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)

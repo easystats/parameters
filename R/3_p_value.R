@@ -42,7 +42,7 @@ p_value.default <- function(model,
                             dof = NULL,
                             method = NULL,
                             component = "all",
-                            vcov_estimation = NULL,
+                            vcov = NULL,
                             vcov_args = NULL,
                             verbose = TRUE,
                             ...) {
@@ -57,7 +57,7 @@ p_value.default <- function(model,
   }
 
   # robust standard errors with backward compatibility for `robust = TRUE`
-  if (!is.null(vcov_estimation) || isTRUE(dots[["robust"]])) {
+  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     method <- "robust"
   }
 
@@ -99,13 +99,13 @@ p_value.default <- function(model,
   if (method == "robust") {
     co <- insight::get_parameters(model)
     # this allows us to pass the output of `standard_error()`
-    # to the `vcov_estimation` argument in order to avoid computing the SE twice.
-    if (inherits(vcov_estimation, "data.frame") || "SE" %in% colnames(vcov_estimation)) {
-      se <- vcov_estimation
+    # to the `vcov` argument in order to avoid computing the SE twice.
+    if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
+      se <- vcov
     } else {
       args <- list(model,
                    vcov_args = vcov_args,
-                   vcov_estimation = vcov_estimation)
+                   vcov = vcov)
       args <- c(args, dots)
       se <- do.call("standard_error", args)
     }

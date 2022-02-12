@@ -16,13 +16,14 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  vcov = NULL,
+  vcov_args = NULL,
   ...
 )
 
@@ -34,11 +35,12 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
   verbose = TRUE,
   df_method = ci_method,
+  vcov = NULL,
+  vcov_args = NULL,
   ...
 )
 
@@ -49,7 +51,6 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = TRUE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -63,7 +64,6 @@
   component = c("all", "conditional", "marginal"),
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -77,7 +77,6 @@
   component = c("all", "conditional", "precision", "marginal"),
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -118,7 +117,7 @@ such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
-\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+\item Robust estimation (i.e. \code{robust = TRUE}) of standardized parameters only
 works when \code{standardize="refit"}.
 }}
 
@@ -133,14 +132,6 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
-
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like \code{vcov_estimation} or
-\code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details
-and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
-for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
@@ -175,6 +166,18 @@ names.}
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{vcov}{String, indicating the suffix of the
+\verb{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
+package, e.g. \code{vcov = "CL"} (which calls
+\code{\link[sandwich:vcovCL]{sandwich::vcovCL()}} to compute clustered covariance matrix
+estimators), or \code{vcov = "HC"} (which calls
+\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} to compute
+heteroskedasticity-consistent covariance matrix estimators).}
+
+\item{vcov_args}{List of named vectors, used as additional arguments that are
+passed down to the \pkg{sandwich}-function specified in
+\code{vcov}.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are

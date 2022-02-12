@@ -103,7 +103,7 @@ standard_error.survreg <- function(model, method = NULL, ...) {
 #' @export
 p_value.survreg <- function(model, method = NULL, ...) {
 
-  if (isTRUE(list(...)$robust) || "vcov_estimation" %in% names(list(...))) {
+  if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     return(p_value(model, ...))
   }
   s <- summary(model)

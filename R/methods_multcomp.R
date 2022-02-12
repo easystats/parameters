@@ -65,9 +65,9 @@ ci.glht <- function(x, ci = .95, ...) {
 
   # backward compatibility with `robust` argument
   dots <- list(...)
-  if ("robust" %in% names(dots) && !"vcov_estimation" %in% names(dots)) {
+  if ("robust" %in% names(dots) && !"vcov" %in% names(dots)) {
     robust <- dots[["robust"]]
-  } else if (any(c("vcov_estimation", "vcov_args") %in% names(dots))) {
+  } else if (any(c("vcov", "vcov_args") %in% names(dots))) {
     robust <- TRUE
   } else {
     robust <- FALSE

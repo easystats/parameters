@@ -17,7 +17,7 @@
                                         drop_parameters = NULL,
                                         include_sigma = TRUE,
                                         summary = FALSE,
-                                        vcov_estimation = NULL,
+                                        vcov = NULL,
                                         vcov_args = NULL,
                                         ...) {
 
@@ -109,7 +109,7 @@
     args <- list(model,
                  ci = ci,
                  component = component,
-                 vcov_estimation = vcov_estimation,
+                 vcov = vcov,
                  vcov_args = vcov_args,
                  verbose = verbose)
     args <- c(args, dots)
@@ -137,7 +137,7 @@
                effects = effects,
                verbose = verbose,
                component = component,
-               vcov_estimation = vcov_estimation,
+               vcov = vcov,
                vcov_args = vcov_args)
   args <- c(args, dots)
   pval <- do.call("p_value", args)
@@ -154,7 +154,7 @@
                effects = effects,
                component = component,
                verbose = verbose,
-               vcov_estimation = vcov_estimation,
+               vcov = vcov,
                vcov_args = vcov_args)
   args <- c(args, dots)
   if (!is.null(ci_method)) {
@@ -167,11 +167,11 @@
   }
 
 
-  # ==== test statistic - fix values for robust vcov_estimation
+  # ==== test statistic - fix values for robust vcov
 
 
   # deprecated argument `robust = TRUE`
-  if (!is.null(vcov_estimation) || isTRUE(dots[["robust"]])) {
+  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else if (!is.null(statistic)) {
     parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
@@ -428,7 +428,7 @@
                                       include_sigma = FALSE,
                                       summary = FALSE,
                                       verbose = TRUE,
-                                      vcov_estimation = NULL,
+                                      vcov = NULL,
                                       vcov_args = NULL,
                                       ...) {
 
@@ -473,10 +473,10 @@
 
   if (!is.null(ci)) {
     # robust (current or deprecated)
-    if (!is.null(vcov_estimation) || isTRUE(list(...)[["robust"]])) {
+    if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       args <- list(model,
                    ci = ci,
-                   vcov_estimation = vcov_estimation,
+                   vcov = vcov,
                    vcov_args = vcov_args)
       args <- c(args, dots)
       ci_df <- suppressMessages(do.call("ci", args))
@@ -496,9 +496,9 @@
 
   # standard error - only if we don't already have SE for std. parameters
   if (!"SE" %in% colnames(parameters)) {
-    if (!is.null(vcov_estimation) || isTRUE(dots[["robust"]])) {
+    if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
       args <- list(model,
-                   vcov_estimation = vcov_estimation,
+                   vcov = vcov,
                    vcov_args = vcov_args)
       args <- c(args, dots)
       parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
@@ -514,9 +514,9 @@
 
 
   # p value
-  if (!is.null(vcov_estimation) || isTRUE(list(...)[["robust"]])) {
+  if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
     args <- list(model,
-                 vcov_estimation = vcov_estimation,
+                 vcov = vcov,
                  vcov_args = vcov_args)
     args <- c(args, dots)
     parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
@@ -534,7 +534,7 @@
 
 
   # adjust standard errors and test-statistic as well
-  if ((!is.null(vcov_estimation) || ci_method %in% special_ci_methods) ||
+  if ((!is.null(vcov) || ci_method %in% special_ci_methods) ||
       # deprecated argument
       isTRUE(list(...)[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE

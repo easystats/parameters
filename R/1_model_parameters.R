@@ -423,7 +423,7 @@ model_parameters.default <- function(model,
                                      drop = NULL,
                                      parameters = keep,
                                      verbose = TRUE,
-                                     vcov_estimation = NULL,
+                                     vcov = NULL,
                                      vcov_args = NULL,
                                      ...) {
 
@@ -445,7 +445,7 @@ model_parameters.default <- function(model,
         keep_parameters = keep,
         drop_parameters = drop,
         verbose = verbose,
-        vcov_estimation = vcov_estimation,
+        vcov = vcov,
         vcov_args = vcov_args,
         ...
       )
@@ -488,7 +488,7 @@ model_parameters.default <- function(model,
                                       drop_parameters = NULL,
                                       verbose = TRUE,
                                       df_method = ci_method,
-                                      vcov_estimation = NULL,
+                                      vcov = NULL,
                                       vcov_args = NULL,
                                       ...) {
 
@@ -533,7 +533,7 @@ model_parameters.default <- function(model,
       keep_parameters = keep_parameters,
       drop_parameters = drop_parameters,
       verbose = verbose,
-      vcov_estimation = vcov_estimation,
+      vcov = vcov,
       vcov_args = vcov_args)
     args <- c(args, dots)
     params <- do.call(".extract_parameters_generic", args)
@@ -580,7 +580,7 @@ model_parameters.glm <- function(model,
                                  summary = getOption("parameters_summary", FALSE),
                                  verbose = TRUE,
                                  df_method = ci_method,
-                                 vcov_estimation = NULL,
+                                 vcov = NULL,
                                  vcov_args = NULL,
                                  ...) {
 
@@ -613,7 +613,7 @@ model_parameters.glm <- function(model,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
     summary = summary,
-    vcov_estimation = vcov_estimation,
+    vcov = vcov,
     vcov_args = vcov_args)
   args <- c(args, dots)
   out <- do.call(".model_parameters_generic", args)

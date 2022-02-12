@@ -4,7 +4,7 @@
                         dof = NULL,
                         effects = c("fixed", "random", "all"),
                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
-                        vcov_estimation = NULL,
+                        vcov = NULL,
                         vcov_args = NULL,
                         ...) {
 
@@ -39,7 +39,7 @@
       effects = effects,
       component = component,
       method = method,
-      vcov_estimation = vcov_estimation,
+      vcov = vcov,
       vcov_args = vcov_args,
       ...
     )
@@ -59,7 +59,7 @@
                     component,
                     method = "wald",
                     se = NULL,
-                    vcov_estimation = NULL,
+                    vcov = NULL,
                     vcov_args = NULL,
                     ...) {
 
@@ -90,10 +90,10 @@
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
   # standard errors to save time...
   if (is.null(se)) {
-    if (!is.null(vcov_estimation) || isTRUE(list(...)[["robust"]])) {
+    if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       stderror <- standard_error(model,
                                  component = component,
-                                 vcov_estimation = vcov_estimation,
+                                 vcov = vcov,
                                  vcov_args = vcov_args,
                                  ...)
     } else {

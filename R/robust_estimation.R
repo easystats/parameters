@@ -7,7 +7,7 @@
 #' @inheritParams standard_error
 #' @export
 standard_error_robust <- function(model,
-                                  vcov_estimation = "HC3",
+                                  vcov = "HC3",
                                   vcov_args = NULL,
                                   component = "conditional",
                                   ...) {
@@ -22,7 +22,7 @@ standard_error_robust <- function(model,
   }
 
   standard_error(model,
-                 vcov_estimation = vcov_estimation,
+                 vcov = vcov,
                  vcov_args = vcov_args,
                  ...)
 }
@@ -34,7 +34,7 @@ standard_error_robust <- function(model,
 #' @inheritParams p_value
 #' @export
 p_value_robust <- function(model,
-                           vcov_estimation = "HC",
+                           vcov = "HC",
                            vcov_args = NULL,
                            component = "conditional",
                            method = NULL,
@@ -51,7 +51,7 @@ p_value_robust <- function(model,
 
   p_value(
     model,
-    vcov_estimation = vcov_estimation,
+    vcov = vcov,
     vcov_args = vcov_args,
     component = component,
     ...)
@@ -66,7 +66,7 @@ p_value_robust <- function(model,
 ci_robust <- function(model,
                       ci = 0.95,
                       method = NULL,
-                      vcov_estimation = "HC",
+                      vcov = "HC",
                       vcov_args = NULL,
                       component = "conditional",
                       ...) {
@@ -75,7 +75,7 @@ ci_robust <- function(model,
     ci = ci,
     method = method,
     component = component,
-    vcov_estimation = vcov_estimation,
+    vcov = vcov,
     vcov_args = vcov_args,
     ...
   )
