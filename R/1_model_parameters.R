@@ -1,4 +1,4 @@
-# default methods, glm (almost default)
+# Arguments passed to or from other methods. For instance, when default methods, glm (almost default)
 
 #################### .default ----------------------
 
@@ -396,6 +396,13 @@ parameters <- model_parameters
 #'
 #' # standardized parameters
 #' model_parameters(model, standardize = "refit")
+#'
+#' # robust, heteroskedasticity-consistent standard errors
+#' model_parameters(model, vcov = "HC3")
+#'
+#' model_parameters(model,
+#'                  vcov = "vcovCL",
+#'                  vcov_args = list(cluster = mtcars$cyl))
 #'
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)

@@ -9,16 +9,18 @@
 #'   value `1` (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
-#' @param vcov String, indicating the suffix of the
-#'   `vcov*()`-function from the \pkg{sandwich} or \pkg{clubSandwich}
-#'   package, e.g. `vcov = "CL"` (which calls
-#'   [sandwich::vcovCL()] to compute clustered covariance matrix
-#'   estimators), or `vcov = "HC"` (which calls
-#'   [sandwich::vcovHC()] to compute
-#'   heteroskedasticity-consistent covariance matrix estimators).
-#' @param vcov_args List of named vectors, used as additional arguments that are
-#'   passed down to the \pkg{sandwich}-function specified in
-#'   `vcov`.
+#' @param vcov variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+#'  * A covariance matrix
+#'  * A function which returns a covariance matrix (e.g., `stats::vcov()`)
+#'  * A string which indicates the kind of uncertainty estimates to return.
+#'    - Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See `?sandwich::vcovHC`
+#'    - Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See `?clubSandwich::vcovCR()`
+#'    - Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See `?sandwich::vcovBS`
+#'    - Other `sandwich` package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+#' @param vcov_args List of arguments to be passed to the function identified by
+#'   the `vcov` argument. This function is typically supplied by the `sandwich`
+#'   or `clubSandwich` packages. Please refer to their documentation (e.g.,
+#'   `?sandwich::vcovHAC`) to see the list of available arguments.
 #' @param effects Should standard errors for fixed effects or random effects be
 #'   returned? Only applies to mixed models. May be abbreviated. When standard
 #'   errors for random effects are requested, for each grouping factor a list of
@@ -37,7 +39,14 @@
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+#'
 #' standard_error(model)
+#'
+#' standard_error(model, vcov = "HC3")
+#'
+#' standard_error(model,
+#'                vcov = "vcovCL",
+#'                vcov_args = list(cluster = iris$Species))
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")

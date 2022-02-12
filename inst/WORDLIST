@@ -181,6 +181,7 @@ lme
 lmodel
 lmtest
 loadings
+mammen
 merMod
 metaBMA
 metacluster
@@ -222,5 +223,14 @@ th
 tidymodels
 tseries
 varimax
+vcovBS
+vcovCL
+vcovCR
+vcovHC
+vcovHAC
+vcovPC
+vcovPL
+webb
+xy
 www
 ’

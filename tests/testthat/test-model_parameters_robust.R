@@ -15,10 +15,13 @@ if (requiet("testthat") &&
   })
 
   test_that("model_parameters, robust CL", {
-    params <- model_parameters(model, robust = TRUE, vcov_estimation = "CL", vcov_type = "HC1")
+    params1 <- model_parameters(model, robust = TRUE, vcov_estimation = "CL", vcov_type = "HC1")
+    params2 <- model_parameters(model, robust = TRUE, vcov_estimation = "CL", vcov_args = list(type = "HC1"))
     robust_se <- unname(sqrt(diag(sandwich::vcovCL(model))))
-    expect_equal(params$SE, robust_se, tolerance = 1e-3)
-    expect_equal(params$p, c(0, 0.00695, 0.00322, 0.00435, 0.94471, 0.00176), tolerance = 1e-3)
+    expect_equal(params1$SE, robust_se, tolerance = 1e-3)
+    expect_equal(params1$p, c(0, 0.00695, 0.00322, 0.00435, 0.94471, 0.00176), tolerance = 1e-3)
+    expect_equal(params2$SE, robust_se, tolerance = 1e-3)
+    expect_equal(params2$p, c(0, 0.00695, 0.00322, 0.00435, 0.94471, 0.00176), tolerance = 1e-3)
   })
 
   model2 <- lm(mpg ~ wt * am + cyl + gear, data = effectsize::standardize(mtcars))

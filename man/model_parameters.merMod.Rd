@@ -241,17 +241,23 @@ names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
-\item{vcov}{String, indicating the suffix of the
-\verb{vcov*()}-function from the \pkg{sandwich} or \pkg{clubSandwich}
-package, e.g. \code{vcov = "CL"} (which calls
-\code{\link[sandwich:vcovCL]{sandwich::vcovCL()}} to compute clustered covariance matrix
-estimators), or \code{vcov = "HC"} (which calls
-\code{\link[sandwich:vcovHC]{sandwich::vcovHC()}} to compute
-heteroskedasticity-consistent covariance matrix estimators).}
+\item{vcov}{variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
+\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
+\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+}
+}}
 
-\item{vcov_args}{List of named vectors, used as additional arguments that are
-passed down to the \pkg{sandwich}-function specified in
-\code{vcov}.}
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
+or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 }
 \value{
 A data frame of indices related to the model's parameters.
