@@ -317,7 +317,7 @@ parameters <- model_parameters
 #'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
 #'   effects will be returned.
-#'   - Robust estimation (i.e. `robust = TRUE`) of standardized parameters only
+#'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of standardized parameters only
 #'   works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   the coefficients (and related confidence intervals). This is typical for
