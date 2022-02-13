@@ -541,7 +541,8 @@ model_parameters.default <- function(model,
       drop_parameters = drop_parameters,
       verbose = verbose,
       vcov = vcov,
-      vcov_args = vcov_args)
+      vcov_args = vcov_args
+    )
     args <- c(args, dots)
     params <- do.call(".extract_parameters_generic", args)
   }
