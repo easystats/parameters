@@ -622,7 +622,8 @@ model_parameters.glm <- function(model,
     p_adjust = p_adjust,
     summary = summary,
     vcov = vcov,
-    vcov_args = vcov_args)
+    vcov_args = vcov_args
+  )
   args <- c(args, dots)
   out <- do.call(".model_parameters_generic", args)
 

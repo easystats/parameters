@@ -66,6 +66,14 @@ standard_error.default <- function(model,
 
   dots <- list(...)
 
+  # superseded arguments
+  if (isTRUE(verbose) && "vcov_type" %in% names(dots)) {
+    warning("The `vcov_type` argument is superseded by `vcov_args`.")
+  }
+  if (isTRUE(verbose) && "robust" %in% names(dots)) {
+    warning("The `robust` argument is superseded by `vcov`.")
+  }
+
   se <- NULL
 
   # vcov: matrix
@@ -192,7 +200,8 @@ standard_error.default <- function(model,
   if (vcov_fun %in% c("HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5")) {
     if (!"type" %in% names(vcov_args)) vcov_args[["type"]] <- vcov_fun
     vcov_fun <- "vcovHC"
-  # "HC" is both a `parameters` shortcut for the function name and a valid input for `type` in `vcovHC`
+  # "HC" is both a `parameters` shortcut for the function name and a valid
+  # input for `type` in `vcovHC`
   } else if (vcov_fun == "HC") {
     vcov_fun <- "vcovHC"
   } else if (vcov_fun %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {

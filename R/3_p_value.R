@@ -10,7 +10,7 @@
 #'  }
 #'
 #' @param model A statistical model.
-#' @param method string For linear mixed models, `method` can be
+#' @param method For linear mixed models, `method` can be
 #'   [`"kenward"`][p_value_kenward] or
 #'   [`"satterthwaite"`][p_value_satterthwaite].
 #' @param adjust Character value naming the method used to adjust p-values or
