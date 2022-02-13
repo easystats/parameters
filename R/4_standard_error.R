@@ -9,7 +9,7 @@
 #'   value `1` (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
-#' @param vcov variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+#' @param vcov Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
 #'  * A covariance matrix
 #'  * A function which returns a covariance matrix (e.g., `stats::vcov()`)
 #'  * A string which indicates the kind of uncertainty estimates to return.
