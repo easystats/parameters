@@ -16,7 +16,7 @@ p_value_robust(
 \arguments{
 \item{model}{A statistical model.}
 
-\item{vcov}{variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
 \item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
@@ -38,7 +38,7 @@ or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
 further details.}
 
-\item{method}{string For linear mixed models, \code{method} can be
+\item{method}{For linear mixed models, \code{method} can be
 \code{\link[=p_value_kenward]{"kenward"}} or
 \code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
@@ -47,3 +47,4 @@ further details.}
 \description{
 Robust p values. Superseded by the \verb{vcov*} arguments in \code{p_value()}
 }
+\keyword{internal}

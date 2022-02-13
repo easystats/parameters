@@ -32,6 +32,7 @@ standard_error_robust <- function(model,
 #' Robust p values. Superseded by the `vcov*` arguments in `p_value()`
 #'
 #' @inheritParams p_value
+#' @keywords internal
 #' @export
 p_value_robust <- function(model,
                            vcov = "HC",
@@ -62,6 +63,7 @@ p_value_robust <- function(model,
 #'
 #' @inheritParams ci.default
 #' @inheritParams standard_error
+#' @keywords internal
 #' @export
 ci_robust <- function(model,
                       ci = 0.95,

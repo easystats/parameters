@@ -86,7 +86,7 @@ standard_error(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{vcov}{variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
 \item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
@@ -124,7 +124,7 @@ errors for random effects are requested, for each grouping factor a list of
 standard errors (per group level) for random intercepts and slopes is
 returned.}
 
-\item{method}{string For linear mixed models, \code{method} can be
+\item{method}{For linear mixed models, \code{method} can be
 \code{\link[=p_value_kenward]{"kenward"}} or
 \code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 }

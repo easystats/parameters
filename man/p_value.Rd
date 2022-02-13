@@ -33,7 +33,7 @@ approximation method defined in \code{method}. If not \code{NULL}, use this argu
 to override the default degrees of freedom used to compute confidence
 intervals.}
 
-\item{method}{string For linear mixed models, \code{method} can be
+\item{method}{For linear mixed models, \code{method} can be
 \code{\link[=p_value_kenward]{"kenward"}} or
 \code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
@@ -41,7 +41,7 @@ intervals.}
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
 further details.}
 
-\item{vcov}{variance-covariance matrix used to compute uncertainty estimates. This argument accepts a covariance matrix, a function which returns a covariance, or a string which identifies the function to be used to compute the covariance matrix.
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
 \item A function which returns a covariance matrix (e.g., \code{stats::vcov()})

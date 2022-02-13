@@ -24,7 +24,7 @@ further details.}
 
 \item{...}{Additional arguments}
 
-\item{method}{string For linear mixed models, \code{method} can be
+\item{method}{For linear mixed models, \code{method} can be
 \code{\link[=p_value_kenward]{"kenward"}} or
 \code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
