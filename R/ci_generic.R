@@ -6,6 +6,7 @@
                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
                         vcov = NULL,
                         vcov_args = NULL,
+                        verbose = TRUE,
                         ...) {
 
   # check method
@@ -41,6 +42,7 @@
       method = method,
       vcov = vcov,
       vcov_args = vcov_args,
+      verbose = verbose,
       ...
     )
   })
@@ -61,6 +63,7 @@
                     se = NULL,
                     vcov = NULL,
                     vcov_args = NULL,
+                    verbose = TRUE,
                     ...) {
 
   if (inherits(model, "emmGrid")) {
@@ -95,6 +98,7 @@
                                  component = component,
                                  vcov = vcov,
                                  vcov_args = vcov_args,
+                                 verbose = verbose,
                                  ...)
     } else {
       stderror <- switch(method,

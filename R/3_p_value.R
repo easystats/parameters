@@ -105,7 +105,8 @@ p_value.default <- function(model,
     } else {
       args <- list(model,
                    vcov_args = vcov_args,
-                   vcov = vcov)
+                   vcov = vcov,
+                   verbose = verbose)
       args <- c(args, dots)
       se <- do.call("standard_error", args)
     }

@@ -451,9 +451,9 @@ model_parameters.default <- function(model,
         summary = summary,
         keep_parameters = keep,
         drop_parameters = drop,
-        verbose = verbose,
         vcov = vcov,
         vcov_args = vcov_args,
+        verbose = verbose,
         ...
       )
     },

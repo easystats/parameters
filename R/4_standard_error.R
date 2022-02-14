@@ -66,14 +66,6 @@ standard_error.default <- function(model,
 
   dots <- list(...)
 
-  # superseded arguments
-  if (isTRUE(verbose) && "vcov_type" %in% names(dots)) {
-    warning("The `vcov_type` argument is superseded by `vcov_args`.")
-  }
-  if (isTRUE(verbose) && "robust" %in% names(dots)) {
-    warning("The `robust` argument is superseded by `vcov`.")
-  }
-
   se <- NULL
 
   # vcov: matrix
@@ -92,7 +84,8 @@ standard_error.default <- function(model,
   if (is.character(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
                  vcov_fun = vcov,
-                 vcov_args = vcov_args)
+                 vcov_args = vcov_args,
+                 verbose = verbose)
     args <- c(args, dots)
     .vcov <- do.call(".get_vcov", args)
     se <- sqrt(diag(.vcov))
@@ -170,9 +163,18 @@ standard_error.default <- function(model,
                       vcov_args = NULL,
                       component = "conditional",
                       method = "any",
+                      verbose = TRUE,
                       ...) {
 
   dots <- list(...)
+
+  # superseded arguments
+  if (isTRUE(verbose) && "vcov_type" %in% names(dots)) {
+    warning("The `vcov_type` argument is superseded by the `vcov_args` argument.")
+  }
+  if (isTRUE(verbose) && "robust" %in% names(dots)) {
+    warning("The `robust` argument is superseded by the `vcov` argument.")
+  }
 
   if (is.null(vcov_args)) {
     vcov_args <- list()
@@ -197,25 +199,26 @@ standard_error.default <- function(model,
   }
 
   # type shortcuts: overwrite only if not supplied explicitly by the user
-  if (vcov_fun %in% c("HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5")) {
-    if (!"type" %in% names(vcov_args)) vcov_args[["type"]] <- vcov_fun
-    vcov_fun <- "vcovHC"
-  # "HC" is both a `parameters` shortcut for the function name and a valid
-  # input for `type` in `vcovHC`
-  } else if (vcov_fun == "HC") {
-    vcov_fun <- "vcovHC"
-  } else if (vcov_fun %in% c("CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3")) {
-    if (!"type" %in% names(vcov_args)) vcov_args[["type"]] <- vcov_fun
-    vcov_fun <- "vcovCR"
-  } else if (vcov_fun %in% c("xy", "residual", "wild", "mammen", "webb")) {
-    if (!"type" %in% names(vcov_args)) vcov_args[["type"]] <- vcov_fun
-    vcov_fun <- "vcovBS"
-  } else if (vcov_fun == "vcovCR") {
-    if (!"type" %in% names(vcov_args)) vcov_args[["type"]] <- "CR0"
-    vcov_fun <- "vcovCR"
-  # prefix for other functions exported by the `sandwich`
-  } else if (vcov_fun %in% c("OPG", "BS", "HAC", "PC", "CL", "PL", "CR")) {
-    vcov_fun <- paste0("vcov", vcov_fun)
+  if (!"type" %in% names(vcov_args)) {
+    if (vcov_fun %in% c("HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5",
+                        "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3", "xy",
+                        "residual", "wild", "mammen", "webb")) {
+      vcov_args[["type"]] <- vcov_fun
+    }
+  }
+
+  if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_fun)) {
+    vcov_fun <- switch(
+      vcov_fun,
+      "HC0" =, "HC1" =, "HC2" =, "HC3" =, "HC4" =, "HC4m" =, "HC5" =, "HC" = "vcovHC",
+      "CR0" =, "CR1" =, "CR1p" =, "CR1S" =, "CR2" =, "CR3" =, "CR" = "vcovCR",
+      "xy" =, "residual" =, "wild" =, "mammen" =, "webb" =, "BS" = "vcovBS",
+      "OPG" = "vcovOPG",
+      "HAC" = "vcovHAC",
+      "PC" = "vcovPC",
+      "CL" = "vcovCL",
+      "PL" = "vcovPL"
+    )
   }
 
   # check if required package is available
