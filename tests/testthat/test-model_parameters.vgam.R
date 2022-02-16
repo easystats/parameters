@@ -22,7 +22,7 @@ if (.runThisTest && requiet("testthat") && requiet("VGAM") && requiet("parameter
     params <- suppressWarnings(model_parameters(m1))
     expect_equal(params$Coefficient, as.vector(m1@coefficients[params$Parameter]), tolerance = 1e-3)
     expect_equal(params$Parameter, c("(Intercept):1", "(Intercept):2", "exposure.time", "s(let)"))
-    expect_equal(params$df, c(NA, NA, NA, 2.65007), tolerance = 1e-3)
+    expect_equal(params$df, c(NA, NA, NA, 2.77342), tolerance = 1e-3)
     expect_equal(as.vector(na.omit(params$df)), as.vector(m1@nl.df), tolerance = 1e-3)
   })
 
