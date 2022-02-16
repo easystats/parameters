@@ -82,7 +82,7 @@ determine the number of clusters need numeric input only.}
 
 \item{package}{Package from which methods are to be called to determine the
 number of clusters. Can be \code{"all"} or a vector containing
-\code{"NbClust"}, \code{"mclust"}, \code{"cluster"} and \code{"M3C"}.}
+\code{"easystats"}, \code{"NbClust"}, \code{"mclust"}, and \code{"M3C"}.}
 
 \item{fast}{If \code{FALSE}, will compute 4 more indices (sets \code{index = "allong"}
 in \code{NbClust}). This has been deactivated by default as it is
@@ -140,10 +140,10 @@ library(parameters)
 # The main 'n_clusters' function ===============================
 if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   require("cluster", quietly = TRUE) && require("see", quietly = TRUE)) {
-  n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust", "cluster"))
+  n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
   n
   summary(n)
-  as.data.frame(n)
+  as.data.frame(n)  # Duration is the time elapsed for each method in seconds
   plot(n)
 
   # The following runs all the method but it significantly slower

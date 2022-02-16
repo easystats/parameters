@@ -29,7 +29,7 @@ model_parameters.SemiParBIV <- function(model,
 #' @export
 p_value.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- .compact_list(s[grepl("^tableP", names(s))])
+  s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
   params <- do.call(rbind, lapply(1:length(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
@@ -38,14 +38,14 @@ p_value.SemiParBIV <- function(model, ...) {
   }))
   colnames(params)[4] <- "p"
   rownames(params) <- NULL
-  .remove_backticks_from_parameter_names(params[c("Parameter", "p", "Component")])
+  insight::text_remove_backticks(params[c("Parameter", "p", "Component")], verbose = FALSE)
 }
 
 
 #' @export
 standard_error.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- .compact_list(s[grepl("^tableP", names(s))])
+  s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
   params <- do.call(rbind, lapply(1:length(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
@@ -54,5 +54,5 @@ standard_error.SemiParBIV <- function(model, ...) {
   }))
   colnames(params)[2] <- "SE"
   rownames(params) <- NULL
-  .remove_backticks_from_parameter_names(params[c("Parameter", "SE", "Component")])
+  insight::text_remove_backticks(params[c("Parameter", "SE", "Component")], verbose = FALSE)
 }

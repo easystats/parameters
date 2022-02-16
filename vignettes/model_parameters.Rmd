@@ -49,8 +49,7 @@ if (!requireNamespace("poorman", quietly = TRUE) ||
   library(parameters)
   library(poorman)
   library(effectsize)
-  library(brms)
-    library(EGAnet)
+  library(EGAnet)
   library(psych)
   library(nFactors)
   library(brms)
@@ -93,6 +92,7 @@ cor.test(iris$Sepal.Length, iris$Sepal.Width) %>%
 t.test(mpg ~ vs, data = mtcars) %>%
   parameters()
 ```
+
 
 ### Bayesian
 

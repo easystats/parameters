@@ -20,7 +20,7 @@ model_parameters.glmmTMB <- function(model,
                                      robust = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
-                                     summary = FALSE,
+                                     summary = getOption("parameters_mixed_summary", FALSE),
                                      keep = NULL,
                                      drop = NULL,
                                      parameters = keep,
@@ -268,7 +268,7 @@ standard_error.glmmTMB <- function(model,
       return(NULL)
     }
 
-    cs <- .compact_list(stats::coef(summary(model)))
+    cs <- datawizard::compact_list(stats::coef(summary(model)))
     x <- lapply(names(cs), function(i) {
       .data_frame(
         Parameter = insight::find_parameters(model, effects = "fixed", component = i, flatten = TRUE),

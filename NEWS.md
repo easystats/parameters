@@ -1,4 +1,14 @@
-# parameters 0.15.1
+# parameters 0.16.1
+
+## General
+
+* Added options to set defaults for different arguments. Currently supported:
+  - `options("parameters_summary" = TRUE/FALSE)`, which sets the default value
+    for the `summary` argument in `model_parameters()` for non-mixed.
+  - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default 
+    value for the `summary` argument in `model_parameters()` for non-mixed.
+
+# parameters 0.16.0
 
 ## General
 

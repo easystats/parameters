@@ -560,7 +560,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
         "CI_high" = model$conf.int[2],
         "p" = model$p.value,
         "Method" = model$method,
-        stringsAsFactors = FALSE
+        stringsAsFactors = FALSE,
+        check.names = FALSE
       )
     } else {
       data.frame(
@@ -631,6 +632,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 # ==== effectsizes =====
 
 
+# effectsize Chi2 (Phi / Cramer's V) ----
+
 .add_effectsize_chi2 <- function(model,
                                  out,
                                  cramers_v = NULL,
@@ -687,6 +690,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 
+# effectsize Chi2 (McNemar) ----
+
 .add_effectsize_mcnemar <- function(model,
                                     out,
                                     cohens_g = NULL,
@@ -715,6 +720,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 
+
+# effectsize Cohen's d / Hedges g (t-test) ----
 
 .add_effectsize_ttest <- function(model,
                                   out,
@@ -779,6 +786,10 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 }
 
 
+
+
+# effectsize r (rank biserial) ----
+
 .add_effectsize_rankbiserial <- function(model,
                                          out,
                                          rank_biserial = NULL,
@@ -791,7 +802,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
     es <- effectsize::effectsize(model,
-      type = "r_rank_biserial",
+      type = "rank_biserial",
       ci = ci,
       verbose = verbose,
       ...
@@ -811,6 +822,10 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
+
+
+
+# effectsize rank Epsilon2 ----
 
 .add_effectsize_rankepsilon <- function(model,
                                         out,
@@ -846,6 +861,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   out
 }
 
+
+
+
+# effectsize Kendall's W ----
+
 .add_effectsize_kendalls_w <- function(model,
                                        out,
                                        kendalls_w = NULL,
@@ -878,6 +898,11 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
+
+
+
+
+# effectsize One-way Anova (Omega, Eta, ...) ----
 
 .add_effectsize_oneway <- function(model,
                                    out,

@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters")) {
+if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
@@ -8,7 +8,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   # aov ----------------------------------
 
   test_that("model_parameters.aov", {
-    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+    skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(Sepal.Width ~ Species, data = iris)
     mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
@@ -43,7 +43,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
   data(mtcars)
   test_that("model_parameters.anova", {
-    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+    skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
     mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
@@ -60,7 +60,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
   data(mtcars)
   test_that("model_parameters.anova", {
-    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+    skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     suppressWarnings({
       mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
@@ -90,7 +90,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
         contrasts = list(fcategory = contr.sum, partner.status = contr.sum)
       ))
     test_that("model_parameters.car-anova", {
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
       mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
       expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
@@ -115,7 +115,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   model <- aov(fit)
 
   test_that("model_parameters.maov", {
-    skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+    skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
@@ -139,7 +139,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with aov", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
 
       set.seed(123)
       npk.aov <- aov(yield ~ block + N * P, npk)
@@ -254,7 +254,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with manova", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
 
       set.seed(123)
       # fake a 2nd response variable
@@ -305,7 +305,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with Gam", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
 
       # setup
       set.seed(123)
@@ -356,7 +356,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with anova", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.0")
+      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
 
       set.seed(123)
       mod <-

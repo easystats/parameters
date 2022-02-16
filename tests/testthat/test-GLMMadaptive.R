@@ -49,7 +49,7 @@ if (requiet("testthat") &&
       tolerance = 1e-3
     )
 
-    expect_null(ci(m2, component = "zi"))
+    expect_null(suppressMessages(ci(m2, component = "zi")))
   })
 
 
@@ -82,7 +82,7 @@ if (requiet("testthat") &&
       tolerance = 1e-3
     )
 
-    expect_null(standard_error(m2, component = "zi"))
+    expect_null(suppressMessages(standard_error(m2, component = "zi")))
   })
 
 
@@ -114,7 +114,7 @@ if (requiet("testthat") &&
       tolerance = 1e-3
     )
 
-    expect_null(p_value(m2, component = "zi"))
+    expect_null(suppressMessages(p_value(m2, component = "zi")))
   })
 
 

@@ -7,46 +7,6 @@
 }
 
 
-
-
-
-
-
-
-#' Flatten a list
-#'
-#' @param object A list.
-#' @param name Name of column of keys in the case the output is a dataframe.
-#' @keywords internal
-.flatten_list <- function(object, name = "name") {
-  if (length(object) == 1) {
-    object[[1]]
-  } else if (all(sapply(object, is.data.frame))) {
-    if (is.null(names(object))) {
-      as.data.frame(t(sapply(object, rbind)))
-    } else {
-      tryCatch(
-        {
-          rn <- names(object)
-          object <- do.call(rbind, object)
-          object[name] <- rn
-          object[c(name, setdiff(names(object), name))]
-        },
-        warning = function(w) {
-          object
-        },
-        error = function(e) {
-          object
-        }
-      )
-    }
-  } else {
-    object
-  }
-}
-
-
-
 #' Recode a variable so its lowest value is beginning with zero
 #'
 #' @keywords internal
@@ -131,13 +91,6 @@
 }
 
 
-
-#' remove NULL elements from lists
-#' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
-
-
-
 #' remove empty string from character
 #' @keywords internal
 .compact_character <- function(x) x[!sapply(x, function(i) nchar(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
@@ -171,12 +124,16 @@
 }
 
 
-# capitalize first character in string
+# Execute a function but store warnings (https://stackoverflow.com/a/4947528/4198688)
 #' @keywords internal
-.capitalize <- function(x) {
-  capped <- grep("^[A-Z]", x, invert = TRUE)
-  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
-  x
+.catch_warnings <- function(expr) {
+  myWarnings <- NULL
+  wHandler <- function(w) {
+    myWarnings <<- c(myWarnings, list(w))
+    invokeRestart("muffleWarning")
+  }
+  val <- withCallingHandlers(expr, warning = wHandler)
+  list(out = val, warnings = myWarnings)
 }
 
 
@@ -184,41 +141,6 @@
 .safe_deparse <- function(string) {
   paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
 }
-
-
-
-#' @keywords internal
-.remove_columns <- function(data, variables) {
-  to_remove <- which(colnames(data) %in% variables)
-  if (length(to_remove)) {
-    data[, -to_remove, drop = FALSE]
-  } else {
-    data
-  }
-}
-
-
-
-
-#' @keywords internal
-.is_empty_object <- function(x) {
-  if (is.list(x)) {
-    x <- tryCatch(
-      {
-        .compact_list(x)
-      },
-      error = function(x) {
-        x
-      }
-    )
-  }
-  # this is an ugly fix because of ugly tibbles
-  if (inherits(x, c("tbl_df", "tbl"))) x <- as.data.frame(x)
-  x <- suppressWarnings(x[!is.na(x)])
-  length(x) == 0 || is.null(x)
-}
-
-
 
 
 #' @keywords internal
@@ -229,8 +151,6 @@
   if (isTRUE(na.rm)) x <- stats::na.omit(x)
   length(unique(x))
 }
-
-
 
 
 #' @keywords internal
@@ -261,17 +181,7 @@
 }
 
 
-
-
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
 
-
-
-# capitalizes the first letter in a string
-.capitalize <- function(x) {
-  capped <- grep("^[A-Z]", x, invert = TRUE)
-  substr(x[capped], 1, 1) <- toupper(substr(x[capped], 1, 1))
-  x
-}

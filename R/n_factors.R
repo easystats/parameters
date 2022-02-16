@@ -449,7 +449,7 @@ print.n_clusters <- print.n_factors
 
   data.frame(
     n_Factors = as.numeric(nfac),
-    Method = .capitalize(names(nfac)),
+    Method = insight::format_capitalize(names(nfac)),
     Family = "Barlett"
   )
 }

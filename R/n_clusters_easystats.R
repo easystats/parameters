@@ -20,6 +20,8 @@ n_clusters_elbow <- function(x,
                              clustering_function = stats::kmeans,
                              n_max = 10,
                              ...) {
+
+  t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,
     method = "wss",
@@ -36,6 +38,7 @@ n_clusters_elbow <- function(x,
 
   attr(out, "n") <- optim
   attr(out, "gradient") <- gradient
+  attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_elbow", class(out))
   out
 }
@@ -66,6 +69,8 @@ n_clusters_gap <- function(x,
                            gap_method = "firstSEmax",
                            ...) {
   insight::check_if_installed("cluster")
+
+  t0 <- Sys.time()
   rez <- .n_clusters_factoextra(
     x,
     method = "gap_stat",
@@ -83,6 +88,7 @@ n_clusters_gap <- function(x,
   attr(out, "n") <- optim
   attr(out, "ymin") <- rez$ymin
   attr(out, "ymax") <- rez$ymax
+  attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_gap", class(out))
   out
 }
@@ -108,6 +114,8 @@ n_clusters_silhouette <- function(x,
                                   clustering_function = stats::kmeans,
                                   n_max = 10,
                                   ...) {
+
+  t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,
     method = "silhouette",
@@ -122,6 +130,7 @@ n_clusters_silhouette <- function(x,
   optim <- which.max(out$Silhouette)
 
   attr(out, "n") <- optim
+  attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_silhouette", class(out))
   out
 }
@@ -151,6 +160,7 @@ n_clusters_silhouette <- function(x,
 #' @export
 n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {
   method <- match.arg(method)
+  t0 <- Sys.time()
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   if (method == "SS") {
@@ -182,7 +192,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
     attr(out, "eps") <- eps
     attr(out, "n") <- length(unique(rez$clusters)) - 1
   }
-
+  attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_dbscan", class(out))
   out
 }
@@ -209,6 +219,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
 #' @export
 n_clusters_hclust <- function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
   insight::check_if_installed("pvclust")
+  t0 <- Sys.time()
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   # pvclust works on columns, so we need to pivot the dataframe
@@ -218,6 +229,7 @@ n_clusters_hclust <- function(x, standardize = TRUE, include_factors = FALSE, di
   attr(out, "model") <- model
   attr(out, "ci") <- ci
   attr(out, "n") <- length(unique(out$Cluster)[unique(out$Cluster) != 0])
+  attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_hclust", class(out))
   out
 }
@@ -278,7 +290,7 @@ print.n_clusters_hclust <- function(x, ...) {
 #' @export
 visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   data <- as.data.frame(x)
-  data$Gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$WSS, max(data$WSS))))
+  data$Gradient <- datawizard::data_rescale(attributes(x)$gradient, c(min(data$WSS, max(data$WSS))))
   layers <- list()
 
   # Layers -----------------------
@@ -404,7 +416,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
   # Layers -----------------------
   if ("gradient" %in% names(attributes(x))) {
-    data$gradient <- datawizard::change_scale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
+    data$gradient <- datawizard::data_rescale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
 
     layers[["l1"]] <- list(
       geom = "line",
@@ -432,7 +444,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
       title = "DBSCAN Method"
     )
   } else {
-    data$y <- datawizard::change_scale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
+    data$y <- datawizard::data_rescale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
 
     layers[["l1"]] <- list(
       geom = "line",

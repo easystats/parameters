@@ -40,6 +40,7 @@ model_parameters.zcpglm <- function(model,
                                     keep = NULL,
                                     drop = NULL,
                                     parameters = keep,
+                                    summary = getOption("parameters_summary", FALSE),
                                     verbose = TRUE,
                                     ...) {
   component <- match.arg(component)
@@ -63,6 +64,7 @@ model_parameters.zcpglm <- function(model,
       p_adjust = p_adjust,
       keep_parameters = keep,
       drop_parameters = drop,
+      verbose = verbose,
       ...
     )
   }
@@ -78,6 +80,7 @@ model_parameters.zcpglm <- function(model,
     ci,
     exponentiate,
     p_adjust = p_adjust,
+    summary = summary,
     verbose = verbose,
     ...
   )

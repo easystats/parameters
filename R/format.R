@@ -285,7 +285,7 @@ format.parameters_stan <- function(x,
     })
   }
 
-  final_table <- .compact_list(final_table)
+  final_table <- datawizard::compact_list(final_table)
 
   # modify table title, if requested
   if (length(final_table) == 1 && !is.null(table_caption)) {

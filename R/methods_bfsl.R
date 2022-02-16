@@ -29,7 +29,7 @@ standard_error.bfsl <- function(model, ...) {
     stringsAsFactors = FALSE,
     row.names = NULL
   )
-  .remove_backticks_from_parameter_names(params)
+  insight::text_remove_backticks(params, verbose = FALSE)
 }
 
 

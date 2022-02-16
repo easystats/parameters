@@ -430,7 +430,9 @@
   }
 
   # remove columns that have only NA or Inf
-  to_remove <- sapply(x, function(col) all(is.na(col) | is.infinite(col)))
+  to_remove <- sapply(colnames(x), function(col) {
+    all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
+  })
   if (any(to_remove)) x[to_remove] <- NULL
 
   # For Bayesian models, we need to prettify parameter names here...
@@ -744,7 +746,7 @@
     final_table <- .fix_nonmatching_columns(final_table, is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan")))
     do.call(rbind, final_table)
   } else {
-    .compact_list(final_table)
+    datawizard::compact_list(final_table)
   }
 }
 

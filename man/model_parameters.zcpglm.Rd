@@ -17,6 +17,7 @@
   keep = NULL,
   drop = NULL,
   parameters = keep,
+  summary = getOption("parameters_summary", FALSE),
   verbose = TRUE,
   ...
 )
@@ -123,6 +124,10 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
+
+\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 
 \item{verbose}{Toggle warnings and messages.}
 

@@ -48,7 +48,7 @@ if (requiet("testthat") &&
     )
   })
 
-  if (.runThisTest) {
+  if (.runThisTest && requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
     mp <- suppressWarnings(model_parameters(bf,
@@ -125,19 +125,21 @@ if (requiet("testthat") &&
 
   expect_equal(dim(df_t), c(1L, 12L))
 
-  # with effectsize
-  set.seed(123)
-  df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), cohens_d = TRUE))
+  if (requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
+    # with effectsize
+    set.seed(123)
+    df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), cohens_d = TRUE))
 
-  # TODO: fix column order
-  expect_identical(
-    colnames(df_t_es),
-    c(
-      "Parameter", "Median", "CI", "CI_low", "CI_high", "Cohens_d",
-      "d_CI_low", "d_CI_high", "pd", "ROPE_Percentage",
-      "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+    # TODO: fix column order
+    expect_identical(
+      colnames(df_t_es),
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "Cohens_d",
+        "d_CI_low", "d_CI_high", "pd", "ROPE_Percentage",
+        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+      )
     )
-  )
 
-  expect_equal(dim(df_t_es), c(1L, 15L))
+    expect_equal(dim(df_t_es), c(1L, 15L))
+  }
 }

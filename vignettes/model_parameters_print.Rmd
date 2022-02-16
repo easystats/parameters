@@ -239,7 +239,27 @@ print(cp, groups = list(Species = c("Species (versicolor)",
                         Controls = "Petal Length"))
 ```
 
-## More advances tables and markdown / HTML formatting
+
+# Splitting wide tables into multiple table parts
+
+For very wide tables that cannot be displayed properly, you can use the `table_width` argument in the `print()` method to split tables into multiple parts. `table_width` can be a numeric value, or `"auto"`, indicating the width of the complete table. If `table_width = "auto"` and the table is wider than the current available width (i.e. line length) of the console (or any other source for textual output, like markdown files), the table is split into multiple parts. Else, if `table_width` is numeric and table rows are wider than `table_width`, the table is split into multiple parts.
+
+```{r}
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+lm4 <- lm(Sepal.Length ~ Species * Petal.Length + Petal.Width, data = iris)
+
+# very wide table
+compare_parameters(lm1, lm2, lm3, lm4)
+
+# table split into two parts
+tab <- compare_parameters(lm1, lm2, lm3, lm4)
+print(tab, table_width = 80)
+```
+
+# More advances tables and markdown / HTML formatting
 
 The `print_md()` as well as `print_html()` functions can be used to create markdown (for knitting to PDF or Word) and HTML tables. 
 
