@@ -4,9 +4,16 @@
 
 * Added options to set defaults for different arguments. Currently supported:
   - `options("parameters_summary" = TRUE/FALSE)`, which sets the default value
-    for the `summary` argument in `model_parameters()` for non-mixed.
+    for the `summary` argument in `model_parameters()` for non-mixed models.
   - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default 
-    value for the `summary` argument in `model_parameters()` for non-mixed.
+    value for the `summary` argument in `model_parameters()` for mixed models.
+
+* Minor improvements for `print()` methods.
+
+## Bug fixes
+
+* Fixed minor issues and edge cases in `n_clusters()` and related cluster
+  functions.
 
 # parameters 0.16.0
 
