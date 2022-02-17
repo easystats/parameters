@@ -209,6 +209,8 @@ simulate_parameters.multinom <- function(model,
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
 
   out
 }
