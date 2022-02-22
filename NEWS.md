@@ -15,6 +15,8 @@
 * Fixed minor issues and edge cases in `n_clusters()` and related cluster
   functions.
 
+* Fixed issue in `p_value()` that returned wrong p-values for `fixest::feols()`.
+
 # parameters 0.16.0
 
 ## General
