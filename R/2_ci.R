@@ -57,13 +57,24 @@ ci.glm <- function(x,
                    ci = .95,
                    dof = NULL,
                    method = "profile",
+                   vcov = NULL,
+                   vcov_args = NULL,
                    ...) {
   method <- match.arg(method, choices = c("profile", "wald", "normal", "residual"))
   if (method == "profile") {
+    if (!is.null(vcov) || !is.null(vcov_args)) {
+      stop('The `vcov` and `vcov_args` are not available with `method = "profile"`')
+    }
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)
   } else {
-    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
+    out <- .ci_generic(model = x,
+                       ci = ci,
+                       dof = dof,
+                       method = method,
+                       vcov = vcov,
+                       vcov_args = vcov_args,
+                       ...)
   }
 
   row.names(out) <- NULL

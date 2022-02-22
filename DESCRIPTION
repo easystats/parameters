@@ -125,6 +125,7 @@ Suggests:
     lm.beta,
     lme4,
     lmerTest,
+    lmtest,
     logspline,
     lqmm,
     M3C,
