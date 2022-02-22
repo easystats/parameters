@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-16-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-16-1"></a></h3>
 <ul><li><p>Fixed minor issues and edge cases in <code><a href="../reference/n_clusters.html">n_clusters()</a></code> and related cluster functions.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> that returned wrong p-values for <code>fixest::feols()</code>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> that returned wrong p-values for <code><a href="https://lrberge.github.io/fixest/reference/feols.html" class="external-link">fixest::feols()</a></code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -338,7 +338,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-11-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-11-0"></a></h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests when <code>standardize_d = TRUE</code>, did not return columns for the group-specific means.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> for <code>fixest::feols()</code>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> for <code><a href="https://lrberge.github.io/fixest/reference/feols.html" class="external-link">fixest::feols()</a></code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer()</a></code> models with p-values that were calculated with <code>df_method = "ml1"</code> or <code>df_method = "betwithin"</code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for multinomial models when response was a character vector (and no factor).</p></li>
 <li><p>Fixed issue in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> for model-parameters objects from Bayesian models.</p></li>
