@@ -176,8 +176,6 @@ Suggests:
     truncreg,
     VGAM,
     WRS2
-Remotes:
-    easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
