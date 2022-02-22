@@ -123,8 +123,11 @@ print.parameters_clusters <- function(x, digits = 2, ...) {
 # Predict -----------------------------------------------------------------
 
 
+#' Predict method for parameters_clusters objects
+#'
 #' @export
 #' @param names character vector or list
+#' @param newdata data.frame
 #' @inheritParams stats::predict
 predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ...) {
   if (is.null(newdata)) {

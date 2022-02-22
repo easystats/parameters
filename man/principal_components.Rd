@@ -34,13 +34,7 @@ principal_components(
 
 rotated_data(pca_results)
 
-predict.parameters_efa(
-  object,
-  newdata = NULL,
-  names = NULL,
-  keep_na = TRUE,
-  ...
-)
+\method{predict}{parameters_efa}(object, newdata = NULL, names = NULL, keep_na = TRUE, ...)
 
 \method{print}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
