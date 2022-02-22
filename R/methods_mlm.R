@@ -156,6 +156,8 @@ simulate_parameters.mlm <- function(model,
   attr(out, "object_class") <- class(model)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
 
   out
 }
