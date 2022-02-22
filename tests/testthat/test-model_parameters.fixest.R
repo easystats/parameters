@@ -1,4 +1,6 @@
-if (requiet("testthat") && requiet("parameters") && requiet("fixest") && requiet("datawizard")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fixest") && requiet("datawizard") && getRversion() >= "3.6.0") {
   data("qol_cancer")
   qol_cancer <- cbind(
     qol_cancer,
