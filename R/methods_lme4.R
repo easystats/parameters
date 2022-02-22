@@ -168,8 +168,7 @@ model_parameters.merMod <- function(model,
         include_sigma = include_sigma,
         summary = summary,
         vcov = vcov,
-        vcov_args = vcov_args
-      )
+        vcov_args = vcov_args)
       args <- c(args, dots)
       params <- do.call(".extract_parameters_mixed", args)
     }

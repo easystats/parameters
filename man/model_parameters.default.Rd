@@ -37,10 +37,10 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
-  verbose = TRUE,
   df_method = ci_method,
   vcov = NULL,
   vcov_args = NULL,
+  verbose = TRUE,
   ...
 )
 

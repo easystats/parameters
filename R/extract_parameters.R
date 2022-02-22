@@ -427,9 +427,9 @@
                                       drop_parameters = NULL,
                                       include_sigma = FALSE,
                                       summary = FALSE,
-                                      verbose = TRUE,
                                       vcov = NULL,
                                       vcov_args = NULL,
+                                      verbose = TRUE,
                                       ...) {
 
   dots <- list(...)
@@ -477,7 +477,8 @@
       args <- list(model,
                    ci = ci,
                    vcov = vcov,
-                   vcov_args = vcov_args)
+                   vcov_args = vcov_args,
+                   verbose = verbose)
       args <- c(args, dots)
       ci_df <- suppressMessages(do.call("ci", args))
     } else if (ci_method %in% c("kenward", "kr")) {
@@ -499,7 +500,8 @@
     if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
       args <- list(model,
                    vcov = vcov,
-                   vcov_args = vcov_args)
+                   vcov_args = vcov_args,
+                   verbose = verbose)
       args <- c(args, dots)
       parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
     # special handling for KR-SEs, which we already have computed from dof
@@ -517,7 +519,8 @@
   if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
     args <- list(model,
                  vcov = vcov,
-                 vcov_args = vcov_args)
+                 vcov_args = vcov_args,
+                 verbose = verbose)
     args <- c(args, dots)
     parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
   } else {
