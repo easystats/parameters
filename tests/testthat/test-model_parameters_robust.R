@@ -15,6 +15,13 @@ if (requiet("testthat") &&
       expect_equal(params$p, c(0, 0.0259, 0.01478, 0.01197, 0.95238, 0.01165), tolerance = 1e-3)
     })
 
+    test_that("ci, robust", {
+      params <- ci(model, robust = TRUE)
+      robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
+      upper_ci <- coef(model) + qt(.975, df.residual(model)) * robust_se
+      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3)
+    })
+
     test_that("model_parameters, robust CL", {
       params <- model_parameters(model, robust = TRUE, vcov_estimation = "CL", vcov_type = "HC1")
       robust_se <- unname(sqrt(diag(sandwich::vcovCL(model))))
@@ -50,6 +57,9 @@ if (requiet("testthat") &&
     })
   }
 
+  data(mtcars)
+  mtcars$am <- as.factor(mtcars$am)
+  model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
 
   if (packageVersion("parameters") >= "0.16.9.9") {
     test_that("model_parameters, robust", {
@@ -57,6 +67,13 @@ if (requiet("testthat") &&
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
       expect_equal(params$SE, robust_se, tolerance = 1e-3)
       expect_equal(params$p, c(0, 0.0259, 0.01478, 0.01197, 0.95238, 0.01165), tolerance = 1e-3)
+    })
+
+    test_that("ci, robust", {
+      params <- ci(model, robust = TRUE)
+      robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
+      upper_ci <- coef(model) + qt(.975, df.residual(model)) * robust_se
+      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3)
     })
 
     test_that("model_parameters, robust CL", {
