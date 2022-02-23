@@ -24,7 +24,7 @@ Models with special components (DirichletRegModel, clm2, cgam, ...)
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,8 +113,9 @@ parameters. See the documentation for your object's class:</p><ul><li><p><a href
   <span class="va">model</span>,
   dof <span class="op">=</span> <span class="cn">NULL</span>,
   method <span class="op">=</span> <span class="cn">NULL</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   component <span class="op">=</span> <span class="st">"all"</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
@@ -128,9 +129,7 @@ parameters. See the documentation for your object's class:</p><ul><li><p><a href
     <dl><dt>model</dt>
 <dd><p>A statistical model.</p></dd>
 <dt>...</dt>
-<dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where <code>method = "robust"</code> is supported.</p></dd>
+<dd><p>Additional arguments</p></dd>
 <dt>dof</dt>
 <dd><p>Number of degrees of freedom to be used when calculating
 confidence intervals. If <code>NULL</code> (default), the degrees of freedom are
@@ -139,16 +138,27 @@ approximation method defined in <code>method</code>. If not <code>NULL</code>, u
 to override the default degrees of freedom used to compute confidence
 intervals.</p></dd>
 <dt>method</dt>
-<dd><p>If <code>"robust"</code>, and if model is supported by the <span class="pkg">sandwich</span>
-or <span class="pkg">clubSandwich</span> packages, computes p-values based on robust
-covariance matrix estimation.</p></dd>
-<dt>robust</dt>
-<dd><p>Logical, if <code>TRUE</code>, computes confidence intervals (or p-values)
-based on robust standard errors. See <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></dd>
+<dd><p>For linear mixed models, <code>method</code> can be
+<code><a href="p_value_kenward.html">"kenward"</a></code> or
+<code><a href="p_value_satterthwaite.html">"satterthwaite"</a></code>.</p></dd>
 <dt>component</dt>
 <dd><p>Model component for which parameters should be shown. See
 the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> for
 further details.</p></dd>
+<dt>vcov</dt>
+<dd><p>Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
+<li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
+<li><p>A string which indicates the kind of uncertainty estimates to return.</p><ul><li><p>Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">?sandwich::vcovHC</a></code></p></li>
+<li><p>Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See <code>?clubSandwich::vcovCR()</code></p></li>
+<li><p>Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
+<li><p>Other <code>sandwich</code> package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"</p></li>
+</ul></li>
+</ul></dd>
+<dt>vcov_args</dt>
+<dd><p>List of arguments to be passed to the function identified by
+the <code>vcov</code> argument. This function is typically supplied by the <code>sandwich</code>
+or <code>clubSandwich</code> packages. Please refer to their documentation (e.g.,
+<code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available arguments.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
 <dt>ci</dt>
@@ -162,13 +172,6 @@ confidence intervals. See <code><a href="https://rdrr.io/pkg/emmeans/man/summary
     <p>A data frame with at least two columns: the parameter names and the
 p-values. Depending on the model, may also include columns for model
 components etc.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p><code><a href="standard_error_robust.html">p_value_robust()</a></code> resp. <code>p_value(robust = TRUE)</code>
-rely on the <span class="pkg">sandwich</span> or <span class="pkg">clubSandwich</span> package (the latter if
-<code>vcov_estimation = "CR"</code> for cluster-robust standard errors) and will
-thus only work for those models supported by those packages.</p>
     </div>
 
     <div class="section level2">

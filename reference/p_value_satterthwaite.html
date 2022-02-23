@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,11 +88,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_satterthwaite</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ci_satterthwaite</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">dof_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, robust <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">p_value_satterthwaite</span><span class="op">(</span><span class="va">model</span>, dof <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">se_satterthwaite</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
     </div>
@@ -103,13 +103,8 @@
 <dd><p>A statistical model.</p></dd>
 <dt>ci</dt>
 <dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-<dt>robust</dt>
-<dd><p>Logical, if <code>TRUE</code>, computes confidence intervals (or p-values)
-based on robust standard errors. See <code><a href="standard_error_robust.html">standard_error_robust()</a></code>.</p></dd>
 <dt>...</dt>
-<dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code>
-when confidence intervals or p-values based on robust standard errors
-should be computed.</p></dd>
+<dd><p>Additional arguments</p></dd>
 <dt>dof</dt>
 <dd><p>Degrees of Freedom.</p></dd>
 </dl></div>

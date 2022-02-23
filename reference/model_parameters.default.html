@@ -12,7 +12,7 @@ linear models (GLMs)."><meta property="og:image" content="/reference/figures/car
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,13 +100,14 @@ linear models (GLMs).</p>
   iterations <span class="op">=</span> <span class="fl">1000</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
   keep <span class="op">=</span> <span class="cn">NULL</span>,
   drop <span class="op">=</span> <span class="cn">NULL</span>,
   parameters <span class="op">=</span> <span class="va">keep</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -119,11 +120,12 @@ linear models (GLMs).</p>
   iterations <span class="op">=</span> <span class="fl">1000</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -135,7 +137,6 @@ linear models (GLMs).</p>
   iterations <span class="op">=</span> <span class="fl">1000</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">TRUE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
@@ -150,7 +151,6 @@ linear models (GLMs).</p>
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
@@ -165,7 +165,6 @@ linear models (GLMs).</p>
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
@@ -207,7 +206,7 @@ such behaviours, either use <code>standardize="basic"</code> or standardize the 
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
 effects will be returned.</p></li>
-<li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
+<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
 </ul></dd>
 <dt>exponentiate</dt>
@@ -222,14 +221,6 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
 from non-Gaussian families.</p></dd>
-<dt>robust</dt>
-<dd><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like <code>vcov_estimation</code> or
-<code>vcov_type</code> are passed down to other methods, see
-<code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
-and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
-for working examples.</p></dd>
 <dt>p_adjust</dt>
 <dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
@@ -264,6 +255,20 @@ names.</p></dd>
 <dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
+<dt>vcov</dt>
+<dd><p>Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
+<li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
+<li><p>A string which indicates the kind of uncertainty estimates to return.</p><ul><li><p>Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">?sandwich::vcovHC</a></code></p></li>
+<li><p>Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See <code>?clubSandwich::vcovCR()</code></p></li>
+<li><p>Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code></p></li>
+<li><p>Other <code>sandwich</code> package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"</p></li>
+</ul></li>
+</ul></dd>
+<dt>vcov_args</dt>
+<dd><p>List of arguments to be passed to the function identified by
+the <code>vcov</code> argument. This function is typically supplied by the <code>sandwich</code>
+or <code>clubSandwich</code> packages. Please refer to their documentation (e.g.,
+<code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available arguments.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods. For instance, when
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
@@ -420,6 +425,29 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |    4.90e-17 | 0.08 | [-0.15,  0.15] | 6.50e-16 | &gt; .999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -0.52 | 0.12 | [-0.77, -0.27] |    -4.22 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -0.45 | 0.12 | [-0.70, -0.20] |    -3.64 | 0.001 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># robust, heteroskedasticity-consistent standard errors</span></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, vcov <span class="op">=</span> <span class="st">"HC3"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.69 | 2.30 | [34.97, 44.40] | 17.22 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 0.78 | [-4.78, -1.60] | -4.10 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.39 | [-2.30, -0.72] | -3.90 | &lt; .001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>,</span>
+<span class="r-in">                 vcov <span class="op">=</span> <span class="st">"vcovCL"</span>,</span>
+<span class="r-in">                 vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |         95% CI | t(29) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.69 | 1.50 | [36.61, 42.76] | 26.43 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.19 | 1.20 | [-5.65, -0.73] | -2.65 | 0.013 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.51 | 0.40 | [-2.32, -0.70] | -3.82 | &lt; .001</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>

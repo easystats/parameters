@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,14 +121,35 @@
 
     
     
-<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function also allows the computation of standard errors, confidence intervals, and <em>p</em>-values based on robust covariance matrix estimation from model parameters. Robust estimation relies on the <a href="https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf" class="external-link"><code>sandwich</code></a> and <a href="https://cran.r-project.org/web/packages/clubSandwich/index.html" class="external-link"><code>clubSandwich</code></a> packages. This means that all models supported by either of these packages should work with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> when <code>robust = TRUE</code>.</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html" class="external-link"><code>model_parameters()</code></a> function also allows the computation of standard errors, confidence intervals, and <em>p</em>-values based on various covariance matrices: heteroskedasticity-consistent, cluster-robust, bootstrap, etc. This functionality relies on the <a href="https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf" class="external-link"><code>sandwich</code></a> and <a href="https://cran.r-project.org/web/packages/clubSandwich/index.html" class="external-link"><code>clubSandwich</code></a> packages. This means that all models supported by either of these packages should work with <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
+<p>The computation of robust standard errors is controlled by two arguments:</p>
+<ol style="list-style-type: decimal">
+<li>
+<code>vcov</code>: accepts 3 types of arguments
+<ul>
+<li>A covariance matrix</li>
+<li>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</li>
+<li>A string which indicates the kind of uncertainty estimates to return.
+<ul>
+<li>Heteroskedasticity-consistent: “vcovHC”, “HC”, “HC0”, “HC1”, “HC2”, “HC3”, “HC4”, “HC4m”, “HC5”</li>
+<li>Cluster-robust: “vcovCR”, “CR0”, “CR1”, “CR1p”, “CR1S”, “CR2”, “CR3”</li>
+<li>Bootstrap: “vcovBS”, “xy”, “residual”, “wild”, “mammen”, “webb”</li>
+<li>Other <code>sandwich</code> functions: “vcovHAC”, “vcovPC”, “vcovCL”, “vcovPL”</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<code>vcov_args</code>: list of arguments passed to the <code>sandwich</code> or <code>clubSandwich</code> function used to compute the covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
+</li>
+</ol>
 <div class="section level2">
 <h2 id="linear-regression-models">Linear Regression Models<a class="anchor" aria-label="anchor" href="#linear-regression-models"></a>
 </h2>
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-from-model-parameters">Robust Covariance Matrix Estimation from Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-from-model-parameters"></a>
 </h3>
-<p>By default, when <code>model_parameters(robust = TRUE)</code>, it internally calls <code>sandwich::vcovHC(type = "HC3")</code>. However, there are three arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error_robust.html" class="external-link"><code>?standard_error_robust</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov_estimation</code> - <code>vcov_type</code> - <code>vcov_args</code></p>
+<p>However, there are two arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error.html" class="external-link"><code>?standard_error</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov</code> - <code>vcov_args</code></p>
 <p>Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type “HC3” (i.e. <code>sandwich::vcovHC(type = "HC3")</code>).</p>
 <p>First let’s create a simple linear regression model, which we know violates homoscedasticity assumption, and thus robust estimation methods are to be considered.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -148,7 +169,7 @@
 <span class="co">#&gt; speed       |        3.93 | 0.42 | [  3.10,  4.77] |  9.46 | &lt; .001</span>
 
 <span class="co"># model parameters, where SE, CI, and p-values are based on robust estimation</span>
-<span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, vcov <span class="op">=</span> <span class="st">"HC3"</span><span class="op">)</span>
 <span class="va">mp</span>
 <span class="co">#&gt; Parameter   | Coefficient |   SE |          95% CI | t(48) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------</span>
@@ -164,8 +185,8 @@
 <div class="section level3">
 <h3 id="cluster-robust-covariance-matrix-estimation-sandwich">Cluster-Robust Covariance Matrix Estimation (sandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-sandwich"></a>
 </h3>
-<p>If a different type of covariance matrix estimation is required, use the <code>vcov_estimation</code>-argument. This argument needs the suffix for the related <code>vcov*()</code>-functions as value, i.e. <code>vcov_estimation = "CL"</code> would call <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code>, or <code>vcov_estimation = "HAC"</code> would call <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">sandwich::vcovHAC()</a></code>.</p>
-<p>The specific estimation type can also be changed with <code>vcov_type</code>. For example, <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> accepts estimation types <code>HC0</code> to <code>HC3</code>. In the next example, we use a clustered covariance matrix estimation with <code>HC1</code>-estimation type.</p>
+<p>If a different type of covariance matrix estimation is required, use the <code>vcov</code>-argument. This argument accepts the name of a function from the <code>sandwich</code> or <code>clubSandwich</code> packages as a string, such as <code>"vcovCL"</code> (or just its suffix <code>"CL"</code>). <code>parameters</code> will then call the corresponding function with the content of <code>vcov_args</code> as arguments.</p>
+<p>The specific estimation type can be controlled by passing a <code>type</code> argument via <code>vcov_args</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types of covariance matrices that this function can produce (<code>HC0</code> to <code>HC3</code>). In the next example, we use a clustered covariance matrix estimation with <code>HC1</code>-estimation type.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># let's create a more complicated model</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
@@ -174,9 +195,8 @@
 <span class="co"># change estimation-type</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
-  robust <span class="op">=</span> <span class="cn">TRUE</span>,
-  vcov_estimation <span class="op">=</span> <span class="st">"CL"</span>, <span class="co"># type of covariance matrix</span>
-  vcov_type <span class="op">=</span> <span class="st">"HC1"</span> <span class="co"># type of robust estimation</span>
+  vcov <span class="op">=</span> <span class="st">"CL"</span>, <span class="co"># type of covariance matrix</span>
+  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span> <span class="co"># type of robust estimation</span>
 <span class="op">)</span>
 
 <span class="va">mp</span>
@@ -202,10 +222,8 @@
 <span class="co"># change estimation-type, defining additional arguments</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
-  robust <span class="op">=</span> <span class="cn">TRUE</span>,
-  vcov_estimation <span class="op">=</span> <span class="st">"CL"</span>,
-  vcov_type <span class="op">=</span> <span class="st">"HC1"</span>,
-  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
+  vcov <span class="op">=</span> <span class="st">"vcovCL"</span>,
+  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"HC1"</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="va">mp</span>
@@ -228,7 +246,7 @@
 <div class="section level3">
 <h3 id="cluster-robust-covariance-matrix-estimation-clubsandwich">Cluster-Robust Covariance Matrix Estimation (clubSandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-clubsandwich"></a>
 </h3>
-<p>Cluster-robust estimation of the variance-covariance matrix can also be achieved using <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>. Thus, when <code>vcov_estimation = "CR"</code>, the related function from the <code>clubSandwich</code> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
+<p>using <code><a href="https://rdrr.io/pkg/clubSandwich/man/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>. Thus, when <code>vcov = "CR"</code>, the related function from the <code>clubSandwich</code> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create fake-cluster-variable, to demonstrate cluster robust standard errors</span>
 <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -236,10 +254,8 @@
 <span class="co"># cluster-robust estimation</span>
 <span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
-  robust <span class="op">=</span> <span class="cn">TRUE</span>,
-  vcov_estimation <span class="op">=</span> <span class="st">"CR"</span>,
-  vcov_type <span class="op">=</span> <span class="st">"CR1"</span>,
-  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
+  vcov <span class="op">=</span> <span class="st">"vcovCR"</span>,
+  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"CR1"</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="va">mp</span>
 <span class="co">#&gt; Parameter                           | Coefficient |   SE |        95% CI | t(143) |      p</span>
@@ -265,7 +281,7 @@
 <p>Finally, robust estimation can be combined with <a href="https://easystats.github.io/parameters/articles/model_parameters_standardized.html" class="external-link">standardization</a>. However, robust covariance matrix estimation only works for <code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, robust estimation on standardized model</span>
-<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, vcov <span class="op">=</span> <span class="st">"HC3"</span><span class="op">)</span>
 <span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                         |       -1.30 | 0.07 | [-1.44, -1.16] | -18.70 | &lt; .001</span>
@@ -320,22 +336,20 @@
 <span class="co"># model parameters with cluster robust estimation</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
-  robust <span class="op">=</span> <span class="cn">TRUE</span>,
-  vcov_estimation <span class="op">=</span> <span class="st">"CR"</span>,
-  vcov_type <span class="op">=</span> <span class="st">"CR1"</span>,
-  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
+  vcov <span class="op">=</span> <span class="st">"vcovCR"</span>,
+  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"CR1"</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)                        |        1.55 | 0.40 | [ 0.76,  2.35] |   3.87 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |   0.75 | 0.608 </span>
-<span class="co">#&gt; Species [virginica]                |       -0.41 | 0.19 | [-0.78, -0.03] |  -0.70 | 0.033 </span>
-<span class="co">#&gt; Sepal Width                        |        0.66 | 0.10 | [ 0.46,  0.86] |   5.83 | &lt; .001</span>
-<span class="co">#&gt; Petal Length                       |        0.82 | 0.05 | [ 0.72,  0.91] |  12.52 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.48 | 0.35 | [-1.18,  0.21] |  -2.60 | 0.172 </span>
-<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.36 | 0.11 | [-0.57, -0.15] |  -1.99 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]               |        0.41 | 0.80 | [-1.17,  1.99] |   0.51 | 0.608 </span>
+<span class="co">#&gt; Species [virginica]                |       -0.41 | 0.19 | [-0.78, -0.03] |  -2.15 | 0.033 </span>
+<span class="co">#&gt; Sepal Width                        |        0.66 | 0.10 | [ 0.46,  0.86] |   6.64 | &lt; .001</span>
+<span class="co">#&gt; Petal Length                       |        0.82 | 0.05 | [ 0.72,  0.91] |  17.27 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.48 | 0.35 | [-1.18,  0.21] |  -1.37 | 0.172 </span>
+<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.36 | 0.11 | [-0.57, -0.15] |  -3.39 | &lt; .001</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
@@ -354,22 +368,20 @@
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   standardize <span class="op">=</span> <span class="st">"refit"</span>,
-  robust <span class="op">=</span> <span class="cn">TRUE</span>,
-  vcov_estimation <span class="op">=</span> <span class="st">"CR"</span>,
-  vcov_type <span class="op">=</span> <span class="st">"CR1"</span>,
-  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
+  vcov <span class="op">=</span> <span class="st">"vcovCR"</span>,
+  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"CR1"</span>, cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">grp</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter                          | Coefficient |   SE |         95% CI | t(141) |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |   4.74 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] |  -4.91 | &lt; .001</span>
-<span class="co">#&gt; Species [virginica]                |       -1.81 | 0.23 | [-2.26, -1.37] |  -5.33 | &lt; .001</span>
-<span class="co">#&gt; Sepal Width                        |        0.35 | 0.05 | [ 0.24,  0.45] |   5.83 | &lt; .001</span>
-<span class="co">#&gt; Petal Length                       |        1.74 | 0.10 | [ 1.54,  1.94] |  12.52 | &lt; .001</span>
-<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.25 | 0.19 | [-0.62,  0.11] |  -2.60 | 0.172 </span>
-<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.19 | 0.06 | [-0.30, -0.08] |  -1.99 | &lt; .001</span>
+<span class="co">#&gt; (Intercept)                        |        0.97 | 0.08 | [ 0.82,  1.12] |  12.55 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor]               |       -1.29 | 0.33 | [-1.95, -0.63] |  -3.85 | &lt; .001</span>
+<span class="co">#&gt; Species [virginica]                |       -1.81 | 0.23 | [-2.26, -1.37] |  -8.01 | &lt; .001</span>
+<span class="co">#&gt; Sepal Width                        |        0.35 | 0.05 | [ 0.24,  0.45] |   6.64 | &lt; .001</span>
+<span class="co">#&gt; Petal Length                       |        1.74 | 0.10 | [ 1.54,  1.94] |  17.27 | &lt; .001</span>
+<span class="co">#&gt; Species [versicolor] * Sepal Width |       -0.25 | 0.19 | [-0.62,  0.11] |  -1.37 | 0.172 </span>
+<span class="co">#&gt; Species [virginica] * Sepal Width  |       -0.19 | 0.06 | [-0.30, -0.08] |  -3.39 | &lt; .001</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>

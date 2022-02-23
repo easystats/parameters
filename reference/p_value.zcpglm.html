@@ -12,7 +12,7 @@ zero-inflated models."><meta property="og:image" content="/reference/figures/car
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,13 +113,11 @@ zero-inflated models.</p>
 the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> for
 further details.</p></dd>
 <dt>...</dt>
-<dd><p>Arguments passed down to <code><a href="standard_error_robust.html">standard_error_robust()</a></code> when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where <code>method = "robust"</code> is supported.</p></dd>
+<dd><p>Additional arguments</p></dd>
 <dt>method</dt>
-<dd><p>If <code>"robust"</code>, and if model is supported by the <span class="pkg">sandwich</span>
-or <span class="pkg">clubSandwich</span> packages, computes p-values based on robust
-covariance matrix estimation.</p></dd>
+<dd><p>For linear mixed models, <code>method</code> can be
+<code><a href="p_value_kenward.html">"kenward"</a></code> or
+<code><a href="p_value_satterthwaite.html">"satterthwaite"</a></code>.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
 </dl></div>

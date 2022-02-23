@@ -12,7 +12,7 @@ cplm or countreg)."><meta property="og:image" content="/reference/figures/card.p
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.99</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,7 +100,6 @@ cplm or countreg)."><meta property="og:image" content="/reference/figures/card.p
   component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
-  robust <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
   keep <span class="op">=</span> <span class="cn">NULL</span>,
   drop <span class="op">=</span> <span class="cn">NULL</span>,
@@ -142,7 +141,7 @@ such behaviours, either use <code>standardize="basic"</code> or standardize the 
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
 effects will be returned.</p></li>
-<li><p>Robust estimation (i.e. <code>robust=TRUE</code>) of standardized parameters only
+<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
 works when <code>standardize="refit"</code>.</p></li>
 </ul></dd>
 <dt>exponentiate</dt>
@@ -157,14 +156,6 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
 <code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
 from non-Gaussian families.</p></dd>
-<dt>robust</dt>
-<dd><p>Logical, if <code>TRUE</code>, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like <code>vcov_estimation</code> or
-<code>vcov_type</code> are passed down to other methods, see
-<code><a href="standard_error_robust.html">standard_error_robust()</a></code> for details
-and <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link">this vignette</a>
-for working examples.</p></dd>
 <dt>p_adjust</dt>
 <dd><p>Character vector, if not <code>NULL</code>, indicates the method to
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further

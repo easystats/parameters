@@ -82,6 +82,9 @@
     <loc>/reference/ci.default.html</loc>
   </url>
   <url>
+    <loc>/reference/ci_robust.html</loc>
+  </url>
+  <url>
     <loc>/reference/cluster_analysis.html</loc>
   </url>
   <url>
@@ -259,6 +262,9 @@
     <loc>/reference/p_value_ml1.html</loc>
   </url>
   <url>
+    <loc>/reference/p_value_robust.html</loc>
+  </url>
+  <url>
     <loc>/reference/p_value_satterthwaite.html</loc>
   </url>
   <url>
@@ -266,6 +272,9 @@
   </url>
   <url>
     <loc>/reference/pool_parameters.html</loc>
+  </url>
+  <url>
+    <loc>/reference/predict.parameters_clusters.html</loc>
   </url>
   <url>
     <loc>/reference/principal_components.html</loc>
