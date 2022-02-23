@@ -60,11 +60,13 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
                          method = NULL,
                          statistic = NULL,
                          se = NULL,
-                         robust = FALSE,
                          component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
                          effects = c("fixed", "random", "all"),
                          verbose = TRUE,
+                         vcov = NULL,
+                         vcov_args = NULL,
                          ...) {
+
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -88,12 +90,16 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     if (is.null(se)) {
       se <- se_kenward(model)$SE
     }
-  } else if (isTRUE(robust)) {
-    se <- standard_error_robust(model, component = component, ...)$SE
+  } else if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+    se <- standard_error(model,
+                         vcov = vcov,
+                         vcov_args = vcov_args,
+                         component = component,
+                         ...)$SE
   }
 
   # overwrite statistic, based on robust or kenward standard errors
-  if (identical(method, "kenward") || identical(method, "kr") || isTRUE(robust)) {
+  if (identical(method, "kenward") || identical(method, "kr") || !is.null(vcov)) {
     estimate <- if ("Coefficient" %in% colnames(params)) {
       params$Coefficient
     } else {

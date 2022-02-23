@@ -49,7 +49,6 @@ model_parameters.glht <- function(model,
     merge_by = "Parameter",
     standardize = NULL,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = NULL,
     verbose = verbose,
     ...
@@ -62,7 +61,18 @@ model_parameters.glht <- function(model,
 
 
 #' @export
-ci.glht <- function(x, ci = .95, robust = TRUE, ...) {
+ci.glht <- function(x, ci = .95, ...) {
+
+  # backward compatibility with `robust` argument
+  dots <- list(...)
+  if ("robust" %in% names(dots) && !"vcov" %in% names(dots)) {
+    robust <- dots[["robust"]]
+  } else if (any(c("vcov", "vcov_args") %in% names(dots))) {
+    robust <- TRUE
+  } else {
+    robust <- FALSE
+  }
+
   s <- summary(x)
   if (robust) {
     adjusted_ci <- 2 * stats::pnorm(s$test$qfunction(ci)) - 1

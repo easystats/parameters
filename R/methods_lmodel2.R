@@ -23,7 +23,6 @@ model_parameters.lmodel2 <- function(model,
     merge_by = c("Parameter", "Component"),
     standardize = NULL,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     verbose = verbose,
     ...

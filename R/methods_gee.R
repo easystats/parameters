@@ -4,10 +4,10 @@ standard_error.geeglm <- standard_error.default
 
 
 #' @export
-standard_error.gee <- function(model, method = NULL, robust = FALSE, ...) {
+standard_error.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
 
-  if (isTRUE(robust)) {
+  if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     se <- as.vector(cs[, "Robust S.E."])
   } else {
     se <- as.vector(cs[, "Naive S.E."])
@@ -18,13 +18,13 @@ standard_error.gee <- function(model, method = NULL, robust = FALSE, ...) {
 
 
 #' @export
-p_value.gee <- function(model, method = NULL, robust = FALSE, ...) {
+p_value.gee <- function(model, method = NULL, ...) {
   cs <- stats::coef(summary(model))
   if (is.null(method)) {
     method <- "any"
   }
 
-  if (isTRUE(robust)) {
+  if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
   } else {
     p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)

@@ -9,9 +9,7 @@
 \arguments{
 \item{model}{A statistical model.}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Additional arguments}
 }
 \value{
 The p-values.

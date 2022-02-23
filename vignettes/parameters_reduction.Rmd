@@ -1,5 +1,5 @@
 ---
-title: "Feature Reduction (PCA, cMDS, ICA...)"
+title: "Feature Reduction (PCA, cMDS, ICA, ...)"
 output: 
   rmarkdown::html_vignette:
     toc: true

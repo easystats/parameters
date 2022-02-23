@@ -7,7 +7,6 @@
                                              iterations = 1000,
                                              ci_method = NULL,
                                              p_adjust = NULL,
-                                             robust = FALSE,
                                              summary = FALSE,
                                              verbose = TRUE,
                                              group_level = FALSE,
@@ -57,7 +56,7 @@
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "p_adjust") <- p_adjust
-  attr(params, "robust_vcov") <- isTRUE(robust)
+  attr(params, "robust_vcov") <- isTRUE(list(...)$robust) || "vcov" %in% names(list(...))
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)

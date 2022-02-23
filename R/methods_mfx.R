@@ -9,7 +9,6 @@ model_parameters.logitor <- function(model,
                                      iterations = 1000,
                                      standardize = NULL,
                                      exponentiate = TRUE,
-                                     robust = FALSE,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
@@ -20,7 +19,6 @@ model_parameters.logitor <- function(model,
     iterations = iterations,
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = robust,
     p_adjust = p_adjust,
     ...
   )
@@ -44,7 +42,6 @@ model_parameters.poissonmfx <- function(model,
                                         component = c("all", "conditional", "marginal"),
                                         standardize = NULL,
                                         exponentiate = FALSE,
-                                        robust = FALSE,
                                         p_adjust = NULL,
                                         verbose = TRUE,
                                         ...) {
@@ -58,7 +55,6 @@ model_parameters.poissonmfx <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     component = component,
-    robust = robust,
     p_adjust = p_adjust,
     ...
   )
@@ -115,7 +111,6 @@ model_parameters.betamfx <- function(model,
                                      component = c("all", "conditional", "precision", "marginal"),
                                      standardize = NULL,
                                      exponentiate = FALSE,
-                                     robust = FALSE,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
@@ -129,7 +124,6 @@ model_parameters.betamfx <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     component = component,
-    robust = robust,
     p_adjust = p_adjust,
     ...
   )
@@ -145,8 +139,8 @@ model_parameters.betamfx <- function(model,
 
 
 #' @export
-ci.logitor <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
-  .ci_generic(model = x$fit, ci = ci, method = method, robust = robust, ...)
+ci.logitor <- function(x, ci = .95, method = NULL, ...) {
+  .ci_generic(model = x$fit, ci = ci, method = method, ...)
 }
 
 
@@ -163,10 +157,9 @@ ci.poissonmfx <- function(x,
                           ci = .95,
                           component = c("all", "conditional", "marginal"),
                           method = NULL,
-                          robust = FALSE,
                           ...) {
   component <- match.arg(component)
-  .ci_generic(model = x, ci = ci, component = component, method = method, robust = robust, ...)
+  .ci_generic(model = x, ci = ci, component = component, method = method, ...)
 }
 
 
@@ -196,11 +189,10 @@ ci.betaor <- function(x,
 ci.betamfx <- function(x,
                        ci = .95,
                        method = NULL,
-                       robust = FALSE,
                        component = c("all", "conditional", "precision", "marginal"),
                        ...) {
   component <- match.arg(component)
-  .ci_generic(model = x, ci = ci, component = component, method = method, robust = robust, ...)
+  .ci_generic(model = x, ci = ci, component = component, method = method, ...)
 }
 
 
@@ -215,7 +207,7 @@ standard_error.negbin <- standard_error.default
 
 #' @export
 standard_error.logitor <- function(model, ...) {
-  standard_error.lm(model$fit, ...)
+  standard_error.default(model$fit, ...)
 }
 
 

@@ -37,7 +37,6 @@
   standardize = NULL,
   exponentiate = FALSE,
   ci_method = "wald",
-  robust = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
@@ -60,7 +59,6 @@
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
@@ -70,6 +68,8 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
+  vcov = NULL,
+  vcov_args = NULL,
   ...
 )
 
@@ -127,7 +127,7 @@ such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
-\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+\item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of standardized parameters only
 works when \code{standardize="refit"}.
 }}
 
@@ -188,14 +188,6 @@ with zero-inflated component. \code{component} may be one of \code{"conditional"
 \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
 (default). May be abbreviated.}
 
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like \code{vcov_estimation} or
-\code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details
-and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
-for working examples.}
-
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column
 will indicate which variables belong to the within-effects,
@@ -248,6 +240,24 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
+\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
+\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
+or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 }
 \value{
 A data frame of indices related to the model's parameters.

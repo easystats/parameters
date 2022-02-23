@@ -28,7 +28,6 @@ model_parameters.DirichletRegModel <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     ...
   ))
 

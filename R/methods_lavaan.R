@@ -249,6 +249,7 @@ print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...
 
 
 #' @export
+#' @inheritParams stats::predict
 predict.parameters_sem <- function(object, newdata = NULL, ...) {
   insight::check_if_installed("lavaan")
 

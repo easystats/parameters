@@ -19,24 +19,15 @@
 #'   `"quantile"`, `"ci"`, `"eti"`, `"si"`, `"bci"`, or `"bcai"`. See section
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details.
-#' @param robust Logical, if `TRUE`, computes confidence intervals (or p-values)
-#'   based on robust standard errors. See [`standard_error_robust()`].
 #' @param component Model component for which parameters should be shown. See
 #'   the documentation for your object's class in [`model_parameters()`] for
 #'   further details.
 #' @param iterations The number of bootstrap replicates. Only applies to models
 #'   of class `merMod` when `method=boot`.
 #' @param verbose Toggle warnings and messages.
-#' @param ... Arguments passed down to [`standard_error_robust()`]
-#'   when confidence intervals or p-values based on robust standard errors
-#'   should be computed.
+#' @param ... Additional arguments
 #'
 #' @return A data frame containing the CI bounds.
-#'
-#' @note `ci_robust()` resp. `ci(robust=TRUE)` rely on the \pkg{sandwich}
-#'   or \pkg{clubSandwich} package (the latter if `vcov_estimation="CR"` for
-#'   cluster-robust standard errors) and will thus only work for those models
-#'   supported by those packages.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
@@ -56,8 +47,8 @@
 #' }
 #' }
 #' @export
-ci.default <- function(x, ci = .95, dof = NULL, method = NULL, robust = FALSE, ...) {
-  .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
+ci.default <- function(x, ci = .95, dof = NULL, method = NULL, ...) {
+  .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
 }
 
 
@@ -66,14 +57,24 @@ ci.glm <- function(x,
                    ci = .95,
                    dof = NULL,
                    method = "profile",
-                   robust = FALSE,
+                   vcov = NULL,
+                   vcov_args = NULL,
                    ...) {
   method <- match.arg(method, choices = c("profile", "wald", "normal", "residual"))
   if (method == "profile") {
+    if (!is.null(vcov) || !is.null(vcov_args)) {
+      stop('The `vcov` and `vcov_args` are not available with `method = "profile"`')
+    }
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)
   } else {
-    out <- .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, ...)
+    out <- .ci_generic(model = x,
+                       ci = ci,
+                       dof = dof,
+                       method = method,
+                       vcov = vcov,
+                       vcov_args = vcov_args,
+                       ...)
   }
 
   row.names(out) <- NULL

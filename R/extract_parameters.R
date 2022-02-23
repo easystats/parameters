@@ -8,7 +8,6 @@
                                         merge_by = c("Parameter", "Component"),
                                         standardize = NULL,
                                         effects = "fixed",
-                                        robust = FALSE,
                                         ci_method = NULL,
                                         p_adjust = NULL,
                                         wb_component = FALSE,
@@ -18,7 +17,12 @@
                                         drop_parameters = NULL,
                                         include_sigma = TRUE,
                                         summary = FALSE,
+                                        vcov = NULL,
+                                        vcov_args = NULL,
                                         ...) {
+
+
+  dots <- list(...)
 
   # ==== check if standardization is required and package available
 
@@ -45,9 +49,13 @@
 
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
-  if (!is.null(standardize) && standardize == "refit") {
-    model <- datawizard::standardize(model, verbose = FALSE, ...)
-    standardize <- NULL
+  if (isTRUE(standardize == "refit")) {
+    args <- list(model, verbose = FALSE)
+    args <- c(args, list(...))
+    # argument name conflict with deprecated `robust`
+    args[["robust"]] <- NULL
+    fun <- datawizard::standardize
+    model <- do.call(fun, args)
   }
 
   parameters <- insight::get_parameters(model,
@@ -97,37 +105,19 @@
 
   # ==== CI - only if we don't already have CI for std. parameters
 
-
   if (!is.null(ci)) {
-    if (isTRUE(robust)) {
-      ci_df <- suppressMessages(ci_robust(
-        model,
-        ci = ci,
-        method = ci_method,
-        component = component,
-        verbose = verbose,
-        ...
-      ))
-    } else if (!is.null(ci_method)) {
-      ci_df <- suppressMessages(
-        ci(
-          model,
-          ci = ci,
-          effects = effects,
-          component = component,
-          method = ci_method,
-          verbose = verbose
-        )
-      )
-    } else {
-      ci_df <- suppressMessages(ci(
-        model,
-        ci = ci,
-        effects = effects,
-        component = component,
-        verbose = verbose
-      ))
+    args <- list(model,
+                 ci = ci,
+                 component = component,
+                 vcov = vcov,
+                 vcov_args = vcov_args,
+                 verbose = verbose)
+    args <- c(args, dots)
+    if (!is.null(ci_method)) {
+      args[["method"]] <- ci_method
     }
+    ci_df <-  suppressMessages(do.call("ci", args))
+
     if (!is.null(ci_df)) {
       if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
@@ -142,22 +132,15 @@
 
   # ==== p value
 
-  if (isTRUE(robust)) {
-    pval <- p_value_robust(
-      model,
-      method = ci_method,
-      component = component,
-      ...
-    )
-  } else {
-    pval <- p_value(
-      model,
-      effects = effects,
-      component = component,
-      method = ci_method,
-      verbose = verbose
-    )
-  }
+  args <- list(model,
+               method = ci_method,
+               effects = effects,
+               verbose = verbose,
+               component = component,
+               vcov = vcov,
+               vcov_args = vcov_args)
+  args <- c(args, dots)
+  pval <- do.call("p_value", args)
 
   if (!is.null(pval)) {
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
@@ -167,33 +150,28 @@
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-
-  if (isTRUE(robust)) {
-    std_err <- standard_error_robust(model, component = component, ...)
-  } else if (!is.null(ci_method)) {
-    std_err <- standard_error(
-      model,
-      effects = effects,
-      component = component,
-      method = ci_method,
-      verbose = verbose
-    )
-  } else {
-    std_err <- standard_error(model,
-      effects = effects,
-      component = component,
-      verbose = verbose
-    )
+  args <- list(model,
+               effects = effects,
+               component = component,
+               verbose = verbose,
+               vcov = vcov,
+               vcov_args = vcov_args)
+  args <- c(args, dots)
+  if (!is.null(ci_method)) {
+    args[["method"]] <- ci_method
   }
+  std_err <- do.call("standard_error", args)
 
   if (!is.null(std_err)) {
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
 
 
-  # ==== test statistic - fix values for robust estimation
+  # ==== test statistic - fix values for robust vcov
 
-  if (isTRUE(robust)) {
+
+  # deprecated argument `robust = TRUE`
+  if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else if (!is.null(statistic)) {
     parameters <- merge(parameters, statistic, by = merge_by, sort = FALSE)
@@ -272,7 +250,7 @@
 
   # ==== Std Coefficients for other methods than "refit"
 
-  if (!is.null(standardize) && !isFALSE(standardize)) {
+  if (!is.null(standardize) && !isTRUE(standardize == "refit")) {
     # give minimal attributes required for standardization
     temp_pars <- parameters
     class(temp_pars) <- c("parameters_model", class(temp_pars))
@@ -443,15 +421,19 @@
                                       ci = .95,
                                       ci_method = "wald",
                                       standardize = NULL,
-                                      robust = FALSE,
                                       p_adjust = NULL,
                                       wb_component = FALSE,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       include_sigma = FALSE,
                                       summary = FALSE,
+                                      vcov = NULL,
+                                      vcov_args = NULL,
                                       verbose = TRUE,
                                       ...) {
+
+  dots <- list(...)
+
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
 
   # get parameters and statistic
@@ -490,8 +472,15 @@
   # CI - only if we don't already have CI for std. parameters
 
   if (!is.null(ci)) {
-    if (isTRUE(robust)) {
-      ci_df <- suppressMessages(ci_robust(model, ci = ci, ...))
+    # robust (current or deprecated)
+    if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+      args <- list(model,
+                   ci = ci,
+                   vcov = vcov,
+                   vcov_args = vcov_args,
+                   verbose = verbose)
+      args <- c(args, dots)
+      ci_df <- suppressMessages(do.call("ci", args))
     } else if (ci_method %in% c("kenward", "kr")) {
       # special handling for KR-CIs, where we already have computed SE
       ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
@@ -507,10 +496,15 @@
 
 
   # standard error - only if we don't already have SE for std. parameters
-  if (!("SE" %in% colnames(parameters))) {
-    if (isTRUE(robust)) {
-      parameters <- merge(parameters, standard_error_robust(model, ...), by = "Parameter", sort = FALSE)
-      # special handling for KR-SEs, which we already have computed from dof
+  if (!"SE" %in% colnames(parameters)) {
+    if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
+      args <- list(model,
+                   vcov = vcov,
+                   vcov_args = vcov_args,
+                   verbose = verbose)
+      args <- c(args, dots)
+      parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
+    # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
       se_kr$df_error <- NULL
@@ -522,8 +516,13 @@
 
 
   # p value
-  if (isTRUE(robust)) {
-    parameters <- merge(parameters, p_value_robust(model, ...), by = "Parameter", sort = FALSE)
+  if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+    args <- list(model,
+                 vcov = vcov,
+                 vcov_args = vcov_args,
+                 verbose = verbose)
+    args <- c(args, dots)
+    parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
@@ -538,7 +537,9 @@
 
 
   # adjust standard errors and test-statistic as well
-  if (isFALSE(robust) && ci_method %in% special_ci_methods) {
+  if ((!is.null(vcov) || ci_method %in% special_ci_methods) ||
+      # deprecated argument
+      isTRUE(list(...)[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)
@@ -602,7 +603,6 @@
 
     coef_col <- "Std_Coefficient"
   }
-
 
   # Reorder
   order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")

@@ -17,7 +17,6 @@ model_parameters.glmmTMB <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      ci_method = "wald",
-                                     robust = FALSE,
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = getOption("parameters_mixed_summary", FALSE),
@@ -82,7 +81,6 @@ model_parameters.glmmTMB <- function(model,
         ci = ci,
         component = component,
         standardize = standardize,
-        robust = robust,
         ci_method = ci_method,
         p_adjust = p_adjust,
         wb_component = wb_component,
@@ -191,7 +189,6 @@ ci.glmmTMB <- function(x,
                        ci = .95,
                        dof = NULL,
                        method = "wald",
-                       robust = FALSE,
                        component = "all",
                        verbose = TRUE,
                        ...) {
@@ -216,7 +213,7 @@ ci.glmmTMB <- function(x,
   } else {
 
     # all other
-    .ci_generic(model = x, ci = ci, dof = dof, method = method, robust = robust, component = component, ...)
+    .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
   }
 }
 
