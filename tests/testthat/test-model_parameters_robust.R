@@ -34,8 +34,8 @@ if (requiet("testthat") &&
     test_that("ci, robust", {
       params <- ci(model, robust = TRUE)
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
-      upper_ci <- coef(model) + qt(.975, df.residual(model)) * robust_se
-      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3)
+      upper_ci <- as.vector(coef(model) + qt(.975, df.residual(model)) * robust_se)
+      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3, ignore_attr = TRUE)
     })
 
     test_that("model_parameters, robust CL", {
@@ -88,8 +88,8 @@ if (requiet("testthat") &&
     test_that("ci, robust", {
       params <- ci(model, vcov = "HC3")
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
-      upper_ci <- coef(model) + qt(.975, df.residual(model)) * robust_se
-      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3)
+      upper_ci <- as.vector(coef(model) + qt(.975, df.residual(model)) * robust_se)
+      expect_equal(params$CI_high, upper_ci, tolerance = 1e-3, ignore_attr = TRUE)
     })
 
     test_that("model_parameters, robust CL", {
