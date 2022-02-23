@@ -7,7 +7,7 @@ if (requiet("testthat") &&
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
 
-  if (packageVersion("parameters") < "0.17.0") {
+  if (packageVersion("parameters") < "0.16.9.9") {
     test_that("model_parameters, robust", {
       params <- model_parameters(model, robust = TRUE)
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
@@ -111,4 +111,20 @@ if (requiet("testthat") &&
     })
   }
 
+  if (requiet("lme4")) {
+    model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
+
+    if (packageVersion("parameters") < "0.16.9.9") {
+
+      ## TODO this one actually is not correct.
+
+      test_that("ci_ml1, robust", {
+        params <- ci_ml1(model, robust = TRUE, vcov_estimation = "CR", vcov_args = list(cluster = iris$Species))
+        robust_se <- unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$Species))))
+        upper_ci <- fixef(model) + qt(.975, dof_ml1(model)) * robust_se
+      })
+    } else {
+
+    }
+  }
 }
