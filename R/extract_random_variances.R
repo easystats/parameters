@@ -174,7 +174,7 @@
       }
     }
   } else {
-    rand_groups_slp <- NULL
+    ran_groups_slp <- NULL
   }
 
   ran_groups <- unique(c(ran_groups_int, ran_groups_slp))
