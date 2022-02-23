@@ -170,10 +170,10 @@ standard_error.default <- function(model,
 
   # superseded arguments
   if (isTRUE(verbose) && "vcov_type" %in% names(dots)) {
-    warning("The `vcov_type` argument is superseded by the `vcov_args` argument.")
+    warning(insight::format_message("The `vcov_type` argument is superseded by the `vcov_args` argument."), call. = FALSE)
   }
   if (isTRUE(verbose) && "robust" %in% names(dots)) {
-    warning("The `robust` argument is superseded by the `vcov` argument.")
+    warning(insight::format_message("The `robust` argument is superseded by the `vcov` argument."), call. = FALSE)
   }
 
   if (is.null(vcov_args)) {
