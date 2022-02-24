@@ -92,9 +92,9 @@ check_heteroscedasticity(model)
 ```
 
 We would extract model parameters both with and without robust estimation to
-highlight difference it makes to standard errors, confidence intervals, and
-*p*-values. Also, note that the coefficient estimate and the *t*-statistic
-associated with it remain unchanged.
+highlight the difference it makes to standard errors, confidence intervals, 
+*t*-statistic, and *p*-values. Also, note that the coefficient estimate remains 
+unchanged.
 
 ```{r}
 # model parameters, where SE, CI, and p-values are *not* based on robust estimation
@@ -231,8 +231,8 @@ model_parameters(
 ```
 
 Notice that robust estimation returns different standard errors, confidence
-intervals, and *p*-values compared to the standard estimation. Also, note that
-the coefficient estimate and the statistic associated with it remain unchanged.
+intervals, test statistic and *p*-values compared to the standard estimation. 
+Also, note that the coefficient estimate remains unchanged.
 
 ### Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters
 
