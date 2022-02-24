@@ -159,7 +159,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span>
 <span class="fu"><a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html" class="external-link">check_heteroscedasticity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co">#&gt; Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.031).</span></code></pre></div>
-<p>We would extract model parameters both with and without robust estimation to highlight difference it makes to standard errors, confidence intervals, and <em>p</em>-values. Also, note that the coefficient estimate and the <em>t</em>-statistic associated with it remain unchanged.</p>
+<p>We would extract model parameters both with and without robust estimation to highlight the difference it makes to standard errors, confidence intervals, <em>t</em>-statistic, and <em>p</em>-values. Also, note that the coefficient estimate remains unchanged.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># model parameters, where SE, CI, and p-values are *not* based on robust estimation</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
@@ -357,7 +357,7 @@
 <span class="co">#&gt; ---------------------------------</span>
 <span class="co">#&gt; SD (Intercept: grp) |        0.08</span>
 <span class="co">#&gt; SD (Residual)       |        0.30</span></code></pre></div>
-<p>Notice that robust estimation returns different standard errors, confidence intervals, and <em>p</em>-values compared to the standard estimation. Also, note that the coefficient estimate and the statistic associated with it remain unchanged.</p>
+<p>Notice that robust estimation returns different standard errors, confidence intervals, test statistic and <em>p</em>-values compared to the standard estimation. Also, note that the coefficient estimate remains unchanged.</p>
 </div>
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters">Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters"></a>
