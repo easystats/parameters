@@ -10,6 +10,16 @@
 
 * Minor improvements for `print()` methods.
 
+* Robust uncertainty estimates:
+  - The `vcov_estimation`, `vcov_type`, and `robust` arguments are deprecated in
+    these functions: `model_parameters()`, `parameters()`, `standard_error()`,
+    `p_value()`, and `ci()`. They are replaced by the `vcov` and `vcov_args`
+    arguments.
+  - The `standard_error_robust()` and `p_value_robust()` functions are superseded
+    by the `vcov` and `vcov_args` arguments of the `standard_error()` and
+    `p_value()` functions.
+  - Vignette: https://easystats.github.io/parameters/articles/model_parameters_robust.html
+
 ## Bug fixes
 
 * Fixed minor issues and edge cases in `n_clusters()` and related cluster
