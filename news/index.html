@@ -85,13 +85,21 @@
 <h2 class="pkg-version" data-toc-text="0.16.1" id="parameters-0161">parameters 0.16.1<a class="anchor" aria-label="anchor" href="#parameters-0161"></a></h2>
 <div class="section level3">
 <h3 id="general-0-16-1">General<a class="anchor" aria-label="anchor" href="#general-0-16-1"></a></h3>
-<ul><li>Added options to set defaults for different arguments. Currently supported:
+<ul><li>
+<p>Added options to set defaults for different arguments. Currently supported:</p>
 <ul><li>
 <code>options("parameters_summary" = TRUE/FALSE)</code>, which sets the default value for the <code>summary</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for non-mixed models.</li>
 <li>
 <code>options("parameters_mixed_summary" = TRUE/FALSE)</code>, which sets the default value for the <code>summary</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models.</li>
 </ul></li>
-<li>Minor improvements for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> methods.</li>
+<li><p>Minor improvements for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> methods.</p></li>
+<li>
+<p>Robust uncertainty estimates:</p>
+<ul><li>The <code>vcov_estimation</code>, <code>vcov_type</code>, and <code>robust</code> arguments are deprecated in these functions: <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/model_parameters.html">parameters()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code>, and <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>. They are replaced by the <code>vcov</code> and <code>vcov_args</code> arguments. See the</li>
+<li>The <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> and <code><a href="../reference/p_value_robust.html">p_value_robust()</a></code> functions are superseded by the <code>vcov</code> and <code>vcov_args</code> arguments of the <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> functions.</li>
+<li>Vignette: <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="external-link uri">https://easystats.github.io/parameters/articles/model_parameters_robust.html</a>
+</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-16-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-16-1"></a></h3>
