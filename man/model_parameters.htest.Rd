@@ -81,17 +81,18 @@ A data frame of indices related to the model's parameters.
 Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 }
 \examples{
+
 model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-model_parameters(model)
+model_parameters(model, hedges_g = TRUE)
 
 model <- t.test(mtcars$mpg ~ mtcars$vs)
-model_parameters(model)
+model_parameters(model, hedges_g = TRUE)
 
 model <- t.test(iris$Sepal.Width, mu = 1)
-model_parameters(model)
+model_parameters(model, standardized_d = TRUE)
 
 data(airquality)
 airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -102,4 +103,8 @@ smokers <- c(83, 90, 129, 70)
 patients <- c(86, 93, 136, 82)
 model <- pairwise.prop.test(smokers, patients)
 model_parameters(model)
+
+model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
+model_parameters(model, cramers_v = "adjusted")
+
 }
