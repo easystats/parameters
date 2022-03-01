@@ -47,6 +47,19 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
     expect_equal(colnames(mp2), c("Chi2", "df", "p", "Method"))
   })
 
+  test_that("model_parameters-chisq-test works with `svychisq` objects", {
+    skip_if_not_installed("survey")
+    data(api)
+
+    set.seed(123)
+    dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+    m <- svychisq(~ sch.wide + stype, dclus1)
+    mp <- model_parameters(m)
+
+    expect_equal(mp$F, 5.19337, tolerance = 1e-3)
+    expect_equal(names(mp), c("F", "df", "df_error", "p", "Method"))
+  })
+
   mp <- model_parameters(stats::chisq.test(table(mtcars$am)), phi = "adjusted", ci = 0.95)
   test_that("model_parameters-chisq-test adjusted", {
     expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
