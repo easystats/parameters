@@ -34,9 +34,17 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
 
   data(mtcars)
   mp <- model_parameters(stats::chisq.test(table(mtcars$am)))
+
   test_that("model_parameters-chisq-test NULL", {
     expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
     expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
+  })
+
+  mp2 <- model_parameters(stats::chisq.test(table(mtcars$am, mtcars$cyl)))
+
+  test_that("model_parameters-chisq-test two way table", {
+    expect_equal(mp2$Chi2, 8.740733, tolerance = 1e-3)
+    expect_equal(colnames(mp2), c("Chi2", "df", "p", "Method"))
   })
 
   mp <- model_parameters(stats::chisq.test(table(mtcars$am)), phi = "adjusted", ci = 0.95)
