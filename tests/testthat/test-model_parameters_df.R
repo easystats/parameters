@@ -246,11 +246,11 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     data("Produc", package = "plm")
     set.seed(123)
 
-    model <- plm::plm(
+    model <- suppressWarnings(plm::plm(
       formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
       data = Produc,
       index = c("state", "year")
-    )
+    ))
 
     test_that("model_parameters.plm", {
       params <- suppressWarnings(model_parameters(model))
