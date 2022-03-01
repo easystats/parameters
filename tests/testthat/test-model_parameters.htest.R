@@ -49,6 +49,8 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
 
   test_that("model_parameters-chisq-test works with `svychisq` objects", {
     skip_if_not_installed("survey")
+
+    library(survey)
     data(api)
 
     set.seed(123)
