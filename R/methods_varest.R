@@ -7,7 +7,6 @@ model_parameters.varest <- function(model,
                                     iterations = 1000,
                                     standardize = NULL,
                                     exponentiate = FALSE,
-                                    robust = FALSE,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
@@ -19,7 +18,6 @@ model_parameters.varest <- function(model,
       iterations = iterations,
       standardize = standardize,
       exponentiate = exponentiate,
-      robust = robust,
       p_adjust = p_adjust,
       verbose = verbose,
       ...
@@ -113,6 +111,8 @@ simulate_parameters.varest <- function(model,
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
 
   out
 }

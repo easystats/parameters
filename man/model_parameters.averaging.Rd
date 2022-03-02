@@ -99,7 +99,7 @@ such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
-\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+\item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of standardized parameters only
 works when \code{standardize="refit"}.
 }}
 }

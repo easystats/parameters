@@ -16,13 +16,14 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
   parameters = keep,
   verbose = TRUE,
+  vcov = NULL,
+  vcov_args = NULL,
   ...
 )
 
@@ -34,11 +35,12 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
-  verbose = TRUE,
   df_method = ci_method,
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
   ...
 )
 
@@ -49,7 +51,6 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = TRUE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -63,7 +64,6 @@
   component = c("all", "conditional", "marginal"),
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -77,7 +77,6 @@
   component = c("all", "conditional", "precision", "marginal"),
   standardize = NULL,
   exponentiate = FALSE,
-  robust = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
   ...
@@ -118,7 +117,7 @@ such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
 effects will be returned.
-\item Robust estimation (i.e. \code{robust=TRUE}) of standardized parameters only
+\item Robust estimation (i.e., \code{vcov} set to a value other than \code{NULL}) of standardized parameters only
 works when \code{standardize="refit"}.
 }}
 
@@ -133,14 +132,6 @@ transformed coefficient. The transformed confidence interval more clearly
 captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
-
-\item{robust}{Logical, if \code{TRUE}, robust standard errors are calculated
-(if possible), and confidence intervals and p-values are based on these
-robust standard errors. Additional arguments like \code{vcov_estimation} or
-\code{vcov_type} are passed down to other methods, see
-\code{\link[=standard_error_robust]{standard_error_robust()}} for details
-and \href{https://easystats.github.io/parameters/articles/model_parameters_robust.html}{this vignette}
-for working examples.}
 
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
@@ -175,6 +166,24 @@ names.}
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
+\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
+\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
+or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
@@ -373,6 +382,13 @@ model_parameters(model, bootstrap = TRUE)
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
+
+# robust, heteroskedasticity-consistent standard errors
+model_parameters(model, vcov = "HC3")
+
+model_parameters(model,
+                 vcov = "vcovCL",
+                 vcov_args = list(cluster = mtcars$cyl))
 
 # different p-value style in output
 model_parameters(model, p_digits = 5)

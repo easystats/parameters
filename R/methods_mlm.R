@@ -52,11 +52,8 @@ model_parameters.mlm <- function(model,
     merge_by = c("Parameter", "Response"),
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
-    ...
-  )
-
+    ...)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
@@ -159,6 +156,8 @@ simulate_parameters.mlm <- function(model,
   attr(out, "object_class") <- class(model)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
 
   out
 }

@@ -21,8 +21,30 @@ p_value.fixest <- function(model, ...) {
 
   .data_frame(
     Parameter = params$Parameter,
-    p = as.vector(stats[[stat_col]])
+    p = as.vector(stats[, stat_col])
   )
+}
+
+
+
+#' @export
+degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
+
+  if (method %in% c("wald", "residual", "fit")) {
+    s <- summary(model)
+    vcov_scaled <- s$cov.scaled
+    if (is.null(vcov_scaled)) {
+      s$nobs - s$nparams
+    } else {
+      max(s$nobs - attr(vcov_scaled, "dof.K"), 1)
+    }
+  } else {
+    degrees_of_freedom.default(model, method = method, ...)
+  }
 }
 
 

@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.16.0.3
+Version: 0.16.9.99
 Authors@R: 
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -111,6 +111,7 @@ Suggests:
     factoextra,
     FactoMineR,
     fastICA,
+    fixest,
     fpc,
     gam,
     gamlss,
@@ -130,6 +131,7 @@ Suggests:
     lm.beta,
     lme4,
     lmerTest,
+    lmtest,
     logspline,
     lqmm,
     M3C,
@@ -180,8 +182,6 @@ Suggests:
     truncreg,
     VGAM,
     WRS2
-Remotes:
-    easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

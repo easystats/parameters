@@ -4,9 +4,28 @@
 
 * Added options to set defaults for different arguments. Currently supported:
   - `options("parameters_summary" = TRUE/FALSE)`, which sets the default value
-    for the `summary` argument in `model_parameters()` for non-mixed.
+    for the `summary` argument in `model_parameters()` for non-mixed models.
   - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default 
-    value for the `summary` argument in `model_parameters()` for non-mixed.
+    value for the `summary` argument in `model_parameters()` for mixed models.
+
+* Minor improvements for `print()` methods.
+
+* Robust uncertainty estimates:
+  - The `vcov_estimation`, `vcov_type`, and `robust` arguments are deprecated in
+    these functions: `model_parameters()`, `parameters()`, `standard_error()`,
+    `p_value()`, and `ci()`. They are replaced by the `vcov` and `vcov_args`
+    arguments.
+  - The `standard_error_robust()` and `p_value_robust()` functions are superseded
+    by the `vcov` and `vcov_args` arguments of the `standard_error()` and
+    `p_value()` functions.
+  - Vignette: https://easystats.github.io/parameters/articles/model_parameters_robust.html
+
+## Bug fixes
+
+* Fixed minor issues and edge cases in `n_clusters()` and related cluster
+  functions.
+
+* Fixed issue in `p_value()` that returned wrong p-values for `fixest::feols()`.
 
 # parameters 0.16.0
 

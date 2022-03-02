@@ -42,7 +42,6 @@ model_parameters.bracl <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
-    robust = FALSE,
     p_adjust = p_adjust,
     ...
   )
@@ -53,9 +52,9 @@ model_parameters.bracl <- function(model,
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, robust = FALSE, ...) {
+ci.bracl <- function(x, ci = .95, method = NULL, ...) {
   params <- insight::get_parameters(x)
-  out <- .ci_generic(model = x, ci = ci, method = method, robust = robust, ...)
+  out <- .ci_generic(model = x, ci = ci, method = method, ...)
   if ("Response" %in% colnames(params)) {
     out$Response <- params$Response
   }
@@ -209,6 +208,8 @@ simulate_parameters.multinom <- function(model,
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
 
   out
 }

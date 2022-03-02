@@ -99,6 +99,7 @@ reference:
   - cluster_meta
   - cluster_performance
   - n_clusters
+  - predict.parameters_clusters
 - subtitle: "Factors and Principal Components"
   contents:
   - check_factorstructure

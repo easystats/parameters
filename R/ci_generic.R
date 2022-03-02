@@ -4,7 +4,9 @@
                         dof = NULL,
                         effects = c("fixed", "random", "all"),
                         component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
-                        robust = FALSE,
+                        vcov = NULL,
+                        vcov_args = NULL,
+                        verbose = TRUE,
                         ...) {
 
   # check method
@@ -37,8 +39,10 @@
       dof = dof,
       effects = effects,
       component = component,
-      robust = robust,
       method = method,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose,
       ...
     )
   })
@@ -55,10 +59,13 @@
                     dof,
                     effects,
                     component,
-                    robust = FALSE,
                     method = "wald",
                     se = NULL,
+                    vcov = NULL,
+                    vcov_args = NULL,
+                    verbose = TRUE,
                     ...) {
+
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
@@ -86,14 +93,19 @@
   # if we have adjusted SE, e.g. from kenward-roger, don't recompute
   # standard errors to save time...
   if (is.null(se)) {
-    stderror <- if (isTRUE(robust)) {
-      standard_error_robust(model, component = component, ...)
+    if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
+      stderror <- standard_error(model,
+                                 component = component,
+                                 vcov = vcov,
+                                 vcov_args = vcov_args,
+                                 verbose = verbose,
+                                 ...)
     } else {
-      switch(method,
-        "kenward" = ,
-        "kr" = se_kenward(model),
-        "satterthwaite" = se_satterthwaite(model),
-        standard_error(model, component = component)
+      stderror <- switch(method,
+            "kenward" = se_kenward(model),
+            "kr" = se_kenward(model),
+            "satterthwaite" = se_satterthwaite(model),
+            standard_error(model, component = component)
       )
     }
 

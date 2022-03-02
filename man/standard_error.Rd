@@ -24,7 +24,7 @@
 \usage{
 standard_error(model, ...)
 
-\method{standard_error}{default}(model, method = NULL, verbose = TRUE, ...)
+\method{standard_error}{default}(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...)
 
 \method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 
@@ -42,7 +42,14 @@ standard_error(model, ...)
   ...
 )
 
-\method{standard_error}{merMod}(model, effects = c("fixed", "random"), method = NULL, ...)
+\method{standard_error}{merMod}(
+  model,
+  effects = c("fixed", "random"),
+  method = NULL,
+  vcov = NULL,
+  vcov_args = NULL,
+  ...
+)
 
 \method{standard_error}{poissonmfx}(model, component = c("all", "conditional", "marginal"), ...)
 
@@ -56,7 +63,6 @@ standard_error(model, ...)
   model,
   effects = c("fixed", "random"),
   component = c("all", "conditional", "zi", "zero_inflated"),
-  robust = FALSE,
   verbose = TRUE,
   ...
 )
@@ -78,18 +84,25 @@ standard_error(model, ...)
 \arguments{
 \item{model}{A model.}
 
-\item{...}{Arguments passed to or from other methods. For
-\code{standard_error()}, if \code{method = "robust"}, arguments
-\code{vcov_estimation}, \code{vcov_type} and \code{vcov_args} can be passed
-down to \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{...}{Arguments passed to or from other methods.}
 
-\item{method}{If \code{"robust"}, robust standard errors are computed by
-calling \code{\link[=standard_error_robust]{standard_error_robust()}}.
-\code{standard_error_robust()}, in turn, calls one of the
-\verb{vcov*()}-functions from the \pkg{sandwich} or \pkg{clubSandwich}
-package for robust covariance matrix estimators. For linear mixed models,
-\code{method} may also be \code{\link[=p_value_kenward]{"kenward"}} or
-\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+\itemize{
+\item A covariance matrix
+\item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
+\item A string which indicates the kind of uncertainty estimates to return.
+\itemize{
+\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
+\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
+\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
+\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+}
+}}
+
+\item{vcov_args}{List of arguments to be passed to the function identified by
+the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
+or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+\code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -111,8 +124,9 @@ errors for random effects are requested, for each grouping factor a list of
 standard errors (per group level) for random intercepts and slopes is
 returned.}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
-based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
+\item{method}{For linear mixed models, \code{method} can be
+\code{\link[=p_value_kenward]{"kenward"}} or
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 }
 \value{
 A data frame with at least two columns: the parameter names and the
@@ -121,8 +135,7 @@ components etc.
 }
 \description{
 \code{standard_error()} attempts to return standard errors of model
-parameters, while \code{standard_error_robust()} attempts to return robust
-standard errors.
+parameters
 }
 \note{
 For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard
@@ -130,5 +143,12 @@ error is the SD of the posterior samples.
 }
 \examples{
 model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+
 standard_error(model)
+
+standard_error(model, vcov = "HC3")
+
+standard_error(model,
+               vcov = "vcovCL",
+               vcov_args = list(cluster = iris$Species))
 }

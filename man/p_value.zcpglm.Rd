@@ -22,13 +22,11 @@
 the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
 further details.}
 
-\item{...}{Arguments passed down to \code{standard_error_robust()} when confidence
-intervals or p-values based on robust standard errors should be computed.
-Only available for models where \code{method = "robust"} is supported.}
+\item{...}{Additional arguments}
 
-\item{method}{If \code{"robust"}, and if model is supported by the \pkg{sandwich}
-or \pkg{clubSandwich} packages, computes p-values based on robust
-covariance matrix estimation.}
+\item{method}{For linear mixed models, \code{method} can be
+\code{\link[=p_value_kenward]{"kenward"}} or
+\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

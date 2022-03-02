@@ -53,7 +53,6 @@ model_parameters.pgmm <- function(model,
                                   ci = .95,
                                   component = c("conditional", "all"),
                                   exponentiate = FALSE,
-                                  robust = TRUE,
                                   p_adjust = NULL,
                                   keep = NULL,
                                   drop = NULL,
@@ -67,7 +66,6 @@ model_parameters.pgmm <- function(model,
     merge_by = c("Parameter", "Component"),
     ci = ci,
     component = component,
-    robust = robust,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
@@ -109,12 +107,12 @@ standard_error.pgmm <- function(model, component = c("conditional", "all"), ...)
 
 
 #' @export
-ci.pgmm <- function(x, ci = .95, dof = Inf, method = NULL, robust = FALSE, component = "conditional", ...) {
+ci.pgmm <- function(x, ci = .95, dof = Inf, method = NULL, component = "conditional", ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {
     method <- "wald"
   }
 
-  .ci_generic(model = x, ci = ci, dof = dof, robust = robust, method = method, component = component)
+  .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component)
 }

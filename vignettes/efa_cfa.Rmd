@@ -1,5 +1,5 @@
 ---
-title: "Structural Models (EFA, CFA, SEM...)"
+title: "Structural Models (EFA, CFA, SEM, ...)"
 output: 
   rmarkdown::html_vignette:
     toc: true

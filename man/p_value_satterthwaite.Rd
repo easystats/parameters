@@ -8,11 +8,11 @@
 \alias{se_satterthwaite}
 \title{Satterthwaite approximation for SEs, CIs and p-values}
 \usage{
-ci_satterthwaite(model, ci = 0.95, robust = FALSE, ...)
+ci_satterthwaite(model, ci = 0.95, ...)
 
 dof_satterthwaite(model)
 
-p_value_satterthwaite(model, dof = NULL, robust = FALSE, ...)
+p_value_satterthwaite(model, dof = NULL, ...)
 
 se_satterthwaite(model)
 }
@@ -21,12 +21,7 @@ se_satterthwaite(model)
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
 
-\item{robust}{Logical, if \code{TRUE}, computes confidence intervals (or p-values)
-based on robust standard errors. See \code{\link[=standard_error_robust]{standard_error_robust()}}.}
-
-\item{...}{Arguments passed down to \code{\link[=standard_error_robust]{standard_error_robust()}}
-when confidence intervals or p-values based on robust standard errors
-should be computed.}
+\item{...}{Additional arguments}
 
 \item{dof}{Degrees of Freedom.}
 }

@@ -4,6 +4,8 @@
 }
 
 
+# default method -------------------
+
 .extract_random_variances.default <- function(model,
                                               ci = .95,
                                               effects = "random",
@@ -34,10 +36,7 @@
 }
 
 
-
-
-
-
+# glmmTMB -------------------
 
 .extract_random_variances.glmmTMB <- function(model,
                                               ci = .95,
@@ -102,16 +101,13 @@
 }
 
 
+# GLMMadpative -------------------
+
 .extract_random_variances.MixMod <- .extract_random_variances.glmmTMB
 
 
 
-
-
-
-
 # workhorse ------------------------
-
 
 .extract_random_variances_helper <- function(model,
                                              ci = .95,
@@ -161,16 +157,14 @@
     ran_intercept$Group <- rownames(ran_intercept)
     ran_intercept$Parameter <- "SD (Intercept)"
   }
-  ran_groups <- ran_intercept$Group
+  ran_groups_int <- ran_intercept$Group
 
   # random slope - tau11
   if (!is.null(ran_slope) && nrow(ran_slope) > 0) {
     colnames(ran_slope) <- "Coefficient"
     ran_slope$Group <- rownames(ran_slope)
-    if (is.null(ran_groups)) {
-      ran_groups <- gsub("\\..*", "", ran_slope$Group)
-    }
-    for (i in unique(ran_groups)) {
+    ran_groups_slp <- gsub("\\..*", "", ran_slope$Group)
+    for (i in unique(ran_groups_slp)) {
       slopes <- which(grepl(paste0("^\\Q", i, "\\E"), ran_slope$Group))
       if (length(slopes)) {
         ran_slope$Parameter[slopes] <- paste0(
@@ -179,7 +173,11 @@
         ran_slope$Group[slopes] <- i
       }
     }
+  } else {
+    ran_groups_slp <- NULL
   }
+
+  ran_groups <- unique(c(ran_groups_int, ran_groups_slp))
 
   # random slope-intercept correlation - rho01
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
@@ -282,10 +280,7 @@
 
 
 
-
-
 # extract CI for random SD ------------------------
-
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL) {
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
@@ -460,11 +455,6 @@
 
 
 
-
-
-
-
-
 # Extract Variance and Correlation Components ----
 
 # store essential information about variance components...
@@ -619,7 +609,6 @@
 
 
 
-
 # Caution! this is somewhat experimental...
 # It retrieves the variance-covariance matrix of random effects
 # from nested lme-models.
@@ -676,7 +665,6 @@
 
 
 
-
 # glmmTMB returns a list of model information, one for conditional
 # and one for zero-inflated part, so here we "unlist" it, returning
 # only the conditional part.
@@ -687,8 +675,6 @@
     x
   }
 }
-
-
 
 
 .collapse_zi <- function(x) {
@@ -702,12 +688,7 @@
 
 
 
-
-
-
-
 #### helper to extract various random effect variances -----------------------
-
 
 
 # random slope-variances (tau 11) ----
@@ -731,7 +712,6 @@
 
 
 
-
 # random intercept-variances, i.e.
 # between-subject-variance (tau 00) ----
 # ----------------------------------------------
@@ -745,7 +725,6 @@
 
   sapply(vars, function(i) i)
 }
-
 
 
 
@@ -777,8 +756,6 @@
     unlist(rho01)
   }
 }
-
-
 
 
 
