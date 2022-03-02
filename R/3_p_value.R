@@ -147,9 +147,7 @@ p_value.default <- function(model,
 
   # output
   if (!is.null(p)) {
-    p <- .data_frame(
-      Parameter = names(p),
-      p = as.vector(p))
+    p <- .data_frame(Parameter = names(p), p = as.vector(p))
     return(p)
   }
 

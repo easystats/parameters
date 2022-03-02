@@ -113,7 +113,7 @@ standard_error.default <- function(model,
         names(se_from_varcov) <- colnames(varcov)
         se_from_varcov
       },
-      error = function(e)  NULL)
+      error = function(e) NULL)
   }
 
   # output
@@ -122,9 +122,7 @@ standard_error.default <- function(model,
       insight::print_color("\nCould not extract standard errors from model object.\n", "red")
     }
   } else {
-    .data_frame(
-      Parameter = names(se),
-      SE = as.vector(se))
+    .data_frame(Parameter = names(se), SE = as.vector(se))
   }
 }
 
@@ -210,9 +208,9 @@ standard_error.default <- function(model,
   if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_fun)) {
     vcov_fun <- switch(
       vcov_fun,
-      "HC0" =, "HC1" =, "HC2" =, "HC3" =, "HC4" =, "HC4m" =, "HC5" =, "HC" = "vcovHC",
-      "CR0" =, "CR1" =, "CR1p" =, "CR1S" =, "CR2" =, "CR3" =, "CR" = "vcovCR",
-      "xy" =, "residual" =, "wild" =, "mammen" =, "webb" =, "BS" = "vcovBS",
+      "HC0" = , "HC1" = , "HC2" = , "HC3" = , "HC4" = , "HC4m" = , "HC5" = , "HC" = "vcovHC",
+      "CR0" = , "CR1" = , "CR1p" = , "CR1S" = , "CR2" = , "CR3" = , "CR" = "vcovCR",
+      "xy" = , "residual" = , "wild" = , "mammen" = , "webb" = , "BS" = "vcovBS",
       "OPG" = "vcovOPG",
       "HAC" = "vcovHAC",
       "PC" = "vcovPC",
