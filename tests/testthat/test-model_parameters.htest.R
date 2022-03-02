@@ -1,23 +1,4 @@
 if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.4.5") {
-
-
-  ## TODO remove before CRAN submission
-
-  Sys.setenv(
-    "_R_CHECK_LENGTH_1_LOGIC2_" = TRUE,
-    "_R_CHECK_LENGTH_1_CONDITION_" = TRUE
-  )
-
-  m <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
-  parameters:::.extract_htest_chi2(m)
-
-  print(str(m))
-  cat("\n\n")
-  cat(str(m))
-  cat("\n\n")
-
-
-
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
     expect_equal(
