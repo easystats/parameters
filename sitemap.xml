@@ -112,9 +112,6 @@
     <loc>/reference/display.parameters_model.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-compact_character.html</loc>
-  </url>
-  <url>
     <loc>/reference/dot-data_frame.html</loc>
   </url>
   <url>
@@ -125,9 +122,6 @@
   </url>
   <url>
     <loc>/reference/dot-filter_component.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-find_most_common.html</loc>
   </url>
   <url>
     <loc>/reference/dot-n_factors_bartlett.html</loc>
@@ -146,9 +140,6 @@
   </url>
   <url>
     <loc>/reference/dot-n_factors_sescree.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-recode_to_zero.html</loc>
   </url>
   <url>
     <loc>/reference/equivalence_test.lm.html</loc>
