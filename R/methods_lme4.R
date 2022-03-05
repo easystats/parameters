@@ -29,13 +29,27 @@
 #'
 #' @section Confidence intervals for random effect variances:
 #' For models of class `merMod` and `glmmTMB`, confidence intervals for random
-#' effect variances can be calculated. For models of class `lme4`, when
+#' effect variances can be calculated. For models of from package **lme4**, when
 #' `ci_method` is either `"profile"` or `"boot"`, and `effects` is either
 #' `"random"` or `"all"`, profiled resp. bootstrapped confidence intervals are
 #' computed for the random effects. For all other options of `ci_method`,
 #' confidence intervals for random effects will be missing. For models of class
 #' `glmmTMB`, confidence intervals for random effect variances always use a
 #' Wald t-distribution approximation.
+#'
+#' @section Dispersion parameters in *glmmTMB*:
+#' For some models from package **glmmTMB**, both the dispersion parameter and
+#' the residual variance from the random effects parameters are shown. Usually,
+#' these are the same but presented on different scales, e.g.
+#'
+#' ```
+#' model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+#' exp(fixef(model)$disp) # 0.09902987
+#' sigma(model)^2         # 0.09902987
+#' ```
+#'
+#' For models where the dispersion parameter and the residual variance are
+#' the same, only the residual variance is shown in the output.
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.

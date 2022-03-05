@@ -272,13 +272,26 @@ use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/
 \section{Confidence intervals for random effect variances}{
 
 For models of class \code{merMod} and \code{glmmTMB}, confidence intervals for random
-effect variances can be calculated. For models of class \code{lme4}, when
+effect variances can be calculated. For models of from package \strong{lme4}, when
 \code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
 \code{"random"} or \code{"all"}, profiled resp. bootstrapped confidence intervals are
 computed for the random effects. For all other options of \code{ci_method},
 confidence intervals for random effects will be missing. For models of class
 \code{glmmTMB}, confidence intervals for random effect variances always use a
 Wald t-distribution approximation.
+}
+
+\section{Dispersion parameters in \emph{glmmTMB}}{
+
+For some models from package \strong{glmmTMB}, both the dispersion parameter and
+the residual variance from the random effects parameters are shown. Usually,
+these are the same but presented on different scales, e.g.\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+exp(fixef(model)$disp) # 0.09902987
+sigma(model)^2         # 0.09902987
+}
+
+For models where the dispersion parameter and the residual variance are
+the same, only the residual variance is shown in the output.
 }
 
 \section{Confidence intervals and approximation of degrees of freedom}{
