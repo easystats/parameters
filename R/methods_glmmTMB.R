@@ -103,12 +103,12 @@ model_parameters.glmmTMB <- function(model,
       # don't print dispersion for zi-component
       component %in% c("conditional", "all", "dispersion")
     ) {
-      # add component column
-      if (is.null(params$Component)) {
-        params$Component <- "conditional"
-      }
       dispersion_param <- insight::get_parameters(model, component = "dispersion")
       if (!is.null(dispersion_param)) {
+        # add component column
+        if (is.null(params$Component)) {
+          params$Component <- "conditional"
+        }
         params[nrow(params) + 1, ] <- NA
         params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
         params[nrow(params), "Coefficient"] <- stats::sigma(model)
