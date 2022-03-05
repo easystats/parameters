@@ -159,11 +159,9 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m3, effects = "fixed")$Coefficient,
-      c(
-        -0.6104, -0.9637, 0.1707, -0.3871, 0.4879, 0.5895, -0.1133,
-        1.4294, 0.91, 1.1614, -0.9393, 1.0424, -0.5623, -0.893, -2.5398,
-        -2.563, 0.4132
-      ),
+      c(-0.61038, -0.9637, 0.17068, -0.38706, 0.48795, 0.58949, -0.11327,
+        1.42935, 0.91004, 1.16141, -0.93932, 1.04243, -0.56231, -0.893,
+        -2.53981, -2.56303, 1.51165),
       tolerance = 1e-2
     )
     expect_equal(
@@ -323,6 +321,24 @@ if (.runThisTest &&
       ),
       tolerance = 1e-2
     )
+  })
+
+
+  data(mtcars)
+  mdisp <- glmmTMB(hp ~ 0 + wt/mpg, mtcars)
+  test_that("model_parameters, dispersion", {
+    mp <- model_parameters(mdisp)
+    expect_equal(mp$Coefficient, c(59.50992, -0.80396, 48.97731), tolerance = 1e-2)
+    expect_equal(mp$Parameter, c("wt", "wt:mpg", "(Intercept)"))
+    expect_equal(mp$Component, c("conditional", "conditional", "dispersion"))
+  })
+
+  mdisp <- glmmTMB(hp ~ 0 + wt/mpg + (1 | gear), mtcars)
+  test_that("model_parameters, dispersion", {
+    mp <- model_parameters(mdisp)
+    expect_equal(mp$Coefficient, c(58.25869, -0.87868, 47.01676, 36.99492), tolerance = 1e-2)
+    expect_equal(mp$Parameter, c("wt", "wt:mpg", "SD (Intercept)", "SD (Observations)"))
+    expect_equal(mp$Component, c("conditional", "conditional", "conditional", "conditional"))
   })
 
 

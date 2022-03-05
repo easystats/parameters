@@ -144,7 +144,7 @@
     }
   )
 
-  # sigma/dispersion only once
+  # sigma/dispersion only once,
   if (component == "conditional") {
     ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
   } else {
@@ -338,6 +338,10 @@
           var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
         } else {
           var_ci$Group <- group_factor
+          # check if sigma was properly identified
+          if (!"sigma" %in% var_ci$Group && "sigma" %in% rownames(var_ci)) {
+            var_ci$Group[rownames(var_ci) == "sigma"] <- "Residual"
+          }
         }
         var_ci$Group[var_ci$Group == "sigma"] <- "Residual"
 
