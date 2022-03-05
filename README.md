@@ -177,7 +177,7 @@ model_parameters(model, effects = "all")
 #> SD (Residual)           |        0.32
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
-model_parameters(model, df_method = "kenward")
+model_parameters(model, ci_method = "kenward")
 #> # Fixed Effects
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
@@ -191,6 +191,22 @@ model_parameters(model, df_method = "kenward")
 #> -------------------------------------
 #> SD (Intercept: Species) |        0.89
 #> SD (Residual)           |        0.32
+
+# profiled CI method also computes CI for random parameters
+model_parameters(model, ci_method = "profile")
+#> # Fixed Effects
+#> 
+#> Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
+#> ------------------------------------------------------------------
+#> (Intercept)  |        2.00 | 0.56 | [0.75, 3.18] |   3.56 | < .001
+#> Petal Length |        0.28 | 0.06 | [0.15, 0.39] |   4.75 | < .001
+#> 
+#> # Random Effects
+#> 
+#> Parameter               | Coefficient |       95% CI
+#> ----------------------------------------------------
+#> SD (Intercept: Species) |        0.89 | [0.34, 2.15]
+#> SD (Residual)           |        0.32 | [0.28, 0.35]
 ```
 
 ### Structural Models
