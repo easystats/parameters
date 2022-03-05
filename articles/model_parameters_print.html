@@ -194,18 +194,12 @@
 <span class="co">#&gt; spp [DF]    |    -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244 </span>
 <span class="co">#&gt; mined [no]  |    -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Dispersion</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Coefficient</span>
-<span class="co">#&gt; -------------------------</span>
-<span class="co">#&gt; (Intercept) |        0.41</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects Variances</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
 <span class="co">#&gt; -------------------------------------------------</span>
 <span class="co">#&gt; SD (Intercept: site) |        0.38 | [0.17, 0.87]</span>
-<span class="co">#&gt; SD (Residual)        |        1.51 |</span></code></pre></div>
+<span class="co">#&gt; SD (Residual)        |        1.51 | [0.93, 2.46]</span></code></pre></div>
 <p>Redundant columns are removed. The related model component is shown as table header. However, you can also return a single table:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
@@ -230,9 +224,8 @@
 <span class="co">#&gt; sppDES-L             |       -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236  |   fixed | zero_inflated</span>
 <span class="co">#&gt; sppDF                |       -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244  |   fixed | zero_inflated</span>
 <span class="co">#&gt; minedno              |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | &lt; .001 |   fixed | zero_inflated</span>
-<span class="co">#&gt; (Intercept)          |        0.41 |      |                |       |        |   fixed |    dispersion</span>
 <span class="co">#&gt; SD (Intercept: site) |        0.38 |      | [ 0.17,  0.87] |       |        |  random |   conditional</span>
-<span class="co">#&gt; SD (Residual)        |        1.51 |      |                |       |        |  random |   conditional</span></code></pre></div>
+<span class="co">#&gt; SD (Residual)        |        1.51 |      | [ 0.93,  2.46] |       |        |  random |   conditional</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="adding-model-summaries">Adding model summaries<a class="anchor" aria-label="anchor" href="#adding-model-summaries"></a>
