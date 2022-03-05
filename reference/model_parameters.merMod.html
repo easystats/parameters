@@ -354,13 +354,26 @@ use <code>effects = "fixed"</code>. There is also a <a href="https://easystats.g
     
 
 <p>For models of class <code>merMod</code> and <code>glmmTMB</code>, confidence intervals for random
-effect variances can be calculated. For models of class <code>lme4</code>, when
+effect variances can be calculated. For models of from package <strong>lme4</strong>, when
 <code>ci_method</code> is either <code>"profile"</code> or <code>"boot"</code>, and <code>effects</code> is either
 <code>"random"</code> or <code>"all"</code>, profiled resp. bootstrapped confidence intervals are
 computed for the random effects. For all other options of <code>ci_method</code>,
 confidence intervals for random effects will be missing. For models of class
 <code>glmmTMB</code>, confidence intervals for random effect variances always use a
 Wald t-distribution approximation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="dispersion-parameters-in-glmmtmb">Dispersion parameters in <em>glmmTMB</em><a class="anchor" aria-label="anchor" href="#dispersion-parameters-in-glmmtmb"></a></h2>
+    
+
+<p>For some models from package <strong>glmmTMB</strong>, both the dispersion parameter and
+the residual variance from the random effects parameters are shown. Usually,
+these are the same but presented on different scales, e.g.</p><div class="sourceCode"><pre><code><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/fixef.html" class="external-link">fixef</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">disp</span><span class="op">)</span> <span class="co"># 0.09902987</span>
+<span class="fu"><a href="https://rdrr.io/pkg/lme4/man/sigma.html" class="external-link">sigma</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>         <span class="co"># 0.09902987</span></code></pre></div>
+
+<p>For models where the dispersion parameter and the residual variance are
+the same, only the residual variance is shown in the output.</p>
     </div>
     <div class="section level2">
     <h2 id="confidence-intervals-and-approximation-of-degrees-of-freedom">Confidence intervals and approximation of degrees of freedom<a class="anchor" aria-label="anchor" href="#confidence-intervals-and-approximation-of-degrees-of-freedom"></a></h2>
