@@ -122,6 +122,7 @@ Suggests:
     glmmTMB,
     GPArotation,
     gt,
+    httr,
     ivprobit,
     ivreg,
     knitr,
