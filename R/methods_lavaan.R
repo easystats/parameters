@@ -18,6 +18,25 @@
 #'   (or `"std.nox"`) for standardized estimates based on both the
 #'   variances of observed and latent variables, but not the variances of
 #'   exogenous covariates. See `lavaan::standardizedsolution` for details.
+#' @param keep,drop Character containing a regular expression pattern that
+#'   describes the parameters that should be included (for `keep`) or excluded
+#'   (for `drop`) in the returned data frame. `keep` may also be a
+#'   named list of regular expressions. All non-matching parameters will be
+#'   removed from the output. If `keep` is a character vector, every parameter
+#'   name in the *"Parameter"* column that matches the regular expression in
+#'   `keep` will be selected from the returned data frame (and vice versa,
+#'   all parameter names matching `drop` will be excluded). Furthermore, if
+#'   `keep` has more than one element, these will be merged with an `OR`
+#'   operator into a regular expression pattern like this: `"(one|two|three)"`.
+#'   If `keep` is a named list of regular expression patterns, the names of the
+#'   list-element should equal the column name where selection should be
+#'   applied. This is useful for model objects where `model_parameters()`
+#'   returns multiple columns with parameter components, like in
+#'   [model_parameters.lavaan()]. Note that the regular expression pattern
+#'   should match the parameter names as they are stored in the returned data
+#'   frame, which can be different from how they are printed. Inspect the
+#'   `$Parameter` column of the parameters table to get the exact parameter
+#'   names.
 #' @inheritParams model_parameters.default
 #' @param component What type of links to return. Can be `"all"` or some of `c("regression", "correlation", "loading", "variance", "mean")`.
 #' @param ... Arguments passed to or from other methods.
