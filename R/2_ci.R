@@ -59,11 +59,14 @@ ci.glm <- function(x,
                    method = "profile",
                    vcov = NULL,
                    vcov_args = NULL,
+                   verbose = TRUE,
                    ...) {
+
   method <- match.arg(method, choices = c("profile", "wald", "normal", "residual"))
+
   if (method == "profile") {
-    if (!is.null(vcov) || !is.null(vcov_args)) {
-      stop('The `vcov` and `vcov_args` are not available with `method = "profile"`')
+    if (!is.null(vcov) || !is.null(vcov_args) && isTRUE(verbose)) {
+      warning(insight::format_message("The `vcov` and `vcov_args` are not available with `method = \"profile\"`"), call. = FALSE)
     }
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)
@@ -74,6 +77,7 @@ ci.glm <- function(x,
                        method = method,
                        vcov = vcov,
                        vcov_args = vcov_args,
+                       verbose = verbose,
                        ...)
   }
 
