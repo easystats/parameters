@@ -165,5 +165,119 @@ if (.runThisTest &&
     expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
   })
 
+
+  # CI -------------------------------------
+
+  data(iris)
+  m <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
+
+  test_that("robust-ci lm", {
+    ci1 <- ci(m, vcov = "HC")
+    # robust CI manually
+    params <- insight::get_parameters(m)
+    se <- sqrt(diag(sandwich::vcovHC(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = params$Estimate - se * fac,
+      CI_high = params$Estimate + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
+  data(housing)
+  m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
+
+  test_that("robust-ci polr", {
+    ci1 <- ci(m, vcov = "vcovCL")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovCL(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = c(m$coefficients, m$zeta) - se * fac,
+      CI_high = c(m$coefficients, m$zeta) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+
+    ci1 <- ci(m, vcov = "vcovOPG")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovOPG(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = c(m$coefficients, m$zeta) - se * fac,
+      CI_high = c(m$coefficients, m$zeta) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
+  data("bioChemists")
+  m <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
+
+  test_that("robust-ci zeroinfl", {
+    ci1 <- ci(m, vcov = "vcovCL")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovCL(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+
+    ci1 <- ci(m, vcov = "vcovOPG")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovOPG(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
+  set.seed(123)
+  m <- survreg(
+    formula = Surv(futime, fustat) ~ ecog.ps + rx,
+    data = ovarian,
+    dist = "logistic"
+  )
+
+  test_that("robust-ci survival", {
+    set.seed(123)
+    ci1 <- ci(m, vcov = "vcovBS")
+    # robust CI manually
+    set.seed(123)
+    se <- sqrt(diag(sandwich::vcovBS(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+
+    ci1 <- ci(m, vcov = "vcovOPG")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovOPG(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
 }
 

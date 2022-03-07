@@ -18,7 +18,13 @@ ci.negbin <- ci.glm
 
 #' @export
 ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
-  method <- match.arg(method, choices = c("profile", "wald"))
+  method <- match.arg(method, choices = c("profile", "wald", "robust"))
+
+  robust <- !is.null(method) && method == "robust"
+  if (.check_vcov_args(robust, ...)) {
+    return(ci.default(x, ...))
+  }
+
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
     out <- do.call(rbind, out)
