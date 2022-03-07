@@ -6,7 +6,11 @@ if (.runThisTest &&
     requiet("MASS") &&
     requiet("pscl") &&
     requiet("survival") &&
+    requiet("ivreg") &&
+    requiet("AER") &&
     requiet("sandwich")) {
+
+
 
   # standard errors -------------------------------------
 
@@ -18,6 +22,7 @@ if (.runThisTest &&
     se2 <- sqrt(diag(sandwich::vcovHC(m)))
     expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
 
   data(housing)
   m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
@@ -31,6 +36,7 @@ if (.runThisTest &&
     se2 <- sqrt(diag(sandwich::vcovOPG(m)))
     expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
 
   data("bioChemists")
   m <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
@@ -50,6 +56,35 @@ if (.runThisTest &&
     se2 <- sqrt(diag(sandwich::vcovOPG(m)))
     expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
+
+  data(CigarettesSW)
+  CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
+  CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
+  CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
+
+  m <- ivreg(
+    log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
+    data = CigarettesSW,
+    subset = year == "1995"
+  )
+
+  test_that("robust-se ivreg", {
+    se1 <- standard_error(m, vcov = "vcovCL")
+    se2 <- sqrt(diag(sandwich::vcovCL(m)))
+    expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
+
+    set.seed(123)
+    se1 <- standard_error(m, vcov = "vcovBS", vcov_args = list(R = 20))
+    set.seed(123)
+    se2 <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
+    expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
+
+    se1 <- standard_error(m, vcov = "vcovOPG")
+    se2 <- sqrt(diag(sandwich::vcovOPG(m)))
+    expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
 
   set.seed(123)
   m <- survreg(
@@ -88,6 +123,7 @@ if (.runThisTest &&
     expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
   })
 
+
   data(housing)
   m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
 
@@ -108,6 +144,46 @@ if (.runThisTest &&
     p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
     expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
+
+  data(CigarettesSW)
+  CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
+  CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
+  CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
+
+  m <- ivreg(
+    log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
+    data = CigarettesSW,
+    subset = year == "1995"
+  )
+
+  test_that("robust-p ivreg", {
+    p1 <- p_value(m, vcov = "vcovCL")
+    # robust p manually
+    se <- sqrt(diag(sandwich::vcovCL(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    stat <- coef(m) / se
+    p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
+    expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
+
+    set.seed(123)
+    p1 <- p_value(m, vcov = "vcovBS", vcov_args = list(R = 20))
+    set.seed(123)
+    se <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    stat <- coef(m) / se
+    p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
+    expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
+
+    p1 <- p_value(m, vcov = "vcovOPG")
+    # robust p manually
+    se <- sqrt(diag(sandwich::vcovOPG(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    stat <- coef(m) / se
+    p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
+    expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
 
   data("bioChemists")
   m <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
@@ -139,6 +215,7 @@ if (.runThisTest &&
     expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
   })
 
+
   set.seed(123)
   m <- survreg(
     formula = Surv(futime, fustat) ~ ecog.ps + rx,
@@ -166,6 +243,8 @@ if (.runThisTest &&
   })
 
 
+
+
   # CI -------------------------------------
 
   data(iris)
@@ -185,6 +264,7 @@ if (.runThisTest &&
     expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
     expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
 
   data(housing)
   m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
@@ -215,6 +295,45 @@ if (.runThisTest &&
     expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
   })
 
+
+  data(CigarettesSW)
+  CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
+  CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
+  CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
+
+  m <- ivreg(
+    log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
+    data = CigarettesSW,
+    subset = year == "1995"
+  )
+
+  test_that("robust-ci ivreg", {
+    ci1 <- ci(m, vcov = "vcovCL")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovCL(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+
+    ci1 <- ci(m, vcov = "vcovOPG")
+    # robust CI manually
+    se <- sqrt(diag(sandwich::vcovOPG(m)))
+    dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
+    fac <- suppressWarnings(stats::qt(.975, df = dof))
+    ci2 <- as.data.frame(cbind(
+      CI_low = coef(m) - se * fac,
+      CI_high = coef(m) + se * fac
+    ))
+    expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
+  })
+
+
   data("bioChemists")
   m <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
 
@@ -243,6 +362,7 @@ if (.runThisTest &&
     expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
     expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
   })
+
 
   set.seed(123)
   m <- survreg(
