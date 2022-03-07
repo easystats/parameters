@@ -169,7 +169,7 @@
                  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">nbinom2</a></span><span class="op">(</span><span class="op">)</span>, 
                  data <span class="op">=</span> <span class="va">Salamanders</span><span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------</span>
@@ -182,20 +182,7 @@
 <span class="co">#&gt; spp [DF]    |    -0.11 | 0.24 | [-0.59, 0.36] | -0.46 | 0.642 </span>
 <span class="co">#&gt; mined [no]  |     1.43 | 0.37 | [ 0.71, 2.15] |  3.90 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |     0.91 | 0.63 | [-0.32,  2.14] |  1.45 | 0.147 </span>
-<span class="co">#&gt; spp [PR]    |     1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384 </span>
-<span class="co">#&gt; spp [DM]    |    -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241 </span>
-<span class="co">#&gt; spp [EC-A]  |     1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144 </span>
-<span class="co">#&gt; spp [EC-L]  |    -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439 </span>
-<span class="co">#&gt; spp [DES-L] |    -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236 </span>
-<span class="co">#&gt; spp [DF]    |    -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244 </span>
-<span class="co">#&gt; mined [no]  |    -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
 <span class="co">#&gt; -------------------------------------------------</span>
@@ -207,26 +194,18 @@
 <span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, split_component <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter            | Coefficient |   SE |         95% CI |     z |      p | Effects |     Component</span>
-<span class="co">#&gt; -----------------------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)          |       -0.61 | 0.41 | [-1.40,  0.18] | -1.51 | 0.132  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [PR]             |       -0.96 | 0.64 | [-2.23,  0.30] | -1.50 | 0.134  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [DM]             |        0.17 | 0.24 | [-0.29,  0.63] |  0.73 | 0.468  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [EC-A]           |       -0.39 | 0.34 | [-1.06,  0.28] | -1.13 | 0.258  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [EC-L]           |        0.49 | 0.24 | [ 0.02,  0.96] |  2.05 | 0.041  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [DES-L]          |        0.59 | 0.23 | [ 0.14,  1.04] |  2.59 | 0.010  |   fixed |   conditional</span>
-<span class="co">#&gt; spp [DF]             |       -0.11 | 0.24 | [-0.59,  0.36] | -0.46 | 0.642  |   fixed |   conditional</span>
-<span class="co">#&gt; mined [no]           |        1.43 | 0.37 | [ 0.71,  2.15] |  3.90 | &lt; .001 |   fixed |   conditional</span>
-<span class="co">#&gt; (Intercept)          |        0.91 | 0.63 | [-0.32,  2.14] |  1.45 | 0.147  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppPR                |        1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppDM                |       -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppEC-A              |        1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppEC-L              |       -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppDES-L             |       -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236  |   fixed | zero_inflated</span>
-<span class="co">#&gt; sppDF                |       -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244  |   fixed | zero_inflated</span>
-<span class="co">#&gt; minedno              |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | &lt; .001 |   fixed | zero_inflated</span>
-<span class="co">#&gt; SD (Intercept: site) |        0.38 |      | [ 0.17,  0.87] |       |        |  random |   conditional</span>
-<span class="co">#&gt; SD (Residual)        |        1.51 |      | [ 0.93,  2.46] |       |        |  random |   conditional</span></code></pre></div>
+<span class="co">#&gt; Parameter            | Log-Mean |   SE |        95% CI |     z |      p | Effects</span>
+<span class="co">#&gt; ---------------------------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept)          |    -0.61 | 0.41 | [-1.40, 0.18] | -1.51 | 0.132  |   fixed</span>
+<span class="co">#&gt; spp [PR]             |    -0.96 | 0.64 | [-2.23, 0.30] | -1.50 | 0.134  |   fixed</span>
+<span class="co">#&gt; spp [DM]             |     0.17 | 0.24 | [-0.29, 0.63] |  0.73 | 0.468  |   fixed</span>
+<span class="co">#&gt; spp [EC-A]           |    -0.39 | 0.34 | [-1.06, 0.28] | -1.13 | 0.258  |   fixed</span>
+<span class="co">#&gt; spp [EC-L]           |     0.49 | 0.24 | [ 0.02, 0.96] |  2.05 | 0.041  |   fixed</span>
+<span class="co">#&gt; spp [DES-L]          |     0.59 | 0.23 | [ 0.14, 1.04] |  2.59 | 0.010  |   fixed</span>
+<span class="co">#&gt; spp [DF]             |    -0.11 | 0.24 | [-0.59, 0.36] | -0.46 | 0.642  |   fixed</span>
+<span class="co">#&gt; mined [no]           |     1.43 | 0.37 | [ 0.71, 2.15] |  3.90 | &lt; .001 |   fixed</span>
+<span class="co">#&gt; SD (Intercept: site) |     0.38 |      | [ 0.17, 0.87] |       |        |  random</span>
+<span class="co">#&gt; SD (Residual)        |     1.51 |      | [ 0.93, 2.46] |       |        |  random</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="adding-model-summaries">Adding model summaries<a class="anchor" aria-label="anchor" href="#adding-model-summaries"></a>
@@ -287,7 +266,7 @@
 
 <span class="co"># default printing</span>
 <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> 
-<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter        | Log-Mean |   SE |         95% CI |     z |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------------</span>
@@ -300,14 +279,7 @@
 <span class="co">#&gt; spp [long DF]    |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
 <span class="co">#&gt; mined [no]       |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
-<span class="co">#&gt; ---------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
-<span class="co">#&gt; mined [no]  |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
 <span class="co">#&gt; -------------------------------------------------</span>
@@ -317,7 +289,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Log-Mean |   SE |         95% CI |     z |      p</span>
 <span class="co">#&gt; ------------------------------------------------------------------------</span>
@@ -330,14 +302,7 @@
 <span class="co">#&gt; spp [long DF]        |     0.12 | 0.15 | [-0.17,  0.40] |  0.78 | 0.435 </span>
 <span class="co">#&gt; mined [no]           |     1.27 | 0.27 | [ 0.74,  1.80] |  4.72 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter            | Log-Odds |   SE |         95% CI |     z |      p</span>
-<span class="co">#&gt; ------------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept)          |     0.79 | 0.27 | [ 0.26,  1.32] |  2.90 | 0.004 </span>
-<span class="co">#&gt; mined [no]           |    -1.84 | 0.31 | [-2.46, -1.23] | -5.87 | &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient |         95% CI</span>
 <span class="co">#&gt; ---------------------------------------------------</span>
@@ -346,7 +311,7 @@
 <p>If <code>column_width</code> is a named vector, names are matched against column names, and those columns gain the specified minimum width.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SE <span class="op">=</span> <span class="fl">8</span>, `95% CI` <span class="op">=</span> <span class="fl">12</span>, p <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects (Count Model)</span>
+<span class="co">#&gt; # Fixed Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter        | Log-Mean |       SE |         95% CI |     z |       p</span>
 <span class="co">#&gt; -------------------------------------------------------------------------</span>
@@ -359,14 +324,7 @@
 <span class="co">#&gt; spp [long DF]    |     0.12 |     0.15 | [-0.17,  0.40] |  0.78 |   0.435</span>
 <span class="co">#&gt; mined [no]       |     1.27 |     0.27 | [ 0.74,  1.80] |  4.72 |  &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   | Log-Odds |       SE |         95% CI |     z |       p</span>
-<span class="co">#&gt; --------------------------------------------------------------------</span>
-<span class="co">#&gt; (Intercept) |     0.79 |     0.27 | [ 0.26,  1.32] |  2.90 |   0.004</span>
-<span class="co">#&gt; mined [no]  |    -1.84 |     0.31 | [-2.46, -1.23] | -5.87 |  &lt; .001</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects Variances</span>
+<span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient |       95% CI</span>
 <span class="co">#&gt; -------------------------------------------------</span>
