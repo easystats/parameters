@@ -33,7 +33,7 @@ exogenous covariates. See \code{lavaan::standardizedsolution} for details.}
 
 \item{component}{What type of links to return. Can be \code{"all"} or some of \code{c("regression", "correlation", "loading", "variance", "mean")}.}
 
-\item{keep, drop}{Character containing a regular expression pattern that
+\item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -52,6 +52,8 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 \verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
+
+\item{drop}{See \code{keep}.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 

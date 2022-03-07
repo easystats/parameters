@@ -353,7 +353,7 @@ parameters <- model_parameters
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
-#' @param keep,drop Character containing a regular expression pattern that
+#' @param keep Character containing a regular expression pattern that
 #'   describes the parameters that should be included (for `keep`) or excluded
 #'   (for `drop`) in the returned data frame. `keep` may also be a
 #'   named list of regular expressions. All non-matching parameters will be
@@ -372,6 +372,7 @@ parameters <- model_parameters
 #'   frame, which can be different from how they are printed. Inspect the
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
+#' @param drop See `keep`.
 #' @param parameters Deprecated, alias for `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
