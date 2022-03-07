@@ -95,7 +95,14 @@ parameters</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for default</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, vcov <span class="op">=</span> <span class="cn">NULL</span>, vcov_args <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">standard_error</span><span class="op">(</span>
+  <span class="va">model</span>,
+  component <span class="op">=</span> <span class="st">"all"</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
 
 <span class="co"># S3 method for DirichletRegModel</span>
 <span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
@@ -172,6 +179,12 @@ parameters</p>
 <dd><p>A model.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>component</dt>
+<dd><p>Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
+<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
+(default). May be abbreviated.</p></dd>
 <dt>vcov</dt>
 <dd><p>Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
 <li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
@@ -188,12 +201,6 @@ or <code>clubSandwich</code> packages. Please refer to their documentation (e.g.
 <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available arguments.</p></dd>
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
-<dt>component</dt>
-<dd><p>Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. <code>component</code> may be one of <code>"conditional"</code>,
-<code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or <code>"all"</code>
-(default). May be abbreviated.</p></dd>
 <dt>force</dt>
 <dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
 values to calculate the standard error, with the lowest level being the
