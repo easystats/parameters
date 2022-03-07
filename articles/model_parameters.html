@@ -329,7 +329,7 @@
   data <span class="op">=</span> <span class="va">Salamanders</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; # Fixed Effects</span>
+<span class="co">#&gt; # Fixed Effects (Count Model)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p</span>
 <span class="co">#&gt; --------------------------------------------------------------</span>
@@ -342,7 +342,20 @@
 <span class="co">#&gt; spp [DF]    |    -0.11 | 0.24 | [-0.59, 0.37] | -0.46 | 0.642 </span>
 <span class="co">#&gt; mined [no]  |     1.45 | 0.37 | [ 0.73, 2.17] |  3.95 | &lt; .001</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; # Random Effects</span>
+<span class="co">#&gt; # Fixed Effects (Zero-Inflated Model)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Parameter   | Log-Odds |   SE |         95% CI |     z |      p</span>
+<span class="co">#&gt; ---------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |     0.90 | 0.64 | [-0.35,  2.15] |  1.41 | 0.159 </span>
+<span class="co">#&gt; spp [PR]    |     1.12 | 1.50 | [-1.82,  4.06] |  0.74 | 0.456 </span>
+<span class="co">#&gt; spp [DM]    |    -0.95 | 0.82 | [-2.56,  0.65] | -1.17 | 0.244 </span>
+<span class="co">#&gt; spp [EC-A]  |     1.04 | 0.72 | [-0.38,  2.46] |  1.44 | 0.150 </span>
+<span class="co">#&gt; spp [EC-L]  |    -0.58 | 0.74 | [-2.03,  0.88] | -0.77 | 0.439 </span>
+<span class="co">#&gt; spp [DES-L] |    -0.91 | 0.78 | [-2.43,  0.61] | -1.18 | 0.239 </span>
+<span class="co">#&gt; spp [DF]    |    -2.63 | 2.37 | [-7.27,  2.02] | -1.11 | 0.268 </span>
+<span class="co">#&gt; mined [no]  |    -2.56 | 0.63 | [-3.80, -1.32] | -4.06 | &lt; .001</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Random Effects Variances</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Parameter            | Coefficient</span>
 <span class="co">#&gt; ----------------------------------</span>
@@ -382,9 +395,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Dispersion</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter   |       95% CI</span>
-<span class="co">#&gt; --------------------------</span>
-<span class="co">#&gt; (Intercept) | [3.15, 1.31]</span>
+<span class="co">#&gt; Parameter   | Coefficient |   SE |       95% CI |      z |      p</span>
+<span class="co">#&gt; -----------------------------------------------------------------</span>
+<span class="co">#&gt; (Intercept) |        3.20 | 0.03 | [3.15, 3.26] | 115.48 | &lt; .001</span>
+<span class="co">#&gt; sd [ten]    |        1.39 | 0.04 | [1.31, 1.46] |  35.35 | &lt; .001</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects Variances</span>
 <span class="co">#&gt; </span>
