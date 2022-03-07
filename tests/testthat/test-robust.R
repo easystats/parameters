@@ -5,7 +5,7 @@ if (.runThisTest &&
     requiet("parameters") &&
     requiet("MASS") &&
     requiet("pscl") &&
-    requiet("survial") &&
+    requiet("survival") &&
     requiet("sandwich")) {
 
   # standard errors -------------------------------------
