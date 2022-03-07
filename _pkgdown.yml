@@ -158,6 +158,8 @@ navbar:
         href: articles/model_parameters_robust.html
       - text: Model Parameters and Missing Data
         href: articles/model_parameters_mice.html
+      - text: Analysing Longitudinal or Panel Data
+        href: articles/demean.html
   - text: Formatting and Printing
     menu:
       - text: Formatting Model Parameters
