@@ -28,7 +28,6 @@ knitr::opts_chunk$set(
 pkgs <- c(
   "datawizard",
   "poorman",
-  "tidyr",
   "see",
   "ggplot2",
   "parameters",
