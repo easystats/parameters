@@ -115,13 +115,11 @@
       return(NULL)
     }
 
-    # filter non-matching parameters
-    if (nrow(stderror) != nrow(params)) {
+    # filter non-matching parameters, resp. sort stderror and parameters,
+    # so both have the identical order of values
+    if (nrow(stderror) != nrow(params) || !all(stderror$Parameter %in% params$Parameter) || !all(order(stderror$Parameter) == order(params$Parameter))) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
-
-    # make sure we have correct order
-    params <- params[match(stderror$Parameter, params$Parameter), ]
     se <- stderror$SE
   }
 
