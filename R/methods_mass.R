@@ -51,8 +51,8 @@ ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
 #' @export
 standard_error.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(standard_error(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(standard_error.default(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
@@ -90,8 +90,8 @@ p_value.rlm <- function(model, ...) {
 #' @export
 p_value.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(standard_error(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(p_value.default(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
