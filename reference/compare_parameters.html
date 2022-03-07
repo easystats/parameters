@@ -196,7 +196,7 @@ templates are possible:</p><ul><li><p><code>"ci"</code>: Estimate and confidence
 <dt>column_names</dt>
 <dd><p>Character vector with strings that should be used as
 column headers. Must be of same length as number of models in <code>...</code>.</p></dd>
-<dt>keep, drop</dt>
+<dt>keep</dt>
 <dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
 (for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
@@ -216,6 +216,8 @@ should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
 names.</p></dd>
+<dt>drop</dt>
+<dd><p>See <code>keep</code>.</p></dd>
 <dt>parameters</dt>
 <dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
 <dt>verbose</dt>
