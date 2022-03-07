@@ -147,7 +147,12 @@ p_value.default <- function(model,
 
   # output
   if (!is.null(p)) {
-    p <- .data_frame(Parameter = names(p), p = as.vector(p))
+    params <- insight::get_parameters(model, component = component)
+    if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
+      p <- .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+    } else {
+      p <- .data_frame(Parameter = names(p), p = as.vector(p))
+    }
     return(p)
   }
 

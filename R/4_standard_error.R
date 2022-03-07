@@ -123,7 +123,12 @@ standard_error.default <- function(model,
       insight::print_color("\nCould not extract standard errors from model object.\n", "red")
     }
   } else {
-    .data_frame(Parameter = names(se), SE = as.vector(se))
+    params <- insight::get_parameters(model, component = component)
+    if (length(se) == nrow(params) && "Component" %in% colnames(params)) {
+      .data_frame(Parameter = params$Parameter, SE = as.vector(se), Component = params$Component)
+    } else {
+      .data_frame(Parameter = names(se), SE = as.vector(se))
+    }
   }
 }
 
