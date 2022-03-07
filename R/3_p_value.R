@@ -98,6 +98,8 @@ p_value.default <- function(model,
   # robust standard errors
   if (method == "robust") {
     co <- insight::get_parameters(model)
+    # for polr, we need to fix parameter names
+    co$Parameter <- gsub("Intercept: ", "", co$Parameter, fixed = TRUE)
     # this allows us to pass the output of `standard_error()`
     # to the `vcov` argument in order to avoid computing the SE twice.
     if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
@@ -112,7 +114,7 @@ p_value.default <- function(model,
     }
 
     dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)
-    se <- merge(co, se, sort = FALSE)
+    se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
     p <- stats::setNames(se$p, se$Parameter)
