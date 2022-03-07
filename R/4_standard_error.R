@@ -59,6 +59,7 @@ standard_error <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model,
+                                   component = "all",
                                    vcov = NULL,
                                    vcov_args = NULL,
                                    verbose = TRUE,
@@ -108,7 +109,7 @@ standard_error.default <- function(model,
   # classical se from get_varcov()
   if (is.null(se)) {
     se <- tryCatch({
-        varcov <- insight::get_varcov(model)
+        varcov <- insight::get_varcov(model, component = component)
         se_from_varcov <- sqrt(diag(varcov))
         names(se_from_varcov) <- colnames(varcov)
         se_from_varcov
@@ -155,6 +156,15 @@ standard_error.default <- function(model,
   se
 }
 
+
+
+.check_vcov_args <- function(robust, ...) {
+  dots <- list(...)
+  isTRUE(isTRUE(robust) || isTRUE(dots$robust) || ("vcov" %in% names(dots) && !is.null(dots[["vcov"]])))
+}
+
+
+# compute robust vcov ----------------
 
 .get_vcov <- function(x,
                       vcov_fun = "vcovHC",

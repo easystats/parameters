@@ -86,7 +86,7 @@ p_value.aareg <- function(model, ...) {
 #' @export
 standard_error.survreg <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust) || isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
+  if (.check_vcov_args(robust, ...)) {
     return(standard_error.default(model, ...))
   }
 
@@ -104,7 +104,7 @@ standard_error.survreg <- function(model, method = NULL, ...) {
 p_value.survreg <- function(model, method = NULL, ...) {
 
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust) || isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
+  if (.check_vcov_args(robust, ...)) {
     return(p_value.default(model, ...))
   }
   s <- summary(model)

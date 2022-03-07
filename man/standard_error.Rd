@@ -24,7 +24,14 @@
 \usage{
 standard_error(model, ...)
 
-\method{standard_error}{default}(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...)
+\method{standard_error}{default}(
+  model,
+  component = "all",
+  vcov = NULL,
+  vcov_args = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{standard_error}{DirichletRegModel}(model, component = c("all", "conditional", "precision"), ...)
 
@@ -86,6 +93,12 @@ standard_error(model, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
+\item{component}{Should all parameters, parameters for the conditional model,
+or for the zero-inflated part of the model be returned? Applies to models
+with zero-inflated component. \code{component} may be one of \code{"conditional"},
+\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
+(default). May be abbreviated.}
+
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
@@ -105,12 +118,6 @@ or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
 
 \item{force}{Logical, if \code{TRUE}, factors are converted to numerical
 values to calculate the standard error, with the lowest level being the
