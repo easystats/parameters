@@ -75,7 +75,7 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.11.5),
-    datawizard (>= 0.2.3),
+    datawizard (>= 0.3.0),
     insight (>= 0.16.0),
     graphics,
     methods,
@@ -105,7 +105,7 @@ Suggests:
     dbscan,
     drc,
     DRR,
-    effectsize (>= 0.5.0),
+    effectsize (>= 0.6.0),
     EGAnet (>= 0.7),
     emmeans (>= 1.7.0),
     factoextra,
@@ -172,7 +172,7 @@ Suggests:
     rmarkdown,
     rstanarm,
     sandwich,
-    see (>= 0.6.8),
+    see (>= 0.6.9),
     sjstats,
     spelling,
     survey,
