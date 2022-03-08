@@ -132,16 +132,20 @@
 <li>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</li>
 <li>A string which indicates the kind of uncertainty estimates to return.
 <ul>
-<li>Heteroskedasticity-consistent: “vcovHC”, “HC”, “HC0”, “HC1”, “HC2”, “HC3”, “HC4”, “HC4m”, “HC5”</li>
-<li>Cluster-robust: “vcovCR”, “CR0”, “CR1”, “CR1p”, “CR1S”, “CR2”, “CR3”</li>
-<li>Bootstrap: “vcovBS”, “xy”, “residual”, “wild”, “mammen”, “webb”</li>
-<li>Other <code>sandwich</code> functions: “vcovHAC”, “vcovPC”, “vcovCL”, “vcovPL”</li>
+<li>Heteroskedasticity-consistent: <code>"vcovHC"</code>, <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>, <code>"HC2"</code>, <code>"HC3"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>
+</li>
+<li>Cluster-robust: <code>"vcovCR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>, <code>"CR2"</code>, <code>"CR3"</code>
+</li>
+<li>Bootstrap: <code>"vcovBS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>, <code>"webb"</code>
+</li>
+<li>Other <code>sandwich</code> functions: <code>"vcovHAC"</code>, <code>"vcovPC"</code>, <code>"vcovCL"</code>, <code>"vcovPL"</code>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<code>vcov_args</code>: list of arguments passed to the <code>sandwich</code> or <code>clubSandwich</code> function used to compute the covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
+<code>vcov_args</code>: list of arguments passed to the <em>sandwich</em> or <em>clubSandwich</em> function used to compute the covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
 </li>
 </ol>
 <div class="section level2">
@@ -150,7 +154,7 @@
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-from-model-parameters">Robust Covariance Matrix Estimation from Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-from-model-parameters"></a>
 </h3>
-<p>However, there are two arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error.html" class="external-link"><code>?standard_error</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov</code> - <code>vcov_args</code></p>
+<p>There are two arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error.html" class="external-link"><code>?standard_error</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov</code> - <code>vcov_args</code></p>
 <p>Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type “HC3” (i.e. <code>sandwich::vcovHC(type = "HC3")</code>).</p>
 <p>First let’s create a simple linear regression model, which we know violates homoscedasticity assumption, and thus robust estimation methods are to be considered.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -186,7 +190,7 @@
 <div class="section level3">
 <h3 id="cluster-robust-covariance-matrix-estimation-sandwich">Cluster-Robust Covariance Matrix Estimation (sandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-sandwich"></a>
 </h3>
-<p>If a different type of covariance matrix estimation is required, use the <code>vcov</code>-argument. This argument accepts the name of a function from the <code>sandwich</code> or <code>clubSandwich</code> packages as a string, such as <code>"vcovCL"</code> (or just its suffix <code>"CL"</code>). <code>parameters</code> will then call the corresponding function with the content of <code>vcov_args</code> as arguments.</p>
+<p>If a different type of covariance matrix estimation is required, use the <code>vcov</code>-argument. This argument accepts the name of a function from the <em>sandwich</em> or <em>clubSandwich</em> packages as a string, such as <code>"vcovCL"</code> (or just its suffix <code>"CL"</code>). <em>parameters</em> will then call the corresponding function with the content of <code>vcov_args</code> as arguments.</p>
 <p>The specific estimation type can be controlled by passing a <code>type</code> argument via <code>vcov_args</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types of covariance matrices that this function can produce (<code>HC0</code> to <code>HC3</code>). In the next example, we use a clustered covariance matrix estimation with <code>HC1</code>-estimation type.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># let's create a more complicated model</span>
@@ -216,7 +220,7 @@
 <span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span>
 <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span></code></pre></div>
-<p>Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, additional arguments that should be passed down to functions from the <code>sandwich</code> package can be specified in <code>vcov_args</code>:</p>
+<p>Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, additional arguments that should be passed down to functions from the <em>sandwich</em> package can be specified in <code>vcov_args</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris</span><span class="op">$</span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -300,7 +304,7 @@
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-for-mixed-models">Robust Covariance Matrix Estimation for Mixed Models<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-for-mixed-models"></a>
 </h3>
-<p>For linear mixed-effects models, that by definition have a clustered (<em>hierarchical</em> or <em>multilevel</em>) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the <code>clubSandwich</code> package, thus we need to define the same arguments as in the above example.</p>
+<p>For linear mixed-effects models, that by definition have a clustered (<em>hierarchical</em> or <em>multilevel</em>) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the <em>clubSandwich</em> package, thus we need to define the same arguments as in the above example.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
