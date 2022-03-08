@@ -58,17 +58,17 @@ The computation of robust standard errors is controlled by two arguments:
    * A covariance matrix
    * A function which returns a covariance matrix (e.g., `stats::vcov()`)
    * A string which indicates the kind of uncertainty estimates to return.
-     - Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5"
-     - Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3"
-     - Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb"
-     - Other `sandwich` functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
-2. `vcov_args`: list of arguments passed to the `sandwich` or `clubSandwich` function used to compute the covariance matrix. See for example `?sandwich::vcovHAC`
+     - Heteroskedasticity-consistent: `"vcovHC"`, `"HC"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`
+     - Cluster-robust: `"vcovCR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`, `"CR2"`, `"CR3"`
+     - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`, `"webb"`
+     - Other `sandwich` functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`, `"vcovPL"`
+2. `vcov_args`: list of arguments passed to the *sandwich* or *clubSandwich* function used to compute the covariance matrix. See for example `?sandwich::vcovHAC`
 
 ## Linear Regression Models
 
 ### Robust Covariance Matrix Estimation from Model Parameters
 
-However, there are two arguments (see
+There are two arguments (see
 [`?standard_error`](https://easystats.github.io/parameters/reference/standard_error.html)
 for further details) that allow for choosing different methods and options of
 robust estimation:
@@ -113,8 +113,8 @@ unname(sqrt(diag(sandwich::vcovHC(model))))
 
 If a different type of covariance matrix estimation is required, use the
 `vcov`-argument. This argument accepts the name of a function from the
-`sandwich` or `clubSandwich` packages as a string, such as `"vcovCL"` (or just
-its suffix `"CL"`). `parameters` will then call the corresponding function with
+*sandwich* or *clubSandwich* packages as a string, such as `"vcovCL"` (or just
+its suffix `"CL"`). *parameters* will then call the corresponding function with
 the content of `vcov_args` as arguments. 
 
 The specific estimation type can be controlled by passing a `type` argument via `vcov_args`. See `?sandwich::vcovCL` for information about the different types of covariance matrices that this function can produce (`HC0` to `HC3`). In the next
@@ -144,7 +144,7 @@ Usually, clustered covariance matrix estimation is used when there is a
 cluster-structure in the data. The variable indicating the cluster-structure can
 be defined in `sandwich::vcovCL()` with the `cluster`-argument. In
 `model_parameters()`, additional arguments that should be passed down to
-functions from the `sandwich` package can be specified in `vcov_args`:
+functions from the *sandwich* package can be specified in `vcov_args`:
 
 ```{r}
 iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
@@ -204,7 +204,7 @@ model_parameters(model, standardize = "refit", vcov = "HC3")
 For linear mixed-effects models, that by definition have a clustered
 (*hierarchical* or *multilevel*) structure in the data, it is also possible to
 estimate a cluster-robust covariance matrix. This is possible due to the
-`clubSandwich` package, thus we need to define the same arguments as in the
+*clubSandwich* package, thus we need to define the same arguments as in the
 above example.
 
 ```{r}

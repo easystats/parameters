@@ -221,7 +221,7 @@ ci.glmmTMB <- function(x,
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot"))
+  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
   component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {

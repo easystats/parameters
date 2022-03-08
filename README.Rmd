@@ -88,7 +88,7 @@ Click on the buttons above to access the package [documentation](https://easysta
 - [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
 - [Structural models (EFA, CFA, SEM...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 - [Parameters selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
-- [A Practical Guide for Panel Data Analysis](https://easystats.github.io/datawizard/articles/demean.html)
+- [A Practical Guide for Panel Data Analysis](https://easystats.github.io/parameters/articles/demean.html)
 
 ## Contributing and Support
 

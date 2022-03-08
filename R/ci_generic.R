@@ -83,6 +83,8 @@
 
   # check if all estimates are non-NA
   params <- .check_rank_deficiency(params, verbose = FALSE)
+  # for polr, we need to fix parameter names
+  params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
 
   # sanity check...
   if (is.null(method)) {
@@ -113,8 +115,9 @@
       return(NULL)
     }
 
-    # filter non-matching parameters
-    if (nrow(stderror) != nrow(params)) {
+    # filter non-matching parameters, resp. sort stderror and parameters,
+    # so both have the identical order of values
+    if (nrow(stderror) != nrow(params) || !all(stderror$Parameter %in% params$Parameter) || !all(order(stderror$Parameter) == order(params$Parameter))) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
     se <- stderror$SE

@@ -18,7 +18,13 @@ ci.negbin <- ci.glm
 
 #' @export
 ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
-  method <- match.arg(method, choices = c("profile", "wald"))
+  method <- match.arg(method, choices = c("profile", "wald", "robust"))
+
+  robust <- !is.null(method) && method == "robust"
+  if (.check_vcov_args(robust, ...)) {
+    return(ci.default(x, ...))
+  }
+
   if (method == "profile") {
     out <- lapply(ci, function(i) .ci_profiled2(model = x, ci = i))
     out <- do.call(rbind, out)
@@ -51,8 +57,8 @@ ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
 #' @export
 standard_error.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(standard_error(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(standard_error.default(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
@@ -90,8 +96,8 @@ p_value.rlm <- function(model, ...) {
 #' @export
 p_value.polr <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(standard_error(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(p_value.default(model, ...))
   }
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))

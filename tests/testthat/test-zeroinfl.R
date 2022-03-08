@@ -26,6 +26,13 @@ if (requiet("testthat") &&
       c(0, 9e-05, 0.03833, 6e-04, 0, 0.03211, 0.83068, 0.06539),
       tolerance = 1e-4
     )
+    expect_s3_class(p_value(m1, method = "robust"), "data.frame")
+    expect_s3_class(p_value(m1, method = "robust", vcov = NULL), "data.frame")
+    expect_s3_class(p_value(m1, vcov = NULL), "data.frame")
+
+    ## TODO package sandwich errors for these...
+    # expect_s3_class(p_value(m1, vcov = "HC"), "data.frame")
+    #expect_s3_class(p_value(m1, method = "robust", vcov = "HC"), "data.frame")
   })
 
   test_that("model_parameters", {
@@ -85,4 +92,5 @@ if (requiet("testthat") &&
       tolerance = 1e-4
     )
   })
+
 }
