@@ -164,7 +164,7 @@ glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
 ```{r}
 # show Odds Ratios and Wald-method for degrees of freedom
 glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
-  parameters(exponentiate = TRUE, df_method = "wald")
+  parameters(exponentiate = TRUE, ci_method = "wald")
 ```
 
 ```{r}
