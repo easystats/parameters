@@ -130,9 +130,6 @@ cluster_analysis <- function(x,
                              ...) {
 
 
-  # Sanity checks -----------------------------------------------------------
-  insight::check_if_installed("performance")
-
   # match arguments
   method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
 
