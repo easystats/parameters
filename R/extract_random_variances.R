@@ -843,7 +843,7 @@
         d[upper.tri(d, diag = TRUE)] <- NA
         d <- as.data.frame(d)
 
-        d <- datawizard::reshape_longer(d, colnames_to = "Parameter1", rows_to = "Parameter2")
+        d <- datawizard::reshape_longer(d, colnames_to = "Parameter1", rows_to = "Parameter2", verbose = FALSE)
         d <- d[stats::complete.cases(d), ]
         d <- d[!d$Parameter1 %in% c("Intercept", "(Intercept)"), ]
 
