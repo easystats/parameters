@@ -314,64 +314,72 @@
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
       if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
 
-        # vcov from full model. the parameters from vcov have a different
-        # order, so we need to restore the "original" order of random effect
-        # parameters using regex to match the naming patterns (of the column
-        # names from the vcov)
-        vv <- stats::vcov(model, full = TRUE, ranpar = "sd")
+        # this may fail, so wrap in try-catch
+        tryCatch(
+          {
+            # vcov from full model. the parameters from vcov have a different
+            # order, so we need to restore the "original" order of random effect
+            # parameters using regex to match the naming patterns (of the column
+            # names from the vcov)
+            vv <- stats::vcov(model, full = TRUE, ranpar = "sd")
 
-        # only keep random effect variances
-        cov_columns <- grepl("(^cov_|residual)", colnames(vv))
-        vv <- vv[cov_columns, cov_columns, drop = FALSE]
+            # only keep random effect variances
+            cov_columns <- grepl("(^cov_|residual)", colnames(vv))
+            vv <- vv[cov_columns, cov_columns, drop = FALSE]
 
-        # iterate random effect variables
-        re_groups <- setdiff(unique(out$Group), "Residual")
-        # create data frame with group and parameter names and SE
-        var_ci <- do.call(rbind, lapply(re_groups, function(i) {
-          pattern <- paste0("^cov_", i, "\\.(.*)")
-          re_group_columns <- grepl(pattern, colnames(vv))
-          vv_sub <- as.matrix(vv[re_group_columns, re_group_columns, drop = FALSE])
-          cn <- gsub(pattern, "\\1", colnames(vv_sub))
-          .data_frame(Group = i, Parameter = cn, SE = sqrt(diag(vv_sub)))
-        }))
+            # iterate random effect variables
+            re_groups <- setdiff(unique(out$Group), "Residual")
+            # create data frame with group and parameter names and SE
+            var_ci <- do.call(rbind, lapply(re_groups, function(i) {
+              pattern <- paste0("^cov_", i, "\\.(.*)")
+              re_group_columns <- grepl(pattern, colnames(vv))
+              vv_sub <- as.matrix(vv[re_group_columns, re_group_columns, drop = FALSE])
+              cn <- gsub(pattern, "\\1", colnames(vv_sub))
+              .data_frame(Group = i, Parameter = cn, SE = sqrt(diag(vv_sub)))
+            }))
 
-        # add residual variance
-        res_column <- which(colnames(vv) == "residual")
-        var_ci <- rbind(
-          var_ci,
-          .data_frame(Group = "Residual",
-                      Parameter = "SD (Observations)",
-                      SE = sqrt(vv[res_column, res_column, drop = TRUE]))
+            # add residual variance
+            res_column <- which(colnames(vv) == "residual")
+            var_ci <- rbind(
+              var_ci,
+              .data_frame(Group = "Residual",
+                          Parameter = "SD (Observations)",
+                          SE = sqrt(vv[res_column, res_column, drop = TRUE]))
+            )
+
+            # renaming
+            var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
+            # correlations
+            var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
+            var_ci$Parameter[var_ci_corr_param] <- gsub(
+              "(.*)\\.\\(Intercept\\)",
+              paste0("Cor (Intercept~\\1: ", var_ci$Group[var_ci_corr_param], ")"),
+              var_ci$Parameter[var_ci_corr_param]
+            )
+            # remaining
+            var_ci_others <- !grepl("^(Cor|SD) (.*)", var_ci$Parameter)
+            var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)",var_ci$Parameter[var_ci_others])
+
+            # merge with random effect coefficients
+            out$.sort_id <- 1:nrow(out)
+            tmp <- merge(
+              datawizard::data_remove(out, "SE", verbose = FALSE),
+              var_ci,
+              all.x = TRUE,
+              sort = FALSE
+            )
+            tmp <- tmp[order(tmp$.sort_id), ]
+            out$SE <- tmp$SE
+            out$.sort_id <- NULL
+
+            # Wald CI
+            out$CI_low <- out$Coefficient - stats::qnorm(.975) * out$SE
+            out$CI_high <- out$Coefficient + stats::qnorm(.975) * out$SE
+          },
+          error = function(e) {
+            # do nothing...
+          }
         )
-
-        # renaming
-        var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
-        # correlations
-        var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
-        var_ci$Parameter[var_ci_corr_param] <- gsub(
-          "(.*)\\.\\(Intercept\\)",
-          paste0("Cor (Intercept~\\1: ", var_ci$Group[var_ci_corr_param], ")"),
-          var_ci$Parameter[var_ci_corr_param]
-        )
-        # remaining
-        var_ci_others <- !grepl("^(Cor|SD) (.*)", var_ci$Parameter)
-        var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)",var_ci$Parameter[var_ci_others])
-
-        # merge with random effect coefficients
-        out$.sort_id <- 1:nrow(out)
-        tmp <- merge(
-          datawizard::data_remove(out, "SE", verbose = FALSE),
-          var_ci,
-          all.x = TRUE,
-          sort = FALSE
-        )
-        tmp <- tmp[order(tmp$.sort_id), ]
-        out$SE <- tmp$SE
-        out$.sort_id <- NULL
-
-        # Wald CI
-        out$CI_low <- out$Coefficient - stats::qnorm(.975) * out$SE
-        out$CI_high <- out$Coefficient + stats::qnorm(.975) * out$SE
       }
     }
   } else if (inherits(model, "glmmTMB")) {
