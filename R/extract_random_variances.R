@@ -375,10 +375,12 @@
 
             # ensure correlation CI are within -1/1 bounds
             var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
-            coefs <- out$Coefficient[var_ci_corr_param]
-            delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
-            out$CI_low <- tanh(atanh(coefs) - stats::qnorm(.975) * atanh(delta_se))
-            out$CI_high <- tanh(atanh(coefs) + stats::qnorm(.975) * atanh(delta_se))
+            if (any(var_ci_corr_param)) {
+              coefs <- out$Coefficient[var_ci_corr_param]
+              delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
+              out$CI_low <- tanh(atanh(coefs) - stats::qnorm(.975) * atanh(delta_se))
+              out$CI_high <- tanh(atanh(coefs) + stats::qnorm(.975) * atanh(delta_se))
+            }
 
             # Wald CI, based on delta-method.
             # SD is chi square distributed. So it has a long tail. CIs should
