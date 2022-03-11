@@ -340,16 +340,19 @@ use <code>effects = "fixed"</code>. There is also a <a href="https://easystats.g
     
 
 <p>For models of class <code>merMod</code> and <code>glmmTMB</code>, confidence intervals for random
-effect variances can be calculated. For models of from package <strong>lme4</strong>, when
-<code>ci_method</code> is either <code>"profile"</code> or <code>"boot"</code>, and <code>effects</code> is either
-<code>"random"</code> or <code>"all"</code>, profiled resp. bootstrapped confidence intervals are
-computed for the random effects. For all other options of <code>ci_method</code>,
-and only when the <strong>merDeriv</strong> package is installed, confidence intervals
-for random effects are based on normal-distribution approximation, using the
-delta-method to transform standard errors for constructing the intervals.
-For models of class <code>glmmTMB</code>, confidence intervals for random effect
-variances always use a Wald t-distribution approximation.
-<br><br> Note that confidence intervals for random effects from <strong>lme4</strong> models
+effect variances can be calculated.</p><ul><li><p>For models of from package <strong>lme4</strong>, when <code>ci_method</code> is either <code>"profile"</code>
+or <code>"boot"</code>, and <code>effects</code> is either <code>"random"</code> or <code>"all"</code>, profiled resp.
+bootstrapped confidence intervals are computed for the random effects.</p></li>
+<li><p>For all other options of <code>ci_method</code>, and only when the <strong>merDeriv</strong>
+package is installed, confidence intervals for random effects are based on
+normal-distribution approximation, using the delta-method to transform
+standard errors for constructing the intervals. Due to the transformation,
+the intervals are asymmetrical, however, they are within the correct bounds
+(i.e. no negative interval for the SD, and the interval for the correlations
+is within the range from -1 to +1).</p></li>
+<li><p>For models of class <code>glmmTMB</code>, confidence intervals for random effect
+variances always use a Wald t-distribution approximation.</p></li>
+</ul><p><br><br> Note that confidence intervals for random effects from <strong>lme4</strong> models
 that use the normal-distribution approximation (i.e. when <code>ci_method</code> is
 neither <code>"profile"</code> nor <code>"boot"</code>) are often an unreliable measure of
 uncertainty. Thus, profiled or bootstrapped confidence intervals are
