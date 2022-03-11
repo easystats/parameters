@@ -70,7 +70,7 @@ if (requiet("testthat") &&
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
 
-  if (packageVersion("parameters") >= "0.16.9.9") {
+  if (packageVersion("parameters") >= "0.17.0") {
     test_that("model_parameters, robust", {
       expect_warning(model_parameters(model, robust = TRUE))
       params <- model_parameters(model, vcov = "HC3")
