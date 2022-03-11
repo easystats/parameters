@@ -374,7 +374,7 @@
             out$.sort_id <- NULL
 
             # ensure correlation CI are within -1/1 bounds
-            var_ci_corr_param <- grepl("^Cor (.*)", var_ci$Parameter)
+            var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
             out$CI_low <- tanh(atanh(out$Coefficient[var_ci_corr_param]) - stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
             out$CI_high <- tanh(atanh(out$Coefficient[var_ci_corr_param]) + stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
 
