@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -344,9 +344,15 @@ effect variances can be calculated. For models of from package <strong>lme4</str
 <code>ci_method</code> is either <code>"profile"</code> or <code>"boot"</code>, and <code>effects</code> is either
 <code>"random"</code> or <code>"all"</code>, profiled resp. bootstrapped confidence intervals are
 computed for the random effects. For all other options of <code>ci_method</code>,
-confidence intervals for random effects will be missing. For models of class
-<code>glmmTMB</code>, confidence intervals for random effect variances always use a
-Wald t-distribution approximation.</p>
+and only when the <strong>merDeriv</strong> package is installed, confidence intervals
+for random effects are based on normal-distribution approximation. For models
+of class <code>glmmTMB</code>, confidence intervals for random effect variances always
+use a Wald t-distribution approximation.
+<br><br> Note that confidence intervals for random effects from <strong>lme4</strong> models
+that use the normal-distribution approximation (i.e. when <code>ci_method</code> is
+neither <code>"profile"</code> nor <code>"boot"</code>) are often an unreliable measure of
+uncertainty. Thus, profiled or bootstrapped confidence intervals are
+preferred if more precise intervals are required.</p>
     </div>
     <div class="section level2">
     <h2 id="dispersion-parameters-in-glmmtmb">Dispersion parameters in <em>glmmTMB</em><a class="anchor" aria-label="anchor" href="#dispersion-parameters-in-glmmtmb"></a></h2>
@@ -490,10 +496,10 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Coefficient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: gear) |        1.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual)        |        2.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Coefficient |   SE |        95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Intercept: gear) |        1.26 | 1.12 | [-0.93, 3.46]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SD (Residual)        |        2.91 | 0.39 | [ 2.15, 3.67]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p values (two-tailed) computed using a</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   Wald t-distribution approximation.</span>
