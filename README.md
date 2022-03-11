@@ -171,10 +171,10 @@ model_parameters(model, effects = "all")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient |   SE |        95% CI
-#> ------------------------------------------------------------
-#> SD (Intercept: Species) |        0.89 | 0.46 | [ 0.00, 1.79]
-#> SD (Residual)           |        0.32 | 0.02 | [ 0.28, 0.35]
+#> Parameter               | Coefficient |   SE |       95% CI
+#> -----------------------------------------------------------
+#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
+#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, ci_method = "kenward")
@@ -187,10 +187,10 @@ model_parameters(model, ci_method = "kenward")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient |   SE |        95% CI
-#> ------------------------------------------------------------
-#> SD (Intercept: Species) |        0.89 | 0.46 | [ 0.00, 1.79]
-#> SD (Residual)           |        0.32 | 0.02 | [ 0.28, 0.35]
+#> Parameter               | Coefficient |   SE |       95% CI
+#> -----------------------------------------------------------
+#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
+#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 ```
 
 ### Structural Models
