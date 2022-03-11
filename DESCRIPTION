@@ -142,6 +142,7 @@ Suggests:
     mclust,
     MCMCglmm,
     mediation,
+    merDeriv,
     metaBMA,
     metafor,
     mfx,

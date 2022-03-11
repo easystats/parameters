@@ -309,6 +309,41 @@
         out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
         out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
       }
+    } else if (FALSE && !is.null(ci_method)) {
+      # Wald based CIs
+      # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
+      if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
+        # vcov from full model
+        vv <- vcov(model, full = TRUE, ranpar = "sd")
+        # only keep random effect variances
+        cov_columns <- grepl("(^cov_|residual)", colnames(vv))
+        vv <- vv[cov_columns, cov_columns, drop = FALSE]
+        # iterate random effect variables
+        re_groups <- setdiff(unique(out$Group), "Residual")
+        # create data frame with group and parameter names and SE
+        var_ci <- do.call(rbind, lapply(re_groups, function(i) {
+          pattern <- paste0("^cov_", i, "\\.(.*)")
+          re_group_columns <- grepl(pattern, colnames(vv))
+          vv_sub <- as.matrix(vv[re_group_columns, re_group_columns, drop = FALSE])
+          cn <- gsub(pattern, "\\1", colnames(vv_sub))
+          .data_frame(Group = i, Parameter = cn, SE = sqrt(diag(vv_sub)))
+        }))
+        # add residual variance
+        res_column <- which(colnames(vv) == "residual")
+        var_ci <- rbind(
+          var_ci,
+          .data_frame(Group = "Residual",
+                      Parameter = "SD (Observations)",
+                      SE = sqrt(vv[res_column, res_column, drop = TRUE]))
+        )
+        # renaming
+        var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
+
+        # merge with random effect coefficients
+        out$SE <- NULL
+        out$.sort_id <- 1:nrow(out)
+        out <- merge(out, var_ci, sort = FALSE)
+      }
     }
   } else if (inherits(model, "glmmTMB")) {
     ## TODO "profile" seems to be less stable, so only wald?
