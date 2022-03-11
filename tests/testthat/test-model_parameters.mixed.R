@@ -148,10 +148,10 @@ if (.runThisTest &&
         "",
         "# Random Effects",
         "",
-        "Parameter            | Coefficient",
-        "----------------------------------",
-        "SD (Intercept: gear) |        0.27",
-        "SD (Residual)        |        0.59"
+        "Parameter            | Coefficient |   SE |        95% CI",
+        "---------------------------------------------------------",
+        "SD (Intercept: gear) |        0.27 | 0.24 | [-0.20, 0.74]",
+        "SD (Residual)        |        0.59 | 0.08 | [ 0.44, 0.75]"
       )
     )
 
