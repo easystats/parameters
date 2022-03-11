@@ -345,9 +345,10 @@ effect variances can be calculated. For models of from package <strong>lme4</str
 <code>"random"</code> or <code>"all"</code>, profiled resp. bootstrapped confidence intervals are
 computed for the random effects. For all other options of <code>ci_method</code>,
 and only when the <strong>merDeriv</strong> package is installed, confidence intervals
-for random effects are based on normal-distribution approximation. For models
-of class <code>glmmTMB</code>, confidence intervals for random effect variances always
-use a Wald t-distribution approximation.
+for random effects are based on normal-distribution approximation, using the
+delta-method to transform standard errors for constructing the intervals.
+For models of class <code>glmmTMB</code>, confidence intervals for random effect
+variances always use a Wald t-distribution approximation.
 <br><br> Note that confidence intervals for random effects from <strong>lme4</strong> models
 that use the normal-distribution approximation (i.e. when <code>ci_method</code> is
 neither <code>"profile"</code> nor <code>"boot"</code>) are often an unreliable measure of
