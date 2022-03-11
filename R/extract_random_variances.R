@@ -318,7 +318,7 @@
         # order, so we need to restore the "original" order of random effect
         # parameters using regex to match the naming patterns (of the column
         # names from the vcov)
-        vv <- vcov(model, full = TRUE, ranpar = "sd")
+        vv <- stats::vcov(model, full = TRUE, ranpar = "sd")
 
         # only keep random effect variances
         cov_columns <- grepl("(^cov_|residual)", colnames(vv))
