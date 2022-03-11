@@ -144,7 +144,7 @@ standard_error.default <- function(model,
 
 
 .get_se_from_summary <- function(model, component = NULL) {
-  cs <- stats::coef(summary(model))
+  cs <- suppressWarnings(stats::coef(summary(model)))
   se <- NULL
 
   if (is.list(cs) && !is.null(component)) cs <- cs[[component]]

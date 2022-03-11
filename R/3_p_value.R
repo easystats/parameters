@@ -169,7 +169,7 @@ p_value.default <- function(model,
 
 
 .get_pval_from_summary <- function(model, cs = NULL) {
-  if (is.null(cs)) cs <- stats::coef(summary(model))
+  if (is.null(cs)) cs <- suppressWarnings(stats::coef(summary(model)))
   p <- NULL
 
   if (ncol(cs) >= 4) {
