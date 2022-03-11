@@ -373,9 +373,14 @@
             out$SE <- tmp$SE
             out$.sort_id <- NULL
 
+            # ensure correlation CI are within -1/1 bounds
+            var_ci_corr_param <- grepl("^Cor (.*)", var_ci$Parameter)
+            out$CI_low <- tanh(atanh(out$Coefficient[var_ci_corr_param]) - stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
+            out$CI_high <- tanh(atanh(out$Coefficient[var_ci_corr_param]) + stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
+
             # Wald CI
-            out$CI_low <- out$Coefficient - stats::qnorm(.975) * out$SE
-            out$CI_high <- out$Coefficient + stats::qnorm(.975) * out$SE
+            out$CI_low[!var_ci_corr_param] <- out$Coefficient[!var_ci_corr_param] - stats::qnorm(.975) * out$SE[!var_ci_corr_param]
+            out$CI_high[!var_ci_corr_param] <- out$Coefficient[!var_ci_corr_param] + stats::qnorm(.975) * out$SE[!var_ci_corr_param]
           },
           error = function(e) {
             # do nothing...
