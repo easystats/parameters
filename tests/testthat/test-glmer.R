@@ -57,6 +57,38 @@ if (.runThisTest &&
         "SD (Residual)        |        1.00"
       )
     )
+
+    set.seed(123)
+    model <- glmer(
+      cbind(incidence, size - incidence) ~ period + (1 | herd),
+      data = cbpp,
+      family = binomial(),
+      nAGQ = 2
+    )
+
+    mp <- model_parameters(model, effects = "all")
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      out,
+      c(
+        "# Fixed Effects",
+        "",
+        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
+        "---------------------------------------------------------------",
+        "(Intercept) |    -1.40 | 0.23 | [-1.85, -0.94] | -6.02 | < .001",
+        "period [2]  |    -0.99 | 0.31 | [-1.59, -0.39] | -3.24 | 0.001 ",
+        "period [3]  |    -1.13 | 0.33 | [-1.77, -0.49] | -3.46 | < .001",
+        "period [4]  |    -1.58 | 0.43 | [-2.42, -0.74] | -3.70 | < .001",
+        "",
+        "# Random Effects",
+        "",
+        "Parameter            | Coefficient |   SE |       95% CI",
+        "--------------------------------------------------------",
+        "SD (Intercept: herd) |        0.64 | 0.18 | [0.37, 1.11]",
+        "SD (Residual)        |        1.00 |      |             "
+      )
+    )
+
   })
 
 
