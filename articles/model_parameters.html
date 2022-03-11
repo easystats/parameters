@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.100</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -257,7 +257,7 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># show Odds Ratios and Wald-method for degrees of freedom</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, df_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, ci_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span>
 <span class="co">#&gt; Parameter        | Odds Ratio |       SE |           95% CI |     z |     p</span>
 <span class="co">#&gt; ---------------------------------------------------------------------------</span>
 <span class="co">#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [0.55, 9.87e+11] |  1.88 | 0.060</span>

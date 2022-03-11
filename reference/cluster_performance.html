@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.16.9.100</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,11 +121,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># kmeans</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Indices of model performance</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 681.371           |             602.519 |             78.851 | 0.884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
 <span class="r-in"><span class="co"># hclust</span></span>
 <span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
@@ -133,11 +130,8 @@
 <span class="r-in"></span>
 <span class="r-in"><span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">data</span>, <span class="va">clusters</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">rez</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Indices of model performance</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 681.371           |             591.846 |             89.525 | 0.869</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            591.8456           89.52501 0.8686104</span>
 <span class="r-in"><span class="co"># DBSCAN</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/mhahsler/dbscan" class="external-link">"dbscan"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">dbscan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dbscan/man/dbscan.html" class="external-link">dbscan</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, eps <span class="op">=</span> <span class="fl">1.45</span>, minPts <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -145,19 +139,13 @@
 <span class="r-in">  <span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu">cluster_performance</span><span class="op">(</span><span class="va">model</span>, <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">rez</span></span>
 <span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Indices of model performance</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 681.371           |             526.424 |            154.947 | 0.773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            526.4236            154.947 0.7725951</span>
 <span class="r-in"><span class="co"># Retrieve performance from parameters</span></span>
 <span class="r-in"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">cluster_performance</span><span class="op">(</span><span class="va">params</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Indices of model performance</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 681.371           |             602.519 |             78.851 | 0.884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          681.3706            602.5192           78.85144 0.8842753</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
