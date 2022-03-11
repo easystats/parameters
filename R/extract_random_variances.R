@@ -313,7 +313,10 @@
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
       if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
-        # vcov from full model
+        # vcov from full model. the parameters from vcov have a different
+        # order, so we need to restore the "original" order of random effect
+        # parameters using regex to match the naming patterns (of the column
+        # names from the vcov)
         vv <- vcov(model, full = TRUE, ranpar = "sd")
         # only keep random effect variances
         cov_columns <- grepl("(^cov_|residual)", colnames(vv))
