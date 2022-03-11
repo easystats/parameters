@@ -340,13 +340,14 @@
 
             # add residual variance
             res_column <- which(colnames(vv) == "residual")
-            var_ci <- rbind(
-              var_ci,
-              .data_frame(Group = "Residual",
-                          Parameter = "SD (Observations)",
-                          SE = sqrt(vv[res_column, res_column, drop = TRUE]))
-            )
-
+            if (length(res_column)) {
+              var_ci <- rbind(
+                var_ci,
+                .data_frame(Group = "Residual",
+                            Parameter = "SD (Observations)",
+                            SE = sqrt(vv[res_column, res_column, drop = TRUE]))
+              )
+            }
             # renaming
             var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
             # correlations
