@@ -705,8 +705,16 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
     }
 
-    # do we have random effect variances from glmmTMB?
-    if (identical(model_class, "glmmTMB") && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects && (string_method != "Wald z-" || ci_method != "wald")) {
+    # do we have random effect variances from lme4/glmmTMB?
+                   # must be glmmTMB
+    show_re_msg <- (identical(model_class, "glmmTMB") &&
+                   # and not Wald-CIs
+                   (string_method != "Wald z-" || ci_method != "wald")) ||
+                   # OR must be merMod
+                   ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+                   # and not Wald CIs
+                   !ci_method %in% c("wald", "residual", "normal"))
+    if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
       msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
     }
 

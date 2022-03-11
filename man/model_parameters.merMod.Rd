@@ -265,10 +265,11 @@ and only when the \strong{merDeriv} package is installed, confidence intervals
 for random effects are based on normal-distribution approximation. For models
 of class \code{glmmTMB}, confidence intervals for random effect variances always
 use a Wald t-distribution approximation.
-\cr \cr Note that confidence intervals for random effects from \emph{lme4} models
+\cr \cr Note that confidence intervals for random effects from \strong{lme4} models
 that use the normal-distribution approximation (i.e. when \code{ci_method} is
-neither \code{"profile"} nor \code{"boot"}) are often an unreliable  measure of
-uncertainty.
+neither \code{"profile"} nor \code{"boot"}) are often an unreliable measure of
+uncertainty. Thus, profiled or bootstrapped confidence intervals are
+preferred if more precise intervals are required.
 }
 
 \section{Dispersion parameters in \emph{glmmTMB}}{

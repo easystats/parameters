@@ -1,5 +1,12 @@
 # parameters 0.17.1
 
+## General
+
+* `model_parameters()` for mixed models from package *lme4* now also report
+  confidence intervals for random effect variances by default. Formerly, CIs
+  were only included when `ci_method` was `"profile"` or `"boot"`. The 
+  *merDeriv* package is required for this feature.
+
 # parameters 0.17.0
 
 ## General

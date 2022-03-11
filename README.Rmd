@@ -134,9 +134,6 @@ model_parameters(model, effects = "all")
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, ci_method = "kenward")
-
-# profiled CI method also computes CI for random parameters
-model_parameters(model, ci_method = "profile")
 ```
 
 ### Structural Models

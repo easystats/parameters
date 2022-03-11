@@ -37,10 +37,11 @@
 #' for random effects are based on normal-distribution approximation. For models
 #' of class `glmmTMB`, confidence intervals for random effect variances always
 #' use a Wald t-distribution approximation.
-#' \cr \cr Note that confidence intervals for random effects from *lme4* models
+#' \cr \cr Note that confidence intervals for random effects from **lme4** models
 #' that use the normal-distribution approximation (i.e. when `ci_method` is
-#' neither `"profile"` nor `"boot"`) are often an unreliable  measure of
-#' uncertainty.
+#' neither `"profile"` nor `"boot"`) are often an unreliable measure of
+#' uncertainty. Thus, profiled or bootstrapped confidence intervals are
+#' preferred if more precise intervals are required.
 #'
 #' @section Dispersion parameters in *glmmTMB*:
 #' For some models from package **glmmTMB**, both the dispersion parameter and
