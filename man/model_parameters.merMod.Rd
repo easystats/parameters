@@ -257,15 +257,22 @@ use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/
 \section{Confidence intervals for random effect variances}{
 
 For models of class \code{merMod} and \code{glmmTMB}, confidence intervals for random
-effect variances can be calculated. For models of from package \strong{lme4}, when
-\code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
-\code{"random"} or \code{"all"}, profiled resp. bootstrapped confidence intervals are
-computed for the random effects. For all other options of \code{ci_method},
-and only when the \strong{merDeriv} package is installed, confidence intervals
-for random effects are based on normal-distribution approximation, using the
-delta-method to transform standard errors for constructing the intervals.
-For models of class \code{glmmTMB}, confidence intervals for random effect
+effect variances can be calculated.
+\itemize{
+\item For models of from package \strong{lme4}, when \code{ci_method} is either \code{"profile"}
+or \code{"boot"}, and \code{effects} is either \code{"random"} or \code{"all"}, profiled resp.
+bootstrapped confidence intervals are computed for the random effects.
+\item For all other options of \code{ci_method}, and only when the \strong{merDeriv}
+package is installed, confidence intervals for random effects are based on
+normal-distribution approximation, using the delta-method to transform
+standard errors for constructing the intervals. Due to the transformation,
+the intervals are asymmetrical, however, they are within the correct bounds
+(i.e. no negative interval for the SD, and the interval for the correlations
+is within the range from -1 to +1).
+\item For models of class \code{glmmTMB}, confidence intervals for random effect
 variances always use a Wald t-distribution approximation.
+}
+
 \cr \cr Note that confidence intervals for random effects from \strong{lme4} models
 that use the normal-distribution approximation (i.e. when \code{ci_method} is
 neither \code{"profile"} nor \code{"boot"}) are often an unreliable measure of
