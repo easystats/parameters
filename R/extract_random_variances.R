@@ -378,9 +378,14 @@
             out$CI_low <- tanh(atanh(out$Coefficient[var_ci_corr_param]) - stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
             out$CI_high <- tanh(atanh(out$Coefficient[var_ci_corr_param]) + stats::qnorm(.975) * atanh(out$SE[var_ci_corr_param]))
 
-            # Wald CI
-            out$CI_low[!var_ci_corr_param] <- out$Coefficient[!var_ci_corr_param] - stats::qnorm(.975) * out$SE[!var_ci_corr_param]
-            out$CI_high[!var_ci_corr_param] <- out$Coefficient[!var_ci_corr_param] + stats::qnorm(.975) * out$SE[!var_ci_corr_param]
+            # Wald CI, based on delta-method.
+            # SD is chi square distributed. So it has a long tail. CIs should
+            # therefore be asymmetrical. log(SD) is normally distributed.
+            # Also, if the SD is small, then the CI might go negative
+            coefs <- out$Coefficient[!var_ci_corr_param]
+            delta_se <- out$SE[!var_ci_corr_param] / coefs
+            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
+            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
           },
           error = function(e) {
             # do nothing...
