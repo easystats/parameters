@@ -72,7 +72,7 @@ if (requiet("testthat") &&
 
   if (packageVersion("parameters") >= "0.17.0") {
     test_that("model_parameters, robust", {
-      expect_warning(model_parameters(model, robust = TRUE))
+      expect_warning(expect_warning(expect_warning(model_parameters(model, robust = TRUE))))
       params <- model_parameters(model, vcov = "HC3")
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
       expect_equal(params$SE, robust_se, tolerance = 1e-3)
