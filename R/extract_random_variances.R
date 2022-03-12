@@ -183,8 +183,12 @@
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
     if (!is.null(ran_intercept$Group) && colnames(ran_corr)[1] == ran_intercept$Group[1]) {
       colnames(ran_corr)[1] <- "Coefficient"
-      ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ")")
+      ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ": ", ran_intercept$Group[1], ")")
       ran_corr$Group <- ran_intercept$Group[1]
+    } else if (!is.null(ran_groups) && colnames(ran_corr)[1] == ran_groups[1]) {
+      colnames(ran_corr)[1] <- "Coefficient"
+      ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
+      ran_corr$Group <- ran_groups[1]
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
@@ -265,7 +269,7 @@
 
   # add confidence intervals?
   if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component)
+    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -282,7 +286,7 @@
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL) {
+.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -357,6 +361,26 @@
               paste0("Cor (Intercept~\\1: ", var_ci$Group[var_ci_corr_param], ")"),
               var_ci$Parameter[var_ci_corr_param]
             )
+
+            # correlations w/o intercept? usually only for factors
+            rnd_slopes <- unlist(insight::find_random_slopes(model))
+            if (!is.null(rnd_slopes)) {
+              model_data <- stats::model.frame(model)[rnd_slopes]
+              for (i in rnd_slopes) {
+                if (is.factor(model_data[[i]])) {
+                  referece_level <- paste0(i, levels(model_data[[i]])[1])
+                  var_ci_corr_param2 <- grepl(paste0("(.*)\\.\\Q", referece_level, "\\E"), var_ci$Parameter) & !var_ci_corr_param
+                  if (any(var_ci_corr_param2)) {
+                    var_ci$Parameter[var_ci_corr_param2] <- gsub(
+                      paste0("(.*)\\.\\Q", referece_level, "\\E"),
+                      paste0("Cor (Reference~\\1)"),
+                      var_ci$Parameter[var_ci_corr_param2]
+                    )
+                  }
+                }
+              }
+            }
+
             # remaining
             var_ci_others <- !grepl("^(Cor|SD) (.*)", var_ci$Parameter)
             var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)",var_ci$Parameter[var_ci_others])
@@ -378,8 +402,8 @@
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
-              out$CI_low <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
-              out$CI_high <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
+              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
             }
 
             # Wald CI, based on delta-method.
@@ -392,9 +416,13 @@
             out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
           },
           error = function(e) {
-            # do nothing...
+            if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
+              message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+            }
           }
         )
+      } else if (isTRUE(verbose)) {
+        message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
       }
     }
   } else if (inherits(model, "glmmTMB")) {
@@ -792,10 +820,14 @@
     # check for uncorrelated random slopes-intercept
     non_intercepts <- which(sapply(varcorr, function(i) !grepl("^\\(Intercept\\)", dimnames(i)[[1]][1])))
     if (length(non_intercepts)) {
-      dn <- unlist(lapply(varcorr, function(i) dimnames(i)[1])[non_intercepts])
-      rndslopes <- unlist(lapply(varcorr, function(i) i[1])[non_intercepts])
-      names(rndslopes) <- gsub("(.*)\\.\\d+$", "\\1", names(rndslopes))
-      out <- c(out, stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn)))
+      if (length(non_intercepts) == length(varcorr)) {
+        out <- unlist(lapply(varcorr, function(x) diag(x)))
+      } else {
+        dn <- unlist(lapply(varcorr, function(i) dimnames(i)[1])[non_intercepts])
+        rndslopes <- unlist(lapply(varcorr, function(i) i[1])[non_intercepts])
+        names(rndslopes) <- gsub("(.*)\\.\\d+$", "\\1", names(rndslopes))
+        out <- c(out, stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn)))
+      }
     }
     out
   }
