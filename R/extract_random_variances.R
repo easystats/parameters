@@ -404,6 +404,7 @@
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
               out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
               out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+              out$p[var_ci_corr_param] <- as.vector(2 * stats::pnorm(abs(atanh(coefs) / delta_se), lower.tail = FALSE))
             }
 
             # Wald CI, based on delta-method.
@@ -414,6 +415,7 @@
             delta_se <- out$SE[!var_ci_corr_param] / coefs
             out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
             out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+            out$p[!var_ci_corr_param] <- as.vector(2 * stats::pnorm(abs(log(coefs) / delta_se), lower.tail = FALSE))
           },
           error = function(e) {
             if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
