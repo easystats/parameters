@@ -265,10 +265,12 @@ bootstrapped confidence intervals are computed for the random effects.
 \item For all other options of \code{ci_method}, and only when the \strong{merDeriv}
 package is installed, confidence intervals for random effects are based on
 normal-distribution approximation, using the delta-method to transform
-standard errors for constructing the intervals. Due to the transformation,
-the intervals are asymmetrical, however, they are within the correct bounds
-(i.e. no negative interval for the SD, and the interval for the correlations
-is within the range from -1 to +1).
+standard errors for constructing the intervals around the log-transformed
+SD parameters. These are than back-transformed, so that random effect
+variances, standard errors and confidence intervals are shown on the original
+scale. Due to the transformation, the intervals are asymmetrical, however,
+they are within the correct bounds (i.e. no negative interval for the SD,
+and the interval for the correlations is within the range from -1 to +1).
 \item For models of class \code{glmmTMB}, confidence intervals for random effect
 variances always use a Wald t-distribution approximation.
 }
