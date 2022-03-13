@@ -419,6 +419,10 @@
             if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
               message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
             }
+            if (grepl("exactly singular", e$message, fixed = TRUE) || grepl("Exact singular", e$message, fixed = TRUE)) {
+              message(insight::format_message("Cannot compute standard errors and confidence intervals for random effects parameters.",
+                                              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."))
+            }
           }
         )
       } else if (isTRUE(verbose)) {
