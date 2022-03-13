@@ -236,7 +236,7 @@
   rownames(out) <- NULL
 
   # variances to SD (sqrt), except correlations and Sigma
-  corr_param <- grepl("Cor (Intercept~", out$Parameter, fixed = TRUE)
+  corr_param <- grepl("^Cor (.*)", out$Parameter)
   sigma_param <- out$Parameter == "SD (Observations)"
   not_cor_and_sigma <- !corr_param & !sigma_param
   if (any(not_cor_and_sigma)) {
