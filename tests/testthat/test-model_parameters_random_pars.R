@@ -110,6 +110,16 @@ if (.runThisTest &&
   model <- lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
+  test_that("model_parameters-random pars 9", {
+    expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-7], tolerance = 1e-3)
+    # expect_equal(mp$SE, c(5.68188, 4.951, 9.773, 0.34887, 0.59977, 1.7238), tolerance = 1e-3)
+    # expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, 24.18612), tolerance = 1e-3)
+    expect_equal(mp$Parameter,
+                 c("SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+                   "Cor (Intercept~Days2(-1,3]: Subject)", "Cor (Intercept~Days2(3,6]: Subject)",
+                   "SD (Observations)"))
+  })
+
   model <- lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
