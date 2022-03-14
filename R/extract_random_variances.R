@@ -852,7 +852,7 @@
             # are duplicated (i.e. their difference is 0 - including a tolerance)
             # and then remove duplicated elements
             the_same <- which(abs(outer(out[j], rndslopes, `-`)) < .0001)
-            if (grepl(dn[the_same], names(out[j]), fixed = TRUE)) {
+            if (length(the_same) && grepl(dn[the_same], names(out[j]), fixed = TRUE)) {
               to_remove <- c(to_remove, j)
             }
           }
