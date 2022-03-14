@@ -844,6 +844,21 @@
         # anything missing? (i.e. correlated slope-intercept slopes)
         missig_rnd_slope <- setdiff(names(out), names(rndslopes))
         if (length(missig_rnd_slope)) {
+          # sanity check
+          to_remove <- c()
+          for (j in 1:length(out)) {
+            # identical random slopes might have different names, so
+            # we here check if random slopes from correlated and uncorrelated
+            # are duplicated (i.e. their difference is 0 - including a tolerance)
+            # and then remove duplicated elements
+            the_same <- which(abs(outer(out[j], rndslopes, `-`)) < .0001)
+            if (grepl(dn[the_same], names(out[j]), fixed = TRUE)) {
+              to_remove <- c(to_remove, j)
+            }
+          }
+          if (length(to_remove)) {
+            out <- out[-to_remove]
+          }
           out <- c(out, rndslopes)
         } else {
           out <- rndslopes
