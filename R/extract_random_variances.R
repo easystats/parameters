@@ -820,6 +820,7 @@
   if (inherits(model, "lme")) {
     unlist(lapply(varcorr, function(x) diag(x)[-1]))
   } else {
+    # random slopes for correlated slope-intercept
     out <- unlist(lapply(varcorr, function(x) diag(x)[-1]))
     # check for uncorrelated random slopes-intercept
     non_intercepts <- which(sapply(varcorr, function(i) !grepl("^\\(Intercept\\)", dimnames(i)[[1]][1])))
@@ -835,8 +836,16 @@
             as.vector(diag(i))
           }
         })[non_intercepts])
+        # random slopes for uncorrelated slope-intercept
         names(rndslopes) <- gsub("(.*)\\.\\d+$", "\\1", names(rndslopes))
-        out <- stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn))
+        rndslopes <- stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn))
+        # anything missing? (i.e. correlated slope-intercept slopes)
+        missig_rnd_slope <- setdiff(names(out), names(rndslopes))
+        if (length(missig_rnd_slope)) {
+          out <- c(out, rndslopes)
+        } else {
+          out <- rndslopes
+        }
       }
     }
     out
