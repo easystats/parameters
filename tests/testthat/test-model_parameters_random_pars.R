@@ -111,7 +111,7 @@ if (.runThisTest &&
 
   test_that("model_parameters-random pars 9", {
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-7], tolerance = 1e-3)
-    expect_equal(mp$SE, c(NA, NA, NA, NA, NA, NA, NA), tolerance = 1e-3)
+    expect_true(all(is.na(mp$SE)))
     expect_equal(mp$Parameter,
                  c("SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
                    "Cor (Intercept~Days2(-1,3]: Subject)", "Cor (Intercept~Days2(3,6]: Subject)",
