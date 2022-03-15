@@ -785,7 +785,11 @@
 
 
 .is_nested_lme <- function(model) {
-  sapply(insight::find_random(model), function(i) any(grepl(":", i, fixed = TRUE)))
+  re <- insight::find_random(model)
+  if (is.null(re)) {
+    return(FALSE)
+  }
+  sapply(re, function(i) any(grepl(":", i, fixed = TRUE)))
 }
 
 
