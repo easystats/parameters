@@ -51,7 +51,7 @@ format_p_adjust <- function(method) {
         correction <- 1
         by_vars <- model@misc$by.vars
         if (!is.null(by_vars) && by_vars %in% colnames(params)) {
-          correction <- .n_unique(params[[by_vars]])
+          correction <- insight::n_unique(params[[by_vars]])
         }
         correction
       },

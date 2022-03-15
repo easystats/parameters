@@ -138,7 +138,8 @@ if (.runThisTest &&
     out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
     expect_equal(
       out,
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
         "-----------------------------------------------------------------",
@@ -150,7 +151,8 @@ if (.runThisTest &&
         "Parameter            | Coefficient |   SE |       95% CI",
         "--------------------------------------------------------",
         "SD (Intercept: gear) |        0.27 | 0.24 | [0.05, 1.54]",
-        "SD (Residual)        |        0.59 | 0.08 | [0.46, 0.77]")
+        "SD (Residual)        |        0.59 | 0.08 | [0.46, 0.77]"
+      )
     )
 
     out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", summary = TRUE)))

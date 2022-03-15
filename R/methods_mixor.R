@@ -82,6 +82,6 @@ simulate_model.mixor <- function(model, iterations = 1000, effects = "all", ...)
   out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   out
 }

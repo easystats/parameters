@@ -1,14 +1,14 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    requiet("testthat") &&
-    requiet("parameters") &&
-    requiet("MASS") &&
-    requiet("pscl") &&
-    requiet("survival") &&
-    requiet("ivreg") &&
-    requiet("AER") &&
-    requiet("sandwich")) {
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("MASS") &&
+  requiet("pscl") &&
+  requiet("survival") &&
+  requiet("ivreg") &&
+  requiet("AER") &&
+  requiet("sandwich")) {
 
 
 
@@ -443,7 +443,5 @@ if (.runThisTest &&
       expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
       expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
     })
-
   }
 }
-

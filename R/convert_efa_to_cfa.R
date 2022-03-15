@@ -76,7 +76,7 @@ efa_to_cfa <- convert_efa_to_cfa
   }
 
   # Catch error
-  if (length(names) != .n_unique(loadings$Component)) {
+  if (length(names) != insight::n_unique(loadings$Component)) {
     stop(paste("The `names` vector must be of same length as the number of dimensions, in this case", length(unique(loadings$Component))))
   }
 

@@ -103,22 +103,6 @@
 
 
 #' @keywords internal
-.safe_deparse <- function(string) {
-  paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
-}
-
-
-#' @keywords internal
-.n_unique <- function(x, na.rm = TRUE) {
-  if (is.null(x)) {
-    return(0)
-  }
-  if (isTRUE(na.rm)) x <- stats::na.omit(x)
-  length(unique(x))
-}
-
-
-#' @keywords internal
 .get_object <- function(x, attribute_name = "object_name") {
   obj_name <- attr(x, attribute_name, exact = TRUE)
   model <- NULL
@@ -149,4 +133,3 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
-

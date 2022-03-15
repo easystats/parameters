@@ -26,7 +26,7 @@ model_parameters.ggeffects <- function(model, parameters = NULL, verbose = TRUE,
   colnames(model) <- new_colnames
   model$SE <- NULL
 
-  if (.n_unique(model$Component) == 1) {
+  if (insight::n_unique(model$Component) == 1) {
     model$Component <- NULL
   }
   if (!is.null(focal_term)) {

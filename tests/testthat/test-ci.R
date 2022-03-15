@@ -46,4 +46,3 @@ test_that("vs. sandwich & lmtest", {
 
   expect_warning(ci(model, vcov = vcovHC), regexp = "vcov.*are not available with.*profile")
 })
-

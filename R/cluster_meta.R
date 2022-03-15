@@ -34,7 +34,7 @@
 #' # Convert to dissimilarity
 #' d <- as.dist(abs(m - 1))
 #' model <- hclust(d)
-#' plot(model, hang  = -1)
+#' plot(model, hang = -1)
 #' }
 #' @export
 cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {

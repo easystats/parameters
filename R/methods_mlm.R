@@ -53,7 +53,8 @@ model_parameters.mlm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    ...)
+    ...
+  )
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
@@ -120,7 +121,7 @@ simulate_model.mlm <- function(model, iterations = 1000, ...) {
   colnames(out) <- cn
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   out
 }
 

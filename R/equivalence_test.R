@@ -168,7 +168,7 @@ equivalence_test.lm <- function(x,
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
@@ -247,7 +247,7 @@ equivalence_test.merMod <- function(x,
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out

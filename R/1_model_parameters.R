@@ -402,8 +402,9 @@ parameters <- model_parameters
 #' model_parameters(model, vcov = "HC3")
 #'
 #' model_parameters(model,
-#'                  vcov = "vcovCL",
-#'                  vcov_args = list(cluster = mtcars$cyl))
+#'   vcov = "vcovCL",
+#'   vcov_args = list(cluster = mtcars$cyl)
+#' )
 #'
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)
@@ -434,7 +435,6 @@ model_parameters.default <- function(model,
                                      vcov = NULL,
                                      vcov_args = NULL,
                                      ...) {
-
   dots <- list(...)
 
   out <- tryCatch(
@@ -499,8 +499,6 @@ model_parameters.default <- function(model,
                                       vcov = NULL,
                                       vcov_args = NULL,
                                       ...) {
-
-
   dots <- list(...)
 
   ## TODO remove later
@@ -520,7 +518,8 @@ model_parameters.default <- function(model,
       model,
       iterations = iterations,
       ci = ci,
-      ci_method = ci_method)
+      ci_method = ci_method
+    )
     args <- c(args, dots)
     params <- do.call("bootstrap_parameters", args)
   } else {
@@ -592,8 +591,6 @@ model_parameters.glm <- function(model,
                                  vcov_args = NULL,
                                  verbose = TRUE,
                                  ...) {
-
-
   dots <- list(...)
 
   # set default

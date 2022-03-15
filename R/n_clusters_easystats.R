@@ -20,7 +20,6 @@ n_clusters_elbow <- function(x,
                              clustering_function = stats::kmeans,
                              n_max = 10,
                              ...) {
-
   t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,
@@ -114,7 +113,6 @@ n_clusters_silhouette <- function(x,
                                   clustering_function = stats::kmeans,
                                   n_max = 10,
                                   ...) {
-
   t0 <- Sys.time()
   out <- .n_clusters_factoextra(
     x,

@@ -82,13 +82,14 @@ test_that("model_parameters, standardize-basic", {
 test_that("model_parameters, standardize-refit robust", {
   skip_if_not_installed("clubSandwich")
   params <- model_parameters(model,
-                             standardize = "refit",
-                             effects = "fixed",
-                             robust = TRUE,
-                             vcov_estimation = "CR",
-                             vcov_type = "CR1",
-                             vcov_args = list(cluster = iris$grp),
-                             verbose = FALSE)
+    standardize = "refit",
+    effects = "fixed",
+    robust = TRUE,
+    vcov_estimation = "CR",
+    vcov_type = "CR1",
+    vcov_args = list(cluster = iris$grp),
+    verbose = FALSE
+  )
   expect_equal(c(nrow(params), ncol(params)), c(7, 10))
   expect_equal(params$Coefficient, c(0.96949, -1.28631, -1.81461, 0.34791, 1.74252, -0.25421, -0.18834), tolerance = 1e-3)
   expect_equal(params$SE, c(0.07726, 0.33406, 0.22647, 0.0524, 0.10092, 0.18537, 0.05552), tolerance = 1e-3)
