@@ -99,12 +99,12 @@ format.parameters_model <- function(x,
   }
 
   # remove unique columns
-  if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-  if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
-  if (.n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
+  if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+  if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+  if (insight::n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
 
   # no column with CI-level in output
-  if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+  if (!is.null(formatted_table$CI) && insight::n_unique(formatted_table$CI) == 1) {
     formatted_table$CI <- NULL
   }
 
@@ -208,15 +208,15 @@ format.compare_parameters <- function(x,
     formatted_table <- split(out, f = split_by)
     formatted_table <- lapply(formatted_table, function(i) {
       # remove unique columns
-      if (.n_unique(i$Component) == 1) i$Component <- NULL
-      if (.n_unique(i$Effects) == 1) i$Effects <- NULL
+      if (insight::n_unique(i$Component) == 1) i$Component <- NULL
+      if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
       i
     })
   } else {
     formatted_table <- out
     # remove unique columns
-    if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+    if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
     formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
   }

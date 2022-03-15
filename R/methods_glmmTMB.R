@@ -368,7 +368,7 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
   }
 
   class(d) <- c("parameters_simulate_model", class(d))
-  attr(d, "object_name") <- .safe_deparse(substitute(model))
+  attr(d, "object_name") <- insight::safe_deparse(substitute(model))
   d
 }
 
@@ -399,11 +399,11 @@ simulate_parameters.glmmTMB <- function(model,
     )
 
   params <- insight::get_parameters(model, ...)
-  if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
+  if ("Effects" %in% colnames(params) && insight::n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }
 
-  if ("Component" %in% colnames(params) && .n_unique(params$Component) > 1) {
+  if ("Component" %in% colnames(params) && insight::n_unique(params$Component) > 1) {
     out$Component <- params$Component
   }
 

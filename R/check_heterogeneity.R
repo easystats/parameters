@@ -40,7 +40,7 @@ check_heterogeneity <- function(x, select = NULL, group = NULL) {
     data <- x
   }
 
-  unique_groups <- .n_unique(data[[group]])
+  unique_groups <- insight::n_unique(data[[group]])
   combinations <- expand.grid(select, group)
 
   result <- mapply(function(predictor, id) {
@@ -84,7 +84,7 @@ print.check_heterogeneity <- function(x, ...) {
 
 
 #' @keywords internal
-.n_unique <- function(x, na.rm = TRUE) {
+insight::n_unique <- function(x, na.rm = TRUE) {
   if (is.null(x)) {
     return(0)
   }

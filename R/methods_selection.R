@@ -83,7 +83,7 @@ simulate_model.selection <- function(model, iterations = 1000, component = c("al
   out <- .simulate_model(model, iterations, component = component, effects = "fixed")
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   out
 }
 

@@ -105,7 +105,7 @@
   # model formula
   model_formula <- tryCatch(
     {
-      .safe_deparse(insight::find_formula(model)$conditional)
+      insight::safe_deparse(insight::find_formula(model)$conditional)
     },
     error = function(e) {
       NULL

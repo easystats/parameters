@@ -474,11 +474,11 @@
     x$Response <- NULL
   }
   split_by <- ""
-  split_by <- c(split_by, ifelse("Component" %in% names(x) && .n_unique(x$Component) > 1, "Component", ""))
-  split_by <- c(split_by, ifelse("Effects" %in% names(x) && .n_unique(x$Effects) > 1, "Effects", ""))
-  split_by <- c(split_by, ifelse("Response" %in% names(x) && .n_unique(x$Response) > 1, "Response", ""))
-  split_by <- c(split_by, ifelse("Group" %in% names(x) && .n_unique(x$Group) > 1, "Group", ""))
-  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && .n_unique(x$Subgroup) > 1, "Subgroup", ""))
+  split_by <- c(split_by, ifelse("Component" %in% names(x) && insight::n_unique(x$Component) > 1, "Component", ""))
+  split_by <- c(split_by, ifelse("Effects" %in% names(x) && insight::n_unique(x$Effects) > 1, "Effects", ""))
+  split_by <- c(split_by, ifelse("Response" %in% names(x) && insight::n_unique(x$Response) > 1, "Response", ""))
+  split_by <- c(split_by, ifelse("Group" %in% names(x) && insight::n_unique(x$Group) > 1, "Group", ""))
+  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && insight::n_unique(x$Subgroup) > 1, "Subgroup", ""))
 
   split_by <- split_by[nchar(split_by) > 0]
   split_by
@@ -695,18 +695,18 @@
     component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, is_multivariate, ran_pars, formatted_table)
 
     # exceptions for random effects
-    if (.n_unique(formatted_table$Group) == 1) {
+    if (insight::n_unique(formatted_table$Group) == 1) {
       component_header$subheader1 <- paste0(component_header$subheader1, " (", formatted_table$Group, ")")
       formatted_table$Group <- NULL
     }
 
     # remove non-necessary columns
-    if (.n_unique(formatted_table$Component) == 1) {
+    if (insight::n_unique(formatted_table$Component) == 1) {
       formatted_table$Component <- NULL
     }
 
     # no column with CI-level in output
-    if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+    if (!is.null(formatted_table$CI) && insight::n_unique(formatted_table$CI) == 1) {
       formatted_table$CI <- NULL
     }
 
@@ -735,8 +735,8 @@
     }
 
     # remove unique columns
-    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
-    if (.n_unique(formatted_table$Group) == 1) formatted_table$Group <- NULL
+    if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (insight::n_unique(formatted_table$Group) == 1) formatted_table$Group <- NULL
 
     final_table <- c(final_table, list(formatted_table))
   }

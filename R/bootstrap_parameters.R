@@ -87,9 +87,9 @@ bootstrap_parameters <- function(model,
   )
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
-  } else if ("CI" %in% names(parameters) && .n_unique(parameters$CI) > 1) {
+  } else if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) > 1) {
     parameters <- datawizard::reshape_ci(parameters)
   }
 

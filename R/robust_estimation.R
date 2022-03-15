@@ -82,7 +82,7 @@ ci_robust <- function(model,
     ...
   )
 
-  if ("Component" %in% colnames(out) && .n_unique(out$Component) == 1) {
+  if ("Component" %in% colnames(out) && insight::n_unique(out$Component) == 1) {
     out$Component <- NULL
   }
   out

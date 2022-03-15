@@ -177,11 +177,11 @@ simulate_parameters.zeroinfl <- function(model,
     )
 
   params <- insight::get_parameters(model)
-  if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
+  if ("Effects" %in% colnames(params) && insight::n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }
 
-  if ("Component" %in% colnames(params) && .n_unique(params$Component) > 1) {
+  if ("Component" %in% colnames(params) && insight::n_unique(params$Component) > 1) {
     out$Component <- params$Component
   }
 

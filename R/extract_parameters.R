@@ -225,8 +225,8 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && .n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
-  if ((!is.null(parameters$Effects) && .n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
+  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
+  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
 
 
   # ==== adjust p-values?
@@ -798,10 +798,10 @@
   }
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
   }
-  if ("ROPE_CI" %in% names(parameters) && .n_unique(parameters$ROPE_CI) == 1) {
+  if ("ROPE_CI" %in% names(parameters) && insight::n_unique(parameters$ROPE_CI) == 1) {
     parameters$ROPE_CI <- NULL
   }
   if ("ROPE_low" %in% names(parameters) & "ROPE_high" %in% names(parameters)) {
