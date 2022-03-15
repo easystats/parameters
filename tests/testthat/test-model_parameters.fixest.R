@@ -25,7 +25,8 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
     out <- capture.output(print(params))
     expect_equal(
       out[-9],
-      c("# Fixed Effects",
+      c(
+        "# Fixed Effects",
         "",
         "Parameter | Coefficient |   SE |         95% CI | t(561) |      p",
         "-----------------------------------------------------------------",
@@ -33,7 +34,8 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
         "phq4      |       -3.66 | 0.67 | [-4.98, -2.34] |  -5.45 | < .001",
         "", "Model: QoL ~ time + phq4 (564 Observations)",
         # "Residual standard deviation: 12.365 (df = 561)",
-        "r2: 0.743; ar2: 0.613; wr2: 0.180; war2: 0.175")
+        "r2: 0.743; ar2: 0.613; wr2: 0.180; war2: 0.175"
+      )
     )
   })
 }

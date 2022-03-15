@@ -98,10 +98,10 @@ model_parameters.glmmTMB <- function(model,
     if (
       # must be glmmTMB
       inherits(model, "glmmTMB") &&
-      # don't print dispersion if already present
-      (is.null(component) || !"dispersion" %in% params$Component) &&
-      # don't print dispersion for zi-component
-      component %in% c("conditional", "all", "dispersion")
+        # don't print dispersion if already present
+        (is.null(component) || !"dispersion" %in% params$Component) &&
+        # don't print dispersion for zi-component
+        component %in% c("conditional", "all", "dispersion")
     ) {
       dispersion_param <- insight::get_parameters(model, component = "dispersion")
       if (!is.null(dispersion_param)) {
@@ -144,8 +144,9 @@ model_parameters.glmmTMB <- function(model,
         # check if we have dispersion parameter, and either no sigma
         # or sigma equals dispersion
         if (length(disp) && length(resid) && all.equal(params_variance$Coefficient[resid],
-                                                       params$Coefficient[disp],
-                                                       tolerance = 1e-5)) {
+          params$Coefficient[disp],
+          tolerance = 1e-5
+        )) {
           params <- params[-disp, ]
         }
       }

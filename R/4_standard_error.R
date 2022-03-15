@@ -48,8 +48,9 @@
 #' standard_error(model, vcov = "HC3")
 #'
 #' standard_error(model,
-#'                vcov = "vcovCL",
-#'                vcov_args = list(cluster = iris$Species))
+#'   vcov = "vcovCL",
+#'   vcov_args = list(cluster = iris$Species)
+#' )
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")
@@ -67,7 +68,6 @@ standard_error.default <- function(model,
                                    vcov_args = NULL,
                                    verbose = TRUE,
                                    ...) {
-
   dots <- list(...)
 
   se <- NULL
@@ -81,15 +81,17 @@ standard_error.default <- function(model,
   if (is.function(vcov)) {
     args <- c(list(model), vcov_args, dots)
     se <- tryCatch(sqrt(diag(do.call("vcov", args))),
-                   error = function(x) NULL)
+      error = function(x) NULL
+    )
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
   if (is.character(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
-                 vcov_fun = vcov,
-                 vcov_args = vcov_args,
-                 verbose = verbose)
+      vcov_fun = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose
+    )
     args <- c(args, dots)
     .vcov <- do.call(".get_vcov", args)
     se <- sqrt(diag(.vcov))
@@ -111,13 +113,15 @@ standard_error.default <- function(model,
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    se <- tryCatch({
+    se <- tryCatch(
+      {
         varcov <- insight::get_varcov(model, component = component)
         se_from_varcov <- sqrt(diag(varcov))
         names(se_from_varcov) <- colnames(varcov)
         se_from_varcov
       },
-      error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   # output
@@ -185,7 +189,6 @@ standard_error.default <- function(model,
                       method = "any",
                       verbose = TRUE,
                       ...) {
-
   dots <- list(...)
 
   # superseded arguments
@@ -220,19 +223,38 @@ standard_error.default <- function(model,
 
   # type shortcuts: overwrite only if not supplied explicitly by the user
   if (!"type" %in% names(vcov_args)) {
-    if (vcov_fun %in% c("HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5",
-                        "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3", "xy",
-                        "residual", "wild", "mammen", "webb")) {
+    if (vcov_fun %in% c(
+      "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5",
+      "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3", "xy",
+      "residual", "wild", "mammen", "webb"
+    )) {
       vcov_args[["type"]] <- vcov_fun
     }
   }
 
   if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_fun)) {
-    vcov_fun <- switch(
-      vcov_fun,
-      "HC0" = , "HC1" = , "HC2" = , "HC3" = , "HC4" = , "HC4m" = , "HC5" = , "HC" = "vcovHC",
-      "CR0" = , "CR1" = , "CR1p" = , "CR1S" = , "CR2" = , "CR3" = , "CR" = "vcovCR",
-      "xy" = , "residual" = , "wild" = , "mammen" = , "webb" = , "BS" = "vcovBS",
+    vcov_fun <- switch(vcov_fun,
+      "HC0" = ,
+      "HC1" = ,
+      "HC2" = ,
+      "HC3" = ,
+      "HC4" = ,
+      "HC4m" = ,
+      "HC5" = ,
+      "HC" = "vcovHC",
+      "CR0" = ,
+      "CR1" = ,
+      "CR1p" = ,
+      "CR1S" = ,
+      "CR2" = ,
+      "CR3" = ,
+      "CR" = "vcovCR",
+      "xy" = ,
+      "residual" = ,
+      "wild" = ,
+      "mammen" = ,
+      "webb" = ,
+      "BS" = "vcovBS",
       "OPG" = "vcovOPG",
       "HAC" = "vcovHAC",
       "PC" = "vcovPC",
@@ -247,7 +269,7 @@ standard_error.default <- function(model,
     fun <- get(vcov_fun, asNamespace("clubSandwich"))
   } else {
     insight::check_if_installed("sandwich", reason = "to get robust standard errors")
-    fun  <- try(get(vcov_fun, asNamespace("sandwich")), silent = TRUE)
+    fun <- try(get(vcov_fun, asNamespace("sandwich")), silent = TRUE)
     if (!is.function(fun)) {
       stop(sprintf("`%s` is not a function exported by the `sandwich` package.", vcov_fun))
     }

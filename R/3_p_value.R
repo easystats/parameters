@@ -46,8 +46,6 @@ p_value.default <- function(model,
                             vcov_args = NULL,
                             verbose = TRUE,
                             ...) {
-
-
   dots <- list(...)
 
   if (is.character(method)) {
@@ -86,7 +84,8 @@ p_value.default <- function(model,
       method = method,
       component = component,
       verbose = verbose,
-      ...)
+      ...
+    )
     return(p)
   }
 
@@ -106,9 +105,10 @@ p_value.default <- function(model,
       se <- vcov
     } else {
       args <- list(model,
-                   vcov_args = vcov_args,
-                   vcov = vcov,
-                   verbose = verbose)
+        vcov_args = vcov_args,
+        vcov = vcov,
+        verbose = verbose
+      )
       args <- c(args, dots)
       se <- do.call("standard_error", args)
     }
@@ -132,7 +132,8 @@ p_value.default <- function(model,
           .get_pval_from_summary(model)
         }
       },
-      error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   # default 2nd try: p value from test-statistic
@@ -144,7 +145,8 @@ p_value.default <- function(model,
         names(p_from_stat) <- stat$Parameter
         p_from_stat
       },
-      error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   # output

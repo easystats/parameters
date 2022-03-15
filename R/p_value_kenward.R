@@ -66,7 +66,6 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
                          vcov = NULL,
                          vcov_args = NULL,
                          ...) {
-
   component <- match.arg(component)
   effects <- match.arg(effects)
 
@@ -92,10 +91,11 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
     }
   } else if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
     se <- standard_error(model,
-                         vcov = vcov,
-                         vcov_args = vcov_args,
-                         component = component,
-                         ...)$SE
+      vcov = vcov,
+      vcov_args = vcov_args,
+      component = component,
+      ...
+    )$SE
   }
 
   # overwrite statistic, based on robust or kenward standard errors

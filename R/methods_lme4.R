@@ -115,7 +115,6 @@ model_parameters.merMod <- function(model,
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     ...) {
-
   dots <- list(...)
 
   ## TODO remove later
@@ -193,7 +192,8 @@ model_parameters.merMod <- function(model,
         include_sigma = include_sigma,
         summary = summary,
         vcov = vcov,
-        vcov_args = vcov_args)
+        vcov_args = vcov_args
+      )
       args <- c(args, dots)
       params <- do.call(".extract_parameters_mixed", args)
     }
@@ -307,8 +307,6 @@ standard_error.merMod <- function(model,
                                   vcov = NULL,
                                   vcov_args = NULL,
                                   ...) {
-
-
   dots <- list(...)
 
   effects <- match.arg(effects)
@@ -321,15 +319,16 @@ standard_error.merMod <- function(model,
   if (is.null(method)) {
     method <- "wald"
   } else if ((method == "robust" && is.null(vcov)) ||
-             # deprecated argument
-             isTRUE(list(...)[["robust"]])) {
+    # deprecated argument
+    isTRUE(list(...)[["robust"]])) {
     vcov <- "vcovHC"
   }
 
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
-                 vcov = vcov,
-                 vcov_args = vcov_args)
+      vcov = vcov,
+      vcov_args = vcov_args
+    )
     args <- c(args, dots)
     out <- do.call("standard_error.default", args)
     return(out)

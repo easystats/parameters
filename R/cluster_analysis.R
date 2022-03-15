@@ -281,7 +281,7 @@ cluster_analysis <- function(x,
 .cluster_analysis_mixture <- function(data = NULL, n = NULL, ...) {
   insight::check_if_installed("mclust")
 
-  model <- mclust::Mclust(data, G=n, verbose = FALSE, ...)
+  model <- mclust::Mclust(data, G = n, verbose = FALSE, ...)
 
   list(model = model, clusters = model$classification)
 }

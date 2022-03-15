@@ -159,9 +159,11 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m3, effects = "fixed")$Coefficient,
-      c(-0.61038, -0.9637, 0.17068, -0.38706, 0.48795, 0.58949, -0.11327,
+      c(
+        -0.61038, -0.9637, 0.17068, -0.38706, 0.48795, 0.58949, -0.11327,
         1.42935, 0.91004, 1.16141, -0.93932, 1.04243, -0.56231, -0.893,
-        -2.53981, -2.56303, 1.51165),
+        -2.53981, -2.56303, 1.51165
+      ),
       tolerance = 1e-2
     )
     expect_equal(
@@ -325,7 +327,7 @@ if (.runThisTest &&
 
 
   data(mtcars)
-  mdisp <- glmmTMB(hp ~ 0 + wt/mpg, mtcars)
+  mdisp <- glmmTMB(hp ~ 0 + wt / mpg, mtcars)
   test_that("model_parameters, dispersion", {
     mp <- model_parameters(mdisp)
     expect_equal(mp$Coefficient, c(59.50992, -0.80396, 48.97731), tolerance = 1e-2)
@@ -333,7 +335,7 @@ if (.runThisTest &&
     expect_equal(mp$Component, c("conditional", "conditional", "dispersion"))
   })
 
-  mdisp <- glmmTMB(hp ~ 0 + wt/mpg + (1 | gear), mtcars)
+  mdisp <- glmmTMB(hp ~ 0 + wt / mpg + (1 | gear), mtcars)
   test_that("model_parameters, dispersion", {
     mp <- model_parameters(mdisp)
     expect_equal(mp$Coefficient, c(58.25869, -0.87868, 47.01676, 36.99492), tolerance = 1e-2)

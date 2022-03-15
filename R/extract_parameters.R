@@ -20,8 +20,6 @@
                                         vcov = NULL,
                                         vcov_args = NULL,
                                         ...) {
-
-
   dots <- list(...)
 
   # ==== check if standardization is required and package available
@@ -107,16 +105,17 @@
 
   if (!is.null(ci)) {
     args <- list(model,
-                 ci = ci,
-                 component = component,
-                 vcov = vcov,
-                 vcov_args = vcov_args,
-                 verbose = verbose)
+      ci = ci,
+      component = component,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose
+    )
     args <- c(args, dots)
     if (!is.null(ci_method)) {
       args[["method"]] <- ci_method
     }
-    ci_df <-  suppressMessages(do.call("ci", args))
+    ci_df <- suppressMessages(do.call("ci", args))
 
     if (!is.null(ci_df)) {
       if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
@@ -133,12 +132,13 @@
   # ==== p value
 
   args <- list(model,
-               method = ci_method,
-               effects = effects,
-               verbose = verbose,
-               component = component,
-               vcov = vcov,
-               vcov_args = vcov_args)
+    method = ci_method,
+    effects = effects,
+    verbose = verbose,
+    component = component,
+    vcov = vcov,
+    vcov_args = vcov_args
+  )
   args <- c(args, dots)
   pval <- do.call("p_value", args)
 
@@ -151,11 +151,12 @@
 
   std_err <- NULL
   args <- list(model,
-               effects = effects,
-               component = component,
-               verbose = verbose,
-               vcov = vcov,
-               vcov_args = vcov_args)
+    effects = effects,
+    component = component,
+    verbose = verbose,
+    vcov = vcov,
+    vcov_args = vcov_args
+  )
   args <- c(args, dots)
   if (!is.null(ci_method)) {
     args[["method"]] <- ci_method
@@ -431,7 +432,6 @@
                                       vcov_args = NULL,
                                       verbose = TRUE,
                                       ...) {
-
   dots <- list(...)
 
   special_ci_methods <- c("betwithin", "satterthwaite", "ml1", "kenward", "kr")
@@ -475,10 +475,11 @@
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       args <- list(model,
-                   ci = ci,
-                   vcov = vcov,
-                   vcov_args = vcov_args,
-                   verbose = verbose)
+        ci = ci,
+        vcov = vcov,
+        vcov_args = vcov_args,
+        verbose = verbose
+      )
       args <- c(args, dots)
       ci_df <- suppressMessages(do.call("ci", args))
     } else if (ci_method %in% c("kenward", "kr")) {
@@ -499,12 +500,13 @@
   if (!"SE" %in% colnames(parameters)) {
     if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
       args <- list(model,
-                   vcov = vcov,
-                   vcov_args = vcov_args,
-                   verbose = verbose)
+        vcov = vcov,
+        vcov_args = vcov_args,
+        verbose = verbose
+      )
       args <- c(args, dots)
       parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
-    # special handling for KR-SEs, which we already have computed from dof
+      # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
       se_kr$df_error <- NULL
@@ -518,9 +520,10 @@
   # p value
   if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
     args <- list(model,
-                 vcov = vcov,
-                 vcov_args = vcov_args,
-                 verbose = verbose)
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose
+    )
     args <- c(args, dots)
     parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
   } else {
@@ -538,8 +541,8 @@
 
   # adjust standard errors and test-statistic as well
   if ((!is.null(vcov) || ci_method %in% special_ci_methods) ||
-      # deprecated argument
-      isTRUE(list(...)[["robust"]])) {
+    # deprecated argument
+    isTRUE(list(...)[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
   } else {
     parameters <- merge(parameters, statistic, by = "Parameter", sort = FALSE)

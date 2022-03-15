@@ -53,7 +53,8 @@ model_parameters.mlm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    ...)
+    ...
+  )
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }

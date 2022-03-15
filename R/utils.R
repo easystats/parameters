@@ -133,4 +133,3 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
-

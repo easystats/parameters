@@ -65,7 +65,6 @@
                     vcov_args = NULL,
                     verbose = TRUE,
                     ...) {
-
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
@@ -97,17 +96,18 @@
   if (is.null(se)) {
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       stderror <- standard_error(model,
-                                 component = component,
-                                 vcov = vcov,
-                                 vcov_args = vcov_args,
-                                 verbose = verbose,
-                                 ...)
+        component = component,
+        vcov = vcov,
+        vcov_args = vcov_args,
+        verbose = verbose,
+        ...
+      )
     } else {
       stderror <- switch(method,
-            "kenward" = se_kenward(model),
-            "kr" = se_kenward(model),
-            "satterthwaite" = se_satterthwaite(model),
-            standard_error(model, component = component)
+        "kenward" = se_kenward(model),
+        "kr" = se_kenward(model),
+        "satterthwaite" = se_satterthwaite(model),
+        standard_error(model, component = component)
       )
     }
 

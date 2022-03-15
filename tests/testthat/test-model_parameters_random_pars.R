@@ -4,7 +4,6 @@ if (.runThisTest &&
   requiet("testthat") &&
   requiet("parameters") &&
   requiet("lme4")) {
-
   data(sleepstudy)
 
   model <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
@@ -78,7 +77,7 @@ if (.runThisTest &&
   })
 
   data("sleepstudy")
-  sleepstudy$Days2 <- cut(sleepstudy$Days, breaks = c(-1, 3 ,6, 10))
+  sleepstudy$Days2 <- cut(sleepstudy$Days, breaks = c(-1, 3, 6, 10))
 
   model <- lmer(Reaction ~ Days2 + (1 + Days2 | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
@@ -87,10 +86,14 @@ if (.runThisTest &&
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-6], tolerance = 1e-3)
     expect_equal(mp$SE, c(5.68189, 5.16887, 8.47536, 0.3384, 0.47038, 1.7238), tolerance = 1e-3)
     expect_equal(mp$CI_low, c(16.7131, 21.12065, 24.1964, -0.36662, -0.59868, 24.18608), tolerance = 1e-3)
-    expect_equal(mp$Parameter,
-                 c("SD (Intercept)", "SD (Days2(3,6])", "SD (Days2(6,10])",
-                   "Cor (Intercept~Days2(3,6]: Subject)", "Cor (Intercept~Days2(6,10]: Subject)",
-                   "SD (Observations)"))
+    expect_equal(
+      mp$Parameter,
+      c(
+        "SD (Intercept)", "SD (Days2(3,6])", "SD (Days2(6,10])",
+        "Cor (Intercept~Days2(3,6]: Subject)", "Cor (Intercept~Days2(6,10]: Subject)",
+        "SD (Observations)"
+      )
+    )
   })
 
   model <- lmer(Reaction ~ Days2 + (0 + Days2 | Subject), data = sleepstudy)
@@ -100,10 +103,14 @@ if (.runThisTest &&
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-6], tolerance = 1e-3)
     expect_equal(mp$SE, c(5.68188, 4.951, 9.773, 0.34887, 0.59977, 1.7238), tolerance = 1e-3)
     expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, 24.18612), tolerance = 1e-3)
-    expect_equal(mp$Parameter,
-                 c("SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
-                   "Cor (Reference~Days2(3,6])", "Cor (Reference~Days2(6,10])",
-                   "SD (Observations)"))
+    expect_equal(
+      mp$Parameter,
+      c(
+        "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+        "Cor (Reference~Days2(3,6])", "Cor (Reference~Days2(6,10])",
+        "SD (Observations)"
+      )
+    )
   })
 
   model <- lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
@@ -112,10 +119,14 @@ if (.runThisTest &&
   test_that("model_parameters-random pars 9", {
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-7], tolerance = 1e-3)
     expect_true(all(is.na(mp$SE)))
-    expect_equal(mp$Parameter,
-                 c("SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
-                   "Cor (Intercept~Days2(-1,3]: Subject)", "Cor (Intercept~Days2(3,6]: Subject)",
-                   "SD (Observations)"))
+    expect_equal(
+      mp$Parameter,
+      c(
+        "SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+        "Cor (Intercept~Days2(-1,3]: Subject)", "Cor (Intercept~Days2(3,6]: Subject)",
+        "SD (Observations)"
+      )
+    )
   })
 
   model <- lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
@@ -125,9 +136,13 @@ if (.runThisTest &&
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor[-6], tolerance = 1e-3)
     expect_equal(mp$SE, c(5.68188, 4.951, 9.773, 0.34887, 0.59977, 1.7238), tolerance = 1e-3)
     expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, 24.18612), tolerance = 1e-3)
-    expect_equal(mp$Parameter,
-                 c("SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
-                   "Cor (Reference~Days2(3,6])", "Cor (Reference~Days2(6,10])",
-                   "SD (Observations)"))
+    expect_equal(
+      mp$Parameter,
+      c(
+        "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+        "Cor (Reference~Days2(3,6])", "Cor (Reference~Days2(6,10])",
+        "SD (Observations)"
+      )
+    )
   })
 }

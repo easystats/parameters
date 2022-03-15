@@ -3,7 +3,6 @@ if (requiet("testthat") &&
   requiet("sandwich") &&
   requiet("clubSandwich") &&
   requiet("datawizard")) {
-
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)

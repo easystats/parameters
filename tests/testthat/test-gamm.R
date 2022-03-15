@@ -11,7 +11,8 @@ if (requiet("testthat") &&
       family = poisson,
       data = dat,
       random = list(fac = ~1),
-      verbosePQL = FALSE)
+      verbosePQL = FALSE
+    )
 
 
   test_that("ci", {

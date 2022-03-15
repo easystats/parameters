@@ -102,7 +102,6 @@ standard_error.survreg <- function(model, method = NULL, ...) {
 
 #' @export
 p_value.survreg <- function(model, method = NULL, ...) {
-
   robust <- !is.null(method) && method == "robust"
   if (.check_vcov_args(robust, ...)) {
     return(p_value.default(model, ...))
