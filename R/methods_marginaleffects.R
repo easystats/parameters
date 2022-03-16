@@ -11,25 +11,22 @@ model_parameters.marginaleffects <- function(model,
   mod <- attributes(model)$model
   ori_data <- insight::get_data(mod)
 
-  # Convert to dataframe
-  out <- as.data.frame(model)
+  # Convert to dataframe and rename some columns
+  out <- datawizard::data_rename(as.data.frame(model),
+                                 pattern = c("type", "term", "dydx", "std.error"),
+                                 replacement = c("Type", "Term", "Coefficient", "SE"))
 
 
   if("posterior_draws" %in% names(attributes(model))) {
     # ---- if Bayesian ----
-    # Remove point-estimates (going to recompute it anyway)
-    out <- datawizard::data_remove(out, c("dydx", "std.error", "conf.low", "conf.high"))
+    # Remove point-estimates (going to recompute them anyway)
+    out <- datawizard::data_remove(out, c("Coefficient", "SE", "conf.low", "conf.high"))
     draws <- data.frame(t(attributes(model)$posterior_draws))
     draws <- bayestestR::describe_posterior(draws, ci = ci, ...)
     out <- cbind(out, datawizard::data_remove(draws, "Parameter"))
 
   } else {
     # ---- if Frequentist ----
-    # Rename columns
-    out <- datawizard::data_rename(out,
-                                   pattern = c("type", "term", "dydx", "std.error"),
-                                   replacement = c("Type", "Term", "Coefficient", "SE"))
-
     # Add CI
     if(all(c("Coefficient", "SE") %in% names(out))) {
       out$CI_low <- out$Coefficient + qnorm((1 - ci) / 2) * out$SE
