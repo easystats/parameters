@@ -17,7 +17,7 @@ model_parameters.marginaleffects <- function(model,
                                  replacement = c("Type", "Term", "Coefficient", "SE"))
 
 
-  if("posterior_draws" %in% names(attributes(model))) {
+  if ("posterior_draws" %in% names(attributes(model))) {
     # ---- if Bayesian ----
     # Remove point-estimates (going to recompute them anyway)
     out <- datawizard::data_remove(out, c("Coefficient", "SE", "conf.low", "conf.high"))
@@ -28,9 +28,9 @@ model_parameters.marginaleffects <- function(model,
   } else {
     # ---- if Frequentist ----
     # Add CI
-    if(all(c("Coefficient", "SE") %in% names(out))) {
-      out$CI_low <- out$Coefficient + qnorm((1 - ci) / 2) * out$SE
-      out$CI_high <- out$Coefficient - qnorm((1 - ci) / 2) * out$SE
+    if (all(c("Coefficient", "SE") %in% names(out))) {
+      out$CI_low <- out$Coefficient + stats::qnorm((1 - ci) / 2) * out$SE
+      out$CI_high <- out$Coefficient - stats::qnorm((1 - ci) / 2) * out$SE
     }
   }
 
@@ -38,7 +38,7 @@ model_parameters.marginaleffects <- function(model,
   out <- datawizard::data_relocate(out, names(ori_data), before = 1)
 
   out <- suppressWarnings(.add_model_parameters_attributes(out, model, ci, ...))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   attr(out, "parameter_names") <- names(out)[names(out) %in% names(ori_data)]
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))

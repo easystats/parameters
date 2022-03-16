@@ -137,6 +137,7 @@ Suggests:
     lqmm,
     M3C,
     magrittr,
+    marginaleffects,
     MASS,
     Matrix,
     mclust,
