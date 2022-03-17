@@ -256,8 +256,9 @@ error is the SD of the posterior samples.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  Sepal.Length:Speciesvirginica 0.10558799</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>,</span>
-<span class="r-in">               vcov <span class="op">=</span> <span class="st">"vcovCL"</span>,</span>
-<span class="r-in">               vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  vcov <span class="op">=</span> <span class="st">"vcovCL"</span>,</span>
+<span class="r-in">  vcov_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                        Parameter           SE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                    (Intercept) 1.397486e-15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                   Sepal.Length 2.784715e-16</span>

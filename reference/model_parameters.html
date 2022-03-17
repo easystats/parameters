@@ -172,7 +172,11 @@ arguments to tweak the output. There is also a
 implemented in the
 <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>, and a dedicated
 method for use inside rmarkdown files,
-<code><a href="display.parameters_model.html">print_md()</a></code>.</p>
+<code><a href="display.parameters_model.html">print_md()</a></code>. <br><br><strong>For developers</strong>, if
+speed performance is an issue, you can use the (undocumented) <code>pretty_names</code>
+argument, e.g. <code>model_parameters(..., pretty_names = FALSE)</code>. This will
+skip the formatting of the coefficient names and make <code>model_performance()</code>
+faster.</p>
     </div>
     <div class="section level2">
     <h2 id="standardization-of-model-coefficients">Standardization of model coefficients<a class="anchor" aria-label="anchor" href="#standardization-of-model-coefficients"></a></h2>
