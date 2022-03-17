@@ -45,7 +45,7 @@ model_parameters.zcpglm <- function(model,
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part
-  if (!insight::model_info(model, verbose = FALSE, no_terms = TRUE)$is_zero_inflated && component != "conditional") {
+  if (!insight::model_info(model, verbose = FALSE)$is_zero_inflated && component != "conditional") {
     component <- "conditional"
   }
 

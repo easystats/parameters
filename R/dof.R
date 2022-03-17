@@ -270,7 +270,7 @@ dof <- degrees_of_freedom
     }
   }
 
-  info <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)
+  info <- insight::model_info(model, verbose = FALSE)
   if (!is.null(info) && isFALSE(info$is_mixed) && method == "boot") {
     if (verbose) {
       warning(insight::format_message(sprintf("'%s=boot' only works for mixed models of class 'merMod'. To bootstrap this model, use `bootstrap=TRUE, ci_method=\"bcai\"`.", type)), call. = FALSE)

@@ -228,7 +228,7 @@ pool_parameters <- function(x,
 
 
 .add_pooled_params_attributes <- function(pooled_params, model_params, model, ci, exponentiate, verbose = TRUE) {
-  info <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)
+  info <- insight::model_info(model, verbose = FALSE)
   pretty_names <- attributes(model_params)$pretty_names
   if (length(pretty_names) < nrow(model_params)) {
     pretty_names <- c(pretty_names, model_params$Parameter[(length(pretty_names) + 1):nrow(model_params)])

@@ -22,7 +22,7 @@ model_parameters.brmsfit <- function(model,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
-  modelinfo <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)
+  modelinfo <- insight::model_info(model, verbose = FALSE)
 
   # Bayesian meta analysis
 

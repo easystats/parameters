@@ -51,7 +51,7 @@ model_parameters.glmmTMB <- function(model,
 
   # fix argument, if model has only conditional component
   cs <- stats::coef(summary(model))
-  has_zeroinf <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)$is_zero_inflated
+  has_zeroinf <- insight::model_info(model, verbose = FALSE)$is_zero_inflated
   has_disp <- is.list(cs) && !is.null(cs$disp)
 
   if (!has_zeroinf && !has_disp && component != "conditional") {
@@ -310,7 +310,7 @@ standard_error.glmmTMB <- function(model,
 #' @export
 simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = FALSE, ...) {
   component <- match.arg(component)
-  info <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)
+  info <- insight::model_info(model, verbose = FALSE)
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
   if (!is.list(info)) {

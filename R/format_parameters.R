@@ -79,7 +79,7 @@ format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(dot_args$model_info)) {
     info <- dot_args$model_info
   } else {
-    info <- insight::model_info(model, verbose = FALSE, no_terms = TRUE)
+    info <- insight::model_info(model, verbose = FALSE)
   }
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
