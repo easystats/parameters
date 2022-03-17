@@ -51,7 +51,11 @@ arguments to tweak the output. There is also a
 implemented in the
 \href{https://easystats.github.io/see/}{\strong{see}-package}, and a dedicated
 method for use inside rmarkdown files,
-\code{\link[=print_md.parameters_model]{print_md()}}.
+\code{\link[=print_md.parameters_model]{print_md()}}. \cr \cr \strong{For developers}, if
+speed performance is an issue, you can use the (undocumented) \code{pretty_names}
+argument, e.g. \code{model_parameters(..., pretty_names = FALSE)}. This will
+skip the formatting of the coefficient names and make \code{model_performance()}
+faster.
 }
 \section{Standardization of model coefficients}{
 

@@ -143,7 +143,7 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
   n
   summary(n)
-  as.data.frame(n)  # Duration is the time elapsed for each method in seconds
+  as.data.frame(n) # Duration is the time elapsed for each method in seconds
   plot(n)
 
   # The following runs all the method but it significantly slower

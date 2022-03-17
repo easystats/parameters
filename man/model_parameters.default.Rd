@@ -392,8 +392,9 @@ model_parameters(model, standardize = "refit")
 model_parameters(model, vcov = "HC3")
 
 model_parameters(model,
-                 vcov = "vcovCL",
-                 vcov_args = list(cluster = mtcars$cyl))
+  vcov = "vcovCL",
+  vcov_args = list(cluster = mtcars$cyl)
+)
 
 # different p-value style in output
 model_parameters(model, p_digits = 5)

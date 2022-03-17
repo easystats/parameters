@@ -43,6 +43,6 @@ heatmap(m, scale = "none")
 # Convert to dissimilarity
 d <- as.dist(abs(m - 1))
 model <- hclust(d)
-plot(model, hang  = -1)
+plot(model, hang = -1)
 }
 }

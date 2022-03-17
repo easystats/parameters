@@ -42,7 +42,11 @@
 #'   implemented in the
 #'   [**see**-package](https://easystats.github.io/see/), and a dedicated
 #'   method for use inside rmarkdown files,
-#'   [`print_md()`][print_md.parameters_model].
+#'   [`print_md()`][print_md.parameters_model]. \cr \cr **For developers**, if
+#'   speed performance is an issue, you can use the (undocumented) `pretty_names`
+#'   argument, e.g. `model_parameters(..., pretty_names = FALSE)`. This will
+#'   skip the formatting of the coefficient names and make `model_performance()`
+#'   faster.
 #'
 #' @section Standardization of model coefficients:
 #' Standardization is based on [effectsize::standardize_parameters()]. In case

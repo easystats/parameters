@@ -159,6 +159,7 @@ standard_error(model)
 standard_error(model, vcov = "HC3")
 
 standard_error(model,
-               vcov = "vcovCL",
-               vcov_args = list(cluster = iris$Species))
+  vcov = "vcovCL",
+  vcov_args = list(cluster = iris$Species)
+)
 }
