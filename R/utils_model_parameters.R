@@ -18,7 +18,7 @@
   # model info
   info <- tryCatch(
     {
-      suppressWarnings(insight::model_info(model, verbose = FALSE))
+      suppressWarnings(insight::model_info(model, verbose = FALSE, no_terms = TRUE))
     },
     error = function(e) {
       NULL
@@ -263,7 +263,7 @@
 
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
-  if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear && identical(exponentiate, "nongaussian")) {
+  if (!is.null(model) && insight::model_info(model, verbose = FALSE, no_terms = TRUE)$is_linear && identical(exponentiate, "nongaussian")) {
     return(params)
   }
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))

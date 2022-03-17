@@ -1,7 +1,7 @@
 #' @rdname p_value_ml1
 #' @export
 dof_ml1 <- function(model) {
-  if (!insight::model_info(model, verbose = FALSE)$is_mixed) {
+  if (!insight::is_mixed_model(model)) {
     stop("Model must be a mixed model.")
   }
 
