@@ -45,7 +45,7 @@
 #'   [`print_md()`][print_md.parameters_model]. \cr \cr **For developers**, if
 #'   speed performance is an issue, you can use the (undocumented) `pretty_names`
 #'   argument, e.g. `model_parameters(..., pretty_names = FALSE)`. This will
-#'   skip the formatting of the coefficient names and make `model_performance()`
+#'   skip the formatting of the coefficient names and make `model_parameters()`
 #'   faster.
 #'
 #' @section Standardization of model coefficients:
