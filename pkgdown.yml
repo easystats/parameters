@@ -1,6 +1,6 @@
 pandoc: 2.14.2
 pkgdown: 2.0.2.9000
-pkgdown_sha: 9aae87398abdbe1cd5af5ff6f168d2e142d531c9
+pkgdown_sha: 98d5a5c735eb244cb98b2e6bab1d54bb27c0af95
 articles:
   clustering: clustering.html
   demean: demean.html
@@ -14,5 +14,5 @@ articles:
   overview_of_vignettes: overview_of_vignettes.html
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
-last_built: 2022-03-17T16:50Z
+last_built: 2022-03-21T13:56Z
 
