@@ -506,7 +506,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, trimws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+      footer <- c(footer, insight::trim_ws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
     }
   }
   footer
@@ -634,7 +634,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, fill, "Model: ", model_formula, n, "\n")
     } else if (type == "html") {
-      footer <- c(footer, trimws(paste0("Model: ", model_formula, n)))
+      footer <- c(footer, insight::trim_ws(paste0("Model: ", model_formula, n)))
     }
   }
   footer

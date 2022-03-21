@@ -85,7 +85,7 @@
   #      intercepts (alpha-coefficients) in the component column
 
   if (inherits(model, "polr")) {
-    intercept_groups <- which(grepl("^Intercept:", parameters$Parameter))
+    intercept_groups <- which(grepl("Intercept:", parameters$Parameter, fixed = TRUE))
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(c("intercept", "location", "scale"), vapply(model[c("alpha", "beta", "zeta")], length, numeric(1)))

@@ -101,7 +101,7 @@ standard_error.default <- function(model,
   if (is.null(se)) {
     se <- tryCatch(
       {
-        if (grepl("^Zelig-", class(model)[1])) {
+        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_se())
         } else {
           .get_se_from_summary(model)

@@ -125,7 +125,7 @@ p_value.default <- function(model,
     p <- tryCatch(
       {
         # Zelig-models are weird
-        if (grepl("^Zelig-", class(model)[1])) {
+        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_pvalue())
         } else {
           # try to get p-value from classical summary for default models

@@ -357,11 +357,11 @@ model_parameters.maov <- model_parameters.aov
     } else if (!is.null(attr(model, "heading"))) {
       heading <- attr(model, "heading")[1]
       if (grepl("(.*)Type (.*) Wald(.*)", heading)) {
-        type <- type_to_numeric(trimws(gsub("(.*)Type (.*) Wald(.*)", "\\2", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub("(.*)Type (.*) Wald(.*)", "\\2", heading)))
       } else if (grepl("Type (.*) Analysis(.*)", heading)) {
-        type <- type_to_numeric(trimws(gsub("Type (.*) Analysis(.*)", "\\1", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub("Type (.*) Analysis(.*)", "\\1", heading)))
       } else if (grepl("(.*)Type (.*) tests(.*)", heading)) {
-        type <- type_to_numeric(trimws(gsub("(.*)Type (.*) tests(.*)", "\\2", heading)))
+        type <- type_to_numeric(insight::trim_ws(gsub("(.*)Type (.*) tests(.*)", "\\2", heading)))
       }
     } else if ("type" %in% names(model) && !is.null(model$type)) {
       type <- type_to_numeric(model$type)

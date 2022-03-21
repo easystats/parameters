@@ -11,29 +11,29 @@
   if (style == "minimal") {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
     colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("ci_p", "ci")) {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
+    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
     x <- x[param_col]
     colnames(x) <- modelname
   } else if (style %in% c("se_p", "se")) {
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
+    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[param_col]
     colnames(x) <- modelname
   } else if (style %in% c("ci_p2")) {
     ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, x[[ci_col]]))
+    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
     colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("se_p2")) {
     param_col <- colnames(x)[1]
-    x[[param_col]] <- trimws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
+    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
     x <- x[c(param_col, "p")]
     colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   }
@@ -222,7 +222,7 @@
   )
 
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
-    component_name <- trimws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
     if (nchar(component_name) == 0) {
       component_name <- "Random Effects Variances"
     } else {
@@ -230,7 +230,7 @@
     }
   }
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
-    component_name <- trimws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
     if (nchar(component_name) == 0) {
       component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
     } else {
@@ -238,7 +238,7 @@
     }
   }
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
-    component_name <- trimws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
+    component_name <- insight::trim_ws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
     if (nchar(component_name) == 0) {
       component_name <- "Random Effects (Zero-Inflated Model)"
     } else {
@@ -542,7 +542,7 @@
   # make sure we have correct order of levels from split-factor
   if (!is.null(attributes(x)$model_class) && all(attributes(x)$model_class == "mediate")) {
     x$Component <- factor(x$Component, levels = c("control", "treated", "average", "Total Effect"))
-    x$Parameter <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", x$Parameter))
+    x$Parameter <- insight::trim_ws(gsub("(.*)\\((.*)\\)$", "\\1", x$Parameter))
   } else {
     x[split_column] <- lapply(x[split_column], function(i) {
       if (!is.factor(i)) i <- factor(i, levels = unique(i))
@@ -673,11 +673,11 @@
     }
 
     # rename columns for random part
-    if (grepl("random", type) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
+    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
       colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
     }
 
-    if (grepl("random", type) && isTRUE(ran_pars)) {
+    if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
       tables[[type]]$CI <- NULL
     }
 
