@@ -7,6 +7,9 @@
   were only included when `ci_method` was `"profile"` or `"boot"`. The 
   *merDeriv* package is required for this feature.
 
+* `model_parameters()` for `htest` objects now also supports models from 
+  `var.test()`.
+
 # parameters 0.17.0
 
 ## General
