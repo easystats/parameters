@@ -3,9 +3,9 @@
 #' This function attempts to return, or compute, p-values of a model's
 #' parameters. See the documentation for your object's class:
 #' \itemize{
-#'  \item{[Bayesian models][p_value.BFBayesFactor] (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+#'  \item{[Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)}
 #'  \item{[Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)}
-#'  \item{[Marginal effects models][p_value.poissonmfx] (\pkg{mfx})}
+#'  \item{[Marginal effects models][p_value.poissonmfx] (**mfx**)}
 #'  \item{[Models with special components][p_value.DirichletRegModel] (`DirichletRegModel`, `clm2`, `cgam`, ...)}
 #'  }
 #'
