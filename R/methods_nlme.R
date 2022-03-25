@@ -22,6 +22,7 @@ ci.lme <- function(x,
     if (!is.null(vcov) || !requireNamespace("nlme", quietly = TRUE)) {
       .ci_generic(model = x, ci = ci, method = method, vcov = vcov, vcov_args = vcov_args, ...)
     } else {
+      insight::check_if_installed("nlme")
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(
           {
@@ -69,12 +70,12 @@ p_value.lme <- function(model,
 
   # robust standard errors or custom varcov
   } else {
-    b <- fixef(model)
+    b <- insight::get_parameters(model)
     se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
-    tstat <- b / se$SE
+    tstat <- b$Estimate / se$SE
     # residuals are defined like this in `nlme:::summary.lme`
     df <- model$fixDF[["X"]]
-    p <- 2 * pt(-abs(tstat), df = df)
+    p <- 2 * stats::pt(-abs(tstat), df = df)
     param <- se$Parameter
   }
 
