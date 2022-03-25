@@ -111,7 +111,7 @@ variables). It starts by creating a new set of variables, based on the given
 method (the default method is "PCA", but other are available via the
 <code>method</code> argument, such as "cMDS", "DRR" or "ICA"). Then, it names this
 new dimensions using the original variables that correlates the most with it.
-For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the
+For instance, a variable named <code>'V1_0.97/V4_-0.88'</code> means that the V1 and the
 V4 variables correlate maximally (with respective coefficients of .97 and
 -.88) with this dimension. Although this function can be useful in
 exploratory data analysis, it's best to perform the dimension reduction step
@@ -132,8 +132,8 @@ data analysis workflow. <code>reduce_data()</code> is an alias for
     <dl><dt>x</dt>
 <dd><p>A data frame or a statistical model.</p></dd>
 <dt>method</dt>
-<dd><p>The feature reduction method. Can be one of 'PCA', 'cMDS',
-'DRR', 'ICA' (see the Details section).</p></dd>
+<dd><p>The feature reduction method. Can be one of <code>"PCA"</code>, <code>"cMDS"</code>,
+<code>"DRR"</code>, <code>"ICA"</code> (see the 'Details' section).</p></dd>
 <dt>n</dt>
 <dd><p>Number of components to extract. If <code>n="all"</code>, then <code>n</code> is
 set as the number of variables minus 1 (<code>ncol(x)-1</code>). If
@@ -144,9 +144,9 @@ it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.</p></dd>
 <dt>distance</dt>
 <dd><p>The distance measure to be used. Only applies when
-<code>method = "cMDS"</code>. This must be one of "euclidean", "maximum",
-"manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring
-can be given.</p></dd>
+<code>method = "cMDS"</code>. This must be one of <code>"euclidean"</code>, <code>"maximum"</code>,
+<code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code> or <code>"minkowski"</code>. Any unambiguous
+substring can be given.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
 </dl></div>
@@ -161,20 +161,20 @@ set of dissimilarities (i.e., a distance matrix) and returns a set of points
 such that the distances between the points are approximately equal to the
 dissimilarities.</p></li>
 <li><p><strong>DRR</strong>: Dimensionality Reduction via Regression (DRR) is a very
-recent technique extending PCA (Laparra et al., 2015). Starting from a
+recent technique extending PCA (<em>Laparra et al., 2015</em>). Starting from a
 rotated PCA, it predicts redundant information from the remaining components
 using non-linear regression. Some of the most notable advantages of
 performing DRR are avoidance of multicollinearity between predictors and
 overfitting mitigation. DRR tends to perform well when the first principal
 component is enough to explain most of the variation in the predictors.
-Requires the <span class="pkg">DRR</span> package to be installed.</p></li>
+Requires the <strong>DRR</strong> package to be installed.</p></li>
 <li><p><strong>ICA</strong>: Performs an Independent Component Analysis using the
 FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
 sources (through least squares minimization), ICA attempts to find
 independent sources, i.e., the source space that maximizes the
 "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
 source, which makes it a poor tool for dimensionality reduction. Requires the
-<span class="pkg">fastICA</span> package to be installed.</p></li>
+<strong>fastICA</strong> package to be installed.</p></li>
 </ul></div><p>See also <a href="https://easystats.github.io/parameters/articles/parameters_reduction.html" class="external-link">package vignette</a>.</p>
     </div>
     <div class="section level2">
