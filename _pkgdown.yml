@@ -132,6 +132,34 @@ reference:
   contents:
   - check_heterogeneity
 
+articles:
+
+  - title: Parameters Description
+    navbar: Parameters Description
+    # desc:
+    contents:
+    - articles/model_parameters.html
+    - articles/model_parameters_standardized.html
+    - articles/model_parameters_robust.html
+    - articles/model_parameters_mice.html
+    - articles/demean.html
+
+  - title: Formatting and Printing
+    navbar: Formatting and Printing
+    # desc:
+    contents:
+    - articles/model_parameters_formatting.html
+    - articles/model_parameters_print.html
+
+  - title: Dimension Reduction and Clustering
+    navbar: Dimension Reduction and Clustering
+    # desc:
+    contents:
+    - articles/parameters_reduction.html
+    - articles/efa_cfa.html
+    - articles/parameters_selection.html
+    - articles/clustering.html
+
 navbar:
   type: default
   right:
@@ -148,6 +176,9 @@ navbar:
     href: news/index.html
   - text: Features
     href: reference/index.html
+  - text: Articles
+    href: articles/index.html
+
   # - text: Parameters Description
   #   menu:
   #     - text: Summary of Model Parameters
@@ -177,30 +208,4 @@ navbar:
   #     - text: Clustering with easystats
   #       href: articles/clustering.html
 
-articles:
 
-  - title: Parameters Description
-    navbar: Parameters Description
-    # desc:
-    contents:
-    - articles/model_parameters.html
-    - articles/model_parameters_standardized.html
-    - articles/model_parameters_robust.html
-    - articles/model_parameters_mice.html
-    - articles/demean.html
-
-  - title: Formatting and Printing
-    navbar: Formatting and Printing
-    # desc:
-    contents:
-    - articles/model_parameters_formatting.html
-    - articles/model_parameters_print.html
-
-  - title: Dimension Reduction and Clustering
-    navbar: Dimension Reduction and Clustering
-    # desc:
-    contents:
-    - articles/parameters_reduction.html
-    - articles/efa_cfa.html
-    - articles/parameters_selection.html
-    - articles/clustering.html
