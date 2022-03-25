@@ -66,7 +66,7 @@
 #'   rename columns into a consistent, standardized naming scheme.
 #'
 #' @note If the calculation of random effects parameters takes too long, you may
-#' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @examples
 #' library(parameters)

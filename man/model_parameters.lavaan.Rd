@@ -68,7 +68,7 @@ A data frame of indices related to the model's parameters.
 Format CFA/SEM objects from the lavaan package (Rosseel, 2012; Merkle and Rosseel 2018).
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
 library(parameters)

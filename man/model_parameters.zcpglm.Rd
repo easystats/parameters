@@ -113,8 +113,8 @@ are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::descri
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from zero-inflated models (from packages like \pkg{pscl},
-\pkg{cplm} or \pkg{countreg}).
+Parameters from zero-inflated models (from packages like \strong{pscl},
+\strong{cplm} or \strong{countreg}).
 }
 \examples{
 library(parameters)

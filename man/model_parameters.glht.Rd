@@ -10,8 +10,8 @@
 \method{model_parameters}{glht}(model, ci = 0.95, exponentiate = FALSE, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{Object of class \code{\link[multcomp:glht]{multcomp::glht()}} (\pkg{multcomp})
-or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\pkg{PMCMRplus}).}
+\item{model}{Object of class \code{\link[multcomp:glht]{multcomp::glht()}} (\strong{multcomp})
+or of class \code{PMCMR}, \code{trendPMCMR} or \code{osrt} (\strong{PMCMRplus}).}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are

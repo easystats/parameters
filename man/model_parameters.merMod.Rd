@@ -252,7 +252,7 @@ Parameters from (linear) mixed models.
 }
 \note{
 If the calculation of random effects parameters takes too long, you may
-use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \section{Confidence intervals for random effect variances}{
 
