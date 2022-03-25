@@ -169,42 +169,12 @@ navbar:
   - icon: fa-github
     href: https://github.com/easystats/parameters/
     aria-label: GitHub
-  # left:
-  # - icon: fa-home fa-lg
-  #   href: index
-  # - text: News
-  #   href: news/index
-  # - text: Features
-  #   href: reference/index
-  # - text: Articles
-  #   href: index
-
-  # - text: Parameters Description
-  #   menu:
-  #     - text: Summary of Model Parameters
-  #       href: model_parameters
-  #     - text: Standardized Model Parameters
-  #       href: model_parameters_standardized
-  #     - text: Robust Estimation of Standard Errors
-  #       href: model_parameters_robust
-  #     - text: Model Parameters and Missing Data
-  #       href: model_parameters_mice
-  #     - text: Analysing Longitudinal or Panel Data
-  #       href: demean
-  # - text: Formatting and Printing
-  #   menu:
-  #     - text: Formatting Model Parameters
-  #       href: model_parameters_formatting
-  #     - text: Printing Model Parameters
-  #       href: model_parameters_print
-  # - text: Dimension Reduction and Clustering
-  #   menu:
-  #     - text: 'Feature reduction (PCA, cMDS, ICA...)'
-  #       href: parameters_reduction
-  #     - text: 'Structural models (EFA, CFA, SEM...)'
-  #       href: efa_cfa
-  #     - text: Parameters Selection
-  #       href: parameters_selection
-  #     - text: Clustering with easystats
-  #       href: clustering
-
+  left:
+  - icon: fa-home fa-lg
+    href: index
+  - text: News
+    href: news/index
+  - text: Features
+    href: reference/index
+  - text: Articles
+    href: articles/index
