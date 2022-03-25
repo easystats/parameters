@@ -13,15 +13,15 @@
 #'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
 #'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, ...)}
 #'  \item{[Other special models][model_parameters.averaging] (`model.avg`, `betareg`, `glmx`, ...)}
-#'  \item{[Mixed models][model_parameters.merMod] (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, \pkg{afex}, ...)}
-#'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (\pkg{BayesFactor})}
-#'  \item{[Bayesian models][model_parameters.stanreg] (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, \pkg{blavaan}, ...)}
-#'  \item{[PCA and FA][model_parameters.principal] (\pkg{psych})}
-#'  \item{[CFA and SEM][model_parameters.lavaan] (\pkg{lavaan})}
+#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
+#'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (**BayesFactor**)}
+#'  \item{[Bayesian models][model_parameters.stanreg] (**rstanarm**, **brms**, **MCMCglmm**, **blavaan**, ...)}
+#'  \item{[PCA and FA][model_parameters.principal] (**psych**)}
+#'  \item{[CFA and SEM][model_parameters.lavaan] (**lavaan**)}
 #'  \item{[Cluster models][model_parameters.kmeans] (k-means, ...)}
-#'  \item{[Meta-Analysis via linear (mixed) models][model_parameters.rma] (`rma`, `metaplus`, \pkg{metaBMA}, ...)}
-#'  \item{[Hypothesis testing][model_parameters.glht] (`glht`, \pkg{PMCMRplus})}
-#'  \item{[Robust statistical tests][model_parameters.t1way] (\pkg{WRS2})}
+#'  \item{[Meta-Analysis via linear (mixed) models][model_parameters.rma] (`rma`, `metaplus`, **metaBMA**, ...)}
+#'  \item{[Hypothesis testing][model_parameters.glht] (`glht`, **PMCMRplus**)}
+#'  \item{[Robust statistical tests][model_parameters.t1way] (**WRS2**)}
 #'  \item{[Multiply imputed repeated analyses][model_parameters.mira] (`mira`)}
 #'  }
 #'
@@ -56,7 +56,7 @@
 #' default, `standardize = "refit"`, never standardizes categorical predictors
 #' (i.e. factors), which may be a different behaviour compared to other R
 #' packages or other software packages (like SPSS). To mimic behaviour of SPSS
-#' or packages such as \pkg{lm.beta}, use `standardize = "basic"`.
+#' or packages such as **lm.beta**, use `standardize = "basic"`.
 #'
 #' @section
 #'
@@ -118,7 +118,7 @@
 #' within-group variable is found to have access between-group variance.
 #'
 #' @section Labeling the Degrees of Freedom:
-#' Throughout the \pkg{parameters} package, we decided to label the residual
+#' Throughout the **parameters} package, we decided to label the residual
 #' degrees of freedom *df_error*. The reason for this is that these degrees
 #' of freedom not always refer to the residuals. For certain models, they refer
 #' to the estimate error - in a linear model these are the same, but in - for
@@ -316,7 +316,7 @@ parameters <- model_parameters
 #'   **Important:**
 #'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
 #'   factors), which may be a different behaviour compared to other R packages
-#'   (such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+#'   (such as **lm.beta**) or other software packages (like SPSS). to mimic
 #'   such behaviours, either use `standardize="basic"` or standardize the data
 #'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
@@ -335,15 +335,15 @@ parameters <- model_parameters
 #'   `exponentiate = "nongaussian"` will only exponentiate coefficients
 #'   from non-Gaussian families.
 #' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (\pkg{betareg}),
-#'   `"scale"` (\pkg{ordinal}), `"extra"` (\pkg{glmx}),
-#'   `"marginal"` (\pkg{mfx}), `"conditional"` or `"full"` (for
+#'   one of `"conditional"`, `"precision"` (**betareg**),
+#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
+#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
 #'   `MuMIn::model.avg()`) or `"all"`.
 #' @param p_adjust Character vector, if not `NULL`, indicates the method to
 #'   adjust p-values. See [stats::p.adjust()] for details. Further
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,
 #'   `"sidak"` and `"none"` to explicitly disable adjustment for
-#'   `emmGrid` objects (from \pkg{emmeans}).
+#'   `emmGrid` objects (from **emmeans**).
 #' @param ci_method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,
