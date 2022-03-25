@@ -118,7 +118,7 @@
 #' within-group variable is found to have access between-group variance.
 #'
 #' @section Labeling the Degrees of Freedom:
-#' Throughout the **parameters} package, we decided to label the residual
+#' Throughout the **parameters** package, we decided to label the residual
 #' degrees of freedom *df_error*. The reason for this is that these degrees
 #' of freedom not always refer to the residuals. For certain models, they refer
 #' to the estimate error - in a linear model these are the same, but in - for
