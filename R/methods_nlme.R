@@ -7,14 +7,22 @@ model_parameters.lme <- model_parameters.merMod
 
 
 #' @export
-ci.lme <- function(x, ci = .95, method = "wald", ...) {
+ci.lme <- function(x,
+                   ci = .95,
+                   vcov = NULL,
+                   vcov_args = NULL,
+                   method = "wald",
+                   ...) {
   method <- tolower(method)
   method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1", "satterthwaite"))
 
   if (method %in% c("wald", "residual", "normal")) {
-    if (!requireNamespace("nlme", quietly = TRUE)) {
-      .ci_generic(model = x, ci = ci, method = method)
+    # `vcov` argument must be computed using the `.ci_generic` function.
+    # note that this uses `dof()`, which produces slightly different results than the stock degrees of freedom
+    if (!is.null(vcov) || !requireNamespace("nlme", quietly = TRUE)) {
+      .ci_generic(model = x, ci = ci, method = method, vcov = vcov, vcov_args = vcov_args, ...)
     } else {
+      insight::check_if_installed("nlme")
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(
           {
@@ -49,12 +57,30 @@ ci.lme <- function(x, ci = .95, method = "wald", ...) {
 
 
 #' @export
-p_value.lme <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 5]
+p_value.lme <- function(model,
+                        vcov = NULL,
+                        vcov_args = NULL,
+                        ...) {
+
+  # default values
+  if (is.null(vcov)) {
+    cs <- stats::coef(summary(model))
+    p <- cs[, 5]
+    param <- rownames(cs)
+
+  # robust standard errors or custom varcov
+  } else {
+    b <- insight::get_parameters(model)
+    se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
+    tstat <- b$Estimate / se$SE
+    # residuals are defined like this in `nlme:::summary.lme`
+    df <- model$fixDF[["X"]]
+    p <- 2 * stats::pt(-abs(tstat), df = df)
+    param <- se$Parameter
+  }
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
+    Parameter = .remove_backticks_from_string(param),
     p = as.vector(p)
   )
 }
