@@ -144,7 +144,7 @@
     }
   )
 
-  # sigma/dispersion only once
+  # sigma/dispersion only once,
   if (component == "conditional") {
     ran_sigma <- data.frame(insight::get_sigma(model, ci = NULL, verbose = FALSE))
   } else {
@@ -183,8 +183,12 @@
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
     if (!is.null(ran_intercept$Group) && colnames(ran_corr)[1] == ran_intercept$Group[1]) {
       colnames(ran_corr)[1] <- "Coefficient"
-      ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ")")
+      ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ": ", ran_intercept$Group[1], ")")
       ran_corr$Group <- ran_intercept$Group[1]
+    } else if (!is.null(ran_groups) && colnames(ran_corr)[1] == ran_groups[1]) {
+      colnames(ran_corr)[1] <- "Coefficient"
+      ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
+      ran_corr$Group <- ran_groups[1]
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
@@ -232,7 +236,7 @@
   rownames(out) <- NULL
 
   # variances to SD (sqrt), except correlations and Sigma
-  corr_param <- grepl("Cor (Intercept~", out$Parameter, fixed = TRUE)
+  corr_param <- grepl("^Cor (.*)", out$Parameter)
   sigma_param <- out$Parameter == "SD (Observations)"
   not_cor_and_sigma <- !corr_param & !sigma_param
   if (any(not_cor_and_sigma)) {
@@ -265,7 +269,7 @@
 
   # add confidence intervals?
   if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component)
+    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -282,7 +286,7 @@
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL) {
+.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -308,6 +312,127 @@
       if (any(corr_param) && any(var_ci_corr_param)) {
         out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
         out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+      }
+    } else if (!is.null(ci_method)) {
+      # Wald based CIs
+      # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
+      if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
+
+        # this may fail, so wrap in try-catch
+        tryCatch(
+          {
+            # vcov from full model. the parameters from vcov have a different
+            # order, so we need to restore the "original" order of random effect
+            # parameters using regex to match the naming patterns (of the column
+            # names from the vcov)
+            vv <- stats::vcov(model, full = TRUE, ranpar = "sd")
+
+            # only keep random effect variances
+            cov_columns <- grepl("(^cov_|residual)", colnames(vv))
+            vv <- vv[cov_columns, cov_columns, drop = FALSE]
+
+            # iterate random effect variables
+            re_groups <- setdiff(unique(out$Group), "Residual")
+            # create data frame with group and parameter names and SE
+            var_ci <- do.call(rbind, lapply(re_groups, function(i) {
+              pattern <- paste0("^cov_", i, "\\.(.*)")
+              re_group_columns <- grepl(pattern, colnames(vv))
+              vv_sub <- as.matrix(vv[re_group_columns, re_group_columns, drop = FALSE])
+              cn <- gsub(pattern, "\\1", colnames(vv_sub))
+              .data_frame(Group = i, Parameter = cn, SE = sqrt(diag(vv_sub)))
+            }))
+
+            # add residual variance
+            res_column <- which(colnames(vv) == "residual")
+            if (length(res_column)) {
+              var_ci <- rbind(
+                var_ci,
+                .data_frame(
+                  Group = "Residual",
+                  Parameter = "SD (Observations)",
+                  SE = sqrt(vv[res_column, res_column, drop = TRUE])
+                )
+              )
+            }
+            # renaming
+            var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
+            # correlations
+            var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
+            var_ci$Parameter[var_ci_corr_param] <- gsub(
+              "(.*)\\.\\(Intercept\\)",
+              paste0("Cor (Intercept~\\1: ", var_ci$Group[var_ci_corr_param], ")"),
+              var_ci$Parameter[var_ci_corr_param]
+            )
+
+            # correlations w/o intercept? usually only for factors
+            rnd_slopes <- unlist(insight::find_random_slopes(model))
+            if (!is.null(rnd_slopes)) {
+              model_data <- stats::model.frame(model)[rnd_slopes]
+              for (i in rnd_slopes) {
+                if (is.factor(model_data[[i]])) {
+                  referece_level <- paste0(i, levels(model_data[[i]])[1])
+                  var_ci_corr_param2 <- grepl(paste0("(.*)\\.\\Q", referece_level, "\\E"), var_ci$Parameter) & !var_ci_corr_param
+                  if (any(var_ci_corr_param2)) {
+                    var_ci$Parameter[var_ci_corr_param2] <- gsub(
+                      paste0("(.*)\\.\\Q", referece_level, "\\E"),
+                      paste0("Cor (Reference~\\1)"),
+                      var_ci$Parameter[var_ci_corr_param2]
+                    )
+                  }
+                }
+              }
+            }
+
+            # remaining
+            var_ci_others <- !grepl("^(Cor|SD) (.*)", var_ci$Parameter)
+            var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)", var_ci$Parameter[var_ci_others])
+
+            # merge with random effect coefficients
+            out$.sort_id <- 1:nrow(out)
+            tmp <- merge(
+              datawizard::data_remove(out, "SE", verbose = FALSE),
+              var_ci,
+              all.x = TRUE,
+              sort = FALSE
+            )
+            tmp <- tmp[order(tmp$.sort_id), ]
+            out$SE <- tmp$SE
+            out$.sort_id <- NULL
+
+            # ensure correlation CI are within -1/1 bounds
+            var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
+            if (any(var_ci_corr_param)) {
+              coefs <- out$Coefficient[var_ci_corr_param]
+              delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
+              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
+              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+            }
+
+            # Wald CI, based on delta-method.
+            # SD is chi square distributed. So it has a long tail. CIs should
+            # therefore be asymmetrical. log(SD) is normally distributed.
+            # Also, if the SD is small, then the CI might go negative
+            coefs <- out$Coefficient[!var_ci_corr_param]
+            delta_se <- out$SE[!var_ci_corr_param] / coefs
+            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
+            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+          },
+          error = function(e) {
+            if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
+              message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+            }
+            if (grepl("exactly singular", e$message, fixed = TRUE) ||
+              grepl("computationally singular", e$message, fixed = TRUE) ||
+              grepl("Exact singular", e$message, fixed = TRUE)) {
+              message(insight::format_message(
+                "Cannot compute standard errors and confidence intervals for random effects parameters.",
+                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+              ))
+            }
+          }
+        )
+      } else if (isTRUE(verbose)) {
+        message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
       }
     }
   } else if (inherits(model, "glmmTMB")) {
@@ -338,6 +463,10 @@
           var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
         } else {
           var_ci$Group <- group_factor
+          # check if sigma was properly identified
+          if (!"sigma" %in% var_ci$Group && "sigma" %in% rownames(var_ci)) {
+            var_ci$Group[rownames(var_ci) == "sigma"] <- "Residual"
+          }
         }
         var_ci$Group[var_ci$Group == "sigma"] <- "Residual"
 
@@ -660,7 +789,11 @@
 
 
 .is_nested_lme <- function(model) {
-  sapply(insight::find_random(model), function(i) any(grepl(":", i, fixed = TRUE)))
+  re <- insight::find_random(model)
+  if (is.null(re)) {
+    return(FALSE)
+  }
+  sapply(re, function(i) any(grepl(":", i, fixed = TRUE)))
 }
 
 
@@ -697,14 +830,48 @@
   if (inherits(model, "lme")) {
     unlist(lapply(varcorr, function(x) diag(x)[-1]))
   } else {
+    # random slopes for correlated slope-intercept
     out <- unlist(lapply(varcorr, function(x) diag(x)[-1]))
     # check for uncorrelated random slopes-intercept
     non_intercepts <- which(sapply(varcorr, function(i) !grepl("^\\(Intercept\\)", dimnames(i)[[1]][1])))
     if (length(non_intercepts)) {
-      dn <- unlist(lapply(varcorr, function(i) dimnames(i)[1])[non_intercepts])
-      rndslopes <- unlist(lapply(varcorr, function(i) i[1])[non_intercepts])
-      names(rndslopes) <- gsub("(.*)\\.\\d+$", "\\1", names(rndslopes))
-      out <- c(out, stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn)))
+      if (length(non_intercepts) == length(varcorr)) {
+        out <- unlist(lapply(varcorr, function(x) diag(x)))
+      } else {
+        dn <- unlist(lapply(varcorr, function(i) dimnames(i)[1])[non_intercepts])
+        rndslopes <- unlist(lapply(varcorr, function(i) {
+          if (is.null(dim(i)) || identical(dim(i), c(1, 1))) {
+            as.vector(i)
+          } else {
+            as.vector(diag(i))
+          }
+        })[non_intercepts])
+        # random slopes for uncorrelated slope-intercept
+        names(rndslopes) <- gsub("(.*)\\.\\d+$", "\\1", names(rndslopes))
+        rndslopes <- stats::setNames(rndslopes, paste0(names(rndslopes), ".", dn))
+        # anything missing? (i.e. correlated slope-intercept slopes)
+        missig_rnd_slope <- setdiff(names(out), names(rndslopes))
+        if (length(missig_rnd_slope)) {
+          # sanity check
+          to_remove <- c()
+          for (j in 1:length(out)) {
+            # identical random slopes might have different names, so
+            # we here check if random slopes from correlated and uncorrelated
+            # are duplicated (i.e. their difference is 0 - including a tolerance)
+            # and then remove duplicated elements
+            the_same <- which(abs(outer(out[j], rndslopes, `-`)) < .0001)
+            if (length(the_same) && grepl(dn[the_same], names(out[j]), fixed = TRUE)) {
+              to_remove <- c(to_remove, j)
+            }
+          }
+          if (length(to_remove)) {
+            out <- out[-to_remove]
+          }
+          out <- c(out, rndslopes)
+        } else {
+          out <- rndslopes
+        }
+      }
     }
     out
   }
@@ -775,7 +942,7 @@
         d[upper.tri(d, diag = TRUE)] <- NA
         d <- as.data.frame(d)
 
-        d <- datawizard::reshape_longer(d, colnames_to = "Parameter1", rows_to = "Parameter2")
+        d <- datawizard::reshape_longer(d, colnames_to = "Parameter1", rows_to = "Parameter2", verbose = FALSE)
         d <- d[stats::complete.cases(d), ]
         d <- d[!d$Parameter1 %in% c("Intercept", "(Intercept)"), ]
 

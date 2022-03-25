@@ -131,7 +131,7 @@ Elbow or the Gap method, with their own visualization functionalities. See
 the examples below for more details.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
 \dontrun{
@@ -143,7 +143,7 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
   n
   summary(n)
-  as.data.frame(n)  # Duration is the time elapsed for each method in seconds
+  as.data.frame(n) # Duration is the time elapsed for each method in seconds
   plot(n)
 
   # The following runs all the method but it significantly slower

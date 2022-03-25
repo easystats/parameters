@@ -99,12 +99,12 @@ format.parameters_model <- function(x,
   }
 
   # remove unique columns
-  if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-  if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
-  if (.n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
+  if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+  if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+  if (insight::n_unique(formatted_table$Group) == 1 && isTRUE(mixed_model)) formatted_table$Group <- NULL
 
   # no column with CI-level in output
-  if (!is.null(formatted_table$CI) && .n_unique(formatted_table$CI) == 1) {
+  if (!is.null(formatted_table$CI) && insight::n_unique(formatted_table$CI) == 1) {
     formatted_table$CI <- NULL
   }
 
@@ -208,15 +208,15 @@ format.compare_parameters <- function(x,
     formatted_table <- split(out, f = split_by)
     formatted_table <- lapply(formatted_table, function(i) {
       # remove unique columns
-      if (.n_unique(i$Component) == 1) i$Component <- NULL
-      if (.n_unique(i$Effects) == 1) i$Effects <- NULL
+      if (insight::n_unique(i$Component) == 1) i$Component <- NULL
+      if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
       i
     })
   } else {
     formatted_table <- out
     # remove unique columns
-    if (.n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-    if (.n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
+    if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
     formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
   }
@@ -317,77 +317,6 @@ format.parameters_sem <- function(x,
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
   .format_columns_multiple_components(x, pretty_names = TRUE, split_column = "Component", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
 }
-
-
-
-
-# distribution ---------------------------------
-
-#' @export
-format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_width = "auto", ci_brackets = TRUE, ...) {
-  if (all(c("Min", "Max") %in% names(x))) {
-    x$Min <- insight::format_ci(x$Min, x$Max, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
-    x$Max <- NULL
-    colnames(x)[which(colnames(x) == "Min")] <- "Range"
-  }
-
-  if (all(c("Q1", "Q3") %in% names(x))) {
-    x$Q1 <- insight::format_ci(x$Q1, x$Q3, ci = NULL, digits = digits, width = ci_width, brackets = FALSE)
-    x$Q3 <- NULL
-    colnames(x)[which(colnames(x) == "Q1")] <- "Quartiles"
-  }
-
-  if (all(c("CI_low", "CI_high") %in% names(x))) {
-    x$CI_low <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = ci_width, brackets = ci_brackets)
-    x$CI_high <- NULL
-    ci_lvl <- attributes(x)$ci
-    centrality_ci <- attributes(x)$first_centrality
-
-    if (!is.null(centrality_ci)) {
-      ci_suffix <- paste0(" (", centrality_ci, ")")
-    } else {
-      ci_suffix <- ""
-    }
-
-    if (!is.null(ci_lvl)) {
-      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("%i%% CI%s", round(100 * ci_lvl), ci_suffix)
-    } else {
-      colnames(x)[which(colnames(x) == "CI_low")] <- sprintf("CI%s", ci_suffix)
-    }
-  }
-
-  if ("Trimmed_Mean" %in% colnames(x)) {
-    threshold <- attributes(x)$threshold
-    if (is.null(threshold)) {
-      trim_name <- "Trimmed"
-    } else {
-      trim_name <- sprintf("Trimmed (%g%%)", round(100 * threshold))
-    }
-    colnames(x)[which(colnames(x) == "Trimmed_Mean")] <- trim_name
-  }
-
-  if (".group" %in% colnames(x)) {
-    final_table <- list()
-    grps <- split(x, x[[".group"]])
-    for (i in names(grps)) {
-      grps[[i]][[".group"]] <- NULL
-      table_caption <- NULL
-      if (is.null(format) || format == "text") {
-        table_caption <- c(sprintf("# %s", i), "blue")
-      } else if (format == "markdown") {
-        table_caption <- sprintf("%s", i)
-      }
-      attr(grps[[i]], "table_caption") <- table_caption
-      final_table <- c(final_table, list(grps[[i]]))
-    }
-  } else {
-    final_table <- x
-  }
-
-  final_table
-}
-
-
 
 
 
@@ -506,7 +435,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, sprintf("%sResidual standard deviation: %.*f%s\n", fill, digits, sigma, res_df))
     } else if (type == "html") {
-      footer <- c(footer, trimws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
+      footer <- c(footer, insight::trim_ws(sprintf("Residual standard deviation: %.*f%s", digits, sigma, res_df)))
     }
   }
   footer
@@ -634,7 +563,7 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       }
       footer <- paste0(footer, fill, "Model: ", model_formula, n, "\n")
     } else if (type == "html") {
-      footer <- c(footer, trimws(paste0("Model: ", model_formula, n)))
+      footer <- c(footer, insight::trim_ws(paste0("Model: ", model_formula, n)))
     }
   }
   footer
@@ -705,8 +634,16 @@ format.parameters_distribution <- function(x, digits = 2, format = NULL, ci_widt
       msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
     }
 
-    # do we have random effect variances from glmmTMB?
-    if (identical(model_class, "glmmTMB") && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects && (string_method != "Wald z-" || ci_method != "wald")) {
+    # do we have random effect variances from lme4/glmmTMB?
+    # must be glmmTMB
+    show_re_msg <- (identical(model_class, "glmmTMB") &&
+      # and not Wald-CIs
+      (string_method != "Wald z-" || ci_method != "wald")) ||
+      # OR must be merMod
+      ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+        # and not Wald CIs
+        !ci_method %in% c("wald", "residual", "normal"))
+    if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
       msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
     }
 

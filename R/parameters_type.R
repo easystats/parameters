@@ -309,7 +309,7 @@ parameters_type <- function(model, ...) {
   p <- "(.*)poly\\((.*),\\s(.*)\\)(.*)"
   tryCatch(
     {
-      trimws(sub(p, replacement = subs, x))
+      insight::trim_ws(sub(p, replacement = subs, x))
     },
     error = function(x) {
       1

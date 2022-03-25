@@ -83,7 +83,7 @@ model_parameters.metaplus <- function(model,
 
   # no df
   out$df_error <- NULL
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   attr(out, "measure") <- "Estimate"
 
   if (!"Method" %in% names(out)) {
@@ -230,7 +230,7 @@ model_parameters.meta_random <- function(model,
 
   # final atributes
   attr(out, "measure") <- "Estimate"
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   if (!"Method" %in% names(out)) {
@@ -376,7 +376,7 @@ model_parameters.meta_bma <- function(model,
 
   # final attributes
   attr(out, "measure") <- "Estimate"
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   if (!"Method" %in% names(out)) {

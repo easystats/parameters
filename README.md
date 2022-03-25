@@ -88,7 +88,7 @@ these vignettes:
 -   [Parameters
     selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 -   [A Practical Guide for Panel Data
-    Analysis](https://easystats.github.io/datawizard/articles/demean.html)
+    Analysis](https://easystats.github.io/parameters/articles/demean.html)
 
 ## Contributing and Support
 
@@ -171,13 +171,13 @@ model_parameters(model, effects = "all")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient
-#> -------------------------------------
-#> SD (Intercept: Species) |        0.89
-#> SD (Residual)           |        0.32
+#> Parameter               | Coefficient |   SE |       95% CI
+#> -----------------------------------------------------------
+#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
+#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
-model_parameters(model, df_method = "kenward")
+model_parameters(model, ci_method = "kenward")
 #> # Fixed Effects
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
@@ -187,10 +187,10 @@ model_parameters(model, df_method = "kenward")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient
-#> -------------------------------------
-#> SD (Intercept: Species) |        0.89
-#> SD (Residual)           |        0.32
+#> Parameter               | Coefficient |   SE |       95% CI
+#> -----------------------------------------------------------
+#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
+#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 ```
 
 ### Structural Models
@@ -287,3 +287,10 @@ A BibTeX entry for LaTeX users is
     pages = {2445},
   }
 ```
+
+## Code of Conduct
+
+Please note that the parameters project is released with a [Contributor
+Code of
+Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+By contributing to this project, you agree to abide by its terms.

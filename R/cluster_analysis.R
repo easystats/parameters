@@ -47,7 +47,7 @@
 #'   as `nrow(x)`.
 #'
 #' @note
-#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @details
 #' The `print()` and `plot()` methods show the (standardized) mean value for
@@ -129,9 +129,6 @@ cluster_analysis <- function(x,
                              iterations = 100,
                              ...) {
 
-
-  # Sanity checks -----------------------------------------------------------
-  insight::check_if_installed("performance")
 
   # match arguments
   method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
@@ -284,7 +281,7 @@ cluster_analysis <- function(x,
 .cluster_analysis_mixture <- function(data = NULL, n = NULL, ...) {
   insight::check_if_installed("mclust")
 
-  model <- mclust::Mclust(data, G=n, verbose = FALSE, ...)
+  model <- mclust::Mclust(data, G = n, verbose = FALSE, ...)
 
   list(model = model, clusters = model$classification)
 }

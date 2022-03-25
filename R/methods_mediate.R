@@ -131,7 +131,7 @@ p_value.mediate <- function(model, ...) {
 #' @export
 format_parameters.mediate <- function(model, ...) {
   params <- insight::find_parameters(model, flatten = TRUE)
-  params <- trimws(gsub("(.*)\\((.*)\\)$", "\\1", params))
+  params <- insight::trim_ws(gsub("(.*)\\((.*)\\)$", "\\1", params))
   names(params) <- params
   params[params == "ACME"] <- "Indirect Effect (ACME)"
   params[params == "ADE"] <- "Direct Effect (ADE)"

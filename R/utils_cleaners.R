@@ -26,19 +26,19 @@
     # remove possible  namespace
     x <- sub("(.*)::(.*)", "\\2", x)
     if (pattern[j] == "offset") {
-      x <- trimws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
+      x <- insight::trim_ws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
     } else if (pattern[j] == "I") {
       if (full) {
-        x <- trimws(sub("I\\(((\\w|\\.)*).*", "\\1", x))
+        x <- insight::trim_ws(sub("I\\(((\\w|\\.)*).*", "\\1", x))
       } else {
-        x <- trimws(sub("I\\((.*)\\)(.*)", "\\1", x))
+        x <- insight::trim_ws(sub("I\\((.*)\\)(.*)", "\\1", x))
       }
       # some exceptions here...
-    } else if (full && pattern[j] == "scale" && any(grepl("scale\\(", x))) {
-      x[grepl("scale\\(", x)] <- insight::clean_names(x[grepl("scale\\(", x)])
+    } else if (full && pattern[j] == "scale" && any(grepl("scale(", x, fixed = TRUE))) {
+      x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(x[grepl("scale(", x, fixed = TRUE)])
     } else {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
-      x <- trimws(sub(p, "\\1\\3", x))
+      x <- insight::trim_ws(sub(p, "\\1\\3", x))
     }
   }
 

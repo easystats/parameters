@@ -235,7 +235,7 @@ compare_parameters <- function(...,
   all_models <- all_models[order(params_order), ]
   all_models[model_cols] <- NULL
 
-  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, .safe_deparse)), fixed = TRUE)
+  attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- style
   attr(all_models, "all_attributes") <- object_attributes
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))

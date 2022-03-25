@@ -3,7 +3,7 @@
 #' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
-#' @param test The indices to compute. Character (vector) with one or more of these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each "test", the corresponding \pkg{bayestestR} function is called (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results included in the summary output.
+#' @param test The indices to compute. Character (vector) with one or more of these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each "test", the corresponding **bayestestR** function is called (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results included in the summary output.
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -87,9 +87,9 @@ bootstrap_parameters <- function(model,
   )
 
   # Remove unnecessary columns
-  if ("CI" %in% names(parameters) && .n_unique(parameters$CI) == 1) {
+  if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) == 1) {
     parameters$CI <- NULL
-  } else if ("CI" %in% names(parameters) && .n_unique(parameters$CI) > 1) {
+  } else if ("CI" %in% names(parameters) && insight::n_unique(parameters$CI) > 1) {
     parameters <- datawizard::reshape_ci(parameters)
   }
 

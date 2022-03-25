@@ -45,7 +45,7 @@
 #' @note There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
-#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'   [**see**-package](https://easystats.github.io/see/)..
 #'   `n_components()` is a convenient short for `n_factors(type =
 #'   "PCA")`.
 #'

@@ -32,15 +32,15 @@ Compute and extract model parameters. See the documentation for your object's cl
 \item{\link[=model_parameters.zcpglm]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
 \item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, ...)}
 \item{\link[=model_parameters.averaging]{Other special models} (\code{model.avg}, \code{betareg}, \code{glmx}, ...)}
-\item{\link[=model_parameters.merMod]{Mixed models} (\pkg{lme4}, \pkg{nlme}, \pkg{glmmTMB}, \pkg{afex}, ...)}
-\item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\pkg{BayesFactor})}
-\item{\link[=model_parameters.stanreg]{Bayesian models} (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, \pkg{blavaan}, ...)}
-\item{\link[=model_parameters.principal]{PCA and FA} (\pkg{psych})}
-\item{\link[=model_parameters.lavaan]{CFA and SEM} (\pkg{lavaan})}
+\item{\link[=model_parameters.merMod]{Mixed models} (\strong{lme4}, \strong{nlme}, \strong{glmmTMB}, \strong{afex}, ...)}
+\item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\strong{BayesFactor})}
+\item{\link[=model_parameters.stanreg]{Bayesian models} (\strong{rstanarm}, \strong{brms}, \strong{MCMCglmm}, \strong{blavaan}, ...)}
+\item{\link[=model_parameters.principal]{PCA and FA} (\strong{psych})}
+\item{\link[=model_parameters.lavaan]{CFA and SEM} (\strong{lavaan})}
 \item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
-\item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma}, \code{metaplus}, \pkg{metaBMA}, ...)}
-\item{\link[=model_parameters.glht]{Hypothesis testing} (\code{glht}, \pkg{PMCMRplus})}
-\item{\link[=model_parameters.t1way]{Robust statistical tests} (\pkg{WRS2})}
+\item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma}, \code{metaplus}, \strong{metaBMA}, ...)}
+\item{\link[=model_parameters.glht]{Hypothesis testing} (\code{glht}, \strong{PMCMRplus})}
+\item{\link[=model_parameters.t1way]{Robust statistical tests} (\strong{WRS2})}
 \item{\link[=model_parameters.mira]{Multiply imputed repeated analyses} (\code{mira})}
 }
 }
@@ -51,7 +51,11 @@ arguments to tweak the output. There is also a
 implemented in the
 \href{https://easystats.github.io/see/}{\strong{see}-package}, and a dedicated
 method for use inside rmarkdown files,
-\code{\link[=print_md.parameters_model]{print_md()}}.
+\code{\link[=print_md.parameters_model]{print_md()}}. \cr \cr \strong{For developers}, if
+speed performance is an issue, you can use the (undocumented) \code{pretty_names}
+argument, e.g. \code{model_parameters(..., pretty_names = FALSE)}. This will
+skip the formatting of the coefficient names and make \code{model_parameters()}
+faster.
 }
 \section{Standardization of model coefficients}{
 
@@ -62,7 +66,7 @@ errors and confidence intervals refer to the standardized coefficient. The
 default, \code{standardize = "refit"}, never standardizes categorical predictors
 (i.e. factors), which may be a different behaviour compared to other R
 packages or other software packages (like SPSS). To mimic behaviour of SPSS
-or packages such as \pkg{lm.beta}, use \code{standardize = "basic"}.
+or packages such as \strong{lm.beta}, use \code{standardize = "basic"}.
 }
 
 \section{Standardization Methods}{
@@ -122,7 +126,7 @@ within-group variable is found to have access between-group variance.
 
 \section{Labeling the Degrees of Freedom}{
 
-Throughout the \pkg{parameters} package, we decided to label the residual
+Throughout the \strong{parameters} package, we decided to label the residual
 degrees of freedom \emph{df_error}. The reason for this is that these degrees
 of freedom not always refer to the residuals. For certain models, they refer
 to the estimate error - in a linear model these are the same, but in - for

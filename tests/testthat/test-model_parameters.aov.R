@@ -59,7 +59,7 @@ if (.runThisTest) {
         expect_equal(sum(model_parameters(model)$df), 2)
       })
 
-      if (.runThisTest) {
+      if (.runThisTest && requiet("httr")) {
         test_that("model_parameters.anova", {
           model <- insight::download_model("anova_3")
           expect_equal(sum(model_parameters(model)$df), 149)

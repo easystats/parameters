@@ -71,7 +71,7 @@
 )
 }
 \arguments{
-\item{model}{Bayesian model (including SEM from \pkg{blavaan}. May also be
+\item{model}{Bayesian model (including SEM from \strong{blavaan}. May also be
 a data frame with posterior samples.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
@@ -126,25 +126,7 @@ frame, which can be different from how they are printed. Inspect the
 \verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern that
-describes the parameters that should be included (for \code{keep}) or excluded
-(for \code{drop}) in the returned data frame. \code{keep} may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If \code{keep} is a character vector, every parameter
-name in the \emph{"Parameter"} column that matches the regular expression in
-\code{keep} will be selected from the returned data frame (and vice versa,
-all parameter names matching \code{drop} will be excluded). Furthermore, if
-\code{keep} has more than one element, these will be merged with an \code{OR}
-operator into a regular expression pattern like this: \code{"(one|two|three)"}.
-If \code{keep} is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where \code{model_parameters()}
-returns multiple columns with parameter components, like in
-\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-\verb{$Parameter} column of the parameters table to get the exact parameter
-names.}
+\item{drop}{See \code{keep}.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
@@ -198,7 +180,7 @@ on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+(such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
@@ -226,7 +208,7 @@ When \code{standardize = "refit"}, columns \code{diagnostic},
 \code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the
-\href{https://easystats.github.io/see/}{\pkg{see}-package}.
+\href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 

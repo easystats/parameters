@@ -27,7 +27,7 @@
 \method{model_parameters}{omega}(model, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{PCA or FA created by the \pkg{psych} or \pkg{FactoMineR}
+\item{model}{PCA or FA created by the \strong{psych} or \strong{FactoMineR}
 packages (e.g. through \code{psych::principal},  \code{psych::fa} or \code{psych::omega}).}
 
 \item{sort}{Sort the loadings.}
@@ -49,10 +49,10 @@ loadings data. Usually, the question related to the item.}
 A data frame of loadings.
 }
 \description{
-Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
+Format structural models from the \strong{psych} or \strong{FactoMineR} packages.
 }
 \details{
-For the structural models obtained with \pkg{psych}, the following indices
+For the structural models obtained with \strong{psych}, the following indices
 are present:
 \itemize{
 \item \strong{Complexity} (\cite{Hoffman's, 1978; Pettersson and Turkheimer,

@@ -47,8 +47,8 @@ standard_error.zeroinfl <- function(model,
   }
 
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(standard_error(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(standard_error.default(model, component = component, ...))
   }
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
@@ -100,8 +100,8 @@ p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "z
   }
 
   robust <- !is.null(method) && method == "robust"
-  if (isTRUE(robust)) {
-    return(p_value(model, ...))
+  if (.check_vcov_args(robust, ...)) {
+    return(p_value.default(model, component = component, ...))
   }
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
@@ -177,11 +177,11 @@ simulate_parameters.zeroinfl <- function(model,
     )
 
   params <- insight::get_parameters(model)
-  if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
+  if ("Effects" %in% colnames(params) && insight::n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }
 
-  if ("Component" %in% colnames(params) && .n_unique(params$Component) > 1) {
+  if ("Component" %in% colnames(params) && insight::n_unique(params$Component) > 1) {
     out$Component <- params$Component
   }
 

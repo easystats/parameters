@@ -9,17 +9,20 @@
 #'   value `1` (unless the factor has numeric levels, which are converted
 #'   to the corresponding numeric value). By default, `NA` is returned for
 #'   factors or character vectors.
-#' @param vcov Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+#' @param vcov Variance-covariance matrix used to compute uncertainty estimates
+#' (e.g., for robust standard errors). This argument accepts a covariance matrix,
+#' a function which returns a covariance matrix, or a string which identifies
+#' the function to be used to compute the covariance matrix.
 #'  * A covariance matrix
 #'  * A function which returns a covariance matrix (e.g., `stats::vcov()`)
 #'  * A string which indicates the kind of uncertainty estimates to return.
-#'    - Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See `?sandwich::vcovHC`
-#'    - Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See `?clubSandwich::vcovCR()`
-#'    - Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See `?sandwich::vcovBS`
-#'    - Other `sandwich` package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+#'    - Heteroskedasticity-consistent: `"vcovHC"`, `"HC"`, `"HC0"`, `"HC1"`, `"HC2"`, `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See `?sandwich::vcovHC`.
+#'    - Cluster-robust: `"vcovCR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`, `"CR2"`, `"CR3"`. See `?clubSandwich::vcovCR`.
+#'    - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`, `"webb"`. See `?sandwich::vcovBS`.
+#'    - Other `sandwich` package functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`, `"vcovPL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
-#'   the `vcov` argument. This function is typically supplied by the `sandwich`
-#'   or `clubSandwich` packages. Please refer to their documentation (e.g.,
+#'   the `vcov` argument. This function is typically supplied by the **sandwich**
+#'   or **clubSandwich** packages. Please refer to their documentation (e.g.,
 #'   `?sandwich::vcovHAC`) to see the list of available arguments.
 #' @param effects Should standard errors for fixed effects or random effects be
 #'   returned? Only applies to mixed models. May be abbreviated. When standard
@@ -30,7 +33,7 @@
 #' @inheritParams p_value
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @note For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard
+#' @note For Bayesian models (from **rstanarm** or **brms**), the standard
 #'   error is the SD of the posterior samples.
 #'
 #' @return A data frame with at least two columns: the parameter names and the
@@ -45,8 +48,9 @@
 #' standard_error(model, vcov = "HC3")
 #'
 #' standard_error(model,
-#'                vcov = "vcovCL",
-#'                vcov_args = list(cluster = iris$Species))
+#'   vcov = "vcovCL",
+#'   vcov_args = list(cluster = iris$Species)
+#' )
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")
@@ -59,11 +63,11 @@ standard_error <- function(model, ...) {
 #' @rdname standard_error
 #' @export
 standard_error.default <- function(model,
+                                   component = "all",
                                    vcov = NULL,
                                    vcov_args = NULL,
                                    verbose = TRUE,
                                    ...) {
-
   dots <- list(...)
 
   se <- NULL
@@ -77,15 +81,17 @@ standard_error.default <- function(model,
   if (is.function(vcov)) {
     args <- c(list(model), vcov_args, dots)
     se <- tryCatch(sqrt(diag(do.call("vcov", args))),
-                   error = function(x) NULL)
+      error = function(x) NULL
+    )
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
   if (is.character(vcov) || isTRUE(dots[["robust"]])) {
     args <- list(model,
-                 vcov_fun = vcov,
-                 vcov_args = vcov_args,
-                 verbose = verbose)
+      vcov_fun = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose
+    )
     args <- c(args, dots)
     .vcov <- do.call(".get_vcov", args)
     se <- sqrt(diag(.vcov))
@@ -95,7 +101,7 @@ standard_error.default <- function(model,
   if (is.null(se)) {
     se <- tryCatch(
       {
-        if (grepl("^Zelig-", class(model)[1])) {
+        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_se())
         } else {
           .get_se_from_summary(model)
@@ -107,33 +113,42 @@ standard_error.default <- function(model,
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    se <- tryCatch({
-        varcov <- insight::get_varcov(model)
+    se <- tryCatch(
+      {
+        varcov <- insight::get_varcov(model, component = component)
         se_from_varcov <- sqrt(diag(varcov))
         names(se_from_varcov) <- colnames(varcov)
         se_from_varcov
       },
-      error = function(e)  NULL)
+      error = function(e) NULL
+    )
   }
 
   # output
   if (is.null(se)) {
     if (isTRUE(verbose)) {
-      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
+      warning("Could not extract standard errors from model object.", call. = FALSE)
     }
   } else {
-    .data_frame(
-      Parameter = names(se),
-      SE = as.vector(se))
+    params <- insight::get_parameters(model, component = component)
+    if (length(se) == nrow(params) && "Component" %in% colnames(params)) {
+      se <- .data_frame(Parameter = params$Parameter, SE = as.vector(se), Component = params$Component)
+    } else {
+      se <- .data_frame(Parameter = names(se), SE = as.vector(se))
+    }
   }
+
+  se
 }
+
+
 
 
 # helper -----------------------------------------------------------------
 
 
 .get_se_from_summary <- function(model, component = NULL) {
-  cs <- stats::coef(summary(model))
+  cs <- suppressWarnings(stats::coef(summary(model)))
   se <- NULL
 
   if (is.list(cs) && !is.null(component)) cs <- cs[[component]]
@@ -158,6 +173,15 @@ standard_error.default <- function(model,
 }
 
 
+
+.check_vcov_args <- function(robust, ...) {
+  dots <- list(...)
+  isTRUE(isTRUE(robust) || isTRUE(dots$robust) || ("vcov" %in% names(dots) && !is.null(dots[["vcov"]])))
+}
+
+
+# compute robust vcov ----------------
+
 .get_vcov <- function(x,
                       vcov_fun = "vcovHC",
                       vcov_args = NULL,
@@ -165,7 +189,6 @@ standard_error.default <- function(model,
                       method = "any",
                       verbose = TRUE,
                       ...) {
-
   dots <- list(...)
 
   # superseded arguments
@@ -200,19 +223,38 @@ standard_error.default <- function(model,
 
   # type shortcuts: overwrite only if not supplied explicitly by the user
   if (!"type" %in% names(vcov_args)) {
-    if (vcov_fun %in% c("HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5",
-                        "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3", "xy",
-                        "residual", "wild", "mammen", "webb")) {
+    if (vcov_fun %in% c(
+      "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5",
+      "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3", "xy",
+      "residual", "wild", "mammen", "webb"
+    )) {
       vcov_args[["type"]] <- vcov_fun
     }
   }
 
   if (!grepl("^(vcov|kernHAC|NeweyWest)", vcov_fun)) {
-    vcov_fun <- switch(
-      vcov_fun,
-      "HC0" =, "HC1" =, "HC2" =, "HC3" =, "HC4" =, "HC4m" =, "HC5" =, "HC" = "vcovHC",
-      "CR0" =, "CR1" =, "CR1p" =, "CR1S" =, "CR2" =, "CR3" =, "CR" = "vcovCR",
-      "xy" =, "residual" =, "wild" =, "mammen" =, "webb" =, "BS" = "vcovBS",
+    vcov_fun <- switch(vcov_fun,
+      "HC0" = ,
+      "HC1" = ,
+      "HC2" = ,
+      "HC3" = ,
+      "HC4" = ,
+      "HC4m" = ,
+      "HC5" = ,
+      "HC" = "vcovHC",
+      "CR0" = ,
+      "CR1" = ,
+      "CR1p" = ,
+      "CR1S" = ,
+      "CR2" = ,
+      "CR3" = ,
+      "CR" = "vcovCR",
+      "xy" = ,
+      "residual" = ,
+      "wild" = ,
+      "mammen" = ,
+      "webb" = ,
+      "BS" = "vcovBS",
       "OPG" = "vcovOPG",
       "HAC" = "vcovHAC",
       "PC" = "vcovPC",
@@ -227,7 +269,7 @@ standard_error.default <- function(model,
     fun <- get(vcov_fun, asNamespace("clubSandwich"))
   } else {
     insight::check_if_installed("sandwich", reason = "to get robust standard errors")
-    fun  <- try(get(vcov_fun, asNamespace("sandwich")), silent = TRUE)
+    fun <- try(get(vcov_fun, asNamespace("sandwich")), silent = TRUE)
     if (!is.function(fun)) {
       stop(sprintf("`%s` is not a function exported by the `sandwich` package.", vcov_fun))
     }

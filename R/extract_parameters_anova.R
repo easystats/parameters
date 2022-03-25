@@ -83,7 +83,7 @@
 
 .extract_anova_aov <- function(model) {
   parameters <- as.data.frame(summary(model)[[1]])
-  parameters$Parameter <- trimws(row.names(parameters))
+  parameters$Parameter <- insight::trim_ws(row.names(parameters))
   parameters
 }
 
@@ -92,7 +92,7 @@
 
 .extract_anova_manova <- function(model) {
   parameters <- as.data.frame(summary(model)$stats)
-  parameters$Parameter <- trimws(row.names(parameters))
+  parameters$Parameter <- insight::trim_ws(row.names(parameters))
   parameters[["den Df"]] <- NULL
   parameters[["num Df"]] <- NULL
   parameters
@@ -105,7 +105,7 @@
   s <- summary(model)
   out <- do.call(rbind, lapply(names(s), function(i) {
     parameters <- as.data.frame(s[[i]])
-    parameters$Parameter <- trimws(row.names(parameters))
+    parameters$Parameter <- insight::trim_ws(row.names(parameters))
     parameters$Response <- gsub("\\s*Response ", "", i)
     parameters
   }))
@@ -137,7 +137,7 @@
     } else {
       temp <- as.data.frame(aov_summary[[1]])
     }
-    temp$Parameter <- trimws(row.names(temp))
+    temp$Parameter <- insight::trim_ws(row.names(temp))
     temp$Group <- i
     temp
   }))
@@ -150,11 +150,11 @@
 
 .extract_anova_anova <- function(model) {
   parameters <- as.data.frame(model)
-  parameters$Parameter <- trimws(row.names(parameters))
+  parameters$Parameter <- insight::trim_ws(row.names(parameters))
   # Deal with anovas of models
   if (length(attributes(model)$heading) == 2) {
     info <- attributes(model)$heading[[2]]
-    if (grepl("Model", info)) {
+    if (grepl("Model", info, fixed = TRUE)) {
       parameters$Parameter <- unlist(strsplit(info, "\n", fixed = TRUE))
     }
   } else if (length(attributes(model)$heading) > 2) {

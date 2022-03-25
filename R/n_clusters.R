@@ -43,7 +43,7 @@
 #'
 #'
 #'
-#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @examples
 #' \dontrun{
@@ -55,7 +55,7 @@
 #'   n <- n_clusters(iris[, 1:4], package = c("NbClust", "mclust")) # package can be "all"
 #'   n
 #'   summary(n)
-#'   as.data.frame(n)  # Duration is the time elapsed for each method in seconds
+#'   as.data.frame(n) # Duration is the time elapsed for each method in seconds
 #'   plot(n)
 #'
 #'   # The following runs all the method but it significantly slower
@@ -99,7 +99,7 @@ n_clusters <- function(x,
   out <- out[!is.na(out$n_Clusters), ]
 
   # Error if no solution
-  if(nrow(out) == 0) stop("No complete solution was found. Please try again with more methods.")
+  if (nrow(out) == 0) stop("No complete solution was found. Please try again with more methods.")
 
   # Clean
   out <- out[order(out$n_Clusters), ] # Arrange by n clusters
@@ -146,10 +146,12 @@ n_clusters <- function(x,
   models <- as.character(sapply(out, function(x) x[[1]]))
   n <- as.numeric(sapply(out, function(x) x[[2]]))
 
-  data.frame(n_Clusters = n,
-             Method = paste0("Mixture (", models, ")"),
-             Package = "mclust",
-             Duration = as.numeric(difftime(Sys.time(), t0, units = "secs")))
+  data.frame(
+    n_Clusters = n,
+    Method = paste0("Mixture (", models, ")"),
+    Package = "mclust",
+    Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))
+  )
 }
 
 
@@ -206,16 +208,16 @@ n_clusters <- function(x,
       }
     )
 
-    if(!is.null(n)) {
+    if (!is.null(n)) {
       # Catch and print potential warnings
       w <- ""
-      if(!is.null(n$warnings)) {
+      if (!is.null(n$warnings)) {
         w <- paste0("\n  - ", unlist(n$warnings), collapse = "")
         warning(paste0("For ", idx, " index (NbClust):", w), call. = FALSE)
       }
 
       # Don't merge results if convergence issue
-      if(grepl("did not converge in", w) == FALSE) {
+      if (grepl("did not converge in", w) == FALSE) {
         out <- rbind(out, data.frame(
           n_Clusters = n$out$Best.nc[["Number_clusters"]],
           Method = idx,
@@ -249,18 +251,19 @@ n_clusters <- function(x,
   )
 
   # Monte Carlo Version (Super slow)
-  if (fast == FALSE){
+  if (fast == FALSE) {
     t0 <- Sys.time()
-    out2 <- M3C::M3C(data, method=1, maxK = n_max, removeplots = TRUE, silent = TRUE)
-    out <- rbind(out,
-                 data.frame(n_Clusters = out2$scores[which.max(out2$scores$RCSI), "K"],
-                            Method = "Consensus clustering algorithm (Monte Carlo)",
-                            Package = "M3C",
-                            Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))))
+    out2 <- M3C::M3C(data, method = 1, maxK = n_max, removeplots = TRUE, silent = TRUE)
+    out <- rbind(
+      out,
+      data.frame(
+        n_Clusters = out2$scores[which.max(out2$scores$RCSI), "K"],
+        Method = "Consensus clustering algorithm (Monte Carlo)",
+        Package = "M3C",
+        Duration = as.numeric(difftime(Sys.time(), t0, units = "secs"))
+      )
+    )
   }
 
   out
 }
-
-
-

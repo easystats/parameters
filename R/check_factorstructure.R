@@ -131,8 +131,8 @@ check_kmo <- function(x, ...) {
 #' @examples
 #' library(parameters)
 #' check_sphericity_bartlett(mtcars)
-#' @details This function is strongly inspired by the `cortest.bartlett`
-#'   function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
+#' @details This function is strongly inspired by the `cortest.bartlett()`
+#'   function in the **psych** package (Revelle, 2016). All credit goes to its
 #'   author.
 #'
 #' @return A list of indices related to sphericity.

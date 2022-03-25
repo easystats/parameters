@@ -58,7 +58,7 @@ model_parameters.rma <- function(model,
                                  verbose = TRUE,
                                  ...) {
   # handle ci-level that was defined in function call...
-  ci_level <- parse(text = .safe_deparse(model$call))[[1]]$level
+  ci_level <- parse(text = insight::safe_deparse(model$call))[[1]]$level
   if (!is.null(ci_level) && missing(ci)) {
     ci <- ci_level / 100
   }
@@ -148,7 +148,7 @@ model_parameters.rma <- function(model,
 
   # no df
   out$df_error <- NULL
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   attr(out, "measure") <- model$measure
 
   if (!"Method" %in% names(out)) {

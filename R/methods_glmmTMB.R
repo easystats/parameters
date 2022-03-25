@@ -59,6 +59,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   params <- params_random <- params_variance <- NULL
+  dispersion_param <- FALSE
 
   if (effects %in% c("fixed", "all")) {
     # Processing
@@ -94,13 +95,26 @@ model_parameters.glmmTMB <- function(model,
     }
 
     # add dispersion parameter
-    if (inherits(model, "glmmTMB") && !is.null(params$Component) && !"dispersion" %in% params$Component) {
+    if (
+      # must be glmmTMB
+      inherits(model, "glmmTMB") &&
+        # don't print dispersion if already present
+        (is.null(component) || !"dispersion" %in% params$Component) &&
+        # don't print dispersion for zi-component
+        component %in% c("conditional", "all", "dispersion")
+    ) {
       dispersion_param <- insight::get_parameters(model, component = "dispersion")
       if (!is.null(dispersion_param)) {
+        # add component column
+        if (is.null(params$Component)) {
+          params$Component <- "conditional"
+        }
         params[nrow(params) + 1, ] <- NA
         params[nrow(params), "Parameter"] <- dispersion_param$Parameter[1]
-        params[nrow(params), "Coefficient"] <- dispersion_param$Estimate[1]
+        params[nrow(params), "Coefficient"] <- stats::sigma(model)
         params[nrow(params), "Component"] <- dispersion_param$Component[1]
+        params[nrow(params), c("CI_low", "CI_high")] <- stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2]
+        dispersion_param <- TRUE
       }
     }
 
@@ -111,18 +125,33 @@ model_parameters.glmmTMB <- function(model,
   }
 
   att <- attributes(params)
+  random_effects <- insight::find_random(model, flatten = TRUE)
 
-  if (effects %in% c("random", "all") && isTRUE(group_level)) {
-    params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
-    if (length(insight::find_random(model, flatten = TRUE)) > 1) {
-      warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
+  # check if any random effects at all
+  if (!is.null(random_effects) && effects %in% c("random", "all")) {
+    # add random parameters or variances
+    if (isTRUE(group_level)) {
+      params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
+      if (length(random_effects) > 1) {
+        warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
+      }
+    } else {
+      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, verbose = verbose)
+      # remove redundant dispersion parameter
+      if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
+        disp <- which(params$Component == "dispersion")
+        resid <- which(params_variance$Group == "Residual")
+        # check if we have dispersion parameter, and either no sigma
+        # or sigma equals dispersion
+        if (length(disp) && length(resid) && all.equal(params_variance$Coefficient[resid],
+          params$Coefficient[disp],
+          tolerance = 1e-5
+        )) {
+          params <- params[-disp, ]
+        }
+      }
     }
   }
-
-  if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, verbose = verbose)
-  }
-
 
   # merge random and fixed effects, if necessary
   if (!is.null(params) && (!is.null(params_random) || !is.null(params_variance))) {
@@ -193,7 +222,7 @@ ci.glmmTMB <- function(x,
                        verbose = TRUE,
                        ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot"))
+  method <- match.arg(method, choices = c("wald", "normal", "ml1", "betwithin", "profile", "uniroot", "robust"))
   component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
 
   if (is.null(.check_component(x, component, verbose = verbose))) {
@@ -340,7 +369,7 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
   }
 
   class(d) <- c("parameters_simulate_model", class(d))
-  attr(d, "object_name") <- .safe_deparse(substitute(model))
+  attr(d, "object_name") <- insight::safe_deparse(substitute(model))
   d
 }
 
@@ -371,11 +400,11 @@ simulate_parameters.glmmTMB <- function(model,
     )
 
   params <- insight::get_parameters(model, ...)
-  if ("Effects" %in% colnames(params) && .n_unique(params$Effects) > 1) {
+  if ("Effects" %in% colnames(params) && insight::n_unique(params$Effects) > 1) {
     out$Effects <- params$Effects
   }
 
-  if ("Component" %in% colnames(params) && .n_unique(params$Component) > 1) {
+  if ("Component" %in% colnames(params) && insight::n_unique(params$Component) > 1) {
     out$Component <- params$Component
   }
 

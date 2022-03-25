@@ -9,13 +9,13 @@ if (requiet("testthat") &&
 
   Crime$year <- as.factor(Crime$year)
 
-  m1 <- plm(lcrmrte ~ lprbarr + year | . - lprbarr + lmix, data = Crime, model = "random")
+  m1 <- suppressWarnings(plm::plm(lcrmrte ~ lprbarr + year | . - lprbarr + lmix, data = Crime, model = "random"))
 
-  m2 <- plm::plm(
+  m2 <- suppressWarnings(plm::plm(
     formula = log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
     data = Produc,
     index = c("state", "year")
-  )
+  ))
 
   test3333 <- data.frame(
     ID = c("TOM", "TOM", "TOM", "TOM", "MARY", "MARY", "MARY", "JOHN", "JOHN"),
@@ -26,13 +26,13 @@ if (requiet("testthat") &&
   test3333["lag"] <- lag(test3333$ret)
   test3333 <- na.omit(test3333)
   test3333model <- ret ~ lag
-  m3 <- plm::plm(
+  m3 <- suppressWarnings(plm::plm(
     test3333model,
     data = test3333,
     model = "within",
     effect = "individual",
     index = c("ID", "Year")
-  )
+  ))
 
   test_that("ci", {
     expect_equal(

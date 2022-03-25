@@ -15,7 +15,7 @@
 #'   it will select all the components that are maximally pseudo-loaded (i.e.,
 #'   correlated) by at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
-#'   \pkg{psych} package. Possible options include `"varimax"`,
+#'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
 #'   or `"cluster"` (and more). See [psych::fa()] for details.
 #' @param sort Sort the loadings.
@@ -27,8 +27,7 @@
 #' @param standardize A logical value indicating whether the variables should be
 #'   standardized (centered and scaled) to have unit variance before the
 #'   analysis (in general, such scaling is advisable).
-#' @param object An object of class `parameters_pca` or
-#'   `parameters_efa`
+#' @param object An object of class `parameters_pca` or `parameters_efa`
 #' @param newdata An optional data frame in which to look for variables with
 #'   which to predict. If omitted, the fitted values are used.
 #' @param names Optional character vector to name columns of the returned data
@@ -71,7 +70,7 @@
 #'    \item{Running
 #'    [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
 #'    visually displays the loadings (that requires the
-#'    \href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
+#'    [**see**-package](https://easystats.github.io/see/) to work).}
 #' }
 #' }
 #'

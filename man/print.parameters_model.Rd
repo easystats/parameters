@@ -114,7 +114,7 @@ to add the model-specification to the output of the
 
 \section{Labeling the Degrees of Freedom}{
 
-Throughout the \pkg{parameters} package, we decided to label the residual
+Throughout the \strong{parameters} package, we decided to label the residual
 degrees of freedom \emph{df_error}. The reason for this is that these degrees
 of freedom not always refer to the residuals. For certain models, they refer
 to the estimate error - in a linear model these are the same, but in - for

@@ -339,7 +339,7 @@ degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
 #' p-values for Marginal Effects Models
 #'
 #' This function attempts to return, or compute, p-values of marginal effects
-#' models from package \pkg{mfx}.
+#' models from package **mfx**.
 #'
 #' @param model A statistical model.
 #' @param component Should all parameters, parameters for the conditional model,

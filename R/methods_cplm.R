@@ -8,8 +8,8 @@
 #' @name model_parameters.zcpglm
 #'
 #' @description
-#' Parameters from zero-inflated models (from packages like \pkg{pscl},
-#' \pkg{cplm} or \pkg{countreg}).
+#' Parameters from zero-inflated models (from packages like **pscl**,
+#' **cplm** or **countreg**).
 #'
 #' @param model A model with zero-inflation component.
 #' @inheritParams model_parameters.default

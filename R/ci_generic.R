@@ -65,7 +65,6 @@
                     vcov_args = NULL,
                     verbose = TRUE,
                     ...) {
-
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
@@ -83,6 +82,8 @@
 
   # check if all estimates are non-NA
   params <- .check_rank_deficiency(params, verbose = FALSE)
+  # for polr, we need to fix parameter names
+  params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
 
   # sanity check...
   if (is.null(method)) {
@@ -95,17 +96,18 @@
   if (is.null(se)) {
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       stderror <- standard_error(model,
-                                 component = component,
-                                 vcov = vcov,
-                                 vcov_args = vcov_args,
-                                 verbose = verbose,
-                                 ...)
+        component = component,
+        vcov = vcov,
+        vcov_args = vcov_args,
+        verbose = verbose,
+        ...
+      )
     } else {
       stderror <- switch(method,
-            "kenward" = se_kenward(model),
-            "kr" = se_kenward(model),
-            "satterthwaite" = se_satterthwaite(model),
-            standard_error(model, component = component)
+        "kenward" = se_kenward(model),
+        "kr" = se_kenward(model),
+        "satterthwaite" = se_satterthwaite(model),
+        standard_error(model, component = component)
       )
     }
 
@@ -113,8 +115,9 @@
       return(NULL)
     }
 
-    # filter non-matching parameters
-    if (nrow(stderror) != nrow(params)) {
+    # filter non-matching parameters, resp. sort stderror and parameters,
+    # so both have the identical order of values
+    if (nrow(stderror) != nrow(params) || !all(stderror$Parameter %in% params$Parameter) || !all(order(stderror$Parameter) == order(params$Parameter))) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
     se <- stderror$SE

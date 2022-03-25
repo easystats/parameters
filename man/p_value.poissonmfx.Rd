@@ -32,7 +32,7 @@ components etc.
 }
 \description{
 This function attempts to return, or compute, p-values of marginal effects
-models from package \pkg{mfx}.
+models from package \strong{mfx}.
 }
 \examples{
 if (require("mfx", quietly = TRUE)) {

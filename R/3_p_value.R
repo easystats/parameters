@@ -3,9 +3,9 @@
 #' This function attempts to return, or compute, p-values of a model's
 #' parameters. See the documentation for your object's class:
 #' \itemize{
-#'  \item{[Bayesian models][p_value.BFBayesFactor] (\pkg{rstanarm}, \pkg{brms}, \pkg{MCMCglmm}, ...)}
+#'  \item{[Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)}
 #'  \item{[Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)}
-#'  \item{[Marginal effects models][p_value.poissonmfx] (\pkg{mfx})}
+#'  \item{[Marginal effects models][p_value.poissonmfx] (**mfx**)}
 #'  \item{[Models with special components][p_value.DirichletRegModel] (`DirichletRegModel`, `clm2`, `cgam`, ...)}
 #'  }
 #'
@@ -46,8 +46,6 @@ p_value.default <- function(model,
                             vcov_args = NULL,
                             verbose = TRUE,
                             ...) {
-
-
   dots <- list(...)
 
   if (is.character(method)) {
@@ -86,7 +84,8 @@ p_value.default <- function(model,
       method = method,
       component = component,
       verbose = verbose,
-      ...)
+      ...
+    )
     return(p)
   }
 
@@ -98,21 +97,24 @@ p_value.default <- function(model,
   # robust standard errors
   if (method == "robust") {
     co <- insight::get_parameters(model)
+    # for polr, we need to fix parameter names
+    co$Parameter <- gsub("Intercept: ", "", co$Parameter, fixed = TRUE)
     # this allows us to pass the output of `standard_error()`
     # to the `vcov` argument in order to avoid computing the SE twice.
     if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
       se <- vcov
     } else {
       args <- list(model,
-                   vcov_args = vcov_args,
-                   vcov = vcov,
-                   verbose = verbose)
+        vcov_args = vcov_args,
+        vcov = vcov,
+        verbose = verbose
+      )
       args <- c(args, dots)
       se <- do.call("standard_error", args)
     }
 
     dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)
-    se <- merge(co, se, sort = FALSE)
+    se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
     p <- stats::setNames(se$p, se$Parameter)
@@ -123,14 +125,15 @@ p_value.default <- function(model,
     p <- tryCatch(
       {
         # Zelig-models are weird
-        if (grepl("^Zelig-", class(model)[1])) {
+        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_pvalue())
         } else {
           # try to get p-value from classical summary for default models
           .get_pval_from_summary(model)
         }
       },
-      error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   # default 2nd try: p value from test-statistic
@@ -142,14 +145,18 @@ p_value.default <- function(model,
         names(p_from_stat) <- stat$Parameter
         p_from_stat
       },
-      error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   # output
   if (!is.null(p)) {
-    p <- .data_frame(
-      Parameter = names(p),
-      p = as.vector(p))
+    params <- insight::get_parameters(model, component = component)
+    if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
+      p <- .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+    } else {
+      p <- .data_frame(Parameter = names(p), p = as.vector(p))
+    }
     return(p)
   }
 
@@ -164,7 +171,7 @@ p_value.default <- function(model,
 
 
 .get_pval_from_summary <- function(model, cs = NULL) {
-  if (is.null(cs)) cs <- stats::coef(summary(model))
+  if (is.null(cs)) cs <- suppressWarnings(stats::coef(summary(model)))
   p <- NULL
 
   if (ncol(cs) >= 4) {

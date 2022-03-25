@@ -3,7 +3,6 @@ if (requiet("testthat") &&
   requiet("sandwich") &&
   requiet("clubSandwich") &&
   requiet("datawizard")) {
-
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
@@ -70,9 +69,9 @@ if (requiet("testthat") &&
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)
 
-  if (packageVersion("parameters") >= "0.16.9.9") {
+  if (packageVersion("parameters") >= "0.17.0") {
     test_that("model_parameters, robust", {
-      expect_warning(model_parameters(model, robust = TRUE))
+      expect_warning(expect_warning(expect_warning(model_parameters(model, robust = TRUE))))
       params <- model_parameters(model, vcov = "HC3")
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
       expect_equal(params$SE, robust_se, tolerance = 1e-3)

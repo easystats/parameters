@@ -6,10 +6,10 @@ model_parameters.HLfit <- model_parameters.default
 #' @export
 ci.HLfit <- function(x,
                      ci = 0.95,
-                     method = c("wald", "ml1", "betwithin", "profile", "boot"),
+                     method = "wald",
                      iterations = 100,
                      ...) {
-  method <- match.arg(tolower(method))
+  method <- match.arg(tolower(method), choices = c("wald", "ml1", "betwithin", "profile", "boot"))
 
   # Wald approx
   if (method == "wald") {

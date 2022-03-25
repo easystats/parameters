@@ -88,7 +88,7 @@ different defaults for the function arguments.
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the
-\href{https://easystats.github.io/see/}{\pkg{see}-package}.
+\href{https://easystats.github.io/see/}{\strong{see}-package}..
 \code{n_components()} is a convenient short for \code{n_factors(type = "PCA")}.
 }
 \examples{

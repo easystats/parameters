@@ -52,7 +52,7 @@
   attr(params, "linear_model") <- isTRUE(info$is_linear)
   attr(params, "mixed_model") <- isTRUE(info$is_mixed)
   attr(params, "n_obs") <- info$n_obs
-  attr(params, "model_class") <- class(model)
+  attr(params, "model_class") <- as.character(class(model))
   attr(params, "bootstrap") <- bootstrap
   attr(params, "iterations") <- iterations
   attr(params, "p_adjust") <- p_adjust
@@ -105,7 +105,7 @@
   # model formula
   model_formula <- tryCatch(
     {
-      .safe_deparse(insight::find_formula(model)$conditional)
+      insight::safe_deparse(insight::find_formula(model)$conditional)
     },
     error = function(e) {
       NULL

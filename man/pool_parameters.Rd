@@ -36,9 +36,9 @@ to mixed models. May be abbreviated. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
+\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
+\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
 
 \item{verbose}{Toggle warnings and messages.}

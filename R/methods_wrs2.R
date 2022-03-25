@@ -22,7 +22,7 @@ model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
 }
 
 .extract_wrs2_t1way <- function(model) {
-  fcall <- .safe_deparse(model$call)
+  fcall <- insight::safe_deparse(model$call)
   # effect sizes are by default contained for `t1way` but not `rmanova`
   if (grepl("^(t1way|WRS2::t1way)", fcall)) {
     data.frame(
@@ -129,7 +129,7 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 }
 
 .extract_wrs2_yuen <- function(model) {
-  fcall <- .safe_deparse(model$call)
+  fcall <- insight::safe_deparse(model$call)
 
   # the latter regexe covers `rlang::exec` or `do.call` instances
 
@@ -215,7 +215,7 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
 
 
 .extract_wrs2_robtab <- function(model) {
-  fcall <- .safe_deparse(model$call)
+  fcall <- insight::safe_deparse(model$call)
 
   # dataframe
   out <- as.data.frame(model$partable)

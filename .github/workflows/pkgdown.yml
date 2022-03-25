@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master, v2-branch]
+    branches: [main, master]
   pull_request:
-    branches: [main, master, v2-branch]
+    branches: [main, master]
   release:
     types: [published]
   workflow_dispatch:
@@ -19,15 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-pandoc@v2-branch
+      - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2-branch
+      - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2-branch
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: r-lib/pkgdown, local::.
           needs: website
 
       - name: Build site

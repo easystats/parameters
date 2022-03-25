@@ -78,7 +78,7 @@ simulate_model.varest <- function(model, iterations = 1000, ...) {
     simulate_model(model = model$varresult[[i]], iterations = iterations, ...)
   })
   names(out) <- paste0("Equation ", names(model$varresult))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   out
 }
 

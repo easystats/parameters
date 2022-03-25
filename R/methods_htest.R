@@ -32,17 +32,18 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
+#'
 #' model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 #' model_parameters(model)
 #'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-#' model_parameters(model)
+#' model_parameters(model, hedges_g = TRUE)
 #'
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
-#' model_parameters(model)
+#' model_parameters(model, hedges_g = TRUE)
 #'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
-#' model_parameters(model)
+#' model_parameters(model, standardized_d = TRUE)
 #'
 #' data(airquality)
 #' airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -53,7 +54,12 @@
 #' patients <- c(86, 93, 136, 82)
 #' model <- pairwise.prop.test(smokers, patients)
 #' model_parameters(model)
+#'
+#' model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
+#' model_parameters(model, cramers_v = "adjusted")
+#'
 #' @return A data frame of indices related to the model's parameters.
+#'
 #' @export
 model_parameters.htest <- function(model,
                                    cramers_v = NULL,
@@ -96,7 +102,7 @@ model_parameters.htest <- function(model,
   }
 
   if (!is.null(parameters$Method)) {
-    parameters$Method <- trimws(gsub("with continuity correction", "", parameters$Method))
+    parameters$Method <- insight::trim_ws(gsub("with continuity correction", "", parameters$Method, fixed = TRUE))
   }
 
   # save alternative
@@ -264,6 +270,10 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
     # exact binomial test --------------
     out <- .extract_htest_binom(model)
+  } else if (m_info$is_ftest) {
+
+    # F test for equal variances --------------
+    out <- .extract_htest_vartest(model)
   } else {
     stop("model_parameters not implemented for such h-tests yet.")
   }
@@ -377,6 +387,7 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 
+
 # extract htest leveneTest ----------------------
 
 
@@ -387,6 +398,26 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
     `F` = model$`F value`[1],
     p = model$`Pr(>F)`[1],
     Method = "Levene's Test for Homogeneity of Variance",
+    stringsAsFactors = FALSE
+  )
+}
+
+
+
+# extract htest var.test ----------------------
+
+
+.extract_htest_vartest <- function(model) {
+  data.frame(
+    "Parameter" = model$data.name,
+    "Estimate" = model$estimate,
+    "df" = model$parameter[1],
+    "df_error" = model$parameter[2],
+    `F` = model$statistic,
+    "CI_low" = model$conf.int[1],
+    "CI_high" = model$conf.int[2],
+    p = model$p.value,
+    Method = "F test to compare two variances",
     stringsAsFactors = FALSE
   )
 }
@@ -528,8 +559,8 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
-  if (("observed" %in% names(model) && inherits(model$observed, "svytable")) ||
-    grepl("^svychisq", model$data.name)) {
+  if ((any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
+    any(grepl("^svychisq", model$data.name))) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }

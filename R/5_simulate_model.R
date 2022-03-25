@@ -25,8 +25,8 @@
 #'     `mu = coef(model)` and variance `Sigma = vcov(model)`.
 #'   }
 #'   \subsection{Models with Zero-Inflation Component}{
-#'     For models from packages \pkg{glmmTMB}, \pkg{pscl}, \pkg{GLMMadaptive} and
-#'     \pkg{countreg}, the `component` argument can be used to specify
+#'     For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
+#'     **countreg**, the `component` argument can be used to specify
 #'     which parameters should be simulated. For all other models, parameters
 #'     from the conditional component (fixed effects) are simulated. This may
 #'     include smooth terms, but not random effects.
@@ -63,7 +63,7 @@ simulate_model.default <- function(model, iterations = 1000, ...) {
   out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- .safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
   out
 }
 

@@ -1,8 +1,8 @@
 #' Parameters from Structural Models (PCA, EFA, ...)
 #'
-#' Format structural models from the \pkg{psych} or \pkg{FactoMineR} packages.
+#' Format structural models from the **psych** or **FactoMineR** packages.
 #'
-#' @param model PCA or FA created by the \pkg{psych} or \pkg{FactoMineR}
+#' @param model PCA or FA created by the **psych** or **FactoMineR**
 #'   packages (e.g. through `psych::principal`,  `psych::fa` or `psych::omega`).
 #' @inheritParams principal_components
 #' @param labels A character vector containing labels to be added to the
@@ -10,7 +10,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
-#'  For the structural models obtained with \pkg{psych}, the following indices
+#'  For the structural models obtained with **psych**, the following indices
 #'  are present:
 #'
 #' - **Complexity** (\cite{Hoffman's, 1978; Pettersson and Turkheimer,

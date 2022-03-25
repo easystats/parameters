@@ -23,8 +23,8 @@ to work. In other words, before starting with factor analysis, one needs to
 check whether Bartlett’s test of sphericity is significant.
 }
 \details{
-This function is strongly inspired by the \code{cortest.bartlett}
-function in the \pkg{psych} package (Revelle, 2016). All credit goes to its
+This function is strongly inspired by the \code{cortest.bartlett()}
+function in the \strong{psych} package (Revelle, 2016). All credit goes to its
 author.
 }
 \examples{

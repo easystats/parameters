@@ -34,9 +34,9 @@
 case of bootstrapped frequentist models.}
 
 \item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
+\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
+\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
@@ -47,7 +47,7 @@ on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+(such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
@@ -72,7 +72,7 @@ from non-Gaussian families.}
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \pkg{emmeans}).}
+\code{emmGrid} objects (from \strong{emmeans}).}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -94,25 +94,7 @@ frame, which can be different from how they are printed. Inspect the
 \verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern that
-describes the parameters that should be included (for \code{keep}) or excluded
-(for \code{drop}) in the returned data frame. \code{keep} may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If \code{keep} is a character vector, every parameter
-name in the \emph{"Parameter"} column that matches the regular expression in
-\code{keep} will be selected from the returned data frame (and vice versa,
-all parameter names matching \code{drop} will be excluded). Furthermore, if
-\code{keep} has more than one element, these will be merged with an \code{OR}
-operator into a regular expression pattern like this: \code{"(one|two|three)"}.
-If \code{keep} is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where \code{model_parameters()}
-returns multiple columns with parameter components, like in
-\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-\verb{$Parameter} column of the parameters table to get the exact parameter
-names.}
+\item{drop}{See \code{keep}.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
@@ -131,8 +113,8 @@ are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::descri
 A data frame of indices related to the model's parameters.
 }
 \description{
-Parameters from zero-inflated models (from packages like \pkg{pscl},
-\pkg{cplm} or \pkg{countreg}).
+Parameters from zero-inflated models (from packages like \strong{pscl},
+\strong{cplm} or \strong{countreg}).
 }
 \examples{
 library(parameters)

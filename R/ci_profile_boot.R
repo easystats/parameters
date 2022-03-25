@@ -129,7 +129,7 @@
   insight::check_if_installed("lme4")
 
   # Compute
-  out <- as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", nsim = iterations, ...))
+  out <- suppressWarnings(suppressMessages(as.data.frame(lme4::confint.merMod(x, level = ci, method = "boot", nsim = iterations, ...))))
   rownames(out) <- gsub("`", "", rownames(out), fixed = TRUE)
   out <- out[rownames(out) %in% insight::find_parameters(x, effects = "fixed")$conditional, ]
   names(out) <- c("CI_low", "CI_high")

@@ -122,7 +122,7 @@ on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+(such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
@@ -168,7 +168,7 @@ cases \code{"wald"} is used then.}
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \pkg{emmeans}).}
+\code{emmGrid} objects (from \strong{emmeans}).}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -219,44 +219,29 @@ frame, which can be different from how they are printed. Inspect the
 \verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
-\item{drop}{Character containing a regular expression pattern that
-describes the parameters that should be included (for \code{keep}) or excluded
-(for \code{drop}) in the returned data frame. \code{keep} may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If \code{keep} is a character vector, every parameter
-name in the \emph{"Parameter"} column that matches the regular expression in
-\code{keep} will be selected from the returned data frame (and vice versa,
-all parameter names matching \code{drop} will be excluded). Furthermore, if
-\code{keep} has more than one element, these will be merged with an \code{OR}
-operator into a regular expression pattern like this: \code{"(one|two|three)"}.
-If \code{keep} is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where \code{model_parameters()}
-returns multiple columns with parameter components, like in
-\code{\link[=model_parameters.lavaan]{model_parameters.lavaan()}}. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-\verb{$Parameter} column of the parameters table to get the exact parameter
-names.}
+\item{drop}{See \code{keep}.}
 
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
-\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance matrix,
+a function which returns a covariance matrix, or a string which identifies
+the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
 \item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
 \item A string which indicates the kind of uncertainty estimates to return.
 \itemize{
-\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
-\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
-\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
-\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"}, \code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"}, \code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"}, \code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"}, \code{"vcovPL"}.
 }
 }}
 
 \item{vcov_args}{List of arguments to be passed to the function identified by
-the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
-or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
+or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 }
 \value{
@@ -267,18 +252,41 @@ Parameters from (linear) mixed models.
 }
 \note{
 If the calculation of random effects parameters takes too long, you may
-use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+use \code{effects = "fixed"}. There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \section{Confidence intervals for random effect variances}{
 
 For models of class \code{merMod} and \code{glmmTMB}, confidence intervals for random
-effect variances can be calculated. For models of class \code{lme4}, when
-\code{ci_method} is either \code{"profile"} or \code{"boot"}, and \code{effects} is either
-\code{"random"} or \code{"all"}, profiled resp. bootstrapped confidence intervals are
-computed for the random effects. For all other options of \code{ci_method},
-confidence intervals for random effects will be missing. For models of class
-\code{glmmTMB}, confidence intervals for random effect variances always use a
-Wald t-distribution approximation.
+effect variances can be calculated.
+\itemize{
+\item For models of from package \strong{lme4}, when \code{ci_method} is either \code{"profile"}
+or \code{"boot"}, and \code{effects} is either \code{"random"} or \code{"all"}, profiled resp.
+bootstrapped confidence intervals are computed for the random effects.
+\item For all other options of \code{ci_method}, and only when the \strong{merDeriv}
+package is installed, confidence intervals for random effects are based on
+normal-distribution approximation, using the delta-method to transform
+standard errors for constructing the intervals around the log-transformed
+SD parameters. These are than back-transformed, so that random effect
+variances, standard errors and confidence intervals are shown on the original
+scale. Due to the transformation, the intervals are asymmetrical, however,
+they are within the correct bounds (i.e. no negative interval for the SD,
+and the interval for the correlations is within the range from -1 to +1).
+\item For models of class \code{glmmTMB}, confidence intervals for random effect
+variances always use a Wald t-distribution approximation.
+}
+}
+
+\section{Dispersion parameters in \emph{glmmTMB}}{
+
+For some models from package \strong{glmmTMB}, both the dispersion parameter and
+the residual variance from the random effects parameters are shown. Usually,
+these are the same but presented on different scales, e.g.\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+exp(fixef(model)$disp) # 0.09902987
+sigma(model)^2         # 0.09902987
+}
+
+For models where the dispersion parameter and the residual variance are
+the same, only the residual variance is shown in the output.
 }
 
 \section{Confidence intervals and approximation of degrees of freedom}{

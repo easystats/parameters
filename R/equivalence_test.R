@@ -106,7 +106,7 @@ bayestestR::equivalence_test
 #'   for further information.
 #' }
 #'
-#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @references
 #' \itemize{
@@ -168,7 +168,7 @@ equivalence_test.lm <- function(x,
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
@@ -247,7 +247,7 @@ equivalence_test.merMod <- function(x,
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
     attr(out, "pretty_names") <- format_parameters(x)
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out

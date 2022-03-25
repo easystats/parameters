@@ -3,6 +3,7 @@
 if (.runThisTest) {
   if (requiet("testthat") &&
     requiet("parameters") &&
+    requiet("httr") &&
     requiet("lme4") &&
     requiet("insight")) {
     data(mtcars)

@@ -54,7 +54,7 @@ it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.}
 
 \item{rotation}{If not \code{"none"}, the PCA / FA will be computed using the
-\pkg{psych} package. Possible options include \code{"varimax"},
+\strong{psych} package. Possible options include \code{"varimax"},
 \code{"quartimax"}, \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
 or \code{"cluster"} (and more). See \code{\link[psych:fa]{psych::fa()}} for details.}
 
@@ -78,8 +78,7 @@ compute it by running \code{cor()} on the passed data.}
 
 \item{pca_results}{The output of the \code{principal_components()} function.}
 
-\item{object}{An object of class \code{parameters_pca} or
-\code{parameters_efa}}
+\item{object}{An object of class \code{parameters_pca} or \code{parameters_efa}}
 
 \item{newdata}{An optional data frame in which to look for variables with
 which to predict. If omitted, the fitted values are used.}
@@ -133,7 +132,7 @@ including missing values, so it matches the original data frame.}
 \item{Running
 \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}}
 visually displays the loadings (that requires the
-\href{https://easystats.github.io/see/}{\pkg{see} package} to work).}
+\href{https://easystats.github.io/see/}{\strong{see}-package} to work).}
 }
 }
 

@@ -112,7 +112,7 @@ on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as \pkg{lm.beta}) or other software packages (like SPSS). to mimic
+(such as \strong{lm.beta}) or other software packages (like SPSS). to mimic
 such behaviours, either use \code{standardize="basic"} or standardize the data
 with \code{datawizard::standardize(force=TRUE)} \emph{before} fitting the model.
 \item For mixed models, when using methods other than \code{"refit"}, only the fixed
@@ -137,13 +137,13 @@ from non-Gaussian families.}
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
-\code{emmGrid} objects (from \pkg{emmeans}).}
+\code{emmGrid} objects (from \strong{emmeans}).}
 
 \item{summary}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).}
 
-\item{keep, drop}{Character containing a regular expression pattern that
+\item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
 named list of regular expressions. All non-matching parameters will be
@@ -163,26 +163,31 @@ frame, which can be different from how they are printed. Inspect the
 \verb{$Parameter} column of the parameters table to get the exact parameter
 names.}
 
+\item{drop}{See \code{keep}.}
+
 \item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates (e.g., for robust standard errors). This argument accepts a covariance matrix, a function which returns a covariance matrix, or a string which identifies the function to be used to compute the covariance matrix.
+\item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
+(e.g., for robust standard errors). This argument accepts a covariance matrix,
+a function which returns a covariance matrix, or a string which identifies
+the function to be used to compute the covariance matrix.
 \itemize{
 \item A covariance matrix
 \item A function which returns a covariance matrix (e.g., \code{stats::vcov()})
 \item A string which indicates the kind of uncertainty estimates to return.
 \itemize{
-\item Heteroskedasticity-consistent: "vcovHC", "HC", "HC0", "HC1", "HC2", "HC3", "HC4", "HC4m", "HC5". See \code{?sandwich::vcovHC}
-\item Cluster-robust: "vcovCR", "CR0", "CR1", "CR1p", "CR1S", "CR2", "CR3". See \code{?clubSandwich::vcovCR()}
-\item Bootstrap: "vcovBS", "xy", "residual", "wild", "mammen", "webb". See \code{?sandwich::vcovBS}
-\item Other \code{sandwich} package functions: "vcovHAC", "vcovPC", "vcovCL", "vcovPL"
+\item Heteroskedasticity-consistent: \code{"vcovHC"}, \code{"HC"}, \code{"HC0"}, \code{"HC1"}, \code{"HC2"}, \code{"HC3"}, \code{"HC4"}, \code{"HC4m"}, \code{"HC5"}. See \code{?sandwich::vcovHC}.
+\item Cluster-robust: \code{"vcovCR"}, \code{"CR0"}, \code{"CR1"}, \code{"CR1p"}, \code{"CR1S"}, \code{"CR2"}, \code{"CR3"}. See \code{?clubSandwich::vcovCR}.
+\item Bootstrap: \code{"vcovBS"}, \code{"xy"}, \code{"residual"}, \code{"wild"}, \code{"mammen"}, \code{"webb"}. See \code{?sandwich::vcovBS}.
+\item Other \code{sandwich} package functions: \code{"vcovHAC"}, \code{"vcovPC"}, \code{"vcovCL"}, \code{"vcovPL"}.
 }
 }}
 
 \item{vcov_args}{List of arguments to be passed to the function identified by
-the \code{vcov} argument. This function is typically supplied by the \code{sandwich}
-or \code{clubSandwich} packages. Please refer to their documentation (e.g.,
+the \code{vcov} argument. This function is typically supplied by the \strong{sandwich}
+or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
@@ -193,9 +198,9 @@ are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::descri
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 
 \item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\pkg{betareg}),
-\code{"scale"} (\pkg{ordinal}), \code{"extra"} (\pkg{glmx}),
-\code{"marginal"} (\pkg{mfx}), \code{"conditional"} or \code{"full"} (for
+one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
+\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
+\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
 \code{MuMIn::model.avg()}) or \code{"all"}.}
 }
 \value{
@@ -387,8 +392,9 @@ model_parameters(model, standardize = "refit")
 model_parameters(model, vcov = "HC3")
 
 model_parameters(model,
-                 vcov = "vcovCL",
-                 vcov_args = list(cluster = mtcars$cyl))
+  vcov = "vcovCL",
+  vcov_args = list(cluster = mtcars$cyl)
+)
 
 # different p-value style in output
 model_parameters(model, p_digits = 5)

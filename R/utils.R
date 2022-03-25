@@ -7,23 +7,6 @@
 }
 
 
-#' Recode a variable so its lowest value is beginning with zero
-#'
-#' @keywords internal
-.recode_to_zero <- function(x) {
-  # check if factor
-  if (is.factor(x) || is.character(x)) {
-    # try to convert to numeric
-    x <- .factor_to_numeric(x)
-  }
-
-  # retrieve lowest category
-  minval <- min(x, na.rm = TRUE)
-  sapply(x, function(y) y - minval)
-}
-
-
-
 #' Safe transformation from factor/character to numeric
 #' @keywords internal
 .factor_to_numeric <- function(x, lowest = NULL) {
@@ -79,24 +62,6 @@
 }
 
 
-#' Find most common occurence
-#'
-#' @keywords internal
-.find_most_common <- function(x) {
-  out <- names(sort(table(x), decreasing = TRUE))[1]
-
-  if (is.numeric(x)) out <- as.numeric(out)
-
-  out
-}
-
-
-#' remove empty string from character
-#' @keywords internal
-.compact_character <- function(x) x[!sapply(x, function(i) nchar(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
-
-
-
 #' @keywords internal
 .rename_values <- function(x, old, new) {
   x[x %in% old] <- new
@@ -138,22 +103,6 @@
 
 
 #' @keywords internal
-.safe_deparse <- function(string) {
-  paste0(sapply(deparse(string, width.cutoff = 500), trimws, simplify = TRUE), collapse = " ")
-}
-
-
-#' @keywords internal
-.n_unique <- function(x, na.rm = TRUE) {
-  if (is.null(x)) {
-    return(0)
-  }
-  if (isTRUE(na.rm)) x <- stats::na.omit(x)
-  length(unique(x))
-}
-
-
-#' @keywords internal
 .get_object <- function(x, attribute_name = "object_name") {
   obj_name <- attr(x, attribute_name, exact = TRUE)
   model <- NULL
@@ -184,4 +133,3 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
-

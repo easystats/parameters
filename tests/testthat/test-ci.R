@@ -44,6 +44,5 @@ test_that("vs. sandwich & lmtest", {
   expect_equal(unknown[["CI_low"]], known[, "2.5 %"], ignore_attr = TRUE)
   expect_equal(unknown[["CI_high"]], known[, "97.5 %"], ignore_attr = TRUE)
 
-  expect_error(ci(model, vcov = vcovHC), regexp = "vcov.*are not available with.*profile")
+  expect_warning(ci(model, vcov = vcovHC), regexp = "vcov.*are not available with.*profile")
 })
-
