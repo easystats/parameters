@@ -16,6 +16,15 @@ m2 <- nlme::lme(
   method = "ML"
 )
 
+data(iris)
+set.seed(1234)
+iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+m3 <- lme(
+  fixed = Sepal.Length ~ Species * Sepal.Width + Petal.Length,
+  random = ~ 1 | grp,
+  data = iris
+)
+
 test_that("ci", {
   expect_equal(
     ci(m1)$CI_low,
@@ -32,12 +41,36 @@ test_that("se", {
   )
 })
 
+test_that("se: vcov", {
+  requiet("clubSandwich")
+  se1 <- standard_error(m1, vcov = "CR3")$SE
+  se2 <- sqrt(diag(as.matrix(vcovCR(m1, type = "CR3"))))
+  expect_equal(se1, se2, ignore_attr = TRUE)
+})
+
 test_that("p_value", {
   expect_equal(
     p_value(m1)$p,
     c(2.38350215912719e-80, 2.26328050057813e-10),
     tolerance = 1e-4
   )
+})
+
+test_that("p: vcov", {
+  requiet("clubSandwich")
+  requiet("lmtest")
+  # default
+  p1 <- stats::coef(summary(m3))[, 5]
+  p2 <- p_value(m3)$p
+  expect_equal(p1, p2, ignore_attr = TRUE)
+  # manual computation
+  p1 <- p_value(m3, vcov = "CR3")$p
+  b2 <- fixef(m3)
+  se2 <- sqrt(diag(as.matrix(vcovCR(m3, type = "CR3"))))
+  t2 <- b2 / se2
+  # same DF used in `nlme:::summary.lme`
+  p2 <- 2 * pt(-abs(t2), df = m3$fixDF[["X"]])
+  expect_equal(p1, p2, ignore_attr = TRUE)
 })
 
 test_that("model_parameters", {

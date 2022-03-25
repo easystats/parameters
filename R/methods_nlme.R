@@ -49,12 +49,30 @@ ci.lme <- function(x, ci = .95, method = "wald", ...) {
 
 
 #' @export
-p_value.lme <- function(model, ...) {
-  cs <- stats::coef(summary(model))
-  p <- cs[, 5]
+p_value.lme <- function(model,
+                        vcov = NULL,
+                        vcov_args = NULL,
+                        ...) {
+
+  # default values
+  if (is.null(vcov)) {
+    cs <- stats::coef(summary(model))
+    p <- cs[, 5]
+    param <- rownames(cs)
+
+  # robust standard errors or custom varcov
+  } else {
+    b <- fixef(model)
+    se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
+    tstat <- b / se$SE
+    # residuals are defined like this in `nlme:::summary.lme`
+    df <- model$fixDF[["X"]]
+    p <- 2 * pt(-abs(tstat), df = df)
+    param <- se$Parameter
+  }
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(cs)),
+    Parameter = .remove_backticks_from_string(param),
     p = as.vector(p)
   )
 }
