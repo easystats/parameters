@@ -21,8 +21,8 @@
 #'    - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`, `"webb"`. See `?sandwich::vcovBS`.
 #'    - Other `sandwich` package functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`, `"vcovPL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
-#'   the `vcov` argument. This function is typically supplied by the *sandwich*
-#'   or *clubSandwich* packages. Please refer to their documentation (e.g.,
+#'   the `vcov` argument. This function is typically supplied by the **sandwich**
+#'   or **clubSandwich** packages. Please refer to their documentation (e.g.,
 #'   `?sandwich::vcovHAC`) to see the list of available arguments.
 #' @param effects Should standard errors for fixed effects or random effects be
 #'   returned? Only applies to mixed models. May be abbreviated. When standard
@@ -33,7 +33,7 @@
 #' @inheritParams p_value
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @note For Bayesian models (from \pkg{rstanarm} or \pkg{brms}), the standard
+#' @note For Bayesian models (from **rstanarm** or **brms**), the standard
 #'   error is the SD of the posterior samples.
 #'
 #' @return A data frame with at least two columns: the parameter names and the
