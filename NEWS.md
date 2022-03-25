@@ -2,13 +2,19 @@
 
 ## General
 
-* `model_parameters()` for mixed models from package *lme4* now also report
+* `model_parameters()` for mixed models from package *lme4* now also reports
   confidence intervals for random effect variances by default. Formerly, CIs
   were only included when `ci_method` was `"profile"` or `"boot"`. The 
   *merDeriv* package is required for this feature.
 
 * `model_parameters()` for `htest` objects now also supports models from 
   `var.test()`.
+
+## Bug fixes
+
+* The `vcov` argument, used for computing robust standard errors, did not 
+  calculate the correct p-values and confidence intervals for models of class
+  `lme`.
 
 # parameters 0.17.0
 
