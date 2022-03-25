@@ -12,8 +12,8 @@ reduce_data(x, method = "PCA", n = "max", distance = "euclidean", ...)
 \arguments{
 \item{x}{A data frame or a statistical model.}
 
-\item{method}{The feature reduction method. Can be one of 'PCA', 'cMDS',
-'DRR', 'ICA' (see the Details section).}
+\item{method}{The feature reduction method. Can be one of \code{"PCA"}, \code{"cMDS"},
+\code{"DRR"}, \code{"ICA"} (see the 'Details' section).}
 
 \item{n}{Number of components to extract. If \code{n="all"}, then \code{n} is
 set as the number of variables minus 1 (\code{ncol(x)-1}). If
@@ -24,9 +24,9 @@ it will select all the components that are maximally pseudo-loaded (i.e.,
 correlated) by at least one variable.}
 
 \item{distance}{The distance measure to be used. Only applies when
-\code{method = "cMDS"}. This must be one of "euclidean", "maximum",
-"manhattan", "canberra", "binary" or "minkowski". Any unambiguous substring
-can be given.}
+\code{method = "cMDS"}. This must be one of \code{"euclidean"}, \code{"maximum"},
+\code{"manhattan"}, \code{"canberra"}, \code{"binary"} or \code{"minkowski"}. Any unambiguous
+substring can be given.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -36,7 +36,7 @@ variables). It starts by creating a new set of variables, based on the given
 method (the default method is "PCA", but other are available via the
 \code{method} argument, such as "cMDS", "DRR" or "ICA"). Then, it names this
 new dimensions using the original variables that correlates the most with it.
-For instance, a variable named 'V1_0.97/V4_-0.88' means that the V1 and the
+For instance, a variable named \code{'V1_0.97/V4_-0.88'} means that the V1 and the
 V4 variables correlate maximally (with respective coefficients of .97 and
 -.88) with this dimension. Although this function can be useful in
 exploratory data analysis, it's best to perform the dimension reduction step
@@ -56,13 +56,13 @@ such that the distances between the points are approximately equal to the
 dissimilarities.
 
 \item \strong{DRR}: Dimensionality Reduction via Regression (DRR) is a very
-recent technique extending PCA (Laparra et al., 2015). Starting from a
+recent technique extending PCA (\emph{Laparra et al., 2015}). Starting from a
 rotated PCA, it predicts redundant information from the remaining components
 using non-linear regression. Some of the most notable advantages of
 performing DRR are avoidance of multicollinearity between predictors and
 overfitting mitigation. DRR tends to perform well when the first principal
 component is enough to explain most of the variation in the predictors.
-Requires the \pkg{DRR} package to be installed.
+Requires the \strong{DRR} package to be installed.
 
 \item \strong{ICA}: Performs an Independent Component Analysis using the
 FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
@@ -70,7 +70,7 @@ sources (through least squares minimization), ICA attempts to find
 independent sources, i.e., the source space that maximizes the
 "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
 source, which makes it a poor tool for dimensionality reduction. Requires the
-\pkg{fastICA} package to be installed.
+\strong{fastICA} package to be installed.
 }
 }
 See also \href{https://easystats.github.io/parameters/articles/parameters_reduction.html}{package vignette}.

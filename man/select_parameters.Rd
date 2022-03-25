@@ -68,7 +68,7 @@ the cAIC can't be improved further.
 }
 
 \subsection{Bayesian models}{
-For Bayesian models, it uses the \pkg{projpred} package.
+For Bayesian models, it uses the \strong{projpred} package.
 }
 }
 \examples{

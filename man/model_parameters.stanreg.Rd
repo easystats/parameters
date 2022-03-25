@@ -71,7 +71,7 @@
 )
 }
 \arguments{
-\item{model}{Bayesian model (including SEM from \pkg{blavaan}. May also be
+\item{model}{Bayesian model (including SEM from \strong{blavaan}. May also be
 a data frame with posterior samples.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
@@ -208,7 +208,7 @@ When \code{standardize = "refit"}, columns \code{diagnostic},
 \code{bf_prior} and \code{priors} are ignored. \cr \cr There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the
-\href{https://easystats.github.io/see/}{\pkg{see}-package}.
+\href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 

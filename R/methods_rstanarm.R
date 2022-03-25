@@ -2,7 +2,7 @@
 #'
 #' Parameters from Bayesian models.
 #'
-#' @param model Bayesian model (including SEM from \pkg{blavaan}. May also be
+#' @param model Bayesian model (including SEM from **blavaan**. May also be
 #'   a data frame with posterior samples.
 #' @param ci Credible Interval (CI) level. Default to `0.95` (`95%`). See
 #'   [bayestestR::ci()] for further details.
@@ -37,7 +37,7 @@
 #'   `bf_prior` and `priors` are ignored. \cr \cr There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
-#'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'   [**see**-package](https://easystats.github.io/see/).
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'

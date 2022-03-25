@@ -22,7 +22,7 @@
 #'   }
 #'
 #'   \subsection{Bayesian models}{
-#'     For Bayesian models, it uses the \pkg{projpred} package.
+#'     For Bayesian models, it uses the **projpred** package.
 #'   }
 #'
 #' @examples
