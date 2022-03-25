@@ -199,6 +199,7 @@ articles:
   - title: Dimension Reduction and Clustering
     navbar: Dimension Reduction and Clustering
     # desc:
+    contents:
     - articles/parameters_reduction.html
     - articles/efa_cfa.html
     - articles/parameters_selection.html
