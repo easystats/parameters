@@ -161,9 +161,9 @@
 case of bootstrapped frequentist models.</p></dd>
 <dt>component</dt>
 <dd><p>Model component for which parameters should be shown. May be
-one of <code>"conditional"</code>, <code>"precision"</code> (<span class="pkg">betareg</span>),
-<code>"scale"</code> (<span class="pkg">ordinal</span>), <code>"extra"</code> (<span class="pkg">glmx</span>),
-<code>"marginal"</code> (<span class="pkg">mfx</span>), <code>"conditional"</code> or <code>"full"</code> (for
+one of <code>"conditional"</code>, <code>"precision"</code> (<strong>betareg</strong>),
+<code>"scale"</code> (<strong>ordinal</strong>), <code>"extra"</code> (<strong>glmx</strong>),
+<code>"marginal"</code> (<strong>mfx</strong>), <code>"conditional"</code> or <code>"full"</code> (for
 <code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></dd>
 <dt>standardize</dt>
 <dd><p>The method used for standardizing the parameters. Can be
@@ -172,7 +172,7 @@ on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <c
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
+(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
@@ -204,7 +204,7 @@ are passed down to <code><a href="https://easystats.github.io/bayestestR/referen
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
+<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

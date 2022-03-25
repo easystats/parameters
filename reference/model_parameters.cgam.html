@@ -174,7 +174,7 @@ on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <c
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
+(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
@@ -199,7 +199,7 @@ from non-Gaussian families.</p></dd>
 adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
 possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <span class="pkg">emmeans</span>).</p></dd>
+<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
 <dt>keep</dt>
 <dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded

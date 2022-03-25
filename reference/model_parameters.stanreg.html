@@ -266,7 +266,7 @@ on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <c
 <code>"pseudo"</code>. See 'Details' in <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link">effectsize::standardize_parameters()</a></code>.
 <strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
-(such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). to mimic
+(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed

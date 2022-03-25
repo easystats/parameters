@@ -129,15 +129,15 @@ Multiply imputed repeated analyses (mira)
 <li><p><a href="model_parameters.zcpglm.html">Zero-inflated models</a> (<code>hurdle</code>, <code>zeroinfl</code>, <code>zerocount</code>)</p></li>
 <li><p><a href="model_parameters.mlm.html">Multinomial, ordinal and cumulative link models</a> (<code>bracl</code>, <code>multinom</code>, <code>mlm</code>, ...)</p></li>
 <li><p><a href="model_parameters.averaging.html">Other special models</a> (<code>model.avg</code>, <code>betareg</code>, <code>glmx</code>, ...)</p></li>
-<li><p><a href="model_parameters.merMod.html">Mixed models</a> (<span class="pkg">lme4</span>, <span class="pkg">nlme</span>, <span class="pkg">glmmTMB</span>, <span class="pkg">afex</span>, ...)</p></li>
-<li><p><a href="model_parameters.BFBayesFactor.html">Bayesian tests</a> (<span class="pkg">BayesFactor</span>)</p></li>
-<li><p><a href="model_parameters.stanreg.html">Bayesian models</a> (<span class="pkg">rstanarm</span>, <span class="pkg">brms</span>, <span class="pkg">MCMCglmm</span>, <span class="pkg">blavaan</span>, ...)</p></li>
-<li><p><a href="model_parameters.principal.html">PCA and FA</a> (<span class="pkg">psych</span>)</p></li>
-<li><p><a href="model_parameters.lavaan.html">CFA and SEM</a> (<span class="pkg">lavaan</span>)</p></li>
+<li><p><a href="model_parameters.merMod.html">Mixed models</a> (<strong>lme4</strong>, <strong>nlme</strong>, <strong>glmmTMB</strong>, <strong>afex</strong>, ...)</p></li>
+<li><p><a href="model_parameters.BFBayesFactor.html">Bayesian tests</a> (<strong>BayesFactor</strong>)</p></li>
+<li><p><a href="model_parameters.stanreg.html">Bayesian models</a> (<strong>rstanarm</strong>, <strong>brms</strong>, <strong>MCMCglmm</strong>, <strong>blavaan</strong>, ...)</p></li>
+<li><p><a href="model_parameters.principal.html">PCA and FA</a> (<strong>psych</strong>)</p></li>
+<li><p><a href="model_parameters.lavaan.html">CFA and SEM</a> (<strong>lavaan</strong>)</p></li>
 <li><p><a href="model_parameters.kmeans.html">Cluster models</a> (k-means, ...)</p></li>
-<li><p><a href="model_parameters.rma.html">Meta-Analysis via linear (mixed) models</a> (<code>rma</code>, <code>metaplus</code>, <span class="pkg">metaBMA</span>, ...)</p></li>
-<li><p><a href="model_parameters.glht.html">Hypothesis testing</a> (<code>glht</code>, <span class="pkg">PMCMRplus</span>)</p></li>
-<li><p><a href="model_parameters.t1way.html">Robust statistical tests</a> (<span class="pkg">WRS2</span>)</p></li>
+<li><p><a href="model_parameters.rma.html">Meta-Analysis via linear (mixed) models</a> (<code>rma</code>, <code>metaplus</code>, <strong>metaBMA</strong>, ...)</p></li>
+<li><p><a href="model_parameters.glht.html">Hypothesis testing</a> (<code>glht</code>, <strong>PMCMRplus</strong>)</p></li>
+<li><p><a href="model_parameters.t1way.html">Robust statistical tests</a> (<strong>WRS2</strong>)</p></li>
 <li><p><a href="model_parameters.mira.html">Multiply imputed repeated analyses</a> (<code>mira</code>)</p></li>
 </ul></div>
 
@@ -189,7 +189,7 @@ errors and confidence intervals refer to the standardized coefficient. The
 default, <code>standardize = "refit"</code>, never standardizes categorical predictors
 (i.e. factors), which may be a different behaviour compared to other R
 packages or other software packages (like SPSS). To mimic behaviour of SPSS
-or packages such as <span class="pkg">lm.beta</span>, use <code>standardize = "basic"</code>.</p>
+or packages such as <strong>lm.beta</strong>, use <code>standardize = "basic"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="standardization-methods">Standardization Methods<a class="anchor" aria-label="anchor" href="#standardization-methods"></a></h2>
@@ -249,13 +249,7 @@ within-group variable is found to have access between-group variance.</p></li>
     <h2 id="labeling-the-degrees-of-freedom">Labeling the Degrees of Freedom<a class="anchor" aria-label="anchor" href="#labeling-the-degrees-of-freedom"></a></h2>
     
 
-<p>Throughout the <span class="pkg">parameters</span> package, we decided to label the residual
-degrees of freedom <em>df_error</em>. The reason for this is that these degrees
-of freedom not always refer to the residuals. For certain models, they refer
-to the estimate error - in a linear model these are the same, but in - for
-instance - any mixed effects model, this isn't strictly true. Hence, we
-think that <code>df_error</code> is the most generic label for these degrees of
-freedom.</p>
+<p>Throughout the **parameters</p>
     </div>
     <div class="section level2">
     <h2 id="confidence-intervals-and-approximation-of-degrees-of-freedom">Confidence intervals and approximation of degrees of freedom<a class="anchor" aria-label="anchor" href="#confidence-intervals-and-approximation-of-degrees-of-freedom"></a></h2>
