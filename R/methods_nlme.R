@@ -7,13 +7,20 @@ model_parameters.lme <- model_parameters.merMod
 
 
 #' @export
-ci.lme <- function(x, ci = .95, method = "wald", ...) {
+ci.lme <- function(x,
+                   ci = .95,
+                   vcov = NULL,
+                   vcov_args = NULL,
+                   method = "wald",
+                   ...) {
   method <- tolower(method)
   method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1", "satterthwaite"))
 
   if (method %in% c("wald", "residual", "normal")) {
-    if (!requireNamespace("nlme", quietly = TRUE)) {
-      .ci_generic(model = x, ci = ci, method = method)
+    # `vcov` argument must be computed using the `.ci_generic` function.
+    # note that this uses `dof()`, which produces slightly different results than the stock degrees of freedom
+    if (!is.null(vcov) || !requireNamespace("nlme", quietly = TRUE)) {
+      .ci_generic(model = x, ci = ci, method = method, vcov = vcov, vcov_args = vcov_args, ...)
     } else {
       out <- lapply(ci, function(i) {
         ci_list <- tryCatch(

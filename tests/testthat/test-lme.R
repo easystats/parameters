@@ -19,7 +19,7 @@ m2 <- nlme::lme(
 data(iris)
 set.seed(1234)
 iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
-m3 <- lme(
+m3 <- nlme::lme(
   fixed = Sepal.Length ~ Species * Sepal.Width + Petal.Length,
   random = ~ 1 | grp,
   data = iris
@@ -31,6 +31,22 @@ test_that("ci", {
     c(237.927995380985, 7.4146616764556),
     tolerance = 1e-4
   )
+})
+
+test_that("ci(vcov)", {
+  # vcov changes results
+  ci1 <- ci(m3)
+  ci2 <- ci(m3, vcov = "CR3")
+  expect_true(all(ci1$CI_low != ci2$CI_low))
+  # manual computation
+  b <- fixef(m3)
+  se <- standard_error(m3, vcov = "CR3")$SE
+  tstat <- b / se
+  critical_t <- abs(qt(0.025, df = dof(m3)))
+  ci_lo <- b - critical_t * se
+  ci_hi <- b + critical_t * se
+  expect_equal(ci2$CI_low, ci_lo, tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(ci2$CI_high, ci_hi, tolerance = 1e-3, ignore_attr = TRUE)
 })
 
 test_that("se", {
