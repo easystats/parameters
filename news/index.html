@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,12 @@
 <h2 class="pkg-version" data-toc-text="0.17.1" id="parameters-0171">parameters 0.17.1<a class="anchor" aria-label="anchor" href="#parameters-0171"></a></h2>
 <div class="section level3">
 <h3 id="general-0-17-1">General<a class="anchor" aria-label="anchor" href="#general-0-17-1"></a></h3>
-<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models from package <em>lme4</em> now also report confidence intervals for random effect variances by default. Formerly, CIs were only included when <code>ci_method</code> was <code>"profile"</code> or <code>"boot"</code>. The <em>merDeriv</em> package is required for this feature.</p></li>
+<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models from package <em>lme4</em> now also reports confidence intervals for random effect variances by default. Formerly, CIs were only included when <code>ci_method</code> was <code>"profile"</code> or <code>"boot"</code>. The <em>merDeriv</em> package is required for this feature.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects now also supports models from <code><a href="https://rdrr.io/r/stats/var.test.html" class="external-link">var.test()</a></code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-17-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-17-1"></a></h3>
+<ul><li>The <code>vcov</code> argument, used for computing robust standard errors, did not calculate the correct p-values and confidence intervals for models of class <code>lme</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
