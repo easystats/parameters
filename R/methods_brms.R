@@ -73,7 +73,7 @@ model_parameters.brmsfit <- function(model,
       if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
     }
 
-    params <- .add_pretty_names(params, model)
+    params <- .add_pretty_names(params, model, group_level)
 
     if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
       params <- .exponentiate_parameters(params, model, exponentiate)

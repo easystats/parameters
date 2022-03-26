@@ -287,9 +287,18 @@
 
 
 
-.add_pretty_names <- function(params, model) {
+.add_pretty_names <- function(params, model, group_level = FALSE) {
   attr(params, "model_class") <- class(model)
   cp <- insight::clean_parameters(model)
+
+  # add information about group levels
+  if (isTRUE(group_level)) {
+    re_info <- datawizard::data_rename(cp, pattern = "Cleaned_Parameter", replacement = "Level")
+    params <- datawizard::data_merge(params, re_info, join = "left")
+    params$Level[params$Effects != "random"] <- NA
+    params$Group[params$Effects != "random"] <- ""
+  }
+
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
   attr(params, "cleaned_parameters") <- stats::setNames(clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)], params$Parameter)
   attr(params, "pretty_names") <- stats::setNames(clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)], params$Parameter)
