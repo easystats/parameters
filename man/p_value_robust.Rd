@@ -2,7 +2,7 @@
 % Please edit documentation in R/robust_estimation.R
 \name{p_value_robust}
 \alias{p_value_robust}
-\title{Robust p values. Superseded by the \verb{vcov*} arguments in \code{p_value()}}
+\title{Robust p-values. Superseded by the \verb{vcov*} arguments in \code{p_value()}}
 \usage{
 p_value_robust(
   model,
@@ -48,6 +48,6 @@ further details.}
 \item{...}{Additional arguments}
 }
 \description{
-Robust p values. Superseded by the \verb{vcov*} arguments in \code{p_value()}
+Robust p-values. Superseded by the \verb{vcov*} arguments in \code{p_value()}
 }
 \keyword{internal}

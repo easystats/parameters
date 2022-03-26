@@ -87,7 +87,7 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{ci_method}{Method for computing degrees of freedom for p values
+\item{ci_method}{Method for computing degrees of freedom for p-values
 and confidence intervals (CI). See documentation for related model class
 in \code{\link[=model_parameters]{model_parameters()}}.}
 

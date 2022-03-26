@@ -30,7 +30,7 @@ standard_error_robust <- function(model,
 
 
 
-#' Robust p values. Superseded by the `vcov*` arguments in `p_value()`
+#' Robust p-values. Superseded by the `vcov*` arguments in `p_value()`
 #'
 #' @inheritParams p_value
 #' @keywords internal

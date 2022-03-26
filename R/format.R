@@ -631,7 +631,7 @@ format.parameters_sem <- function(x,
     if (isTRUE(bootstrap)) {
       msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
     } else {
-      msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
+      msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
     }
 
     # do we have random effect variances from lme4/glmmTMB?
