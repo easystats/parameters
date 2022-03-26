@@ -169,12 +169,12 @@ navbar:
   - icon: fa-github
     href: https://github.com/easystats/parameters/
     aria-label: GitHub
-  left:
-  - icon: fa-home fa-lg
-    href: index
-  - text: News
-    href: news/index
-  - text: Features
-    href: reference/index
-  - text: Articles
-    href: articles/index
+  # left:
+  # - icon: fa-home fa-lg
+  #   href: index
+  # - text: News
+  #   href: news/index
+  # - text: Features
+  #   href: reference/index
+  # - text: Articles
+  #   href: articles/index
