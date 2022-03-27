@@ -303,12 +303,12 @@
       r_grpname <- gsub("__zi", "", r_grpname)
 
       params$Level <- NA
-      params$Group <- ""
-      params$Group[rand_eff] <- r_grpname
+      params$Groupname <- ""
+      params$Groupname[rand_eff] <- r_grpname
       params$Level[rand_eff] <- r_levels
     }
 
-    params <- datawizard::data_remove(params, select = c("Groupname", "Cleaned_Parameter"))
+    params$Cleaned_Parameter <- NULL
   }
 
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]

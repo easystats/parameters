@@ -261,8 +261,10 @@ format.parameters_stan <- function(x,
       x[to_remove] <- NULL
     }
 
-    # remove redundant levels, it equals the parameter name for random effects
+    # remove redundant columns
     x$Level <- NULL
+    x$Groupname <- NULL
+
     out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE, format = format)
 
     final_table <- lapply(out, function(i) {
