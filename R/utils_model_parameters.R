@@ -293,10 +293,11 @@
 
   # add information about group levels
   if (isTRUE(group_level)) {
-    re_info <- datawizard::data_rename(cp, pattern = "Cleaned_Parameter", replacement = "Level")
-    params <- datawizard::data_merge(params, re_info, join = "left")
+    params <- datawizard::data_merge(params, cp, join = "left")
+    params$Group <- params$Groupname
     params$Level[params$Effects != "random"] <- NA
     params$Group[params$Effects != "random"] <- ""
+    params <- datawizard::data_remove(params, select = c("Groupname", "Cleaned_Parameter"))
   }
 
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
