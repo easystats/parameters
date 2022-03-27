@@ -295,10 +295,10 @@
   if (isTRUE(group_level)) {
     params <- datawizard::data_merge(params, cp, join = "left")
 
-    rand_eff <- grepl("^r_(.*)\\[(.*)\\]", params$Cleaned_Parameter)
+    rand_eff <- grepl("^r_(.*)\\[(.*)\\]", params$Parameter)
     if (any(rand_eff)) {
-      r_levels <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\2", params$Cleaned_Parameter[rand_eff])
-      r_grpname <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\1", params$Cleaned_Parameter[rand_eff])
+      r_levels <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\2", params$Parameter[rand_eff])
+      r_grpname <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\1", params$Parameter[rand_eff])
       r_levels <- gsub("__zi", "", r_levels)
       r_grpname <- gsub("__zi", "", r_grpname)
 
