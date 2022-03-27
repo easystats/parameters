@@ -117,7 +117,13 @@ model_parameters.stanreg <- function(model,
     ...
   )
 
-  attr(params, "parameter_info") <- insight::clean_parameters(model)
+  # we need to make sure that the prettyfied group names still match
+  cp <- insight::clean_parameters(model)
+  if ("Group" %in% names(params)) {
+    cp$Group <- params$Group
+  }
+
+  attr(params, "parameter_info") <- cp
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
 

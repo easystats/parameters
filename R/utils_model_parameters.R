@@ -307,7 +307,6 @@
       params$Group <- ""
       params$Group[rand_eff] <- r_grpname
       params$Level[rand_eff] <- r_levels
-      cp$Group <- params$Group
     }
 
     params$Cleaned_Parameter <- NULL
