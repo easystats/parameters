@@ -302,10 +302,12 @@
       r_levels <- gsub("__zi", "", r_levels)
       r_grpname <- gsub("__zi", "", r_grpname)
 
+      params$Groupname <- params$Group
       params$Level <- NA
-      params$Groupname <- ""
-      params$Groupname[rand_eff] <- r_grpname
+      params$Group <- ""
+      params$Group[rand_eff] <- r_grpname
       params$Level[rand_eff] <- r_levels
+      cp$Group <- params$Group
     }
 
     params$Cleaned_Parameter <- NULL
