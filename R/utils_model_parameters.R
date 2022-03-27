@@ -294,9 +294,20 @@
   # add information about group levels
   if (isTRUE(group_level)) {
     params <- datawizard::data_merge(params, cp, join = "left")
-    params$Group <- params$Groupname
-    params$Level[params$Effects != "random"] <- NA
-    params$Group[params$Effects != "random"] <- ""
+
+    rand_eff <- grepl("^r_(.*)\\[(.*)\\]", params$Cleaned_Parameter)
+    if (any(rand_eff)) {
+      r_levels <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\2", params$Cleaned_Parameter[rand_eff])
+      r_grpname <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\1", params$Cleaned_Parameter[rand_eff])
+      r_levels <- gsub("__zi", "", r_levels)
+      r_grpname <- gsub("__zi", "", r_grpname)
+
+      params$Level <- NA
+      params$Group <- ""
+      params$Group[rand_eff] <- r_grpname
+      params$Level[rand_eff] <- r_levels
+    }
+
     params <- datawizard::data_remove(params, select = c("Groupname", "Cleaned_Parameter"))
   }
 
