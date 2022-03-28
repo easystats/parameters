@@ -261,6 +261,16 @@ format.parameters_stan <- function(x,
       x[to_remove] <- NULL
     }
 
+    # restore group labels for print - this is a little hack. we want to have
+    # the columns "Group" and "Level" for random effect groups for Stan models
+    # when calling "as.data.frame()" on the returned object from "model_parameters()"
+    # However, to make printing work, the "Group" column in "cp" must be formatted
+    # in the way as returned by "insight::clean_parameters()". Since the latter
+    # function uses a different pattern for the values in "Group" than what we
+    # need for "as.data.frame()", we need to fix this here. This is currently
+    # easier than changing the behaviour of "insight::clean_parameters()".
+    x$Group <- x$Grouplabel
+
     # remove redundant columns
     x$Level <- NULL
     x$Grouplabel <- NULL

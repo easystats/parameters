@@ -328,6 +328,12 @@
       params$Group <- ""
       params$Group[rand_eff] <- r_group
       params$Level[rand_eff] <- r_levels
+
+      # fix SD/Cor
+      sd_cor <- grepl("SD/Cor:", params$Grouplabel, fixed = TRUE)
+      if (any(sd_cor)) {
+        params$Group[sd_cor] <- gsub("SD/Cor: (.*)", "\\1", params$Grouplabel)
+      }
     }
 
     params$Cleaned_Parameter <- NULL
