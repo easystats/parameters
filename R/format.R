@@ -263,7 +263,7 @@ format.parameters_stan <- function(x,
 
     # remove redundant columns
     x$Level <- NULL
-    x$Groupname <- NULL
+    x$Grouplabel <- NULL
 
     out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE, format = format)
 

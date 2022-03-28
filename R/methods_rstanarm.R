@@ -120,7 +120,8 @@ model_parameters.stanreg <- function(model,
   # we need to make sure that the prettyfied group names still match
   cp <- insight::clean_parameters(model)
   if ("Group" %in% names(params)) {
-    cp$Group <- params$Group
+    match_parameters <- match(params$Parameter, cp$Parameter)
+    cp$Group[match_parameters] <- params$Group
   }
 
   attr(params, "parameter_info") <- cp

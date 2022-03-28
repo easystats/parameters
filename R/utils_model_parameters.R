@@ -291,21 +291,42 @@
   attr(params, "model_class") <- class(model)
   cp <- insight::clean_parameters(model)
 
-  # add information about group levels
+  # add information about group levels. for Stan-models, we need to extract
+  # information about "Group" and "Level", to have the same columns as for
+  # frequentist models. This information is saved in a slightly different
+  # way in the attached attribute "parameter_info", which is used for
+  # printing, but if the information is required as data frame, we add these
+  # columns here, too.
+
   if (isTRUE(group_level)) {
     params <- datawizard::data_merge(params, cp, join = "left")
 
-    rand_eff <- grepl("^r_(.*)\\[(.*)\\]", params$Parameter)
-    if (any(rand_eff)) {
-      r_levels <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\2", params$Parameter[rand_eff])
-      r_grpname <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\1", params$Parameter[rand_eff])
-      r_levels <- gsub("__zi", "", r_levels)
-      r_grpname <- gsub("__zi", "", r_grpname)
+    # brms
+    rand_eff_brms <- grepl("^r_(.*)\\[(.*)\\]", params$Parameter)
+    # rstanarm
+    rand_eff_rstan <- grepl("^b\\[", params$Parameter)
 
-      params$Groupname <- params$Group
+    # check if we have any random effects at all...
+    if (any(rand_eff_brms) || any(rand_eff_rstan)) {
+
+      # extract information about random effects group and group levels
+      if (any(rand_eff_brms)) {
+        rand_eff <- rand_eff_brms
+        r_levels <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\2", params$Parameter[rand_eff])
+        r_group <- gsub("^r_(.*)\\[(.*),(.*)\\]", "\\1", params$Parameter[rand_eff])
+        r_levels <- gsub("__zi", "", r_levels)
+        r_group <- gsub("__zi", "", r_group)
+      } else {
+        rand_eff <- rand_eff_rstan
+        r_levels <- gsub("b\\[(.*) (.*):(.*)\\]", "\\3", params$Parameter[rand_eff])
+        r_group <- gsub("b\\[(.*) (.*):(.*)\\]", "\\2", params$Parameter[rand_eff])
+      }
+
+      # add columns to data frame
+      params$Grouplabel <- params$Group
       params$Level <- NA
       params$Group <- ""
-      params$Group[rand_eff] <- r_grpname
+      params$Group[rand_eff] <- r_group
       params$Level[rand_eff] <- r_levels
     }
 
