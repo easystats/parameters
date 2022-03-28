@@ -332,7 +332,7 @@
       # fix SD/Cor
       sd_cor <- grepl("SD/Cor:", params$Grouplabel, fixed = TRUE)
       if (any(sd_cor)) {
-        params$Group[sd_cor] <- gsub("SD/Cor: (.*)", "\\1", params$Grouplabel)
+        params$Group[sd_cor] <- gsub("SD/Cor: (.*)", "\\1", params$Grouplabel[sd_cor])
       }
     }
 
