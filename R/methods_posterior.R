@@ -1,3 +1,4 @@
+#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.draws <- function(model,
                                    centrality = "median",
@@ -13,9 +14,31 @@ model_parameters.draws <- function(model,
                                    verbose = TRUE,
                                    ...) {
   out <- .posterior_draws_to_df(model)
-  model_parameters(out, centrality = centrality, dispersion = dispersion, ci = ci,
-                   ci_method = ci_method, test = test, rope_range = rope_range,
-                   rope_ci = rope_ci, keep = keep, drop = drop, verbose = verbose, ...)
+
+  # Processing
+  params <- .extract_parameters_bayesian(
+    out,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    bf_prior = NULL,
+    diagnostic = NULL,
+    priors = FALSE,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
+    ...
+  )
+
+  attr(params, "ci") <- ci
+  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+
+  params
 }
 
 
