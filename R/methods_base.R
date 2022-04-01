@@ -1,5 +1,10 @@
+#' @rdname model_parameters.stanreg
 #' @export
-model_parameters.data.frame <- function(model, verbose = TRUE, ...) {
+model_parameters.data.frame <- function(model, as_draws = FALSE, verbose = TRUE, ...) {
+  # treat data frame as bootstraps/posteriors?
+  if (isTRUE(as_draws)) {
+    return(model_parameters.draws(model, verbose = verbose, ...))
+  }
   if (isTRUE(verbose)) {
     warning(insight::format_message("A `data.frame` object is no valid regression model object and cannot be used with `model_parameters()`."), call. = FALSE)
   }

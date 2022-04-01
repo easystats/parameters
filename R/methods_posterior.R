@@ -76,6 +76,10 @@ p_value.draws <- function(model, ...) {
   UseMethod(".posterior_draws_to_df")
 }
 
+.posterior_draws_to_df.data.frame <- function(x) {
+  x
+}
+
 .posterior_draws_to_df.draws_array <- function(x) {
   cn <- dimnames(x)$variable
   old_dim <- dim(x)
