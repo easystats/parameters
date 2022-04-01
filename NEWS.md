@@ -10,6 +10,8 @@
 * `model_parameters()` for `htest` objects now also supports models from 
   `var.test()`.
 
+* `model_parameters()` now supports `draws` objects from package *posterior*.
+
 ## Bug fixes
 
 * The `vcov` argument, used for computing robust standard errors, did not 
