@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Bayesian Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_brms.R" class="external-link"><code>R/methods_brms.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_rstanarm.R" class="external-link"><code>R/methods_rstanarm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_brms.R" class="external-link"><code>R/methods_brms.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_posterior.R" class="external-link"><code>R/methods_posterior.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>model_parameters.stanreg.Rd</code></div>
     </div>
 
@@ -73,21 +73,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for data.frame</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
-  <span class="va">model</span>,
-  centrality <span class="op">=</span> <span class="st">"median"</span>,
-  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  ci_method <span class="op">=</span> <span class="st">"hdi"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
-  rope_range <span class="op">=</span> <span class="st">"default"</span>,
-  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
-  keep <span class="op">=</span> <span class="cn">NULL</span>,
-  drop <span class="op">=</span> <span class="cn">NULL</span>,
-  parameters <span class="op">=</span> <span class="va">keep</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, as_draws <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for brmsfit</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
@@ -107,6 +93,23 @@
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   group_level <span class="op">=</span> <span class="cn">FALSE</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for draws</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  centrality <span class="op">=</span> <span class="st">"median"</span>,
+  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="st">"hdi"</span>,
+  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"rope"</span><span class="op">)</span>,
+  rope_range <span class="op">=</span> <span class="st">"default"</span>,
+  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
   keep <span class="op">=</span> <span class="cn">NULL</span>,
   drop <span class="op">=</span> <span class="cn">NULL</span>,
   parameters <span class="op">=</span> <span class="va">keep</span>,
@@ -143,7 +146,17 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
 <dd><p>Bayesian model (including SEM from <strong>blavaan</strong>. May also be
-a data frame with posterior samples.</p></dd>
+a data frame with posterior samples, however, <code>as_draws</code> must be set to
+<code>TRUE</code> (else, for data frames <code>NULL</code> is returned).</p></dd>
+<dt>as_draws</dt>
+<dd><p>Logical, if <code>TRUE</code> and <code>model</code> is of class <code>data.frame</code>,
+the data frame is treated as posterior samples and handled similar to
+Bayesian models. All arguments in <code>...</code> are passed to
+<code>model_parameters.draws()</code>.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle messages and warnings.</p></dd>
+<dt>...</dt>
+<dd><p>Currently not used.</p></dd>
 <dt>centrality</dt>
 <dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
 <dt>dispersion</dt>
@@ -176,34 +189,6 @@ the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
 <dt>rope_ci</dt>
 <dd><p>The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.</p></dd>
-<dt>keep</dt>
-<dd><p>Character containing a regular expression pattern that
-describes the parameters that should be included (for <code>keep</code>) or excluded
-(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If <code>keep</code> is a character vector, every parameter
-name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>keep</code> will be selected from the returned data frame (and vice versa,
-all parameter names matching <code>drop</code> will be excluded). Furthermore, if
-<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
-operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
-If <code>keep</code> is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
-returns multiple columns with parameter components, like in
-<code><a href="model_parameters.lavaan.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-<code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></dd>
-<dt>drop</dt>
-<dd><p>See <code>keep</code>.</p></dd>
-<dt>parameters</dt>
-<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle messages and warnings.</p></dd>
-<dt>...</dt>
-<dd><p>Currently not used.</p></dd>
 <dt>bf_prior</dt>
 <dd><p>Distribution representing a prior for the computation of
 Bayes factors / SI. Used if the input is a posterior, otherwise (in the
@@ -263,6 +248,30 @@ effects) and when <code>effects = "all"</code> or <code>effects = "random"</code
 include the parameters for each group level from random effects. If
 <code>group_level = FALSE</code> (the default), only information on SD and COR
 are shown.</p></dd>
+<dt>keep</dt>
+<dd><p>Character containing a regular expression pattern that
+describes the parameters that should be included (for <code>keep</code>) or excluded
+(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>keep</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href="model_parameters.lavaan.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+<code>$Parameter</code> column of the parameters table to get the exact parameter
+names.</p></dd>
+<dt>drop</dt>
+<dd><p>See <code>keep</code>.</p></dd>
+<dt>parameters</dt>
+<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
