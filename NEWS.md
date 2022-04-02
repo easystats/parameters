@@ -18,7 +18,8 @@
 * `model_parameters()` for `htest` objects now also supports models from 
   `var.test()`.
 
-* `model_parameters()` now supports `draws` objects from package *posterior*.
+* `model_parameters()` now supports `draws` objects from package *posterior*
+  and `deltaMethods` objects from package *car*.
 
 ## Bug fixes
 
