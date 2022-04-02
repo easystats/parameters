@@ -87,15 +87,14 @@ standard_error.default <- function(model,
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
   if (is.character(vcov) || isTRUE(dots[["robust"]])) {
-    args <- list(
+    .vcov <- insight::get_varcov(
       model,
       component = component,
-      vcov_fun = vcov,
+      vcov = vcov,
       vcov_args = vcov_args,
-      verbose = verbose
+      verbose = verbose,
+      ...
     )
-    args <- c(args, dots)
-    .vcov <- do.call(insight::get_varcov, args)
     se <- sqrt(diag(.vcov))
   }
 
