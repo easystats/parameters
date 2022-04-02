@@ -150,6 +150,15 @@ model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
 
 
 
+# survey-table --------------------
+
+#' @export
+model_parameters.svytable <- function(model, verbose = TRUE, ...) {
+  model_parameters(summary(model)$statistic, verbose = verbose, ...)
+}
+
+
+
 # ==== extract parameters ====
 
 
