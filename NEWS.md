@@ -1,6 +1,14 @@
 # parameters 0.17.1
 
-## General
+## Breaking Changes
+
+* `model_summary()` now no longer treats data frame inputs as posterior samples.
+  Rather, for data frames, now `NULL` is returned. If you want to treat a data
+  frame as posterior samples, set the new argument `as_draws = TRUE`.
+
+## Changes to functions
+
+### `model_parameters()`
 
 * `model_parameters()` for mixed models from package *lme4* now also reports
   confidence intervals for random effect variances by default. Formerly, CIs
