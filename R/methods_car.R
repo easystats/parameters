@@ -11,6 +11,20 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   # rename CI columns
   colnames(params)[ci_cols] <- c("CI_low", "CI_high")
 
+  # check if statistic is available
+  if (is.null(params$Statistic)) {
+    params <- merge(params, insight::get_statistic(model), by = "Parameter", sort = FALSE)
+  }
+
+  # check if statistic is available
+  if (is.null(params$p)) {
+    params$p <- as.vector(2 * stats::pnorm(abs(params$Statistic), lower.tail = FALSE))
+  }
+
+  # rename statistic column
+  names(params) <- gsub("Statistic", "z", names(params), fixed = TRUE)
+
+  # adjust p?
   if (!is.null(p_adjust)) {
     params <- .p_adjust(params, p_adjust, model, verbose)
   }
