@@ -2,6 +2,7 @@ if (requiet("testthat") &&
   requiet("parameters") &&
   requiet("survey")) {
 
+  library(survey)
   data(api)
   dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
   m <- svytable(~ sch.wide + stype, dclus1)
