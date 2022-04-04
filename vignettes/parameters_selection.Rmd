@@ -135,13 +135,13 @@ and should not be used in place of **theoretical** or **hypothetical** reasons
 (*i.e.*, you should have *a priori* hypotheses about which parameters of your
 model you want to focus on).
 
-## Mixed and Bayesian models
+## Mixed models
 
 For simple linear regressions as above, the selection is made using the `step()`
 function (available in base R). This performs a
 [**stepwise**](https://en.wikipedia.org/wiki/Stepwise_regression) selection.
 However, this procedures is not available for other types of models, such as
-**mixed** or **Bayesian** models.
+**mixed** models.
 
 ### Mixed models
 
