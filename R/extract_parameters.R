@@ -704,7 +704,7 @@
                                          centrality = "median",
                                          dispersion = FALSE,
                                          ci = .95,
-                                         ci_method = "hdi",
+                                         ci_method = "eti",
                                          test = c("pd", "rope"),
                                          rope_range = "default",
                                          rope_ci = 0.95,
