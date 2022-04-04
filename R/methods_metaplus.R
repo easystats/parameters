@@ -144,7 +144,7 @@ ci.metaplus <- function(x, ...) {
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = .95,
-                                         ci_method = "hdi",
+                                         ci_method = "eti",
                                          exponentiate = FALSE,
                                          include_studies = TRUE,
                                          verbose = TRUE,
@@ -152,7 +152,7 @@ model_parameters.meta_random <- function(model,
 
   # process arguments
   params <- as.data.frame(model$estimates)
-  ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
+  ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))
 
   # parameters of studies included
   study_params <- model$data
@@ -257,10 +257,10 @@ standard_error.meta_random <- function(model, ...) {
 
 
 #' @export
-ci.meta_random <- function(x, method = "hdi", ...) {
+ci.meta_random <- function(x, method = "eti", ...) {
   # process arguments
   params <- as.data.frame(x$estimates)
-  ci_method <- match.arg(method, choices = c("hdi", "eti"))
+  ci_method <- match.arg(method, choices = c("hdi", "eti", "quantile"))
 
   # extract ci-level and find ci-columns
   ci <- .meta_bma_extract_ci(params)
@@ -304,7 +304,7 @@ ci.meta_fixed <- ci.meta_random
 #' @export
 model_parameters.meta_bma <- function(model,
                                       ci = .95,
-                                      ci_method = "hdi",
+                                      ci_method = "eti",
                                       exponentiate = FALSE,
                                       include_studies = TRUE,
                                       verbose = TRUE,
@@ -312,7 +312,7 @@ model_parameters.meta_bma <- function(model,
 
   # process arguments
   params <- as.data.frame(model$estimates)
-  ci_method <- match.arg(ci_method, choices = c("hdi", "eti"))
+  ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))
 
   # parameters of studies included
   study_params <- model$meta$fixed$data

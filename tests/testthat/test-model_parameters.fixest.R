@@ -23,8 +23,14 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
   test_that("print digits model_parameters.fixest", {
     params <- model_parameters(m, summary = TRUE, verbose = FALSE)
     out <- capture.output(print(params))
+
+    # currently, a bug for fixest 10.4 on R >= 4.2
+    if (getRversion() < "4.2.0") {
+      out <- out[-9]
+    }
+
     expect_equal(
-      out[-9],
+      out,
       c(
         "# Fixed Effects",
         "",
@@ -32,7 +38,8 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
         "-----------------------------------------------------------------",
         "time      |        1.09 | 0.67 | [-0.23,  2.40] |   1.63 | 0.106 ",
         "phq4      |       -3.66 | 0.67 | [-4.98, -2.34] |  -5.45 | < .001",
-        "", "Model: QoL ~ time + phq4 (564 Observations)",
+        "",
+        "Model: QoL ~ time + phq4 (564 Observations)",
         "r2: 0.743; ar2: 0.613; wr2: 0.180; war2: 0.175"
       )
       # "Residual standard deviation: 12.365 (df = 561)"

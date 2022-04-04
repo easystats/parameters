@@ -3,8 +3,8 @@ if (requiet("testthat") &&
   requiet("survey")) {
 
   library(survey)
-  data(api)
-  dclus1 <- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+  data(api, package = "survey")
+  dclus1 <<- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
   m <- svytable(~ sch.wide + stype, dclus1)
   mp <- model_parameters(m)
   test_that("model_parameters", {

@@ -1,6 +1,6 @@
 test_that("model_parameters.data.frame", {
   data(iris)
-  expect_null(model_parameters(iris))
+  expect_warning(expect_null(model_parameters(iris)))
 })
 
 test_that("model_parameters.data.frame as draws", {

@@ -35,7 +35,7 @@ model_parameters.marginaleffects <- function(model,
   }
 
   # Move columns from original data at the beginning
-  out <- datawizard::data_relocate(out, names(ori_data), before = 1)
+  out <- datawizard::data_relocate(out, names(ori_data), before = 1, verbose = FALSE)
 
   out <- suppressWarnings(.add_model_parameters_attributes(out, model, ci, ...))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
