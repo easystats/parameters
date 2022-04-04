@@ -33,7 +33,7 @@ if (requiet("testthat") &&
     )
     expect_equal(
       params$CI_low,
-      c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.00824, 0.01884),
+      c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, -0.02744, 0.02641),
       tolerance = 1e-3
     )
     expect_equal(
@@ -67,8 +67,9 @@ if (requiet("testthat") &&
       c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.22141),
       tolerance = 1e-3
     )
-    expect_equal(params$CI_low,
-      c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.06638),
+    expect_equal(
+      params$CI_low,
+      c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, 0.06839),
       tolerance = 1e-3
     )
     expect_equal(
@@ -101,7 +102,7 @@ if (requiet("testthat") &&
       "Bohner & Schluter (2014), Exp. 2", "Overall", "tau"
     ))
     expect_equal(params$Coefficient, c(0.3806, 0.30494, 0.20554, 0.25084, 0.28768, -0.12154, -1.45792, 0.2004, 0.12107), tolerance = 1e-3)
-    expect_equal(params$CI_low, c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, -0.15334, 0.01884), tolerance = 1e-3)
+    expect_equal(params$CI_low, c(-0.00686, 0.03816, -0.16998, -0.0825, -1.32685, -0.60772, -2.94785, -0.15494, 0.01993), tolerance = 1e-3)
     expect_equal(
       colnames(params),
       c(
