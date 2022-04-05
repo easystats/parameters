@@ -3,8 +3,7 @@
 #' This function performs an automated selection of the 'best' parameters,
 #' updating and returning the "best" model.
 #'
-#' @param model A statistical model (of class `lm`, `glm`,
-#'   `merMod`, `stanreg` or `brmsfit`).
+#' @param model A statistical model (of class `lm`, `glm`, or `merMod`).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @details
@@ -21,10 +20,6 @@
 #'     the cAIC can't be improved further.
 #'   }
 #'
-#'   \subsection{Bayesian models}{
-#'     For Bayesian models, it uses the **projpred** package.
-#'   }
-#'
 #' @examples
 #' model <- lm(mpg ~ ., data = mtcars)
 #' select_parameters(model)
@@ -39,25 +34,6 @@
 #'     data = iris
 #'   )
 #'   select_parameters(model)
-#' }
-#' }
-#'
-#' \dontrun{
-#' # rstanarm -------------------------------------------
-#' if (require("rstanarm") && require("projpred")) {
-#'   model <- stan_glm(
-#'     mpg ~ .,
-#'     data = mtcars,
-#'     iter = 500, refresh = 0, verbose = FALSE
-#'   )
-#'   select_parameters(model, cross_validation = TRUE)
-#'
-#'   model <- stan_glm(
-#'     mpg ~ cyl * disp * hp,
-#'     data = mtcars,
-#'     iter = 500, refresh = 0, verbose = FALSE
-#'   )
-#'   select_parameters(model, cross_validation = FALSE)
 #' }
 #' }
 #'

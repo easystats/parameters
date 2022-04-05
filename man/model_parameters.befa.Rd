@@ -10,7 +10,7 @@
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = NULL,
   verbose = TRUE,
   ...
