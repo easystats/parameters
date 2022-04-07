@@ -257,4 +257,15 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     expect_equal(format_parameters(m5), c(`(Intercept)` = "(Intercept)", qsec = "qsec", wt = "wt", `qsec:wt` = "qsec * wt", `wt:drat` = "wt * drat"))
     expect_equal(format_parameters(m6), c(`(Intercept)` = "(Intercept)", wt = "wt", qsec = "qsec", `wt:qsec` = "wt * qsec"))
   })
+
+  test_that("format_parameters-20", {
+    data(iris)
+    levels(iris$Species) <- c("Yes (Species)", "Species.verti", "No_Specieses")
+    model <- lm(Sepal.Length ~ Species + Petal.Width, data = iris)
+    fp <- format_parameters(model)
+    expect_equal(fp, c(`(Intercept)` = "(Intercept)", SpeciesSpecies.verti = "Species [Species.verti]",
+                       SpeciesNo_Specieses = "Species [No_Specieses]", Petal.Width = "Petal Width")
+    )
+  })
+
 }
