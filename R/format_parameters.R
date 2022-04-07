@@ -182,7 +182,7 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
   # do some final formatting, like replacing underscores or dots with whitespace.
-  names <- gsub("(\\.|_)", " ", names)
+  names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", names, perl = TRUE)
 
   # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
   # etc. are removed. However, these patterns are needed in "format_table()",
