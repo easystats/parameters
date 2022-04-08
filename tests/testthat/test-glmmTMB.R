@@ -42,8 +42,8 @@ if (.runThisTest &&
   ))
 
   test_that("unsupported args", {
-    expect_message(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
-    expect_message(model_parameters(m1, vcov = "HC3"))
+    expect_warning(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
+    expect_warning(model_parameters(m1, vcov = "HC3"))
   })
 
   test_that("ci", {
