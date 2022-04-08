@@ -35,9 +35,7 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # sanity check, warn if unsupported argument is used.
-  if (verbose) {
-    .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1])
-  }
+  dot_args <- .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1], verbose = verbose)
 
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
@@ -82,21 +80,27 @@ model_parameters.glmmTMB <- function(model,
         }
       }
     } else {
-      params <- .extract_parameters_generic(
+      args <- list(
         model,
         ci = ci,
         component = component,
+        merge_by = c("Parameter", "Component"),
         standardize = standardize,
+        effects = "fixed",
         ci_method = ci_method,
         p_adjust = p_adjust,
-        wb_component = wb_component,
         keep_parameters = NULL,
         drop_parameters = NULL,
+        verbose = verbose,
+        vcov = NULL,
+        vcov_args = NULL,
         keep_component_column = component != "conditional",
         include_sigma = include_sigma,
-        summary = summary,
-        ...
+        wb_component = wb_component,
+        summary = summary
       )
+      args <- c(args, dot_args)
+      params <- do.call(".extract_parameters_generic", args)
     }
 
     # add dispersion parameter

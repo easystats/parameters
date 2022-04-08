@@ -41,6 +41,11 @@ if (.runThisTest &&
     data = Salamanders
   ))
 
+  test_that("unsupported args", {
+    expect_message(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
+    expect_message(model_parameters(m1, vcov = "HC3"))
+  })
+
   test_that("ci", {
     expect_equal(
       ci(m1)$CI_low,

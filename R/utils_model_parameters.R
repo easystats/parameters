@@ -340,10 +340,17 @@
 # the "vcov" argument - this should not be silently ignored, but rather the user
 # should be informed that robust SE are not available for that model.
 
-.check_dots <- function(dots, not_allowed, model_class) {
-  not_allowed <- not_allowed[which(not_allowed %in% dots)]
+.check_dots <- function(dots, not_allowed, model_class, verbose = TRUE) {
+  not_allowed <- not_allowed[which(not_allowed %in% names(dots))]
   if (length(not_allowed)) {
-    message(insight::format_message(sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s':", model_class),
-                                    paste(not_allowed, collapse = ",")))
+    if (verbose) {
+      warning(insight::format_message(sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s' and will be ignored:", model_class),
+                                      paste(not_allowed, collapse = ",")), call. = FALSE)
+    }
+    dots[not_allowed] <- NULL
+    if (!length(dots)) {
+      dots <- NULL
+    }
   }
+  dots
 }
