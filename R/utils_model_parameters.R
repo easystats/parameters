@@ -344,8 +344,10 @@
   not_allowed <- not_allowed[which(not_allowed %in% names(dots))]
   if (length(not_allowed)) {
     if (verbose) {
-      warning(insight::format_message(sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s' and will be ignored:", model_class),
-                                      paste(not_allowed, collapse = ",")), call. = FALSE)
+      warning(insight::format_message(
+        sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s' and will be ignored:", model_class),
+        paste0("\"", not_allowed, "\"", collapse = ", "),
+        "Please run `model_parameters()` again without specifying the above mentioned arguments to obtain expected results."), call. = FALSE)
     }
     dots[not_allowed] <- NULL
     if (!length(dots)) {
