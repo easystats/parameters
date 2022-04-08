@@ -1,3 +1,6 @@
+# This function add meta-information to the returned parameters data frame,
+# usually used for printing etc.
+
 #' @keywords internal
 .add_model_parameters_attributes <- function(params,
                                              model,
@@ -16,20 +19,15 @@
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   # model info
-  info <- tryCatch(
-    {
-      suppressWarnings(insight::model_info(model, verbose = FALSE))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  info <- tryCatch(suppressWarnings(insight::model_info(model, verbose = FALSE)),
+                   error = function(e) NULL)
 
-  ## TODO remove is.list() when insight 0.8.3 on CRAN
-  if (is.null(info) || !is.list(info)) {
+  if (is.null(info)) {
     info <- list(family = "unknown", link_function = "unknown")
   }
 
+  # for simplicity, we just use the model information from the first formula
+  # when we have multivariate response models...
   if (!is.null(info) && insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
     info <- info[[1]]
   }
@@ -84,7 +82,7 @@
   # Models for which titles should be removed -
   # here we add exceptions for objects that should
   # not have a table headline
-  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl"))) {
+  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
     attr(params, "title") <- ""
   }
 
@@ -103,14 +101,8 @@
 
 
   # model formula
-  model_formula <- tryCatch(
-    {
-      insight::safe_deparse(insight::find_formula(model)$conditional)
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  model_formula <- tryCatch(insight::safe_deparse(insight::find_formula(model)$conditional),
+                            error = function(e) NULL)
   attr(params, "model_formula") <- model_formula
 
 
@@ -132,14 +124,8 @@
   # special handling for meta analysis. we need additional
   # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
-    rma_data <- tryCatch(
-      {
-        insight::get_data(model, verbose = FALSE)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
+                         error = function(e) NULL)
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
@@ -148,14 +134,8 @@
   # special handling for meta analysis again, but these objects save the
   # inverse weighting information in a different column.
   if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
-    rma_data <- tryCatch(
-      {
-        insight::get_data(model, verbose = FALSE)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
+                         error = function(e) NULL)
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / params$SE^2
   }
@@ -255,12 +235,6 @@
 }
 
 
-.all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
-}
-
-
-
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
   if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear && identical(exponentiate, "nongaussian")) {
@@ -358,4 +332,18 @@
   }
 
   out
+}
+
+
+
+# checks for valid inputs in model_parameters(). E.g., some models don't support
+# the "vcov" argument - this should not be silently ignored, but rather the user
+# should be informed that robust SE are not available for that model.
+
+.check_dots <- function(dots, not_allowed, model_class) {
+  not_allowed <- not_allowed[which(not_allowed %in% dots)]
+  if (length(not_allowed)) {
+    message(insight::format_message(sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s':", model_class),
+                                    paste(not_allowed, collapse = ",")))
+  }
 }

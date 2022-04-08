@@ -34,6 +34,11 @@ model_parameters.glmmTMB <- function(model,
     ci_method <- df_method
   }
 
+  # sanity check, warn if unsupported argument is used.
+  if (verbose) {
+    .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1])
+  }
+
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
 

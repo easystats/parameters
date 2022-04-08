@@ -21,11 +21,17 @@
 * `model_parameters()` now supports `draws` objects from package *posterior*
   and `deltaMethods` objects from package *car*.
 
+* `model_parameters()` now checks arguments and informs the user if specific
+  given arguments are not supported for that model class (e.g., `"vcov"` is 
+  currently not supported for models of class *glmmTMB*).
+
 ## Bug fixes
 
 * The `vcov` argument, used for computing robust standard errors, did not 
   calculate the correct p-values and confidence intervals for models of class
   `lme`.
+
+* `pool_parameters()` did not save all relevant model information as attributes.
 
 # parameters 0.17.0
 

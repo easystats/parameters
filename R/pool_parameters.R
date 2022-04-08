@@ -237,14 +237,14 @@ pool_parameters <- function(x,
   attr(pooled_params, "exponentiate") <- exponentiate
   attr(pooled_params, "pretty_names") <- pretty_names
   attr(pooled_params, "verbose") <- verbose
-  attr(pooled_params, "ordinal_model") <- attributes(pooled_params)$ordinal_model
-  attr(pooled_params, "model_class") <- attributes(pooled_params)$model_class
-  attr(pooled_params, "bootstrap") <- attributes(pooled_params)$bootstrap
-  attr(pooled_params, "iterations") <- attributes(pooled_params)$iterations
-  attr(pooled_params, "df_method") <- attributes(pooled_params)$df_method
-  attr(pooled_params, "digits") <- attributes(pooled_params)$digits
-  attr(pooled_params, "ci_digits") <- attributes(pooled_params)$ci_digits
-  attr(pooled_params, "p_digits") <- attributes(pooled_params)$p_digits
+  attr(pooled_params, "ordinal_model") <- attributes(model_params)$ordinal_model
+  attr(pooled_params, "model_class") <- attributes(model_params)$model_class
+  attr(pooled_params, "bootstrap") <- attributes(model_params)$bootstrap
+  attr(pooled_params, "iterations") <- attributes(model_params)$iterations
+  attr(pooled_params, "ci_method") <- attributes(model_params)$ci_method
+  attr(pooled_params, "digits") <- attributes(model_params)$digits
+  attr(pooled_params, "ci_digits") <- attributes(model_params)$ci_digits
+  attr(pooled_params, "p_digits") <- attributes(model_params)$p_digits
   # column name for coefficients
   coef_col <- .find_coefficient_type(info, exponentiate)
   attr(pooled_params, "coefficient_name") <- coef_col

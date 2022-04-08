@@ -142,6 +142,17 @@
 }
 
 
+# The coefficient column in the printed output is renamed, based on the model.
+# But for instance, for random effects, however, which are on a different scale,
+# we want a different name for this column. Since print.parameters_model() splits
+# components into different tables, we change the column name for those "tables"
+# that contain the random effects or zero-inflated parameters
+
+.all_coefficient_types <- function() {
+  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
+}
+
+
 
 
 # helper to format the header / subheader of different model components --------------
