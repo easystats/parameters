@@ -8,34 +8,6 @@
 
 
 #' Safe transformation from factor/character to numeric
-#' @keywords internal
-.factor_to_numeric <- function(x, lowest = NULL) {
-  if (is.numeric(x)) {
-    return(x)
-  }
-  if (is.logical(x)) {
-    return(as.numeric(x))
-  }
-
-  if (anyNA(suppressWarnings(as.numeric(as.character(stats::na.omit(x)))))) {
-    if (is.character(x)) {
-      x <- as.factor(x)
-    }
-    x <- droplevels(x)
-    levels(x) <- 1:nlevels(x)
-  }
-
-  out <- as.numeric(as.character(x))
-  if (!is.null(lowest)) {
-    difference <- min(out) - lowest
-    out <- out - difference
-  }
-  out
-}
-
-
-
-#' Safe transformation from factor/character to numeric
 #'
 #' @keywords internal
 .factor_to_dummy <- function(x) {
