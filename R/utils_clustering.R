@@ -41,7 +41,7 @@
     # ordered factors to numeric
     factors <- sapply(x, is.ordered)
     if (any(factors)) {
-      x[factors] <- sapply(x[factors], datawizard::convert_data_to_numeric)
+      x[factors] <- sapply(x[factors], datawizard::convert_data_to_numeric, dummy_factors = FALSE, preserve_levels = TRUE)
     }
 
     # character and factors to dummies
