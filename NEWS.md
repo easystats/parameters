@@ -2,7 +2,7 @@
 
 ## Breaking Changes
 
-* `model_summary()` now no longer treats data frame inputs as posterior samples.
+* `model_parameters()` now no longer treats data frame inputs as posterior samples.
   Rather, for data frames, now `NULL` is returned. If you want to treat a data
   frame as posterior samples, set the new argument `as_draws = TRUE`.
 
