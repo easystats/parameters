@@ -29,6 +29,12 @@ A sorted data frame or original object.
 \description{
 Sort parameters by coefficient values
 }
+\details{
+The column containing model parameter estimates is called \code{Coefficient} in
+\emph{easystats} convention and \code{estimate} in \emph{broom} convention. Therefore, if
+you enter a data frame with a different naming convention for column
+containing the said estimates, it will produce an error.
+}
 \examples{
 # creating object to sort (can also be a regular data frame)
 mod <- model_parameters(stats::lm(wt ~ am * cyl, data = mtcars))

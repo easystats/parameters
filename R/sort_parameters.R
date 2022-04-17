@@ -31,6 +31,13 @@ sort_parameters <- function(x, ...) {
 #'   [easystats-project](https://easystats.github.io/easystats/), or on
 #'   \pkg{broom}'s naming conventions.
 #'
+#' @details
+#'
+#' The column containing model parameter estimates is called `Coefficient` in
+#' *easystats* convention and `estimate` in *broom* convention. Therefore, if
+#' you enter a data frame with a different naming convention for column
+#' containing the said estimates, it will produce an error.
+#'
 #' @export
 sort_parameters.default <- function(x, sort = "none", style = "easystats", ...) {
   sort <- match.arg(tolower(sort), choices = c("none", "ascending", "descending"))
@@ -46,7 +53,9 @@ sort_parameters.default <- function(x, sort = "none", style = "easystats", ...) 
       "ascending" = order(x$Coefficient, decreasing = FALSE),
       "descending" = order(x$Coefficient, decreasing = TRUE)
     )
-  } else {
+  }
+
+  if (style == "broom") {
     new_row_order <- switch(sort,
       "ascending" = order(x$estimate, decreasing = FALSE),
       "descending" = order(x$estimate, decreasing = TRUE)
