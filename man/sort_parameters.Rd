@@ -12,6 +12,8 @@ sort_parameters(x, ...)
 \arguments{
 \item{x}{A data frame or a \code{parameters_model} object.}
 
+\item{...}{Arguments passed to or from other methods.}
+
 \item{sort}{If \code{"none"} (default) do not sort, \code{"ascending"} sort by
 increasing coefficient value, or \code{"descending"} sort by decreasing
 coefficient value.}
@@ -28,7 +30,7 @@ A sorted data frame or original object.
 Sort parameters by coefficient values
 }
 \examples{
-
+# creating object to sort (can also be a regular data frame)
 mod <- model_parameters(stats::lm(wt ~ am * cyl, data = mtcars))
 
 # original output
