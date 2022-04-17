@@ -39,6 +39,7 @@ degrees_of_freedom.bfsl <- function(model, method = "residual", ...) {
   if (is.null(method)) {
     method <- "wald"
   }
+
   method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
 
   if (method %in% c("wald", "residual", "fit")) {

@@ -49,6 +49,7 @@ reference:
   - pool_parameters
   - random_parameters
   - print.parameters_model
+  - sort_parameters
 
 - title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
   contents:
