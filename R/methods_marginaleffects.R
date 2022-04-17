@@ -13,8 +13,9 @@ model_parameters.marginaleffects <- function(model,
 
   # Convert to dataframe and rename some columns
   out <- datawizard::data_rename(as.data.frame(model),
-                                 pattern = c("type", "term", "dydx", "std.error"),
-                                 replacement = c("Type", "Term", "Coefficient", "SE"))
+    pattern = c("type", "term", "dydx", "std.error"),
+    replacement = c("Type", "Term", "Coefficient", "SE")
+  )
 
 
   if ("posterior_draws" %in% names(attributes(model))) {
@@ -24,7 +25,6 @@ model_parameters.marginaleffects <- function(model,
     draws <- data.frame(t(attributes(model)$posterior_draws))
     draws <- bayestestR::describe_posterior(draws, ci = ci, ...)
     out <- cbind(out, datawizard::data_remove(draws, "Parameter"))
-
   } else {
     # ---- if Frequentist ----
     # Add CI

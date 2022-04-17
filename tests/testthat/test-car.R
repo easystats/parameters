@@ -1,10 +1,9 @@
 if (requiet("testthat") &&
   requiet("parameters") &&
   requiet("car")) {
-
   data(mtcars)
   mod <- lm(mpg ~ disp + hp, mtcars)
-  x <- deltaMethod(mod, 'disp + hp', rhs = 0)
+  x <- deltaMethod(mod, "disp + hp", rhs = 0)
 
   test_that("ci", {
     expect_equal(ci(x)$CI_low, x$`2.5 %`, tolerance = 1e-3)
@@ -25,7 +24,7 @@ if (requiet("testthat") &&
   })
 
 
-  x <- deltaMethod(mod, 'disp + hp', rhs = 0, level = .8)
+  x <- deltaMethod(mod, "disp + hp", rhs = 0, level = .8)
 
   test_that("ci", {
     expect_equal(ci(x)$CI_low, x$`10 %`, tolerance = 1e-3)

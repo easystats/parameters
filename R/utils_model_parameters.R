@@ -20,7 +20,8 @@
 
   # model info
   info <- tryCatch(suppressWarnings(insight::model_info(model, verbose = FALSE)),
-                   error = function(e) NULL)
+    error = function(e) NULL
+  )
 
   if (is.null(info)) {
     info <- list(family = "unknown", link_function = "unknown")
@@ -102,7 +103,8 @@
 
   # model formula
   model_formula <- tryCatch(insight::safe_deparse(insight::find_formula(model)$conditional),
-                            error = function(e) NULL)
+    error = function(e) NULL
+  )
   attr(params, "model_formula") <- model_formula
 
 
@@ -125,7 +127,8 @@
   # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
     rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
-                         error = function(e) NULL)
+      error = function(e) NULL
+    )
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
@@ -135,7 +138,8 @@
   # inverse weighting information in a different column.
   if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
     rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
-                         error = function(e) NULL)
+      error = function(e) NULL
+    )
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / params$SE^2
   }
@@ -347,7 +351,8 @@
       warning(insight::format_message(
         sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s' and will be ignored:", model_class),
         paste0("\"", not_allowed, "\"", collapse = ", "),
-        "Please run `model_parameters()` again without specifying the above mentioned arguments to obtain expected results."), call. = FALSE)
+        "Please run `model_parameters()` again without specifying the above mentioned arguments to obtain expected results."
+      ), call. = FALSE)
     }
     dots[not_allowed] <- NULL
     if (!length(dots)) {
