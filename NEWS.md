@@ -6,6 +6,10 @@
   Rather, for data frames, now `NULL` is returned. If you want to treat a data
   frame as posterior samples, set the new argument `as_draws = TRUE`.
 
+## New functions
+
+* `sort_parameters()` to sort model parameters by coefficient values.
+
 ## Changes to functions
 
 ### `model_parameters()`
