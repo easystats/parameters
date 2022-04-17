@@ -7,7 +7,7 @@
 \usage{
 sort_parameters(x, ...)
 
-\method{sort_parameters}{default}(x, sort = "none", style = "easystats", ...)
+\method{sort_parameters}{default}(x, sort = "none", column = "Coefficient", ...)
 }
 \arguments{
 \item{x}{A data frame or a \code{parameters_model} object.}
@@ -18,22 +18,15 @@ sort_parameters(x, ...)
 increasing coefficient value, or \code{"descending"} sort by decreasing
 coefficient value.}
 
-\item{style}{Naming conventions the given object follows. This can either be
-based on the naming conventions from the
-\href{https://easystats.github.io/easystats/}{easystats-project}, or on
-\pkg{broom}'s naming conventions.}
+\item{column}{The column containing model parameter estimates. This will be
+\code{"Coefficient"} (default) in \emph{easystats} packages, \code{"estimate"} in \emph{broom}
+package, etc.}
 }
 \value{
 A sorted data frame or original object.
 }
 \description{
 Sort parameters by coefficient values
-}
-\details{
-The column containing model parameter estimates is called \code{Coefficient} in
-\emph{easystats} convention and \code{estimate} in \emph{broom} convention. Therefore, if
-you enter a data frame with a different naming convention for column
-containing the said estimates, it will produce an error.
 }
 \examples{
 # creating object to sort (can also be a regular data frame)

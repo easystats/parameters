@@ -48,14 +48,14 @@ test_that("sort_parameters returns original object when no sorting - broom", {
 
 test_that("sort_parameters returns sorted object when necessary - broom", {
   expect_equal(
-    sort_parameters(df, sort = "ascending", style = "broom")$estimate,
+    sort_parameters(df, sort = "ascending", column = "estimate")$estimate,
     sort(df$estimate)
   )
 
   expect_equal(
-    sort_parameters(df, sort = "descending", style = "broom")$estimate,
+    sort_parameters(df, sort = "descending", column = "estimate")$estimate,
     sort(df$estimate, decreasing = TRUE)
   )
 
-  expect_s3_class(sort_parameters(df, sort = "ascending", style = "broom"), "tbl_df")
+  expect_s3_class(sort_parameters(df, sort = "ascending", column = "estimate"), "tbl_df")
 })

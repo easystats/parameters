@@ -26,41 +26,23 @@ sort_parameters <- function(x, ...) {
 #' @param sort If `"none"` (default) do not sort, `"ascending"` sort by
 #'   increasing coefficient value, or `"descending"` sort by decreasing
 #'   coefficient value.
-#' @param style Naming conventions the given object follows. This can either be
-#'   based on the naming conventions from the
-#'   [easystats-project](https://easystats.github.io/easystats/), or on
-#'   \pkg{broom}'s naming conventions.
-#'
-#' @details
-#'
-#' The column containing model parameter estimates is called `Coefficient` in
-#' *easystats* convention and `estimate` in *broom* convention. Therefore, if
-#' you enter a data frame with a different naming convention for column
-#' containing the said estimates, it will produce an error.
+#' @param column The column containing model parameter estimates. This will be
+#'   `"Coefficient"` (default) in *easystats* packages, `"estimate"` in *broom*
+#'   package, etc.
 #'
 #' @export
-sort_parameters.default <- function(x, sort = "none", style = "easystats", ...) {
+sort_parameters.default <- function(x, sort = "none", column = "Coefficient", ...) {
   sort <- match.arg(tolower(sort), choices = c("none", "ascending", "descending"))
-  style <- match.arg(tolower(style), choices = c("easystats", "broom"))
 
   if (sort == "none") {
     return(x)
   }
 
   # new row indices to use for sorting
-  if (style == "easystats") {
     new_row_order <- switch(sort,
-      "ascending" = order(x$Coefficient, decreasing = FALSE),
-      "descending" = order(x$Coefficient, decreasing = TRUE)
+      "ascending" = order(x[[column]], decreasing = FALSE),
+      "descending" = order(x[[column]], decreasing = TRUE)
     )
-  }
-
-  if (style == "broom") {
-    new_row_order <- switch(sort,
-      "ascending" = order(x$estimate, decreasing = FALSE),
-      "descending" = order(x$estimate, decreasing = TRUE)
-    )
-  }
 
   x[new_row_order, ]
 }
