@@ -32,7 +32,7 @@ sort_parameters <- function(x, ...) {
 #'   \pkg{broom}'s naming conventions.
 #'
 #' @export
-sort_parameters.default <- function(x, sort = "none", style = "easystats") {
+sort_parameters.default <- function(x, sort = "none", style = "easystats", ...) {
   sort <- match.arg(tolower(sort), choices = c("none", "ascending", "descending"))
   style <- match.arg(tolower(style), choices = c("easystats", "broom"))
 

@@ -7,7 +7,7 @@
 \usage{
 sort_parameters(x, ...)
 
-\method{sort_parameters}{default}(x, sort = "none", style = "easystats")
+\method{sort_parameters}{default}(x, sort = "none", style = "easystats", ...)
 }
 \arguments{
 \item{x}{A data frame or a \code{parameters_model} object.}
