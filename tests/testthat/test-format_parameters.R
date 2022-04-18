@@ -263,9 +263,9 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     levels(iris$Species) <- c("Yes (Species)", "Species.verti", "No_Specieses")
     model <- lm(Sepal.Length ~ Species + Petal.Width, data = iris)
     fp <- format_parameters(model)
-    expect_equal(fp, c(`(Intercept)` = "(Intercept)", SpeciesSpecies.verti = "Species [Species.verti]",
-                       SpeciesNo_Specieses = "Species [No_Specieses]", Petal.Width = "Petal Width")
-    )
+    expect_equal(fp, c(
+      `(Intercept)` = "(Intercept)", SpeciesSpecies.verti = "Species [Species.verti]",
+      SpeciesNo_Specieses = "Species [No_Specieses]", Petal.Width = "Petal Width"
+    ))
   })
-
 }

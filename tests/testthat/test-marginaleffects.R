@@ -1,5 +1,4 @@
 if (requiet("testthat") && requiet("parameters") && requiet("marginaleffects") && requiet("rstanarm")) {
-
   test_that("model_parameters - marginaleffects (frequentist)", {
 
     # Frequentist

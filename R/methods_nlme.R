@@ -68,7 +68,7 @@ p_value.lme <- function(model,
     p <- cs[, 5]
     param <- rownames(cs)
 
-  # robust standard errors or custom varcov
+    # robust standard errors or custom varcov
   } else {
     b <- insight::get_parameters(model)
     se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
