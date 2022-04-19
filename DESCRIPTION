@@ -81,9 +81,6 @@ Imports:
     methods,
     stats,
     utils
-Remotes:
-    easystats/insight,
-    easystats/datawizard
 Suggests:
     AER,
     afex,
@@ -195,3 +192,7 @@ Language: en-US
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+Remotes:
+    easystats/insight,
+    easystats/bayestestR,
+    easystats/datawizard
