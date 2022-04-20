@@ -91,6 +91,7 @@
 <h3 id="bug-fixes-0-17-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-17-1"></a></h3>
 <ul><li><p>The <code>vcov</code> argument, used for computing robust standard errors, did not calculate the correct p-values and confidence intervals for models of class <code>lme</code>.</p></li>
 <li><p><code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> did not save all relevant model information as attributes.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models from package <em>glmmTMB</em> did not work when <code>exponentiate = TRUE</code> and model contained a dispersion parameter that was different to sigma. Furthermore, exponentiating falsely exponentiated the dispersion parameter.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -332,99 +333,6 @@
 <h3 id="bug-fixes-0-12-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-12-0"></a></h3>
 <ul><li><p>Fixed edge case when formatting parameters from polynomial terms with many degrees.</p></li>
 <li><p>Fixed issue with random sampling and dropped factor levels in <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code>.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.11.0" id="parameters-0110">parameters 0.11.0<a class="anchor" aria-label="anchor" href="#parameters-0110"></a></h2><p class="text-muted">CRAN release: 2021-01-15</p>
-<div class="section level3">
-<h3 id="new-supported-model-classes-0-11-0">New supported model classes<a class="anchor" aria-label="anchor" href="#new-supported-model-classes-0-11-0"></a></h3>
-<ul><li>
-<code>coxr</code> (<em>coxrobust</em>), <code>coeftest</code> (<em>lmtest</em>), <code>ivfixed</code> (<em>ivfixed</em>), <code>ivprobit</code> (<em>ivprobit</em>), <code>riskRegression</code> (<em>riskRegression</em>), <code>fitdistr</code> (<em>MASS</em>), <code>yuen</code>, <code>t1way</code>, <code>onesampb</code>, <code>mcp1</code> and <code>mcp2</code> (<em>WRS2</em>), <code>Anova.mlm</code> (<em>car</em>), <code>rqs</code> (<em>quantreg</em>), <code>lmodel2</code> (<em>lmodel2</em>), <code>summary.lm</code>, <code>PMCMR</code>, <code>osrt</code> and <code>trendPMCMR</code> (<em>PMCMRplus</em>), <code>bamlss</code> (<em>bamlss</em>).</li>
-</ul></div>
-<div class="section level3">
-<h3 id="new-functions-0-11-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-11-0"></a></h3>
-<div class="section level4">
-<h4 id="printing-and-table-formatting-0-11-0">Printing and table Formatting<a class="anchor" aria-label="anchor" href="#printing-and-table-formatting-0-11-0"></a></h4>
-<ul><li>
-<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> as an alias for <code>display(format = "html")</code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered HTML markdown tables.</li>
-</ul></div>
-</div>
-<div class="section level3">
-<h3 id="changes-to-functions-0-11-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-11-0"></a></h3>
-<ul><li><p>Added more effect size measures to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for anova objects gains a <code>power</code> argument, to calculate the power for each parameter.</p></li>
-<li><p><code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for models from <em>lme4</em> and <em>glmmTMB</em> can now computed profiled confidence intervals, using <code>method = "profile"</code>. Consequently, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with <code>df_method = "profile"</code> also computes profiled confidence intervals. For models of class <code>glmmTMB</code>, option <code>"uniroot"</code> is also available.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="bug-fixes-0-11-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-11-0"></a></h3>
-<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests when <code>standardize_d = TRUE</code>, did not return columns for the group-specific means.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> for <code><a href="https://lrberge.github.io/fixest/reference/feols.html" class="external-link">fixest::feols()</a></code>.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer()</a></code> models with p-values that were calculated with <code>df_method = "ml1"</code> or <code>df_method = "betwithin"</code>.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for multinomial models when response was a character vector (and no factor).</p></li>
-<li><p>Fixed issue in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> for model-parameters objects from Bayesian models.</p></li>
-<li><p>Fixed issues with printing of model parameters for multivariate response models from <em>brms</em>.</p></li>
-<li><p>Fixed issue with paired t-tests and <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.10.1" id="parameters-0101">parameters 0.10.1<a class="anchor" aria-label="anchor" href="#parameters-0101"></a></h2><p class="text-muted">CRAN release: 2020-12-08</p>
-<div class="section level3">
-<h3 id="new-functions-0-10-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-10-1"></a></h3>
-<ul><li>
-<code><a href="../reference/format_p_adjust.html">format_p_adjust()</a></code>, to create pretty names for p-adjustment methods.</li>
-</ul></div>
-<div class="section level3">
-<h3 id="bug-fixes-0-10-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-1"></a></h3>
-<ul><li><p>Fixed breaking code / failing tests due to latest <em>effectsize</em> update.</p></li>
-<li><p>Fixed issue with <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for models of class <code>mlm</code>.</p></li>
-<li><p>Undocumented arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> worked for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>, but not when directly called inside <code><a href="../reference/model_parameters.html">model_parameters()</a></code>. Now, <code>model_parameters(model, digits = 5, ci_digits = 8)</code> works again.</p></li>
-<li><p>Fixed some minor printing-issues.</p></li>
-</ul></div>
-</div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.10.0" id="parameters-0100">parameters 0.10.0<a class="anchor" aria-label="anchor" href="#parameters-0100"></a></h2><p class="text-muted">CRAN release: 2020-12-01</p>
-<div class="section level3">
-<h3 id="breaking-changes-0-10-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-10-0"></a></h3>
-<ul><li><p>The default-method for effect sizes in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (i.e. when arguments <code>omega_squared</code>, <code>eta_squared</code> or <code>epsilon_squared</code> are set to <code>TRUE</code>) is now <code>"partial"</code>, as initially intended.</p></li>
-<li><p>Column names for degrees of freedom were revised. <code>"df_residual"</code> was replaced by the more generic <code>"df_error"</code>. Moreover, models of class <code>htest</code> now also have the column name <code>"df_error"</code> and no longer <code>"df"</code> (where applicable).</p></li>
-<li><p>Some re-exports for functions that were moved to <em>insight</em> longer ago, were now removed.</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="new-supported-model-classes-0-10-0">New supported model classes<a class="anchor" aria-label="anchor" href="#new-supported-model-classes-0-10-0"></a></h3>
-<ul><li><p><code>Glm</code> (<em>rms</em>), <code>mediate</code> (<em>mediation</em>).</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> supports <code>Gam</code> models (<em>gam</em>), <code>ridgelm</code> (<em>MASS</em>), <code>htest</code> objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html" class="external-link">oneway.test()</a></code>, <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>, <code><a href="https://rdrr.io/r/stats/prop.test.html" class="external-link">prop.test()</a></code>, <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code> and <code>pairwise.htest</code> objects, <code>mcmc.list</code> (e.g. from <em>bayesGARCH</em>).</p></li>
-</ul></div>
-<div class="section level3">
-<h3 id="new-functions-0-10-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-10-0"></a></h3>
-<div class="section level4">
-<h4 id="printing-and-table-formatting-0-10-0">Printing and table Formatting<a class="anchor" aria-label="anchor" href="#printing-and-table-formatting-0-10-0"></a></h4>
-<ul><li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, to format output from package-functions into different formats.</p></li>
-<li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> as an alias for <code>display(format = "markdown")</code>. This allows to print tabular outputs from data frames (as returned by most functions in <em>parameters</em>) into nicely rendered markdown tables.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code>, to create a “pretty data frame” with nicer column names and formatted values. This is one of the worker-functions behind <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>.</p></li>
-</ul></div>
-</div>
-<div class="section level3">
-<h3 id="changes-to-functions-0-10-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-10-0"></a></h3>
-<div class="section level4">
-<h4 id="model_parameters-0-10-0"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-10-0"></a></h4>
-<ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for Anova-models (of class <code>aov</code>, <code>anova</code> etc.) gains a <code>ci</code>-argument, to add confidence intervals to effect size parameters.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code> objects gains a <code>cramers_v</code> and <code>phi</code> argument, to compute effect size parameters for objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>, and a <code>standardized_D</code> argument, to compute effect size parameters for objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>metafor</code>-models is more stable when called from inside functions.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>metaBMA</em>-models now includes prior information for the meta-parameters.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for meta-analysis-models gains a <code>include_studies</code>-argument, to include or remove studies from the output.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for gam-models now includes the residual df for smooth terms, and no longer the reference df.</p></li>
-<li><p>Slightly revised and improved the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
-</ul></div>
-<div class="section level4">
-<h4 id="other-functions-0-10-0">Other functions<a class="anchor" aria-label="anchor" href="#other-functions-0-10-0"></a></h4>
-<ul><li><p><code><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution()</a></code> now includes the name of the centrality index in the <code>CI</code>-column, when <code>centrality = "all"</code>.</p></li>
-<li><p><code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> gains a <code>details</code>-argument. For mixed models, and if <code>details = TRUE</code>, random effect variances will also be pooled.</p></li>
-</ul></div>
-</div>
-<div class="section level3">
-<h3 id="bug-fixes-0-10-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-10-0"></a></h3>
-<ul><li><p>Fixed issue in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <em>lme</em> models with non-positive definite variance-covariance.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/pkg/nnet/man/multinom.html" class="external-link">nnet::multinom()</a></code>, <code><a href="https://rdrr.io/pkg/lqmm/man/lqm.html" class="external-link">lqmm::lqm()</a></code>, <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code>, and <code>margins::margins()</code> models, and models from package <em>blme</em>.</p></li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
