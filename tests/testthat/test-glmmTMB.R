@@ -385,6 +385,28 @@ if (.runThisTest &&
   })
 
 
+  # exponentiate for dispersion = sigma parameters -----------------------
+
+  set.seed(101)
+  ## rbeta() function parameterized by mean and shape
+  my_rbeta <- function(n, mu, shape0) {
+    rbeta(n, shape1 = mu * shape0, shape2 = (1 - mu) * shape0)
+  }
+  n <- 100
+  ng <- 10
+  dd <- data.frame(x = rnorm(n), f = factor(rep(1:(n / ng), ng)))
+  dd <- transform(dd, y = my_rbeta(n, mu = plogis(-1 + 2 * x + rnorm(ng)[f]), shape0 = 5))
+
+  m_exp <- glmmTMB(y ~ x + (1 | f), family = "beta_family", dd)
+
+  test_that("model_parameters, exp, glmmTMB", {
+    mp1 <- model_parameters(m_exp, exponentiate = TRUE)
+    mp2 <- model_parameters(m_exp, exponentiate = FALSE)
+    expect_equal(mp1$Coefficient, c(0.49271, 6.75824, 260.58836, 1.14541, 5.56294), tolerance = 1e-3)
+    expect_equal(mp1$Coefficient[3:4], mp2$Coefficient[3:4], tolerance = 1e-3)
+  })
+
+
   # proper printing ---------------------
 
   if (win_os) {

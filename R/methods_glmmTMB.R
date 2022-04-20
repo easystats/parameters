@@ -152,10 +152,11 @@ model_parameters.glmmTMB <- function(model,
         resid <- which(params_variance$Group == "Residual")
         # check if we have dispersion parameter, and either no sigma
         # or sigma equals dispersion
-        if (length(disp) && length(resid) && all.equal(params_variance$Coefficient[resid],
-          params$Coefficient[disp],
-          tolerance = 1e-5
-        )) {
+        if (length(disp) > 0 &&
+            length(resid) > 0 &&
+            isTRUE(all.equal(params_variance$Coefficient[resid],
+                             params$Coefficient[disp],
+                             tolerance = 1e-5))) {
           params <- params[-disp, ]
         }
       }

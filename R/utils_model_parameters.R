@@ -248,15 +248,16 @@
   if (any(columns)) {
     if (inherits(model, "mvord")) {
       rows <- params$Component != "correlation"
-      params[rows, columns] <- exp(params[rows, columns])
-      if (all(c("Coefficient", "SE") %in% names(params))) {
-        params$SE[rows] <- params$Coefficient[rows] * params$SE[rows]
-      }
     } else {
-      params[columns] <- exp(params[columns])
-      if (all(c("Coefficient", "SE") %in% names(params))) {
-        params$SE <- params$Coefficient * params$SE
+      if (!is.null(params$Component)) {
+        rows <- !tolower(params$Component) %in% c("dispersion", "residual")
+      } else {
+        rows <- 1:nrow(params)
       }
+    }
+    params[rows, columns] <- exp(params[rows, columns])
+    if (all(c("Coefficient", "SE") %in% names(params))) {
+      params$SE[rows] <- params$Coefficient[rows] * params$SE[rows]
     }
   }
   params
