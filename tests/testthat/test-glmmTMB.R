@@ -402,8 +402,15 @@ if (.runThisTest &&
   test_that("model_parameters, exp, glmmTMB", {
     mp1 <- model_parameters(m_exp, exponentiate = TRUE)
     mp2 <- model_parameters(m_exp, exponentiate = FALSE)
-    expect_equal(mp1$Coefficient, c(0.49271, 6.75824, 260.58836, 1.14541, 5.56294), tolerance = 1e-3)
+    expect_equal(mp1$Coefficient, c(0.49271, 6.75824, 1.14541, 5.56294), tolerance = 1e-3)
     expect_equal(mp1$Coefficient[3:4], mp2$Coefficient[3:4], tolerance = 1e-3)
+  })
+
+  test_that("model_parameters, no dispersion, glmmTMB", {
+    mp1 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = TRUE)
+    mp2 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = FALSE)
+    expect_equal(mp1$Coefficient, exp(unlist(fixef(m_exp)$cond)), tolerance = 1e-3)
+    expect_equal(mp2$Coefficient, unlist(fixef(m_exp)$cond), tolerance = 1e-3)
   })
 
 
