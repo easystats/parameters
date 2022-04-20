@@ -39,7 +39,7 @@
 
 * `model_parameters()` for models from package *glmmTMB* did not work when
   `exponentiate = TRUE` and model contained a dispersion parameter that was
-  different to sigma. Furthermore, exponentiating falsely exponentiated the
+  different than sigma. Furthermore, exponentiating falsely exponentiated the
   dispersion parameter.
 
 # parameters 0.17.0
