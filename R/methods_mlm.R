@@ -61,7 +61,10 @@ model_parameters.mlm <- function(model,
 
 
 #' @export
-standard_error.mlm <- function(model, ...) {
+standard_error.mlm <- function(model,
+                               vcov = NULL,
+                               vcov_args = NULL,
+                               ...) {
   cs <- stats::coef(summary(model))
   se <- lapply(names(cs), function(x) {
     params <- cs[[x]]
@@ -71,7 +74,18 @@ standard_error.mlm <- function(model, ...) {
       Response = gsub("^Response (.*)", "\\1", x)
     )
   })
-  insight::text_remove_backticks(do.call(rbind, se), verbose = FALSE)
+  out <- insight::text_remove_backticks(do.call(rbind, se), verbose = FALSE)
+
+  # robust standard errors
+  if (!is.null(vcov)) {
+    V <- insight::get_varcov(model, vcov = vcov, vcov_args = vcov_args, ...)
+    se <- sqrt(diag(V))
+    if (isTRUE(length(se) == nrow(out))) {
+      out[["SE"]] <- se
+    }
+  }
+
+  return(out)
 }
 
 

@@ -39,4 +39,20 @@ if (requiet("testthat") && requiet("parameters") && getRversion() >= "3.6.0") {
     expect_equal(mp$Response, c("mpg", "mpg", "mpg", "mpg", "hp", "hp", "hp", "hp"))
     expect_equal(mp$Parameter, c("(Intercept)", "cyl", "disp", "cyl:disp", "(Intercept)", "cyl", "disp", "cyl:disp"))
   })
+
+  test_that("get_varcov sandwich", {
+    requiet("sandwich")
+    mod <- lm(formula = cbind(mpg, disp) ~ wt + factor(cyl) + am, data = mtcars)
+    se1 <- standard_error(mod)
+    se2 <- standard_error(mod, vcov = "HC3")
+    se3 <- standard_error(mod, vcov = sandwich::vcovHC)
+    se4 <- sqrt(diag(sandwich::vcovHC(mod)))
+    expect_true(all(se1$SE != se2$SE))
+    expect_true(all(se2$SE == se3$SE))
+    expect_true(all(se2$SE == se4))
+    lab <- strsplit(names(se4), ":")
+    expect_equal(se2$Parameter, sapply(lab, function(x) x[2]))
+    expect_equal(se2$Response, sapply(lab, function(x) x[1]))
+  })
+
 }
