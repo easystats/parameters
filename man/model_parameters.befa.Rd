@@ -29,8 +29,8 @@
 to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi()}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti()}}), \code{"BCI"} (see
+\code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}
+(see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see
 \code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
 \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
@@ -42,7 +42,7 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{verbose}{Toggle off warnings.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

@@ -30,10 +30,6 @@ datawizard::rescale_weights
 #' @export
 datawizard::data_to_numeric
 
-#' @importFrom datawizard convert_data_to_numeric
-#' @export
-datawizard::convert_data_to_numeric
-
 #' @importFrom datawizard skewness
 datawizard::skewness
 

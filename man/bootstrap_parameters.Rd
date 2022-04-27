@@ -25,8 +25,8 @@ bootstrap_parameters(
 to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi()}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti()}}), \code{"BCI"} (see
+\code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}
+(see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see
 \code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
 \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
