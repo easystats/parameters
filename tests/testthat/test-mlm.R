@@ -40,8 +40,10 @@ if (requiet("testthat") && requiet("parameters") && getRversion() >= "3.6.0") {
     expect_equal(mp$Parameter, c("(Intercept)", "cyl", "disp", "cyl:disp", "(Intercept)", "cyl", "disp", "cyl:disp"))
   })
 
-  test_that("get_varcov sandwich", {
+  test_that("sandwich standard errors", {
     requiet("sandwich")
+    requiet("lmtest")
+
     mod <- lm(formula = cbind(mpg, disp) ~ wt + factor(cyl) + am, data = mtcars)
     se1 <- standard_error(mod)
     se2 <- standard_error(mod, vcov = "HC3")
@@ -53,6 +55,24 @@ if (requiet("testthat") && requiet("parameters") && getRversion() >= "3.6.0") {
     lab <- strsplit(names(se4), ":")
     expect_equal(se2$Parameter, sapply(lab, function(x) x[2]))
     expect_equal(se2$Response, sapply(lab, function(x) x[1]))
+
+
+    p1 <- parameters(mod)
+    p2 <- parameters(mod, vcov = "HC3")
+    expect_true(all(p1$Coefficient == p2$Coefficient))
+    expect_true(all(p1$SE != p2$SE))
+    expect_true(all(p1$t != p2$t))
+    expect_true(all(p1$p != p2$p))
+    expect_true(all(p1$CI_low != p2$CI_low))
+    expect_true(all(p1$CI_high != p2$CI_high))
+    lt <- lmtest::coeftest(mod, vcov = sandwich::vcovHC)
+    ci <- stats::confint(lt)
+    expect_equal(p2$Coefficient, lt[, "Estimate"], ignore_attr = TRUE)
+    expect_equal(p2$SE, lt[, "Std. Error"], ignore_attr = TRUE)
+    expect_equal(p2$t, lt[, "t value"], ignore_attr = TRUE)
+    expect_equal(p2$p, lt[, "Pr(>|t|)"], ignore_attr = TRUE)
+    expect_equal(p2$CI_low, ci[, 1], ignore_attr = TRUE)
+    expect_equal(p2$CI_high, ci[, 2], ignore_attr = TRUE)
   })
 
 }
