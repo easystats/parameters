@@ -416,7 +416,7 @@ if (.runThisTest &&
 
   # proper printing ---------------------
 
-  if (win_os) {
+  if (win_os && getRversion() <= "4.2.0") {
     test_that("print-model_parameters glmmTMB", {
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))
