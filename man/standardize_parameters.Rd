@@ -163,8 +163,6 @@ model.
 }
 
 \examples{
-library(parameters)
-
 model <- lm(len ~ supp * dose, data = ToothGrowth)
 standardize_parameters(model, method = "refit")
 \donttest{
@@ -176,20 +174,17 @@ standardize_parameters(model, method = "basic")
 standardize_parameters(model, robust = TRUE)
 standardize_parameters(model, two_sd = TRUE)
 
-
 model <- glm(am ~ cyl * mpg, data = mtcars, family = "binomial")
 standardize_parameters(model, method = "refit")
 standardize_parameters(model, method = "posthoc")
 standardize_parameters(model, method = "basic", exponentiate = TRUE)
 }
 
-
 \dontshow{if (require("lme4")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
 standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 }
-
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{

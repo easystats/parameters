@@ -115,8 +115,6 @@
 #' @family effect size indices
 #'
 #' @examples
-#' library(parameters)
-#'
 #' model <- lm(len ~ supp * dose, data = ToothGrowth)
 #' standardize_parameters(model, method = "refit")
 #' \donttest{
@@ -128,20 +126,17 @@
 #' standardize_parameters(model, robust = TRUE)
 #' standardize_parameters(model, two_sd = TRUE)
 #'
-#'
 #' model <- glm(am ~ cyl * mpg, data = mtcars, family = "binomial")
 #' standardize_parameters(model, method = "refit")
 #' standardize_parameters(model, method = "posthoc")
 #' standardize_parameters(model, method = "basic", exponentiate = TRUE)
 #' }
 #'
-#'
 #' @examplesIf require("lme4")
 #' \donttest{
 #' m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
 #' standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 #' }
-#'
 #'
 #' @examplesIf require("rstanarm")
 #' \dontrun{
