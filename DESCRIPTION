@@ -75,8 +75,8 @@ Depends:
     R (>= 3.4)
 Imports:
     bayestestR (>= 0.11.5),
-    datawizard (>= 0.4.0.3),
-    insight (> 0.17.0),
+    datawizard (>= 0.4.0),
+    insight (>= 0.17.0),
     graphics,
     methods,
     stats,
@@ -103,6 +103,7 @@ Suggests:
     cluster,
     cplm,
     dbscan,
+    domir (>= 0.2.0),
     drc,
     DRR,
     effectsize (>= 0.6.0),

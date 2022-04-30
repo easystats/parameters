@@ -25,6 +25,7 @@ reference:
 - title: "Comprehensive Model Parameters"
   contents:
   - compare_parameters
+  - dominance_analysis
   - model_parameters
   - model_parameters.aov
   - model_parameters.befa
