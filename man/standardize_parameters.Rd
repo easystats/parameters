@@ -37,10 +37,23 @@ standardize_posteriors(
 
 \item{ci}{Confidence Interval (CI) level}
 
+\item{robust}{Logical, if \code{TRUE}, centering is done by subtracting the
+median from the variables and dividing it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by subtracting the
+mean and dividing it by the standard deviation (SD).}
+
+\item{two_sd}{If \code{TRUE}, the variables are scaled by two times the deviation
+(SD or MAD depending on \code{robust}). This method can be useful to obtain
+model coefficients of continuous parameters comparable to coefficients
+related to binary predictors, when applied to \strong{the predictors} (not the
+outcome) (Gelman, 2008).}
+
 \item{include_response}{If \code{TRUE} (default), the response value will also be
 standardized. If \code{FALSE}, only the predictors will be standardized. For
 GLMs the response value will never be standardized (see \emph{Generalized Linear
 Models} section).}
+
+\item{verbose}{Toggle warnings and messages on or off.}
 
 \item{...}{For \code{standardize_parameters()}, arguments passed to
 \link{model_parameters}, such as:

@@ -16,6 +16,17 @@ standardize_info(
 \arguments{
 \item{model}{A statistical model.}
 
+\item{robust}{Logical, if \code{TRUE}, centering is done by subtracting the
+median from the variables and dividing it by the median absolute deviation
+(MAD). If \code{FALSE}, variables are standardized by subtracting the
+mean and dividing it by the standard deviation (SD).}
+
+\item{two_sd}{If \code{TRUE}, the variables are scaled by two times the deviation
+(SD or MAD depending on \code{robust}). This method can be useful to obtain
+model coefficients of continuous parameters comparable to coefficients
+related to binary predictors, when applied to \strong{the predictors} (not the
+outcome) (Gelman, 2008).}
+
 \item{include_pseudo}{(For (G)LMMs) Should Pseudo-standardized information be
 included?}
 
