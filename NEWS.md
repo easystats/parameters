@@ -10,6 +10,9 @@
 
 * `sort_parameters()` to sort model parameters by coefficient values.
 
+* `standardize_parameters()`, `standardize_info()` and `standardise_posteriors()`
+  to standardize model parameters.
+
 ## Changes to functions
 
 ### `model_parameters()`
