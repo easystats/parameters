@@ -195,4 +195,5 @@ Roxygen: list(markdown = TRUE)
 Remotes:
     easystats/insight,
     easystats/bayestestR,
-    easystats/datawizard
+    easystats/datawizard#158
+    
