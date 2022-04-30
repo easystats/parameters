@@ -143,6 +143,7 @@ articles:
     contents:
     - model_parameters
     - model_parameters_standardized
+    - standardize_parameters
     - model_parameters_robust
     - model_parameters_mice
     - demean

@@ -20,7 +20,7 @@
 #'
 #' @details
 #'
-#' # Standardization Methods:
+#' # Standardization Methods
 #' - **refit**: This method is based on a complete model re-fit with a
 #' standardized version of the data. Hence, this method is equal to
 #' standardizing the variables before fitting the model. It is the "purest" and
@@ -132,21 +132,22 @@
 #' standardize_parameters(model, method = "basic", exponentiate = TRUE)
 #' }
 #'
-#' @examplesIf require("lme4")
+#' if (require("lme4")) {
 #' \donttest{
-#' m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
-#' standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
+#'   m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
+#'   standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
+#' }
 #' }
 #'
-#' @examplesIf require("rstanarm")
 #' \dontrun{
-#' model <- stanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-#' standardize_posteriors(model, method = "refit")
-#' standardize_posteriors(model, method = "posthoc")
-#' standardize_posteriors(model, method = "smart")
-#' head(standardize_posteriors(model, method = "basic"))
+#' if (require("rstanarm")) {
+#'   model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
+#'   standardize_posteriors(model, method = "refit")
+#'   standardize_posteriors(model, method = "posthoc")
+#'   standardize_posteriors(model, method = "smart")
+#'   head(standardize_posteriors(model, method = "basic"))
 #' }
-#'
+#' }
 #' @references
 #' - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation and change. Routledge.
 #' - Jones, J. A., & Waller, N. G. (2015). The normal-theory and asymptotic distribution-free (ADF) covariance matrix of standardized regression coefficients: theoretical extensions and finite sample behavior. Psychometrika, 80(2), 365-378.
@@ -399,8 +400,13 @@ standardize_parameters.model_fit <- function(model,
 
 
   ## Get scaling factors
-  deviations <- standardize_info(model, robust = robust, include_pseudo = method == "pseudo", two_sd = two_sd,
-                                 model_info = mi)
+  deviations <- standardize_info(
+    model,
+    robust = robust,
+    include_pseudo = method == "pseudo",
+    two_sd = two_sd,
+    model_info = mi
+  )
   i_missing <- setdiff(seq_len(nrow(pars)), seq_len(nrow(deviations)))
   unstd <- pars
   if (length(i_missing)) {
@@ -420,7 +426,7 @@ standardize_parameters.model_fit <- function(model,
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'.")
+    stop(insight::format_message("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'."), call. = FALSE)
   }
 
 
@@ -453,7 +459,7 @@ standardize_parameters.model_fit <- function(model,
   attr(pars, "two_sd") <- two_sd
   attr(pars, "robust") <- robust
 
-  return(pars)
+  pars
 }
 
 #' @keywords internal
@@ -474,8 +480,14 @@ standardize_posteriors <- function(model, method = "refit", robust = FALSE, two_
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    model <- standardize(model, robust = robust, two_sd = two_sd, include_response = include_response,
-                         verbose = verbose, m_info = m_info)
+    model <- datawizard::standardize(
+      model,
+      robust = robust,
+      two_sd = two_sd,
+      include_response = include_response,
+      verbose = verbose,
+      m_info = m_info
+    )
   }
 
   pars <- insight::get_parameters(model)
@@ -518,8 +530,13 @@ standardise_posteriors <- standardize_posteriors
   }
 
   ## Get scaling factors
-  deviations <- standardize_info(model, robust = robust, include_pseudo = method == "pseudo", two_sd = two_sd,
-                                 model_info = mi)
+  deviations <- standardize_info(
+    model,
+    robust = robust,
+    include_pseudo = method == "pseudo",
+    two_sd = two_sd,
+    model_info = mi
+  )
   i <- match(deviations$Parameter, colnames(pars))
   pars <- pars[, i]
 
@@ -536,7 +553,7 @@ standardise_posteriors <- standardize_posteriors
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'.")
+    stop(insight::format_message("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'."), call. = FALSE)
   }
 
   .dev_pred <- deviations[[col_dev_pred]]

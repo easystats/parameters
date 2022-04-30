@@ -47,7 +47,7 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
 
   # Sanity Check for ZI
   if (mi$is_zero_inflated) {
-    warning("Non-refit parameter standardization is ignoring the zero-inflation component.", call. = FALSE)
+    warning(insight::format_message("Non-refit parameter standardization is ignoring the zero-inflation component."), call. = FALSE)
     # would need to also get the binomial model matrix...
   }
 
@@ -70,8 +70,6 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
       ifelse(types$Link == "Difference", "d", NA)
     )
   )
-
-
 
 
   # Response - Basic
@@ -285,7 +283,7 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
 # Response ------------------------------------------------------------
 
 #' @keywords internal
-.std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL,...) {
+.std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL, ...) {
   if (info$is_linear) {
     # response <- insight::get_response(model)
     response <- stats::model.frame(model)[[1]]
