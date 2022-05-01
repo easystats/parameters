@@ -214,3 +214,29 @@ if (.runThisTest && requiet("parameters") && requiet("testthat")) {
     expect_equal(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3)
   })
 }
+
+
+
+if (.runThisTest && requiet("parameters") && requiet("rms") && requiet("testthat")) {
+  m <- rms::ols(mpg ~ cyl + disp + hp + drat, data = mtcars)
+  a <- anova(m)
+  mp <- model_parameters(a)
+
+  test_that("anova rms", {
+    expect_equal(attr(mp, "anova_type"), 2)
+    expect_equal(mp$Parameter, c("cyl", "disp", "hp", "drat", "Total", "Residuals"))
+    expect_equal(colnames(mp), c("Parameter", "Sum_Squares_Partial", "df", "Mean_Square", "F", "p"))
+    expect_equal(mp$Sum_Squares_Partial, data.frame(a)$Partial.SS, tolerance = 1e-3)
+  })
+
+  m <- rms::orm(mpg ~ cyl + disp + hp + drat, data = mtcars)
+  a <- anova(m)
+  mp <- model_parameters(a)
+
+  test_that("anova rms", {
+    expect_equal(attr(mp, "anova_type"), 2)
+    expect_equal(mp$Parameter, c("cyl", "disp", "hp", "drat", "Total"))
+    expect_equal(colnames(mp), c("Parameter", "Chi2", "df", "p"))
+    expect_equal(mp$Chi2, data.frame(a)$Chi.Square, tolerance = 1e-3)
+  })
+}
