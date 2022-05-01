@@ -17,6 +17,7 @@
 ^vignettes/e.
 ^vignettes/m.
 ^vignettes/p.
+^vignettes/s.
 ^tests/_snaps/.
 ^cran-comments\.md$
 ^revdep$

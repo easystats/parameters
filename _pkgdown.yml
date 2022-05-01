@@ -50,6 +50,8 @@ reference:
   - random_parameters
   - print.parameters_model
   - sort_parameters
+  - standardize_parameters
+  - standardize_info
 
 - title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
   contents:
@@ -141,6 +143,7 @@ articles:
     contents:
     - model_parameters
     - model_parameters_standardized
+    - standardize_parameters
     - model_parameters_robust
     - model_parameters_mice
     - demean

@@ -74,6 +74,7 @@
 }
 
 
+
 #' @keywords internal
 .get_object <- function(x, attribute_name = "object_name") {
   obj_name <- attr(x, attribute_name, exact = TRUE)
@@ -87,7 +88,7 @@
         NULL
       }
     )
-    if (is.null(model)) {
+    if (is.null(model) || inherits(model, "parameters_model")) { # prevent self reference
       model <- tryCatch(
         {
           get(obj_name, envir = globalenv())
