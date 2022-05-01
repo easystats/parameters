@@ -135,6 +135,17 @@ cluster_analysis <- function(x,
 
   # Preparation -------------------------------------------------------------
 
+  # coerce to data frame if input is a matrix
+  if (is.matrix(x)) {
+    x <- as.data.frame(x)
+  }
+
+  # check if we have a correlation/covariance or distance matrix?
+  if (nrow(x) == ncol(x) && identical(lower.tri(x), upper.tri(x))) {
+    ## TODO: special handling
+    warning(insight::format_message("Input data seems to be a correlation, covariance or similar matrix."), call. = FALSE)
+  }
+
   # Preprocess data
   data <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
