@@ -18,8 +18,9 @@ dominance_analysis(
 \item{model}{A model object supported by \code{performance::r2()}. See 'Details'.}
 
 \item{sets}{A (named) list of formula objects with no left hand
-side/response.  A named list uses the name provided each element
-as the label for the set.
+side/response.  If the list has names, the name provided each element
+will be used as the label for the set.  Unnamed list elements will be
+provided a set number name based on its position among the sets as entered.
 
 Predictors in each formula are bound together as a set in the dominance
 analysis and dominance statistics and designations are computed for
@@ -58,7 +59,9 @@ of the following elements:
 model parameters. The variables in this \code{data.frame} include:
 \describe{
 \item{\code{parameter}}{Parameter names.}
-\item{\code{general_dominance}}{Vector of general dominance statistics.}
+\item{\code{general_dominance}}{Vector of general dominance statistics.
+The R2 ascribed to variables in the \code{all} argument are also reported
+here though they are not general dominance statistics.}
 \item{\code{standardized}}{Vector of general dominance statistics normalized
 to sum to 1.}
 \item{\code{ranks}}{Vector of ranks applied to the general dominance
@@ -120,10 +123,20 @@ statistic and designation computations has only been tested to R version
 if (getRversion() >= "3.5.0" && require("domir") &&
 require("performance")) {
   data(mtcars)
+
+  # Dominance Analysis with Logit Regression
   model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
 
   performance::r2(model)
   dominance_analysis(model)
+
+  # Dominance Analysis with Weighted Logit Regression
+
+  model_wt <- glm(vs ~ cyl + carb + mpg, data = mtcars,
+    weights = wt, family = binomial())
+
+ dominance_analysis(model_wt, quote_args = "weights")
+
 }
 }
 \references{

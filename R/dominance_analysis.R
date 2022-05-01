@@ -5,14 +5,17 @@
 #' @description Computes Dominance Analysis Statistics and Designations
 #'
 #' @param model A model object supported by `performance::r2()`. See 'Details'.
+#'
 #' @param sets A (named) list of formula objects with no left hand
-#' side/response.  A named list uses the name provided each element
-#' as the label for the set.
+#' side/response.  If the list has names, the name provided each element
+#' will be used as the label for the set.  Unnamed list elements will be
+#' provided a set number name based on its position among the sets as entered.
 #'
 #' Predictors in each formula are bound together as a set in the dominance
 #' analysis and dominance statistics and designations are computed for
 #' the predictors together.  Predictors in `sets` must be present in the model
 #' submitted to the `model` argument and cannot be in the `all` argument.
+#'
 #' @param all A formula with no left hand side/response.
 #'
 #' Predictors in the formula are included in each subset in the dominance
@@ -36,14 +39,16 @@
 #'  model parameters. The variables in this `data.frame` include:
 #'   \describe{
 #'     \item{`parameter`}{Parameter names.}
-#'      \item{`general_dominance`}{Vector of general dominance statistics.}
+#'      \item{`general_dominance`}{Vector of general dominance statistics.
+#'      The R2 ascribed to variables in the `all` argument are also reported
+#'      here though they are not general dominance statistics.}
 #'      \item{`standardized`}{Vector of general dominance statistics normalized
 #'      to sum to 1.}
 #'      \item{`ranks`}{Vector of ranks applied to the general dominance
 #'      statistics.}
 #'      \item{`subset`}{Names of the subset to which the parameter belongs in
-#'      the dominance analysis.  Each other `data.frame` will refer to these
-#'      subset names.}}}
+#'      the dominance analysis.  Each other `data.frame` returned will refer
+#'      to these subset names.}}}
 #'  \item{`conditional_dominance`}{A `data.frame` of conditional dominance
 #'  statistics.  Each observation represents a subset and each variable
 #'  represents an the average increment to R2 with a specific number of
@@ -111,10 +116,19 @@
 #' if (getRversion() >= "3.5.0" && require("domir") &&
 #' require("performance")) {
 #'   data(mtcars)
+#'
+#'   # Dominance Analysis with Logit Regression
 #'   model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
 #'
 #'   performance::r2(model)
 #'   dominance_analysis(model)
+#'
+#'   # Dominance Analysis with Weighted Logit Regression
+#'   model_wt <- glm(vs ~ cyl + carb + mpg, data = mtcars,
+#'     weights = wt, family = binomial())
+#'
+#'  dominance_analysis(model_wt, quote_args = "weights")
+#'
 #'}
 #' @export
 dominance_analysis <- function(model, sets = NULL, all = NULL,
