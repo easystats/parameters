@@ -25,6 +25,8 @@
 * `model_parameters()` for `htest` objects now also supports models from 
   `var.test()`.
 
+* Improved support for `anova.rms` models in `model_parameters()`.
+
 * `model_parameters()` now supports `draws` objects from package *posterior*
   and `deltaMethods` objects from package *car*.
 
