@@ -257,7 +257,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
 
     mod_b <- glm(am ~ mpg + cyl + hp,
       data = mtcars,
-      family = gaussian()
+      family = stats::gaussian()
     )
     mod_refit <- standardize_parameters(mod_b, method = "refit", exponentiate = TRUE)
 
