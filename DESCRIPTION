@@ -172,6 +172,7 @@ Suggests:
     quantreg,
     randomForest,
     rmarkdown,
+    rms,
     rstanarm,
     sandwich,
     see (>= 0.6.9),

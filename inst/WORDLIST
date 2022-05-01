@@ -123,6 +123,7 @@ bayesGARCH
 bayestestR
 behaviour
 behaviours
+betareg
 biserial
 blavaan
 blme
@@ -140,6 +141,7 @@ clara
 clubSandwich
 clusterable
 cmprsk
+countreg
 coxrobust
 datanovia
 datawizard
@@ -160,6 +162,7 @@ gamm
 gaussianity
 github
 glm
+glmx
 glm's
 glmmTMB
 heteroskedasticity
@@ -187,6 +190,7 @@ metaBMA
 metacluster
 metaclustering
 metafor
+mfx
 mhurdle
 minkowski
 modelling
@@ -202,6 +206,7 @@ plm
 posthoc
 pre
 priori
+pscl
 quantreg
 quartiles
 reproducibility
