@@ -415,8 +415,7 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
 
     has_lvl2_var <- sapply(seq_along(colnames(temp_d)), function(i) {
       # If more than 1% of the variance in the within-var is between:
-      var(dm[, i]) /
-        var(temp_d[, i])
+      stats::var(dm[, i]) / stats::var(temp_d[, i])
     }) > 0.01
     also_between <- p_check_within[has_lvl2_var]
 

@@ -179,7 +179,7 @@ standardize_parameters.default <- function(model, method = "refit", ci = 0.95, r
 
   # need model_parameters to return the parameters, not the terms
   if (inherits(model, "aov")) class(model) <- class(model)[class(model) != "aov"]
-  pars <- model_parameters(model, ci = ci, standardize = NULL, effects = "fixed", ...)
+  pars <- model_parameters(model, ci = ci, standardize = NULL, effects = "fixed", as_draws = TRUE, ...)
 
   # should post hoc exponentiate?
   exponentiate <- isTRUE(eval(match.call()[["exponentiate"]], envir = parent.frame()))
@@ -199,7 +199,7 @@ standardize_parameters.default <- function(model, method = "refit", ci = 0.95, r
 
   ## clean cols
   if (!is.null(ci)) pars$CI <- attr(pars, "ci")
-  colnm <- c("Component", "Response", "Group", "Parameter", head(.col_2_scale, -2), "CI", "CI_low", "CI_high")
+  colnm <- c("Component", "Response", "Group", "Parameter", utils::head(.col_2_scale, -2), "CI", "CI_low", "CI_high")
   pars <- pars[, colnm[colnm %in% colnames(pars)]]
 
   if (!is.null(coefficient_name) && coefficient_name %in% c("Odds Ratio", "Risk Ratio", "IRR")) {
@@ -262,7 +262,7 @@ standardize_parameters.parameters_model <- function(model, method = "refit", ci 
 
   ## clean cols
   if (!is.null(ci)) pars$CI <- attr(pars, "ci")
-  colnm <- c("Component", "Response", "Group", "Parameter", head(.col_2_scale, -2), "CI", "CI_low", "CI_high")
+  colnm <- c("Component", "Response", "Group", "Parameter", utils::head(.col_2_scale, -2), "CI", "CI_low", "CI_high")
   pars <- pars[, colnm[colnm %in% colnames(pars)]]
   i <- colnames(pars) %in% c("Coefficient", "Median", "Mean", "MAP")
   colnames(pars)[i] <- paste0("Std_", colnames(pars)[i])
@@ -583,7 +583,7 @@ standardise_posteriors <- standardize_posteriors
     cant_posthocsmart <- FALSE
 
     if (mi$is_linear) {
-      if (!colnames(model.frame(model))[1] == insight::find_response(model)) {
+      if (!colnames(stats::model.frame(model))[1] == insight::find_response(model)) {
         can_posthocsmart <- TRUE
       }
     }
