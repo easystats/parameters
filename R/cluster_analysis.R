@@ -141,7 +141,7 @@ cluster_analysis <- function(x,
   }
 
   # check if we have a correlation/covariance or distance matrix?
-  if (nrow(x) == ncol(x) && identical(lower.tri(x), upper.tri(x))) {
+  if (nrow(x) == ncol(x) && identical(round(x[lower.tri(x)], 10), round(x[upper.tri(x)], 10))) {
     ## TODO: special handling
     warning(insight::format_message("Input data seems to be a correlation, covariance or similar matrix."), call. = FALSE)
   }
