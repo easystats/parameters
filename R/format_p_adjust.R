@@ -75,7 +75,13 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
-          params$p <- stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params) / rank_adjust, params$df, lower.tail = FALSE)
+          params$p <- suppressWarnings(stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params) / rank_adjust, params$df, lower.tail = FALSE))
+          # for specific contrasts, ptukey might fail, and the tukey-adjustement
+          # could just be simple p-value calculation
+          if (all(is.na(params$p))) {
+            params$p <- 2 * stats::pt(abs(params[[stat_column]]), df = params$df, lower.tail = FALSE)
+            verbose <- FALSE
+          }
         }
       } else if (tolower(p_adjust) == "scheffe" && !is.null(model)) {
         # scheffe adjustment
