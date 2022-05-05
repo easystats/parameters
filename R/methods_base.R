@@ -86,7 +86,7 @@ standard_error.xtabs <- standard_error.table
 
 
 #' @export
-standard_error.effectsize_std_params <- function(model, verbose = TRUE, ...) {
+standard_error.parameters_standardized <- function(model, verbose = TRUE, ...) {
   se <- attr(model, "standard_error")
 
   if (is.null(se)) {
