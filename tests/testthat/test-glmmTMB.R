@@ -1,9 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("glmmTMB")) {
+    getRversion() >= "3.6.0" &&
+    requiet("testthat") &&
+    requiet("parameters") &&
+    requiet("glmmTMB")) {
   data("fish")
   data("Salamanders")
 
