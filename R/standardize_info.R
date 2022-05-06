@@ -41,7 +41,7 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
     insight::find_parameters(model, effects = "fixed", flatten = TRUE, ...)
   }
   types <- parameters_type(model)
-  model_matrix <- as.data.frame(stats::model.matrix(model))
+  model_matrix <- as.data.frame(insight::get_modelmatrix(model))
   data <- insight::get_data(model)
   wgts <- insight::get_weights(model, na_rm = TRUE)
 
@@ -285,8 +285,11 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
 #' @keywords internal
 .std_info_response_smart <- function(model, info, data, model_matrix, types, robust = FALSE, w = NULL, ...) {
   if (info$is_linear) {
-    # response <- insight::get_response(model)
-    response <- stats::model.frame(model)[[1]]
+    if (inherits(model, c("gls", "nlme"))) {
+      response <- insight::get_response(model)
+    } else {
+      response <- stats::model.frame(model)[[1]]
+    }
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       var <- names(model_matrix)[i]
@@ -328,8 +331,11 @@ standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, incl
 
 #' @keywords internal
 .std_info_response_basic <- function(model, info, params, robust = FALSE, w = NULL, ...) {
-  # response <- insight::get_response(model)
-  response <- stats::model.frame(model)[[1]]
+  if (inherits(model, c("gls", "lme"))) {
+    response <- insight::get_response(model)
+  } else {
+    response <- stats::model.frame(model)[[1]]
+  }
 
   if (info$is_linear) {
     if (robust == FALSE) {
