@@ -32,7 +32,11 @@ standardize_info <- function(model, robust = FALSE, two_sd = FALSE, include_pseu
 standardise_info <- standardize_info
 
 #' @export
-standardize_info.default <- function(model, robust = FALSE, two_sd = FALSE, include_pseudo = FALSE, ...) {
+standardize_info.default <- function(model,
+                                     robust = FALSE,
+                                     two_sd = FALSE,
+                                     include_pseudo = FALSE,
+                                     ...) {
   mi <- .get_model_info(model, ...)
 
   params <- if (inherits(model, c("glmmTMB", "MixMod"))) {
