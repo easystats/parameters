@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    getRVersion() >= "3.6.0" &&
+    getRversion() >= "3.6.0" &&
     requiet("testthat") &&
     requiet("parameters") &&
     requiet("panelr")) {
