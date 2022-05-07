@@ -10,6 +10,9 @@
 
 * `sort_parameters()` to sort model parameters by coefficient values.
 
+* `standardize_parameters()`, `standardize_info()` and `standardise_posteriors()`
+  to standardize model parameters.
+
 ## Changes to functions
 
 ### `model_parameters()`
@@ -21,6 +24,8 @@
 
 * `model_parameters()` for `htest` objects now also supports models from 
   `var.test()`.
+
+* Improved support for `anova.rms` models in `model_parameters()`.
 
 * `model_parameters()` now supports `draws` objects from package *posterior*
   and `deltaMethods` objects from package *car*.

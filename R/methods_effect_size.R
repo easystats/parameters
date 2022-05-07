@@ -1,5 +1,5 @@
 #' @export
-ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
+ci.parameters_standardized <- function(x, ci = .95, verbose = TRUE, ...) {
   se <- attr(x, "standard_error")
 
   if (is.null(se)) {
@@ -46,8 +46,8 @@ ci.effectsize_std_params <- function(x, ci = .95, verbose = TRUE, ...) {
 
 
 #' @export
-ci.effectsize_table <- ci.effectsize_std_params
+ci.effectsize_table <- ci.parameters_standardized
 
 
 #' @export
-standard_error.effectsize_table <- standard_error.effectsize_std_params
+standard_error.effectsize_table <- standard_error.parameters_standardized

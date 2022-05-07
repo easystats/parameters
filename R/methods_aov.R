@@ -352,7 +352,9 @@ model_parameters.maov <- model_parameters.aov
     # default to 1
     type <- 1
 
-    if (!is.null(attr(model, "type", exact = TRUE))) {
+    if (inherits(model, "anova.rms")) {
+      type <- 2
+    } else if (!is.null(attr(model, "type", exact = TRUE))) {
       type <- type_to_numeric(attr(model, "type", exact = TRUE))
     } else if (!is.null(attr(model, "heading"))) {
       heading <- attr(model, "heading")[1]

@@ -1,9 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("glmmTMB")) {
+    getRversion() >= "3.6.0" &&
+    requiet("testthat") &&
+    requiet("parameters") &&
+    requiet("glmmTMB")) {
   data("fish")
   data("Salamanders")
 
@@ -409,14 +410,14 @@ if (.runThisTest &&
   test_that("model_parameters, no dispersion, glmmTMB", {
     mp1 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = TRUE)
     mp2 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = FALSE)
-    expect_equal(mp1$Coefficient, exp(unlist(fixef(m_exp)$cond)), tolerance = 1e-3)
-    expect_equal(mp2$Coefficient, unlist(fixef(m_exp)$cond), tolerance = 1e-3)
+    expect_equal(mp1$Coefficient, unname(exp(unlist(fixef(m_exp)$cond))), tolerance = 1e-3)
+    expect_equal(mp2$Coefficient, unname(unlist(fixef(m_exp)$cond)), tolerance = 1e-3)
   })
 
 
   # proper printing ---------------------
 
-  if (win_os) {
+  if (win_os && getRversion() <= "4.2.0") {
     test_that("print-model_parameters glmmTMB", {
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))

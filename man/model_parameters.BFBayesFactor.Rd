@@ -32,8 +32,8 @@
 to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi()}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti()}}), \code{"BCI"} (see
+\code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}
+(see \code{\link[bayestestR:hdi]{hdi()}}), \code{"BCI"} (see
 \code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
 \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
@@ -67,7 +67,7 @@ cell proportions/counts for Bayesian contingency table analysis (from
 \code{BayesFactor::contingencyTableBF()}). Defaults to \code{FALSE}, as this
 information is often redundant.}
 
-\item{verbose}{Toggle off warnings.}
+\item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
