@@ -258,7 +258,7 @@
     attr(temp_pars, "ci") <- ci
     attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
-    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    std_parms <- standardize_parameters(temp_pars, method = standardize)
     parameters$Std_Coefficient <- std_parms$Std_Coefficient
     parameters$SE <- attr(std_parms, "standard_error")
 
@@ -595,7 +595,7 @@
     attr(temp_pars, "ci") <- ci
     attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
-    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    std_parms <- standardize_parameters(temp_pars, method = standardize)
     parameters$Std_Coefficient <- std_parms$Std_Coefficient
     parameters$SE <- attr(std_parms, "standard_error")
 

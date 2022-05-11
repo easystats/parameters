@@ -49,7 +49,7 @@
 #'   faster.
 #'
 #' @section Standardization of model coefficients:
-#' Standardization is based on [effectsize::standardize_parameters()]. In case
+#' Standardization is based on [standardize_parameters()]. In case
 #' of `standardize = "refit"`, the data used to fit the model will be
 #' standardized and the model is completely refitted. In such cases, standard
 #' errors and confidence intervals refer to the standardized coefficient. The
@@ -312,7 +312,7 @@ parameters <- model_parameters
 #' @param standardize The method used for standardizing the parameters. Can be
 #'   `NULL` (default; no standardization), `"refit"` (for re-fitting the model
 #'   on standardized data) or one of `"basic"`, `"posthoc"`, `"smart"`,
-#'   `"pseudo"`. See 'Details' in [effectsize::standardize_parameters()].
+#'   `"pseudo"`. See 'Details' in [standardize_parameters()].
 #'   **Important:**
 #'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
 #'   factors), which may be a different behaviour compared to other R packages

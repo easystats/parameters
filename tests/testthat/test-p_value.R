@@ -1,5 +1,19 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
+if (requiet("testthat") && requiet("parameters")) {
+  test_that("p_value", {
+    expect_equal(p_value(c(1,1,1)), p_value(-c(1,1,1)), tolerance = 1e-3)
+
+    set.seed(123)
+    x <- rnorm(100, mean = 1.5)
+    expect_equal(p_value(x), p_value(-x), tolerance = 1e-3)
+    expect_gt(p_value(x, null = 1), p_value(x))
+    expect_gt(p_value(x), p_value(x, null = -1))
+    expect_equal(p_value(x, null = -1), p_value(-x, null = 1), tolerance = 1e-3)
+  })
+}
+
+
 if (.runThisTest) {
   if (requiet("testthat") &&
     requiet("parameters") &&
