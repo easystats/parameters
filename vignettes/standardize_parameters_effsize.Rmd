@@ -63,8 +63,8 @@ standardization**, described below
 ### Standardized Associations
 
 ```{r}
+library(parameters)
 library(effectsize)
-
 m <- lm(rating ~ complaints, data = attitude)
 
 standardize_parameters(m)
@@ -128,7 +128,7 @@ And we can also get an approximation of Cohen's *d* by converting the
 $t$-statistic from the regression model via `t_to_d()`:
 
 ```{r}
-parameters::model_parameters(m)
+model_parameters(m)
 
 t_to_d(4.11, df_error = 30)
 ```
@@ -164,7 +164,7 @@ predict a worker's salary (in Shmekels) from their age (years), seniority
 (`n_comps`).
 
 Let us explore the different parameter standardization methods provided by
-`effectsize`.
+*parameters*.
 
 ### Standardized Slopes are Not (Always) Correlations
 
@@ -177,7 +177,6 @@ numeric predictors and the outcome.
 
 ```{r}
 data("hardlyworking", package = "effectsize")
-
 head(hardlyworking)
 
 correlation::correlation(
@@ -207,7 +206,7 @@ correlations from our model, in another way: by converting the *t*-statistics
 *r*.
 
 ```{r}
-params <- parameters::model_parameters(mod)
+params <- model_parameters(mod)
 
 t_to_r(params$t[-1], df_error = params$df_error[-1])
 ```
@@ -227,7 +226,7 @@ hardlyworking$age_g <- cut(hardlyworking$age,
 mod <- lm(salary ~ xtra_hours + n_comps + age_g + seniority,
           data = hardlyworking)
 
-parameters::model_parameters(mod)
+model_parameters(mod)
 ```
 
 It seems like the best or most important predictor is `n_comps` as it has the
@@ -273,7 +272,7 @@ without summarizing it, which can then be used as the original model would:
 mod_z <- standardize(mod, two_sd = FALSE, robust = FALSE)
 mod_z
 
-parameters::model_parameters(mod_z)
+model_parameters(mod_z)
 ```
 
 #### **`"posthoc"`**: Refit without refitting
