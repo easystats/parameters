@@ -265,7 +265,7 @@ parameters on 2 SDs (or MADs) of the predictors [@gelman2008scaling].
 standardize_parameters(mod, method = "refit", two_sd = TRUE)
 ```
 
-`effectsize` also comes with a helper function that returns the re-fit model,
+*parameters* also comes with a helper function that returns the re-fit model,
 without summarizing it, which can then be used as the original model would:
 
 ```{r}
