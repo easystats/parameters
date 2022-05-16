@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@
     <h6 class="dropdown-header" data-toc-skip>Parameters Description</h6>
     <a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a>
     <a class="dropdown-item" href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    <a class="dropdown-item" href="../articles/standardize_parameters_effsize.html">Parameter and Model Standardization</a>
     <a class="dropdown-item" href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors, Confidence Intervals, and p-values</a>
     <a class="dropdown-item" href="../articles/model_parameters_mice.html">Model Parameters for Multiply Imputed Repeated Analyses</a>
     <a class="dropdown-item" href="../articles/demean.html">Analysing Longitudinal or Panel Data</a>
@@ -93,8 +94,7 @@
 
 
 
-
-<div class="row">
+<script src="demean_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Analysing Longitudinal or Panel Data</h1>
             
@@ -189,7 +189,7 @@
 <span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span>
 
 <span class="co"># we compare the results with those from the "lfe"-package for panel data</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sgaure/lfe" class="external-link">lfe</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MatthieuStigler/lfe" class="external-link">lfe</a></span><span class="op">)</span>
 <span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html" class="external-link">felm</a></span><span class="op">(</span>
   <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">|</span> <span class="va">ID</span>,
   data <span class="op">=</span> <span class="va">qol_cancer</span>
@@ -214,7 +214,7 @@
 <p>There are several ways how to address this using a mixed models approach:</p>
 <ul>
 <li><p>Correlated group factors and predictors are no problem anyway, because <a href="https://www.tjmahr.com/plotting-partial-pooling-in-mixed-effects-models/" class="external-link">partial pooling</a> allows estimates of units o borrow strength from the whole sample and shrink toward a common mean (<span class="citation">Shor et al. (2007)</span>).</p></li>
-<li><p>If predictor and group factors correlate, one can remove this correlation by group-meaning <span class="citation">(or “mean within clusters,” Bafumi and Gelman 2006; Gelman and Hill 2007, chap. 12.6.)</span>.</p></li>
+<li><p>If predictor and group factors correlate, one can remove this correlation by group-meaning <span class="citation">(or “mean within clusters”, Bafumi and Gelman 2006; Gelman and Hill 2007, Chap. 12.6.)</span>.</p></li>
 <li><p>When time-varying predictors are “decomposed” into their time-varying and time-invariant components (demeaning), then mixed models can model <strong>both</strong> within- and between-subject effects <span class="citation">(Bell, Fairbrother, and Jones 2019)</span> - this approach is essentially a further development of a long-known recommendation by Mundlak <span class="citation">(Mundlak 1978)</span>.</p></li>
 </ul>
 <p>For now, we will follow the last recommendation and use the within- and between-version of <code>phq4</code>.</p>
@@ -308,7 +308,7 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="op">)</span></code></pre></div>
 <p><strong>What about time-constant predictors?</strong></p>
 <p>After demeaning time-varying predictors, “at the higher level, the mean term is no longer constrained by Level 1 effects, so it is free to account for all the higher-level variance associated with that variable” <span class="citation">(Bell and Jones 2015)</span>.</p>
-<p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, chap. 12.6.)</span>.</p>
+<p>Thus, <em>time-constant <strong>categorical</strong></em> predictors, that only have a between-effect, can be simply included as fixed effects predictor (since they’re not constrained by level-1 effects). Time-constant <em>continuous</em> <strong>group-level predictors</strong> (for instance, GDP of countries) should be group-meaned, to have a proper “between”-effect <span class="citation">(Gelman and Hill 2007, Chap. 12.6.)</span>.</p>
 <p>The benefit of this kind of model is that you have information on within-, between- and other time-constant (i.e. between) effects or group-level predictors…</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">rewb</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span>
@@ -537,29 +537,29 @@ x<sub>it</sub> - ͞x<sub>i</sub> is the de-meaned predictor, <em>phq4_within</em
 <span class="co">#&gt; SD (Residual)       |        2.98 | 0.21 | [2.60, 3.42]</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-bafumi_fitting_2006" class="csl-entry">
-Bafumi, Joseph, and Andrew Gelman. 2006. <span>“Fitting Multilevel Models When Predictors and Group Effects Correlate.”</span> In. Philadelphia, PA.
+<div id="refs" class="references">
+<div id="ref-bafumi_fitting_2006">
+<p>Bafumi, Joseph, and Andrew Gelman. 2006. “Fitting Multilevel Models When Predictors and Group Effects Correlate.” In. Philadelphia, PA.</p>
 </div>
-<div id="ref-bell_fixed_2019" class="csl-entry">
-Bell, Andrew, Malcolm Fairbrother, and Kelvyn Jones. 2019. <span>“Fixed and Random Effects Models: Making an Informed Choice.”</span> <em>Quality &amp; Quantity</em> 53: 1051–74. <a href="https://doi.org/10.1007/s11135-018-0802-x" class="external-link">https://doi.org/10.1007/s11135-018-0802-x</a>.
+<div id="ref-bell_fixed_2019">
+<p>Bell, Andrew, Malcolm Fairbrother, and Kelvyn Jones. 2019. “Fixed and Random Effects Models: Making an Informed Choice.” <em>Quality &amp; Quantity</em> 53: 1051–74. <a href="https://doi.org/10.1007/s11135-018-0802-x" class="external-link">https://doi.org/10.1007/s11135-018-0802-x</a>.</p>
 </div>
-<div id="ref-bell_explaining_2015" class="csl-entry">
-Bell, Andrew, and Kelvyn Jones. 2015. <span>“Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data.”</span> <em>Political Science Research and Methods</em> 3 (1): 133–53. <a href="https://doi.org/10.1017/psrm.2014.7" class="external-link">https://doi.org/10.1017/psrm.2014.7</a>.
+<div id="ref-bell_explaining_2015">
+<p>Bell, Andrew, and Kelvyn Jones. 2015. “Explaining Fixed Effects: Random Effects Modeling of Time-Series Cross-Sectional and Panel Data.” <em>Political Science Research and Methods</em> 3 (1): 133–53. <a href="https://doi.org/10.1017/psrm.2014.7" class="external-link">https://doi.org/10.1017/psrm.2014.7</a>.</p>
 </div>
-<div id="ref-gelman_data_2007" class="csl-entry">
-Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. Analytical Methods for Social Research. Cambridge; New York: Cambridge University Press.
+<div id="ref-gelman_data_2007">
+<p>Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. Analytical Methods for Social Research. Cambridge; New York: Cambridge University Press.</p>
 </div>
-<div id="ref-heisig_costs_2017" class="csl-entry">
-Heisig, Jan Paul, Merlin Schaeffer, and Johannes Giesecke. 2017. <span>“The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls.”</span> <em>American Sociological Review</em> 82 (4): 796–827. <a href="https://doi.org/10.1177/0003122417717901" class="external-link">https://doi.org/10.1177/0003122417717901</a>.
+<div id="ref-heisig_costs_2017">
+<p>Heisig, Jan Paul, Merlin Schaeffer, and Johannes Giesecke. 2017. “The Costs of Simplicity: Why Multilevel Models May Benefit from Accounting for Cross-Cluster Differences in the Effects of Controls.” <em>American Sociological Review</em> 82 (4): 796–827. <a href="https://doi.org/10.1177/0003122417717901" class="external-link">https://doi.org/10.1177/0003122417717901</a>.</p>
 </div>
-<div id="ref-mundlak_pooling_1978" class="csl-entry">
-Mundlak, Yair. 1978. <span>“On the Pooling of Time Series and Cross Section Data.”</span> <em>Econometrica</em> 46 (1): 69.
+<div id="ref-mundlak_pooling_1978">
+<p>Mundlak, Yair. 1978. “On the Pooling of Time Series and Cross Section Data.” <em>Econometrica</em> 46 (1): 69.</p>
 </div>
-<div id="ref-shor_bayesian_2007" class="csl-entry">
-Shor, Boris, Joseph Bafumi, Luke Keele, and David Park. 2007. <span>“A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data.”</span> <em>Political Analysis</em> 15 (2): 165–81. <a href="https://doi.org/10.1093/pan/mpm006" class="external-link">https://doi.org/10.1093/pan/mpm006</a>.
+<div id="ref-shor_bayesian_2007">
+<p>Shor, Boris, Joseph Bafumi, Luke Keele, and David Park. 2007. “A Bayesian Multilevel Modeling Approach to Time-Series Cross-Sectional Data.” <em>Political Analysis</em> 15 (2): 165–81. <a href="https://doi.org/10.1093/pan/mpm006" class="external-link">https://doi.org/10.1093/pan/mpm006</a>.</p>
 </div>
 </div>
 </div>
@@ -576,7 +576,7 @@ Shor, Boris, Joseph Bafumi, Luke Keele, and David Park. 2007. <span>“A Bayesia
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer>

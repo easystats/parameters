@@ -18,7 +18,7 @@ Details section)."><meta property="og:image" content="/reference/figures/card.pn
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,7 @@ Details section)."><meta property="og:image" content="/reference/figures/card.pn
     <h6 class="dropdown-header" data-toc-skip>Parameters Description</h6>
     <a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a>
     <a class="dropdown-item" href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    <a class="dropdown-item" href="../articles/standardize_parameters_effsize.html">Parameter and Model Standardization</a>
     <a class="dropdown-item" href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors, Confidence Intervals, and p-values</a>
     <a class="dropdown-item" href="../articles/model_parameters_mice.html">Model Parameters for Multiply Imputed Repeated Analyses</a>
     <a class="dropdown-item" href="../articles/demean.html">Analysing Longitudinal or Panel Data</a>
@@ -260,7 +261,7 @@ components.</p>
 
 <div class="section">
 <h3 id="explained-variance-and-eingenvalues">Explained Variance and Eingenvalues<a class="anchor" aria-label="anchor" href="#explained-variance-and-eingenvalues"></a></h3>
-<p>Use <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> to get the Eigenvalues and the explained variance
+<p>Use <code><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary()</a></code> to get the Eigenvalues and the explained variance
 for each extracted component. The eigenvectors and eigenvalues represent
 the "core" of a PCA: The eigenvectors (the principal components)
 determine the directions of the new feature space, and the eigenvalues
@@ -276,10 +277,10 @@ variance of the data along the new feature axes.</p>
 and Psychological Measurement, 34(1):111–117</p></li>
 <li><p>Hofmann, R. (1978). Complexity and simplicity as objective indices
 descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
-247-250, doi: <a href="https://doi.org/10.1207/s15327906mbr1302_9" class="external-link">10.1207/s15327906mbr1302_9</a></p></li>
+247-250, <a href="https://doi.org/10.1207/s15327906mbr1302_9" class="external-link">doi:10.1207/s15327906mbr1302_9</a></p></li>
 <li><p>Pettersson, E., &amp; Turkheimer, E. (2010). Item selection, evaluation,
 and simple structure in personality data. Journal of research in
-personality, 44(4), 407-420, doi: <a href="https://doi.org/10.1016/j.jrp.2010.03.002" class="external-link">10.1016/j.jrp.2010.03.002</a></p></li>
+personality, 44(4), 407-420, <a href="https://doi.org/10.1016/j.jrp.2010.03.002" class="external-link">doi:10.1016/j.jrp.2010.03.002</a></p></li>
 <li><p>Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 statistics (6th ed.). Boston: Pearson Education.</p></li>
 </ul></div>
@@ -301,7 +302,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"></span>
 <span class="r-in">  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">pca</span> <span class="co"># Print loadings</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span></span>
+<span class="r-in">  <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Component1"</span>, <span class="st">"Component2"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Back-predict scores</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="co"># which variables from the original data belong to which extracted component?</span></span>
@@ -335,7 +336,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in">  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in">  <span class="co"># Automated number of components</span></span>
@@ -366,7 +367,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer></div>

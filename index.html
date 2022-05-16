@@ -50,7 +50,7 @@
     
     <a class="navbar-brand me-2" href="index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,6 +68,7 @@
     <h6 class="dropdown-header" data-toc-skip>Parameters Description</h6>
     <a class="dropdown-item" href="articles/model_parameters.html">Summary of Model Parameters</a>
     <a class="dropdown-item" href="articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    <a class="dropdown-item" href="articles/standardize_parameters_effsize.html">Parameter and Model Standardization</a>
     <a class="dropdown-item" href="articles/model_parameters_robust.html">Robust Estimation of Standard Errors, Confidence Intervals, and p-values</a>
     <a class="dropdown-item" href="articles/model_parameters_mice.html">Model Parameters for Multiply Imputed Repeated Analyses</a>
     <a class="dropdown-item" href="articles/demean.html">Analysing Longitudinal or Panel Data</a>
@@ -130,7 +131,7 @@
 <p>…or from GitHub:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"easystats/parameters"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"easystats/parameters"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
@@ -302,25 +303,25 @@
 <h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h3>
 <p>In order to cite this package, please use the following command:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">"parameters"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Lüdecke D, Ben<span class="sc">-</span>Shachar M, Patil I, Makowski <span class="fu">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Software_, <span class="sc">*</span><span class="dv">5</span><span class="sc">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="sc">:</span> <span class="fl">10.21105</span><span class="sc">/</span><span class="fu">joss.02445</span> (URL<span class="sc">:</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span>).</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">@</span>Article{,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    title <span class="ot">=</span> {Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    volume <span class="ot">=</span> {<span class="dv">5</span>},</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    doi <span class="ot">=</span> {<span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span>},</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    number <span class="ot">=</span> {<span class="dv">53</span>},</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    journal <span class="ot">=</span> {Journal of Open Source Software},</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    author <span class="ot">=</span> {Daniel Lüdecke and Mattan S. Ben<span class="sc">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    year <span class="ot">=</span> {<span class="dv">2020</span>},</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    pages <span class="ot">=</span> {<span class="dv">2445</span>},</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
+<span id="cb9-5"><a href="#cb9-5"></a>Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="st"> </span><span class="fl">10.21105</span><span class="op">/</span><span class="kw">joss.02445</span> (URL<span class="op">:</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>).</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="op">@</span>Article{,</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
+<span id="cb9-12"><a href="#cb9-12"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
+<span id="cb9-13"><a href="#cb9-13"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
+<span id="cb9-16"><a href="#cb9-16"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
+<span id="cb9-17"><a href="#cb9-17"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
+<span id="cb9-18"><a href="#cb9-18"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
+<span id="cb9-19"><a href="#cb9-19"></a>  }</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -400,7 +401,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer>

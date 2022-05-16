@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.17.0.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@
     <h6 class="dropdown-header" data-toc-skip>Parameters Description</h6>
     <a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a>
     <a class="dropdown-item" href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
+    <a class="dropdown-item" href="../articles/standardize_parameters_effsize.html">Parameter and Model Standardization</a>
     <a class="dropdown-item" href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors, Confidence Intervals, and p-values</a>
     <a class="dropdown-item" href="../articles/model_parameters_mice.html">Model Parameters for Multiply Imputed Repeated Analyses</a>
     <a class="dropdown-item" href="../articles/demean.html">Analysing Longitudinal or Panel Data</a>
@@ -93,8 +94,7 @@
 
 
 
-
-<div class="row">
+<script src="model_parameters_formatting_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Formatting Model Parameters</h1>
             
@@ -115,7 +115,7 @@
 <span class="va">iris</span><span class="op">$</span><span class="va">Petlen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span>
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petlen</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="fu"><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; lm(formula = Sepal.Width ~ poly(Sepal.Length, 2) + Species + </span>
@@ -168,7 +168,7 @@
 <div class="section level2">
 <h2 id="standardizing-column-names-of-parameter-tables">Standardizing Column Names of Parameter Tables<a class="anchor" aria-label="anchor" href="#standardizing-column-names-of-parameter-tables"></a>
 </h2>
-<p>As seen above, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns columns named <code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>. While <code>Estimate</code> is not specific for certain models, <code>t value</code> is. For logistic regression models, you would get <code>z value</code>. Some packages alter the names, so you get just <code>t</code> or <code>t-value</code> etc.</p>
+<p>As seen above, the <code><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary()</a></code> returns columns named <code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>. While <code>Estimate</code> is not specific for certain models, <code>t value</code> is. For logistic regression models, you would get <code>z value</code>. Some packages alter the names, so you get just <code>t</code> or <code>t-value</code> etc.</p>
 <p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
@@ -203,7 +203,7 @@
 </h2>
 <p>Beside formatting parameter names (coefficient names) using <code><a href="../reference/format_parameters.html">format_parameters()</a></code>, we can do even more to make the output more readable. Let’s look at an example that includes confidence intervals.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/confint.rma.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://wviechtb.github.io/metafor/reference/confint.rma.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|) 2.5 % 97.5 %</span>
 <span class="co">#&gt; (Intercept)                3.81      0.058   65.50 4.6e-109  3.70   3.93</span>
 <span class="co">#&gt; poly(Sepal.Length, 2)1     4.06      0.467    8.70  7.0e-15  3.14   4.98</span>
@@ -804,6 +804,15 @@
   font-size: 65%;
 }
 
+#niwbgbfclw .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
 #niwbgbfclw .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
@@ -1275,6 +1284,15 @@
   font-size: 65%;
 }
 
+#ghawkzfndf .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
 #ghawkzfndf .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
@@ -1384,7 +1402,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
     </footer>
