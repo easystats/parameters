@@ -29,3 +29,11 @@ datawizard::rescale_weights
 #' @importFrom datawizard visualisation_recipe
 #' @export
 datawizard::visualisation_recipe
+
+#' @importFrom datawizard kurtosis
+#' @export
+datawizard::kurtosis
+
+#' @importFrom datawizard skewness
+#' @export
+datawizard::skewness
