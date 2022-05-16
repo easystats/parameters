@@ -13,7 +13,7 @@
 #' @inheritParams datawizard::standardize.default
 #' @inheritParams effectsize::chisq_to_phi
 #' @param ... For `standardize_parameters()`, arguments passed to
-#'   [parameters::model_parameters], such as:
+#'   [model_parameters()], such as:
 #' - `ci_method`, `centrality` for Mixed models and Bayesian models...
 #' - `exponentiate`, ...
 #' - etc.

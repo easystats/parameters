@@ -57,7 +57,7 @@ Models} section).}
 \item{verbose}{Toggle warnings and messages on or off.}
 
 \item{...}{For \code{standardize_parameters()}, arguments passed to
-\link{model_parameters}, such as:
+\code{\link[=model_parameters]{model_parameters()}}, such as:
 \itemize{
 \item \code{ci_method}, \code{centrality} for Mixed models and Bayesian models...
 \item \code{exponentiate}, ...
