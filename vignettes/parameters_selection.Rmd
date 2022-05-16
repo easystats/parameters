@@ -168,7 +168,10 @@ This is the model selected by `select_parameters()`. Please notice the
 differences in the random effects structure between the initial and the selected
 models:
 
-```{r}
+```{r, eval=FALSE}
+
+## TODO: this is currently broken due to an issue in package cAIC4
+
 # multiple models are checked, however, initial models
 # already seems to be the best one...
 lmer(
