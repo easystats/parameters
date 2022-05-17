@@ -23,10 +23,10 @@ simulate_model(model, iterations = 1000, ...)
 \item{...}{Arguments passed to or from other methods.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
+for the zero-inflated part of the model, or the dispersion model be returned?
+Applies to models with zero-inflated and/or dispersion component. \code{component}
+may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
+\code{"all"} (default). May be abbreviated.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

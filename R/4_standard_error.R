@@ -29,6 +29,9 @@
 #'   errors for random effects are requested, for each grouping factor a list of
 #'   standard errors (per group level) for random intercepts and slopes is
 #'   returned.
+#' @param component Model component for which parameters should be shown. See
+#'   the documentation for your object's class in [`model_parameters()`] or
+#'   [`p_value()`] for further details.
 #' @inheritParams simulate_model
 #' @inheritParams p_value
 #' @param ... Arguments passed to or from other methods.

@@ -60,12 +60,11 @@ ci.DirichletRegModel <- function(x,
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.DirichletRegModel <- function(model,
-                                             component = c("all", "conditional", "precision"),
+                                             component = "all",
                                              ...) {
-  component <- match.arg(component)
+  component <- match.arg(component, choices = c("all", "conditional", "precision"))
   params <- insight::get_parameters(model)
 
   out <- .data_frame(

@@ -4,10 +4,10 @@
 #'
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   or for the zero-inflated part of the model be returned? Applies to models
-#'   with zero-inflated component. `component` may be one of `"conditional"`,
-#'   `"zi"`, `"zero-inflated"`, `"dispersion"` or `"all"`
-#'   (default). May be abbreviated.
+#'   for the zero-inflated part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
+#'    `"all"` (default). May be abbreviated.
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'

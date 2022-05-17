@@ -13,7 +13,12 @@
 
 \method{p_value}{averaging}(model, component = c("conditional", "full"), ...)
 
-\method{p_value}{betareg}(model, component = c("all", "conditional", "precision"), ...)
+\method{p_value}{betareg}(
+  model,
+  component = c("all", "conditional", "precision"),
+  verbose = TRUE,
+  ...
+)
 
 \method{p_value}{cgam}(model, component = c("all", "conditional", "smooth_terms"), ...)
 
@@ -28,6 +33,8 @@ may be one of \code{"conditional"}, \code{"precision"}, \code{"scale"},
 \code{"smooth_terms"}, \code{"full"} or \code{"all"} (default).}
 
 \item{...}{Additional arguments}
+
+\item{verbose}{Toggle warnings and messages.}
 }
 \value{
 The p-values.

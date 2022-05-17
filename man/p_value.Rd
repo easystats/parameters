@@ -38,8 +38,8 @@ intervals.}
 \code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
 
 \item{component}{Model component for which parameters should be shown. See
-the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
-further details.}
+the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
+\code{\link[=p_value]{p_value()}} for further details.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance matrix,

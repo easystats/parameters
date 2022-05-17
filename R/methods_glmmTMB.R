@@ -35,7 +35,12 @@ model_parameters.glmmTMB <- function(model,
   }
 
   # sanity check, warn if unsupported argument is used.
-  dot_args <- .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1], verbose = verbose)
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
 
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
@@ -241,6 +246,15 @@ ci.glmmTMB <- function(x,
     return(NULL)
   }
 
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(x)[1],
+    function_name = "ci",
+    verbose = verbose
+  )
+
   # profiled CIs
   if (method == "profile") {
     pp <- stats::profile(x)
@@ -265,12 +279,20 @@ ci.glmmTMB <- function(x,
 #' @rdname standard_error
 #' @export
 standard_error.glmmTMB <- function(model,
-                                   effects = c("fixed", "random"),
-                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                   effects = "fixed",
+                                   component = "all",
                                    verbose = TRUE,
                                    ...) {
-  component <- match.arg(component)
-  effects <- match.arg(effects)
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated", "dispersion"))
+  effects <- match.arg(effects, choices = c("fixed", "random"))
+
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    function_name = "standard_error",
+    verbose = verbose
+  )
 
   if (effects == "random") {
     if (requireNamespace("TMB", quietly = TRUE) && requireNamespace("glmmTMB", quietly = TRUE)) {

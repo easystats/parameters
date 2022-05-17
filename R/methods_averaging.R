@@ -50,10 +50,9 @@ model_parameters.averaging <- function(model,
 }
 
 
-#' @rdname standard_error
 #' @export
-standard_error.averaging <- function(model, component = c("conditional", "full"), ...) {
-  component <- match.arg(component)
+standard_error.averaging <- function(model, component = "conditional", ...) {
+  component <- match.arg(component, choices = c("conditional", "full"))
   params <- insight::get_parameters(model, component = component)
   if (component == "full") {
     s <- summary(model)$coefmat.full

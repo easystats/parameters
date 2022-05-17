@@ -440,7 +440,12 @@ model_parameters.default <- function(model,
                                      vcov_args = NULL,
                                      ...) {
   # sanity check, warn if unsupported argument is used.
-  dots <- .check_dots(dots = list(...), not_allowed = c("include_sigma", "wb_component"), class(model)[1], verbose)
+  dots <- .check_dots(
+    dots = list(...),
+    not_allowed = c("include_sigma", "wb_component"),
+    class(model)[1],
+    verbose = verbose
+  )
 
   out <- tryCatch(
     {

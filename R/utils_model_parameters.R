@@ -345,14 +345,22 @@
 # the "vcov" argument - this should not be silently ignored, but rather the user
 # should be informed that robust SE are not available for that model.
 
-.check_dots <- function(dots, not_allowed, model_class, verbose = TRUE) {
+.check_dots <- function(dots, not_allowed, model_class, function_name = "model_parameters", verbose = TRUE) {
+  # remove arguments that are NULL
+  dots <- insight::compact_list(dots)
+
+  # return if no args
+  if (!length(dots) || is.null(dots)) {
+    return(NULL)
+  }
+
   not_allowed <- not_allowed[which(not_allowed %in% names(dots))]
   if (length(not_allowed)) {
     if (verbose) {
       warning(insight::format_message(
-        sprintf("Following arguments are not supported in `model_parameters()` for models of class '%s' and will be ignored:", model_class),
+        sprintf("Following arguments are not supported in `%s()` for models of class '%s' and will be ignored:", function_name, model_class),
         paste0("\"", not_allowed, "\"", collapse = ", "),
-        "Please run `model_parameters()` again without specifying the above mentioned arguments to obtain expected results."
+        sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name)
       ), call. = FALSE)
     }
     dots[not_allowed] <- NULL

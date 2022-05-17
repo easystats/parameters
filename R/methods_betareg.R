@@ -13,7 +13,12 @@ model_parameters.betareg <- function(model,
                                      verbose = TRUE,
                                      ...) {
   # sanity check, warn if unsupported argument is used.
-  dot_args <- .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1], verbose = verbose)
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
 
   component <- match.arg(component)
   if (component == "all") {
@@ -24,8 +29,8 @@ model_parameters.betareg <- function(model,
 
   ## TODO check merge by
 
-  out <- .model_parameters_generic(
-    model = model,
+  args <- list(
+    model,
     ci = ci,
     component = component,
     bootstrap = bootstrap,
@@ -34,9 +39,12 @@ model_parameters.betareg <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    ...
+    vcov = NULL,
+    vcov_args = NULL
   )
+  args <- c(args, dot_args)
 
+  out <- do.call(".model_parameters_generic", args)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
@@ -46,18 +54,37 @@ model_parameters.betareg <- function(model,
 ci.betareg <- function(x,
                        ci = .95,
                        component = "all",
+                       verbose = TRUE,
                        ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(x)[1],
+    function_name = "ci",
+    verbose = verbose
+  )
+
   component <- match.arg(component, choices = c("all", "conditional", "precision"))
-  .ci_generic(model = x, ci = ci, dof = Inf, component = component)
+  .ci_generic(model = x, ci = ci, dof = Inf, component = component, verbose = verbose)
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.betareg <- function(model,
-                                   component = c("all", "conditional", "precision"),
+                                   component = "all",
+                                   verbose = TRUE,
                                    ...) {
-  component <- match.arg(component)
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    function_name = "standard_error",
+    verbose = verbose
+  )
+
+  component <- match.arg(component, choices = c("all", "conditional", "precision"))
 
   params <- insight::get_parameters(model)
   cs <- do.call(rbind, stats::coef(summary(model)))
@@ -81,7 +108,17 @@ standard_error.betareg <- function(model,
 #' @export
 p_value.betareg <- function(model,
                             component = c("all", "conditional", "precision"),
+                            verbose = TRUE,
                             ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    function_name = "p_value",
+    verbose = verbose
+  )
+
   component <- match.arg(component)
 
   params <- insight::get_parameters(model)

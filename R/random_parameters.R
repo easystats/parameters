@@ -6,10 +6,10 @@
 #'
 #' @param model A mixed effects model (including `stanreg` models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   or for the zero-inflated part of the model be returned? Applies to models
-#'   with zero-inflated component. `component` may be one of
-#'   `"conditional"` (default), `"zi"` or `"zero_inflated"`.
-#'   May be abbreviated.
+#'   for the zero-inflated part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
+#'    `"all"` (default). May be abbreviated.
 #'
 #' @return A data frame with random effects statistics for the variance components,
 #'   including number of levels per random effect group, as well as complete
