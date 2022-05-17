@@ -1,4 +1,6 @@
-if (requiet("testthat") && requiet("parameters") && requiet("marginaleffects") && requiet("rstanarm")) {
+.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
+if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("marginaleffects") && requiet("rstanarm")) {
   test_that("model_parameters - marginaleffects (frequentist)", {
 
     # Frequentist
