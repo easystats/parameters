@@ -302,14 +302,13 @@ ci.merMod <- function(x,
 #' @rdname standard_error
 #' @export
 standard_error.merMod <- function(model,
-                                  effects = c("fixed", "random"),
+                                  effects = "fixed",
                                   method = NULL,
                                   vcov = NULL,
                                   vcov_args = NULL,
                                   ...) {
   dots <- list(...)
-
-  effects <- match.arg(effects)
+  effects <- match.arg(effects, choices = c("fixed", "random"))
 
   if (effects == "random") {
     out <- .standard_errors_random(model)

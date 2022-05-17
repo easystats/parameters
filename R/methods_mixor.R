@@ -47,7 +47,6 @@ ci.mixor <- function(x, ci = .95, effects = "all", ...) {
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.mixor <- function(model, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))

@@ -34,14 +34,13 @@ ci.zerocount <- ci.glmmTMB
 # standard error -----------------
 
 
-#' @rdname standard_error
 #' @export
 standard_error.zeroinfl <- function(model,
-                                    component = c("all", "conditional", "zi", "zero_inflated"),
+                                    component = "all",
                                     method = NULL,
                                     verbose = TRUE,
                                     ...) {
-  component <- match.arg(component)
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)
   }

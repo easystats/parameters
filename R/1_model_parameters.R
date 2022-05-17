@@ -9,11 +9,11 @@
 #'  \item{[Correlations, t-tests, ...][model_parameters.htest] (`htest`, `pairwise.htest`)}
 #'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, **afex**, ...)}
 #'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, **survey**, ...)}
+#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
 #'  \item{[Additive models][model_parameters.cgam] (`gam`, `gamm`, ...)}
 #'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
-#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, ...)}
+#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, **ordinal**, ...)}
 #'  \item{[Other special models][model_parameters.averaging] (`model.avg`, `betareg`, `glmx`, ...)}
-#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
 #'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (**BayesFactor**)}
 #'  \item{[Bayesian models][model_parameters.stanreg] (**rstanarm**, **brms**, **MCMCglmm**, **blavaan**, ...)}
 #'  \item{[PCA and FA][model_parameters.principal] (**psych**)}

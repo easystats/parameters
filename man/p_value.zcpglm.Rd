@@ -24,9 +24,14 @@ the documentation for your object's class in \code{\link[=model_parameters]{mode
 
 \item{...}{Additional arguments}
 
-\item{method}{For linear mixed models, \code{method} can be
-\code{\link[=p_value_kenward]{"kenward"}} or
-\code{\link[=p_value_satterthwaite]{"satterthwaite"}}.}
+\item{method}{Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): \code{"residual"},
+\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
+\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
+\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
+\emph{Confidence intervals and approximation of degrees of freedom} in
+\code{\link[=model_parameters]{model_parameters()}} for further details.}
 
 \item{verbose}{Toggle warnings and messages.}
 }

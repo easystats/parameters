@@ -28,11 +28,11 @@ Compute and extract model parameters. See the documentation for your object's cl
 \item{\link[=model_parameters.htest]{Correlations, t-tests, ...} (\code{htest}, \code{pairwise.htest})}
 \item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \strong{afex}, ...)}
 \item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \strong{survey}, ...)}
+\item{\link[=model_parameters.merMod]{Mixed models} (\strong{lme4}, \strong{nlme}, \strong{glmmTMB}, \strong{afex}, ...)}
 \item{\link[=model_parameters.cgam]{Additive models} (\code{gam}, \code{gamm}, ...)}
 \item{\link[=model_parameters.zcpglm]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
-\item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, ...)}
+\item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, \strong{ordinal}, ...)}
 \item{\link[=model_parameters.averaging]{Other special models} (\code{model.avg}, \code{betareg}, \code{glmx}, ...)}
-\item{\link[=model_parameters.merMod]{Mixed models} (\strong{lme4}, \strong{nlme}, \strong{glmmTMB}, \strong{afex}, ...)}
 \item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\strong{BayesFactor})}
 \item{\link[=model_parameters.stanreg]{Bayesian models} (\strong{rstanarm}, \strong{brms}, \strong{MCMCglmm}, \strong{blavaan}, ...)}
 \item{\link[=model_parameters.principal]{PCA and FA} (\strong{psych})}

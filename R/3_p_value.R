@@ -10,14 +10,13 @@
 #'  }
 #'
 #' @param model A statistical model.
-#' @param method For linear mixed models, `method` can be
-#'   [`"kenward"`][p_value_kenward] or
-#'   [`"satterthwaite"`][p_value_satterthwaite].
 #' @param adjust Character value naming the method used to adjust p-values or
 #'   confidence intervals. See `?emmeans::summary.emmGrid` for details.
 #' @param ... Additional arguments
 #' @inheritParams ci.default
 #' @inheritParams standard_error.default
+#'
+#' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @return A data frame with at least two columns: the parameter names and the
 #'   p-values. Depending on the model, may also include columns for model
