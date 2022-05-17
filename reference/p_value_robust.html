@@ -109,9 +109,14 @@ or <strong>clubSandwich</strong> packages. Please refer to their documentation (
 the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> or
 <code><a href="p_value.html">p_value()</a></code> for further details.</p></dd>
 <dt>method</dt>
-<dd><p>For linear mixed models, <code>method</code> can be
-<code><a href="p_value_kenward.html">"kenward"</a></code> or
-<code><a href="p_value_satterthwaite.html">"satterthwaite"</a></code>.</p></dd>
+<dd><p>Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> in
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></dd>
 <dt>...</dt>
 <dd><p>Additional arguments</p></dd>
 </dl></div>

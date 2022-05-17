@@ -65,7 +65,7 @@ parameters"><meta property="og:image" content="/reference/figures/card.png"><met
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Standard Errors</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, and 7 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/4_standard_error.R" class="external-link"><code>R/4_standard_error.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_base.R" class="external-link"><code>R/methods_base.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>standard_error.Rd</code></div>
     </div>
 
@@ -103,49 +103,12 @@ parameters</p>
 <span class="co"># S3 method for merMod</span>
 <span class="fu">standard_error</span><span class="op">(</span>
   <span class="va">model</span>,
-  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>,
+  effects <span class="op">=</span> <span class="st">"fixed"</span>,
   method <span class="op">=</span> <span class="cn">NULL</span>,
   vcov <span class="op">=</span> <span class="cn">NULL</span>,
   vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for poissonmfx</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for betamfx</span>
-<span class="fu">standard_error</span><span class="op">(</span>
-  <span class="va">model</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for MixMod</span>
-<span class="fu">standard_error</span><span class="op">(</span>
-  <span class="va">model</span>,
-  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span><span class="op">)</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for mixor</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for clm2</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"scale"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for zeroinfl</span>
-<span class="fu">standard_error</span><span class="op">(</span>
-  <span class="va">model</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
-  method <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for coxph</span>
-<span class="fu">standard_error</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -155,8 +118,8 @@ parameters</p>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
 <dt>component</dt>
-<dd><p>Model component for which parameters should be shown. See
-the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> or
+<dd><p>Model component for which standard errors should be shown.
+See the documentation for your object's class in <code><a href="model_parameters.html">model_parameters()</a></code> or
 <code><a href="p_value.html">p_value()</a></code> for further details.</p></dd>
 <dt>vcov</dt>
 <dd><p>Variance-covariance matrix used to compute uncertainty estimates
@@ -184,15 +147,20 @@ value <code>1</code> (unless the factor has numeric levels, which are converted
 to the corresponding numeric value). By default, <code>NA</code> is returned for
 factors or character vectors.</p></dd>
 <dt>effects</dt>
-<dd><p>Should standard errors for fixed effects or random effects be
-returned? Only applies to mixed models. May be abbreviated. When standard
-errors for random effects are requested, for each grouping factor a list of
-standard errors (per group level) for random intercepts and slopes is
-returned.</p></dd>
+<dd><p>Should standard errors for fixed effects (<code>"fixed"</code>), random
+effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
+to mixed models. May be abbreviated. When standard errors for random
+effects are requested, for each grouping factor a list of standard errors
+(per group level) for random intercepts and slopes is returned.</p></dd>
 <dt>method</dt>
-<dd><p>For linear mixed models, <code>method</code> can be
-<code><a href="p_value_kenward.html">"kenward"</a></code> or
-<code><a href="p_value_satterthwaite.html">"satterthwaite"</a></code>.</p></dd>
+<dd><p>Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> in
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
