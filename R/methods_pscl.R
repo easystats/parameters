@@ -18,15 +18,32 @@ model_parameters.zerocount <- model_parameters.zcpglm
 # ci -----------------
 
 #' @export
-ci.zeroinfl <- ci.glmmTMB
+ci.zeroinfl <- function(x,
+                        ci = .95,
+                        dof = NULL,
+                        method = "wald",
+                        component = "all",
+                        verbose = TRUE,
+                        ...) {
+  method <- tolower(method)
+  method <- match.arg(method, choices = c("wald", "normal", "residual", "robust"))
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+
+  if (is.null(.check_component(x, component, verbose = verbose))) {
+    return(NULL)
+  }
+
+  # all other
+  .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
+}
 
 
 #' @export
-ci.hurdle <- ci.glmmTMB
+ci.hurdle <- ci.zeroinfl
 
 
 #' @export
-ci.zerocount <- ci.glmmTMB
+ci.zerocount <- ci.zeroinfl
 
 
 
