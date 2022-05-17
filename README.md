@@ -269,10 +269,12 @@ In order to cite this package, please use the following command:
 ``` r
 citation("parameters")
 
-Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
-Exploring the Parameters of Statistical Models using R." _Journal of Open Source
-Software_, *5*(53), 2445. doi: 10.21105/joss.02445 (URL:
-https://doi.org/10.21105/joss.02445).
+To cite package 'parameters' in publications use:
+
+  Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
+  Exploring the Parameters of Statistical Models using R." _Journal of Open Source
+  Software_, *5*(53), 2445. doi:10.21105/joss.02445
+  <https://doi.org/10.21105/joss.02445>.
 
 A BibTeX entry for LaTeX users is
 
