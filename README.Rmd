@@ -165,18 +165,7 @@ lm(disp ~ ., data = mtcars) %>%
   model_parameters()
 ```
 
-## Miscellaneous
-
-This packages also contains a lot of [other useful functions](https://easystats.github.io/parameters/reference/index.html):
-
-### Describe a Distribution
-
-```{r, warning=FALSE, message=FALSE}
-data(iris)
-describe_distribution(iris)
-```
-
-### Citation
+## Citation
 
 In order to cite this package, please use the following command:
 
