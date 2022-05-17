@@ -17,6 +17,9 @@ model_parameters.bracl <- function(model,
                                    verbose = TRUE,
                                    ...) {
 
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(dots = list(...), not_allowed = c("vcov", "vcov_args"), class(model)[1], verbose = verbose)
+
   # detect number of levels of response
   nl <- tryCatch(
     {
