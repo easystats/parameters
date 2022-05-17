@@ -283,46 +283,30 @@
 <span class="co">#&gt; carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | &lt; .001</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="miscellaneous">Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"></a>
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>This packages also contains a lot of <a href="https://easystats.github.io/parameters/reference/index.html" class="external-link">other useful functions</a>:</p>
-<div class="section level3">
-<h3 id="describe-a-distribution">Describe a Distribution<a class="anchor" aria-label="anchor" href="#describe-a-distribution"></a>
-</h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="co">#&gt; Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing</span>
-<span class="co">#&gt; ----------------------------------------------------------------------------------------</span>
-<span class="co">#&gt; Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0</span>
-<span class="co">#&gt; Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0</span>
-<span class="co">#&gt; Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0</span>
-<span class="co">#&gt; Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0</span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
-</h3>
 <p>In order to cite this package, please use the following command:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
-<span id="cb9-5"><a href="#cb9-5"></a>Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="st"> </span><span class="fl">10.21105</span><span class="op">/</span><span class="kw">joss.02445</span> (URL<span class="op">:</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>).</span>
-<span id="cb9-7"><a href="#cb9-7"></a></span>
-<span id="cb9-8"><a href="#cb9-8"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  <span class="op">@</span>Article{,</span>
-<span id="cb9-11"><a href="#cb9-11"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
-<span id="cb9-12"><a href="#cb9-12"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
-<span id="cb9-13"><a href="#cb9-13"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
-<span id="cb9-14"><a href="#cb9-14"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
-<span id="cb9-15"><a href="#cb9-15"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
-<span id="cb9-16"><a href="#cb9-16"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
-<span id="cb9-17"><a href="#cb9-17"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
-<span id="cb9-18"><a href="#cb9-18"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
-<span id="cb9-19"><a href="#cb9-19"></a>  }</span></code></pre></div>
-</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>To cite package <span class="st">'parameters'</span> <span class="cf">in</span> publications use<span class="op">:</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="st">  </span>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="op">&lt;</span>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span><span class="op">&gt;</span>.</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="op">@</span>Article{,</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
+<span id="cb8-14"><a href="#cb8-14"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
+<span id="cb8-15"><a href="#cb8-15"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
+<span id="cb8-17"><a href="#cb8-17"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
+<span id="cb8-18"><a href="#cb8-18"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
+<span id="cb8-19"><a href="#cb8-19"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
+<span id="cb8-20"><a href="#cb8-20"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
+<span id="cb8-21"><a href="#cb8-21"></a>  }</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
