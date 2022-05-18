@@ -79,12 +79,11 @@ include smooth terms, but not random effects.
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
-if (require("MASS", quietly = TRUE)) {
-  model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
-  simulate_parameters(model)
-}
+model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
+simulate_parameters(model)
+
 \dontrun{
-if (require("glmmTMB") && require("MASS")) {
+if (require("glmmTMB", quietly = TRUE)) {
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),
     ziformula = ~mined,

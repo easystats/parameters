@@ -52,12 +52,10 @@ include smooth terms, but not random effects.
 }
 }
 \examples{
-if (require("MASS", quietly = TRUE)) {
-  model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
-  head(simulate_model(model))
-}
+model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
+head(simulate_model(model))
 \donttest{
-if (require("MASS", quietly = TRUE) && require("glmmTMB", quietly = TRUE)) {
+if (require("glmmTMB", quietly = TRUE)) {
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),
     ziformula = ~mined,

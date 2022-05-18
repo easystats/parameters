@@ -53,14 +53,12 @@ p_value.gam <- function(model, ...) {
 
 #' @export
 simulate_model.gam <- function(model, iterations = 1000, ...) {
-  insight::check_if_installed("MASS")
-
   if (is.null(iterations)) iterations <- 1000
 
   beta <- stats::coef(model)
   varcov <- insight::get_varcov(model, component = "all")
 
-  out <- as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+  out <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
