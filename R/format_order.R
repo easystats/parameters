@@ -4,7 +4,7 @@
 #'
 #' @param order value or vector of orders.
 #' @param textual Return number as words. If `FALSE`, will run [insight::format_value()].
-#' @inherit insight::format_number
+#' @param ... Arguments to be passed to [insight::format_value()] if `textual` is `FALSE`.
 #'
 #' @return A formatted string.
 #' @examples

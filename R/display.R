@@ -4,6 +4,7 @@
 #' @description Prints tables (i.e. data frame) in different output formats.
 #'   `print_md()` is a alias for `display(format = "markdown")`.
 #'
+#' @param x An object returned by [`model_parameters()`][model_parameters].
 #' @param object An object returned by [`model_parameters()`][model_parameters],
 #'   [`simulate_parameters()`][simulate_parameters],
 #'   [`equivalence_test()`][equivalence_test.lm] or
@@ -18,6 +19,10 @@
 #'   number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
 #'   to have scientific notation with 4 decimal places, or `digits = "signif5"`
 #'   for 5 significant figures (see also [signif()]).
+#' @param subtitle Table title (same as caption) and subtitle, as strings. If `NULL`,
+#'   no title or subtitle is printed, unless it is stored as attributes (`table_title`,
+#'   or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
+#'   data frames, `caption` may be a list of table captions, one for each table.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table

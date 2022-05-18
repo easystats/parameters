@@ -13,6 +13,9 @@
 #'   cell proportions/counts for Bayesian contingency table analysis (from
 #'   `BayesFactor::contingencyTableBF()`). Defaults to `FALSE`, as this
 #'   information is often redundant.
+#' @param cramers_v Compute Cramer's V or phi as index of effect size.
+#'   Can be `"raw"` or `"adjusted"` (effect size will be bias-corrected).
+#'   Only applies to objects from `chisq.test()`.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest

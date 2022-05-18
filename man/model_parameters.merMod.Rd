@@ -280,10 +280,12 @@ variances always use a Wald t-distribution approximation.
 
 For some models from package \strong{glmmTMB}, both the dispersion parameter and
 the residual variance from the random effects parameters are shown. Usually,
-these are the same but presented on different scales, e.g.\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+these are the same but presented on different scales, e.g.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 exp(fixef(model)$disp) # 0.09902987
 sigma(model)^2         # 0.09902987
-}
+}\if{html}{\out{</div>}}
 
 For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.
