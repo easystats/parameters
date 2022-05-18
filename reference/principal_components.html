@@ -308,12 +308,10 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in">  <span class="co"># which variables from the original data belong to which extracted component?</span></span>
 <span class="r-in">  <span class="fu">closest_component</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
 <span class="r-in">  <span class="co"># rotated_data(pca)  # TODO: doesn't work</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  mpg  cyl disp   hp drat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1    1    1    1    2 </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co"># Automated number of components</span></span>
-<span class="r-in"><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span class="r-in">  <span class="co"># Automated number of components</span></span>
+<span class="r-in">  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
