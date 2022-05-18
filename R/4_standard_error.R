@@ -45,15 +45,16 @@
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
-#'
 #' standard_error(model)
 #'
-#' standard_error(model, vcov = "HC3")
+#' if (require("sandwich") && require("clubSandwich")) {
+#'   standard_error(model, vcov = "HC3")
 #'
-#' standard_error(model,
-#'   vcov = "vcovCL",
-#'   vcov_args = list(cluster = iris$Species)
-#' )
+#'   standard_error(model,
+#'     vcov = "vcovCL",
+#'     vcov_args = list(cluster = iris$Species)
+#'   )
+#' }
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")
