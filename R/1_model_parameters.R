@@ -397,18 +397,22 @@ parameters <- model_parameters
 #' model_parameters(model)
 #'
 #' # bootstrapped parameters
-#' model_parameters(model, bootstrap = TRUE)
+#' if (require("boot", quietly = TRUE)) {
+#'   model_parameters(model, bootstrap = TRUE)
+#' }
 #'
 #' # standardized parameters
 #' model_parameters(model, standardize = "refit")
 #'
 #' # robust, heteroskedasticity-consistent standard errors
-#' model_parameters(model, vcov = "HC3")
+#' if (require("sandwich") && require("clubSandwich")) {
+#'   model_parameters(model, vcov = "HC3")
 #'
-#' model_parameters(model,
-#'   vcov = "vcovCL",
-#'   vcov_args = list(cluster = mtcars$cyl)
-#' )
+#'   model_parameters(model,
+#'     vcov = "vcovCL",
+#'     vcov_args = list(cluster = mtcars$cyl)
+#'   )
+#' }
 #'
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)
