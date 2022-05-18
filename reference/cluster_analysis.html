@@ -213,7 +213,9 @@ for clustering.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1   -1.3232208  -0.3718921   -1.1334386  -1.1111395</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2   -0.8135055   1.3145538   -1.2825372  -1.2156393</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       3    0.5690971  -0.3705265    0.6888118   0.6609378</span>
-<span class="r-in"><span class="fu"><a href="cluster_discrimination.html">cluster_discrimination</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Perform LDA</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"MASS"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="fu"><a href="cluster_discrimination.html">cluster_discrimination</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Perform LDA</span></span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Accuracy of Cluster Group Classification via Linear Discriminant Analysis (LDA)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Group Accuracy</span>
