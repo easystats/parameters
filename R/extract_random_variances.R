@@ -287,6 +287,12 @@
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
+
+  ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
+  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+    return(out)
+  }
+
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
