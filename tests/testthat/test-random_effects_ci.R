@@ -170,10 +170,11 @@ if (.runThisTest && !osx &&
 
 
 
+  data(sleepstudy)
+  set.seed(123)
+  sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
   m2 <- lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
-
-  ## TODO: fix me!
   m5 <- lmer(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy)
 
   mp2 <- model_parameters(m2)
@@ -190,6 +191,21 @@ if (.runThisTest && !osx &&
     expect_equal(
       mp2$Parameter,
       c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
+    )
+  })
+
+  test_that("random effects CIs, simple slope", {
+    expect_equal(
+      mp5$CI_low,
+      c(241.61021, 7.43503, 4.11446, 2.69857, -0.40595, 24.632),
+      tolerance = 1e-3,
+      ignore_attr = TRUE
+    )
+
+    expect_equal(
+      mp5$Parameter,
+      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months: Subject)",
+        "SD (Observations)")
     )
   })
 
