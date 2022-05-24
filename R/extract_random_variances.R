@@ -182,9 +182,12 @@
       ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ": ", ran_intercept$Group[1], ")")
       ran_corr$Group <- ran_intercept$Group[1]
     } else if (!is.null(ran_groups) && colnames(ran_corr)[1] == ran_groups[1]) {
-      colnames(ran_corr)[1] <- "Coefficient"
-      ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
-      ran_corr$Group <- ran_groups[1]
+      # colnames(ran_corr)[1] <- "Coefficient"
+      # ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
+      # ran_corr$Group <- ran_groups[1]
+      # this occurs when model has no random intercept
+      # will be captures by random slope-slope-correlation
+      ran_corr <- NULL
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
@@ -216,7 +219,7 @@
     grp <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\1", term)
     slope1 <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\2", term)
     slope2 <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\3", term)
-    ran_slopes_corr$Parameter <- paste0("Cor (", slope1, "~", slope2, ")")
+    ran_slopes_corr$Parameter <- paste0("Cor (", slope1, "~", slope2, ": ", grp, ")")
     ran_slopes_corr$Group <- grp
   }
 
@@ -380,31 +383,13 @@
             }
 
             # correlations w/o intercept? usually only for factors
-            rnd_slopes <- unlist(insight::find_random_slopes(model))
-            if (!is.null(rnd_slopes)) {
-              model_data <- stats::model.frame(model)[rnd_slopes]
-              for (i in rnd_slopes) {
-                if (is.factor(model_data[[i]])) {
-                  referece_level <- paste0(i, levels(model_data[[i]])[1])
-                  var_ci_corr_param2 <- grepl(paste0("(.*)\\.\\Q", referece_level, "\\E"), var_ci$Parameter) & !var_ci_corr_param
-                  if (any(var_ci_corr_param2)) {
-                    var_ci$Parameter[var_ci_corr_param2] <- gsub(
-                      paste0("(.*)\\.\\Q", referece_level, "\\E"),
-                      paste0("Cor (Reference~\\1)"),
-                      var_ci$Parameter[var_ci_corr_param2]
-                    )
-                  }
-                }
-              }
-            }
-
-            # correlation among slopes. we need to recover the (categorical)
+            # or: correlation among slopes. we need to recover the (categorical)
             # term names from our prepared data frame, then match vcov-names
             rnd_slope_corr <- grepl("^Cor \\((?!Intercept~)", out$Parameter, perl = TRUE)
             if (any(rnd_slope_corr)) {
               for (gr in setdiff(unique(out$Group), "Residual")) {
                 rnd_slope_corr_grp <- rnd_slope_corr & out$Group == gr
-                dummy <- gsub("Cor \\((.*)~(.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
+                dummy <- gsub("Cor \\((.*)~(.*): (.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
                 var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp]
               }
             }
