@@ -215,10 +215,10 @@
   if (!is.null(ran_slopes_corr) && nrow(ran_slopes_corr) > 0) {
     term <- rownames(ran_slopes_corr)
     colnames(ran_slopes_corr) <- "Coefficient"
-    rg <- paste0("(", paste0(ran_groups, collapse = "|"), ")")
-    grp <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\1", term)
-    slope1 <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\2", term)
-    slope2 <- gsub(paste0(rg, "\\.", "(.*)", "-", "(.*)"), "\\3", term)
+    rg <- paste0("(", paste0(c(ran_groups, paste0(ran_groups, "\\.\\d+")), collapse = "|"), ")")
+    grp <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\1", term)
+    slope1 <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\2", term)
+    slope2 <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\3", term)
     ran_slopes_corr$Parameter <- paste0("Cor (", slope1, "~", slope2, ": ", grp, ")")
     ran_slopes_corr$Group <- grp
   }
@@ -961,7 +961,7 @@
 
   rho00 <- tryCatch(
     {
-      lapply(corrs, function(d) {
+      insight::compact_list(lapply(corrs, function(d) {
         d[upper.tri(d, diag = TRUE)] <- NA
         d <- as.data.frame(d)
 
@@ -969,10 +969,14 @@
         d <- d[stats::complete.cases(d), ]
         d <- d[!d$Parameter1 %in% c("Intercept", "(Intercept)"), ]
 
+        if (nrow(d) == 0) {
+          return(NULL)
+        }
+
         d$Parameter <- paste0(d$Parameter1, "-", d$Parameter2)
         d$Parameter1 <- d$Parameter2 <- NULL
         stats::setNames(d$Value, d$Parameter)
-      })
+      }))
     },
     error = function(e) {
       NULL
