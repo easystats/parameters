@@ -427,18 +427,28 @@
             delta_se <- out$SE[!var_ci_corr_param] / coefs
             out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
             out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+
+            # warn if singular fit
+            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
+              warning(insight::format_message(
+                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
+              ), call. = FALSE)
+            }
           },
           error = function(e) {
-            if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-              message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
-            }
-            if (grepl("exactly singular", e$message, fixed = TRUE) ||
-              grepl("computationally singular", e$message, fixed = TRUE) ||
-              grepl("Exact singular", e$message, fixed = TRUE)) {
-              message(insight::format_message(
-                "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-              ))
+            if (isTRUE(verbose)) {
+              if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
+                message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+              }
+              if (grepl("exactly singular", e$message, fixed = TRUE) ||
+                  grepl("computationally singular", e$message, fixed = TRUE) ||
+                  grepl("Exact singular", e$message, fixed = TRUE)) {
+                message(insight::format_message(
+                  "Cannot compute standard errors and confidence intervals for random effects parameters.",
+                  "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+                ))
+              }
             }
           }
         )
@@ -585,6 +595,12 @@
         # merge(out, var_ci, sort = FALSE, all.x = TRUE)
       },
       error = function(e) {
+        if (isTRUE(verbose)) {
+          message(insight::format_message(
+            "Cannot compute standard errors and confidence intervals for random effects parameters.",
+            "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+          ))
+        }
         out
       }
     )
