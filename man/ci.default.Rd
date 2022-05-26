@@ -44,8 +44,8 @@ options (which vary depending on the model class): \code{"residual"},
 \item{...}{Additional arguments}
 
 \item{component}{Model component for which parameters should be shown. See
-the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
-further details.}
+the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
+\code{\link[=p_value]{p_value()}} for further details.}
 
 \item{verbose}{Toggle warnings and messages.}
 

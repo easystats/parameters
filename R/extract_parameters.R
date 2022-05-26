@@ -31,9 +31,9 @@
     standardize <- NULL
   }
 
-  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
+  if (!is.null(standardize) && !requireNamespace("datawizard", quietly = TRUE)) {
     if (verbose) {
-      insight::format_message(warning("Package 'effectsize' required to calculate standardized coefficients. Please install it.", call. = FALSE))
+      insight::format_message(warning("Package 'datawizard' required to calculate standardized coefficients. Please install it.", call. = FALSE))
     }
     standardize <- NULL
   }
@@ -258,7 +258,7 @@
     attr(temp_pars, "ci") <- ci
     attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
-    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    std_parms <- standardize_parameters(temp_pars, method = standardize)
     parameters$Std_Coefficient <- std_parms$Std_Coefficient
     parameters$SE <- attr(std_parms, "standard_error")
 
@@ -595,7 +595,7 @@
     attr(temp_pars, "ci") <- ci
     attr(temp_pars, "object_name") <- model # pass the model as is (this is a cheat - teehee!)
 
-    std_parms <- effectsize::standardize_parameters(temp_pars, method = standardize)
+    std_parms <- standardize_parameters(temp_pars, method = standardize)
     parameters$Std_Coefficient <- std_parms$Std_Coefficient
     parameters$SE <- attr(std_parms, "standard_error")
 
@@ -716,12 +716,6 @@
                                          drop_parameters = NULL,
                                          verbose = TRUE,
                                          ...) {
-  # check if standardization is required and package available
-  if (!is.null(standardize) && !requireNamespace("effectsize", quietly = TRUE)) {
-    insight::print_color("Package 'effectsize' required to calculate standardized coefficients. Please install it.\n", "red")
-    standardize <- NULL
-  }
-
   # no ROPE for multi-response models
   if (insight::is_multivariate(model)) {
     test <- setdiff(test, c("rope", "p_rope"))
@@ -763,7 +757,7 @@
     # Don't test BF on standardized params
     test_no_BF <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
     if (length(test_no_BF) == 0) test_no_BF <- NULL
-    std_post <- effectsize::standardize_posteriors(model, method = standardize)
+    std_post <- standardize_posteriors(model, method = standardize)
     std_parameters <- bayestestR::describe_posterior(
       std_post,
       centrality = centrality,

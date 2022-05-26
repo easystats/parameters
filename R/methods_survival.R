@@ -4,7 +4,6 @@
 #################### .coxph ------
 
 
-#' @rdname standard_error
 #' @export
 standard_error.coxph <- function(model, method = NULL, ...) {
   robust <- !is.null(method) && method == "robust"

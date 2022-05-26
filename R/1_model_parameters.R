@@ -9,11 +9,11 @@
 #'  \item{[Correlations, t-tests, ...][model_parameters.htest] (`htest`, `pairwise.htest`)}
 #'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, **afex**, ...)}
 #'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, **survey**, ...)}
+#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
 #'  \item{[Additive models][model_parameters.cgam] (`gam`, `gamm`, ...)}
 #'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
-#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, ...)}
+#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, **ordinal**, ...)}
 #'  \item{[Other special models][model_parameters.averaging] (`model.avg`, `betareg`, `glmx`, ...)}
-#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
 #'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (**BayesFactor**)}
 #'  \item{[Bayesian models][model_parameters.stanreg] (**rstanarm**, **brms**, **MCMCglmm**, **blavaan**, ...)}
 #'  \item{[PCA and FA][model_parameters.principal] (**psych**)}
@@ -49,7 +49,7 @@
 #'   faster.
 #'
 #' @section Standardization of model coefficients:
-#' Standardization is based on [effectsize::standardize_parameters()]. In case
+#' Standardization is based on [standardize_parameters()]. In case
 #' of `standardize = "refit"`, the data used to fit the model will be
 #' standardized and the model is completely refitted. In such cases, standard
 #' errors and confidence intervals refer to the standardized coefficient. The
@@ -312,7 +312,7 @@ parameters <- model_parameters
 #' @param standardize The method used for standardizing the parameters. Can be
 #'   `NULL` (default; no standardization), `"refit"` (for re-fitting the model
 #'   on standardized data) or one of `"basic"`, `"posthoc"`, `"smart"`,
-#'   `"pseudo"`. See 'Details' in [effectsize::standardize_parameters()].
+#'   `"pseudo"`. See 'Details' in [standardize_parameters()].
 #'   **Important:**
 #'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
 #'   factors), which may be a different behaviour compared to other R packages
@@ -397,18 +397,22 @@ parameters <- model_parameters
 #' model_parameters(model)
 #'
 #' # bootstrapped parameters
-#' model_parameters(model, bootstrap = TRUE)
+#' if (require("boot", quietly = TRUE)) {
+#'   model_parameters(model, bootstrap = TRUE)
+#' }
 #'
 #' # standardized parameters
 #' model_parameters(model, standardize = "refit")
 #'
 #' # robust, heteroskedasticity-consistent standard errors
-#' model_parameters(model, vcov = "HC3")
+#' if (require("sandwich") && require("clubSandwich")) {
+#'   model_parameters(model, vcov = "HC3")
 #'
-#' model_parameters(model,
-#'   vcov = "vcovCL",
-#'   vcov_args = list(cluster = mtcars$cyl)
-#' )
+#'   model_parameters(model,
+#'     vcov = "vcovCL",
+#'     vcov_args = list(cluster = mtcars$cyl)
+#'   )
+#' }
 #'
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)
@@ -440,7 +444,12 @@ model_parameters.default <- function(model,
                                      vcov_args = NULL,
                                      ...) {
   # sanity check, warn if unsupported argument is used.
-  dots <- .check_dots(dots = list(...), not_allowed = c("include_sigma", "wb_component"), class(model)[1], verbose)
+  dots <- .check_dots(
+    dots = list(...),
+    not_allowed = c("include_sigma", "wb_component"),
+    class(model)[1],
+    verbose = verbose
+  )
 
   out <- tryCatch(
     {

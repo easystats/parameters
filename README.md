@@ -244,35 +244,19 @@ lm(disp ~ ., data = mtcars) %>%
 #> carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | < .001
 ```
 
-## Miscellaneous
-
-This packages also contains a lot of [other useful
-functions](https://easystats.github.io/parameters/reference/index.html):
-
-### Describe a Distribution
-
-``` r
-data(iris)
-describe_distribution(iris)
-#> Variable     | Mean |   SD |  IQR |        Range | Skewness | Kurtosis |   n | n_Missing
-#> ----------------------------------------------------------------------------------------
-#> Sepal.Length | 5.84 | 0.83 | 1.30 | [4.30, 7.90] |     0.31 |    -0.55 | 150 |         0
-#> Sepal.Width  | 3.06 | 0.44 | 0.52 | [2.00, 4.40] |     0.32 |     0.23 | 150 |         0
-#> Petal.Length | 3.76 | 1.77 | 3.52 | [1.00, 6.90] |    -0.27 |    -1.40 | 150 |         0
-#> Petal.Width  | 1.20 | 0.76 | 1.50 | [0.10, 2.50] |    -0.10 |    -1.34 | 150 |         0
-```
-
-### Citation
+## Citation
 
 In order to cite this package, please use the following command:
 
 ``` r
 citation("parameters")
 
-Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
-Exploring the Parameters of Statistical Models using R." _Journal of Open Source
-Software_, *5*(53), 2445. doi: 10.21105/joss.02445 (URL:
-https://doi.org/10.21105/joss.02445).
+To cite package 'parameters' in publications use:
+
+  Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
+  Exploring the Parameters of Statistical Models using R." _Journal of Open Source
+  Software_, *5*(53), 2445. doi:10.21105/joss.02445
+  <https://doi.org/10.21105/joss.02445>.
 
 A BibTeX entry for LaTeX users is
 

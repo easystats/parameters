@@ -212,7 +212,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
   }
 
   # merge random and fixed effects, if necessary
@@ -302,14 +302,13 @@ ci.merMod <- function(x,
 #' @rdname standard_error
 #' @export
 standard_error.merMod <- function(model,
-                                  effects = c("fixed", "random"),
+                                  effects = "fixed",
                                   method = NULL,
                                   vcov = NULL,
                                   vcov_args = NULL,
                                   ...) {
   dots <- list(...)
-
-  effects <- match.arg(effects)
+  effects <- match.arg(effects, choices = c("fixed", "random"))
 
   if (effects == "random") {
     out <- .standard_errors_random(model)

@@ -17,6 +17,14 @@ model_parameters.bracl <- function(model,
                                    verbose = TRUE,
                                    ...) {
 
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
+
   # detect number of levels of response
   nl <- tryCatch(
     {
@@ -34,8 +42,8 @@ model_parameters.bracl <- function(model,
     merge_by <- "Parameter"
   }
 
-  out <- .model_parameters_generic(
-    model = model,
+  args <- list(
+    model,
     ci = ci,
     bootstrap = bootstrap,
     iterations = iterations,
@@ -43,16 +51,28 @@ model_parameters.bracl <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    ...
+    vcov = NULL,
+    vcov_args = NULL
   )
+  args <- c(args, dot_args)
 
+  out <- do.call(".model_parameters_generic", args)
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   out
 }
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, ...) {
+ci.bracl <- function(x, ci = .95, method = NULL, verbose = TRUE, ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(x)[1],
+    function_name = "ci",
+    verbose = verbose
+  )
+
   params <- insight::get_parameters(x)
   out <- .ci_generic(model = x, ci = ci, method = method, ...)
   if ("Response" %in% colnames(params)) {
@@ -63,7 +83,16 @@ ci.bracl <- function(x, ci = .95, method = NULL, ...) {
 
 
 #' @export
-standard_error.bracl <- function(model, ...) {
+standard_error.bracl <- function(model, verbose = TRUE, ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    function_name = "standard_error",
+    verbose = verbose
+  )
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   se <- smry[[2]]
   names(se) <- rownames(smry)
@@ -79,7 +108,16 @@ standard_error.bracl <- function(model, ...) {
 
 
 #' @export
-p_value.bracl <- function(model, ...) {
+p_value.bracl <- function(model, verbose = TRUE, ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    function_name = "p_value",
+    verbose = verbose
+  )
+
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   p <- smry[[4]]
   names(p) <- rownames(smry)

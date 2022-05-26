@@ -29,12 +29,11 @@
 #'   }
 #'
 #' @examples
-#' library(parameters)
-#'
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' simulate_parameters(model)
+#'
 #' \dontrun{
-#' if (require("glmmTMB")) {
+#' if (require("glmmTMB", quietly = TRUE)) {
 #'   model <- glmmTMB(
 #'     count ~ spp + mined + (1 | site),
 #'     ziformula = ~mined,

@@ -220,10 +220,10 @@ if (require("psych")) {
   # which variables from the original data belong to which extracted component?
   closest_component(pca)
   # rotated_data(pca)  # TODO: doesn't work
-}
 
-# Automated number of components
-principal_components(mtcars[, 1:4], n = "auto")
+  # Automated number of components
+  principal_components(mtcars[, 1:4], n = "auto")
+}
 }
 
 

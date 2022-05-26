@@ -116,33 +116,21 @@
                                              ci_method = NULL,
                                              verbose = FALSE,
                                              ...) {
+
   varcorr <- .get_variance_information(model, component)
-  ran_intercept <- tryCatch(
-    {
-      data.frame(.random_intercept_variance(varcorr))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
 
-  ran_slope <- tryCatch(
-    {
-      data.frame(.random_slope_variance(model, varcorr))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  ran_intercept <- tryCatch(data.frame(.random_intercept_variance(varcorr)),
+                            error = function(e) NULL)
 
-  ran_corr <- tryCatch(
-    {
-      data.frame(.random_slope_intercept_corr(model, varcorr))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  ran_slope <- tryCatch(data.frame(.random_slope_variance(model, varcorr)),
+                        error = function(e) NULL)
+
+  ran_corr <- tryCatch(data.frame(.random_slope_intercept_corr(model, varcorr)),
+                       error = function(e) NULL)
+
+  ran_slopes_corr <- tryCatch(data.frame(.random_slopes_corr(model, varcorr)),
+                              error = function(e) NULL)
+
 
   # sigma/dispersion only once,
   if (component == "conditional") {
@@ -151,6 +139,7 @@
     ran_sigma <- NULL
   }
 
+
   # random intercept - tau00
   if (!is.null(ran_intercept) && nrow(ran_intercept) > 0) {
     colnames(ran_intercept) <- "Coefficient"
@@ -158,6 +147,7 @@
     ran_intercept$Parameter <- "SD (Intercept)"
   }
   ran_groups_int <- ran_intercept$Group
+
 
   # random slope - tau11
   if (!is.null(ran_slope) && nrow(ran_slope) > 0) {
@@ -179,16 +169,25 @@
 
   ran_groups <- unique(c(ran_groups_int, ran_groups_slp))
 
+
   # random slope-intercept correlation - rho01
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
-    if (!is.null(ran_intercept$Group) && colnames(ran_corr)[1] == ran_intercept$Group[1]) {
+    if (ncol(ran_corr) > 1 && all(colnames(ran_corr) %in% ran_groups)) {
+      ran_corr <- datawizard::reshape_longer(ran_corr, colnames_to = "Group", values_to = "Coefficient", rows_to = "Slope")
+      ran_corr$Parameter <- paste0("Cor (Intercept~", ran_corr$Slope, ": ", ran_intercept$Group, ")")
+      ran_corr <- datawizard::data_reorder(ran_corr, select = c("Parameter", "Coefficient", "Group"))
+      ran_corr$Slope <- NULL
+    } else if (!is.null(ran_intercept$Group) && colnames(ran_corr)[1] == ran_intercept$Group[1]) {
       colnames(ran_corr)[1] <- "Coefficient"
       ran_corr$Parameter <- paste0("Cor (Intercept~", row.names(ran_corr), ": ", ran_intercept$Group[1], ")")
       ran_corr$Group <- ran_intercept$Group[1]
     } else if (!is.null(ran_groups) && colnames(ran_corr)[1] == ran_groups[1]) {
-      colnames(ran_corr)[1] <- "Coefficient"
-      ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
-      ran_corr$Group <- ran_groups[1]
+      # colnames(ran_corr)[1] <- "Coefficient"
+      # ran_corr$Parameter <- paste0("Cor (Reference~", row.names(ran_corr), ")")
+      # ran_corr$Group <- ran_groups[1]
+      # this occurs when model has no random intercept
+      # will be captures by random slope-slope-correlation
+      ran_corr <- NULL
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
@@ -211,6 +210,20 @@
     }
   }
 
+
+  # random slope correlation - rho00
+  if (!is.null(ran_slopes_corr) && nrow(ran_slopes_corr) > 0) {
+    term <- rownames(ran_slopes_corr)
+    colnames(ran_slopes_corr) <- "Coefficient"
+    rg <- paste0("(", paste0(c(ran_groups, paste0(ran_groups, "\\.\\d+")), collapse = "|"), ")")
+    grp <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\1", term)
+    slope1 <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\2", term)
+    slope2 <- gsub(paste0(rg, "\\.(.*)-(.*)"), "\\3", term)
+    ran_slopes_corr$Parameter <- paste0("Cor (", slope1, "~", slope2, ": ", grp, ")")
+    ran_slopes_corr$Group <- grp
+  }
+
+
   # residuals - sigma
   if (!is.null(ran_sigma) && nrow(ran_sigma) > 0) {
     colnames(ran_sigma) <- "Coefficient"
@@ -221,7 +234,7 @@
   # row bind all random effect variances, if possible
   out <- tryCatch(
     {
-      out_list <- datawizard::compact_list(list(ran_intercept, ran_slope, ran_corr, ran_sigma))
+      out_list <- insight::compact_list(list(ran_intercept, ran_slope, ran_corr, ran_slopes_corr, ran_sigma))
       do.call(rbind, out_list)
     },
     error = function(e) {
@@ -287,6 +300,12 @@
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
+
+  ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
+  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+    return(out)
+  }
+
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
@@ -358,28 +377,20 @@
             var_ci$Parameter[var_ci$Parameter == "(Intercept)"] <- "SD (Intercept)"
             # correlations
             var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
-            var_ci$Parameter[var_ci_corr_param] <- gsub(
-              "(.*)\\.\\(Intercept\\)",
-              paste0("Cor (Intercept~\\1: ", var_ci$Group[var_ci_corr_param], ")"),
-              var_ci$Parameter[var_ci_corr_param]
-            )
+            if (any(var_ci_corr_param)) {
+              rnd_slope_terms <- gsub("(.*)\\.\\(Intercept\\)", "\\1", var_ci$Parameter[var_ci_corr_param])
+              var_ci$Parameter[var_ci_corr_param] <- paste0("Cor (Intercept~", rnd_slope_terms, ": ", var_ci$Group[var_ci_corr_param], ")")
+            }
 
             # correlations w/o intercept? usually only for factors
-            rnd_slopes <- unlist(insight::find_random_slopes(model))
-            if (!is.null(rnd_slopes)) {
-              model_data <- stats::model.frame(model)[rnd_slopes]
-              for (i in rnd_slopes) {
-                if (is.factor(model_data[[i]])) {
-                  referece_level <- paste0(i, levels(model_data[[i]])[1])
-                  var_ci_corr_param2 <- grepl(paste0("(.*)\\.\\Q", referece_level, "\\E"), var_ci$Parameter) & !var_ci_corr_param
-                  if (any(var_ci_corr_param2)) {
-                    var_ci$Parameter[var_ci_corr_param2] <- gsub(
-                      paste0("(.*)\\.\\Q", referece_level, "\\E"),
-                      paste0("Cor (Reference~\\1)"),
-                      var_ci$Parameter[var_ci_corr_param2]
-                    )
-                  }
-                }
+            # or: correlation among slopes. we need to recover the (categorical)
+            # term names from our prepared data frame, then match vcov-names
+            rnd_slope_corr <- grepl("^Cor \\((?!Intercept~)", out$Parameter, perl = TRUE)
+            if (any(rnd_slope_corr)) {
+              for (gr in setdiff(unique(out$Group), "Residual")) {
+                rnd_slope_corr_grp <- rnd_slope_corr & out$Group == gr
+                dummy <- gsub("Cor \\((.*)~(.*): (.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
+                var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp]
               }
             }
 
@@ -416,18 +427,28 @@
             delta_se <- out$SE[!var_ci_corr_param] / coefs
             out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
             out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+
+            # warn if singular fit
+            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
+              message(insight::format_message(
+                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
+              ))
+            }
           },
           error = function(e) {
-            if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-              message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
-            }
-            if (grepl("exactly singular", e$message, fixed = TRUE) ||
-              grepl("computationally singular", e$message, fixed = TRUE) ||
-              grepl("Exact singular", e$message, fixed = TRUE)) {
-              message(insight::format_message(
-                "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-              ))
+            if (isTRUE(verbose)) {
+              if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
+                message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+              }
+              if (grepl("exactly singular", e$message, fixed = TRUE) ||
+                  grepl("computationally singular", e$message, fixed = TRUE) ||
+                  grepl("Exact singular", e$message, fixed = TRUE)) {
+                message(insight::format_message(
+                  "Cannot compute standard errors and confidence intervals for random effects parameters.",
+                  "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+                ))
+              }
             }
           }
         )
@@ -574,6 +595,12 @@
         # merge(out, var_ci, sort = FALSE, all.x = TRUE)
       },
       error = function(e) {
+        if (isTRUE(verbose)) {
+          message(insight::format_message(
+            "Cannot compute standard errors and confidence intervals for random effects parameters.",
+            "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+          ))
+        }
         out
       }
     )
@@ -914,7 +941,7 @@
   } else {
     corrs <- lapply(varcorr, attr, "correlation")
     rho01 <- sapply(corrs, function(i) {
-      if (!is.null(i)) {
+      if (!is.null(i) && colnames(i)[1] == "(Intercept)") {
         i[-1, 1]
       } else {
         NULL
@@ -932,13 +959,25 @@
   corrs <- lapply(varcorr, attr, "correlation")
   rnd_slopes <- unlist(insight::find_random_slopes(model))
 
-  if (length(rnd_slopes) < 2) {
+  # check if any categorical random slopes. we then have
+  # correlation among factor levels
+  cat_random_slopes <- tryCatch(
+    {
+      d <- insight::get_data(model)[rnd_slopes]
+      any(sapply(d, is.factor))
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  if (length(rnd_slopes) < 2 && !isTRUE(cat_random_slopes)) {
     return(NULL)
   }
 
   rho00 <- tryCatch(
     {
-      lapply(corrs, function(d) {
+      insight::compact_list(lapply(corrs, function(d) {
         d[upper.tri(d, diag = TRUE)] <- NA
         d <- as.data.frame(d)
 
@@ -946,10 +985,14 @@
         d <- d[stats::complete.cases(d), ]
         d <- d[!d$Parameter1 %in% c("Intercept", "(Intercept)"), ]
 
+        if (nrow(d) == 0) {
+          return(NULL)
+        }
+
         d$Parameter <- paste0(d$Parameter1, "-", d$Parameter2)
         d$Parameter1 <- d$Parameter2 <- NULL
         stats::setNames(d$Value, d$Parameter)
-      })
+      }))
     },
     error = function(e) {
       NULL

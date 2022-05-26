@@ -125,12 +125,8 @@ p_value.numeric <- function(model, null = 0, ...) {
   # https://stats.stackexchange.com/a/28725/293056
   x <- stats::na.omit(model)
   xM <- mean(x)
-  if (is.null(null) || all(is.na(null))) {
-    x0 <- x - xM
-  } else {
-    x0 <- null
-  }
-  k <- sum(x > x0)
+  x0 <- x - xM
+  k <- sum(abs(x0) > abs(xM - null)) # two tailed p-value
   N <- length(x)
   (k + 1) / (N + 1)
 }

@@ -24,11 +24,14 @@
 #'   the `vcov` argument. This function is typically supplied by the **sandwich**
 #'   or **clubSandwich** packages. Please refer to their documentation (e.g.,
 #'   `?sandwich::vcovHAC`) to see the list of available arguments.
-#' @param effects Should standard errors for fixed effects or random effects be
-#'   returned? Only applies to mixed models. May be abbreviated. When standard
-#'   errors for random effects are requested, for each grouping factor a list of
-#'   standard errors (per group level) for random intercepts and slopes is
-#'   returned.
+#' @param effects Should standard errors for fixed effects (`"fixed"`), random
+#'   effects (`"random"`), or both (`"all"`) be returned? Only applies
+#'   to mixed models. May be abbreviated. When standard errors for random
+#'   effects are requested, for each grouping factor a list of standard errors
+#'   (per group level) for random intercepts and slopes is returned.
+#' @param component Model component for which standard errors should be shown.
+#'   See the documentation for your object's class in [`model_parameters()`] or
+#'   [`p_value()`] for further details.
 #' @inheritParams simulate_model
 #' @inheritParams p_value
 #' @param ... Arguments passed to or from other methods.
@@ -42,15 +45,16 @@
 #'
 #' @examples
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
-#'
 #' standard_error(model)
 #'
-#' standard_error(model, vcov = "HC3")
+#' if (require("sandwich") && require("clubSandwich")) {
+#'   standard_error(model, vcov = "HC3")
 #'
-#' standard_error(model,
-#'   vcov = "vcovCL",
-#'   vcov_args = list(cluster = iris$Species)
-#' )
+#'   standard_error(model,
+#'     vcov = "vcovCL",
+#'     vcov_args = list(cluster = iris$Species)
+#'   )
+#' }
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")

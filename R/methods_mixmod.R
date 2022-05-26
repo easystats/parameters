@@ -25,15 +25,14 @@ ci.MixMod <- function(x,
 }
 
 
-#' @rdname standard_error
 #' @export
 standard_error.MixMod <- function(model,
-                                  effects = c("fixed", "random"),
-                                  component = c("all", "conditional", "zi", "zero_inflated"),
+                                  effects = "fixed",
+                                  component = "all",
                                   verbose = TRUE,
                                   ...) {
-  component <- match.arg(component)
-  effects <- match.arg(effects)
+  component <- match.arg(component, choices = c("all", "conditional", "zi", "zero_inflated"))
+  effects <- match.arg(effects, choices = c("fixed", "random"))
 
   if (effects == "random") {
     insight::check_if_installed("lme4")

@@ -50,8 +50,8 @@ or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{component}{Model component for which parameters should be shown. See
-the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} for
-further details.}
+the documentation for your object's class in \code{\link[=model_parameters]{model_parameters()}} or
+\code{\link[=p_value]{p_value()}} for further details.}
 
 \item{...}{Additional arguments}
 }

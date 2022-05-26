@@ -29,12 +29,11 @@ structure).}
 Reshape loadings between wide/long formats.
 }
 \examples{
-library(parameters)
-library(psych)
+if (require("psych")) {
+  pca <- model_parameters(psych::fa(attitude, nfactors = 3))
+  loadings <- reshape_loadings(pca)
 
-pca <- model_parameters(psych::fa(attitude, nfactors = 3))
-loadings <- reshape_loadings(pca)
-
-loadings
-reshape_loadings(loadings)
+  loadings
+  reshape_loadings(loadings)
+}
 }

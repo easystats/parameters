@@ -52,9 +52,9 @@ factor_analysis.data.frame <- function(x,
                                     threshold = NULL,
                                     cor = NULL,
                                     ...) {
-  if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
-  }
+  # if (!(rotation %in% c("varimax", "quartimax", "bentlerT", "promax", "" "oblimin", "simplimax", "cluster", "none"))) {
+  #   stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
+  # }
 
   if (!inherits(x, "data.frame")) {
     stop("`x` must be a data frame.", call. = FALSE)

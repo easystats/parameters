@@ -4,10 +4,10 @@
 #'
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   or for the zero-inflated part of the model be returned? Applies to models
-#'   with zero-inflated component. `component` may be one of `"conditional"`,
-#'   `"zi"`, `"zero-inflated"`, `"dispersion"` or `"all"`
-#'   (default). May be abbreviated.
+#'   for the zero-inflated part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
+#'    `"all"` (default). May be abbreviated.
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
@@ -33,7 +33,6 @@
 #'   }
 #'
 #' @examples
-#' library(parameters)
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 #' head(simulate_model(model))
 #' \donttest{
@@ -221,14 +220,13 @@ simulate_model.bracl <- simulate_model.default
 
 
 .simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
-  insight::check_if_installed("MASS")
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
   beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   varcov <- insight::get_varcov(model, component = component, effects = effects)
-  as.data.frame(MASS::mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+  as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()
 
@@ -239,6 +237,34 @@ simulate_model.bracl <- simulate_model.default
   # b <- array(NA, c(100, k))
   # for (i in 1:iterations) {
   #   s[i] <- stats::sigma(model) * sqrt((n - k) / rchisq(1, n - k))
-  #   b[i,] <- MASS::mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
+  #   b[i,] <- .mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
   # }
+}
+
+.mvrnorm <- function(n = 1, mu, Sigma, tol = 1e-06) {
+  p <- length(mu)
+  if (!all(dim(Sigma) == c(p, p))) {
+    stop(insight::format_message("Incompatible arguments to calculate multivariate normal distribution."), call. = FALSE)
+  }
+
+  eS <- eigen(Sigma, symmetric = TRUE)
+  ev <- eS$values
+
+  if (!all(ev >= -tol * abs(ev[1L]))) {
+    stop("'Sigma' is not positive definite.", call. = FALSE)
+  }
+
+  X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
+  nm <- names(mu)
+
+  if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) {
+    nm <- dn[[1L]]
+  }
+
+  dimnames(X) <- list(nm, NULL)
+  if (n == 1) {
+    drop(X)
+  } else {
+    t(X)
+  }
 }

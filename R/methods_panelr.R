@@ -145,7 +145,7 @@ p_value.wbgee <- p_value.wbm
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
   }
 
 

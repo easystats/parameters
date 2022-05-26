@@ -107,7 +107,7 @@ case of bootstrapped frequentist models.}
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model
 on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"},
-\code{"pseudo"}. See 'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
+\code{"pseudo"}. See 'Details' in \code{\link[=standardize_parameters]{standardize_parameters()}}.
 \strong{Important:}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
@@ -383,18 +383,22 @@ model <- lm(mpg ~ wt + cyl, data = mtcars)
 model_parameters(model)
 
 # bootstrapped parameters
-model_parameters(model, bootstrap = TRUE)
+if (require("boot", quietly = TRUE)) {
+  model_parameters(model, bootstrap = TRUE)
+}
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
 
 # robust, heteroskedasticity-consistent standard errors
-model_parameters(model, vcov = "HC3")
+if (require("sandwich") && require("clubSandwich")) {
+  model_parameters(model, vcov = "HC3")
 
-model_parameters(model,
-  vcov = "vcovCL",
-  vcov_args = list(cluster = mtcars$cyl)
-)
+  model_parameters(model,
+    vcov = "vcovCL",
+    vcov_args = list(cluster = mtcars$cyl)
+  )
+}
 
 # different p-value style in output
 model_parameters(model, p_digits = 5)

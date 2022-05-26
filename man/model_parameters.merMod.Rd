@@ -117,7 +117,7 @@
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model
 on standardized data) or one of \code{"basic"}, \code{"posthoc"}, \code{"smart"},
-\code{"pseudo"}. See 'Details' in \code{\link[effectsize:standardize_parameters]{effectsize::standardize_parameters()}}.
+\code{"pseudo"}. See 'Details' in \code{\link[=standardize_parameters]{standardize_parameters()}}.
 \strong{Important:}
 \itemize{
 \item The \code{"refit"} method does \emph{not} standardized categorical predictors (i.e.
@@ -183,10 +183,10 @@ due to the longer computation time.}
 \item{...}{Arguments passed to or from other methods.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
-or for the zero-inflated part of the model be returned? Applies to models
-with zero-inflated component. \code{component} may be one of \code{"conditional"},
-\code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or \code{"all"}
-(default). May be abbreviated.}
+for the zero-inflated part of the model, or the dispersion model be returned?
+Applies to models with zero-inflated and/or dispersion component. \code{component}
+may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
+\code{"all"} (default). May be abbreviated.}
 
 \item{wb_component}{Logical, if \code{TRUE} and models contains within- and
 between-effects (see \code{datawizard::demean()}), the \code{Component} column
@@ -280,10 +280,12 @@ variances always use a Wald t-distribution approximation.
 
 For some models from package \strong{glmmTMB}, both the dispersion parameter and
 the residual variance from the random effects parameters are shown. Usually,
-these are the same but presented on different scales, e.g.\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+these are the same but presented on different scales, e.g.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{model <- glmmTMB(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
 exp(fixef(model)$disp) # 0.09902987
 sigma(model)^2         # 0.09902987
-}
+}\if{html}{\out{</div>}}
 
 For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.

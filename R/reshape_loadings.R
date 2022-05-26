@@ -4,14 +4,13 @@
 #'
 #'
 #' @examples
-#' library(parameters)
-#' library(psych)
+#' if (require("psych")) {
+#'   pca <- model_parameters(psych::fa(attitude, nfactors = 3))
+#'   loadings <- reshape_loadings(pca)
 #'
-#' pca <- model_parameters(psych::fa(attitude, nfactors = 3))
-#' loadings <- reshape_loadings(pca)
-#'
-#' loadings
-#' reshape_loadings(loadings)
+#'   loadings
+#'   reshape_loadings(loadings)
+#' }
 #' @export
 reshape_loadings <- function(x, ...) {
   UseMethod("reshape_loadings")

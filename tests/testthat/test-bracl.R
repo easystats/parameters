@@ -28,6 +28,12 @@ if (requiet("testthat") &&
     )
   })
 
+  # check vcov args
+  test_that("model_parameters", {
+    expect_warning(out <- model_parameters(m1, vcov = "vcovHAC"))
+    expect_equal(out$SE, unname(coef(summary(m1))[, 2]), tolerance = 1e-3)
+  })
+
   # check order of response levels
   test_that("print model_parameters", {
     out <- utils::capture.output(print(model_parameters(m1)))
