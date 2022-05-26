@@ -642,7 +642,7 @@ format.parameters_sem <- function(x,
       # OR must be merMod
       ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
         # and not Wald CIs
-        !ci_method %in% c("wald", "residual", "normal"))
+        !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
     if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
       msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
     }
