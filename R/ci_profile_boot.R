@@ -77,7 +77,15 @@
 
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
-  out <- as.data.frame(stats::confint(profiled, level = ci, ...))
+  if (is.null(profiled)) {
+    out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
+  } else {
+    out <- tryCatch(as.data.frame(stats::confint(profiled, level = ci, ...)),
+                    error = function(e) NULL)
+    if (is.null(out)) {
+      out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
+    }
+  }
   .process_glmmTMB_CI(x, out, ci, component)
 }
 
