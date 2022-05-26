@@ -211,4 +211,28 @@ if (.runThisTest && !osx &&
     )
   })
 
+
+  data(cake)
+  m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
+  mp <- model_parameters(m)
+
+  test_that("random effects CIs, poly slope", {
+    expect_equal(
+      mp$CI_low,
+      c(28.7884, 33.56318, -12.84259, 4.27435, 0.16222, 7.78988, 0.87668,
+        -0.8172, -1, -1, 4.32855),
+      tolerance = 1e-3,
+      ignore_attr = TRUE
+    )
+
+    expect_equal(
+      mp$Parameter,
+      c("(Intercept)", "poly(temp, 2)1", "poly(temp, 2)2", "SD (Intercept)",
+        "SD (Intercept)", "SD (poly(temp, 2)1)", "SD (poly(temp, 2)2)",
+        "Cor (Intercept~poly(temp, 2)1: replicate)", "Cor (Intercept~poly(temp, 2)2: replicate)",
+        "Cor (poly(temp, 2)1~poly(temp, 2)2: replicate)", "SD (Observations)"
+      )
+    )
+  })
+
 }
