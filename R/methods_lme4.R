@@ -212,7 +212,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
   }
 
   # merge random and fixed effects, if necessary
