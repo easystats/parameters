@@ -5,6 +5,10 @@
 * `model_parameters()` now also includes standard errors and confidence
   intervals for slope-slope-correlations of random effects variances.
 
+## Bug fixes
+
+* Fixed issue with *glmmTMB* models when calculating confidence 
+  intervals for random effects failed due to singular fits.
 
 # parameters 0.18.0
 
