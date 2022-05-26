@@ -24,19 +24,19 @@ if (.runThisTest && !osx &&
   set.seed(123)
   sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
-  m1 <- lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake)
-  m2 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-  m3 <- lmer(angle ~ temperature + (temperature | recipe), data = cake)
-  m4 <- lmer(angle ~ temperature + (temperature | replicate), data = cake)
-  m5 <- lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy)
+  m1 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
+  m2 <- suppressMessages(lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy))
+  m3 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe), data = cake))
+  m4 <- suppressMessages(lmer(angle ~ temperature + (temperature | replicate), data = cake))
+  m5 <- suppressMessages(lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
   ## TODO also check messages for profiled CI
 
-  mp1 <- model_parameters(m1)
+  expect_message(mp1 <- model_parameters(m1), "meaningful")
   mp2 <- model_parameters(m2)
-  mp3 <- model_parameters(m3)
-  mp4 <- model_parameters(m4)
-  mp5 <- model_parameters(m5)
+  expect_message(mp3 <- model_parameters(m3), "meaningful")
+  expect_message(mp4 <- model_parameters(m4), "meaningful")
+  expect_message(mp5 <- model_parameters(m5), "meaningful")
 
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
