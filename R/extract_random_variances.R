@@ -430,10 +430,10 @@
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
-              warning(insight::format_message(
+              message(insight::format_message(
                 "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
                 "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
-              ), call. = FALSE)
+              ))
             }
           },
           error = function(e) {
