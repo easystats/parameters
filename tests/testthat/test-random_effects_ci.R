@@ -30,6 +30,8 @@ if (.runThisTest && !osx &&
   m4 <- lmer(angle ~ temperature + (temperature | replicate), data = cake)
   m5 <- lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy)
 
+  ## TODO also check messages for profiled CI
+
   mp1 <- model_parameters(m1)
   mp2 <- model_parameters(m2)
   mp3 <- model_parameters(m3)

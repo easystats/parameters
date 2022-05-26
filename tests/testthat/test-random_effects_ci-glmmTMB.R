@@ -15,6 +15,7 @@ osx <- tryCatch(
 )
 
 ## TODO: Need fixes for glmmTMB
+## TODO also check messages for profiled CI
 
 if (FALSE &&
     .runThisTest && !osx &&
