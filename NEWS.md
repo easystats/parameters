@@ -5,6 +5,8 @@
 * `model_parameters()` now also includes standard errors and confidence
   intervals for slope-slope-correlations of random effects variances.
 
+* `ci()` for *glmmTMB* models with `method = "profile"` is now more robust.
+
 ## Bug fixes
 
 * Fixed issue with *glmmTMB* models when calculating confidence 

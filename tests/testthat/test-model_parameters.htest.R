@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.4.5") {
+if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.0") {
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
     expect_equal(
@@ -62,11 +62,10 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
     expect_equal(names(mp), c("F", "df", "df_error", "p", "Method"))
   })
 
-  mp <- model_parameters(stats::chisq.test(table(mtcars$am)), phi = "adjusted", ci = 0.95)
+  expect_message(mp <- model_parameters(stats::chisq.test(table(mtcars$am)), phi = "adjusted", ci = 0.95))
   test_that("model_parameters-chisq-test adjusted", {
     expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
-    expect_equal(mp$phi_adjusted, 0.0538348, tolerance = 1e-3)
-    expect_equal(colnames(mp), c("Chi2", "df", "phi_adjusted", "CI", "phi_CI_low", "phi_CI_high", "p", "Method"))
+    expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
   })
 
   params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)

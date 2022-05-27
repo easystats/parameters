@@ -687,14 +687,30 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(cramers_v)) {
     # Cramers V
-    es <- effectsize::effectsize(
-      model,
-      type = "cramers_v",
-      ci = ci,
-      alternative = alternative,
-      adjust = identical(cramers_v, "adjusted"),
-      verbose = verbose
+    es <- tryCatch(
+      {
+        effectsize::effectsize(
+          model,
+          type = "cramers_v",
+          ci = ci,
+          alternative = alternative,
+          adjust = identical(cramers_v, "adjusted"),
+          verbose = verbose
+        )
+      },
+      error = function(e) {
+        if (verbose) {
+          msg <- c("Could not compute effectsize Cramer's V.",
+                   paste0("Possible reason: ", e$message))
+          message(insight::format_message(msg))
+        }
+        NULL
+      }
     )
+    # return if not successful
+    if (is.null(es)) {
+      return(out)
+    }
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
@@ -703,14 +719,30 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(phi)) {
     # Phi
-    es <- effectsize::effectsize(
-      model,
-      type = "phi",
-      ci = ci,
-      alternative = alternative,
-      adjust = identical(phi, "adjusted"),
-      verbose = verbose
+    es <- tryCatch(
+      {
+        effectsize::effectsize(
+          model,
+          type = "phi",
+          ci = ci,
+          alternative = alternative,
+          adjust = identical(phi, "adjusted"),
+          verbose = verbose
+        )
+      },
+      error = function(e) {
+        if (verbose) {
+          msg <- c("Could not compute effectsize Phi.",
+                   paste0("Possible reason: ", e$message))
+          message(insight::format_message(msg))
+        }
+        NULL
+      }
     )
+    # return if not successful
+    if (is.null(es)) {
+      return(out)
+    }
     es$CI <- NULL
     ci_cols <- grepl("^CI", names(es))
     names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])

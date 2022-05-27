@@ -24,19 +24,19 @@ if (.runThisTest && !osx &&
   set.seed(123)
   sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
-  m1 <- lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake)
-  m2 <- lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy)
-  m3 <- lmer(angle ~ temperature + (temperature | recipe), data = cake)
-  m4 <- lmer(angle ~ temperature + (temperature | replicate), data = cake)
-  m5 <- lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy)
+  m1 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
+  m2 <- suppressMessages(lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy))
+  m3 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe), data = cake))
+  m4 <- suppressMessages(lmer(angle ~ temperature + (temperature | replicate), data = cake))
+  m5 <- suppressMessages(lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
   ## TODO also check messages for profiled CI
 
-  mp1 <- model_parameters(m1)
+  expect_message(mp1 <- model_parameters(m1), "meaningful")
   mp2 <- model_parameters(m2)
-  mp3 <- model_parameters(m3)
-  mp4 <- model_parameters(m4)
-  mp5 <- model_parameters(m5)
+  expect_message(mp3 <- model_parameters(m3), "meaningful")
+  expect_message(mp4 <- model_parameters(m4), "meaningful")
+  expect_message(mp5 <- model_parameters(m5), "meaningful")
 
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
@@ -208,6 +208,30 @@ if (.runThisTest && !osx &&
       mp5$Parameter,
       c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months: Subject)",
         "SD (Observations)")
+    )
+  })
+
+
+  data(cake)
+  m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
+  mp <- model_parameters(m)
+
+  test_that("random effects CIs, poly slope", {
+    expect_equal(
+      mp$CI_low,
+      c(28.7884, 33.56318, -12.84259, 4.27435, 0.16222, 7.78988, 0.87668,
+        -0.8172, -1, -1, 4.32855),
+      tolerance = 1e-3,
+      ignore_attr = TRUE
+    )
+
+    expect_equal(
+      mp$Parameter,
+      c("(Intercept)", "poly(temp, 2)1", "poly(temp, 2)2", "SD (Intercept)",
+        "SD (Intercept)", "SD (poly(temp, 2)1)", "SD (poly(temp, 2)2)",
+        "Cor (Intercept~poly(temp, 2)1: replicate)", "Cor (Intercept~poly(temp, 2)2: replicate)",
+        "Cor (poly(temp, 2)1~poly(temp, 2)2: replicate)", "SD (Observations)"
+      )
     )
   })
 
