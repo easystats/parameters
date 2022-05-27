@@ -31,6 +31,7 @@ model_parameters.wbm <- function(model,
     group_level = group_level,
     ci_method = NULL,
     include_sigma = include_sigma,
+    verbose = verbose,
     ...
   )
 
@@ -118,6 +119,7 @@ p_value.wbgee <- p_value.wbm
                                             group_level,
                                             ci_method,
                                             include_sigma = FALSE,
+                                            verbose = TRUE,
                                             ...) {
   params <- params_random <- params_variance <- att <- NULL
 
@@ -134,6 +136,7 @@ p_value.wbgee <- p_value.wbm
       p_adjust = p_adjust,
       ci_method = ci_method,
       include_sigma = include_sigma,
+      verbose = verbose,
       ...
     )
     params$Effects <- "fixed"
