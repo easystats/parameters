@@ -57,6 +57,9 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
+\item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
+for all studies. Else, only parameters for overall-effects are shown.}
+
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when

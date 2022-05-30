@@ -9,6 +9,7 @@
 #' Extract and compute indices and measures to describe parameters of meta-analysis models.
 #'
 #' @inheritParams model_parameters.default
+#' @inheritParams model_parameters.averaging
 #'
 #' @examples
 #' library(parameters)
