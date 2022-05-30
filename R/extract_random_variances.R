@@ -154,6 +154,7 @@
     colnames(ran_slope) <- "Coefficient"
     ran_slope$Group <- rownames(ran_slope)
     ran_groups_slp <- gsub("\\..*", "", ran_slope$Group)
+    ran_slope$Parameter <- NA
     for (i in unique(ran_groups_slp)) {
       slopes <- which(grepl(paste0("^\\Q", i, "\\E"), ran_slope$Group))
       if (length(slopes)) {
@@ -191,6 +192,7 @@
     } else {
       colnames(ran_corr) <- "Coefficient"
       ran_corr$Group <- rownames(ran_corr)
+      ran_corr$Parameter <- NA
       for (i in unique(ran_groups)) {
         corrs <- which(grepl(paste0("^\\Q", i, "\\E"), ran_corr$Group))
         if (length(corrs)) {
