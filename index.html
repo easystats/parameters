@@ -112,9 +112,6 @@
 </h1>
 </div>
 
-<hr>
-<p><span class="emoji" data-emoji="warning">⚠️</span> For Bayesian models, we changed the default the CI width! Please make an <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">informed decision</a> and set it explicitly (<code>ci = 0.89</code>, <code>ci = 0.95</code>, or anything else that you decide) <span class="emoji" data-emoji="warning">⚠️</span></p>
-<hr>
 <p><strong><em>Describe and understand your model’s parameters!</em></strong></p>
 <p><strong>parameters</strong>’ primary goal is to provide utilities for processing the parameters of various statistical models (see <a href="https://easystats.github.io/insight/" class="external-link">here</a> for a list of supported models). Beyond computing <em>p-values</em>, <em>CIs</em>, <em>Bayesian indices</em> and other measures for a wide variety of models, this package implements features like <em>bootstrapping</em> of parameters and models, <em>feature reduction</em> (feature extraction and variable selection), or tools for data reduction like functions to perform cluster, factor or principal component analysis.</p>
 <p>Another important goal of the <strong>parameters</strong> package is to facilitate and streamline the process of reporting results of statistical models, which includes the easy and intuitive calculation of standardized estimates or robust standard errors and p-values. <strong>parameters</strong> therefor offers a simple and unified syntax to process a large variety of (model) objects from many different packages.</p>
@@ -268,10 +265,8 @@
 <p><img src="reference/figures/figure2.png" style="display: block; margin: auto;"></p>
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html" class="external-link"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nathaneastwood.github.io/poorman/" class="external-link">poorman</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Parameter   | Coefficient |     SE |            95% CI | t(26) |      p</span>
 <span class="co">#&gt; -----------------------------------------------------------------------</span>
