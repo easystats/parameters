@@ -7,7 +7,7 @@
 #' Compute and extract model parameters. The available options and arguments depend on the modeling **package** and model `class`. Follow one of these links to read the model-specific documentation:
 #' \itemize{
 #'  \item{[Default method][model_parameters.default]: `lm`, `glm`, **stats**, **censReg**, **MASS**, **survey**, ... }
-#'  \item{[Additive models][model_parameters.cgam]: **bamlss** **gamlss**, **mgcv**, **scam**, **VGAM**, `Gam`, `gamm`, ...}
+#'  \item{[Additive models][model_parameters.cgam]: **bamlss**, **gamlss**, **mgcv**, **scam**, **VGAM**, `Gam`, `gamm`, ...}
 #'  \item{[ANOVA][model_parameters.aov]: **afex**, `aov`, `anova`, ...}
 #'  \item{[Bayesian][model_parameters.stanreg]: **BayesFactor**, **blavaan**, **brms**, **MCMCglmm**, **posterior**, **rstanarm**, `bayesQR`, `bcplm`, `BGGM`, `blmrm`, `blrm`, `mcmc.list`, `MCMCglmm`, ...}
 #'  \item{[Clustering][model_parameters.kmeans]: **hclust**, **kmeans**, **mclust**, **pam**, ...}

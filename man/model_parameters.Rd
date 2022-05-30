@@ -26,7 +26,7 @@ A data frame of indices related to the model's parameters.
 Compute and extract model parameters. The available options and arguments depend on the modeling \strong{package} and model \code{class}. Follow one of these links to read the model-specific documentation:
 \itemize{
 \item{\link[=model_parameters.default]{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg}, \strong{MASS}, \strong{survey}, ... }
-\item{\link[=model_parameters.cgam]{Additive models}: \strong{bamlss} \strong{gamlss}, \strong{mgcv}, \strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...}
+\item{\link[=model_parameters.cgam]{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv}, \strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...}
 \item{\link[=model_parameters.aov]{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, ...}
 \item{\link[=model_parameters.stanreg]{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms}, \strong{MCMCglmm}, \strong{posterior}, \strong{rstanarm}, \code{bayesQR}, \code{bcplm}, \code{BGGM}, \code{blmrm}, \code{blrm}, \code{mcmc.list}, \code{MCMCglmm}, ...}
 \item{\link[=model_parameters.kmeans]{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...}

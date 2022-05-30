@@ -6,16 +6,6 @@
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 [![status](https://tinyverse.netlify.com/badge/parameters)](https://CRAN.R-project.org/package=parameters)
 
-------------------------------------------------------------------------
-
-:warning: For Bayesian models, we changed the default the CI width!
-Please make an [informed
-decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-and set it explicitly (`ci = 0.89`, `ci = 0.95`, or anything else that
-you decide) :warning:
-
-------------------------------------------------------------------------
-
 ***Describe and understand your model’s parameters!***
 
 **parameters**’ primary goal is to provide utilities for processing the
@@ -229,10 +219,8 @@ can help you quickly select and retain the most relevant predictors
 using methods tailored for the model type.
 
 ``` r
-library(poorman)
-
-lm(disp ~ ., data = mtcars) %>% 
-  select_parameters() %>% 
+lm(disp ~ ., data = mtcars) |> 
+  select_parameters() |> 
   model_parameters()
 #> Parameter   | Coefficient |     SE |            95% CI | t(26) |      p
 #> -----------------------------------------------------------------------
