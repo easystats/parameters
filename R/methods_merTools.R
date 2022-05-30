@@ -1,3 +1,4 @@
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.merModList <- function(model,
                                         ci = .95,

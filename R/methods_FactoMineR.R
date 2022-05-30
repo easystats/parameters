@@ -73,5 +73,6 @@ model_parameters.PCA <- function(model,
 }
 
 
+#' @rdname model_parameters.principal
 #' @export
 model_parameters.FAMD <- model_parameters.PCA

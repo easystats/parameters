@@ -1,3 +1,4 @@
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE, ...) {
   # tweak column names

@@ -33,7 +33,7 @@ using \code{factoextra::hkmeans()}), \code{pam} (K-Medoids using \code{cluster::
 \code{pamk} (K-Medoids that finds out the number of clusters), \code{"hclust"}
 (hierarchical clustering using \code{hclust()} or \code{pvclust::pvclust()}),
 \code{dbscan} (DBSCAN using \code{dbscan::dbscan()}), \code{hdbscan} (Hierarchical DBSCAN
-using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modelling using
+using \code{dbscan::hdbscan()}), or \code{mixture} (Mixture modeling using
 \code{mclust::Mclust()}, which requires the user to run \code{library(mclust)}
 before).}
 

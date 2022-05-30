@@ -74,11 +74,11 @@
 \item{iterations}{The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.}
 
-\item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
-\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
-\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
+\item{component}{Should all parameters, parameters for the conditional model,
+for the zero-inflated part of the model, or the dispersion model be returned?
+Applies to models with zero-inflated and/or dispersion component. \code{component}
+may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
+\code{"all"} (default). May be abbreviated.}
 
 \item{standardize}{The method used for standardizing the parameters. Can be
 \code{NULL} (default; no standardization), \code{"refit"} (for re-fitting the model

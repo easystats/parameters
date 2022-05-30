@@ -26,5 +26,6 @@ p_value.logistf <- function(model, ...) {
 }
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.logistf <- model_parameters.glm

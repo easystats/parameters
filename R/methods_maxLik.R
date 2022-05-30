@@ -1,10 +1,12 @@
 # .maxLik, .maxim
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.maxLik <- model_parameters.default
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.maxim <- model_parameters.default
 

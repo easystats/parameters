@@ -22,5 +22,6 @@ standard_error.coeftest <- function(model, ...) {
   )
 }
 
+#' @rdname model_parameters.htest
 #' @export
 model_parameters.coeftest <- model_parameters.ivFixed

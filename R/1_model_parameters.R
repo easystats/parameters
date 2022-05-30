@@ -4,25 +4,21 @@
 
 #' Model Parameters
 #'
-#' Compute and extract model parameters. See the documentation for your object's class:
+#' Compute and extract model parameters. The available options and arguments depend on the modeling **package** and model `class`. Follow one of these links to read the model-specific documentation:
 #' \itemize{
-#'  \item{[Correlations, t-tests, ...][model_parameters.htest] (`htest`, `pairwise.htest`)}
-#'  \item{[ANOVAs][model_parameters.aov] (`aov`, `anova`, **afex**, ...)}
-#'  \item{[Regression models][model_parameters.default] (`lm`, `glm`, **survey**, ...)}
-#'  \item{[Mixed models][model_parameters.merMod] (**lme4**, **nlme**, **glmmTMB**, **afex**, ...)}
-#'  \item{[Additive models][model_parameters.cgam] (`gam`, `gamm`, ...)}
-#'  \item{[Zero-inflated models][model_parameters.zcpglm] (`hurdle`, `zeroinfl`, `zerocount`)}
-#'  \item{[Multinomial, ordinal and cumulative link models][model_parameters.mlm] (`bracl`, `multinom`, `mlm`, **ordinal**, ...)}
-#'  \item{[Other special models][model_parameters.averaging] (`model.avg`, `betareg`, `glmx`, ...)}
-#'  \item{[Bayesian tests][model_parameters.BFBayesFactor] (**BayesFactor**)}
-#'  \item{[Bayesian models][model_parameters.stanreg] (**rstanarm**, **brms**, **MCMCglmm**, **blavaan**, ...)}
-#'  \item{[PCA and FA][model_parameters.principal] (**psych**)}
-#'  \item{[CFA and SEM][model_parameters.lavaan] (**lavaan**)}
-#'  \item{[Cluster models][model_parameters.kmeans] (k-means, ...)}
-#'  \item{[Meta-Analysis via linear (mixed) models][model_parameters.rma] (`rma`, `metaplus`, **metaBMA**, ...)}
-#'  \item{[Hypothesis testing][model_parameters.glht] (`glht`, **PMCMRplus**)}
-#'  \item{[Robust statistical tests][model_parameters.t1way] (**WRS2**)}
-#'  \item{[Multiply imputed repeated analyses][model_parameters.mira] (`mira`)}
+#'  \item{[Default method][model_parameters.default]: `lm`, `glm`, **stats**, **censReg**, **MASS**, **survey**, ... }
+#'  \item{[Additive models][model_parameters.cgam]: **bamlss** **gamlss**, **mgcv**, **scam**, **VGAM**, `Gam`, `gamm`, ...}
+#'  \item{[ANOVA][model_parameters.aov]: **afex**, `aov`, `anova`, ...}
+#'  \item{[Bayesian][model_parameters.stanreg]: **BayesFactor**, **blavaan**, **brms**, **MCMCglmm**, **posterior**, **rstanarm**, `bayesQR`, `bcplm`, `BGGM`, `blmrm`, `blrm`, `mcmc.list`, `MCMCglmm`, ...}
+#'  \item{[Clustering][model_parameters.kmeans]: **hclust**, **kmeans**, **mclust**, **pam**, ...}
+#'  \item{[Correlations, t-tests, etc.:][model_parameters.htest] **lmtest**, `htest`, `pairwise.htest`, ...}
+#'  \item{[Meta-Analysis][model_parameters.rma]: **metaBMA**, **metafor**, **metaplus**, ...}
+#'  \item{[Mixed models][model_parameters.merMod]: **cplm**, **glmmTMB**, **lme4**, **lmerTest**, **nlme**, **ordinal**, **robustlmm**, **spaMM**, `mixed`, `MixMod`, ...}
+#'  \item{[Multinomial, ordinal and cumulative link][model_parameters.mlm]: **brglm2**, **DirichletReg**, **nnet**, **ordinal**, `mlm`, ...}
+#'  \item{[Multiple imputation][model_parameters.mira]: **mice**}
+#'  \item{[PCA, FA, CFA, SEM][model_parameters.principal]: **FactoMineR**, **lavaan**, **psych**, `sem`, ...}
+#'  \item{[Zero-inflated and hurdle][model_parameters.zcpglm]: **cplm**, **mhurdle**, **pscl**, ...}
+#'  \item{[Other models][model_parameters.averaging]: **aod**, **bbmle**, **betareg**, **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**, **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**, **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**, **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**, **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...}
 #'  }
 #'
 #' @param model Statistical Model.
@@ -334,11 +330,6 @@ parameters <- model_parameters
 #'   captures this uncertainty. For `compare_parameters()`,
 #'   `exponentiate = "nongaussian"` will only exponentiate coefficients
 #'   from non-Gaussian families.
-#' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (**betareg**),
-#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
-#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
-#'   `MuMIn::model.avg()`) or `"all"`.
 #' @param p_adjust Character vector, if not `NULL`, indicates the method to
 #'   adjust p-values. See [stats::p.adjust()] for details. Further
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,

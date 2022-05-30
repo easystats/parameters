@@ -32,6 +32,8 @@ degrees_of_freedom.complmrob <- function(model, method = "wald", ...) {
 ############# .Gam --------------
 
 
+#' @rdname model_parameters.cgam
+#' @inheritParams model_parameters.aov
 #' @export
 model_parameters.Gam <- function(model,
                                  omega_squared = NULL,

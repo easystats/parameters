@@ -1,3 +1,4 @@
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.fitdistr <- function(model,
                                       exponentiate = FALSE,

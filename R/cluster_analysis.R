@@ -18,7 +18,7 @@
 #'   `pamk` (K-Medoids that finds out the number of clusters), `"hclust"`
 #'   (hierarchical clustering using `hclust()` or `pvclust::pvclust()`),
 #'   `dbscan` (DBSCAN using `dbscan::dbscan()`), `hdbscan` (Hierarchical DBSCAN
-#'   using `dbscan::hdbscan()`), or `mixture` (Mixture modelling using
+#'   using `dbscan::hdbscan()`), or `mixture` (Mixture modeling using
 #'   `mclust::Mclust()`, which requires the user to run `library(mclust)`
 #'   before).
 #' @param distance_method Distance measure to be used for methods based on

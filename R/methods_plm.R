@@ -48,6 +48,7 @@ p_value.pggls <- function(model, ...) {
 # pgmm --------------------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.pgmm <- function(model,
                                   ci = .95,

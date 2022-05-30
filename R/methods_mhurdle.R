@@ -1,3 +1,4 @@
+#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.mhurdle <- function(model,
                                      ci = .95,

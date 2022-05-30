@@ -35,10 +35,10 @@ of covariates, included as main effects or not, etc.). Their interpretation
 depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 that calculate estimated marginal means or marginal effects, such as
-\CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
-awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
-to add the model-specification to the output of the
-\code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
+\CRANpkg{modelbased}, \CRANpkg{emmeans}, \CRANpkg{ggeffects}, or
+\CRANpkg{marginaleffects}. To raise awareness for this issue, you may use
+\code{print(...,show_formula=TRUE)} to add the model-specification to the output
+of the \code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
 }
 
 \examples{

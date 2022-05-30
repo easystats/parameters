@@ -168,7 +168,7 @@ p_value.zcpglm <- function(model,
 
 ########## .bcpglm ---------------
 
-
+#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.bcplm <- model_parameters.bayesQR
 
