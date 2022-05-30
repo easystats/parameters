@@ -1,3 +1,4 @@
+#' @rdname model_parameters.cgam
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.bamlss <- function(model,

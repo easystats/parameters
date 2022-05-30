@@ -21,5 +21,6 @@ standard_error.ivprobit <- function(model, ...) {
 p_value.ivprobit <- p_value.default
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.ivprobit <- model_parameters.ivFixed

@@ -2,6 +2,7 @@
 
 ############### .lme --------------
 
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.lme <- model_parameters.merMod
 

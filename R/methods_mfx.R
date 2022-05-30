@@ -1,7 +1,7 @@
 # model parameters ---------------------
 
 
-#' @rdname model_parameters.default
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.logitor <- function(model,
                                      ci = .95,
@@ -25,15 +25,17 @@ model_parameters.logitor <- function(model,
 }
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.poissonirr <- model_parameters.logitor
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.negbinirr <- model_parameters.logitor
 
 
-#' @rdname model_parameters.default
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.poissonmfx <- function(model,
                                         ci = .95,
@@ -64,18 +66,22 @@ model_parameters.poissonmfx <- function(model,
 }
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.logitmfx <- model_parameters.poissonmfx
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.probitmfx <- model_parameters.poissonmfx
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.negbinmfx <- model_parameters.poissonmfx
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betaor <- function(model,
                                     ci = .95,
@@ -102,7 +108,7 @@ model_parameters.betaor <- function(model,
 }
 
 
-#' @rdname model_parameters.default
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.betamfx <- function(model,
                                      ci = .95,

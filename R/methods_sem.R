@@ -1,4 +1,5 @@
 
+#' @rdname model_parameters.principal
 #' @export
 model_parameters.sem <- model_parameters.default
 

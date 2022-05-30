@@ -1,3 +1,4 @@
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, verbose = TRUE, ...) {
   # Parameters, Estimate and CI

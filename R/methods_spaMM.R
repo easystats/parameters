@@ -1,4 +1,5 @@
 
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.HLfit <- model_parameters.default
 

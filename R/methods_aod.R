@@ -7,6 +7,7 @@
 #################### .glimML ------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.glimML <- function(model,
                                     ci = .95,

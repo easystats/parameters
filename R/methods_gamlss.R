@@ -1,5 +1,6 @@
 #################### .gamlss ------
 
+#' @rdname model_parameters.cgam
 #' @export
 model_parameters.gamlss <- model_parameters.gam
 

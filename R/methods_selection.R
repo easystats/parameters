@@ -1,3 +1,4 @@
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.selection <- function(model,
                                        ci = .95,

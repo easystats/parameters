@@ -1,5 +1,6 @@
 # model_parameters -----------------------------------------
 
+#' @rdname model_parameters.default
 #' @export
 model_parameters.svyglm <- function(model,
                                     ci = .95,

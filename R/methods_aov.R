@@ -239,6 +239,7 @@ standard_error.anova <- standard_error.aov
 #' @export
 p_value.anova <- p_value.aov
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.anova <- model_parameters.aov
 
@@ -252,6 +253,7 @@ standard_error.aovlist <- standard_error.aov
 #' @export
 p_value.aovlist <- p_value.aov
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.aovlist <- model_parameters.aov
 
@@ -259,6 +261,7 @@ model_parameters.aovlist <- model_parameters.aov
 
 # .afex_aov  ------
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
                                       omega_squared = NULL,
@@ -318,12 +321,15 @@ model_parameters.afex_aov <- function(model,
 
 # others  ------
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.anova.rms <- model_parameters.aov
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.Anova.mlm <- model_parameters.aov
 
+#' @rdname model_parameters.aov
 #' @export
 model_parameters.maov <- model_parameters.aov
 

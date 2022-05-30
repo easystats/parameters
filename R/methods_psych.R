@@ -1,14 +1,26 @@
-#' Parameters from Structural Models (PCA, EFA, ...)
+#' Parameters from PCA, FA, CFA, SEM
 #'
 #' Format structural models from the **psych** or **FactoMineR** packages.
 #'
-#' @param model PCA or FA created by the **psych** or **FactoMineR**
-#'   packages (e.g. through `psych::principal`,  `psych::fa` or `psych::omega`).
-#' @inheritParams principal_components
-#' @param labels A character vector containing labels to be added to the
-#'   loadings data. Usually, the question related to the item.
+#' @param model 
+#' @param standardize Return standardized parameters (standardized coefficients).
+#'   Can be `TRUE` (or `"all"` or `"std.all"`) for standardized
+#'   estimates based on both the variances of observed and latent variables;
+#'   `"latent"` (or `"std.lv"`) for standardized estimates based
+#'   on the variances of the latent variables only; or `"no_exogenous"`
+#'   (or `"std.nox"`) for standardized estimates based on both the
+#'   variances of observed and latent variables, but not the variances of
+#'   exogenous covariates. See `lavaan::standardizedsolution` for details.
+#' @param component What type of links to return. Can be `"all"` or some of
+#' `c("regression", "correlation", "loading", "variance", "mean")`.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams principal_components
+#' @inheritParams model_parameters.default
 #'
+#' @note There is also a
+#' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' for `lavaan` models implemented in the
+#' [**see**-package](https://easystats.github.io/see/).
 #' @details
 #'  For the structural models obtained with **psych**, the following indices
 #'  are present:
@@ -69,7 +81,54 @@
 #' }
 #' }
 #'
-#' @return A data frame of loadings.
+#' # lavaan
+#'
+#' library(parameters)
+#'
+#' # lavaan -------------------------------------
+#' if (require("lavaan", quietly = TRUE)) {
+#'
+#'   # Confirmatory Factor Analysis (CFA) ---------
+#'
+#'   structure <- " visual  =~ x1 + x2 + x3
+#'                  textual =~ x4 + x5 + x6
+#'                  speed   =~ x7 + x8 + x9 "
+#'   model <- lavaan::cfa(structure, data = HolzingerSwineford1939)
+#'   model_parameters(model)
+#'   model_parameters(model, standardize = TRUE)
+#'
+#'   # filter parameters
+#'   model_parameters(
+#'     model,
+#'     parameters = list(
+#'       To = "^(?!visual)",
+#'       From = "^(?!(x7|x8))"
+#'     )
+#'   )
+#'
+#'   # Structural Equation Model (SEM) ------------
+#'
+#'   structure <- "
+#'     # latent variable definitions
+#'       ind60 =~ x1 + x2 + x3
+#'       dem60 =~ y1 + a*y2 + b*y3 + c*y4
+#'       dem65 =~ y5 + a*y6 + b*y7 + c*y8
+#'     # regressions
+#'       dem60 ~ ind60
+#'       dem65 ~ ind60 + dem60
+#'     # residual correlations
+#'       y1 ~~ y5
+#'       y2 ~~ y4 + y6
+#'       y3 ~~ y7
+#'       y4 ~~ y8
+#'       y6 ~~ y8
+#'   "
+#'   model <- lavaan::sem(structure, data = PoliticalDemocracy)
+#'   model_parameters(model)
+#'   model_parameters(model, standardize = TRUE)
+#' }
+#'
+#' @return A data frame of indicies or loadings.
 #' @references
 #' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and
 #' Psychological Measurement, 34(1):111–117
@@ -83,6 +142,13 @@
 #'
 #' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate statistics
 #' (6th ed.). Boston: Pearson Education.
+#'
+#' - Rosseel Y (2012). lavaan: An R Package for Structural Equation
+#'   Modeling. Journal of Statistical Software, 48(2), 1-36.
+#'
+#' - Merkle EC , Rosseel Y (2018). blavaan: Bayesian Structural Equation
+#'   Models via Parameter Expansion. Journal of Statistical Software, 85(4),
+#'   1-30. http://www.jstatsoft.org/v85/i04/
 #'
 #' @export
 model_parameters.principal <- function(model,
