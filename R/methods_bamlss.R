@@ -1,4 +1,4 @@
-#' @rdname model_parameters.cgam
+#' @rdname model_parameters.stanreg
 #' @inheritParams insight::get_parameters
 #' @export
 model_parameters.bamlss <- function(model,

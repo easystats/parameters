@@ -229,12 +229,6 @@ passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
 are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
-
-\item{component}{Model component for which parameters should be shown. May be
-one of \code{"conditional"}, \code{"precision"} (\strong{betareg}),
-\code{"scale"} (\strong{ordinal}), \code{"extra"} (\strong{glmx}),
-\code{"marginal"} (\strong{mfx}), \code{"conditional"} or \code{"full"} (for
-\code{MuMIn::model.avg()}) or \code{"all"}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

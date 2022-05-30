@@ -330,11 +330,6 @@ parameters <- model_parameters
 #'   captures this uncertainty. For `compare_parameters()`,
 #'   `exponentiate = "nongaussian"` will only exponentiate coefficients
 #'   from non-Gaussian families.
-#' @param component Model component for which parameters should be shown. May be
-#'   one of `"conditional"`, `"precision"` (**betareg**),
-#'   `"scale"` (**ordinal**), `"extra"` (**glmx**),
-#'   `"marginal"` (**mfx**), `"conditional"` or `"full"` (for
-#'   `MuMIn::model.avg()`) or `"all"`.
 #' @param p_adjust Character vector, if not `NULL`, indicates the method to
 #'   adjust p-values. See [stats::p.adjust()] for details. Further
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,

@@ -2,7 +2,6 @@
 #'
 #' Format structural models from the **psych** or **FactoMineR** packages.
 #'
-#' @param model 
 #' @param standardize Return standardized parameters (standardized coefficients).
 #'   Can be `TRUE` (or `"all"` or `"std.all"`) for standardized
 #'   estimates based on both the variances of observed and latent variables;
@@ -11,6 +10,8 @@
 #'   (or `"std.nox"`) for standardized estimates based on both the
 #'   variances of observed and latent variables, but not the variances of
 #'   exogenous covariates. See `lavaan::standardizedsolution` for details.
+#' @param labels A character vector containing labels to be added to the
+#'   loadings data. Usually, the question related to the item.
 #' @param component What type of links to return. Can be `"all"` or some of
 #' `c("regression", "correlation", "loading", "variance", "mean")`.
 #' @param ... Arguments passed to or from other methods.
@@ -128,7 +129,7 @@
 #'   model_parameters(model, standardize = TRUE)
 #' }
 #'
-#' @return A data frame of indicies or loadings.
+#' @return A data frame of indices or loadings.
 #' @references
 #' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and
 #' Psychological Measurement, 34(1):111–117

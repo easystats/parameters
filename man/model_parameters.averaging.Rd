@@ -688,7 +688,29 @@ the \code{vcov} argument. This function is typically supplied by the \strong{san
 or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
+\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+
+\item{test}{The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
+\code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
+\code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
+For each "test", the corresponding \pkg{bayestestR} function is called
+(e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
+included in the summary output.}
+
+\item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
+values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
+the bounds are set to \code{x +- 0.1*SD(response)}.}
+
+\item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.}
+
 \item{parameters}{Deprecated, alias for \code{keep}.}
+
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -711,6 +733,9 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
+for all studies. Else, only parameters for overall-effects are shown.}
 }
 \value{
 A data frame of indices related to the model's parameters.

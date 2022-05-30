@@ -71,7 +71,7 @@
 )
 }
 \arguments{
-\item{model}{}
+\item{model}{Model object.}
 
 \item{sort}{Sort the loadings.}
 
@@ -80,6 +80,9 @@ from the loadings should be removed. An integer higher than 1 indicates the
 n strongest loadings to retain. Can also be \code{"max"}, in which case it
 will only display the maximum loading per variable (the most simple
 structure).}
+
+\item{labels}{A character vector containing labels to be added to the
+loadings data. Usually, the question related to the item.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -184,7 +187,7 @@ or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 }
 \value{
-A data frame of indicies or loadings.
+A data frame of indices or loadings.
 }
 \description{
 Format structural models from the \strong{psych} or \strong{FactoMineR} packages.
