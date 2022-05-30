@@ -65,7 +65,7 @@ linear models (GLMs)."><meta property="og:image" content="/reference/figures/car
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from (General) Linear Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_mfx.R" class="external-link"><code>R/methods_mfx.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/1_model_parameters.R" class="external-link"><code>R/1_model_parameters.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_censReg.R" class="external-link"><code>R/methods_censReg.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_mass.R" class="external-link"><code>R/methods_mass.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>model_parameters.default.Rd</code></div>
     </div>
 
@@ -114,40 +114,72 @@ linear models (GLMs).</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="co"># S3 method for logitor</span>
+<span class="co"># S3 method for censReg</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="cn">NULL</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
-  standardize <span class="op">=</span> <span class="cn">NULL</span>,
-  exponentiate <span class="op">=</span> <span class="cn">TRUE</span>,
-  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for poissonmfx</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
-  <span class="va">model</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
-  iterations <span class="op">=</span> <span class="fl">1000</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for ridgelm</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for polr</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="cn">NULL</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="co"># S3 method for betamfx</span>
+<span class="co"># S3 method for negbin</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="cn">NULL</span>,
   bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
   iterations <span class="op">=</span> <span class="fl">1000</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"precision"</span>, <span class="st">"marginal"</span><span class="op">)</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  df_method <span class="op">=</span> <span class="va">ci_method</span>,
+  vcov <span class="op">=</span> <span class="cn">NULL</span>,
+  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for svyglm</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="st">"wald"</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
   standardize <span class="op">=</span> <span class="cn">NULL</span>,
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
@@ -231,7 +263,7 @@ If <code>keep</code> is a named list of regular expression patterns, the names o
 list-element should equal the column name where selection should be
 applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
 returns multiple columns with parameter components, like in
-<code><a href="model_parameters.lavaan.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
@@ -266,12 +298,6 @@ passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>
 are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
 <dt>df_method</dt>
 <dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
-<dt>component</dt>
-<dd><p>Model component for which parameters should be shown. May be
-one of <code>"conditional"</code>, <code>"precision"</code> (<strong>betareg</strong>),
-<code>"scale"</code> (<strong>ordinal</strong>), <code>"extra"</code> (<strong>glmx</strong>),
-<code>"marginal"</code> (<strong>mfx</strong>), <code>"conditional"</code> or <code>"full"</code> (for
-<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -404,14 +430,17 @@ rename columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘boot’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:survival’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     aml</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:psych’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     logit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.68 | [35.38, 43.83] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.22 | [-4.78, -2.00] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.47 | [-2.20, -0.79] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       39.60 | [35.41, 43.88] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          |       -3.23 | [-4.85, -1.92] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       -1.47 | [-2.18, -0.75] | 0.002 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) are naıve bootstrap intervals.</span>
 <span class="r-in"></span>

@@ -65,7 +65,7 @@ cplm or countreg)."><meta property="og:image" content="/reference/figures/card.p
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Zero-Inflated Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cplm.R" class="external-link"><code>R/methods_cplm.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cplm.R" class="external-link"><code>R/methods_cplm.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_mhurdle.R" class="external-link"><code>R/methods_mhurdle.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_pscl.R" class="external-link"><code>R/methods_pscl.R</code></a></small>
       <div class="d-none name"><code>model_parameters.zcpglm.Rd</code></div>
     </div>
 
@@ -77,6 +77,72 @@ cplm or countreg)."><meta property="og:image" content="/reference/figures/card.p
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for zcpglm</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for mhurdle</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span>, <span class="st">"infrequent_purchase"</span>,
+    <span class="st">"ip"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for zeroinfl</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for hurdle</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"zi"</span>, <span class="st">"zero_inflated"</span><span class="op">)</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for zerocount</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
@@ -109,11 +175,11 @@ cplm or countreg)."><meta property="og:image" content="/reference/figures/card.p
 <dd><p>The number of bootstrap replicates. This only apply in the
 case of bootstrapped frequentist models.</p></dd>
 <dt>component</dt>
-<dd><p>Model component for which parameters should be shown. May be
-one of <code>"conditional"</code>, <code>"precision"</code> (<strong>betareg</strong>),
-<code>"scale"</code> (<strong>ordinal</strong>), <code>"extra"</code> (<strong>glmx</strong>),
-<code>"marginal"</code> (<strong>mfx</strong>), <code>"conditional"</code> or <code>"full"</code> (for
-<code><a href="https://rdrr.io/pkg/MuMIn/man/model.avg.html" class="external-link">MuMIn::model.avg()</a></code>) or <code>"all"</code>.</p></dd>
+<dd><p>Should all parameters, parameters for the conditional model,
+for the zero-inflated part of the model, or the dispersion model be returned?
+Applies to models with zero-inflated and/or dispersion component. <code>component</code>
+may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
+<code>"all"</code> (default). May be abbreviated.</p></dd>
 <dt>standardize</dt>
 <dd><p>The method used for standardizing the parameters. Can be
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
@@ -162,7 +228,7 @@ If <code>keep</code> is a named list of regular expression patterns, the names o
 list-element should equal the column name where selection should be
 applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
 returns multiple columns with parameter components, like in
-<code><a href="model_parameters.lavaan.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter

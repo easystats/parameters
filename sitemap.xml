@@ -187,9 +187,6 @@
     <loc>/reference/model_parameters.default.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.glht.html</loc>
-  </url>
-  <url>
     <loc>/reference/model_parameters.htest.html</loc>
   </url>
   <url>
@@ -197,9 +194,6 @@
   </url>
   <url>
     <loc>/reference/model_parameters.kmeans.html</loc>
-  </url>
-  <url>
-    <loc>/reference/model_parameters.lavaan.html</loc>
   </url>
   <url>
     <loc>/reference/model_parameters.merMod.html</loc>
@@ -218,9 +212,6 @@
   </url>
   <url>
     <loc>/reference/model_parameters.stanreg.html</loc>
-  </url>
-  <url>
-    <loc>/reference/model_parameters.t1way.html</loc>
   </url>
   <url>
     <loc>/reference/model_parameters.zcpglm.html</loc>

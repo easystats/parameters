@@ -65,7 +65,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="/r
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Generalized Additive (Mixed) Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_gam.R" class="external-link"><code>R/methods_gam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_quantreg.R" class="external-link"><code>R/methods_quantreg.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_gam.R" class="external-link"><code>R/methods_gam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_gamlss.R" class="external-link"><code>R/methods_gamlss.R</code></a>, and 4 more</small>
       <div class="d-none name"><code>model_parameters.cgam.Rd</code></div>
     </div>
 
@@ -110,7 +110,64 @@ of generalized additive models (GAM(M)s).</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="co"># S3 method for rqss</span>
+<span class="co"># S3 method for gamlss</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="st">"residual"</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for gamm</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for Gam</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,
+  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,
+  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,
+  df_error <span class="op">=</span> <span class="cn">NULL</span>,
+  type <span class="op">=</span> <span class="cn">NULL</span>,
+  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for scam</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
+  <span class="va">model</span>,
+  ci <span class="op">=</span> <span class="fl">0.95</span>,
+  ci_method <span class="op">=</span> <span class="st">"residual"</span>,
+  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,
+  iterations <span class="op">=</span> <span class="fl">1000</span>,
+  standardize <span class="op">=</span> <span class="cn">NULL</span>,
+  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
+  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  keep <span class="op">=</span> <span class="cn">NULL</span>,
+  drop <span class="op">=</span> <span class="cn">NULL</span>,
+  parameters <span class="op">=</span> <span class="va">keep</span>,
+  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
+<span class="op">)</span>
+
+<span class="co"># S3 method for vgam</span>
 <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span>
   <span class="va">model</span>,
   ci <span class="op">=</span> <span class="fl">0.95</span>,
@@ -199,7 +256,7 @@ If <code>keep</code> is a named list of regular expression patterns, the names o
 list-element should equal the column name where selection should be
 applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
 returns multiple columns with parameter components, like in
-<code><a href="model_parameters.lavaan.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
 should match the parameter names as they are stored in the returned data
 frame, which can be different from how they are printed. Inspect the
 <code>$Parameter</code> column of the parameters table to get the exact parameter
@@ -215,6 +272,31 @@ names.</p></dd>
 <code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
 are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
+<dt>omega_squared</dt>
+<dd><p>Compute omega squared as index of effect size. Can be
+<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></dd>
+<dt>eta_squared</dt>
+<dd><p>Compute eta squared as index of effect size. Can be
+<code>"partial"</code> (the default, adjusted for effect size), <code>"raw"</code>  or
+<code>"adjusted"</code> (the latter option only for ANOVA-tables from mixed
+models).</p></dd>
+<dt>epsilon_squared</dt>
+<dd><p>Compute epsilon squared as index of effect size. Can
+be <code>"partial"</code> (the default, adjusted for effect size) or
+<code>"raw"</code>.</p></dd>
+<dt>df_error</dt>
+<dd><p>Denominator degrees of freedom (or degrees of freedom of the
+error estimate, i.e., the residuals). This is used to compute effect sizes
+for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
+<code>afex_aov</code>.)</p></dd>
+<dt>type</dt>
+<dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
+<code>afex_aov</code>.)</p></dd>
+<dt>table_wide</dt>
+<dd><p>Logical that decides whether the ANOVA table should be in
+wide format, i.e. should the numerator and denominator degrees of freedom
+be in the same row. Default: <code>FALSE</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -258,18 +340,18 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Gu &amp; Wahba 4 term additive model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(380.25) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |   SE |       95% CI | t(385.52) |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.82 | 0.10 | [7.62, 8.01] |     79.12 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        7.67 | 0.11 | [7.47, 7.88] |     72.98 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Smooth Terms </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |     F |   df |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |  4.49 | 2.47 | 0.004 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 42.56 | 6.71 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) | 91.24 | 7.79 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |  0.97 | 1.79 | 0.416 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x0) |  7.68 | 2.56 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x1) | 83.04 | 2.33 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x2) | 71.81 | 7.58 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth term (x3) |  0.70 | 1.00 | 0.402 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

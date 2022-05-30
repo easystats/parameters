@@ -63,7 +63,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from hypothesis tests</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_htest.R" class="external-link"><code>R/methods_htest.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_htest.R" class="external-link"><code>R/methods_htest.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_lmtest.R" class="external-link"><code>R/methods_lmtest.R</code></a></small>
       <div class="d-none name"><code>model_parameters.htest.Rd</code></div>
     </div>
 
@@ -95,7 +95,10 @@
 <span class="op">)</span>
 
 <span class="co"># S3 method for pairwise.htest</span>
-<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for coeftest</span>
+<span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, ci_method <span class="op">=</span> <span class="st">"wald"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -146,6 +149,16 @@ the <a href="https://easystats.github.io/effectsize/" class="external-link">effe
 <dd><p>Toggle warnings and messages.</p></dd>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>ci_method</dt>
+<dd><p>Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): <code>"residual"</code>,
+<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
+<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
+<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
+<em>Confidence intervals and approximation of degrees of freedom</em> in
+<code><a href="model_parameters.html">model_parameters()</a></code> for further details. When <code>ci_method=NULL</code>, in most
+cases <code>"wald"</code> is used then.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
