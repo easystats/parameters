@@ -116,6 +116,10 @@
                                              ci_method = NULL,
                                              verbose = FALSE,
                                              ...) {
+  varcorr <- .get_variance_information(model, component)
+  class(varcorr) <- "VarCorr.merMod"
+
+  re_data <- as.data.frame(varcorr, order = "lower.tri")
 }
 
 .extract_random_variances_other <- function(model,
