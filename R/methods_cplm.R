@@ -168,7 +168,7 @@ p_value.zcpglm <- function(model,
 
 ########## .bcpglm ---------------
 
-
+#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.bcplm <- model_parameters.bayesQR
 
@@ -264,6 +264,7 @@ model_parameters.cpglmm <- function(model,
     group_level = group_level,
     ci_method = ci_method,
     include_sigma = include_sigma,
+    verbose = verbose,
     ...
   )
 

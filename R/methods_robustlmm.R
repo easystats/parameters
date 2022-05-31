@@ -1,3 +1,4 @@
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.rlmerMod <- model_parameters.cpglmm
 

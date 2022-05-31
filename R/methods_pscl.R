@@ -2,13 +2,16 @@
 
 # model parameters -----------------
 
+#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zeroinfl <- model_parameters.zcpglm
 
+#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.hurdle <- model_parameters.zcpglm
 
 
+#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zerocount <- model_parameters.zcpglm
 

@@ -6,16 +6,6 @@
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 [![status](https://tinyverse.netlify.com/badge/parameters)](https://CRAN.R-project.org/package=parameters)
 
-------------------------------------------------------------------------
-
-:warning: For Bayesian models, we changed the default the CI width!
-Please make an [informed
-decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-and set it explicitly (`ci = 0.89`, `ci = 0.95`, or anything else that
-you decide) :warning:
-
-------------------------------------------------------------------------
-
 ***Describe and understand your model’s parameters!***
 
 **parameters**’ primary goal is to provide utilities for processing the
@@ -171,10 +161,10 @@ model_parameters(model, effects = "all")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient |   SE |       95% CI
-#> -----------------------------------------------------------
-#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
-#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
+#> Parameter               | Coefficient
+#> -------------------------------------
+#> SD (Intercept: Species) |        0.89
+#> SD (Residual)           |        0.32
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
 model_parameters(model, ci_method = "kenward")
@@ -187,10 +177,10 @@ model_parameters(model, ci_method = "kenward")
 #> 
 #> # Random Effects
 #> 
-#> Parameter               | Coefficient |   SE |       95% CI
-#> -----------------------------------------------------------
-#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
-#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
+#> Parameter               | Coefficient
+#> -------------------------------------
+#> SD (Intercept: Species) |        0.89
+#> SD (Residual)           |        0.32
 ```
 
 ### Structural Models
@@ -207,17 +197,17 @@ model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
-#> Variable   |  MR1  |  MR2  |  MR3  | Complexity | Uniqueness
-#> ------------------------------------------------------------
-#> rating     | 0.90  | -0.07 | -0.05 |    1.02    |    0.23   
-#> complaints | 0.97  | -0.06 | 0.04  |    1.01    |    0.10   
-#> privileges | 0.44  | 0.25  | -0.05 |    1.64    |    0.65   
-#> learning   | 0.47  | 0.54  | -0.28 |    2.51    |    0.24   
-#> raises     | 0.55  | 0.43  | 0.25  |    2.35    |    0.23   
-#> critical   | 0.16  | 0.17  | 0.48  |    1.46    |    0.67   
-#> advance    | -0.11 | 0.91  | 0.07  |    1.04    |    0.22   
+#> Variable   | MR1  |  MR2  |  MR3  | Complexity | Uniqueness
+#> -----------------------------------------------------------
+#> rating     | 0.78 | -0.41 | 0.01  |    1.50    |    0.23   
+#> complaints | 0.86 | -0.39 | 0.09  |    1.42    |    0.10   
+#> privileges | 0.59 | -0.02 | -0.07 |    1.03    |    0.65   
+#> learning   | 0.80 | 0.07  | -0.33 |    1.35    |    0.24   
+#> raises     | 0.84 | 0.18  | 0.18  |    1.19    |    0.23   
+#> critical   | 0.30 | 0.24  | 0.42  |    2.45    |    0.67   
+#> advance    | 0.57 | 0.67  | -0.10 |    2.00    |    0.22   
 #> 
-#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
+#> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 49.32%, MR2 = 12.30%, MR3 = 4.98%).
 ```
 
 ## Variable and parameters selection
@@ -229,10 +219,8 @@ can help you quickly select and retain the most relevant predictors
 using methods tailored for the model type.
 
 ``` r
-library(poorman)
-
-lm(disp ~ ., data = mtcars) %>% 
-  select_parameters() %>% 
+lm(disp ~ ., data = mtcars) |> 
+  select_parameters() |> 
   model_parameters()
 #> Parameter   | Coefficient |     SE |            95% CI | t(26) |      p
 #> -----------------------------------------------------------------------
@@ -251,12 +239,10 @@ In order to cite this package, please use the following command:
 ``` r
 citation("parameters")
 
-To cite package 'parameters' in publications use:
-
-  Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
-  Exploring the Parameters of Statistical Models using R." _Journal of Open Source
-  Software_, *5*(53), 2445. doi:10.21105/joss.02445
-  <https://doi.org/10.21105/joss.02445>.
+Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
+Exploring the Parameters of Statistical Models using R." _Journal of Open Source
+Software_, *5*(53), 2445. doi: 10.21105/joss.02445 (URL:
+https://doi.org/10.21105/joss.02445).
 
 A BibTeX entry for LaTeX users is
 

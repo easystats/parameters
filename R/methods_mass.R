@@ -117,6 +117,7 @@ p_value.polr <- function(model, method = NULL, ...) {
 
 # parameters -----------------
 
+#' @rdname model_parameters.default
 #' @export
 model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
   parameters <- insight::get_parameters(model)
@@ -133,9 +134,11 @@ model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
 }
 
 
+#' @rdname model_parameters.default
 #' @export
 model_parameters.polr <- model_parameters.glm
 
 
+#' @rdname model_parameters.default
 #' @export
 model_parameters.negbin <- model_parameters.glm

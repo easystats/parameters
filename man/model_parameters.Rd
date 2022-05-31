@@ -23,25 +23,21 @@ in \code{\link[=print.parameters_model]{print.parameters_model()}} and 'Examples
 A data frame of indices related to the model's parameters.
 }
 \description{
-Compute and extract model parameters. See the documentation for your object's class:
+Compute and extract model parameters. The available options and arguments depend on the modeling \strong{package} and model \code{class}. Follow one of these links to read the model-specific documentation:
 \itemize{
-\item{\link[=model_parameters.htest]{Correlations, t-tests, ...} (\code{htest}, \code{pairwise.htest})}
-\item{\link[=model_parameters.aov]{ANOVAs} (\code{aov}, \code{anova}, \strong{afex}, ...)}
-\item{\link[=model_parameters.default]{Regression models} (\code{lm}, \code{glm}, \strong{survey}, ...)}
-\item{\link[=model_parameters.merMod]{Mixed models} (\strong{lme4}, \strong{nlme}, \strong{glmmTMB}, \strong{afex}, ...)}
-\item{\link[=model_parameters.cgam]{Additive models} (\code{gam}, \code{gamm}, ...)}
-\item{\link[=model_parameters.zcpglm]{Zero-inflated models} (\code{hurdle}, \code{zeroinfl}, \code{zerocount})}
-\item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link models} (\code{bracl}, \code{multinom}, \code{mlm}, \strong{ordinal}, ...)}
-\item{\link[=model_parameters.averaging]{Other special models} (\code{model.avg}, \code{betareg}, \code{glmx}, ...)}
-\item{\link[=model_parameters.BFBayesFactor]{Bayesian tests} (\strong{BayesFactor})}
-\item{\link[=model_parameters.stanreg]{Bayesian models} (\strong{rstanarm}, \strong{brms}, \strong{MCMCglmm}, \strong{blavaan}, ...)}
-\item{\link[=model_parameters.principal]{PCA and FA} (\strong{psych})}
-\item{\link[=model_parameters.lavaan]{CFA and SEM} (\strong{lavaan})}
-\item{\link[=model_parameters.kmeans]{Cluster models} (k-means, ...)}
-\item{\link[=model_parameters.rma]{Meta-Analysis via linear (mixed) models} (\code{rma}, \code{metaplus}, \strong{metaBMA}, ...)}
-\item{\link[=model_parameters.glht]{Hypothesis testing} (\code{glht}, \strong{PMCMRplus})}
-\item{\link[=model_parameters.t1way]{Robust statistical tests} (\strong{WRS2})}
-\item{\link[=model_parameters.mira]{Multiply imputed repeated analyses} (\code{mira})}
+\item{\link[=model_parameters.default]{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg}, \strong{MASS}, \strong{survey}, ... }
+\item{\link[=model_parameters.cgam]{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv}, \strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...}
+\item{\link[=model_parameters.aov]{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, ...}
+\item{\link[=model_parameters.stanreg]{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms}, \strong{MCMCglmm}, \strong{posterior}, \strong{rstanarm}, \code{bayesQR}, \code{bcplm}, \code{BGGM}, \code{blmrm}, \code{blrm}, \code{mcmc.list}, \code{MCMCglmm}, ...}
+\item{\link[=model_parameters.kmeans]{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...}
+\item{\link[=model_parameters.htest]{Correlations, t-tests, etc.:} \strong{lmtest}, \code{htest}, \code{pairwise.htest}, ...}
+\item{\link[=model_parameters.rma]{Meta-Analysis}: \strong{metaBMA}, \strong{metafor}, \strong{metaplus}, ...}
+\item{\link[=model_parameters.merMod]{Mixed models}: \strong{cplm}, \strong{glmmTMB}, \strong{lme4}, \strong{lmerTest}, \strong{nlme}, \strong{ordinal}, \strong{robustlmm}, \strong{spaMM}, \code{mixed}, \code{MixMod}, ...}
+\item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link}: \strong{brglm2}, \strong{DirichletReg}, \strong{nnet}, \strong{ordinal}, \code{mlm}, ...}
+\item{\link[=model_parameters.mira]{Multiple imputation}: \strong{mice}}
+\item{\link[=model_parameters.principal]{PCA, FA, CFA, SEM}: \strong{FactoMineR}, \strong{lavaan}, \strong{psych}, \code{sem}, ...}
+\item{\link[=model_parameters.zcpglm]{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle}, \strong{pscl}, ...}
+\item{\link[=model_parameters.averaging]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg}, \strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit}, \strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik}, \strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus}, \strong{quantreg}, \strong{selection}, \strong{systemfit}, \strong{tidymodels}, \strong{varEST}, \strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...}
 }
 }
 \note{
@@ -313,10 +309,10 @@ of covariates, included as main effects or not, etc.). Their interpretation
 depends of the full context of the model, which should not be inferred
 from the parameters table alone - rather, we recommend to use packages
 that calculate estimated marginal means or marginal effects, such as
-\CRANpkg{modelbased}, \CRANpkg{emmeans} or \CRANpkg{ggeffects}. To raise
-awareness for this issue, you may use \code{print(...,show_formula=TRUE)}
-to add the model-specification to the output of the
-\code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
+\CRANpkg{modelbased}, \CRANpkg{emmeans}, \CRANpkg{ggeffects}, or
+\CRANpkg{marginaleffects}. To raise awareness for this issue, you may use
+\code{print(...,show_formula=TRUE)} to add the model-specification to the output
+of the \code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
 }
 
 \references{

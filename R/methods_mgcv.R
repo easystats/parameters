@@ -1,3 +1,4 @@
+#' @rdname model_parameters.cgam
 #' @export
 model_parameters.gamm <- function(model,
                                   ci = .95,

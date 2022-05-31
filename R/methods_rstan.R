@@ -1,3 +1,4 @@
+#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.stanfit <- function(model,
                                      centrality = "median",

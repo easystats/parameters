@@ -4,6 +4,7 @@
 ###### .metaplus -------------------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.metaplus <- function(model,
                                       ci = .95,
@@ -141,6 +142,7 @@ ci.metaplus <- function(x, ...) {
 ###### .meta_random -------------------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_random <- function(model,
                                          ci = .95,
@@ -283,7 +285,7 @@ ci.meta_random <- function(x, method = "eti", ...) {
 
 ###### .meta_fixed -------------------
 
-
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_fixed <- model_parameters.meta_random
 
@@ -301,6 +303,7 @@ ci.meta_fixed <- ci.meta_random
 ###### .meta_bma -------------------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_bma <- function(model,
                                       ci = .95,

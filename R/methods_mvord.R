@@ -3,6 +3,7 @@
 #################### .mvord
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mvord <- function(model,
                                    ci = .95,

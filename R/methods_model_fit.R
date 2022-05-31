@@ -3,6 +3,7 @@
 # model parameters ---------------------
 
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.model_fit <- function(model,
                                        ci = .95,

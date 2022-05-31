@@ -2,9 +2,124 @@
 % Please edit documentation in R/methods_aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
+\alias{model_parameters.anova}
+\alias{model_parameters.aovlist}
+\alias{model_parameters.afex_aov}
+\alias{model_parameters.anova.rms}
+\alias{model_parameters.Anova.mlm}
+\alias{model_parameters.maov}
 \title{Parameters from ANOVAs}
 \usage{
 \method{model_parameters}{aov}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  ci = NULL,
+  alternative = NULL,
+  test = NULL,
+  power = FALSE,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{anova}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  ci = NULL,
+  alternative = NULL,
+  test = NULL,
+  power = FALSE,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{aovlist}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  ci = NULL,
+  alternative = NULL,
+  test = NULL,
+  power = FALSE,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{afex_aov}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{anova.rms}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  ci = NULL,
+  alternative = NULL,
+  test = NULL,
+  power = FALSE,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{Anova.mlm}(
+  model,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
+  df_error = NULL,
+  type = NULL,
+  ci = NULL,
+  alternative = NULL,
+  test = NULL,
+  power = FALSE,
+  keep = NULL,
+  drop = NULL,
+  parameters = keep,
+  table_wide = FALSE,
+  verbose = TRUE,
+  ...
+)
+
+\method{model_parameters}{maov}(
   model,
   omega_squared = NULL,
   eta_squared = NULL,

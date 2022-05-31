@@ -183,7 +183,7 @@ We've seen above that while an EFA with 5 latent variables works great on our
 dataset, a structure with 6 latent factors might in fact be more appropriate.
 How can we **statistically test** if that is actually the case? This can be done
 using **Confirmatory Factor Analysis (CFA)** (as opposed to **Exploratory** FA),
-which bridges factor analysis with Structural Equation Modelling (SEM).
+which bridges factor analysis with Structural Equation Modeling (SEM).
 
 However, in order to do that cleanly, EFA should be **independent** from CFA:
 the factor structure should be explored in a **"training" set**, and then tested

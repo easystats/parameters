@@ -40,6 +40,7 @@ model_parameters.clm2 <- function(model,
 }
 
 
+#' @rdname model_parameters.merMod
 #' @export
 model_parameters.clmm2 <- model_parameters.clm2
 

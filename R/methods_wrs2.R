@@ -14,6 +14,7 @@
 
 # anova ----------------------
 
+#' @rdname model_parameters.averaging
 model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
@@ -50,6 +51,7 @@ model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
   }
 }
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.med1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_med1way(model)
@@ -68,6 +70,7 @@ model_parameters.med1way <- function(model, verbose = TRUE, ...) {
   )
 }
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.dep.effect <- function(model,
                                         keep = NULL,
@@ -120,6 +123,7 @@ model_parameters.dep.effect <- function(model,
 
 # t-test ----------------------
 
+#' @rdname model_parameters.averaging
 #' @export
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_yuen(model)
