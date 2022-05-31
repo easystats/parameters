@@ -119,8 +119,102 @@
   varcorr <- .get_variance_information(model, component)
   class(varcorr) <- "VarCorr.merMod"
 
+  # return varcorr matrix
   re_data <- as.data.frame(varcorr, order = "lower.tri")
+
+  # extract parameters from SD and COR separately, for sorting
+  re_data_sd <- re_data[!is.na(re_data$var1) & is.na(re_data$var2), ]
+  re_data_cor <- re_data[!is.na(re_data$var1) & !is.na(re_data$var2), ]
+
+  # merge to sorted data frame
+  out <- rbind(
+    re_data_sd[order(re_data_sd$var1, re_data_sd$grp), , drop = FALSE],
+    re_data_cor[order(re_data_cor$var1, re_data_cor$grp), , drop = FALSE],
+    re_data[re_data$grp == "Residual", , drop = FALSE]
+  )
+  out$Parameter <- NA
+
+  # rename SD
+  sds <- !is.na(out$var1) & is.na(out$var2)
+  if (any(sds)) {
+    out$Parameter[sds] <- paste0("SD (", out$var1[sds], ")")
+  }
+
+  # rename correlations
+  corrs <- !is.na(out$var2)
+  if (any(corrs)) {
+    out$Parameter[corrs] <- paste0("Cor (", out$var1[corrs], "~", out$var2[corrs],
+                                   ": ", out$grp[corrs], ")")
+  }
+
+  # rename sigma
+  sigma <- out$grp == "Residual"
+  if (any(sigma)) {
+    out$Parameter[sigma] <- "SD (Observations)"
+  }
+
+  # rename columns
+  out <- datawizard::data_rename(
+    out,
+    pattern = c("grp", "sdcor"),
+    replacement = c("Group", "Coefficient")
+  )
+
+  # remove non-used columns
+  out$var1 <- NULL
+  out$var2 <- NULL
+  out$grp <- NULL
+  out$vcov <- NULL
+  out$sdcor <- NULL
+
+  # fix intercept names
+  out$Parameter <- gsub("(Intercept)", "Intercept", out$Parameter, fixed = TRUE)
+
+  stat_column <- gsub("-statistic", "", insight::find_statistic(model), fixed = TRUE)
+
+  # to match rbind
+  out[[stat_column]] <- NA
+  out$SE <- NA
+  out$df_error <- NA
+  out$p <- NA
+  out$Level <- NA
+  out$CI <- NA
+
+  out$Effects <- "random"
+
+  if (length(ci) == 1) {
+    ci_cols <- c("CI_low", "CI_high")
+  } else {
+    ci_cols <- c()
+    for (i in ci) {
+      ci_low <- paste0("CI_low_", i)
+      ci_high <- paste0("CI_high_", i)
+      ci_cols <- c(ci_cols, ci_low, ci_high)
+    }
+  }
+  out[ci_cols] <- NA
+
+  # variances to SD (sqrt), except correlations and Sigma
+  corr_param <- grepl("^Cor (.*)", out$Parameter)
+  sigma_param <- out$Parameter == "SD (Observations)"
+
+  # add confidence intervals?
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
+    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
+  }
+
+  out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
+
+  if (effects == "random") {
+    out[c(stat_column, "df_error", "p", "CI")] <- NULL
+  }
+
+  rownames(out) <- NULL
+  out
 }
+
+
+
 
 .extract_random_variances_other <- function(model,
                                             ci = .95,
