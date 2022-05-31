@@ -116,6 +116,15 @@
                                              ci_method = NULL,
                                              verbose = FALSE,
                                              ...) {
+}
+
+.extract_random_variances_other <- function(model,
+                                            ci = .95,
+                                            effects = "random",
+                                            component = "conditional",
+                                            ci_method = NULL,
+                                            verbose = FALSE,
+                                            ...) {
 
   varcorr <- .get_variance_information(model, component)
 
