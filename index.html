@@ -214,10 +214,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter               | Coefficient</span>
-<span class="co">#&gt; -------------------------------------</span>
-<span class="co">#&gt; SD (Intercept: Species) |        0.89</span>
-<span class="co">#&gt; SD (Residual)           |        0.32</span>
+<span class="co">#&gt; Parameter               | Coefficient |   SE |       95% CI</span>
+<span class="co">#&gt; -----------------------------------------------------------</span>
+<span class="co">#&gt; SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]</span>
+<span class="co">#&gt; SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]</span>
 
 <span class="co"># model parameters with CI, df and p-values based on Kenward-Roger approximation</span>
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, ci_method <span class="op">=</span> <span class="st">"kenward"</span><span class="op">)</span>
@@ -230,10 +230,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # Random Effects</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter               | Coefficient</span>
-<span class="co">#&gt; -------------------------------------</span>
-<span class="co">#&gt; SD (Intercept: Species) |        0.89</span>
-<span class="co">#&gt; SD (Residual)           |        0.32</span></code></pre></div>
+<span class="co">#&gt; Parameter               | Coefficient |   SE |       95% CI</span>
+<span class="co">#&gt; -----------------------------------------------------------</span>
+<span class="co">#&gt; SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]</span>
+<span class="co">#&gt; SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="structural-models">Structural Models<a class="anchor" aria-label="anchor" href="#structural-models"></a>
@@ -246,17 +246,17 @@
 <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co">#&gt; # Rotated loadings from Factor Analysis (oblimin-rotation)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Variable   | MR1  |  MR2  |  MR3  | Complexity | Uniqueness</span>
-<span class="co">#&gt; -----------------------------------------------------------</span>
-<span class="co">#&gt; rating     | 0.78 | -0.41 | 0.01  |    1.50    |    0.23   </span>
-<span class="co">#&gt; complaints | 0.86 | -0.39 | 0.09  |    1.42    |    0.10   </span>
-<span class="co">#&gt; privileges | 0.59 | -0.02 | -0.07 |    1.03    |    0.65   </span>
-<span class="co">#&gt; learning   | 0.80 | 0.07  | -0.33 |    1.35    |    0.24   </span>
-<span class="co">#&gt; raises     | 0.84 | 0.18  | 0.18  |    1.19    |    0.23   </span>
-<span class="co">#&gt; critical   | 0.30 | 0.24  | 0.42  |    2.45    |    0.67   </span>
-<span class="co">#&gt; advance    | 0.57 | 0.67  | -0.10 |    2.00    |    0.22   </span>
+<span class="co">#&gt; Variable   |  MR1  |  MR2  |  MR3  | Complexity | Uniqueness</span>
+<span class="co">#&gt; ------------------------------------------------------------</span>
+<span class="co">#&gt; rating     | 0.90  | -0.07 | -0.05 |    1.02    |    0.23   </span>
+<span class="co">#&gt; complaints | 0.97  | -0.06 | 0.04  |    1.01    |    0.10   </span>
+<span class="co">#&gt; privileges | 0.44  | 0.25  | -0.05 |    1.64    |    0.65   </span>
+<span class="co">#&gt; learning   | 0.47  | 0.54  | -0.28 |    2.51    |    0.24   </span>
+<span class="co">#&gt; raises     | 0.55  | 0.43  | 0.25  |    2.35    |    0.23   </span>
+<span class="co">#&gt; critical   | 0.16  | 0.17  | 0.48  |    1.46    |    0.67   </span>
+<span class="co">#&gt; advance    | -0.11 | 0.91  | 0.07  |    1.04    |    0.22   </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 49.32%, MR2 = 12.30%, MR3 = 4.98%).</span></code></pre></div>
+<span class="co">#&gt; The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).</span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -283,23 +283,25 @@
 <p>In order to cite this package, please use the following command:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">citation</span>(<span class="st">"parameters"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="st">Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
-<span id="cb8-5"><a href="#cb8-5"></a>Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="st"> </span><span class="fl">10.21105</span><span class="op">/</span><span class="kw">joss.02445</span> (URL<span class="op">:</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>).</span>
-<span id="cb8-7"><a href="#cb8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
+<span id="cb8-3"><a href="#cb8-3"></a>To cite package <span class="st">'parameters'</span> <span class="cf">in</span> publications use<span class="op">:</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="st">  </span>Lüdecke D, Ben<span class="op">-</span>Shachar M, Patil I, Makowski <span class="kw">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  Software_, <span class="op">*</span><span class="dv">5</span><span class="op">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="op">:</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="op">&lt;</span>https<span class="op">:</span><span class="er">//</span>doi.org<span class="op">/</span><span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span><span class="op">&gt;</span>.</span>
 <span id="cb8-9"><a href="#cb8-9"></a></span>
-<span id="cb8-10"><a href="#cb8-10"></a>  <span class="op">@</span>Article{,</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
-<span id="cb8-12"><a href="#cb8-12"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
-<span id="cb8-13"><a href="#cb8-13"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
-<span id="cb8-14"><a href="#cb8-14"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
-<span id="cb8-15"><a href="#cb8-15"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
-<span id="cb8-16"><a href="#cb8-16"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
-<span id="cb8-17"><a href="#cb8-17"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
-<span id="cb8-18"><a href="#cb8-18"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
-<span id="cb8-19"><a href="#cb8-19"></a>  }</span></code></pre></div>
+<span id="cb8-10"><a href="#cb8-10"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="op">@</span>Article{,</span>
+<span id="cb8-13"><a href="#cb8-13"></a>    title =<span class="st"> </span>{Extracting, Computing and Exploring the Parameters of Statistical Models using {R}.},</span>
+<span id="cb8-14"><a href="#cb8-14"></a>    volume =<span class="st"> </span>{<span class="dv">5</span>},</span>
+<span id="cb8-15"><a href="#cb8-15"></a>    doi =<span class="st"> </span>{<span class="fl">10.21105</span><span class="op">/</span>joss<span class="fl">.02445</span>},</span>
+<span id="cb8-16"><a href="#cb8-16"></a>    number =<span class="st"> </span>{<span class="dv">53</span>},</span>
+<span id="cb8-17"><a href="#cb8-17"></a>    journal =<span class="st"> </span>{Journal of Open Source Software},</span>
+<span id="cb8-18"><a href="#cb8-18"></a>    author =<span class="st"> </span>{Daniel Lüdecke and Mattan S. Ben<span class="op">-</span>Shachar and Indrajeet Patil and Dominique Makowski},</span>
+<span id="cb8-19"><a href="#cb8-19"></a>    year =<span class="st"> </span>{<span class="dv">2020</span>},</span>
+<span id="cb8-20"><a href="#cb8-20"></a>    pages =<span class="st"> </span>{<span class="dv">2445</span>},</span>
+<span id="cb8-21"><a href="#cb8-21"></a>  }</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
