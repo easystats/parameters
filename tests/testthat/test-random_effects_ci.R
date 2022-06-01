@@ -38,6 +38,9 @@ if (.runThisTest && !osx &&
   expect_message(mp4 <- model_parameters(m4), "meaningful")
   expect_message(mp5 <- model_parameters(m5), "meaningful")
 
+
+  # model 1 ---------------------
+
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
       mp1$CI_low,
@@ -90,6 +93,9 @@ if (.runThisTest && !osx &&
   })
 
 
+
+  # model 2 ---------------------
+
   test_that("random effects CIs, simple slope", {
     expect_equal(
       mp2$CI_low,
@@ -100,11 +106,19 @@ if (.runThisTest && !osx &&
 
     expect_equal(
       mp2$Parameter,
-      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days: Subject)",
+      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
         "SD (Observations)")
+    )
+
+    expect_equal(
+      mp2$Group,
+      c("", "", "Subject", "Subject", "Subject", "Residual")
     )
   })
 
+
+
+  # model 3 ---------------------
 
   test_that("random effects CIs, categorical slope-1", {
     expect_equal(
@@ -121,26 +135,36 @@ if (.runThisTest && !osx &&
       c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-        "SD (temperature^5)", "Cor (Intercept~temperature.L: recipe)",
-        "Cor (Intercept~temperature.Q: recipe)", "Cor (Intercept~temperature.C: recipe)",
-        "Cor (Intercept~temperature^4: recipe)", "Cor (Intercept~temperature^5: recipe)",
-        "Cor (temperature.L~temperature.C: recipe)", "Cor (temperature.Q~temperature.C: recipe)",
-        "Cor (temperature.L~temperature.Q: recipe)", "Cor (temperature.L~temperature^4: recipe)",
-        "Cor (temperature.Q~temperature^4: recipe)", "Cor (temperature.C~temperature^4: recipe)",
-        "Cor (temperature.L~temperature^5: recipe)", "Cor (temperature.Q~temperature^5: recipe)",
-        "Cor (temperature.C~temperature^5: recipe)", "Cor (temperature^4~temperature^5: recipe)",
-        "SD (Observations)")
+        "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
+        "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
+        "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
+        "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
+        "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
+        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+    )
+
+    expect_equal(
+      mp3$Group,
+      c("", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "Residual")
     )
   })
 
+
+
+  # model 4 ---------------------
 
   test_that("random effects CIs, categorical slope-2", {
     expect_equal(
       mp4$CI_low,
       c(28.88523, 4.96796, -1.93239, -1.98597, -2.68858, -2.5524, 4.27899,
         0.35378, 0.08109, 0.03419, 0, 0.49982, -0.68893, -0.71984, -1,
-        -0.96725, -0.92158, -0.99894, -0.99924, -1, -1, -1, -1, -0.80378,
-        -0.9778, -1, -1, 4.21143),
+        -0.96725, -0.92158, -1, -0.99894, -1, -0.80378, -0.99924, -1,
+        -0.9778, -1, -1, -1, 4.21143),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
@@ -150,17 +174,29 @@ if (.runThisTest && !osx &&
       c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-        "SD (temperature^5)", "Cor (Intercept~temperature.L: replicate)",
-        "Cor (Intercept~temperature.Q: replicate)", "Cor (Intercept~temperature.C: replicate)",
-        "Cor (Intercept~temperature^4: replicate)", "Cor (Intercept~temperature^5: replicate)",
-        "Cor (temperature.L~temperature.C: replicate)", "Cor (temperature.Q~temperature.C: replicate)",
-        "Cor (temperature.L~temperature.Q: replicate)", "Cor (temperature.L~temperature^4: replicate)",
-        "Cor (temperature.Q~temperature^4: replicate)", "Cor (temperature.C~temperature^4: replicate)",
-        "Cor (temperature.L~temperature^5: replicate)", "Cor (temperature.Q~temperature^5: replicate)",
-        "Cor (temperature.C~temperature^5: replicate)", "Cor (temperature^4~temperature^5: replicate)",
-        "SD (Observations)")
+        "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
+        "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
+        "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
+        "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
+        "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
+        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+    )
+
+    expect_equal(
+      mp4$Group,
+      c("", "", "", "", "", "", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "Residual")
     )
   })
+
+
+
+  # model 5 ---------------------
 
   test_that("random effects CIs, double slope", {
     expect_equal(
@@ -173,15 +209,21 @@ if (.runThisTest && !osx &&
     expect_equal(
       mp5$Parameter,
       c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
-        "Cor (Intercept~Days: Subject)", "Cor (Intercept~Months: Subject)",
-        "Cor (Days~Months: Subject)", "SD (Observations)")
+        "Cor (Intercept~Days)", "Cor (Intercept~Months)",
+        "Cor (Days~Months)", "SD (Observations)")
+    )
+
+    expect_equal(
+      mp5$Group,
+      c("", "", "Subject", "Subject", "Subject", "Subject", "Subject",
+        "Subject", "Residual")
     )
   })
 
 
 
 
-
+  # no random intercept --------------------------
 
   data(sleepstudy)
   set.seed(123)
@@ -217,11 +259,15 @@ if (.runThisTest && !osx &&
 
     expect_equal(
       mp5$Parameter,
-      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months: Subject)",
+      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
         "SD (Observations)")
     )
   })
 
+
+
+
+  # poly random slope --------------------------
 
   data(cake)
   m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
@@ -240,10 +286,55 @@ if (.runThisTest && !osx &&
       mp$Parameter,
       c("(Intercept)", "poly(temp, 2)1", "poly(temp, 2)2", "SD (Intercept)",
         "SD (Intercept)", "SD (poly(temp, 2)1)", "SD (poly(temp, 2)2)",
-        "Cor (Intercept~poly(temp, 2)1: replicate)", "Cor (Intercept~poly(temp, 2)2: replicate)",
-        "Cor (poly(temp, 2)1~poly(temp, 2)2: replicate)", "SD (Observations)"
+        "Cor (Intercept~poly(temp, 2)1)", "Cor (Intercept~poly(temp, 2)2)",
+        "Cor (poly(temp, 2)1~poly(temp, 2)2)", "SD (Observations)"
       )
     )
   })
+
+
+
+
+  # poly and categorical random slope --------------------------
+
+  m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (temperature | recipe),
+         data = cake)
+  mp <- model_parameters(m, effects = "random")
+
+  test_that("random effects CIs, poly categorical slope", {
+    expect_equal(
+      mp$CI_low,
+      c(4.27921, 0.21992, 8.23648, 1.18267, 0, 5e-05, 0.37716, 1.24237,
+        0, -0.77198, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, 4.22046),
+      tolerance = 1e-3,
+      ignore_attr = TRUE
+    )
+
+    expect_equal(
+      mp$Parameter,
+      c("SD (Intercept)", "SD (Intercept)", "SD (poly(temp, 2)1)",
+        "SD (poly(temp, 2)2)", "SD (temperature.L)", "SD (temperature.Q)",
+        "SD (temperature.C)", "SD (temperature^4)", "SD (temperature^5)",
+        "Cor (Intercept~poly(temp, 2)1)", "Cor (Intercept~poly(temp, 2)2)",
+        "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (poly(temp, 2)1~poly(temp, 2)2)",
+        "Cor (temperature.L~temperature.Q)", "Cor (temperature.L~temperature.C)",
+        "Cor (temperature.L~temperature^4)", "Cor (temperature.L~temperature^5)",
+        "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
+        "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
+        "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
+        "SD (Observations)")
+    )
+
+    expect_equal(
+      mp$Group,
+      c("replicate", "recipe", "replicate", "replicate", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "replicate", "replicate",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "replicate",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "Residual")
+    )  })
 
 }
