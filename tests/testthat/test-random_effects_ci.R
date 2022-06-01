@@ -335,6 +335,7 @@ if (.runThisTest && !osx &&
         "recipe", "recipe", "recipe", "recipe", "recipe", "replicate",
         "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
         "recipe", "recipe", "recipe", "Residual")
-    )  })
+    )
+  })
 
 }
