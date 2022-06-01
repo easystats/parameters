@@ -123,14 +123,19 @@
   re_data <- as.data.frame(varcorr, order = "lower.tri")
 
   # extract parameters from SD and COR separately, for sorting
-  re_data_sd <- re_data[!is.na(re_data$var1) & is.na(re_data$var2), ]
-  re_data_cor <- re_data[!is.na(re_data$var1) & !is.na(re_data$var2), ]
+  re_sd_intercept <- re_data$var1 == "(Intercept)" & is.na(re_data$var2) & re_data$grp != "Residual"
+  re_sd_slope <- re_data$var1 != "(Intercept)" & is.na(re_data$var2) & re_data$grp != "Residual"
+  re_cor_intercept <- re_data$var1 == "(Intercept)" & !is.na(re_data$var2) & re_data$grp != "Residual"
+  re_cor_slope <- re_data$var1 != "(Intercept)" & !is.na(re_data$var2) & re_data$grp != "Residual"
+  re_sigma <- re_data$grp == "Residual"
 
   # merge to sorted data frame
   out <- rbind(
-    re_data_sd[order(re_data_sd$var1, re_data_sd$grp), , drop = FALSE],
-    re_data_cor[order(re_data_cor$var1, re_data_cor$grp), , drop = FALSE],
-    re_data[re_data$grp == "Residual", , drop = FALSE]
+    re_data[re_sd_intercept, ],
+    re_data[re_sd_slope, ],
+    re_data[re_cor_intercept, ],
+    re_data[re_cor_slope, ],
+    re_data[re_sigma, ]
   )
   out$Parameter <- NA
 
@@ -143,8 +148,7 @@
   # rename correlations
   corrs <- !is.na(out$var2)
   if (any(corrs)) {
-    out$Parameter[corrs] <- paste0("Cor (", out$var1[corrs], "~", out$var2[corrs],
-                                   ": ", out$grp[corrs], ")")
+    out$Parameter[corrs] <- paste0("Cor (", out$var1[corrs], "~", out$var2[corrs], ")")
   }
 
   # rename sigma
@@ -488,7 +492,7 @@
             var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
             if (any(var_ci_corr_param)) {
               rnd_slope_terms <- gsub("(.*)\\.\\(Intercept\\)", "\\1", var_ci$Parameter[var_ci_corr_param])
-              var_ci$Parameter[var_ci_corr_param] <- paste0("Cor (Intercept~", rnd_slope_terms, ": ", var_ci$Group[var_ci_corr_param], ")")
+              var_ci$Parameter[var_ci_corr_param] <- paste0("Cor (Intercept~", rnd_slope_terms, ")")
             }
 
             # correlations w/o intercept? usually only for factors
@@ -498,7 +502,7 @@
             if (any(rnd_slope_corr)) {
               for (gr in setdiff(unique(out$Group), "Residual")) {
                 rnd_slope_corr_grp <- rnd_slope_corr & out$Group == gr
-                dummy <- gsub("Cor \\((.*)~(.*): (.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
+                dummy <- gsub("Cor \\((.*)~(.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
                 var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp]
               }
             }

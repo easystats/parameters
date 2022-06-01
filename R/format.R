@@ -73,6 +73,8 @@ format.parameters_model <- function(x,
       ran_pars <- which(x$Effects == "random")
       stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
       x$Parameter[ran_pars[stddevs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]), ": ", x$Group[ran_pars[stddevs]], ")")
+      corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[corrs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]), ": ", x$Group[ran_pars[corrs]], ")")
       x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
       x$Group <- NULL
     }
