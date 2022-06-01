@@ -421,30 +421,42 @@
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
-      var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
-      colnames(var_ci) <- c("CI_low", "CI_high")
+      tryCatch(
+        {
+          var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
+          colnames(var_ci) <- c("CI_low", "CI_high")
 
-      rn <- row.names(var_ci)
-      rn <- gsub("sd_(.*)(\\|)(.*)", "\\1: \\3", rn)
-      rn <- gsub("|", ":", rn, fixed = TRUE)
-      rn <- gsub("[\\(\\)]", "", rn)
-      rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
+          rn <- row.names(var_ci)
+          rn <- gsub("sd_(.*)(\\|)(.*)", "\\1: \\3", rn)
+          rn <- gsub("|", ":", rn, fixed = TRUE)
+          rn <- gsub("[\\(\\)]", "", rn)
+          rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
 
-      var_ci_corr_param <- grepl("^cor ", rn)
-      var_ci_sigma_param <- rn == "sigma"
+          var_ci_corr_param <- grepl("^cor ", rn)
+          var_ci_sigma_param <- rn == "sigma"
 
-      out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
-      out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
+          out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
+          out$CI_high[!corr_param & !sigma_param] <- var_ci$CI_high[!var_ci_corr_param & !var_ci_sigma_param]
 
-      if (any(sigma_param) && any(var_ci_sigma_param)) {
-        out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
-        out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
-      }
+          if (any(sigma_param) && any(var_ci_sigma_param)) {
+            out$CI_low[sigma_param] <- var_ci$CI_low[var_ci_sigma_param]
+            out$CI_high[sigma_param] <- var_ci$CI_high[var_ci_sigma_param]
+          }
 
-      if (any(corr_param) && any(var_ci_corr_param)) {
-        out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
-        out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
-      }
+          if (any(corr_param) && any(var_ci_corr_param)) {
+            out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
+            out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
+          }
+        },
+        error = function(e) {
+          if (isTRUE(verbose)) {
+            message(insight::format_message(
+              "Cannot compute profiled standard errors and confidence intervals for random effects parameters.",
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+            ))
+          }
+        }
+      )
     } else if (!is.null(ci_method)) {
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
