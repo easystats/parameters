@@ -57,22 +57,34 @@ if (.runThisTest && !osx &&
         "SD (temperature.L)", "SD (temperature.Q)", "SD (temperature.C)",
         "SD (temperature^4)", "SD (temperature^5)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-        "SD (temperature^5)", "Cor (Intercept~temperature.C: recipe)",
-        "Cor (Intercept~temperature.C: replicate)", "Cor (Intercept~temperature.L: recipe)",
-        "Cor (Intercept~temperature.L: replicate)", "Cor (Intercept~temperature.Q: recipe)",
-        "Cor (Intercept~temperature.Q: replicate)", "Cor (Intercept~temperature^4: recipe)",
-        "Cor (Intercept~temperature^4: replicate)", "Cor (Intercept~temperature^5: recipe)",
-        "Cor (Intercept~temperature^5: replicate)", "Cor (temperature.L~temperature.C: recipe)",
-        "Cor (temperature.Q~temperature.C: recipe)", "Cor (temperature.L~temperature.Q: recipe)",
-        "Cor (temperature.L~temperature^4: recipe)", "Cor (temperature.Q~temperature^4: recipe)",
-        "Cor (temperature.C~temperature^4: recipe)", "Cor (temperature.L~temperature^5: recipe)",
-        "Cor (temperature.Q~temperature^5: recipe)", "Cor (temperature.C~temperature^5: recipe)",
-        "Cor (temperature^4~temperature^5: recipe)", "Cor (temperature.L~temperature.C: replicate)",
-        "Cor (temperature.Q~temperature.C: replicate)", "Cor (temperature.L~temperature.Q: replicate)",
-        "Cor (temperature.L~temperature^4: replicate)", "Cor (temperature.Q~temperature^4: replicate)",
-        "Cor (temperature.C~temperature^4: replicate)", "Cor (temperature.L~temperature^5: replicate)",
-        "Cor (temperature.Q~temperature^5: replicate)", "Cor (temperature.C~temperature^5: replicate)",
-        "Cor (temperature^4~temperature^5: replicate)", "SD (Observations)"
+        "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (Intercept~temperature.L)",
+        "Cor (Intercept~temperature.Q)", "Cor (Intercept~temperature.C)",
+        "Cor (Intercept~temperature^4)", "Cor (Intercept~temperature^5)",
+        "Cor (temperature.L~temperature.Q)", "Cor (temperature.L~temperature.C)",
+        "Cor (temperature.L~temperature^4)", "Cor (temperature.L~temperature^5)",
+        "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
+        "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
+        "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
+        "Cor (temperature.L~temperature.Q)", "Cor (temperature.L~temperature.C)",
+        "Cor (temperature.L~temperature^4)", "Cor (temperature.L~temperature^5)",
+        "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
+        "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
+        "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
+        "SD (Observations)")
+    )
+
+    expect_equal(
+      mp1$Group,
+      c("", "", "", "", "", "", "recipe", "replicate", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "Residual"
       )
     )
   })
@@ -88,7 +100,7 @@ if (.runThisTest && !osx &&
 
     expect_equal(
       mp2$Parameter,
-      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days: Subject)",
+      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
         "SD (Observations)")
     )
   })
@@ -109,15 +121,22 @@ if (.runThisTest && !osx &&
       c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-        "SD (temperature^5)", "Cor (Intercept~temperature.L: recipe)",
-        "Cor (Intercept~temperature.Q: recipe)", "Cor (Intercept~temperature.C: recipe)",
-        "Cor (Intercept~temperature^4: recipe)", "Cor (Intercept~temperature^5: recipe)",
-        "Cor (temperature.L~temperature.C: recipe)", "Cor (temperature.Q~temperature.C: recipe)",
-        "Cor (temperature.L~temperature.Q: recipe)", "Cor (temperature.L~temperature^4: recipe)",
-        "Cor (temperature.Q~temperature^4: recipe)", "Cor (temperature.C~temperature^4: recipe)",
-        "Cor (temperature.L~temperature^5: recipe)", "Cor (temperature.Q~temperature^5: recipe)",
-        "Cor (temperature.C~temperature^5: recipe)", "Cor (temperature^4~temperature^5: recipe)",
-        "SD (Observations)")
+        "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
+        "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
+        "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
+        "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
+        "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
+        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+    )
+
+    expect_equal(
+      mp3$Group,
+      c("", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
+        "recipe", "recipe", "recipe", "Residual")
     )
   })
 
@@ -137,17 +156,26 @@ if (.runThisTest && !osx &&
       c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
-        "SD (temperature^5)", "Cor (Intercept~temperature.L: replicate)",
-        "Cor (Intercept~temperature.Q: replicate)", "Cor (Intercept~temperature.C: replicate)",
-        "Cor (Intercept~temperature^4: replicate)", "Cor (Intercept~temperature^5: replicate)",
-        "Cor (temperature.L~temperature.C: replicate)", "Cor (temperature.Q~temperature.C: replicate)",
-        "Cor (temperature.L~temperature.Q: replicate)", "Cor (temperature.L~temperature^4: replicate)",
-        "Cor (temperature.Q~temperature^4: replicate)", "Cor (temperature.C~temperature^4: replicate)",
-        "Cor (temperature.L~temperature^5: replicate)", "Cor (temperature.Q~temperature^5: replicate)",
-        "Cor (temperature.C~temperature^5: replicate)", "Cor (temperature^4~temperature^5: replicate)",
-        "SD (Observations)")
+        "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
+        "Cor (Intercept~temperature.C)", "Cor (Intercept~temperature^4)",
+        "Cor (Intercept~temperature^5)", "Cor (temperature.L~temperature.Q)",
+        "Cor (temperature.L~temperature.C)", "Cor (temperature.L~temperature^4)",
+        "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
+        "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
+        "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
+        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+    )
+
+    expect_equal(
+      mp4$Group,
+      c("", "", "", "", "", "", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "replicate", "replicate",
+        "replicate", "replicate", "replicate", "Residual")
     )
   })
+
 
   test_that("random effects CIs, double slope", {
     expect_equal(
@@ -160,8 +188,8 @@ if (.runThisTest && !osx &&
     expect_equal(
       mp5$Parameter,
       c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
-        "Cor (Intercept~Days: Subject)", "Cor (Intercept~Months: Subject)",
-        "Cor (Days~Months: Subject)", "SD (Observations)")
+        "Cor (Intercept~Days)", "Cor (Intercept~Months)",
+        "Cor (Days~Months)", "SD (Observations)")
     )
   })
 
@@ -204,7 +232,7 @@ if (.runThisTest && !osx &&
 
     expect_equal(
       mp5$Parameter,
-      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months: Subject)",
+      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
         "SD (Observations)")
     )
   })

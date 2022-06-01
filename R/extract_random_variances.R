@@ -612,18 +612,13 @@
         # fix SD and Cor names
         var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
-        var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1:", var_ci$Parameter)
+        var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1\\)", var_ci$Parameter)
         # minor cleaning
         var_ci$Parameter <- gsub("((", "(", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("))", ")", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub(")~", "~", var_ci$Parameter, fixed = TRUE)
         # fix sigma
         var_ci$Parameter[var_ci$Parameter == "sigma"] <- "SD (Observations)"
-        # add name of group factor to cor
-        cor_params <- grepl("^Cor ", var_ci$Parameter)
-        if (any(cor_params)) {
-          var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
-        }
 
         # remove unused columns (that are added back after merging)
         out$CI_low <- NULL
