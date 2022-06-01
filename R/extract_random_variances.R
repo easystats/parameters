@@ -164,6 +164,10 @@
     replacement = c("Group", "Coefficient")
   )
 
+  # fix names for uncorrelated slope-intercepts
+  pattern <- paste0("(", paste0(insight::find_random(model, flatten = TRUE), collapse = "|"), ")\\.\\d+$")
+  out$Group <- gsub(pattern, "\\1", out$Group)
+
   # remove non-used columns
   out$var1 <- NULL
   out$var2 <- NULL
