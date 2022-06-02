@@ -167,7 +167,7 @@ print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...
   formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "text", ci_brackets = TRUE, ci_width = "auto", ...)
   cat(insight::export_table(formatted_table, format = "text", ...))
 
-  if (isTRUE(verbose) && isTRUE(getOption("parameters_cimethod", FALSE))) {
+  if (isTRUE(verbose)) {
     .print_footer_cimethod(x)
   }
 

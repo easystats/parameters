@@ -190,7 +190,7 @@ print.parameters_model <- function(x,
   ))
 
   # inform about CI and df approx.
-  if (isTRUE(verbose) && isTRUE(getOption("parameters_cimethod", FALSE))) {
+  if (isTRUE(verbose)) {
     .print_footer_cimethod(x)
   }
 
