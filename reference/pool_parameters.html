@@ -94,41 +94,18 @@ as <code><a href="https://amices.org/mice/reference/pool.html" class="external-l
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>x</dt>
-<dd><p>A list of <code>parameters_model</code> objects, as returned by
-<code><a href="model_parameters.html">model_parameters()</a></code>, or a list of model-objects that is
-supported by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
-<dt>exponentiate</dt>
-<dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
-<dt>effects</dt>
-<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
-effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
-to mixed models. May be abbreviated. If the calculation of random effects
-parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
-<dt>component</dt>
-<dd><p>Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. <code>component</code>
-may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
-<code>"all"</code> (default). May be abbreviated.</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-<dt>...</dt>
-<dd><p>Currently not used.</p></dd>
-</dl></div>
+    <p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+    </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame of indices related to the model's parameters.</p>
+    
+
+<p>A data frame of indices related to the model's parameters.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

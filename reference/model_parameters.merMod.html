@@ -310,144 +310,34 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>model</dt>
-<dd><p>A mixed model.</p></dd>
-<dt>ci</dt>
-<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-<dt>bootstrap</dt>
-<dd><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
-<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
-<dt>iterations</dt>
-<dd><p>The number of draws to simulate/bootstrap.</p></dd>
-<dt>standardize</dt>
-<dd><p>The method used for standardizing the parameters. Can be
-<code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
-on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="standardize_parameters.html">standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
-factors), which may be a different behaviour compared to other R packages
-(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
-such behaviours, either use <code>standardize="basic"</code> or standardize the data
-with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
-<li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
-effects will be returned.</p></li>
-<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
-works when <code>standardize="refit"</code>.</p></li>
-</ul></dd>
-<dt>effects</dt>
-<dd><p>Should parameters for fixed effects (<code>"fixed"</code>), random
-effects (<code>"random"</code>), or both (<code>"all"</code>) be returned? Only applies
-to mixed models. May be abbreviated. If the calculation of random effects
-parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
-<dt>group_level</dt>
-<dd><p>Logical, for multilevel models (i.e. models with random
-effects) and when <code>effects = "all"</code> or <code>effects = "random"</code>,
-include the parameters for each group level from random effects. If
-<code>group_level = FALSE</code> (the default), only information on SD and COR
-are shown.</p></dd>
-<dt>exponentiate</dt>
-<dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
-<dt>ci_method</dt>
-<dd><p>Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): <code>"residual"</code>,
-<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
-<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
-<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
-<em>Confidence intervals and approximation of degrees of freedom</em> in
-<code><a href="model_parameters.html">model_parameters()</a></code> for further details. When <code>ci_method=NULL</code>, in most
-cases <code>"wald"</code> is used then.</p></dd>
-<dt>p_adjust</dt>
-<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
-<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-<dt>df_method</dt>
-<dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
-<dt>include_sigma</dt>
-<dd><p>Logical, if <code>TRUE</code>, includes the residual standard
-deviation. For mixed models, this is defined as the sum of the distribution-specific
-variance and the variance for the additive overdispersion term (see
-<code><a href="https://easystats.github.io/insight/reference/get_variance.html" class="external-link">insight::get_variance()</a></code> for details). Defaults to <code>FALSE</code> for mixed models
-due to the longer computation time.</p></dd>
-<dt>...</dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
-<dt>component</dt>
-<dd><p>Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. <code>component</code>
-may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
-<code>"all"</code> (default). May be abbreviated.</p></dd>
-<dt>wb_component</dt>
-<dd><p>Logical, if <code>TRUE</code> and models contains within- and
-between-effects (see <code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">datawizard::demean()</a></code>), the <code>Component</code> column
-will indicate which variables belong to the within-effects,
-between-effects, and cross-level interactions. By default, the
-<code>Component</code> column indicates, which parameters belong to the
-conditional or zero-inflated component of the model.</p></dd>
-<dt>summary</dt>
-<dd><p>Logical, if <code>TRUE</code>, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).</p></dd>
-<dt>keep</dt>
-<dd><p>Character containing a regular expression pattern that
-describes the parameters that should be included (for <code>keep</code>) or excluded
-(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If <code>keep</code> is a character vector, every parameter
-name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>keep</code> will be selected from the returned data frame (and vice versa,
-all parameter names matching <code>drop</code> will be excluded). Furthermore, if
-<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
-operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
-If <code>keep</code> is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
-returns multiple columns with parameter components, like in
-<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-<code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></dd>
-<dt>drop</dt>
-<dd><p>See <code>keep</code>.</p></dd>
-<dt>parameters</dt>
-<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-<dt>vcov</dt>
-<dd><p>Variance-covariance matrix used to compute uncertainty estimates
-(e.g., for robust standard errors). This argument accepts a covariance matrix,
-a function which returns a covariance matrix, or a string which identifies
-the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
-<li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
-<li><p>A string which indicates the kind of uncertainty estimates to return.</p><ul><li><p>Heteroskedasticity-consistent: <code>"vcovHC"</code>, <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>, <code>"HC2"</code>, <code>"HC3"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">?sandwich::vcovHC</a></code>.</p></li>
-<li><p>Cluster-robust: <code>"vcovCR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>, <code>"CR2"</code>, <code>"CR3"</code>. See <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">?clubSandwich::vcovCR</a></code>.</p></li>
-<li><p>Bootstrap: <code>"vcovBS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>, <code>"webb"</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code>.</p></li>
-<li><p>Other <code>sandwich</code> package functions: <code>"vcovHAC"</code>, <code>"vcovPC"</code>, <code>"vcovCL"</code>, <code>"vcovPL"</code>.</p></li>
-</ul></li>
-</ul></dd>
-<dt>vcov_args</dt>
-<dd><p>List of arguments to be passed to the function identified by
-the <code>vcov</code> argument. This function is typically supplied by the <strong>sandwich</strong>
-or <strong>clubSandwich</strong> packages. Please refer to their documentation (e.g.,
-<code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available arguments.</p></dd>
-</dl></div>
+    <p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+    </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame of indices related to the model's parameters.</p>
+    
+
+<p>A data frame of indices related to the model's parameters.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>

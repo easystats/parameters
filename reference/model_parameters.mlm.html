@@ -134,84 +134,24 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>model</dt>
-<dd><p>A model with multinomial or categorical response value.</p></dd>
-<dt>ci</dt>
-<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-<dt>bootstrap</dt>
-<dd><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
-<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
-<dt>iterations</dt>
-<dd><p>The number of bootstrap replicates. This only apply in the
-case of bootstrapped frequentist models.</p></dd>
-<dt>component</dt>
-<dd><p>Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. <code>component</code>
-may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
-<code>"all"</code> (default). May be abbreviated.</p></dd>
-<dt>standardize</dt>
-<dd><p>The method used for standardizing the parameters. Can be
-<code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
-on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="standardize_parameters.html">standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
-factors), which may be a different behaviour compared to other R packages
-(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
-such behaviours, either use <code>standardize="basic"</code> or standardize the data
-with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
-<li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
-effects will be returned.</p></li>
-<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
-works when <code>standardize="refit"</code>.</p></li>
-</ul></dd>
-<dt>exponentiate</dt>
-<dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-<dt>...</dt>
-<dd><p>Arguments passed to or from other methods. For instance, when
-<code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
-passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
-<dt>p_adjust</dt>
-<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
-<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
-<dt>vcov</dt>
-<dd><p>Variance-covariance matrix used to compute uncertainty estimates
-(e.g., for robust standard errors). This argument accepts a covariance matrix,
-a function which returns a covariance matrix, or a string which identifies
-the function to be used to compute the covariance matrix.</p><ul><li><p>A covariance matrix</p></li>
-<li><p>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</p></li>
-<li><p>A string which indicates the kind of uncertainty estimates to return.</p><ul><li><p>Heteroskedasticity-consistent: <code>"vcovHC"</code>, <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>, <code>"HC2"</code>, <code>"HC3"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHC.html" class="external-link">?sandwich::vcovHC</a></code>.</p></li>
-<li><p>Cluster-robust: <code>"vcovCR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>, <code>"CR2"</code>, <code>"CR3"</code>. See <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">?clubSandwich::vcovCR</a></code>.</p></li>
-<li><p>Bootstrap: <code>"vcovBS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>, <code>"webb"</code>. See <code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovBS.html" class="external-link">?sandwich::vcovBS</a></code>.</p></li>
-<li><p>Other <code>sandwich</code> package functions: <code>"vcovHAC"</code>, <code>"vcovPC"</code>, <code>"vcovCL"</code>, <code>"vcovPL"</code>.</p></li>
-</ul></li>
-</ul></dd>
-<dt>vcov_args</dt>
-<dd><p>List of arguments to be passed to the function identified by
-the <code>vcov</code> argument. This function is typically supplied by the <strong>sandwich</strong>
-or <strong>clubSandwich</strong> packages. Please refer to their documentation (e.g.,
-<code><a href="https://sandwich.R-Forge.R-project.org//reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>) to see the list of available arguments.</p></dd>
-</dl></div>
+    <p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+    </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame of indices related to the model's parameters.</p>
+    
+
+<p>A data frame of indices related to the model's parameters.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

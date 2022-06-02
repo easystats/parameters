@@ -187,120 +187,31 @@ of generalized additive models (GAM(M)s).</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>model</dt>
-<dd><p>A gam/gamm model.</p></dd>
-<dt>ci</dt>
-<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
-<dt>ci_method</dt>
-<dd><p>Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): <code>"residual"</code>,
-<code>"normal"</code>, <code>"likelihood"</code>, <code>"satterthwaite"</code>, <code>"kenward"</code>, <code>"wald"</code>,
-<code>"profile"</code>, <code>"boot"</code>, <code>"uniroot"</code>, <code>"ml1"</code>, <code>"betwithin"</code>, <code>"hdi"</code>,
-<code>"quantile"</code>, <code>"ci"</code>, <code>"eti"</code>, <code>"si"</code>, <code>"bci"</code>, or <code>"bcai"</code>. See section
-<em>Confidence intervals and approximation of degrees of freedom</em> in
-<code><a href="model_parameters.html">model_parameters()</a></code> for further details. When <code>ci_method=NULL</code>, in most
-cases <code>"wald"</code> is used then.</p></dd>
-<dt>bootstrap</dt>
-<dd><p>Should estimates be based on bootstrapped model? If
-<code>TRUE</code>, then arguments of <a href="model_parameters.stanreg.html">Bayesian regressions</a> apply (see also
-<code><a href="bootstrap_parameters.html">bootstrap_parameters()</a></code>).</p></dd>
-<dt>iterations</dt>
-<dd><p>The number of bootstrap replicates. This only apply in the
-case of bootstrapped frequentist models.</p></dd>
-<dt>standardize</dt>
-<dd><p>The method used for standardizing the parameters. Can be
-<code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
-on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
-<code>"pseudo"</code>. See 'Details' in <code><a href="standardize_parameters.html">standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
-factors), which may be a different behaviour compared to other R packages
-(such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
-such behaviours, either use <code>standardize="basic"</code> or standardize the data
-with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
-<li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
-effects will be returned.</p></li>
-<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
-works when <code>standardize="refit"</code>.</p></li>
-</ul></dd>
-<dt>exponentiate</dt>
-<dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
-<dt>p_adjust</dt>
-<dd><p>Character vector, if not <code>NULL</code>, indicates the method to
-adjust p-values. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">stats::p.adjust()</a></code> for details. Further
-possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
-<code>"sidak"</code> and <code>"none"</code> to explicitly disable adjustment for
-<code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
-<dt>keep</dt>
-<dd><p>Character containing a regular expression pattern that
-describes the parameters that should be included (for <code>keep</code>) or excluded
-(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If <code>keep</code> is a character vector, every parameter
-name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>keep</code> will be selected from the returned data frame (and vice versa,
-all parameter names matching <code>drop</code> will be excluded). Furthermore, if
-<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
-operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
-If <code>keep</code> is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
-returns multiple columns with parameter components, like in
-<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-<code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></dd>
-<dt>drop</dt>
-<dd><p>See <code>keep</code>.</p></dd>
-<dt>parameters</dt>
-<dd><p>Deprecated, alias for <code>keep</code>.</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-<dt>...</dt>
-<dd><p>Arguments passed to or from other methods. For instance, when
-<code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
-passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
-are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
-<dt>omega_squared</dt>
-<dd><p>Compute omega squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></dd>
-<dt>eta_squared</dt>
-<dd><p>Compute eta squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size), <code>"raw"</code>  or
-<code>"adjusted"</code> (the latter option only for ANOVA-tables from mixed
-models).</p></dd>
-<dt>epsilon_squared</dt>
-<dd><p>Compute epsilon squared as index of effect size. Can
-be <code>"partial"</code> (the default, adjusted for effect size) or
-<code>"raw"</code>.</p></dd>
-<dt>df_error</dt>
-<dd><p>Denominator degrees of freedom (or degrees of freedom of the
-error estimate, i.e., the residuals). This is used to compute effect sizes
-for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-<code>afex_aov</code>.)</p></dd>
-<dt>type</dt>
-<dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
-<code>afex_aov</code>.)</p></dd>
-<dt>table_wide</dt>
-<dd><p>Logical that decides whether the ANOVA table should be in
-wide format, i.e. should the numerator and denominator degrees of freedom
-be in the same row. Default: <code>FALSE</code>.</p></dd>
-</dl></div>
+    <p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+    </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame of indices related to the model's parameters.</p>
+    
+
+<p>A data frame of indices related to the model's parameters.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
