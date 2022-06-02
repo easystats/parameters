@@ -3,7 +3,8 @@
 ## General
 
 * It is now possible to hide messages about CI method below tables by specifying
-  `options("parameters_cimethod" = FALSE)` (#722).
+  `options("parameters_cimethod" = FALSE)` (#722). By default, these messages
+  are displayed.
 
 ## Changes to functions
 
