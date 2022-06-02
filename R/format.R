@@ -627,6 +627,10 @@ format.parameters_sem <- function(x,
       string_method <- paste0(string_method, " ")
     }
 
+    if (isFALSE(getOption("parameters_ci_message", TRUE))) {
+      return(invisible())
+    }
+
     # bootstrapped intervals
     if (isTRUE(bootstrap)) {
       msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
