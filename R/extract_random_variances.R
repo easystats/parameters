@@ -797,11 +797,13 @@
     vc1 <- list(vc1)
     names(vc1) <- re_names[[1]]
     attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+    attr(vc1, "useSc") <- TRUE
 
     if (!is.null(vc2)) {
       vc2 <- list(vc2)
       names(vc2) <- re_names[[2]]
       attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+      attr(vc2, "useSc") <- FALSE
     }
 
     varcorr <- datawizard::compact_list(list(vc1, vc2))
@@ -817,6 +819,7 @@
     varcorr <- list(varcorr)
     names(varcorr) <- re_names[1]
     attr(varcorr, "sc") <- model$coef$sigma2[[1]]
+    attr(varcorr, "useSc") <- TRUE
 
     # nlme
     # ---------------------------
