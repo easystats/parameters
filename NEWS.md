@@ -1,5 +1,11 @@
 # parameters 0.18.1
 
+## General
+
+* It is now possible to hide messages about CI method below tables by specifying
+  `options("parameters_cimethod" = FALSE)` (#722). By default, these messages
+  are displayed.
+
 ## Changes to functions
 
 * `model_parameters()` now also includes standard errors and confidence
@@ -11,6 +17,9 @@
 
 * Fixed issue with *glmmTMB* models when calculating confidence 
   intervals for random effects failed due to singular fits.
+  
+* `display()` now correctly includes custom text and additional information
+  in the footer (#722).
 
 # parameters 0.18.0
 
