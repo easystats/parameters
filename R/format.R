@@ -572,7 +572,7 @@ format.parameters_sem <- function(x,
 
 # footer: type of uncertainty interval
 .print_footer_cimethod <- function(x) {
-  if (isFALSE(getOption("parameters_cimethod", FALSE))) {
+  if (isFALSE(getOption("parameters_cimethod", TRUE))) {
     # get attributes
     ci_method <- .additional_arguments(x, "ci_method", NULL)
     test_statistic <- .additional_arguments(x, "test_statistic", NULL)
