@@ -647,6 +647,6 @@ format.parameters_sem <- function(x,
       msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
     }
 
-    message(insight::format_message("\033[0;33m", msg, "\033[0m"))
+    message(insight::format_message(msg))
   }
 }
