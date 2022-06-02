@@ -722,7 +722,7 @@
     }
 
     table_caption <- NULL
-    if (is.null(format) || format == "markdown") {
+    if (is.null(format) || format %in% c("markdown", "text")) {
       # Print
       if (component_header$name != "rewb-contextual") {
         table_caption <- c(sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)), "blue")
