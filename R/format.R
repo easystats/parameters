@@ -572,85 +572,82 @@ format.parameters_sem <- function(x,
 
 # footer: type of uncertainty interval
 .print_footer_cimethod <- function(x) {
+  if (isTRUE(getOption("parameters_cimethod", TRUE))) {
+    # get attributes
+    ci_method <- .additional_arguments(x, "ci_method", NULL)
+    test_statistic <- .additional_arguments(x, "test_statistic", NULL)
+    bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
+    residual_df <- .additional_arguments(x, "residual_df", NULL)
+    random_variances <- .additional_arguments(x, "ran_pars", FALSE)
+    model_class <- .additional_arguments(x, "model_class", NULL)
 
-  # get attributes
-  ci_method <- .additional_arguments(x, "ci_method", NULL)
-  test_statistic <- .additional_arguments(x, "test_statistic", NULL)
-  bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
-  residual_df <- .additional_arguments(x, "residual_df", NULL)
-  random_variances <- .additional_arguments(x, "ran_pars", FALSE)
-  model_class <- .additional_arguments(x, "model_class", NULL)
+    # prepare strings
+    if (!is.null(ci_method)) {
 
-  # prepare strings
-  if (!is.null(ci_method)) {
+      # in case of glm's that have df.residual(), and where residual df where requested
+      if (ci_method == "residual" && test_statistic == "z-statistic" && !is.null(residual_df) && !is.infinite(residual_df) && !is.na(residual_df)) {
+        test_statistic <- "t-statistic"
+      }
 
-    # in case of glm's that have df.residual(), and where residual df where requested
-    if (ci_method == "residual" && test_statistic == "z-statistic" && !is.null(residual_df) && !is.infinite(residual_df) && !is.na(residual_df)) {
-      test_statistic <- "t-statistic"
-    }
-
-    string_tailed <- switch(toupper(ci_method),
-      "HDI" = "highest-density",
-      "UNIROOT" = ,
-      "PROFILE" = "profile-likelihood",
-      "equal-tailed"
-    )
-
-    string_method <- switch(toupper(ci_method),
-      "BCI" = ,
-      "BCAI" = "bias-corrected accelerated bootstrap",
-      "SI" = ,
-      "CI" = ,
-      "QUANTILE" = ,
-      "ETI" = ,
-      "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
-      "NORMAL" = "Wald normal",
-      "BOOT" = "parametric bootstrap",
-      "Wald"
-    )
-
-    if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
-      string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
-    } else {
-      string_approx <- ""
-    }
-
-    if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
-      string_statistic <- switch(tolower(test_statistic),
-        "t-statistic" = "t",
-        "chi-squared statistic" = ,
-        "z-statistic" = "z",
-        ""
+      string_tailed <- switch(toupper(ci_method),
+                              "HDI" = "highest-density",
+                              "UNIROOT" = ,
+                              "PROFILE" = "profile-likelihood",
+                              "equal-tailed"
       )
-      string_method <- paste0(string_method, " ", string_statistic, "-")
-    } else {
-      string_method <- paste0(string_method, " ")
-    }
 
-    if (isFALSE(getOption("parameters_ci_message", TRUE))) {
-      return(invisible())
-    }
+      string_method <- switch(toupper(ci_method),
+                              "BCI" = ,
+                              "BCAI" = "bias-corrected accelerated bootstrap",
+                              "SI" = ,
+                              "CI" = ,
+                              "QUANTILE" = ,
+                              "ETI" = ,
+                              "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+                              "NORMAL" = "Wald normal",
+                              "BOOT" = "parametric bootstrap",
+                              "Wald"
+      )
 
-    # bootstrapped intervals
-    if (isTRUE(bootstrap)) {
-      msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
-    } else {
-      msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
-    }
+      if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
+        string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
+      } else {
+        string_approx <- ""
+      }
 
-    # do we have random effect variances from lme4/glmmTMB?
-    # must be glmmTMB
-    show_re_msg <- (identical(model_class, "glmmTMB") &&
-      # and not Wald-CIs
-      (string_method != "Wald z-" || ci_method != "wald")) ||
-      # OR must be merMod
-      ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
-        # and not Wald CIs
-        !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
-    if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
-      msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
-    }
+      if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
+        string_statistic <- switch(tolower(test_statistic),
+                                   "t-statistic" = "t",
+                                   "chi-squared statistic" = ,
+                                   "z-statistic" = "z",
+                                   ""
+        )
+        string_method <- paste0(string_method, " ", string_statistic, "-")
+      } else {
+        string_method <- paste0(string_method, " ")
+      }
 
-    message(insight::format_message(msg))
+      # bootstrapped intervals
+      if (isTRUE(bootstrap)) {
+        msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
+      } else {
+        msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
+      }
+
+      # do we have random effect variances from lme4/glmmTMB?
+      # must be glmmTMB
+      show_re_msg <- (identical(model_class, "glmmTMB") &&
+                        # and not Wald-CIs
+                        (string_method != "Wald z-" || ci_method != "wald")) ||
+        # OR must be merMod
+        ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+           # and not Wald CIs
+           !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
+      if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
+        msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
+      }
+
+      message(insight::format_message(msg))
+    }
   }
 }
