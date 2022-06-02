@@ -431,14 +431,14 @@ format.parameters_standardized <- function(x,
     footer <- c(footer, "Response is unstandardized.")
   }
 
-  if (format == "text" && !is.null(footer)) {
+  if (format == "markdown" && !is.null(footer)) {
     footer <- lapply(footer, function(ftr) {
       c(paste0("\n- ", ftr), "blue")
     })
   }
   attr(x, "table_footer") <- footer
 
-  if (format == "text" && !is.null(caption)) {
+  if (format == "markdown" && !is.null(caption)) {
     caption <- c(paste0("# ", caption), "blue")
   }
   attr(x, "table_caption") <- caption

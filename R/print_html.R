@@ -65,13 +65,18 @@ print_html.parameters_model <- function(x,
   }
 
   # footer
-  footer <- .print_footer(
+  footer_stats <- .print_footer(
     x,
     digits = footer_digits,
     show_sigma = show_sigma,
     show_formula = show_formula,
     format = "html"
   )
+  if (!is.null(footer)) {
+    footer <- paste0(footer, "<br/>", footer_stats)
+  } else {
+    footer <- footer_stats
+  }
 
   insight::export_table(
     formatted_table,
