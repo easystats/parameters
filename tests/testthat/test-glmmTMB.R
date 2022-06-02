@@ -152,10 +152,7 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m1, effects = "all")$Coefficient,
-      c(
-        1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
-        1, 1.17399
-      ),
+      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312, 1.17399),
       tolerance = 1e-3
     )
     expect_equal(
@@ -176,8 +173,7 @@ if (.runThisTest &&
       model_parameters(m1)$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
-        "zero_inflated", "zero_inflated", "conditional", "conditional",
-        "zero_inflated"
+        "zero_inflated", "zero_inflated", "conditional", "zero_inflated"
       )
     )
     expect_null(model_parameters(m2, effects = "fixed")$Component)
