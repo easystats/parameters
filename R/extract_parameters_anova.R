@@ -181,7 +181,7 @@
   }
 
   # Special catch for car::linearHypothesis
-  m_attr = attributes(model)
+  m_attr <- attributes(model)
   if (!is.null(m_attr$value) && isTRUE(grepl("^Linear hypothesis", m_attr$heading[[1]]))) {
     # Drop unrestricted model (not interesting in linear hypothesis tests)
     # Use formula to subset if available (e.g. with car::linearHypothesis)
@@ -190,14 +190,14 @@
       idx <- idx != "restricted model"
       parameters <- parameters[idx, , drop = FALSE]
     }
-    hypothesis = m_attr$heading[grep("=", m_attr$heading)]
-    parameters_xtra = data.frame(
+    hypothesis <- m_attr$heading[grep("=", m_attr$heading)]
+    parameters_xtra <- data.frame(
       Parameter = hypothesis,
       Coefficient = m_attr$value, 
       SE = sqrt(as.numeric(diag(m_attr$vcov))))
-    row.names(parameters_xtra) = row.names(parameters) <- NULL
-    parameters = cbind(parameters_xtra, parameters)
-    parameters$Parameter = gsub("  ", " ", parameters$Parameter) ## Annoying extra space sometimes
+    row.names(parameters_xtra) <- row.names(parameters) <- NULL
+    parameters <- cbind(parameters_xtra, parameters)
+    parameters$Parameter <- gsub("  ", " ", parameters$Parameter) ## Annoying extra space sometimes
   }
 
   parameters
