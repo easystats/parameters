@@ -124,7 +124,7 @@ are standardized based on their SD at level of prediction (see also
 on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
 is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
-within-group varialbe is found to have access between-group variance.
+within-group variable is found to have access between-group variance.
 }
 }
 
