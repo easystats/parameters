@@ -1,6 +1,6 @@
 pandoc: 2.7.3
 pkgdown: 2.0.3.9000
-pkgdown_sha: 6849d7aed9d3149638fa6db651e62bf951c70921
+pkgdown_sha: 855eba1ad3f486bbda9fcbe43ec8eb88066f161a
 articles:
   clustering: clustering.html
   demean: demean.html
@@ -15,5 +15,5 @@ articles:
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
   standardize_parameters_effsize: standardize_parameters_effsize.html
-last_built: 2022-06-02T16:21Z
+last_built: 2022-06-06T18:06Z
 
