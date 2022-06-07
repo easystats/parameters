@@ -70,7 +70,7 @@
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
 #' is used for level 2 predictors, and `sqrt(residual-variance)` is used for
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
-#' within-group varialbe is found to have access between-group variance.
+#' within-group variable is found to have access between-group variance.
 #'
 #' # Transformed Variables
 #' When the model's formula contains transformations (e.g. `y ~ exp(X)`) `method
