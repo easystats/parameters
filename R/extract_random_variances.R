@@ -229,10 +229,16 @@
 
 #' @export
 as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...) {
+  # retrieve RE SD and COR
   stddevs <- sapply(x[, "StdDev"], as.numeric)
-  corrs <- suppressWarnings(sapply(x[, "Corr"], as.numeric))
+  if ("Corr" %in% colnames(x)) {
+    corrs <- suppressWarnings(sapply(x[, "Corr"], as.numeric))
+  } else {
+    corrs <- NULL
+  }
   grps <- grepl(" =$", names(stddevs))
 
+  # for multiple grouping factors, split at each group
   if (any(grps)) {
     from <- which(grps)
     to <- c(which(grps) - 1, length(grps))[-1]
@@ -246,16 +252,20 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         stringsAsFactors = FALSE
       )
     }))
-    out_cor <- do.call(rbind, lapply(1:length(from), function(i) {
-      values <- corrs[from[i]:to[i]]
-      data.frame(
-        grp = gsub("(.*) =$", "\\1", names(values[1])),
-        var1 = "(Intercept)",
-        var2 = names(values[-1]),
-        sdcor = unname(values[-1]),
-        stringsAsFactors = FALSE
-      )
-    }))
+    if (!is.null(corrs)) {
+      out_cor <- do.call(rbind, lapply(1:length(from), function(i) {
+        values <- corrs[from[i]:to[i]]
+        data.frame(
+          grp = gsub("(.*) =$", "\\1", names(values[1])),
+          var1 = "(Intercept)",
+          var2 = names(values[-1]),
+          sdcor = unname(values[-1]),
+          stringsAsFactors = FALSE
+        )
+      }))
+    } else {
+      out_cor <- NULL
+    }
   } else {
     out_sd <- data.frame(
       grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
@@ -264,13 +274,17 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       sdcor = unname(stddevs),
       stringsAsFactors = FALSE
     )
-    out_cor <- data.frame(
-      grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
-      var1 = "(Intercept)",
-      var2 = names(corrs),
-      sdcor = unname(corrs),
-      stringsAsFactors = FALSE
-    )
+    if (!is.null(corrs)) {
+      out_cor <- data.frame(
+        grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
+        var1 = "(Intercept)",
+        var2 = names(corrs),
+        sdcor = unname(corrs),
+        stringsAsFactors = FALSE
+      )
+    } else {
+      out_cor <- NULL
+    }
   }
 
   out_sd$grp[out_sd$var1 == "Residual"] <- "Residual"
