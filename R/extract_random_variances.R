@@ -107,6 +107,8 @@
 
 
 
+
+
 # workhorse ------------------------
 
 .extract_random_variances_helper <- function(model,
@@ -223,6 +225,12 @@
 
 
 
+
+# old workhorse ------------------------------------
+
+# this used to be the old way to extract random effect variances,
+# which might be less stable than just using "as.data.frame(VarCorr())".
+# we still might need this for nlme::lme
 
 .extract_random_variances_other <- function(model,
                                             ci = .95,
@@ -414,6 +422,8 @@
 
 
 
+
+
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
@@ -424,8 +434,11 @@
   }
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
+
+    # lme4 - boot and profile
+
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
-      tryCatch(
+      out <- tryCatch(
         {
           var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
           colnames(var_ci) <- c("CI_low", "CI_high")
@@ -451,6 +464,7 @@
             out$CI_low[corr_param] <- var_ci$CI_low[var_ci_corr_param]
             out$CI_high[corr_param] <- var_ci$CI_high[var_ci_corr_param]
           }
+          out
         },
         error = function(e) {
           if (isTRUE(verbose)) {
@@ -459,15 +473,19 @@
               "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
             ))
           }
+          out
         }
       )
     } else if (!is.null(ci_method)) {
+
+      # lme4 - wald / normal CI
+
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
       if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
 
         # this may fail, so wrap in try-catch
-        tryCatch(
+        out <- tryCatch(
           {
             # vcov from full model. the parameters from vcov have a different
             # order, so we need to restore the "original" order of random effect
@@ -564,6 +582,7 @@
                 "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
               ))
             }
+            out
           },
           error = function(e) {
             if (isTRUE(verbose)) {
@@ -579,6 +598,7 @@
                 ))
               }
             }
+            out
           }
         )
       } else if (isTRUE(verbose)) {
@@ -586,6 +606,9 @@
       }
     }
   } else if (inherits(model, "glmmTMB")) {
+
+    # glmmTMB random-effects-CI
+
     ## TODO "profile" seems to be less stable, so only wald?
     out <- tryCatch(
       {
@@ -593,38 +616,50 @@
           as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci))),
           as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
         )
+
         colnames(var_ci) <- c("CI_low", "CI_high", "not_used")
         var_ci$Component <- "conditional"
-        # # regex-pattern to find conditional and ZI components
-        group_factor <- insight::find_random(model, flatten = TRUE)
-        group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
-
         var_ci$Parameter <- row.names(var_ci)
-        pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
-        zi_rows <- grepl(pattern, var_ci$Parameter)
-        if (any(zi_rows)) {
-          var_ci$Component[zi_rows] <- "zi"
-        }
 
-        # add Group
-        var_ci$Group <- NA
-        if (length(group_factor) > 1) {
-          var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
-          var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+        if (utils::packageVersion("glmmTMB") > "1.1.3") {
+          var_ci$Component[grepl("^zi\\.", var_ci$Parameter)] <- "zi"
+          # remove cond/zi prefix
+          var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
+          # copy RE group
+          var_ci$Group <- gsub("(.*)\\|(.*)$", "\\2", var_ci$Parameter)
+          var_ci$Parameter <- gsub("(.*)\\|(.*)$", "\\1", var_ci$Parameter)
+          var_ci$Group[rownames(var_ci) == "sigma"] <- "Residual"
         } else {
-          var_ci$Group <- group_factor
-          # check if sigma was properly identified
-          if (!"sigma" %in% var_ci$Group && "sigma" %in% rownames(var_ci)) {
-            var_ci$Group[rownames(var_ci) == "sigma"] <- "Residual"
+          # regex-pattern to find conditional and ZI components
+          group_factor <- insight::find_random(model, flatten = TRUE)
+          group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
+
+          pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
+          zi_rows <- grepl(pattern, var_ci$Parameter)
+          if (any(zi_rows)) {
+            var_ci$Component[zi_rows] <- "zi"
+          }
+
+          # add Group
+          var_ci$Group <- NA
+          if (length(group_factor) > 1) {
+            var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
+            var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+          } else {
+            var_ci$Group <- group_factor
+            # check if sigma was properly identified
+            if (!"sigma" %in% var_ci$Group && "sigma" %in% rownames(var_ci)) {
+              var_ci$Group[rownames(var_ci) == "sigma"] <- "Residual"
+            }
+          }
+
+          # remove cond/zi prefix
+          pattern <- paste0("^(cond\\.|zi\\.|", group_factor, "\\.cond\\.|", group_factor, "\\.zi\\.)(.*)")
+          for (p in pattern) {
+            var_ci$Parameter <- gsub(p, "\\2", var_ci$Parameter)
           }
         }
-        var_ci$Group[var_ci$Group == "sigma"] <- "Residual"
 
-        # remove cond/zi prefix
-        pattern <- paste0("^(cond\\.|zi\\.|", group_factor, "\\.cond\\.|", group_factor, "\\.zi\\.)(.*)")
-        for (p in pattern) {
-          var_ci$Parameter <- gsub(p, "\\2", var_ci$Parameter)
-        }
         # fix SD and Cor names
         var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
         var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
@@ -635,6 +670,7 @@
         var_ci$Parameter <- gsub(")~", "~", var_ci$Parameter, fixed = TRUE)
         # fix sigma
         var_ci$Parameter[var_ci$Parameter == "sigma"] <- "SD (Observations)"
+        var_ci$Group[var_ci$Group == "sigma"] <- "Residual"
 
         # remove unused columns (that are added back after merging)
         out$CI_low <- NULL
@@ -645,83 +681,35 @@
         var_ci$not_used <- NULL
         var_ci$Component <- NULL
 
-        merge(out, var_ci, sort = FALSE, all.x = TRUE)
-        #
-        # groups <- utils::stack(insight::find_random(model, flatten = FALSE))
-        # colnames(groups) <- c("Group", "Component")
-        # groups$Component <- ifelse(groups$Component == "random", "conditional", "zi")
-        #
-        # # regex-pattern to find conditional and ZI components
-        # group_factor <- insight::find_random(model, flatten = TRUE)
-        # group_factor2 <- paste0("(", paste(group_factor, collapse = "|"), ")")
-        #
-        # thetas <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", method = "wald", level = ci)))
-        # thetas$Parameter <- row.names(thetas)
-        # thetas$Component <- "conditional"
-        # # find zi-prefix, to set correct component value
-        # pattern <- paste0("^(zi\\.|", group_factor2, "\\.zi\\.)")
-        # thetas$Component[grepl(pattern, row.names(thetas))] <- "zi"
-        #
-        # if (nrow(thetas) == nrow(groups)) {
-        #   thetas <- cbind(thetas, groups)
-        # } else {
-        #   thetas <- merge(thetas, groups, sort = FALSE)
-        # }
-        #
-        # # reorder columns
-        # thetas <- datawizard::data_relocate(thetas, cols = "Component", after = "Group")
-        # thetas <- datawizard::data_relocate(thetas, cols = "Parameter")
-        #
-        # sigma <- as.data.frame(suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)))
-        #
-        # # check for sigma component
-        # if (nrow(sigma) > 0) {
-        #   sigma$Parameter <- row.names(sigma)
-        #   sigma$Group <- "Residual"
-        #   sigma$Component <- "conditional"
-        #   sigma <- datawizard::data_relocate(sigma, cols = "Parameter")
-        #   var_ci <- rbind(thetas, sigma)
-        # } else {
-        #   var_ci <- thetas
-        # }
-        #
-        # colnames(var_ci) <- c("Parameter", "CI_low", "CI_high", "not_used", "Group", "Component")
-        #
-        # # remove cond/zi prefix
-        # pattern <- paste0("^(cond\\.|zi\\.|", group_factor2, "\\.cond\\.|", group_factor2, "\\.zi\\.)")
-        # var_ci$Parameter <- gsub(pattern, "", var_ci$Parameter)
-        # # fix SD and Cor names
-        # var_ci$Parameter <- gsub(".Intercept.", "(Intercept)", var_ci$Parameter, fixed = TRUE)
-        # var_ci$Parameter <- gsub("^(Std\\.Dev\\.)(.*)", "SD \\(\\2\\)", var_ci$Parameter)
-        # var_ci$Parameter <- gsub("^Cor\\.(.*)\\.(.*)", "Cor \\(\\2~\\1:", var_ci$Parameter)
-        # # minor cleaning
-        # var_ci$Parameter <- gsub("((", "(", var_ci$Parameter, fixed = TRUE)
-        # var_ci$Parameter <- gsub("))", ")", var_ci$Parameter, fixed = TRUE)
-        # var_ci$Parameter <- gsub(")~", "~", var_ci$Parameter, fixed = TRUE)
-        # # fix sigma
-        # var_ci$Parameter[var_ci$Parameter == "sigma"] <- "SD (Observations)"
-        # # add name of group factor to cor
-        # cor_params <- grepl("^Cor ", var_ci$Parameter)
-        # if (any(cor_params)) {
-        #   # this might break if length(group_factor) > 1; I don't have a test case handy
-        #   var_ci$Parameter[cor_params] <- paste0(var_ci$Parameter[cor_params], " ", group_factor, ")")
-        # }
-        #
-        # # remove unused columns (that are added back after merging)
-        # out$CI_low <- NULL
-        # out$CI_high <- NULL
-        #
-        # # filter component
-        # var_ci <- var_ci[var_ci$Component == component, ]
-        # var_ci$not_used <- NULL
-        # var_ci$Component <- NULL
-        #
-        # merge(out, var_ci, sort = FALSE, all.x = TRUE)
+        # check results - warn user
+        if (isTRUE(verbose)) {
+          missing_ci <- any(is.na(var_ci$CI_low) | is.na(var_ci$CI_high))
+          singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model))
+
+          if (singular_fit) {
+            message(insight::format_message(
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              "Some of the confidence intervals of the random effects parameters are probably not meaningful!"
+            ))
+          } else if (missing_ci) {
+            message(insight::format_message(
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!"
+            ))
+          }
+        }
+
+        # merge and sort
+        out$.sort_id <- 1:nrow(out)
+        out <- merge(out, var_ci, sort = FALSE, all.x = TRUE)
+        out <- out[order(out$.sort_id), ]
+        out$.sort_id <- NULL
+        out
       },
       error = function(e) {
         if (isTRUE(verbose)) {
           message(insight::format_message(
-            "Cannot compute standard errors and confidence intervals for random effects parameters.",
+            "Cannot compute confidence intervals for random effects parameters.",
             "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
           ))
         }
@@ -732,6 +720,8 @@
 
   out
 }
+
+
 
 
 
@@ -977,6 +967,7 @@
 
 #### helper to extract various random effect variances -----------------------
 
+## NOTE these may be no longer needed, once we switch to the new workhorse function
 
 # random slope-variances (tau 11) ----
 # ----------------------------------------------
@@ -1131,24 +1122,6 @@
       NULL
     }
   )
-
-  # rho01 <- tryCatch(
-  #   {
-  #     sapply(corrs, function(i) {
-  #       if (!is.null(i)) {
-  #         slope_pairs <- utils::combn(x = rnd_slopes, m = 2, simplify = FALSE)
-  #         lapply(slope_pairs, function(j) {
-  #           stats::setNames(i[j[1], j[2]], paste0("..", paste0(j, collapse = "-")))
-  #         })
-  #       } else {
-  #         NULL
-  #       }
-  #     })
-  #   },
-  #   error = function(e) {
-  #     NULL
-  #   }
-  # )
 
   unlist(rho00)
 }
