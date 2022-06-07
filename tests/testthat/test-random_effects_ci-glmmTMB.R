@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-osx <- tryCatch(
+win_os <- tryCatch(
   {
     si <- Sys.info()
     if (!is.null(si["sysname"])) {
-      si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
+      si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
     } else {
       FALSE
     }
@@ -16,7 +16,7 @@ osx <- tryCatch(
 
 ## TODO also check messages for profiled CI
 
-if (.runThisTest && !osx &&
+if (.runThisTest && win_os &&
     requiet("testthat") &&
     requiet("parameters") &&
     requiet("glmmTMB") &&
