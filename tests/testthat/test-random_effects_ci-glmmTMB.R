@@ -20,7 +20,8 @@ if (.runThisTest && !osx &&
     requiet("testthat") &&
     requiet("parameters") &&
     requiet("glmmTMB") &&
-    requiet("lme4")) {
+    requiet("lme4") &&
+    packageVersion("glmmTMB") > "1.1.3") {
 
   data(sleepstudy)
   data(cake)
