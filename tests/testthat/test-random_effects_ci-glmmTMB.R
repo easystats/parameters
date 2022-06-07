@@ -33,7 +33,7 @@ if (.runThisTest && !osx &&
   m4 <- suppressWarnings(glmmTMB(angle ~ temperature + (temperature | replicate), data = cake))
   m5 <- suppressWarnings(glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
-  expect_message(expect_message(mp1 <- model_parameters(m1), "singularity"), "singularity")
+  expect_message(mp1 <- model_parameters(m1), "singularity")
   mp2 <- model_parameters(m2) # works
   expect_message(mp3 <- model_parameters(m3), "singularity") # no SE/CI
   expect_message(mp4 <- model_parameters(m4), "singularity") # no SE/CI
@@ -42,10 +42,12 @@ if (.runThisTest && !osx &&
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
       mp1$CI_low,
-      c(28.9123, 5.03115, -1.87304, -2.42081, -3.2708, -2.57695, NA,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NA),
+      c(28.9123, 5.03115, -1.87304, -2.42081, -3.2708, -2.57695, 0.21571,
+        4.17466, NaN, 0, 0.26247, 0.34089, 0.02477, 0.65731, 0.3902,
+        0.14685, 0.01322, 0.62182, 0.99915, NaN, NaN, NaN, -0.31609,
+        -0.48806, NaN, -0.8346, NaN, -0.60153, NA, NA, NA, NA, NA, NA,
+        NA, NA, NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12529
+      ),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
@@ -110,8 +112,8 @@ if (.runThisTest && !osx &&
     expect_equal(
       mp3$CI_low,
       c(31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-        NA, NA, NA, NA, NA, NA),
+        0, NaN, NaN, 0, NaN, NaN, NaN, NaN, -0.49203, -0.41167, NaN,
+        NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 7.08478),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
@@ -145,8 +147,9 @@ if (.runThisTest && !osx &&
     expect_equal(
       mp4$CI_low,
       c(29.01131, 5.01247, -1.89444, -1.96275, -2.66798, -2.50892,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-        NA, NA, NA, NA, NA, NA),
+        4.23497, 0.62985, 0.36934, 0.1398, 0.01133, 0.60758, 0.56678,
+        0.26866, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN,
+        4.23582),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
@@ -180,7 +183,8 @@ if (.runThisTest && !osx &&
   test_that("random effects CIs, double slope", {
     expect_equal(
       mp5$CI_low,
-      c(238.40607, 7.52296, NA, NA, NA, NA, NA, NA, NA),
+      c(238.40607, 7.52296, 15.01708, 3.80547, NaN, -0.48781, NaN,
+        NaN, 22.80046),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
@@ -225,7 +229,7 @@ if (.runThisTest && !osx &&
   test_that("random effects CIs, simple slope", {
     expect_equal(
       mp5$CI_low,
-      c(237.03695, 9.04139, NA, NA, NA, NA),
+      c(237.03695, 9.04139, NaN, 8.95755, NaN, 30.67054),
       tolerance = 1e-3,
       ignore_attr = TRUE
     )
