@@ -57,7 +57,7 @@ if (.runThisTest && win_os &&
         -0.48806, NaN, -0.8346, NaN, -0.60153, NA, NA, NA, NA, NA, NA,
         NA, NA, NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12529
       ),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -105,7 +105,7 @@ if (.runThisTest && win_os &&
     expect_equal(
       mp2$CI_low,
       c(238.40611, 7.52295, 15.01709, 3.80546, -0.48781, 22.80047),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -123,7 +123,7 @@ if (.runThisTest && win_os &&
       c(31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
         0, NaN, NaN, 0, NaN, NaN, NaN, NaN, -0.49203, -0.41167, NaN,
         NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 7.08478),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -159,7 +159,7 @@ if (.runThisTest && win_os &&
         4.23497, 0.62985, 0.36934, 0.1398, 0.01133, 0.60758, 0.56678,
         0.26866, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN,
         4.23582),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -194,7 +194,7 @@ if (.runThisTest && win_os &&
       mp5$CI_low,
       c(238.40607, 7.52296, 15.01708, 3.80547, NaN, -0.48781, NaN,
         NaN, 22.80046),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -225,7 +225,7 @@ if (.runThisTest && win_os &&
     expect_equal(
       mp2$CI_low,
       c(243.55046, 6.89554, 4.98429, 25.94359),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
@@ -239,7 +239,7 @@ if (.runThisTest && win_os &&
     expect_equal(
       mp5$CI_low,
       c(237.03695, 9.04139, NaN, 8.95755, NaN, 30.67054),
-      tolerance = 1e-3,
+      tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
