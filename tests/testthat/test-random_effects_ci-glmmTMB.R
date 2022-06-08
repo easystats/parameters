@@ -36,12 +36,14 @@ if (.runThisTest && win_os &&
   set.seed(123)
   sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
+  set.seed(123)
   m1 <- suppressWarnings(glmmTMB(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
   m2 <- glmmTMB(Reaction ~ Days + (Days | Subject), data = sleepstudy)
   m3 <- suppressWarnings(glmmTMB(angle ~ temperature + (temperature | recipe), data = cake))
   m4 <- suppressWarnings(glmmTMB(angle ~ temperature + (temperature | replicate), data = cake))
   m5 <- suppressWarnings(glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
+  set.seed(123)
   expect_message(mp1 <- model_parameters(m1), "singularity")
   mp2 <- model_parameters(m2) # works
   expect_message(mp3 <- model_parameters(m3), "singularity") # no SE/CI
@@ -215,9 +217,11 @@ if (.runThisTest && win_os &&
   set.seed(123)
   sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
+  set.seed(123)
   m2 <- glmmTMB(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
   m5 <- suppressWarnings(glmmTMB(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy))
 
+  set.seed(123)
   mp2 <- model_parameters(m2)
   expect_message(mp5 <- model_parameters(m5), "singularity") # no SE/CI
 
