@@ -36,7 +36,7 @@ the examples below for more details."><meta property="og:image" content="/refere
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,21 +176,77 @@ the examples below for more details.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-    </div>
+    <dl><dt>x</dt>
+<dd><p>A data frame.</p></dd>
+
+
+<dt>standardize</dt>
+<dd><p>Standardize the dataframe before clustering (default).</p></dd>
+
+
+<dt>include_factors</dt>
+<dd><p>Logical, if <code>TRUE</code>, factors are converted to numerical
+values in order to be included in the data for determining the number of
+clusters. By default, factors are removed, because most methods that
+determine the number of clusters need numeric input only.</p></dd>
+
+
+<dt>package</dt>
+<dd><p>Package from which methods are to be called to determine the
+number of clusters. Can be <code>"all"</code> or a vector containing
+<code>"easystats"</code>, <code>"NbClust"</code>, <code>"mclust"</code>, and <code>"M3C"</code>.</p></dd>
+
+
+<dt>fast</dt>
+<dd><p>If <code>FALSE</code>, will compute 4 more indices (sets <code>index = "allong"</code>
+in <code>NbClust</code>). This has been deactivated by default as it is
+computationally heavy.</p></dd>
+
+
+<dt>nbclust_method</dt>
+<dd><p>The clustering method (passed to <code><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html" class="external-link">NbClust::NbClust()</a></code>
+as <code>method</code>).</p></dd>
+
+
+<dt>n_max</dt>
+<dd><p>Maximal number of clusters to test.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+
+
+<dt>clustering_function, gap_method</dt>
+<dd><p>Other arguments passed to other
+functions. <code>clustering_function</code> is used by <code>fviz_nbclust</code> and
+can be <code>kmeans</code>, codecluster::pam, codecluster::clara,
+codecluster::fanny, and more. <code>gap_method</code> is used by
+<code><a href="https://rdrr.io/pkg/cluster/man/clusGap.html" class="external-link">cluster::maxSE</a></code> to extract the optimal numbers of clusters (see its
+<code>method</code> argument).</p></dd>
+
+
+<dt>method, min_size, eps_n, eps_range</dt>
+<dd><p>Arguments for DBSCAN algorithm.</p></dd>
+
+
+<dt>distance_method</dt>
+<dd><p>The distance method (passed to <code><a href="https://rdrr.io/pkg/factoextra/man/dist.html" class="external-link">dist()</a></code>). Used by
+algorithms relying on the distance matrix, such as <code>hclust</code> or <code>dbscan</code>.</p></dd>
+
+
+<dt>hclust_method</dt>
+<dd><p>The hierarchical clustering method (passed to <code><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust()</a></code>).</p></dd>
+
+
+<dt>ci</dt>
+<dd><p>Confidence Interval (CI) level. Default to <code>0.95</code> (<code>95%</code>).</p></dd>
+
+
+<dt>iterations</dt>
+<dd><p>The number of bootstrap replicates. This only apply in the
+case of bootstrapped frequentist models.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>There is also a <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a> implemented in the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>.</p>

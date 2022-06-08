@@ -16,7 +16,7 @@ i.e., by what they are divided. The "basic" method of standardization uses.'><me
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,12 +93,34 @@ i.e., by what they are divided. The "basic" method of standardization uses.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-    </div>
+    <dl><dt>model</dt>
+<dd><p>A statistical model.</p></dd>
+
+
+<dt>robust</dt>
+<dd><p>Logical, if <code>TRUE</code>, centering is done by subtracting the
+median from the variables and dividing it by the median absolute deviation
+(MAD). If <code>FALSE</code>, variables are standardized by subtracting the
+mean and dividing it by the standard deviation (SD).</p></dd>
+
+
+<dt>two_sd</dt>
+<dd><p>If <code>TRUE</code>, the variables are scaled by two times the deviation
+(SD or MAD depending on <code>robust</code>). This method can be useful to obtain
+model coefficients of continuous parameters comparable to coefficients
+related to binary predictors, when applied to <strong>the predictors</strong> (not the
+outcome) (Gelman, 2008).</p></dd>
+
+
+<dt>include_pseudo</dt>
+<dd><p>(For (G)LMMs) Should Pseudo-standardized information be
+included?</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     

@@ -12,7 +12,7 @@ mixed model and returns the result as a data frame."><meta property="og:image" c
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,9 +81,18 @@ mixed model and returns the result as a data frame.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <p></p>
-<p></p>
-    </div>
+    <dl><dt>model</dt>
+<dd><p>A mixed effects model (including <code>stanreg</code> models).</p></dd>
+
+
+<dt>component</dt>
+<dd><p>Should all parameters, parameters for the conditional model,
+for the zero-inflated part of the model, or the dispersion model be returned?
+Applies to models with zero-inflated and/or dispersion component. <code>component</code>
+may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
+<code>"all"</code> (default). May be abbreviated.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
