@@ -180,6 +180,7 @@
 
 
   # ==== degrees of freedom
+
   if (!is.null(ci_method)) {
     df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
@@ -310,24 +311,12 @@
 
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    sig <- tryCatch(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)),
+                    error = function(e) NULL)
     attr(params, "sigma") <- as.numeric(sig)
 
-    resdf <- tryCatch(
-      {
-        suppressWarnings(insight::get_df(model, type = "residual"))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    resdf <- tryCatch(suppressWarnings(insight::get_df(model, type = "residual")),
+                      error = function(e) NULL)
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params
