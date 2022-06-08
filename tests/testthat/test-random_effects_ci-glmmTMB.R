@@ -1,5 +1,9 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+# Test Setup --------------------------------
 
+# only run for dev-version, not on CRAN
+.runThisTest <- length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3
+
+# only run on windows - there are some minor rounding issues on other OS
 win_os <- tryCatch(
   {
     si <- Sys.info()
@@ -13,6 +17,10 @@ win_os <- tryCatch(
     FALSE
   }
 )
+
+
+
+# tests --------------------------------
 
 ## TODO also check messages for profiled CI
 
