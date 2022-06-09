@@ -308,7 +308,7 @@ if (require("lavaan", quietly = TRUE)) {
 \itemize{
 \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational and
 Psychological Measurement, 34(1):111–117
-\item Pettersson, E., \& Turkheimer, E. (2010). Item selection, evaluation, and
+\item Pettersson, E., and Turkheimer, E. (2010). Item selection, evaluation, and
 simple structure in personality data. Journal of research in personality,
 44(4), 407-420.
 \item Revelle, W. (2016). How To: Use the psych package for Factor Analysis and

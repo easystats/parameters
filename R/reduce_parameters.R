@@ -52,10 +52,10 @@
 #' See also [package vignette](https://easystats.github.io/parameters/articles/parameters_reduction.html).
 #'
 #' @references
-#' - Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective
+#' - Nguyen, L. H., and Holmes, S. (2019). Ten quick tips for effective
 #'  dimensionality reduction. PLOS Computational Biology, 15(6).
 #'
-#' - Laparra, V., Malo, J., & Camps-Valls, G. (2015). Dimensionality
+#' - Laparra, V., Malo, J., and Camps-Valls, G. (2015). Dimensionality
 #'  reduction via regression in hyperspectral imagery. IEEE Journal of Selected
 #'  Topics in Signal Processing, 9(6), 1026-1036.
 #'
