@@ -32,6 +32,8 @@ This metaclustering probability matrix can be transformed into a dissimilarity m
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/overview_of_vignettes.html">Overview of Vignettes</a>
+    <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Parameters Description</h6>
     <a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a>
     <a class="dropdown-item" href="../articles/model_parameters_standardized.html">Standardized Model Parameters</a>
@@ -127,6 +129,9 @@ This metaclustering probability matrix can be transformed into a dissimilarity m
 <span class="r-in"><span class="co"># Reordered heatmap</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">m</span>, scale <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co"># Extract 3 clusters</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co"># Convert to dissimilarity</span></span>
 <span class="r-in"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">m</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/hclust.html" class="external-link">hclust</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span>
@@ -143,7 +148,7 @@ This metaclustering probability matrix can be transformed into a dissimilarity m
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
     </footer></div>
