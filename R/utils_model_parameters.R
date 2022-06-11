@@ -203,6 +203,10 @@
 #' @keywords internal
 #' @noRd
 .format_ci_method_name <- function(ci_method) {
+  if (is.null(ci_method)) {
+    return(NULL)
+  }
+
   switch(tolower(ci_method),
     # abbreviations
     "eti" = ,
