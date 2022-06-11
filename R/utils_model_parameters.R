@@ -42,8 +42,8 @@
   }
 
   attr(params, "ci") <- ci
-  attr(params, "ci_method") <- ci_method
-  attr(params, "df_method") <- ci_method
+  attr(params, "ci_method") <- .format_ci_method_name(ci_method)
+  attr(params, "df_method") <- .format_ci_method_name(ci_method)
   attr(params, "test_statistic") <- insight::find_statistic(model)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
@@ -197,7 +197,19 @@
   params
 }
 
-
+.format_ci_method_name <- function(ci_method) {
+  switch(tolower(ci_method),
+    "eti" = ,
+    "hdi" = ,
+    "si" = toupper(ci_method),
+    "bci" = ,
+    "bcai" = "BCa",
+    "satterthwaite" = ,
+    "kenward" = ,
+    "wald" = paste0(toupper(substr(ci_method, 1, 1)), substr(ci_method, 2, nchar(ci_method))),
+    ci_method
+  )
+}
 
 .find_coefficient_type <- function(info, exponentiate, model = NULL) {
   # column name for coefficients
