@@ -197,16 +197,25 @@
   params
 }
 
+
+#' Format CI method name when stored as an attribute
+#'
+#' @keywords internal
+#' @noRd
 .format_ci_method_name <- function(ci_method) {
   switch(tolower(ci_method),
+    # abbreviations
     "eti" = ,
     "hdi" = ,
     "si" = toupper(ci_method),
-    "bci" = ,
-    "bcai" = "BCa",
+    # named after people
     "satterthwaite" = ,
     "kenward" = ,
     "wald" = paste0(toupper(substr(ci_method, 1, 1)), substr(ci_method, 2, nchar(ci_method))),
+    # special cases
+    "bci" = ,
+    "bcai" = "BCa",
+    # no change otherwise
     ci_method
   )
 }
