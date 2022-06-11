@@ -595,23 +595,23 @@ format.parameters_sem <- function(x,
         test_statistic <- "t-statistic"
       }
 
-      string_tailed <- switch(toupper(ci_method),
-        "HDI" = "highest-density",
-        "UNIROOT" = ,
-        "PROFILE" = "profile-likelihood",
+      string_tailed <- switch(ci_method,
+        "hdi" = "highest-density",
+        "uniroot" = ,
+        "profile" = "profile-likelihood",
         "equal-tailed"
       )
 
-      string_method <- switch(toupper(ci_method),
-        "BCI" = ,
-        "BCAI" = "bias-corrected accelerated bootstrap",
-        "SI" = ,
-        "CI" = ,
-        "QUANTILE" = ,
-        "ETI" = ,
-        "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
-        "NORMAL" = "Wald normal",
-        "BOOT" = "parametric bootstrap",
+      string_method <- switch(ci_method,
+        "bci" = ,
+        "bcai" = "bias-corrected accelerated bootstrap",
+        "si" = ,
+        "ci" = ,
+        "quantile" = ,
+        "eti" = ,
+        "hdi" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+        "normal" = "Wald normal",
+        "boot" = "parametric bootstrap",
         "Wald"
       )
 
@@ -621,7 +621,7 @@ format.parameters_sem <- function(x,
         string_approx <- ""
       }
 
-      if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
+      if (!is.null(test_statistic) && !ci_method == "normal" && !isTRUE(bootstrap)) {
         string_statistic <- switch(tolower(test_statistic),
           "t-statistic" = "t",
           "chi-squared statistic" = ,
