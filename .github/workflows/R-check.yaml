@@ -22,6 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          #- {os: macOS-latest, r: 'devel'}
           - {os: macOS-latest, r: 'release'}
           - {os: macOS-latest, r: 'oldrel-1'}
 
@@ -34,8 +35,8 @@ jobs:
           # - {os: windows-latest, r: '3.4.0'}
 
           # Use older ubuntu to maximise backward compatibility
-          - {os: ubuntu-18.04, r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-18.04, r: 'release'}
+          #- {os: ubuntu-18.04, r: 'devel', http-user-agent: 'release'}
+          #- {os: ubuntu-18.04, r: 'release'}
           - {os: ubuntu-18.04, r: 'oldrel-1'}
 
     env:
