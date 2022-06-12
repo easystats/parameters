@@ -177,7 +177,6 @@ Suggests:
     sandwich,
     see (>= 0.6.9),
     sjstats,
-    spelling,
     survey,
     survival,
     testthat,
