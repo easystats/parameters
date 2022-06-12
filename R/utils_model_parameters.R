@@ -29,10 +29,11 @@
 
   # for simplicity, we just use the model information from the first formula
   # when we have multivariate response models...
-  if (!is.null(info) && insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
+  if (!is.null(info) &&
+    insight::is_multivariate(model) &&
+    !"is_zero_inflated" %in% names(info)) {
     info <- info[[1]]
   }
-
 
   # add regular attributes
   if (isFALSE(dot.arguments$pretty_names)) {
@@ -215,7 +216,7 @@
     # named after people
     "satterthwaite" = ,
     "kenward" = ,
-    "wald" = paste0(toupper(substr(ci_method, 1, 1)), substr(ci_method, 2, nchar(ci_method))),
+    "wald" = insight::format_capitalize(ci_method),
     # special cases
     "bci" = ,
     "bcai" = "BCa",
