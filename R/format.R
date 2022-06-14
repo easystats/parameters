@@ -585,30 +585,36 @@ format.parameters_sem <- function(x,
 
     # prepare strings
     if (!is.null(ci_method)) {
+      # since `.format_ci_method_name()` changes the CI method names to have a
+      # mix of cases, standardize them by converting to lower case
+      ci_method <- tolower(ci_method)
 
       # in case of glm's that have df.residual(), and where residual df where requested
-      if (ci_method == "residual" && test_statistic == "z-statistic" && !is.null(residual_df) && !is.infinite(residual_df) && !is.na(residual_df)) {
+      if (ci_method == "residual" &&
+        test_statistic == "z-statistic" &&
+        !is.null(residual_df) &&
+        !is.infinite(residual_df) && !is.na(residual_df)) {
         test_statistic <- "t-statistic"
       }
 
-      string_tailed <- switch(toupper(ci_method),
-                              "HDI" = "highest-density",
-                              "UNIROOT" = ,
-                              "PROFILE" = "profile-likelihood",
-                              "equal-tailed"
+      string_tailed <- switch(ci_method,
+        "hdi" = "highest-density",
+        "uniroot" = ,
+        "profile" = "profile-likelihood",
+        "equal-tailed"
       )
 
-      string_method <- switch(toupper(ci_method),
-                              "BCI" = ,
-                              "BCAI" = "bias-corrected accelerated bootstrap",
-                              "SI" = ,
-                              "CI" = ,
-                              "QUANTILE" = ,
-                              "ETI" = ,
-                              "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
-                              "NORMAL" = "Wald normal",
-                              "BOOT" = "parametric bootstrap",
-                              "Wald"
+      string_method <- switch(ci_method,
+        "bci" = ,
+        "bcai" = "bias-corrected accelerated bootstrap",
+        "si" = ,
+        "ci" = ,
+        "quantile" = ,
+        "eti" = ,
+        "hdi" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+        "normal" = "Wald normal",
+        "boot" = "parametric bootstrap",
+        "Wald"
       )
 
       if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
@@ -617,12 +623,12 @@ format.parameters_sem <- function(x,
         string_approx <- ""
       }
 
-      if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
+      if (!is.null(test_statistic) && !ci_method == "normal" && !isTRUE(bootstrap)) {
         string_statistic <- switch(tolower(test_statistic),
-                                   "t-statistic" = "t",
-                                   "chi-squared statistic" = ,
-                                   "z-statistic" = "z",
-                                   ""
+          "t-statistic" = "t",
+          "chi-squared statistic" = ,
+          "z-statistic" = "z",
+          ""
         )
         string_method <- paste0(string_method, " ", string_statistic, "-")
       } else {
@@ -639,12 +645,13 @@ format.parameters_sem <- function(x,
       # do we have random effect variances from lme4/glmmTMB?
       # must be glmmTMB
       show_re_msg <- (identical(model_class, "glmmTMB") &&
-                        # and not Wald-CIs
-                        (string_method != "Wald z-" || ci_method != "wald")) ||
+        # and not Wald-CIs
+        (string_method != "Wald z-" || ci_method != "wald")) ||
         # OR must be merMod
         ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
-           # and not Wald CIs
-           !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
+          # and not Wald CIs
+          !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
+
       if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
         msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
       }

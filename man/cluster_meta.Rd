@@ -40,6 +40,9 @@ heatmap(m, Rowv = NA, Colv = NA, scale = "none") # Without reordering
 # Reordered heatmap
 heatmap(m, scale = "none")
 
+# Extract 3 clusters
+predict(m, n=3)
+
 # Convert to dissimilarity
 d <- as.dist(abs(m - 1))
 model <- hclust(d)
