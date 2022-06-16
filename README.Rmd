@@ -2,8 +2,6 @@
 output: 
   github_document:
     toc: false
-    fig_width: 10.08
-    fig_height: 6
 tags: [r, reports]
 vignette: >
   \usepackage[utf8]{inputenc}
@@ -12,17 +10,20 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, echo = FALSE}
+```{r, warning=FALSE, message=FALSE, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   dpi = 300,
   tidy.opts = list(width.cutoff = 100),
   fig.path = "man/figures/",
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  out.width = "100%"
 )
-options(knitr.kable.NA = '',
-        digits = 1,
-        width = 100)
+# options(knitr.kable.NA = '',
+#         digits = 1,
+#         width = 100)
 
 set.seed(333)
 library(parameters)
@@ -47,19 +48,19 @@ Another important goal of the **parameters** package is to facilitate and stream
 
 Run the following to install the stable release of **parameters** from CRAN:
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r,  eval=FALSE}
 install.packages("parameters")
 ```
 
 Or this one to install the latest development version from R-universe...
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r,  eval=FALSE}
 install.packages("parameters", repos = "https://easystats.r-universe.dev")
 ```
 
 ...or from GitHub:
 
-```{r, warning=FALSE, message=FALSE, eval=FALSE}
+```{r,  eval=FALSE}
 install.packages("remotes")
 remotes::install_github("easystats/parameters")
 ```
@@ -90,7 +91,7 @@ In case you want to file an issue or contribute in another way to the package, p
  
 ## Model's parameters description
 
-```{r echo=FALSE, fig.width=734, fig.align='center', dpi=96}
+```{r echo=FALSE, fig.align='center', dpi=96}
 knitr::include_graphics("man/figures/figure1.png")
 ```
 
@@ -103,7 +104,7 @@ The [`model_parameters()`](https://easystats.github.io/parameters/articles/model
 
 ### Classical Regression Models
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 model <- lm(Sepal.Width ~ Petal.Length * Species + Petal.Width, data = iris)
 
 # regular model parameters
@@ -115,10 +116,10 @@ model_parameters(model, standardize = "refit")
 
 ### Mixed Models
 
-```{r, warning=FALSE, message=FALSE}
+```{r}
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
 model_parameters(model, effects = "all")
@@ -142,15 +143,15 @@ model_parameters(model)
 
 ## Variable and parameters selection
 
-```{r echo=FALSE, fig.width=756, fig.align='center', dpi=96}
+```{r echo=FALSE, fig.align='center', dpi=96}
 knitr::include_graphics("man/figures/figure2.png")
 ```
 
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html) can help you quickly select and retain the most relevant predictors using methods tailored for the model type.
 
 ```{r, warning=FALSE, message=FALSE}
-lm(disp ~ ., data = mtcars) |> 
-  select_parameters() |> 
+lm(disp ~ ., data = mtcars) |>
+  select_parameters() |>
   model_parameters()
 ```
 
