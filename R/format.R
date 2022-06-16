@@ -175,7 +175,7 @@ format.compare_parameters <- function(x,
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
-    pattern <- paste0("\\.", i, "$")
+    pattern <- paste0("\\.\\Q", i, "\\E$")
     cols <- x[grepl(pattern, colnames(x))]
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function

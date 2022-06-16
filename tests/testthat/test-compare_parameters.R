@@ -67,4 +67,15 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
       )
     )
   })
+
+
+  data(mtcars)
+  m1 <- lm(mpg ~ wt, data = mtcars)
+  m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
+
+  test_that("compare_parameters, column name with escaping regex characters", {
+    out <- utils::capture.output(compare_parameters(m1, m2, column_names = c("linear model (m1)", "logistic reg. (m2)")))
+    expect_equal(out[1], "Parameter    |    linear model (m1) |   logistic reg. (m2)")
+  })
+
 }

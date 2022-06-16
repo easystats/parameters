@@ -21,6 +21,9 @@
 * `display()` now correctly includes custom text and additional information
   in the footer (#722).
 
+* Fixed issue with argument `column_names` in `compare_parameters()` when 
+  strings contained characters that needed to be escaped for regular expressions.
+
 # parameters 0.18.0
 
 ## Breaking Changes
