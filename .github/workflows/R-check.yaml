@@ -56,12 +56,12 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages:
-          any::rcmdcheck,
-          any::XML
-          # fastICA=?ignore-before-r=4.0.0
-          # ivreg=?ignore-before-r=3.6.0
-          # metafor=?ignore-before-r=4.0.0
-          # randomForest=?ignore-before-r=4.1.0
+            any::rcmdcheck
+            any::XML
+            fastICA=?ignore-before-r=4.0.0
+            ivreg=?ignore-before-r=3.6.0
+            metafor=?ignore-before-r=4.0.0
+            randomForest=?ignore-before-r=4.1.0
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
