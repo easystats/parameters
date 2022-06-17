@@ -27,7 +27,6 @@ jobs:
           - {os: windows-latest, r: 'devel'}
           - {os: windows-latest, r: 'release'}
           - {os: windows-latest, r: 'oldrel-1'}
-          - {os: windows-latest, r: '3.5.0'}
 
           # Use older ubuntu to maximise backward compatibility
           - {os: ubuntu-18.04, r: 'devel', http-user-agent: 'release'}
@@ -53,14 +52,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
-            any::rcmdcheck
-            any::XML
-            fastICA=?ignore-before-r=4.0.0
-            ivreg=?ignore-before-r=3.6.0
-            metafor=?ignore-before-r=4.0.0
-            randomForest=?ignore-before-r=4.1.0
-            lme4=?ignore-before-r=3.6.0
+          extra-packages: any::rcmdcheck, any::XML
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
