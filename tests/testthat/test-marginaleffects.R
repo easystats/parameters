@@ -30,7 +30,10 @@ test_that("comparisons()", {
 
 
 test_that("marginalmeans()", {
-  x <- lm(mpg ~ factor(cyl) + factor(gear), data = mtcars)
+  dat <- mtcars
+  dat$cyl <- factor(dat$cyl)
+  dat$gear <- factor(dat$gear)
+  x <- lm(mpg ~ factor(cyl) + factor(gear), data = dat)
   m <- marginalmeans(x)
   expect_equal(nrow(parameters(m)), 6)
 })
