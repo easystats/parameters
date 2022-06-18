@@ -192,6 +192,8 @@ Language: en-US
 RoxygenNote: 7.2.0
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+Remotes:
+    easystats/insight
 RemoteType: github
 RemoteHost: api.github.com
 RemoteRepo: glmmTMB
