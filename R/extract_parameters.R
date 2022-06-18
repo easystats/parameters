@@ -906,13 +906,13 @@
       "std.all"
     )
 
-    data <- lavaan::standardizedsolution(model,
-      se = TRUE,
-      level = ci,
-      type = type,
-      ...
-    )
-
+    # this function errors on unknown arguments
+    valid <- names(formals(lavaan::standardizedsolution))
+    dots <- list(...)
+    dots <- dots[names(dots) %in% valid]
+    args <- c(list( model, se = TRUE, level = ci, type = type), dots)
+    f <- getFromNamespace("standardizedsolution", "lavaan")
+    data <- do.call("f", args)
     names(data)[names(data) == "est.std"] <- "est"
   }
 

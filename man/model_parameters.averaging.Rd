@@ -33,6 +33,9 @@
 \alias{model_parameters.logistf}
 \alias{model_parameters.lqmm}
 \alias{model_parameters.marginaleffects}
+\alias{model_parameters.comparisons}
+\alias{model_parameters.marginalmeans}
+\alias{model_parameters.deltamethod}
 \alias{model_parameters.margins}
 \alias{model_parameters.maxLik}
 \alias{model_parameters.maxim}
@@ -242,6 +245,12 @@
 )
 
 \method{model_parameters}{marginaleffects}(model, ci = 0.95, ...)
+
+\method{model_parameters}{comparisons}(model, ci = 0.95, ...)
+
+\method{model_parameters}{marginalmeans}(model, ci = 0.95, ...)
+
+\method{model_parameters}{deltamethod}(model, ci = 0.95, ...)
 
 \method{model_parameters}{margins}(
   model,
