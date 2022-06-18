@@ -8,40 +8,42 @@
 model_parameters.marginaleffects <- function(model,
                                              ci = .95,
                                              ...) {
-  # Extract model and original data
-  mod <- attributes(model)$model
-  ori_data <- insight::get_data(mod)
 
-  # Convert to dataframe and rename some columns
-  out <- datawizard::data_rename(as.data.frame(model),
-    pattern = c("type", "term", "dydx", "std.error"),
-    replacement = c("Type", "Term", "Coefficient", "SE")
-  )
+  out <- marginaleffects::tidy(model, conf_level = ci, ...)
 
+  out <- datawizard::data_rename(
+    insight::standardize_names(out),
+    pattern = c("type", "value"),
+    replacement = c("Type", "Level"))
 
-  if ("posterior_draws" %in% names(attributes(model))) {
-    # ---- if Bayesian ----
-    # Remove point-estimates (going to recompute them anyway)
-    out <- datawizard::data_remove(out, c("Coefficient", "SE", "conf.low", "conf.high"))
-    draws <- data.frame(t(attributes(model)$posterior_draws))
-    draws <- bayestestR::describe_posterior(draws, ci = ci, ...)
-    out <- cbind(out, datawizard::data_remove(draws, "Parameter"))
-  } else {
-    # ---- if Frequentist ----
-    # Add CI
-    if (all(c("Coefficient", "SE") %in% names(out))) {
-      out$CI_low <- out$Coefficient + stats::qnorm((1 - ci) / 2) * out$SE
-      out$CI_high <- out$Coefficient - stats::qnorm((1 - ci) / 2) * out$SE
-    }
-  }
+  out <- tryCatch(
+    .add_model_parameters_attributes(out, model, ci, ...),
+    error = function(e) out)
 
-  # Move columns from original data at the beginning
-  out <- datawizard::data_relocate(out, names(ori_data), before = 1, verbose = FALSE)
-
-  out <- suppressWarnings(.add_model_parameters_attributes(out, model, ci, ...))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
-  attr(out, "parameter_names") <- names(out)[names(out) %in% names(ori_data)]
+
+  if (inherits(model, "marginalmeans")) {
+    attr(out, "coefficient_name") <- "Marginal Means"
+  } else if (inherits(model, "comparisons")) {
+    attr(out, "coefficient_name") <- "Contrast"
+  } else if (inherits(model, "marginaleffects")) {
+    attr(out, "coefficient_name") <- "Slope"
+  }
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
 }
+
+#' @rdname model_parameters.averaging
+#' @export
+model_parameters.comparisons <- model_parameters.marginaleffects
+
+
+#' @rdname model_parameters.averaging
+#' @export
+model_parameters.marginalmeans <- model_parameters.marginaleffects
+
+
+#' @rdname model_parameters.averaging
+#' @export
+model_parameters.deltamethod <- model_parameters.marginaleffects
