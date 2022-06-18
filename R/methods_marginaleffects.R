@@ -9,30 +9,26 @@ model_parameters.marginaleffects <- function(model,
                                              ci = .95,
                                              ...) {
 
-  # Convert to dataframe and rename some columns
-  replacement <- c(
-        "type" = "Type",
-        "term" = "Parameter",
-        "estimate" = "Coefficient",
-        "std.error" = "SE",
-        "statistic" = "z",
-        "p.value" = "p",
-        "value" = "value",
-        "conf.low" = "CI_low",
-        "conf.high" = "CI_high")
-    
   out <- marginaleffects::tidy(model, conf_level = ci, ...)
 
   out <- datawizard::data_rename(
-    out,
-    pattern = names(replacement),
-    replacement = replacement)
+    insight::standardize_names(out),
+    pattern = c("type", "value"),
+    replacement = c("Type", "Level"))
 
   out <- tryCatch(
     .add_model_parameters_attributes(out, model, ci, ...),
     error = function(e) out)
 
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+
+  if (inherits(model, "marginalmeans")) {
+    attr(out, "coefficient_name") <- "Marginal Means"
+  } else if (inherits(model, "comparisons")) {
+    attr(out, "coefficient_name") <- "Contrast"
+  } else if (inherits(model, "marginaleffects")) {
+    attr(out, "coefficient_name") <- "Slope"
+  }
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
