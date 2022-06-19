@@ -72,7 +72,11 @@
 <h2 class="pkg-version" data-toc-text="0.18.1" id="parameters-0181">parameters 0.18.1<a class="anchor" aria-label="anchor" href="#parameters-0181"></a></h2><p class="text-muted">CRAN release: 2022-05-29</p>
 <div class="section level3">
 <h3 id="general-0-18-1">General<a class="anchor" aria-label="anchor" href="#general-0-18-1"></a></h3>
-<ul><li>It is now possible to hide messages about CI method below tables by specifying <code>options("parameters_cimethod" = FALSE)</code> (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>). By default, these messages are displayed.</li></ul></div>
+<ul><li><p>It is now possible to hide messages about CI method below tables by specifying <code>options("parameters_cimethod" = FALSE)</code> (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>). By default, these messages are displayed.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now supports objects from package <em>marginaleffects</em> and objects returned by <code><a href="https://rdrr.io/pkg/car/man/linearHypothesis.html" class="external-link">car::linearHypothesis()</a></code>.</p></li>
+<li><p>Added <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method to <code>cluster_meta</code> objects.</p></li>
+<li><p>Reorganization of docs for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
+</ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-0-18-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-1"></a></h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also includes standard errors and confidence intervals for slope-slope-correlations of random effects variances.</p></li>
@@ -83,6 +87,7 @@
 <ul><li><p>Fixed issue with <em>glmmTMB</em> models when calculating confidence intervals for random effects failed due to singular fits.</p></li>
 <li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> now correctly includes custom text and additional information in the footer (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>).</p></li>
 <li><p>Fixed issue with argument <code>column_names</code> in <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> when strings contained characters that needed to be escaped for regular expressions.</p></li>
+<li><p>Fixed issues with unknown arguments in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> models when <code>standardize = TRUE</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
