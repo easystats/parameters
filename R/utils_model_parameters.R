@@ -29,9 +29,7 @@
 
   # for simplicity, we just use the model information from the first formula
   # when we have multivariate response models...
-  if (!is.null(info) &&
-    insight::is_multivariate(model) &&
-    !"is_zero_inflated" %in% names(info)) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
     info <- info[[1]]
   }
 
@@ -84,7 +82,8 @@
   # Models for which titles should be removed - here we add exceptions for
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
-  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
+  if (inherits(model, c("mediate", "emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
+    attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
 
