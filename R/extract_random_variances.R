@@ -244,43 +244,39 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     to <- c(which(grps) - 1, length(grps))[-1]
     out_sd <- do.call(rbind, lapply(1:length(from), function(i) {
       values <- stddevs[from[i]:to[i]]
-      data.frame(
+      .data_frame(
         grp = gsub("(.*) =$", "\\1", names(values[1])),
         var1 = names(values[-1]),
         var2 = NA_character_,
-        sdcor = unname(values[-1]),
-        stringsAsFactors = FALSE
+        sdcor = unname(values[-1])
       )
     }))
     if (!is.null(corrs)) {
       out_cor <- do.call(rbind, lapply(1:length(from), function(i) {
         values <- corrs[from[i]:to[i]]
-        data.frame(
+        .data_frame(
           grp = gsub("(.*) =$", "\\1", names(values[1])),
           var1 = "(Intercept)",
           var2 = names(values[-1]),
-          sdcor = unname(values[-1]),
-          stringsAsFactors = FALSE
+          sdcor = unname(values[-1])
         )
       }))
     } else {
       out_cor <- NULL
     }
   } else {
-    out_sd <- data.frame(
+    out_sd <- .data_frame(
       grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
       var1 = names(stddevs),
       var2 = NA_character_,
-      sdcor = unname(stddevs),
-      stringsAsFactors = FALSE
+      sdcor = unname(stddevs)
     )
     if (!is.null(corrs)) {
-      out_cor <- data.frame(
+      out_cor <- .data_frame(
         grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
         var1 = "(Intercept)",
         var2 = names(corrs),
-        sdcor = unname(corrs),
-        stringsAsFactors = FALSE
+        sdcor = unname(corrs)
       )
     } else {
       out_cor <- NULL

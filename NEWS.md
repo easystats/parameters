@@ -6,6 +6,13 @@
   `options("parameters_cimethod" = FALSE)` (#722). By default, these messages
   are displayed.
 
+* `model_parameters()` now supports objects from package _marginaleffects_ and
+  objects returned by `car::linearHypothesis()`.
+
+* Added `predict()` method to `cluster_meta` objects.
+
+* Reorganization of docs for `model_parameters()`.
+
 ## Changes to functions
 
 * `model_parameters()` now also includes standard errors and confidence
@@ -23,6 +30,9 @@
 
 * Fixed issue with argument `column_names` in `compare_parameters()` when 
   strings contained characters that needed to be escaped for regular expressions.
+
+* Fixed issues with unknown arguments in `model_parameters()` for *lavaan* models
+  when `standardize = TRUE`.
 
 # parameters 0.18.0
 
