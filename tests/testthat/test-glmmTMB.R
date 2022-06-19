@@ -436,8 +436,7 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              "
+          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
       )
 
@@ -488,8 +487,7 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              "
+          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
       )
 
