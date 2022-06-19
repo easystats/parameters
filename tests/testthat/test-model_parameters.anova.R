@@ -41,6 +41,27 @@ if (.runThisTest && requiet("insight") && requiet("testthat") && requiet("parame
       expect_equal(mp[["F"]], c(53.40138, 60.42944, 13.96887, NA), tolerance = 1e-3)
     })
 
+    test_that("linear hypothesis tests", {
+      requiet("car")
+      mod.davis <- lm(weight ~ repwt, data=Davis)
+      
+      ## the following are equivalent:
+      p1 <- parameters(linearHypothesis(mod.davis, diag(2), c(0,1)))
+      p2 <- parameters(linearHypothesis(mod.davis, c("(Intercept) = 0", "repwt = 1")))
+      p3 <- parameters(linearHypothesis(mod.davis, c("(Intercept)", "repwt"), c(0,1)))
+      p4 <- parameters(linearHypothesis(mod.davis, c("(Intercept)", "repwt = 1")))
+      expect_equal(p1, p2, ignore_attr = TRUE)
+      expect_equal(p1, p3, ignore_attr = TRUE)
+      expect_equal(p1, p4, ignore_attr = TRUE)
+      expect_equal(nrow(p1), 2)
+      expect_equal(p1$Parameter, c("(Intercept) = 0", "repwt = 1"))
+ 
+      mod.duncan <- lm(prestige ~ income + education, data=Duncan)
+      p <- parameters(linearHypothesis(mod.duncan, "1*income - 1*education + 1 = 1"))
+      expect_equal(nrow(p), 1)
+      expect_equal(p$Parameter, "income - education = 0")
+    })
+
     test_that("print-model_parameters", {
       out <- utils::capture.output(print(mp))
       expect_equal(

@@ -180,6 +180,7 @@
 
 
   # ==== degrees of freedom
+
   if (!is.null(ci_method)) {
     df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
@@ -310,24 +311,12 @@
 
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
-    sig <- tryCatch(
-      {
-        suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    sig <- tryCatch(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)),
+                    error = function(e) NULL)
     attr(params, "sigma") <- as.numeric(sig)
 
-    resdf <- tryCatch(
-      {
-        suppressWarnings(insight::get_df(model, type = "residual"))
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    resdf <- tryCatch(suppressWarnings(insight::get_df(model, type = "residual")),
+                      error = function(e) NULL)
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params
@@ -906,13 +895,13 @@
       "std.all"
     )
 
-    data <- lavaan::standardizedsolution(model,
-      se = TRUE,
-      level = ci,
-      type = type,
-      ...
-    )
-
+    # this function errors on unknown arguments
+    valid <- names(formals(lavaan::standardizedsolution))
+    dots <- list(...)
+    dots <- dots[names(dots) %in% valid]
+    args <- c(list( model, se = TRUE, level = ci, type = type), dots)
+    f <- getFromNamespace("standardizedsolution", "lavaan")
+    data <- do.call("f", args)
     names(data)[names(data) == "est.std"] <- "est"
   }
 

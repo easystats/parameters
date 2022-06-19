@@ -29,10 +29,9 @@
 
   # for simplicity, we just use the model information from the first formula
   # when we have multivariate response models...
-  if (!is.null(info) && insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
     info <- info[[1]]
   }
-
 
   # add regular attributes
   if (isFALSE(dot.arguments$pretty_names)) {
@@ -42,8 +41,8 @@
   }
 
   attr(params, "ci") <- ci
-  attr(params, "ci_method") <- ci_method
-  attr(params, "df_method") <- ci_method
+  attr(params, "ci_method") <- .format_ci_method_name(ci_method)
+  attr(params, "df_method") <- .format_ci_method_name(ci_method)
   attr(params, "test_statistic") <- insight::find_statistic(model)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
@@ -80,10 +79,11 @@
   }
 
 
-  # Models for which titles should be removed -
-  # here we add exceptions for objects that should
-  # not have a table headline
-  if (inherits(model, c("emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
+  # Models for which titles should be removed - here we add exceptions for
+  # objects that should not have a table headline like "# Fixed Effects", when
+  # there is nothing else than fixed effects (redundant title)
+  if (inherits(model, c("mediate", "emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
+    attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
 
@@ -198,6 +198,31 @@
 }
 
 
+#' Format CI method name when stored as an attribute
+#'
+#' @keywords internal
+#' @noRd
+.format_ci_method_name <- function(ci_method) {
+  if (is.null(ci_method)) {
+    return(NULL)
+  }
+
+  switch(tolower(ci_method),
+    # abbreviations
+    "eti" = ,
+    "hdi" = ,
+    "si" = toupper(ci_method),
+    # named after people
+    "satterthwaite" = ,
+    "kenward" = ,
+    "wald" = insight::format_capitalize(ci_method),
+    # special cases
+    "bci" = ,
+    "bcai" = "BCa",
+    # no change otherwise
+    ci_method
+  )
+}
 
 .find_coefficient_type <- function(info, exponentiate, model = NULL) {
   # column name for coefficients

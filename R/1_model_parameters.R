@@ -442,6 +442,7 @@ model_parameters.default <- function(model,
     verbose = verbose
   )
 
+  # extract model parameters table, as data frame
   out <- tryCatch(
     {
       .model_parameters_generic(
@@ -470,6 +471,7 @@ model_parameters.default <- function(model,
     }
   )
 
+  # tell user if something went wrong...
   if (length(out) == 1 && isTRUE(is.na(out))) {
     msg <- insight::format_message(
       paste0("Sorry, `model_parameters()` failed with the following error (possible class '", class(model)[1], "' not supported):\n"),
@@ -484,6 +486,12 @@ model_parameters.default <- function(model,
   out
 }
 
+
+
+
+# helper function for the composition of the parameters table,
+# including a bunch of attributes required for further processing
+# (like printing etc.)
 
 .model_parameters_generic <- function(model,
                                       ci = .95,
@@ -527,6 +535,7 @@ model_parameters.default <- function(model,
     )
     args <- c(args, dots)
     params <- do.call("bootstrap_parameters", args)
+
   } else {
     # set default method for CI
     if (is.null(ci_method) || missing(ci_method)) {
@@ -552,10 +561,12 @@ model_parameters.default <- function(model,
     params <- do.call(".extract_parameters_generic", args)
   }
 
+  # exponentiate coefficients and SE/CI, if requested
   if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
     params <- .exponentiate_parameters(params, model, exponentiate)
   }
 
+  # add further information as attributes
   params <- .add_model_parameters_attributes(
     params,
     model,

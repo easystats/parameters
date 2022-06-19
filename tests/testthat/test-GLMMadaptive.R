@@ -167,8 +167,8 @@ if (requiet("testthat") &&
       expect_equal(
         params$Parameter,
         c(
-          "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY: site)", "SD (Observations)",
-          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP: site)"
+          "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY)", "SD (Observations)",
+          "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP)"
         )
       )
       expect_equal(
@@ -180,7 +180,7 @@ if (requiet("testthat") &&
       )
       expect_equal(
         params$Coefficient,
-        c(0.56552, 0.29951, 0.06307, 0, 1.02233, 0.38209, -0.17162),
+        c(0.56552, 0.29951, 0.06307, 1.61936, 1.02233, 0.38209, -0.17162),
         tolerance = 1e-2
       )
     })

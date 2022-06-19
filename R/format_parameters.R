@@ -94,9 +94,18 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
 
+  # Type-specific changes
+  types <- parameters_type(model)
+  if (is.null(types)) {
+    return(NULL)
+  }
+  types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
+
+
   # special handling hurdle- and zeroinfl-models ---------------------
   if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
     names <- gsub("^(count_|zero_)", "", names)
+    types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
 
   # special handling polr ---------------------
@@ -121,29 +130,14 @@ format_parameters.parameters_model <- function(model, ...) {
       dirich_names <- names <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
     }
     original_names <- names
+    if (!is.null(dirich_names)) {
+      types$Parameter <- dirich_names
+    }
   }
 
 
   # remove "as.factor()", "log()" etc. from parameter names
   names <- .clean_parameter_names(names)
-
-  # Type-specific changes
-  types <- parameters_type(model)
-  if (is.null(types)) {
-    return(NULL)
-  }
-  types$Parameter <- .clean_parameter_names(types$Parameter, full = TRUE)
-
-
-  # hurdle- and zeroinfl-models
-  if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
-    types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
-  }
-
-  # special handling DirichletRegModel
-  if (inherits(model, "DirichletRegModel") && !is.null(dirich_names)) {
-    types$Parameter <- dirich_names
-  }
 
 
   for (i in 1:nrow(types)) {
@@ -152,13 +146,20 @@ format_parameters.parameters_model <- function(model, ...) {
     # No interaction
     if (!types$Type[i] %in% c("interaction", "nested", "simple")) {
       type <- types[i, ]
-      names[i] <- .format_parameter(name, variable = type$Variable, type = type$Type, level = type$Level, brackets = brackets)
+      names[i] <- .format_parameter(
+        name,
+        variable = type$Variable,
+        type = type$Type,
+        level = type$Level,
+        brackets = brackets
+      )
 
       # Interaction or nesting
     } else {
       components <- unlist(strsplit(name, ":", fixed = TRUE))
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
+
       for (j in 1:length(components)) {
         if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
@@ -171,18 +172,38 @@ format_parameters.parameters_model <- function(model, ...) {
 
           if (nrow(type) > 1) type <- type[1, ]
 
-          components[j] <- .format_parameter(components[j], variable = type$Variable, type = type$Type, level = type$Level, brackets = brackets)
+          components[j] <- .format_parameter(
+            components[j],
+            variable = type$Variable,
+            type = type$Type,
+            level = type$Level,
+            brackets = brackets
+          )
+
         } else if (components[j] %in% types$Secondary_Parameter) {
           type <- types[!is.na(types$Secondary_Parameter) & types$Secondary_Parameter == components[j], ]
-          components[j] <- .format_parameter(components[j], variable = type[1, ]$Secondary_Variable, type = type[1, ]$Secondary_Type, level = type[1, ]$Secondary_Level, brackets = brackets)
+          components[j] <- .format_parameter(
+            components[j],
+            variable = type[1,]$Secondary_Variable,
+            type = type[1,]$Secondary_Type,
+            level = type[1,]$Secondary_Level,
+            brackets = brackets
+          )
         }
       }
-      names[i] <- .format_interaction(components, type = types[i, "Type"], is_nested = is_nested, is_simple = is_simple)
+      names[i] <- .format_interaction(
+        components,
+        type = types[i, "Type"],
+        is_nested = is_nested,
+        is_simple = is_simple
+      )
     }
   }
 
   # do some final formatting, like replacing underscores or dots with whitespace.
   names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", names, perl = TRUE)
+  # remove double spaces
+  names <- gsub("  ", " ", names, fixed = TRUE)
 
   # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
   # etc. are removed. However, these patterns are needed in "format_table()",
@@ -269,12 +290,16 @@ format_parameters.parameters_model <- function(model, ...) {
 }
 
 
+# format classes -----------------------------
+
 #' @keywords internal
 .format_factor <- function(name, variable, brackets = c("[", "]")) {
   level <- sub(variable, "", name)
+
   # special handling for "cut()"
   pattern_cut_right <- "^\\((.*),(.*)\\]$"
   pattern_cut_left <- "^\\[(.*),(.*)\\)$"
+
   if (all(grepl(pattern_cut_right, level))) {
     lower_bounds <- gsub(pattern_cut_right, "\\1", level)
     upper_bounds <- gsub(pattern_cut_right, "\\2", level)

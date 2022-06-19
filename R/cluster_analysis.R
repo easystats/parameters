@@ -56,11 +56,13 @@
 #' specific cluster (as compared to other cluster groups with lower absolute
 #' mean values).
 #'
+#' Clusters classification can be obtained via `print(x, newdata = NULL, ...)`.
+#'
 #' @seealso
-#' - [n_clusters()] to determine the number of clusters to extract,
-#' [cluster_discrimination()] to determine the accuracy of cluster group
-#' classification via linear discriminant analysis (LDA) and
-#' [check_clusterstructure()] to check suitability of data
+#' - [n_clusters()] to determine the number of clusters to extract.
+#' - [cluster_discrimination()] to determine the accuracy of cluster group
+#' classification via linear discriminant analysis (LDA).
+#' - [check_clusterstructure()] to check suitability of data
 #' for clustering.
 #' - https://www.datanovia.com/en/lessons/
 #'

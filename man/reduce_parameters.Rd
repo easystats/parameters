@@ -86,9 +86,9 @@ head(out)
 }
 \references{
 \itemize{
-\item Nguyen, L. H., \& Holmes, S. (2019). Ten quick tips for effective
+\item Nguyen, L. H., and Holmes, S. (2019). Ten quick tips for effective
 dimensionality reduction. PLOS Computational Biology, 15(6).
-\item Laparra, V., Malo, J., & Camps-Valls, G. (2015). Dimensionality
+\item Laparra, V., Malo, J., and Camps-Valls, G. (2015). Dimensionality
 reduction via regression in hyperspectral imagery. IEEE Journal of Selected
 Topics in Signal Processing, 9(6), 1026-1036.
 }

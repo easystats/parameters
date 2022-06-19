@@ -70,7 +70,7 @@
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
 #' is used for level 2 predictors, and `sqrt(residual-variance)` is used for
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
-#' within-group varialbe is found to have access between-group variance.
+#' within-group variable is found to have access between-group variance.
 #'
 #' # Transformed Variables
 #' When the model's formula contains transformations (e.g. `y ~ exp(X)`) `method
@@ -431,14 +431,14 @@ format.parameters_standardized <- function(x,
     footer <- c(footer, "Response is unstandardized.")
   }
 
-  if (format == "text" && !is.null(footer)) {
+  if (format %in% c("markdown", "text") && !is.null(footer)) {
     footer <- lapply(footer, function(ftr) {
       c(paste0("\n- ", ftr), "blue")
     })
   }
   attr(x, "table_footer") <- footer
 
-  if (format == "text" && !is.null(caption)) {
+  if (format %in% c("markdown", "text") && !is.null(caption)) {
     caption <- c(paste0("# ", caption), "blue")
   }
   attr(x, "table_caption") <- caption

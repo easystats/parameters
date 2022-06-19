@@ -152,10 +152,7 @@ if (.runThisTest &&
     )
     expect_equal(
       model_parameters(m1, effects = "all")$Coefficient,
-      c(
-        1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312,
-        1, 1.17399
-      ),
+      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312, 1.17399),
       tolerance = 1e-3
     )
     expect_equal(
@@ -176,17 +173,13 @@ if (.runThisTest &&
       model_parameters(m1)$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
-        "zero_inflated", "zero_inflated", "conditional", "conditional",
-        "zero_inflated"
+        "zero_inflated", "zero_inflated", "conditional", "zero_inflated"
       )
     )
     expect_null(model_parameters(m2, effects = "fixed")$Component)
     expect_equal(
       model_parameters(m2)$Component,
-      c(
-        "conditional", "conditional", "conditional", "conditional",
-        "conditional"
-      )
+      c("conditional", "conditional", "conditional", "conditional")
     )
     expect_equal(
       model_parameters(m3, effects = "fixed")$Component,
@@ -241,29 +234,29 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-ran_pars", {
     params <- model_parameters(m1, effects = "random")
-    expect_equal(c(nrow(params), ncol(params)), c(3, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
     expect_equal(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
     )
     expect_equal(
       params$Parameter,
-      c("SD (Intercept)", "SD (Observations)", "SD (Intercept)")
+      c("SD (Intercept)", "SD (Intercept)")
     )
     expect_equal(
       params$Component,
-      c("conditional", "conditional", "zero_inflated")
+      c("conditional", "zero_inflated")
     )
     expect_equal(
       params$Coefficient,
-      c(0.9312, 1, 1.17399),
+      c(0.9312, 1.17399),
       tolerance = 1e-2
     )
   })
 
   test_that("model_parameters.mixed-all_pars", {
     params <- model_parameters(m1, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(9, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(8, 12))
     expect_equal(
       colnames(params),
       c(
@@ -275,20 +268,19 @@ if (.runThisTest &&
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
-        "camper1", "SD (Intercept)", "SD (Observations)", "SD (Intercept)"
+        "camper1", "SD (Intercept)", "SD (Intercept)"
       )
     )
     expect_equal(
       params$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
-        "zero_inflated", "zero_inflated", "conditional", "conditional",
-        "zero_inflated"
+        "zero_inflated", "zero_inflated", "conditional", "zero_inflated"
       )
     )
     expect_equal(
       params$Coefficient,
-      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312, 1, 1.17399),
+      c(1.2628, -1.14165, 0.73354, -0.38939, 2.05407, -1.00823, 0.9312, 1.17399),
       tolerance = 1e-2
     )
   })
@@ -359,7 +351,7 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-ran_pars", {
     params <- model_parameters(m4, effects = "random")
-    expect_equal(c(nrow(params), ncol(params)), c(7, 9))
+    expect_equal(c(nrow(params), ncol(params)), c(6, 9))
     expect_equal(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
@@ -367,20 +359,20 @@ if (.runThisTest &&
     expect_equal(
       params$Parameter,
       c(
-        "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb: persons)", "SD (Observations)",
-        "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg: persons)"
+        "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb)",
+        "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg)"
       )
     )
     expect_equal(
       params$Component,
       c(
-        "conditional", "conditional", "conditional", "conditional",
+        "conditional", "conditional", "conditional",
         "zero_inflated", "zero_inflated", "zero_inflated"
       )
     )
     expect_equal(
       params$Coefficient,
-      c(3.40563, 1.21316, -1, 1, 2.73583, 1.56833, 1),
+      c(3.40563, 1.21316, -1, 2.73583, 1.56833, 1),
       tolerance = 1e-2
     )
   })
@@ -403,7 +395,7 @@ if (.runThisTest &&
   test_that("model_parameters, exp, glmmTMB", {
     mp1 <- model_parameters(m_exp, exponentiate = TRUE)
     mp2 <- model_parameters(m_exp, exponentiate = FALSE)
-    expect_equal(mp1$Coefficient, c(0.49271, 6.75824, 1.14541, 5.56294), tolerance = 1e-3)
+    expect_equal(mp1$Coefficient, c(0.49271, 6.75824, 5.56294, 1.14541), tolerance = 1e-3)
     expect_equal(mp1$Coefficient[3:4], mp2$Coefficient[3:4], tolerance = 1e-3)
   })
 
@@ -444,8 +436,7 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              "
+          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
       )
 
@@ -496,8 +487,7 @@ if (.runThisTest &&
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              "
+          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
       )
 
@@ -549,8 +539,8 @@ if (.runThisTest &&
           "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
           "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "SD (Residual)               |        1.00 |              ",
-          "", "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |        95% CI",
+          "",
+          "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
           "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
           "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
@@ -589,7 +579,6 @@ if (.runThisTest &&
           "SD (Intercept: persons)     |      3.4056 | [ 1.67398, 6.92858]",
           "SD (xb: persons)            |      1.2132 | [ 0.60210, 2.44440]",
           "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]",
-          "SD (Residual)               |      1.0000 |                    ",
           "",
           "# Random Effects (Zero-Inflated Model)",
           "",
@@ -627,8 +616,8 @@ if (.runThisTest &&
           "SD (Intercept: persons)     |      3.4056 | [ 1.67398, 6.92858]",
           "SD (xb: persons)            |      1.2132 | [ 0.60210, 2.44440]",
           "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]",
-          "SD (Residual)               |      1.0000 |                    ",
-          "", "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |              95% CI",
+          "",
+          "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |              95% CI",
           "---------------------------------------------------------------",
           "SD (Intercept: persons)     |      2.7358 | [ 1.16473, 6.42622]",
           "SD (zg: persons)            |      1.5683 | [ 0.64351, 3.82225]",
@@ -669,7 +658,6 @@ if (.runThisTest &&
             "----------------------------------------------------------------",
             "SD (Intercept: Session:Participant) |        0.27 | [0.08, 0.87]",
             "SD (Intercept: Participant)         |        0.38 | [0.16, 0.92]",
-            "SD (Residual)                       |        2.06 | [1.30, 3.27]",
             "",
             "# Random Effects: zero_inflated",
             "",
@@ -677,6 +665,39 @@ if (.runThisTest &&
             "----------------------------------------------------------------",
             "SD (Intercept: Session:Participant) |        0.69 | [0.40, 1.19]",
             "SD (Intercept: Participant)         |        2.39 | [1.25, 4.57]"
+          )
+        )
+        mp <- model_parameters(model_pr, effects = "fixed", component = "all")
+        out <- utils::capture.output(print(mp))
+        expect_equal(
+          out,
+          c("# Fixed Effects",
+            "",
+            "Parameter          | Log-Mean |   SE |        95% CI |     z |      p",
+            "---------------------------------------------------------------------",
+            "(Intercept)        |     2.12 | 0.30 | [ 1.53, 2.71] |  7.05 | < .001",
+            "Surface [Lingual]  |     0.01 | 0.29 | [-0.56, 0.58] |  0.04 | 0.971 ",
+            "Surface [Occlusal] |     0.54 | 0.22 | [ 0.10, 0.98] |  2.43 | 0.015 ",
+            "Side [Anterior]    |     0.04 | 0.32 | [-0.58, 0.66] |  0.14 | 0.889 ",
+            "Side [Left]        |    -0.04 | 0.20 | [-0.44, 0.37] | -0.17 | 0.862 ",
+            "Jaw [Maxillar]     |    -0.10 | 0.21 | [-0.51, 0.30] | -0.51 | 0.612 ",
+            "",
+            "# Zero-Inflated",
+            "",
+            "Parameter          | Log-Odds |   SE |         95% CI |     z |      p",
+            "----------------------------------------------------------------------",
+            "(Intercept)        |     4.87 | 0.93 | [ 3.04,  6.69] |  5.23 | < .001",
+            "Surface [Lingual]  |     0.93 | 0.34 | [ 0.27,  1.60] |  2.75 | 0.006 ",
+            "Surface [Occlusal] |    -1.01 | 0.29 | [-1.59, -0.44] | -3.45 | < .001",
+            "Side [Anterior]    |    -0.20 | 0.37 | [-0.93,  0.52] | -0.55 | 0.583 ",
+            "Side [Left]        |    -0.38 | 0.27 | [-0.91,  0.14] | -1.44 | 0.151 ",
+            "Jaw [Maxillar]     |     0.59 | 0.24 | [ 0.11,  1.07] |  2.42 | 0.016 ",
+            "",
+            "# Dispersion",
+            "",
+            "Parameter   | Coefficient |       95% CI",
+            "----------------------------------------",
+            "(Intercept) |        2.06 | [1.30, 3.27]"
           )
         )
       })
@@ -687,7 +708,7 @@ if (.runThisTest &&
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m4, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(13, 12))
+    expect_equal(c(nrow(params), ncol(params)), c(12, 12))
     expect_equal(
       colnames(params),
       c(
@@ -699,8 +720,8 @@ if (.runThisTest &&
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
-        "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb: persons)",
-        "SD (Observations)", "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg: persons)"
+        "camper1", "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb)",
+        "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg)"
       )
     )
     expect_equal(
@@ -708,15 +729,14 @@ if (.runThisTest &&
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
         "zero_inflated", "zero_inflated", "conditional", "conditional",
-        "conditional", "conditional", "zero_inflated", "zero_inflated",
-        "zero_inflated"
+        "conditional", "zero_inflated", "zero_inflated", "zero_inflated"
       )
     )
     expect_equal(
       params$Coefficient,
       c(
         2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
-        1.21316, -1, 1, 2.73583, 1.56833, 1
+        1.21316, -1, 2.73583, 1.56833, 1
       ),
       tolerance = 1e-2
     )
@@ -792,7 +812,6 @@ if (.runThisTest &&
         "Parameter               | Coefficient |       95% CI",
         "----------------------------------------------------",
         "SD (Intercept: persons) |        0.93 | [0.46, 1.89]",
-        "SD (Residual)           |        1.00 |             ",
         "",
         "# Random Effects (Zero-Inflated Model)",
         "",

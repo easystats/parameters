@@ -36,6 +36,9 @@
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
     x <- x[c(param_col, "p")]
     colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (style %in% c("est", "coef")) {
+    x <- x[1]
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   }
   x[[1]][x[[1]] == "()"] <- ""
   x
@@ -722,7 +725,7 @@
     }
 
     table_caption <- NULL
-    if (is.null(format) || format == "text") {
+    if (is.null(format) || format %in% c("markdown", "text")) {
       # Print
       if (component_header$name != "rewb-contextual") {
         table_caption <- c(sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)), "blue")

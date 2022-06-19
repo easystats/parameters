@@ -73,6 +73,8 @@ format.parameters_model <- function(x,
       ran_pars <- which(x$Effects == "random")
       stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
       x$Parameter[ran_pars[stddevs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]), ": ", x$Group[ran_pars[stddevs]], ")")
+      corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[corrs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]), ": ", x$Group[ran_pars[corrs]], ")")
       x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
       x$Group <- NULL
     }
@@ -173,7 +175,7 @@ format.compare_parameters <- function(x,
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
-    pattern <- paste0("\\.", i, "$")
+    pattern <- paste0("\\.\\Q", i, "\\E$")
     cols <- x[grepl(pattern, colnames(x))]
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function
@@ -401,7 +403,7 @@ format.parameters_sem <- function(x,
 # footer: generic text
 .add_footer_text <- function(footer = NULL, text, type = "text") {
   if (!is.null(text)) {
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -427,7 +429,7 @@ format.parameters_sem <- function(x,
       res_df <- ""
     }
 
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -456,7 +458,7 @@ format.parameters_sem <- function(x,
       }
     )
     if (!is.null(rsq)) {
-      if (type == "text") {
+      if (type == "text" | type == "markdown") {
         if (is.null(footer)) {
           fill <- "\n"
         } else {
@@ -475,7 +477,7 @@ format.parameters_sem <- function(x,
 # footer: anova type
 .add_footer_anova_type <- function(footer = NULL, aov_type, type = "text") {
   if (!is.null(aov_type)) {
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -493,7 +495,7 @@ format.parameters_sem <- function(x,
 # footer: anova test
 .add_footer_anova_test <- function(footer = NULL, test, type = "text") {
   if (!is.null(test)) {
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -511,7 +513,7 @@ format.parameters_sem <- function(x,
 # footer: htest alternative
 .add_footer_alternative <- function(footer = NULL, text_alternative, type = "text") {
   if (!is.null(text_alternative)) {
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -529,7 +531,7 @@ format.parameters_sem <- function(x,
 # footer: p-adjustment
 .add_footer_padjust <- function(footer = NULL, p_adjust, type = "text") {
   if (!is.null(p_adjust) && p_adjust != "none") {
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -555,7 +557,7 @@ format.parameters_sem <- function(x,
       n <- ""
     }
 
-    if (type == "text") {
+    if (type == "text" | type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -572,81 +574,89 @@ format.parameters_sem <- function(x,
 
 # footer: type of uncertainty interval
 .print_footer_cimethod <- function(x) {
+  if (isTRUE(getOption("parameters_cimethod", TRUE))) {
+    # get attributes
+    ci_method <- .additional_arguments(x, "ci_method", NULL)
+    test_statistic <- .additional_arguments(x, "test_statistic", NULL)
+    bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
+    residual_df <- .additional_arguments(x, "residual_df", NULL)
+    random_variances <- .additional_arguments(x, "ran_pars", FALSE)
+    model_class <- .additional_arguments(x, "model_class", NULL)
 
-  # get attributes
-  ci_method <- .additional_arguments(x, "ci_method", NULL)
-  test_statistic <- .additional_arguments(x, "test_statistic", NULL)
-  bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
-  residual_df <- .additional_arguments(x, "residual_df", NULL)
-  random_variances <- .additional_arguments(x, "ran_pars", FALSE)
-  model_class <- .additional_arguments(x, "model_class", NULL)
+    # prepare strings
+    if (!is.null(ci_method)) {
+      # since `.format_ci_method_name()` changes the CI method names to have a
+      # mix of cases, standardize them by converting to lower case
+      ci_method <- tolower(ci_method)
 
-  # prepare strings
-  if (!is.null(ci_method)) {
+      # in case of glm's that have df.residual(), and where residual df where requested
+      if (ci_method == "residual" &&
+        test_statistic == "z-statistic" &&
+        !is.null(residual_df) &&
+        !is.infinite(residual_df) && !is.na(residual_df)) {
+        test_statistic <- "t-statistic"
+      }
 
-    # in case of glm's that have df.residual(), and where residual df where requested
-    if (ci_method == "residual" && test_statistic == "z-statistic" && !is.null(residual_df) && !is.infinite(residual_df) && !is.na(residual_df)) {
-      test_statistic <- "t-statistic"
-    }
-
-    string_tailed <- switch(toupper(ci_method),
-      "HDI" = "highest-density",
-      "UNIROOT" = ,
-      "PROFILE" = "profile-likelihood",
-      "equal-tailed"
-    )
-
-    string_method <- switch(toupper(ci_method),
-      "BCI" = ,
-      "BCAI" = "bias-corrected accelerated bootstrap",
-      "SI" = ,
-      "CI" = ,
-      "QUANTILE" = ,
-      "ETI" = ,
-      "HDI" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
-      "NORMAL" = "Wald normal",
-      "BOOT" = "parametric bootstrap",
-      "Wald"
-    )
-
-    if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
-      string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
-    } else {
-      string_approx <- ""
-    }
-
-    if (!is.null(test_statistic) && !ci_method %in% c("normal") && !isTRUE(bootstrap)) {
-      string_statistic <- switch(tolower(test_statistic),
-        "t-statistic" = "t",
-        "chi-squared statistic" = ,
-        "z-statistic" = "z",
-        ""
+      string_tailed <- switch(ci_method,
+        "hdi" = "highest-density",
+        "uniroot" = ,
+        "profile" = "profile-likelihood",
+        "equal-tailed"
       )
-      string_method <- paste0(string_method, " ", string_statistic, "-")
-    } else {
-      string_method <- paste0(string_method, " ")
-    }
 
-    # bootstrapped intervals
-    if (isTRUE(bootstrap)) {
-      msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
-    } else {
-      msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
-    }
+      string_method <- switch(ci_method,
+        "bci" = ,
+        "bcai" = "bias-corrected accelerated bootstrap",
+        "si" = ,
+        "ci" = ,
+        "quantile" = ,
+        "eti" = ,
+        "hdi" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+        "normal" = "Wald normal",
+        "boot" = "parametric bootstrap",
+        "Wald"
+      )
 
-    # do we have random effect variances from lme4/glmmTMB?
-    # must be glmmTMB
-    show_re_msg <- (identical(model_class, "glmmTMB") &&
-      # and not Wald-CIs
-      (string_method != "Wald z-" || ci_method != "wald")) ||
-      # OR must be merMod
-      ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
-        # and not Wald CIs
-        !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
-    if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
-      msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
-    }
+      if (toupper(ci_method) %in% c("KENWARD", "KR", "KENWARD-ROGER", "KENWARD-ROGERS", "SATTERTHWAITE")) {
+        string_approx <- paste0("with ", format_df_adjust(ci_method, approx_string = "", dof_string = ""), " ")
+      } else {
+        string_approx <- ""
+      }
 
-    message(insight::format_message(msg))
+      if (!is.null(test_statistic) && !ci_method == "normal" && !isTRUE(bootstrap)) {
+        string_statistic <- switch(tolower(test_statistic),
+          "t-statistic" = "t",
+          "chi-squared statistic" = ,
+          "z-statistic" = "z",
+          ""
+        )
+        string_method <- paste0(string_method, " ", string_statistic, "-")
+      } else {
+        string_method <- paste0(string_method, " ")
+      }
+
+      # bootstrapped intervals
+      if (isTRUE(bootstrap)) {
+        msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
+      } else {
+        msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
+      }
+
+      # do we have random effect variances from lme4/glmmTMB?
+      # must be glmmTMB
+      show_re_msg <- (identical(model_class, "glmmTMB") &&
+        # and not Wald-CIs
+        (string_method != "Wald z-" || ci_method != "wald")) ||
+        # OR must be merMod
+        ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
+          # and not Wald CIs
+          !ci_method %in% c("wald", "residual", "normal", "profile", "boot"))
+
+      if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
+        msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
+      }
+
+      message(insight::format_message(msg))
+    }
   }
 }
