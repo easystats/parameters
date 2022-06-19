@@ -54,8 +54,7 @@ if (.runThisTest &&
         "",
         "Parameter            | Coefficient",
         "----------------------------------",
-        "SD (Intercept: herd) |        0.64",
-        "SD (Residual)        |        1.00"
+        "SD (Intercept: herd) |        0.64"
       )
     )
 
@@ -85,8 +84,7 @@ if (.runThisTest &&
         "",
         "Parameter            | Coefficient |   SE |       95% CI",
         "--------------------------------------------------------",
-        "SD (Intercept: herd) |        0.64 | 0.18 | [0.37, 1.11]",
-        "SD (Residual)        |        1.00 |      |             "
+        "SD (Intercept: herd) |        0.64 | 0.18 | [0.37, 1.11]"
       )
     )
   })

@@ -192,4 +192,17 @@ Language: en-US
 RoxygenNote: 7.2.0
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-Remotes: easystats/insight
+Remotes:
+    easystats/insight
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: glmmTMB
+RemoteUsername: glmmTMB
+RemoteRef: ci_tweaks
+RemoteSha: fd8bb78acd8b198147285ce94b1f67043349f570
+RemoteSubdir: glmmTMB
+GithubRepo: glmmTMB
+GithubUsername: glmmTMB
+GithubRef: ci_tweaks
+GithubSHA1: fd8bb78acd8b198147285ce94b1f67043349f570
+GithubSubdir: glmmTMB
