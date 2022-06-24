@@ -9,7 +9,6 @@ model_parameters.mjoint <- function(model,
                                     keep = NULL,
                                     drop = NULL,
                                     parameters = keep,
-                                    random_ci = TRUE,
                                     verbose = TRUE,
                                     ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))

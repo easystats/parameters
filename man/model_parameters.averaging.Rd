@@ -467,7 +467,6 @@
   keep = NULL,
   drop = NULL,
   parameters = keep,
-  random_ci = TRUE,
   verbose = TRUE,
   ...
 )
