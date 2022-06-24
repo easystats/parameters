@@ -9,6 +9,7 @@ model_parameters.mjoint <- function(model,
                                     keep = NULL,
                                     drop = NULL,
                                     parameters = keep,
+                                    random_ci = TRUE,
                                     verbose = TRUE,
                                     ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -36,7 +37,7 @@ model_parameters.mjoint <- function(model,
   }
 
   if (effects %in% c("random", "all")) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = NULL, verbose = verbose)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = NULL, random_ci = random_ci, verbose = verbose)
     params_variance$Component <- "conditional"
   }
 

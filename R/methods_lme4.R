@@ -22,6 +22,10 @@
 #'   variance and the variance for the additive overdispersion term (see
 #'   [insight::get_variance()] for details). Defaults to `FALSE` for mixed models
 #'   due to the longer computation time.
+#' @param random_ci Logical, if `TRUE` (default), includes the confidence
+#'   intervals for random effects parameters. Only applies if `effects` is not
+#'   `"fixed"` and if `ci` is not `NULL`. Set `random_ci = FALSE` if computation
+#'   of the model summary is too much time consuming.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
@@ -114,6 +118,7 @@ model_parameters.merMod <- function(model,
                                     include_sigma = FALSE,
                                     vcov = NULL,
                                     vcov_args = NULL,
+                                    random_ci = TRUE,
                                     ...) {
   dots <- list(...)
 
@@ -212,7 +217,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, random_ci = random_ci, verbose = verbose)
   }
 
   # merge random and fixed effects, if necessary

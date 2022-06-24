@@ -29,9 +29,10 @@
   exponentiate = FALSE,
   ci_method = NULL,
   p_adjust = NULL,
+  include_sigma = FALSE,
+  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
-  include_sigma = FALSE,
   ...
 )
 
@@ -55,6 +56,7 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
+  random_ci = TRUE,
   ...
 )
 
@@ -79,6 +81,7 @@
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
+  random_ci = TRUE,
   ...
 )
 
@@ -111,6 +114,7 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
+  random_ci = TRUE,
   ...
 )
 
@@ -134,6 +138,7 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
+  random_ci = TRUE,
   ...
 )
 
@@ -171,6 +176,7 @@
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
+  random_ci = TRUE,
   ...
 )
 
@@ -198,9 +204,10 @@
   exponentiate = FALSE,
   ci_method = NULL,
   p_adjust = NULL,
+  include_sigma = FALSE,
+  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
-  include_sigma = FALSE,
   ...
 )
 
@@ -215,9 +222,10 @@
   exponentiate = FALSE,
   ci_method = NULL,
   p_adjust = NULL,
+  include_sigma = FALSE,
+  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
-  include_sigma = FALSE,
   ...
 )
 
@@ -307,15 +315,20 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
-\item{verbose}{Toggle warnings and messages.}
-
-\item{df_method}{Deprecated. Please use \code{ci_method}.}
-
 \item{include_sigma}{Logical, if \code{TRUE}, includes the residual standard
 deviation. For mixed models, this is defined as the sum of the distribution-specific
 variance and the variance for the additive overdispersion term (see
 \code{\link[insight:get_variance]{insight::get_variance()}} for details). Defaults to \code{FALSE} for mixed models
 due to the longer computation time.}
+
+\item{random_ci}{Logical, if \code{TRUE} (default), includes the confidence
+intervals for random effects parameters. Only applies if \code{effects} is not
+\code{"fixed"} and if \code{ci} is not \code{NULL}. Set \code{random_ci = FALSE} if computation
+of the model summary is too much time consuming.}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{df_method}{Deprecated. Please use \code{ci_method}.}
 
 \item{...}{Arguments passed to or from other methods.}
 

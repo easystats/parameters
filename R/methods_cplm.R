@@ -228,9 +228,10 @@ model_parameters.cpglmm <- function(model,
                                     exponentiate = FALSE,
                                     ci_method = NULL,
                                     p_adjust = NULL,
+                                    include_sigma = FALSE,
+                                    random_ci = TRUE,
                                     verbose = TRUE,
                                     df_method = ci_method,
-                                    include_sigma = FALSE,
                                     ...) {
 
   ## TODO remove later
@@ -264,6 +265,7 @@ model_parameters.cpglmm <- function(model,
     group_level = group_level,
     ci_method = ci_method,
     include_sigma = include_sigma,
+    random_ci = random_ci,
     verbose = verbose,
     ...
   )

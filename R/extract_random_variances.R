@@ -11,6 +11,7 @@
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
+                                              random_ci = TRUE,
                                               verbose = FALSE,
                                               ...) {
   out <- suppressWarnings(
@@ -20,6 +21,7 @@
       effects = effects,
       component = component,
       ci_method = ci_method,
+      random_ci = random_ci,
       verbose = verbose,
       ...
     )
@@ -43,6 +45,7 @@
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
+                                              random_ci = TRUE,
                                               verbose = FALSE,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
@@ -54,6 +57,7 @@
       effects = effects,
       component = "conditional",
       ci_method = ci_method,
+      random_ci = random_ci,
       verbose = verbose,
       ...
     )
@@ -77,6 +81,7 @@
         effects = effects,
         component = "zi",
         ci_method = ci_method,
+        random_ci = random_ci,
         verbose = FALSE,
         ...
       )
@@ -116,6 +121,7 @@
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
+                                             random_ci = TRUE,
                                              verbose = FALSE,
                                              ...) {
   varcorr <- .get_variance_information(model, component)
@@ -211,7 +217,7 @@
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && isTRUE(random_ci)) {
     out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
   }
 
