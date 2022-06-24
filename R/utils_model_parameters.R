@@ -243,7 +243,9 @@
   } else if (!is.null(info)) {
     if (!info$family == "unknown") {
       if (isTRUE(exponentiate)) {
-        if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        if (info$is_exponential && identical(info$link_function, "log")) {
+          coef_col <- "Prevalence Ratio"
+        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
           coef_col <- "Odds Ratio"
         } else if (info$is_binomial && !info$is_logit) {
           coef_col <- "Risk Ratio"
@@ -251,8 +253,12 @@
           coef_col <- "IRR"
         }
       } else {
-        if (info$is_binomial || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        if (info$is_exponential && identical(info$link_function, "log")) {
+          coef_col <- "Log-Prevalence"
+        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
           coef_col <- "Log-Odds"
+        } else if (info$is_binomial && !info$is_logit) {
+          coef_col <- "Log-Risk"
         } else if (info$is_count) {
           coef_col <- "Log-Mean"
         }

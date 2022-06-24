@@ -152,7 +152,7 @@
 # that contain the random effects or zero-inflated parameters
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
+  c("Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds", "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
 }
 
 
