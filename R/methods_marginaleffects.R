@@ -9,12 +9,10 @@ model_parameters.marginaleffects <- function(model,
                                              ci = .95,
                                              ...) {
 
-  out <- marginaleffects::tidy(model, conf_level = ci, ...)
-
-  out <- datawizard::data_rename(
-    insight::standardize_names(out),
-    pattern = c("type", "value"),
-    replacement = c("Type", "Level"))
+  out <- insight::standardize_names(
+    marginaleffects::tidy(model, conf_level = ci, ...),
+    style = "easystats"
+  )
 
   out <- tryCatch(
     .add_model_parameters_attributes(out, model, ci, ...),
