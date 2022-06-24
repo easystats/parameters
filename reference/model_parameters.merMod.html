@@ -87,9 +87,10 @@
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   ci_method <span class="op">=</span> <span class="cn">NULL</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
-  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -114,6 +115,7 @@
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
   include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -139,6 +141,7 @@
   include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   vcov <span class="op">=</span> <span class="cn">NULL</span>,
   vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -173,6 +176,7 @@
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
   include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -197,6 +201,7 @@
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
   include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -236,6 +241,7 @@
   include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   vcov <span class="op">=</span> <span class="cn">NULL</span>,
   vcov_args <span class="op">=</span> <span class="cn">NULL</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -265,9 +271,10 @@
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   ci_method <span class="op">=</span> <span class="cn">NULL</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
-  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -283,9 +290,10 @@
   exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,
   ci_method <span class="op">=</span> <span class="cn">NULL</span>,
   p_adjust <span class="op">=</span> <span class="cn">NULL</span>,
+  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
+  random_ci <span class="op">=</span> <span class="cn">TRUE</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   df_method <span class="op">=</span> <span class="va">ci_method</span>,
-  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
 <span class="op">)</span>
 
@@ -396,20 +404,27 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 <code>emmGrid</code> objects (from <strong>emmeans</strong>).</p></dd>
 
 
-<dt>verbose</dt>
-<dd><p>Toggle warnings and messages.</p></dd>
-
-
-<dt>df_method</dt>
-<dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
-
-
 <dt>include_sigma</dt>
 <dd><p>Logical, if <code>TRUE</code>, includes the residual standard
 deviation. For mixed models, this is defined as the sum of the distribution-specific
 variance and the variance for the additive overdispersion term (see
 <code><a href="https://easystats.github.io/insight/reference/get_variance.html" class="external-link">insight::get_variance()</a></code> for details). Defaults to <code>FALSE</code> for mixed models
 due to the longer computation time.</p></dd>
+
+
+<dt>random_ci</dt>
+<dd><p>Logical, if <code>TRUE</code> (default), includes the confidence
+intervals for random effects parameters. Only applies if <code>effects</code> is not
+<code>"fixed"</code> and if <code>ci</code> is not <code>NULL</code>. Set <code>random_ci = FALSE</code> if computation
+of the model summary is too much time consuming.</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages.</p></dd>
+
+
+<dt>df_method</dt>
+<dd><p>Deprecated. Please use <code>ci_method</code>.</p></dd>
 
 
 <dt>...</dt>
