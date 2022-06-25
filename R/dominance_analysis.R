@@ -35,25 +35,25 @@
 #' An object of class `"parameters_da"` is a list of `data.frame`s composed
 #' of the following elements:
 #' \describe{
-#'  \item{`general`}{A `data.frame` which associates dominance statistics with
+#'  \item{`General`}{A `data.frame` which associates dominance statistics with
 #'  model parameters. The variables in this `data.frame` include:
 #'   \describe{
-#'     \item{`parameter`}{Parameter names.}
-#'      \item{`general_dominance`}{Vector of general dominance statistics.
+#'     \item{`Parameter`}{Parameter names.}
+#'      \item{`General_Dominance`}{Vector of general dominance statistics.
 #'      The R2 ascribed to variables in the `all` argument are also reported
 #'      here though they are not general dominance statistics.}
-#'      \item{`standardized`}{Vector of general dominance statistics normalized
+#'      \item{`Percent`}{Vector of general dominance statistics normalized
 #'      to sum to 1.}
-#'      \item{`ranks`}{Vector of ranks applied to the general dominance
+#'      \item{`Ranks`}{Vector of ranks applied to the general dominance
 #'      statistics.}
-#'      \item{`subset`}{Names of the subset to which the parameter belongs in
+#'      \item{`Subset`}{Names of the subset to which the parameter belongs in
 #'      the dominance analysis.  Each other `data.frame` returned will refer
 #'      to these subset names.}}}
-#'  \item{`conditional_dominance`}{A `data.frame` of conditional dominance
+#'  \item{`Conditional`}{A `data.frame` of conditional dominance
 #'  statistics.  Each observation represents a subset and each variable
 #'  represents an the average increment to R2 with a specific number of
 #'  subsets in the model.  `NULL` if `conditional` argument is `FALSE`.}
-#'  \item{`complete_dominance`}{A `data.frame` of complete dominance
+#'  \item{`Complete`}{A `data.frame` of complete dominance
 #'  designations. The subsets in the observations are compared to the
 #'  subsets referenced in each variable. Whether the subset
 #'  in each variable dominates the subset in each observation is
@@ -339,12 +339,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   # Internal wrapper to ensure r2 values conform to domin ----
-  r2_wrap <- function(model, ...) {
+  .r2_wrap <- function(model, ...) {
     list(fitstat = performance::r2(model, ...)[[1]])
   }
 
   # Finalize and implement DA
-  args2domin <- append(list(formula_overall = fml, reg = reg, fitstat = list(r2_wrap, "fitstat"),
+  args2domin <- append(list(formula_overall = fml, reg = reg, fitstat = list(.r2_wrap, "fitstat"),
                     data = data, conditional = conditional, complete = complete,
                     sets = sets_processed, all = all_processed), args)
 
@@ -357,14 +357,16 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       c(names(domir_res$General_Dominance)[1:(length(domir_res$General_Dominance) - length(set_names))],
         set_names)
 
-    if (conditional)
+    if (conditional) {
       rownames(domir_res$Conditional_Dominance) <- names(domir_res$General_Dominance)
+
+    }
 
   }
 
   if (complete) {
 
-    colnames(domir_res$Complete_Dominance) <- paste0("< ", names(domir_res$General_Dominance))
+    colnames(domir_res$Complete_Dominance) <- paste0("dmn_", names(domir_res$General_Dominance))
 
     dimnames(domir_res$Complete_Dominance) <- list(
       colnames(domir_res$Complete_Dominance),
@@ -441,11 +443,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   if (conditional) {
 
     da_df_cdl <-
-      data.frame(subset = names(domir_res$General_Dominance))
+      data.frame(Subset = names(domir_res$General_Dominance))
 
     da_df_cdl <-
       datawizard::data_merge(da_df_cdl,
-                             data.frame(subset = names(domir_res$General_Dominance),
+                             data.frame(Subset = names(domir_res$General_Dominance),
                                         domir_res$Conditional_Dominance))
 
     da_df_cdl <-
@@ -459,11 +461,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   if (complete) {
 
   da_df_cpt <-
-    data.frame(subset = names(domir_res$General_Dominance))
+    data.frame(Subset = names(domir_res$General_Dominance))
 
   da_df_cpt <-
     datawizard::data_merge(da_df_cpt,
-                           data.frame(subset = names(domir_res$General_Dominance),
+                           data.frame(Subset = names(domir_res$General_Dominance),
                                       domir_res$Complete_Dominance))
 
   da_df_cpt <-
@@ -475,15 +477,20 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   else da_df_cpt <- NULL
 
-  da_list <- list(general = da_df_res,
-                  conditional = da_df_cdl,
-                  complete = da_df_cpt)
+  da_df_res <-
+    datawizard::data_rename(da_df_res,
+                            replacement = c("Parameter", "General_Dominance",
+                                            "Percent", "Ranks", "Subset"))
+
+  da_list <- list(General = da_df_res,
+                  Conditional = da_df_cdl,
+                  Complete = da_df_cpt)
 
   # add attributes and class
   attr(da_list, "model_R2") <- domir_res$Fit_Statistic_Overall
-  attr(da_list$general, "table_title") <- "General Dominance Statistics"
-  if (conditional) attr(da_list$conditional, "table_title") <- "Conditional Dominance Statistics"
-  if (complete) attr(da_list$complete, "table_title") <- "Complete Dominance Designations"
+  attr(da_list$General, "table_title") <- "General Dominance Statistics"
+  if (conditional) attr(da_list$Conditional, "table_title") <- "Conditional Dominance Statistics"
+  if (complete) attr(da_list$Complete, "table_title") <- "Complete Dominance Designations"
 
   class(da_list) <- c("parameters_da")
 
@@ -504,7 +511,42 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
   cat("Model R2 Value: ", sprintf("%.*f", digits, attr(x, "model_R2")), "\n\n")
 
-  cat(insight::export_table(x, digits = digits, ...))
+  printed_x <- x
+
+  printed_x$General <- datawizard::data_rename(x$General,
+                                               pattern = "General_Dominance",
+                                               replacement = "General Dominance")
+
+  if (!is.null(x$Conditional)) {
+
+    cdl_col <- ncol(x$Conditional)
+
+    cdl_names<- paste0("IVs_", 1:(cdl_col - 1))
+
+    cdl_names_rep <- paste("IVs:", 1:(cdl_col - 1))
+
+    printed_x$Conditional <-
+      datawizard::data_rename(x$Conditional,
+                  pattern = cdl_names,
+                  replacement = cdl_names_rep)
+
+  }
+
+  if (!is.null(x$Complete)) {
+
+    cpt_names <- names(x$Complete)[-1]
+
+    cpt_names_rep <- gsub("dmn_", "< ",
+                          cpt_names)
+
+    printed_x$Complete <-
+      datawizard::data_rename(x$Complete,
+                              pattern = cpt_names,
+                              replacement = cpt_names_rep)
+
+  }
+
+  cat(insight::export_table(printed_x, digits = digits, ...))
 
   invisible(x)
 

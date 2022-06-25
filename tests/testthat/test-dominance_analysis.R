@@ -14,7 +14,7 @@ if (requiet("testthat") && requiet("performance") && requiet("domir") &&
     gnrl_domir <- c(NA, DA_domir$General_Dominance)
     names(gnrl_domir) <- NULL
 
-    gnrl_da <- DA_performance$general$general_dominance
+    gnrl_da <- DA_performance$General$General_Dominance
 
     expect_equal(gnrl_domir,
                  gnrl_da)
@@ -25,7 +25,7 @@ if (requiet("testthat") && requiet("performance") && requiet("domir") &&
     cdl_domir <- DA_domir$Conditional_Dominance
     dimnames(cdl_domir) <-c(NULL, NULL)
 
-    cdl_da <- as.matrix(DA_performance$conditional[,-1])
+    cdl_da <- as.matrix(DA_performance$Conditional[,-1])
     dimnames(cdl_da) <-c(NULL, NULL)
 
     expect_equal(cdl_domir,
@@ -37,7 +37,7 @@ if (requiet("testthat") && requiet("performance") && requiet("domir") &&
     cpt_domir <- DA_domir$Complete_Dominance
     dimnames(cpt_domir) <- list(NULL, NULL)
 
-    cpt_da <- t(DA_performance$complete[,-1])
+    cpt_da <- t(DA_performance$Complete[,-1])
     dimnames(cpt_da) <- list(NULL, NULL)
 
     expect_equal(cpt_domir,
@@ -58,13 +58,13 @@ if (requiet("testthat") && requiet("performance") && requiet("domir") &&
     names(domir_all_sub_r2) <-NULL
 
     expect_equal(domir_all_sub_r2,
-                 with(DA_performance2$general, general_dominance[subset == "all"]))
+                 with(DA_performance2$General, General_Dominance[Subset == "all"]))
 
     gnrl_domir2 <- DA_domir2$General_Dominance
     names(gnrl_domir2) <- NULL
 
-    gnrl_da2 <- aggregate(DA_performance2$general$general_dominance,
-                          list(DA_performance2$general$subset), mean)
+    gnrl_da2 <- aggregate(DA_performance2$General$General_Dominance,
+                          list(DA_performance2$General$Subset), mean)
 
     gnrl_da2 <- gnrl_da2[which(gnrl_da2$Group.1 %in% c("cyl", "set1")),]
 

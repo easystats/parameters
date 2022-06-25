@@ -55,25 +55,25 @@ Object of class \code{"parameters_da"}.
 An object of class \code{"parameters_da"} is a list of \code{data.frame}s composed
 of the following elements:
 \describe{
-\item{\code{general}}{A \code{data.frame} which associates dominance statistics with
+\item{\code{General}}{A \code{data.frame} which associates dominance statistics with
 model parameters. The variables in this \code{data.frame} include:
 \describe{
-\item{\code{parameter}}{Parameter names.}
-\item{\code{general_dominance}}{Vector of general dominance statistics.
+\item{\code{Parameter}}{Parameter names.}
+\item{\code{General_Dominance}}{Vector of general dominance statistics.
 The R2 ascribed to variables in the \code{all} argument are also reported
 here though they are not general dominance statistics.}
-\item{\code{standardized}}{Vector of general dominance statistics normalized
+\item{\code{Percent}}{Vector of general dominance statistics normalized
 to sum to 1.}
-\item{\code{ranks}}{Vector of ranks applied to the general dominance
+\item{\code{Ranks}}{Vector of ranks applied to the general dominance
 statistics.}
-\item{\code{subset}}{Names of the subset to which the parameter belongs in
-the dominance analysis.  Each other \code{data.frame} will refer to these
-subset names.}}}
-\item{\code{conditional_dominance}}{A \code{data.frame} of conditional dominance
+\item{\code{Subset}}{Names of the subset to which the parameter belongs in
+the dominance analysis.  Each other \code{data.frame} returned will refer
+to these subset names.}}}
+\item{\code{Conditional}}{A \code{data.frame} of conditional dominance
 statistics.  Each observation represents a subset and each variable
 represents an the average increment to R2 with a specific number of
 subsets in the model.  \code{NULL} if \code{conditional} argument is \code{FALSE}.}
-\item{\code{complete_dominance}}{A \code{data.frame} of complete dominance
+\item{\code{Complete}}{A \code{data.frame} of complete dominance
 designations. The subsets in the observations are compared to the
 subsets referenced in each variable. Whether the subset
 in each variable dominates the subset in each observation is
@@ -131,7 +131,6 @@ require("performance")) {
   dominance_analysis(model)
 
   # Dominance Analysis with Weighted Logit Regression
-
   model_wt <- glm(vs ~ cyl + carb + mpg, data = mtcars,
     weights = wt, family = binomial())
 
