@@ -268,11 +268,16 @@ random effects parameters. Only applies if \code{effects} is not \code{"fixed"} 
 if \code{ci} is not \code{NULL}. Set \code{ci_random = FALSE} if computation of the model
 summary is too much time consuming. By default, \code{ci_random = NULL}, which
 uses a heuristic to guess if computation of confidence intervals for random
-effects will be time consuming or not. For models with larger sample size
-and/or more complex random effects structures, confidence intervals will
-not be computed, for simpler models or fewer observations, confidence
-intervals will be included. Set explicitly to \code{TRUE} or \code{FALSE} to enforce
-or omit confidence intervals of random effects.}
+effects is fast enough or not. For models with larger sample size and/or
+more complex random effects structures, confidence intervals will not be
+computed, for simpler models or fewer observations, confidence intervals
+will be included. Set explicitly to \code{TRUE} or \code{FALSE} to enforce or omit
+calculation of confidence intervals. \strong{Note}: For \code{merMod}  objects and
+if \code{ci_method} is \emph{not} \code{"boot"} or \code{"profile"}, the \strong{merDeriv} package
+is loaded, if installed, to calculate the variance-covariance matrix for
+random effects. Thus, all further calls to \code{summary.merMod()} will rely
+on \code{merDeriv.vcov()}, which might make \code{summary()} (much) slower for
+\code{merMod} objects.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
