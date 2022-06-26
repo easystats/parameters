@@ -11,7 +11,7 @@
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
-                                              random_ci = TRUE,
+                                              ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
   out <- suppressWarnings(
@@ -21,7 +21,7 @@
       effects = effects,
       component = component,
       ci_method = ci_method,
-      random_ci = random_ci,
+      ci_random = ci_random,
       verbose = verbose,
       ...
     )
@@ -45,7 +45,7 @@
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
-                                              random_ci = TRUE,
+                                              ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
@@ -57,7 +57,7 @@
       effects = effects,
       component = "conditional",
       ci_method = ci_method,
-      random_ci = random_ci,
+      ci_random = ci_random,
       verbose = verbose,
       ...
     )
@@ -81,7 +81,7 @@
         effects = effects,
         component = "zi",
         ci_method = ci_method,
-        random_ci = random_ci,
+        ci_random = ci_random,
         verbose = FALSE,
         ...
       )
@@ -121,7 +121,7 @@
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
-                                             random_ci = TRUE,
+                                             ci_random = NULL,
                                              verbose = FALSE,
                                              ...) {
   varcorr <- .get_variance_information(model, component)
@@ -217,8 +217,8 @@
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && isTRUE(random_ci)) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !isFALSE(ci_random)) {
+    out <- .random_sd_ci(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component, verbose = verbose)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -303,12 +303,40 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
+.random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
 
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
     return(out)
   }
+
+  # heuristic to check whether CIs for random effects should be computed or
+  # not. If `ci_random=NULL`, we check model complexity and decide whether to
+  # go on or not. For models with larger samples sized or more complex random
+  # effects, this might be quite time consuming.
+
+  if (is.null(ci_random)) {
+    # check sample size, don't compute by default when larger than 1000
+    nobs <- insight::n_obs(model)
+    if (nobs >= 1000) {
+      return(out)
+    }
+
+    # check complexity of random effects
+    re <- insight::find_random(model, flatten = TRUE)
+    rs <- insight::find_random_slopes(model)
+
+    # quit if if random slopes and larger sample size or more than 1 grouping factor
+    if (!is.null(rs) && (nobs >= 500 || length(re) > 1)) {
+      return(out)
+    }
+
+    # quit if if than two grouping factors
+    if (length(re) > 2) {
+      return(out)
+    }
+  }
+
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
 

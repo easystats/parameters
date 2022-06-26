@@ -21,16 +21,16 @@
 \method{model_parameters}{cpglmm}(
   model,
   ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  ci_method = NULL,
   p_adjust = NULL,
   include_sigma = FALSE,
-  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
   ...
@@ -39,14 +39,15 @@
 \method{model_parameters}{glmmTMB}(
   model,
   ci = 0.95,
+  ci_method = "wald",
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
+  standardize = NULL,
   effects = "all",
   component = "all",
   group_level = FALSE,
-  standardize = NULL,
   exponentiate = FALSE,
-  ci_method = "wald",
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
@@ -56,15 +57,15 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
-  random_ci = TRUE,
   ...
 )
 
 \method{model_parameters}{merMod}(
   model,
   ci = 0.95,
-  bootstrap = FALSE,
   ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
@@ -81,7 +82,6 @@
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
-  random_ci = TRUE,
   ...
 )
 
@@ -97,14 +97,15 @@
 \method{model_parameters}{mixed}(
   model,
   ci = 0.95,
+  ci_method = "wald",
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
+  standardize = NULL,
   effects = "all",
   component = "all",
   group_level = FALSE,
-  standardize = NULL,
   exponentiate = FALSE,
-  ci_method = "wald",
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
@@ -114,21 +115,21 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
-  random_ci = TRUE,
   ...
 )
 
 \method{model_parameters}{MixMod}(
   model,
   ci = 0.95,
+  ci_method = "wald",
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
+  standardize = NULL,
   effects = "all",
   component = "all",
   group_level = FALSE,
-  standardize = NULL,
   exponentiate = FALSE,
-  ci_method = "wald",
   p_adjust = NULL,
   wb_component = TRUE,
   summary = getOption("parameters_mixed_summary", FALSE),
@@ -138,7 +139,6 @@
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
-  random_ci = TRUE,
   ...
 )
 
@@ -158,8 +158,9 @@
 \method{model_parameters}{lme}(
   model,
   ci = 0.95,
-  bootstrap = FALSE,
   ci_method = NULL,
+  ci_random = NULL,
+  bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
@@ -176,7 +177,6 @@
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
-  random_ci = TRUE,
   ...
 )
 
@@ -196,16 +196,16 @@
 \method{model_parameters}{clmm}(
   model,
   ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  ci_method = NULL,
   p_adjust = NULL,
   include_sigma = FALSE,
-  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
   ...
@@ -214,16 +214,16 @@
 \method{model_parameters}{rlmerMod}(
   model,
   ci = 0.95,
+  ci_method = NULL,
+  ci_random = NULL,
   bootstrap = FALSE,
   iterations = 1000,
   standardize = NULL,
   effects = "all",
   group_level = FALSE,
   exponentiate = FALSE,
-  ci_method = NULL,
   p_adjust = NULL,
   include_sigma = FALSE,
-  random_ci = TRUE,
   verbose = TRUE,
   df_method = ci_method,
   ...
@@ -252,6 +252,27 @@
 \item{model}{A mixed model.}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
+
+\item{ci_method}{Method for computing degrees of freedom for
+confidence intervals (CI) and the related p-values. Allowed are following
+options (which vary depending on the model class): \code{"residual"},
+\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
+\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
+\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
+\emph{Confidence intervals and approximation of degrees of freedom} in
+\code{\link[=model_parameters]{model_parameters()}} for further details. When \code{ci_method=NULL}, in most
+cases \code{"wald"} is used then.}
+
+\item{ci_random}{Logical, if \code{TRUE}, includes the confidence intervals for
+random effects parameters. Only applies if \code{effects} is not \code{"fixed"} and
+if \code{ci} is not \code{NULL}. Set \code{ci_random = FALSE} if computation of the model
+summary is too much time consuming. By default, \code{ci_random = NULL}, which
+uses a heuristic to guess if computation of confidence intervals for random
+effects will be time consuming or not. For models with larger sample size
+and/or more complex random effects structures, confidence intervals will
+not be computed, for simpler models or fewer observations, confidence
+intervals will be included. Set explicitly to \code{TRUE} or \code{FALSE} to enforce
+or omit confidence intervals of random effects.}
 
 \item{bootstrap}{Should estimates be based on bootstrapped model? If
 \code{TRUE}, then arguments of \link[=model_parameters.stanreg]{Bayesian regressions} apply (see also
@@ -299,16 +320,6 @@ captures this uncertainty. For \code{compare_parameters()},
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients
 from non-Gaussian families.}
 
-\item{ci_method}{Method for computing degrees of freedom for
-confidence intervals (CI) and the related p-values. Allowed are following
-options (which vary depending on the model class): \code{"residual"},
-\code{"normal"}, \code{"likelihood"}, \code{"satterthwaite"}, \code{"kenward"}, \code{"wald"},
-\code{"profile"}, \code{"boot"}, \code{"uniroot"}, \code{"ml1"}, \code{"betwithin"}, \code{"hdi"},
-\code{"quantile"}, \code{"ci"}, \code{"eti"}, \code{"si"}, \code{"bci"}, or \code{"bcai"}. See section
-\emph{Confidence intervals and approximation of degrees of freedom} in
-\code{\link[=model_parameters]{model_parameters()}} for further details. When \code{ci_method=NULL}, in most
-cases \code{"wald"} is used then.}
-
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
@@ -320,11 +331,6 @@ deviation. For mixed models, this is defined as the sum of the distribution-spec
 variance and the variance for the additive overdispersion term (see
 \code{\link[insight:get_variance]{insight::get_variance()}} for details). Defaults to \code{FALSE} for mixed models
 due to the longer computation time.}
-
-\item{random_ci}{Logical, if \code{TRUE} (default), includes the confidence
-intervals for random effects parameters. Only applies if \code{effects} is not
-\code{"fixed"} and if \code{ci} is not \code{NULL}. Set \code{random_ci = FALSE} if computation
-of the model summary is too much time consuming.}
 
 \item{verbose}{Toggle warnings and messages.}
 

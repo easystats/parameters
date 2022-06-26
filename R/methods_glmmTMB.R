@@ -9,14 +9,15 @@
 #' @export
 model_parameters.glmmTMB <- function(model,
                                      ci = .95,
+                                     ci_method = "wald",
+                                     ci_random = NULL,
                                      bootstrap = FALSE,
                                      iterations = 1000,
+                                     standardize = NULL,
                                      effects = "all",
                                      component = "all",
                                      group_level = FALSE,
-                                     standardize = NULL,
                                      exponentiate = FALSE,
-                                     ci_method = "wald",
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = getOption("parameters_mixed_summary", FALSE),
@@ -26,7 +27,6 @@ model_parameters.glmmTMB <- function(model,
                                      verbose = TRUE,
                                      df_method = ci_method,
                                      include_sigma = FALSE,
-                                     random_ci = TRUE,
                                      ...) {
 
   ## TODO remove later
@@ -164,7 +164,7 @@ model_parameters.glmmTMB <- function(model,
         warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
       }
     } else {
-      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, random_ci = random_ci, verbose = verbose)
+      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
       # remove redundant dispersion parameter
       if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
         disp <- which(params$Component == "dispersion")
