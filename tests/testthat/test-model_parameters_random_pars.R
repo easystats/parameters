@@ -57,7 +57,7 @@ if (.runThisTest &&
   }
 
   model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = sleepstudy)
-  mp <- model_parameters(model, effects = "random")
+  mp <- model_parameters(model, effects = "random", ci_random = TRUE)
 
   test_that("model_parameters-random pars 5", {
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor, tolerance = 1e-3)

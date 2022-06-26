@@ -32,11 +32,11 @@ if (.runThisTest && !osx &&
 
   ## TODO also check messages for profiled CI
 
-  expect_message(mp1 <- model_parameters(m1), "meaningful")
-  mp2 <- model_parameters(m2)
-  expect_message(mp3 <- model_parameters(m3), "meaningful")
-  expect_message(mp4 <- model_parameters(m4), "meaningful")
-  expect_message(mp5 <- model_parameters(m5), "meaningful")
+  expect_message(mp1 <- model_parameters(m1, ci_random = TRUE), "meaningful")
+  mp2 <- model_parameters(m2, ci_random = TRUE)
+  expect_message(mp3 <- model_parameters(m3, ci_random = TRUE), "meaningful")
+  expect_message(mp4 <- model_parameters(m4, ci_random = TRUE), "meaningful")
+  expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "meaningful")
 
 
   # model 1 ---------------------
@@ -271,7 +271,7 @@ if (.runThisTest && !osx &&
 
   data(cake)
   m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
-  mp <- model_parameters(m)
+  mp <- model_parameters(m, ci_random = TRUE)
 
   test_that("random effects CIs, poly slope", {
     expect_equal(
