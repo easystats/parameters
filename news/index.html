@@ -131,7 +131,7 @@
 <li>
 <code>options("parameters_mixed_summary" = TRUE/FALSE)</code>, which sets the default value for the <code>summary</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models.</li>
 </ul></li>
-<li><p>Minor improvements for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> methods.</p></li>
+<li><p>Minor improvements for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods.</p></li>
 <li>
 <p>Robust uncertainty estimates:</p>
 <ul><li>The <code>vcov_estimation</code>, <code>vcov_type</code>, and <code>robust</code> arguments are deprecated in these functions: <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/model_parameters.html">parameters()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code>, and <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>. They are replaced by the <code>vcov</code> and <code>vcov_args</code> arguments.</li>
@@ -197,7 +197,7 @@
 <div class="section level3">
 <h3 id="general-0-15-0">General<a class="anchor" aria-label="anchor" href="#general-0-15-0"></a></h3>
 <ul><li><p>The handling to approximate the degrees of freedom in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> was revised and should now be more consistent. Some bugs related to the previous computation of confidence intervals and p-values have been fixed. Now it is possible to change the method to approximate degrees of freedom for CIs and p-values using the <code>ci_method</code>, resp. <code>method</code> argument. This change has been documented in detail in <code><a href="../reference/model_parameters.html">?model_parameters</a></code>, and online here: <a href="https://easystats.github.io/parameters/reference/model_parameters.html" class="external-link uri">https://easystats.github.io/parameters/reference/model_parameters.html</a></p></li>
-<li><p>Minor changes to <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <em>glmmTMB</em> with dispersion parameter.</p></li>
+<li><p>Minor changes to <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <em>glmmTMB</em> with dispersion parameter.</p></li>
 <li><p>Added vignette on printing options for model parameters.</p></li>
 </ul></div>
 <div class="section level3">
@@ -221,7 +221,7 @@
 <li><p><code><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution()</a></code> gets <code>verbose</code> argument to toggle warnings and messages.</p></li>
 <li><p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> removes dots and underscores from parameter names, to make these more “human readable”.</p></li>
 <li><p>The experimental calculation of p-values in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> was replaced by a proper calculation p-values. The argument <code>p_value</code> was removed and p-values are now always included.</p></li>
-<li><p>Minor improvements to <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code>, <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>.</p></li>
+<li><p>Minor improvements to <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>.</p></li>
 </ul></div>
 </div>
 <div class="section level3">
@@ -232,7 +232,7 @@
 <li><p>Fixed issue in <code><a href="../reference/p_value_satterthwaite.html">ci_satterthwaite()</a></code>, which used <code>Inf</code> degrees of freedom instead of the Satterthwaite approximation.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.mlm.html">model_parameters.mlm()</a></code> when model contained interaction terms.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.rma.html">model_parameters.rma()</a></code> when model contained interaction terms.</p></li>
-<li><p>Fixed sign error for <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code> for objects created with <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test.formula()</a></code> (issue <a href="https://github.com/easystats/parameters/issues/552" class="external-link">#552</a>)</p></li>
+<li><p>Fixed sign error for <code><a href="../reference/model_parameters.htest.html">model_parameters.htest()</a></code> for objects created with <code>t.test.formula()</code> (issue <a href="https://github.com/easystats/parameters/issues/552" class="external-link">#552</a>)</p></li>
 <li><p>Fixed issue when computing random effect variances in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models with categorical random slopes.</p></li>
 </ul></div>
 </div>
@@ -253,13 +253,13 @@
 <ul><li>Performance improvements for models from package <em>survey</em>.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functions-0-14-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-14-0"></a></h3>
-<ul><li>Added a <code><a href="https://wviechtb.github.io/metafor/reference/print.rma.html" class="external-link">summary()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which is a convenient shortcut for <code>print(..., select = "minimal")</code>.</li></ul></div>
+<ul><li>Added a <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which is a convenient shortcut for <code>print(..., select = "minimal")</code>.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-0-14-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-14-0"></a></h3>
 <div class="section level4">
 <h4 id="model_parameters-0-14-0"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-14-0"></a></h4>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>parameters</code> argument, which takes a regular expression as string, to select specific parameters from the returned data frame.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> gains a <code>groups</code> argument, to group parameters in the output. Furthermore, <code>groups</code> can be used directly as argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> and will be passed to the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> gains a <code>groups</code> argument, to group parameters in the output. Furthermore, <code>groups</code> can be used directly as argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> and will be passed to the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for ANOVAs now saves the type as attribute and prints this information as footer in the output as well.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>htest</em>-objects now saves the alternative hypothesis as attribute and prints this information as footer in the output as well.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> passes arguments <code>type</code>, <code>parallel</code> and <code>n_cpus</code> down to <code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> when <code>bootstrap = TRUE</code>.</p></li>
@@ -274,14 +274,14 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-14-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-14-0"></a></h3>
 <ul><li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>emmGrid</em> objects with Bayesian models.</p></li>
-<li><p>Arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> were ignored for <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> and only worked when used in the call to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> directly.</p></li>
+<li><p>Arguments <code>digits</code>, <code>ci_digits</code> and <code>p_digits</code> were ignored for <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and only worked when used in the call to <code><a href="../reference/model_parameters.html">model_parameters()</a></code> directly.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.13.0" id="parameters-0130">parameters 0.13.0<a class="anchor" aria-label="anchor" href="#parameters-0130"></a></h2><p class="text-muted">CRAN release: 2021-04-08</p>
 <div class="section level3">
 <h3 id="general-0-13-0">General<a class="anchor" aria-label="anchor" href="#general-0-13-0"></a></h3>
-<ul><li>Revised and improved the <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li></ul></div>
+<ul><li>Revised and improved the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li></ul></div>
 <div class="section level3">
 <h3 id="new-supported-model-classes-0-13-0">New supported model classes<a class="anchor" aria-label="anchor" href="#new-supported-model-classes-0-13-0"></a></h3>
 <ul><li>
@@ -294,7 +294,7 @@
 <li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
 <li><p>To be internally consistent, the degrees of freedom column for <code>lqm(m)</code> and <code>cgam(m)</code> objects (with <em>t</em>-statistic) is called <code>df_error</code>.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>summary</code> argument to add summary information about the model to printed outputs.</p></li>
 <li><p>Minor improvements for models from <em>quantreg</em>.</p></li>
@@ -308,9 +308,9 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-13-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-13-0"></a></h3>
 <ul><li><p>Fixed issue with non-initialized argument <code>style</code> in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code>.</p></li>
-<li><p>Make <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> work with objects that have “simple” column names for confidence intervals with missing CI-level (i.e. when column is named <code>"CI"</code> instead of, say, <code>"95% CI"</code>).</p></li>
+<li><p>Make <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> work with objects that have “simple” column names for confidence intervals with missing CI-level (i.e. when column is named <code>"CI"</code> instead of, say, <code>"95% CI"</code>).</p></li>
 <li><p>Fixed issue with <code>p_adjust</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which did not work for adjustment-methods <code>"BY"</code> and <code>"BH"</code>.</p></li>
-<li><p>Fixed issue with <code>show_sigma</code> in <code><a href="https://rdrr.io/pkg/PMCMRplus/man/print.mandel.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
+<li><p>Fixed issue with <code>show_sigma</code> in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with incorrect order of degrees of freedom.</p></li>
 </ul></div>
 </div>

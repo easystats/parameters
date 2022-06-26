@@ -81,7 +81,7 @@ average.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_scores</span><span class="op">(</span><span class="va">x</span>, n_items <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_scores</span><span class="op">(</span><span class="va">x</span>, n_items <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -116,22 +116,22 @@ used to compute the PCA.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># PCA extracted two components</span></span>
-<span class="r-in">  <span class="va">pca</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># assignment of items to each component</span></span>
-<span class="r-in">  <span class="fu"><a href="principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># now we want to have sum scores for each component</span></span>
-<span class="r-in">  <span class="fu">get_scores</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in">  <span class="co"># compare to manually computed sum score for 2nd component, which</span></span>
-<span class="r-in">  <span class="co"># consists of items "hp" and "qsec"</span></span>
-<span class="r-in">  <span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span> <span class="op">+</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># PCA extracted two components</span></span></span>
+<span class="r-in"><span>  <span class="va">pca</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># assignment of items to each component</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="principal_components.html">closest_component</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># now we want to have sum scores for each component</span></span></span>
+<span class="r-in"><span>  <span class="fu">get_scores</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="co"># compare to manually computed sum score for 2nd component, which</span></span></span>
+<span class="r-in"><span>  <span class="co"># consists of items "hp" and "qsec"</span></span></span>
+<span class="r-in"><span>  <span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span> <span class="op">+</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">qsec</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  63.230  63.510  55.805  64.720  96.010  62.610 130.420  41.000  58.950</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10]  70.650  70.950  98.700  98.800  99.000 111.490 116.410 123.710  42.735</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [19]  35.260  42.450  58.505  83.435  83.650 130.205  96.025  42.450  53.850</span>

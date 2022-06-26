@@ -111,7 +111,7 @@ parameter.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -133,10 +133,10 @@ parameter.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Parameter      Type        Link              Term     Variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       (Intercept) intercept        Mean       (Intercept)         &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      Petal.Length   numeric Association      Petal.Length Petal.Length</span>
@@ -152,9 +152,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4                 NA              NA                 NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Parameter      Type        Link                  Term    Variable</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           (Intercept) intercept        Mean           (Intercept)        &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     Speciesversicolor    factor  Difference     Speciesversicolor     Species</span>
@@ -173,9 +173,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5                 NA              NA                 NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="fl">2</span>, raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="fl">2</span>, raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           Parameter      Type        Link                  Term</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                       (Intercept) intercept        Mean           (Intercept)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                 Speciesversicolor    factor  Difference     Speciesversicolor</span>
@@ -194,10 +194,10 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3             NA                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4             NA                 NA              NA                 NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5             NA                 NA              NA                 NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Interactions</span></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Interactions</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Parameter        Type        Link              Term</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   (Intercept)   intercept        Mean       (Intercept)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                   Sepal.Width     numeric Association       Sepal.Width</span>
@@ -219,9 +219,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4           &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5    Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    Sepal.Width        Sepal.Width            &lt;NA&gt;               &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span> <span class="op">*</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                     Parameter        Type        Link</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                                 (Intercept)   intercept        Mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                                 Sepal.Width     numeric Association</span>
@@ -274,9 +274,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10       virginica               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11      versicolor        Sepal.Width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12       virginica        Sepal.Width</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Parameter        Type        Link              Term</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   (Intercept)   intercept        Mean       (Intercept)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2             Speciesversicolor      factor  Difference Speciesversicolor</span>
@@ -298,9 +298,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4              &lt;NA&gt;               &lt;NA&gt;            &lt;NA&gt;               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Speciesversicolor            Species      versicolor               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  Speciesvirginica            Species       virginica               &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Parameter      Type       Link              Term</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   (Intercept) intercept       Mean       (Intercept)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2             Speciesversicolor    factor Difference Speciesversicolor</span>
@@ -322,13 +322,13 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4     Speciessetosa            Species          setosa               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 Speciesversicolor            Species      versicolor               &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  Speciesvirginica            Species       virginica               &lt;NA&gt;</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Complex interactions</span></span>
-<span class="r-in"><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span>
-<span class="r-in"><span class="va">data</span><span class="op">$</span><span class="va">fac2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">fac2</span> <span class="op">/</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Complex interactions</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span></span></span>
+<span class="r-in"><span><span class="va">data</span><span class="op">$</span><span class="va">fac2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">fac2</span> <span class="op">/</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               Parameter      Type        Link              Term</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                           (Intercept) intercept        Mean       (Intercept)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                     Speciesversicolor    factor  Difference Speciesversicolor</span>
@@ -381,9 +381,9 @@ parameter.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      Speciessetosa</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11  Speciesversicolor</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12   Speciesvirginica</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">fac2</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">/</span> <span class="va">fac2</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">parameters_type</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               Parameter        Type        Link</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                           (Intercept)   intercept        Mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2                     Speciesversicolor      factor  Difference</span>

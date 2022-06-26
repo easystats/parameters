@@ -78,7 +78,7 @@ mixed model and returns the result as a data frame.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -116,14 +116,14 @@ It indicates the <em>within-group variance</em>.</p>
 <h3 id="between-group-random-intercept-variance">Between-group random intercept variance<a class="anchor" aria-label="anchor" href="#between-group-random-intercept-variance"></a></h3>
 <p>The random intercept variance, or <em>between-group</em> variance
 for the intercept (τ<sub>00</sub>),
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html" class="external-link">VarCorr()</a></code>. It indicates how much groups
+is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. It indicates how much groups
 or subjects differ from each other.</p>
 </div>
 <div class="section">
 <h3 id="between-group-random-slope-variance">Between-group random slope variance<a class="anchor" aria-label="anchor" href="#between-group-random-slope-variance"></a></h3>
 <p>The random slope variance, or <em>between-group</em> variance
 for the slopes (τ<sub>11</sub>)
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
+is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
 for mixed models with random slopes. It indicates how much groups
 or subjects differ from each other according to their slopes.</p>
 </div>
@@ -131,7 +131,7 @@ or subjects differ from each other according to their slopes.</p>
 <h3 id="random-slope-intercept-correlation">Random slope-intercept correlation<a class="anchor" aria-label="anchor" href="#random-slope-intercept-correlation"></a></h3>
 <p>The random slope-intercept correlation
 (ρ<sub>01</sub>)
-is obtained from <code><a href="https://rdrr.io/pkg/lme4/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
+is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
 for mixed models with random intercepts and slopes.</p>
 </div><p><strong>Note:</strong> For the within-group and between-group variance, variance
 and standard deviations (which are simply the square root of the variance)
@@ -140,11 +140,11 @@ are shown.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sleepstudy</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sleepstudy</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">random_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Random Effects</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Within-Group Variance          </span>654.94 (25.59)</span>
