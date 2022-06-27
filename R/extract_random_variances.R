@@ -496,6 +496,9 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
                 message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
               }
+              if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
+                message(insight::format_message("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables."))
+              }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                   grepl("computationally singular", e$message, fixed = TRUE) ||
                   grepl("Exact singular", e$message, fixed = TRUE)) {
