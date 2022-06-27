@@ -29,14 +29,9 @@
 #'   uses a heuristic to guess if computation of confidence intervals for random
 #'   effects is fast enough or not. For models with larger sample size and/or
 #'   more complex random effects structures, confidence intervals will not be
-#'   computed, for simpler models or fewer observations, confidence intervals
-#'   will be included. Set explicitly to `TRUE` or `FALSE` to enforce or omit
-#'   calculation of confidence intervals. **Note**: For `merMod`  objects and
-#'   if `ci_method` is *not* `"boot"` or `"profile"`, the **merDeriv** package
-#'   is loaded, if installed, to calculate the variance-covariance matrix for
-#'   random effects. Thus, all further calls to `summary.merMod()` will rely
-#'   on `merDeriv.vcov()`, which might make `summary()` (much) slower for
-#'   `merMod` objects.
+#'   computed by default, for simpler models or fewer observations, confidence
+#'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
+#'   or omit calculation of confidence intervals.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
