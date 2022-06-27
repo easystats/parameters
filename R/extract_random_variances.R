@@ -385,9 +385,11 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
       # lme4 - wald / normal CI
 
+      merDeriv_loaded <- isNamespaceLoaded("merDeriv")
+
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
-      if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
+      if (all(suppressMessages(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE)))) {
 
         # this may fail, so wrap in try-catch
         out <- tryCatch(
@@ -506,6 +508,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out
           }
         )
+
+        # detach
+        if (!merDeriv_loaded) {
+          .unregister_vcov()
+        }
+
       } else if (isTRUE(verbose)) {
         message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
       }
@@ -803,4 +811,20 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   } else {
     x
   }
+}
+
+
+
+
+# this is used to only temporarily load merDeriv and to point registered
+# methods from merDeriv to lme4-methods. if merDeriv was loaded before,
+# nothing will be changed. If merDeriv was not loaded, vcov-methods registered
+# by merDeriv will be re-registered to use lme4::vcov.merMod. This is no problem,
+# because *if* useres load merDeriv later manually, merDeriv-vcov-methods will
+# be registered again.
+
+.unregister_vcov <- function() {
+  unloadNamespace("merDeriv")
+  suppressWarnings(suppressMessages(registerS3method("vcov", "lmerMod", method = lme4::vcov.merMod)))
+  suppressWarnings(suppressMessages(registerS3method("vcov", "glmerMod", method = lme4::vcov.merMod)))
 }
