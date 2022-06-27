@@ -348,14 +348,9 @@ summary is too much time consuming. By default, <code>ci_random = NULL</code>, w
 uses a heuristic to guess if computation of confidence intervals for random
 effects is fast enough or not. For models with larger sample size and/or
 more complex random effects structures, confidence intervals will not be
-computed, for simpler models or fewer observations, confidence intervals
-will be included. Set explicitly to <code>TRUE</code> or <code>FALSE</code> to enforce or omit
-calculation of confidence intervals. <strong>Note</strong>: For <code>merMod</code>  objects and
-if <code>ci_method</code> is <em>not</em> <code>"boot"</code> or <code>"profile"</code>, the <strong>merDeriv</strong> package
-is loaded, if installed, to calculate the variance-covariance matrix for
-random effects. Thus, all further calls to <code>summary.merMod()</code> will rely
-on <code>merDeriv.vcov()</code>, which might make <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> (much) slower for
-<code>merMod</code> objects.</p></dd>
+computed by default, for simpler models or fewer observations, confidence
+intervals will be included. Set explicitly to <code>TRUE</code> or <code>FALSE</code> to enforce
+or omit calculation of confidence intervals.</p></dd>
 
 
 <dt>bootstrap</dt>
