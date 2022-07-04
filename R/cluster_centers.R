@@ -17,7 +17,6 @@
 #' cluster_centers(iris[1:4], clusters = k$cluster, fun = median)
 #' @export
 cluster_centers <- function(data, clusters, fun = mean, ...) {
-
   # Get n obs
   params <- data.frame(table(clusters))
   names(params) <- c("Cluster", "n_Obs")

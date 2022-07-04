@@ -312,11 +312,13 @@
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
     sig <- tryCatch(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)),
-                    error = function(e) NULL)
+      error = function(e) NULL
+    )
     attr(params, "sigma") <- as.numeric(sig)
 
     resdf <- tryCatch(suppressWarnings(insight::get_df(model, type = "residual")),
-                      error = function(e) NULL)
+      error = function(e) NULL
+    )
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params
@@ -351,7 +353,6 @@
                                       drop = NULL,
                                       column = NULL,
                                       verbose = TRUE) {
-
   # check pattern
   if (!is.null(keep) && length(keep) > 1) {
     keep <- paste0("(", paste0(keep, collapse = "|"), ")")
@@ -623,7 +624,6 @@
 
 
 .add_within_between_effects <- function(model, parameters) {
-
   # This function checks whether the model contains predictors that were
   # "demeaned" using the "demean()" function. If so, these columns have an
   # attribute indicating the within or between effect, and in such cases,
@@ -899,7 +899,7 @@
     valid <- names(formals(lavaan::standardizedsolution))
     dots <- list(...)
     dots <- dots[names(dots) %in% valid]
-    args <- c(list( model, se = TRUE, level = ci, type = type), dots)
+    args <- c(list(model, se = TRUE, level = ci, type = type), dots)
     f <- utils::getFromNamespace("standardizedsolution", "lavaan")
     data <- do.call("f", args)
     names(data)[names(data) == "est.std"] <- "est"

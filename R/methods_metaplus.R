@@ -151,7 +151,6 @@ model_parameters.meta_random <- function(model,
                                          include_studies = TRUE,
                                          verbose = TRUE,
                                          ...) {
-
   # process arguments
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))
@@ -312,7 +311,6 @@ model_parameters.meta_bma <- function(model,
                                       include_studies = TRUE,
                                       verbose = TRUE,
                                       ...) {
-
   # process arguments
   params <- as.data.frame(model$estimates)
   ci_method <- match.arg(ci_method, choices = c("hdi", "eti", "quantile"))

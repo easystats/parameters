@@ -52,7 +52,6 @@ pool_parameters <- function(x,
                             component = "conditional",
                             verbose = TRUE,
                             ...) {
-
   # check input, save original model -----
 
   original_model <- random_params <- NULL

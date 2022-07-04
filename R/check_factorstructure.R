@@ -14,7 +14,6 @@
 #' [check_kmo()], [check_sphericity_bartlett()] and [check_clusterstructure()].
 #' @export
 check_factorstructure <- function(x, ...) {
-
   # TODO: detect (and remove?) factors
   # TODO: This could be improved using the correlation package to use different correlation methods
 
@@ -145,7 +144,6 @@ check_kmo <- function(x, ...) {
 #'   approximation in factor analysis. Biometrika, 38(3/4), 337-344.
 #' @export
 check_sphericity_bartlett <- function(x, ...) {
-
   # This could be improved using the correlation package to use different correlation methods
   cormatrix <- stats::cor(x, use = "pairwise.complete.obs", ...)
 

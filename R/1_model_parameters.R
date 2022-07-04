@@ -535,7 +535,6 @@ model_parameters.default <- function(model,
     )
     args <- c(args, dots)
     params <- do.call("bootstrap_parameters", args)
-
   } else {
     # set default method for CI
     if (is.null(ci_method) || missing(ci_method)) {

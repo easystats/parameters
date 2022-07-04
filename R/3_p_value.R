@@ -174,7 +174,6 @@ p_value.default <- function(model,
   p <- NULL
 
   if (ncol(cs) >= 4) {
-
     # do we have a p-value column based on t?
     pvcn <- which(colnames(cs) == "Pr(>|t|)")
 

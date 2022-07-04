@@ -58,7 +58,7 @@ standardise_posteriors <- standardize_posteriors
 
   if (robust && method == "pseudo") {
     warning("'robust' standardization not available for 'pseudo' method.",
-            call. = FALSE
+      call. = FALSE
     )
     robust <- FALSE
   }

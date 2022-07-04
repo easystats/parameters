@@ -9,9 +9,6 @@ if (.runThisTest &&
   requiet("ivreg") &&
   requiet("AER") &&
   requiet("sandwich")) {
-
-
-
   # standard errors -------------------------------------
 
   data(iris)

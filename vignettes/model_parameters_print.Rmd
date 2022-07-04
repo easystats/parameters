@@ -74,9 +74,10 @@ Again by default, the argument `split_components` is `TRUE`, which means that mo
 library(glmmTMB)
 data("Salamanders")
 model <- glmmTMB(count ~ spp + mined + (1 | site),
-                 ziformula = ~spp + mined,
-                 family = nbinom2(), 
-                 data = Salamanders)
+  ziformula = ~ spp + mined,
+  family = nbinom2(),
+  data = Salamanders
+)
 model_parameters(model)
 ```
 
@@ -121,14 +122,14 @@ data("Salamanders")
 levels(Salamanders$spp) <- paste("long", levels(Salamanders$spp))
 
 model <- glmmTMB(
- count ~ spp + mined + (1 | site),
- ziformula = ~mined,
- family = poisson(),
- data = Salamanders
+  count ~ spp + mined + (1 | site),
+  ziformula = ~mined,
+  family = poisson(),
+  data = Salamanders
 )
 
 # default printing
-model_parameters(model) 
+model_parameters(model)
 ```
 
 The `column_width` argument can be used to either define the width of specific columns, or to fix column widths of the same columns across tables to have the same width. In the latter case, use `column_width = "fixed"` in the `print()` method.
@@ -169,19 +170,25 @@ Note that the parameters in the table summary are re-ordered according to the or
 
 ```{r}
 # group parameters, either by parameter name or position
-print(mp, groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
-                        "Interactions" = c("gear4:vs", "gear5:vs"), 
-                        "Controls" = c(2, 3, 7))) # gear 4 and 5, drat
+print(mp, groups = list(
+  "Engine" = c("cyl6", "cyl8", "vs", "hp"),
+  "Interactions" = c("gear4:vs", "gear5:vs"),
+  "Controls" = c(2, 3, 7)
+)) # gear 4 and 5, drat
 ```
 
 If you prefer tables without vertical borders, use the `sep` argument to define the string that is used as border-separator. This argument is passed down to `insight::export_table()`.
 
 ```{r}
 # group parameters, either by parameter name or position
-print(mp, sep = "  ",
-      groups = list("Engine" = c("cyl6", "cyl8", "vs", "hp"),
-                    "Interactions" = c("gear4:vs", "gear5:vs"), 
-                    "Controls" = c(2, 3, 7)))
+print(mp,
+  sep = "  ",
+  groups = list(
+    "Engine" = c("cyl6", "cyl8", "vs", "hp"),
+    "Interactions" = c("gear4:vs", "gear5:vs"),
+    "Controls" = c(2, 3, 7)
+  )
+)
 ```
 
 # Summaries for multiple models
@@ -232,11 +239,17 @@ cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept")
 as.data.frame(cp)$Parameter
 
 # create groups. Interactions only present in 2nd model
-print(cp, groups = list(Species = c("Species (versicolor)", 
-                                    "Species (virginica)"),
-                        Interactions = c("Species (versicolor) * Petal Length",
-                                         "Species (virginica) * Petal Length"),
-                        Controls = "Petal Length"))
+print(cp, groups = list(
+  Species = c(
+    "Species (versicolor)",
+    "Species (virginica)"
+  ),
+  Interactions = c(
+    "Species (versicolor) * Petal Length",
+    "Species (virginica) * Petal Length"
+  ),
+  Controls = "Petal Length"
+))
 ```
 
 

@@ -88,7 +88,8 @@
         NULL
       }
     )
-    if (is.null(model) || inherits(model, "parameters_model")) { # prevent self reference
+    if (is.null(model) || inherits(model, "parameters_model")) {
+      # prevent self reference
       model <- tryCatch(
         {
           get(obj_name, envir = globalenv())

@@ -304,7 +304,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
-
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
     return(out)
@@ -339,7 +338,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 
   if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
-
     # lme4 - boot and profile
 
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
@@ -382,7 +380,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         }
       )
     } else if (!is.null(ci_method)) {
-
       # lme4 - wald / normal CI
 
       merDeriv_loaded <- isNamespaceLoaded("merDeriv")
@@ -390,7 +387,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
       if (all(suppressMessages(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE)))) {
-
         # this may fail, so wrap in try-catch
         out <- tryCatch(
           {
@@ -500,8 +496,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
                 message(insight::format_message("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables."))
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
-                  grepl("computationally singular", e$message, fixed = TRUE) ||
-                  grepl("Exact singular", e$message, fixed = TRUE)) {
+                grepl("computationally singular", e$message, fixed = TRUE) ||
+                grepl("Exact singular", e$message, fixed = TRUE)) {
                 message(insight::format_message(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
                   "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
@@ -516,13 +512,11 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         if (!merDeriv_loaded) {
           .unregister_vcov()
         }
-
       } else if (isTRUE(verbose)) {
         message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
       }
     }
   } else if (inherits(model, "glmmTMB")) {
-
     # glmmTMB random-effects-CI
 
     ## TODO "profile" seems to be less stable, so only wald?
@@ -646,7 +640,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-
   # reason to be installed
   reason <- "to compute random effect variances for mixed models"
 

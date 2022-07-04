@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    getRversion() >= "3.6.0" &&
-    requiet("testthat") &&
-    requiet("parameters") &&
-    requiet("lme4")) {
+  getRversion() >= "3.6.0" &&
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("lme4")) {
   data(mtcars)
   m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")

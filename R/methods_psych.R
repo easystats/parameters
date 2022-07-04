@@ -88,7 +88,6 @@
 #'
 #' # lavaan -------------------------------------
 #' if (require("lavaan", quietly = TRUE)) {
-#'
 #'   # Confirmatory Factor Analysis (CFA) ---------
 #'
 #'   structure <- " visual  =~ x1 + x2 + x3
@@ -158,7 +157,6 @@ model_parameters.principal <- function(model,
                                        labels = NULL,
                                        verbose = TRUE,
                                        ...) {
-
   # n
   n <- model$factors
 
@@ -250,7 +248,6 @@ model_parameters.fa.ci <- model_parameters.fa
 #' @rdname model_parameters.principal
 #' @export
 model_parameters.omega <- function(model, verbose = TRUE, ...) {
-
   # Table of omega coefficients
   table_om <- model$omega.group
   colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")

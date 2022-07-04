@@ -74,5 +74,4 @@ if (requiet("testthat") && requiet("parameters") && getRversion() >= "3.6.0") {
     expect_equal(p2$CI_low, ci[, 1], ignore_attr = TRUE)
     expect_equal(p2$CI_high, ci[, 2], ignore_attr = TRUE)
   })
-
 }

@@ -39,10 +39,10 @@ sort_parameters.default <- function(x, sort = "none", column = "Coefficient", ..
   }
 
   # new row indices to use for sorting
-    new_row_order <- switch(sort,
-      "ascending" = order(x[[column]], decreasing = FALSE),
-      "descending" = order(x[[column]], decreasing = TRUE)
-    )
+  new_row_order <- switch(sort,
+    "ascending" = order(x[[column]], decreasing = FALSE),
+    "descending" = order(x[[column]], decreasing = TRUE)
+  )
 
   x[new_row_order, ]
 }

@@ -2,7 +2,7 @@
 
 if (requiet("testthat") && requiet("parameters")) {
   test_that("p_value", {
-    expect_equal(p_value(c(1,1,1)), p_value(-c(1,1,1)), tolerance = 1e-3)
+    expect_equal(p_value(c(1, 1, 1)), p_value(-c(1, 1, 1)), tolerance = 1e-3)
 
     set.seed(123)
     x <- rnorm(100, mean = 1.5)

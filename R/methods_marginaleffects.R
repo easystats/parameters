@@ -8,7 +8,6 @@
 model_parameters.marginaleffects <- function(model,
                                              ci = .95,
                                              ...) {
-
   out <- insight::standardize_names(
     marginaleffects::tidy(model, conf_level = ci, ...),
     style = "easystats"
@@ -16,7 +15,8 @@ model_parameters.marginaleffects <- function(model,
 
   out <- tryCatch(
     .add_model_parameters_attributes(out, model, ci, ...),
-    error = function(e) out)
+    error = function(e) out
+  )
 
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
 

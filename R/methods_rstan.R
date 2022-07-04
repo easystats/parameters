@@ -18,7 +18,6 @@ model_parameters.stanfit <- function(model,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
-
   # Processing
   params <- .extract_parameters_bayesian(
     model,

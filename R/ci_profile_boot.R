@@ -81,7 +81,8 @@
     out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
   } else {
     out <- tryCatch(as.data.frame(stats::confint(profiled, level = ci, ...)),
-                    error = function(e) NULL)
+      error = function(e) NULL
+    )
     if (is.null(out)) {
       out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
     }

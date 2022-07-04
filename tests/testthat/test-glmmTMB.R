@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    getRversion() >= "3.6.0" &&
-    requiet("testthat") &&
-    requiet("parameters") &&
-    requiet("glmmTMB")) {
+  getRversion() >= "3.6.0" &&
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("glmmTMB")) {
   data("fish")
   data("Salamanders")
 
@@ -671,7 +671,8 @@ if (.runThisTest &&
         out <- utils::capture.output(print(mp))
         expect_equal(
           out,
-          c("# Fixed Effects",
+          c(
+            "# Fixed Effects",
             "",
             "Parameter          | Log-Mean |   SE |        95% CI |     z |      p",
             "---------------------------------------------------------------------",

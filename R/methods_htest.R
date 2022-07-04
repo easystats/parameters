@@ -182,15 +182,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   m_info <- insight::model_info(model, verbose = FALSE)
 
   if (m_info$is_correlation) {
-
     # correlation ---------
     out <- .extract_htest_correlation(model)
   } else if (.is_levenetest(model)) {
-
     # levene's test ---------
     out <- .extract_htest_levenetest(model)
   } else if (m_info$is_ttest) {
-
     # t-test -----------
     out <- .extract_htest_ttest(model)
     out <- .add_effectsize_ttest(model,
@@ -203,7 +200,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       ...
     )
   } else if (m_info$is_ranktest) {
-
     # rank-test (kruskal / wilcox / friedman) -----------
     out <- .extract_htest_ranktest(model)
 
@@ -237,7 +233,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       )
     }
   } else if (m_info$is_onewaytest) {
-
     # one-way test -----------
     out <- .extract_htest_oneway(model)
     out <- .add_effectsize_oneway(
@@ -250,7 +245,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       verbose = verbose
     )
   } else if (m_info$is_chi2test) {
-
     # chi2- and mcnemar-test -----------
     out <- .extract_htest_chi2(model)
     if (grepl("^McNemar", model$method)) {
@@ -272,15 +266,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       )
     }
   } else if (m_info$is_proptest) {
-
     # test of proportion --------------
     out <- .extract_htest_prop(model)
   } else if (m_info$is_binomtest) {
-
     # exact binomial test --------------
     out <- .extract_htest_binom(model)
   } else if (m_info$is_ftest) {
-
     # F test for equal variances --------------
     out <- .extract_htest_vartest(model)
   } else {
@@ -700,8 +691,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       },
       error = function(e) {
         if (verbose) {
-          msg <- c("Could not compute effectsize Cramer's V.",
-                   paste0("Possible reason: ", e$message))
+          msg <- c(
+            "Could not compute effectsize Cramer's V.",
+            paste0("Possible reason: ", e$message)
+          )
           message(insight::format_message(msg))
         }
         NULL
@@ -732,8 +725,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
       },
       error = function(e) {
         if (verbose) {
-          msg <- c("Could not compute effectsize Phi.",
-                   paste0("Possible reason: ", e$message))
+          msg <- c(
+            "Could not compute effectsize Phi.",
+            paste0("Possible reason: ", e$message)
+          )
           message(insight::format_message(msg))
         }
         NULL
@@ -808,7 +803,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   }
 
   if (requireNamespace("effectsize", quietly = TRUE)) {
-
     # standardized d
     if (!is.null(standardized_d)) {
       es <- effectsize::effectsize(

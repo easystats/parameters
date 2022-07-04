@@ -7,7 +7,6 @@ model_parameters.lqmm <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-
   # Processing
   if (bootstrap) {
     parameters <- bootstrap_parameters(

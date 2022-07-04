@@ -39,7 +39,6 @@ if (FALSE && requiet("testthat") && requiet("lqmm") && requiet("parameters")) {
   # lqmm -----------------------
 
   test_that("model_parameters - lqmm", {
-
     # setup
     set.seed(123)
 

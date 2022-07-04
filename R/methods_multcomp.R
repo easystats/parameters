@@ -37,7 +37,6 @@ model_parameters.glht <- function(model,
                                   exponentiate = FALSE,
                                   verbose = TRUE,
                                   ...) {
-
   # p-adjustment method
   s <- summary(model)
   p_adjust <- s$test$type
@@ -63,7 +62,6 @@ model_parameters.glht <- function(model,
 
 #' @export
 ci.glht <- function(x, ci = .95, ...) {
-
   # backward compatibility with `robust` argument
   dots <- list(...)
   if ("robust" %in% names(dots) && !"vcov" %in% names(dots)) {

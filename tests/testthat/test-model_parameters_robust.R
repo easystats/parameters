@@ -124,7 +124,6 @@ if (requiet("testthat") &&
     model <- lmer(Petal.Length ~ Sepal.Length + (1 | Species), data = iris)
 
     if (packageVersion("parameters") < "0.16.9.9") {
-
       ## TODO this one actually is not correct.
 
       test_that("ci_ml1, robust", {

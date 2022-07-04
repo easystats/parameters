@@ -32,7 +32,7 @@
 #' heatmap(m, scale = "none")
 #'
 #' # Extract 3 clusters
-#' predict(m, n=3)
+#' predict(m, n = 3)
 #'
 #' # Convert to dissimilarity
 #' d <- as.dist(abs(m - 1))
@@ -81,7 +81,6 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
 #' @keywords internal
 .cluster_meta_matrix <- function(data) {
-
   # Internal function
   .get_prob <- function(x) {
     if (any(is.na(x))) {

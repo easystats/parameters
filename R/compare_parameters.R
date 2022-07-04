@@ -150,11 +150,9 @@ compare_parameters <- function(...,
     model_name <- model_names[[i]]
 
     if (inherits(model, "parameters_model")) {
-
       # we already have model parameters object...
       dat <- model
     } else {
-
       # set default-ci_type for Bayesian models
       if (.is_bayesian_model(model) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) {
         ci_method_tmp <- "eti"

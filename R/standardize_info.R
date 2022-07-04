@@ -114,8 +114,8 @@ standardize_info.default <- function(model,
 
   # Pseudo (for LMM)
   if (include_pseudo &&
-      mi$is_mixed &&
-      length(insight::find_random(model)$random) == 1) {
+    mi$is_mixed &&
+    length(insight::find_random(model)$random) == 1) {
     out <- merge(
       out,
       .std_info_pseudo(
@@ -299,7 +299,7 @@ standardize_info.default <- function(model,
     for (i in seq_along(names(model_matrix))) {
       var <- names(model_matrix)[i]
       if (any(types$Parameter == var) &&
-          types$Link[types$Parameter == var] == "Difference") {
+        types$Link[types$Parameter == var] == "Difference") {
         parent_var <- types$Variable[types$Parameter == var]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]

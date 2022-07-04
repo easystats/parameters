@@ -134,7 +134,6 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   # stricter tests ---------------------------------------------------------
 
   if (requiet("car") && requiet("gam")) {
-
     # aov ------------------------------------------------
 
     test_that("works with aov", {

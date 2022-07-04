@@ -16,7 +16,6 @@ model_parameters.bracl <- function(model,
                                    p_adjust = NULL,
                                    verbose = TRUE,
                                    ...) {
-
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
