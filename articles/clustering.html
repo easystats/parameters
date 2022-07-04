@@ -127,11 +127,11 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">33</span><span class="op">)</span>  <span class="co"># Set random seed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">33</span><span class="op">)</span> <span class="co"># Set random seed</span></span>
 <span></span>
 <span><span class="co"># Select the first 4 numeric columns (drop the Species fator)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>  <span class="co"># Print the 6 first rows</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="co"># Print the 6 first rows</span></span>
 <span><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span></span>
 <span><span class="co">#&gt; 1          5.1         3.5          1.4         0.2</span></span>
 <span><span class="co">#&gt; 2          4.9         3.0          1.4         0.2</span></span>
@@ -143,10 +143,10 @@
 <span><span class="co"># Run PCA</span></span>
 <span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">pca_scores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA_1"</span>, <span class="st">"PCA_2"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pca_scores</span><span class="op">$</span><span class="va">True_Clusters</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>  <span class="co"># Add real clusters</span></span>
+<span><span class="va">pca_scores</span><span class="op">$</span><span class="va">True_Clusters</span> <span class="op">&lt;-</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span> <span class="co"># Add real clusters</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pca_scores</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PCA_1</span>, y <span class="op">=</span> <span class="va">PCA_2</span>, color <span class="op">=</span> <span class="va">True_Clusters</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">pca_scores</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">PCA_1</span>, y <span class="op">=</span> <span class="va">PCA_2</span>, color <span class="op">=</span> <span class="va">True_Clusters</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
@@ -179,7 +179,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_kmeans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">3</span>, method <span class="op">=</span> <span class="st">"kmeans"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_kmeans</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_kmeans</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 76.70% of the total variance of the original data.</span></span>
@@ -199,11 +199,11 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span></code></pre></div>
 <p>Note that we can also visualize the <strong>centers</strong> (i.e., the “average” of each variable for each cluster):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rez_kmeans</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Visualize cluster centers</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rez_kmeans</span><span class="op">)</span><span class="op">)</span> <span class="co"># Visualize cluster centers</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>One can extract the cluster assignments to use it as a new variable by using <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez_kmeans</span><span class="op">)</span>  <span class="co"># Get clusters</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez_kmeans</span><span class="op">)</span> <span class="co"># Get clusters</span></span>
 <span><span class="co">#&gt;   [1] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3</span></span>
 <span><span class="co">#&gt;  [38] 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 2 1 1 1 2 1 1 1 1 1 1 1 1 2 1 1 1 1 2 1 1 1</span></span>
 <span><span class="co">#&gt;  [75] 1 2 2 2 1 1 1 1 1 1 1 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 2 2 2 2 1 2 2 2 2</span></span>
@@ -217,7 +217,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_hclust</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">3</span>, method <span class="op">=</span> <span class="st">"hclust"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_hclust</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_hclust</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 74.35% of the total variance of the original data.</span></span>
@@ -237,7 +237,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hclust</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hclust</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -247,7 +247,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_hkmeans</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">3</span>, method <span class="op">=</span> <span class="st">"hkmeans"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_hkmeans</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_hkmeans</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 76.70% of the total variance of the original data.</span></span>
@@ -267,7 +267,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hkmeans</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hkmeans</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -277,7 +277,7 @@
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_pam</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">3</span>, method <span class="op">=</span> <span class="st">"pam"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_pam</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_pam</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 76.46% of the total variance of the original data.</span></span>
@@ -297,7 +297,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_pam</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_pam</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 </div>
@@ -310,13 +310,14 @@
 </h3>
 <p>This method computes p-values for each cluster of the hierarchical cluster structure, and returns the <strong>significant</strong> clusters. This method can return a larger number of smaller clusters and, because it’s based on bootstrapping, is quite slow.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rez_hclust2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, </span>
-<span>                        n <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                        method <span class="op">=</span> <span class="st">"hclust"</span>, </span>
-<span>                        iterations <span class="op">=</span> <span class="fl">500</span>,</span>
-<span>                        ci <span class="op">=</span> <span class="fl">0.90</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">rez_hclust2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>,</span>
+<span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"hclust"</span>,</span>
+<span>  iterations <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.90</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_hclust2</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_hclust2</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 25 clusters accounted for 48.37% of the total variance of the original data.</span></span>
@@ -356,7 +357,7 @@
 <span><span class="co">#&gt; 596.000           |             288.295 |              3.390 | 0.484</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hclust2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hclust2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -365,7 +366,7 @@
 <p>Although the DBSCAN method is quite powerful to identify clusters, it is highly dependent on its parameters, namely, <code>eps</code> and the <code>min_size</code>. Regarding the latter, the minimum size of any cluster is set by default to <code>0.1</code> (i.e., 10% of rows), which is appropriate to avoid having too small clusters.</p>
 <p>The “optimal” <strong>eps</strong> value can be estimated using the <a href="https://easystats.github.io/parameters/reference/cluster_analysis.html" class="external-link"><code>n_clusters_dbscan()</code></a> function:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">eps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_dbscan</a></span><span class="op">(</span><span class="va">data</span>, min_size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> </span>
+<code class="sourceCode R"><span><span class="va">eps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_clusters.html">n_clusters_dbscan</a></span><span class="op">(</span><span class="va">data</span>, min_size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span><span class="va">eps</span></span>
 <span><span class="co">#&gt; The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = 2.11193281281293 (with min. cluster size set to 15), which corresponds to 1 clusters.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">eps</span><span class="op">)</span></span></code></pre></div>
@@ -374,7 +375,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_dbscan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"dbscan"</span>, dbscan_eps <span class="op">=</span> <span class="fl">1.45</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_dbscan</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_dbscan</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 61.14% of the total variance of the original data.</span></span>
@@ -392,7 +393,7 @@
 <span><span class="co">#&gt; 596.000           |             364.406 |            183.751 | 0.611</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_dbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_dbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -402,7 +403,7 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_hdbscan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"hdbscan"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_hdbscan</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_hdbscan</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 3 clusters accounted for 66.08% of the total variance of the original data.</span></span>
@@ -422,7 +423,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hdbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_hdbscan</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -432,7 +433,7 @@
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rez_pamk</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"pamk"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_pamk</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_pamk</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 2 clusters accounted for 62.94% of the total variance of the original data.</span></span>
@@ -451,7 +452,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_pamk</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_pamk</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -463,7 +464,7 @@
 <span></span>
 <span><span class="va">rez_mixture</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_analysis.html">cluster_analysis</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"mixture"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rez_mixture</span>  <span class="co"># Show results</span></span>
+<span><span class="va">rez_mixture</span> <span class="co"># Show results</span></span>
 <span><span class="co">#&gt; # Clustering Solution</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 2 clusters accounted for 62.94% of the total variance of the original data.</span></span>
@@ -482,7 +483,7 @@
 <span><span class="co">#&gt; # You can access the predicted clusters via 'predict()'.</span></span>
 <span></span>
 <span><span class="co"># Visualize</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_mixture</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Visualize </span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rez_mixture</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html" class="external-link">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Visualize</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 </div>
@@ -492,14 +493,18 @@
 <p>One of the core “issue” of statistical clustering is that, in many cases, different methods will give different results. The <strong>metaclustering</strong> approach proposed by <em>easystats</em> (that finds echoes in <em>consensus clustering</em>; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability matrix. This matrix contains, for each pair of observations, the probability of being in the same cluster. For instance, if the 6th and the 9th row of a dataframe has been assigned to a similar cluster by 5 our of 10 clustering methods, then its probability of being grouped together is 0.5.</p>
 <p>Metaclustering is based on the hypothesis that, as each clustering algorithm embodies a different prism by which it sees the data, running an infinite amount of algorithms would result in the emergence of the “true” clusters. As the number of algorithms and parameters is finite, the probabilistic perspective is a useful proxy. This method is interesting where there is no obvious reasons to prefer one over another clustering method, as well as to investigate how robust some clusters are under different algorithms.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">list_of_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">rez_kmeans</span>, <span class="va">rez_hclust</span>, <span class="va">rez_hkmeans</span>, <span class="va">rez_pam</span>,</span>
-<span>                        <span class="va">rez_hclust2</span>, <span class="va">rez_dbscan</span>, <span class="va">rez_hdbscan</span>, <span class="va">rez_mixture</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">list_of_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="va">rez_kmeans</span>, <span class="va">rez_hclust</span>, <span class="va">rez_hkmeans</span>, <span class="va">rez_pam</span>,</span>
+<span>  <span class="va">rez_hclust2</span>, <span class="va">rez_dbscan</span>, <span class="va">rez_hdbscan</span>, <span class="va">rez_mixture</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">probability_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cluster_meta.html">cluster_meta</a></span><span class="op">(</span><span class="va">list_of_results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Plot the matrix as a reordered heatmap</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">probability_matrix</span>, scale <span class="op">=</span> <span class="st">"none"</span>, </span>
-<span>        col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">256</span>, palette <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">probability_matrix</span>,</span>
+<span>  scale <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">256</span>, palette <span class="op">=</span> <span class="st">"inferno"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="clustering_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>The dendrogram (which is a <strong>hierarchical clustering of the clustering solution</strong>, hence the name of <strong>meta</strong>clustering), as well as the heatmap (in which the darker squares represent a higher probability of belonging to the same cluster) shows that there is one metacluster consisting of the 1-50 first rows (bottom left), and then the rest of the observations are closer to one another. However, two subclusters are still visible, corresponding to the “true” species.</p>
 <p>The metaclustering approach confirms our initial hypothesis, <em>the <strong>setosa</strong> species stands out quite clearly, and the separation between the two other species is less clear cut</em>.</p>

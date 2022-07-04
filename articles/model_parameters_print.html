@@ -151,9 +151,10 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
-<span>                 ziformula <span class="op">=</span> <span class="op">~</span><span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span>,</span>
-<span>                 family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">nbinom2</a></span><span class="op">(</span><span class="op">)</span>, </span>
-<span>                 data <span class="op">=</span> <span class="va">Salamanders</span><span class="op">)</span></span>
+<span>  ziformula <span class="op">=</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/nbinom2.html" class="external-link">nbinom2</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">Salamanders</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -270,14 +271,14 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span>
-<span> <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
-<span> ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,</span>
-<span> family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span> data <span class="op">=</span> <span class="va">Salamanders</span></span>
+<span>  <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
+<span>  ziformula <span class="op">=</span> <span class="op">~</span><span class="va">mined</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">Salamanders</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># default printing</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter        | Log-Mean |   SE |         95% CI |     z |      p</span></span>
@@ -391,9 +392,11 @@
 <p>Note that the parameters in the table summary are re-ordered according to the order specified in <code>groups</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
-<span>                        <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>, </span>
-<span>                        <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># gear 4 and 5, drat</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>,</span>
+<span>  <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">)</span> <span class="co"># gear 4 and 5, drat</span></span>
 <span><span class="co">#&gt; Parameter        | Coefficient |   SE |          95% CI | t(22) |     p</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Engine           |             |      |                 |       |      </span></span>
@@ -411,10 +414,14 @@
 <p>If you prefer tables without vertical borders, use the <code>sep</code> argument to define the string that is used as border-separator. This argument is passed down to <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, sep <span class="op">=</span> <span class="st">"  "</span>,</span>
-<span>      groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
-<span>                    <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>, </span>
-<span>                    <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">"  "</span>,</span>
+<span>  groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"Interactions"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gear4:vs"</span>, <span class="st">"gear5:vs"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"Controls"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter         Coefficient    SE           95% CI  t(22)      p</span></span>
 <span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Engine                                                            </span></span>
@@ -507,11 +514,17 @@
 <span><span class="co">#&gt; [5] "Species (virginica) * Petal Length"</span></span>
 <span></span>
 <span><span class="co"># create groups. Interactions only present in 2nd model</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species (versicolor)"</span>, </span>
-<span>                                    <span class="st">"Species (virginica)"</span><span class="op">)</span>,</span>
-<span>                        Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species (versicolor) * Petal Length"</span>,</span>
-<span>                                         <span class="st">"Species (virginica) * Petal Length"</span><span class="op">)</span>,</span>
-<span>                        Controls <span class="op">=</span> <span class="st">"Petal Length"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Species (versicolor)"</span>,</span>
+<span>    <span class="st">"Species (virginica)"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Species (versicolor) * Petal Length"</span>,</span>
+<span>    <span class="st">"Species (virginica) * Petal Length"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  Controls <span class="op">=</span> <span class="st">"Petal Length"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                             |                  lm1 |                  lm2</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; Species                               |                      |                     </span></span>
