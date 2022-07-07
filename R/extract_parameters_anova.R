@@ -307,7 +307,7 @@
   if (requireNamespace("effectsize", quietly = TRUE)) {
     power <- tryCatch(
       {
-        cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE)
+        cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE, verbose = FALSE)
 
         f2 <- cohens_f2$Cohens_f2[match(cohens_f2$Parameter, params$Parameter)]
         u <- params$df[params$Parameter != "Residuals"]
