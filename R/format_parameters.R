@@ -179,14 +179,13 @@ format_parameters.parameters_model <- function(model, ...) {
             level = type$Level,
             brackets = brackets
           )
-
         } else if (components[j] %in% types$Secondary_Parameter) {
           type <- types[!is.na(types$Secondary_Parameter) & types$Secondary_Parameter == components[j], ]
           components[j] <- .format_parameter(
             components[j],
-            variable = type[1,]$Secondary_Variable,
-            type = type[1,]$Secondary_Type,
-            level = type[1,]$Secondary_Level,
+            variable = type[1, ]$Secondary_Variable,
+            type = type[1, ]$Secondary_Type,
+            level = type[1, ]$Secondary_Level,
             brackets = brackets
           )
         }
@@ -219,7 +218,6 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_parameter <- function(name, variable, type, level, brackets = brackets) {
-
   # Factors
   if (type == "factor") {
     name <- .format_factor(name = name, variable = variable, brackets = brackets)

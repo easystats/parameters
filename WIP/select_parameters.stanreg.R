@@ -39,7 +39,6 @@ select_parameters.brmsfit <- select_parameters.stanreg
 
 #' @keywords internal
 .reconstruct_formula <- function(parameters, model) {
-
   # # Clean
   # if (utils::tail(parameters, 1) == "sigma") {
   #   parameters <- parameters[1:length(parameters) - 1]

@@ -11,7 +11,6 @@ standard_error_robust <- function(model,
                                   vcov_args = NULL,
                                   component = "conditional",
                                   ...) {
-
   # exceptions
   if (inherits(model, "gee")) {
     return(standard_error(model, ...))
@@ -41,7 +40,6 @@ p_value_robust <- function(model,
                            component = "conditional",
                            method = NULL,
                            ...) {
-
   # exceptions
   if (inherits(model, "gee")) {
     return(p_value(model, ...))

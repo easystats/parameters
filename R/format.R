@@ -421,7 +421,6 @@ format.parameters_sem <- function(x,
 # footer: residual standard deviation
 .add_footer_sigma <- function(footer = NULL, digits, sigma, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
-
     # format residual df
     if (!is.null(residual_df)) {
       res_df <- paste0(" (df = ", residual_df, ")")
@@ -549,7 +548,6 @@ format.parameters_sem <- function(x,
 # footer: model formula
 .add_footer_formula <- function(footer = NULL, model_formula, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
-
     # format n of observations
     if (!is.null(n_obs)) {
       n <- paste0(" (", n_obs, " Observations)")

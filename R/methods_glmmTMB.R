@@ -9,14 +9,15 @@
 #' @export
 model_parameters.glmmTMB <- function(model,
                                      ci = .95,
+                                     ci_method = "wald",
+                                     ci_random = NULL,
                                      bootstrap = FALSE,
                                      iterations = 1000,
+                                     standardize = NULL,
                                      effects = "all",
                                      component = "all",
                                      group_level = FALSE,
-                                     standardize = NULL,
                                      exponentiate = FALSE,
-                                     ci_method = "wald",
                                      p_adjust = NULL,
                                      wb_component = TRUE,
                                      summary = getOption("parameters_mixed_summary", FALSE),
@@ -27,7 +28,6 @@ model_parameters.glmmTMB <- function(model,
                                      df_method = ci_method,
                                      include_sigma = FALSE,
                                      ...) {
-
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
     warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
@@ -163,7 +163,7 @@ model_parameters.glmmTMB <- function(model,
         warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
       }
     } else {
-      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, verbose = verbose)
+      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
       # remove redundant dispersion parameter
       if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
         disp <- which(params$Component == "dispersion")
@@ -171,10 +171,11 @@ model_parameters.glmmTMB <- function(model,
         # check if we have dispersion parameter, and either no sigma
         # or sigma equals dispersion
         if (length(disp) > 0 &&
-            length(resid) > 0 &&
-            isTRUE(all.equal(params_variance$Coefficient[resid],
-                             params$Coefficient[disp],
-                             tolerance = 1e-5))) {
+          length(resid) > 0 &&
+          isTRUE(all.equal(params_variance$Coefficient[resid],
+            params$Coefficient[disp],
+            tolerance = 1e-5
+          ))) {
           params <- params[-disp, ]
         }
       }
@@ -281,7 +282,6 @@ ci.glmmTMB <- function(x,
     out <- lapply(ci, function(i) .ci_uniroot_glmmTMB(x, ci = i, component = component, ...))
     do.call(rbind, out)
   } else {
-
     # all other
     .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
   }

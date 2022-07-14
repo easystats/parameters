@@ -34,10 +34,8 @@ format_p_adjust <- function(method) {
 
 
 .p_adjust <- function(params, p_adjust, model = NULL, verbose = TRUE) {
-
   # check if we have any adjustment at all, and a p-column
   if (!is.null(p_adjust) && "p" %in% colnames(params) && p_adjust != "none") {
-
     ## TODO add "mvt" method from emmeans
 
     # prepare arguments
@@ -63,7 +61,6 @@ format_p_adjust <- function(method) {
 
     # only proceed if valid argument-value
     if (tolower(p_adjust) %in% all_methods) {
-
       # save old values, to check if p-adjustment worked
       old_p_vals <- params$p
       # find statistic column

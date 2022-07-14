@@ -18,7 +18,6 @@ model_parameters.emmGrid <- function(model,
                                      parameters = NULL,
                                      verbose = TRUE,
                                      ...) {
-
   # set default for p-adjust
   emm_padjust <- tryCatch(
     {
@@ -37,7 +36,6 @@ model_parameters.emmGrid <- function(model,
 
   # we assume frequentist here...
   if (!.is_bayesian_emmeans(model)) {
-
     # get statistic, se and p
     statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
     SE <- standard_error(model)
@@ -53,7 +51,6 @@ model_parameters.emmGrid <- function(model,
       params <- .p_adjust(params, p_adjust, model, verbose)
     }
   } else {
-
     # Bayesian models go here...
     params <- bayestestR::describe_posterior(
       model,
@@ -337,7 +334,6 @@ p_value.emm_list <- function(model, adjust = "none", ...) {
 
   # any missing values?
   if (anyNA(out$p)) {
-
     # standard errors
     se <- unlist(lapply(s, function(i) {
       if (is.null(i$SE)) {

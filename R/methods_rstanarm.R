@@ -79,8 +79,6 @@ model_parameters.stanreg <- function(model,
                                      parameters = keep,
                                      verbose = TRUE,
                                      ...) {
-
-
   # Processing
   params <- .extract_parameters_bayesian(
     model,
@@ -149,8 +147,6 @@ model_parameters.stanmvreg <- function(model,
                                        parameters = keep,
                                        verbose = TRUE,
                                        ...) {
-
-
   # Processing
   params <- .extract_parameters_bayesian(
     model,

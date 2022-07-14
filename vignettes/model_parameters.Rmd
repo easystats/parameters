@@ -55,7 +55,6 @@ if (!requireNamespace("poorman", quietly = TRUE) ||
   library(brms)
   library(GLMMadaptive)
   library(FactoMineR)
-  
 }
 
 set.seed(333)

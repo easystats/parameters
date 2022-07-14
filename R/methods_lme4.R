@@ -22,6 +22,16 @@
 #'   variance and the variance for the additive overdispersion term (see
 #'   [insight::get_variance()] for details). Defaults to `FALSE` for mixed models
 #'   due to the longer computation time.
+#' @param ci_random Logical, if `TRUE`, includes the confidence intervals for
+#'   random effects parameters. Only applies if `effects` is not `"fixed"` and
+#'   if `ci` is not `NULL`. Set `ci_random = FALSE` if computation of the model
+#'   summary is too much time consuming. By default, `ci_random = NULL`, which
+#'   uses a heuristic to guess if computation of confidence intervals for random
+#'   effects is fast enough or not. For models with larger sample size and/or
+#'   more complex random effects structures, confidence intervals will not be
+#'   computed by default, for simpler models or fewer observations, confidence
+#'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
+#'   or omit calculation of confidence intervals.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
@@ -96,8 +106,9 @@
 #' @export
 model_parameters.merMod <- function(model,
                                     ci = .95,
-                                    bootstrap = FALSE,
                                     ci_method = NULL,
+                                    ci_random = NULL,
+                                    bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "all",
@@ -212,7 +223,7 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
   }
 
   # merge random and fixed effects, if necessary

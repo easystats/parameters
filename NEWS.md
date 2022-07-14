@@ -18,6 +18,11 @@
 * `model_parameters()` now also includes standard errors and confidence
   intervals for slope-slope-correlations of random effects variances.
 
+* `model_parameters()` for mixed models gains a `ci_random` argument, to toggle
+  whether confidence intervals for random effects parameters should also be
+  computed. Set to `FALSE` if calculation of confidence intervals for random 
+  effects parameters takes too long.
+
 * `ci()` for *glmmTMB* models with `method = "profile"` is now more robust.
 
 ## Bug fixes

@@ -8,7 +8,6 @@
                         vcov_args = NULL,
                         verbose = TRUE,
                         ...) {
-
   # check method
   if (is.null(method)) {
     method <- "wald"

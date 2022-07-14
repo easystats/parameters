@@ -21,9 +21,9 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(comment = ">")
+options(digits = 2)
 
 if (!requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("parameters", quietly = TRUE) ||
@@ -32,9 +32,9 @@ if (!requireNamespace("ggplot2", quietly = TRUE) ||
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
-library(ggplot2)
-library(poorman)
-library(tidyr)
+  library(ggplot2)
+  library(poorman)
+  library(tidyr)
 }
 
 set.seed(333)
@@ -70,7 +70,7 @@ df_long <- df %>%
   gather(Type, Distance) %>%
   mutate(Type = forcats::fct_relevel(Type, c("Coefficient", "Bootstrapped_1000", "Bootstrapped_4000")))
 
-df_long %>% 
+df_long %>%
   ggplot(aes(y = Distance, x = Type, fill = Type)) +
   geom_violin() +
   geom_hline(yintercept = 0, linetype = "dashed") +
@@ -96,7 +96,7 @@ bayestestR::bayesfactor(BayesFactor::ttestBF(df$Bootstrapped_4000))
 ```{r message=FALSE, warning=FALSE}
 library(emmeans)
 
-lm(Distance ~ Type, data = df_long) %>% 
+lm(Distance ~ Type, data = df_long) %>%
   emmeans::emmeans(~Type)
 ```
 

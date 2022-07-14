@@ -72,19 +72,19 @@ library(ggplot2)
 library(parameters)
 library(see)
 
-set.seed(33)  # Set random seed
+set.seed(33) # Set random seed
 
 # Select the first 4 numeric columns (drop the Species fator)
-data <- iris[1:4]  
-head(data)  # Print the 6 first rows
+data <- iris[1:4]
+head(data) # Print the 6 first rows
 
 # Run PCA
 pca <- principal_components(data, n = 2)
 pca_scores <- predict(pca, names = c("PCA_1", "PCA_2"))
-pca_scores$True_Clusters <- iris$Species  # Add real clusters
+pca_scores$True_Clusters <- iris$Species # Add real clusters
 
 # Visualize
-ggplot(pca_scores, aes(x = PCA_1, y = PCA_2, color = True_Clusters)) + 
+ggplot(pca_scores, aes(x = PCA_1, y = PCA_2, color = True_Clusters)) +
   geom_point() +
   theme_modern()
 ```
@@ -122,20 +122,20 @@ Now that we know how many clusters we want to extract (let's say that we have a 
 ```{r}
 rez_kmeans <- cluster_analysis(data, n = 3, method = "kmeans")
 
-rez_kmeans  # Show results
+rez_kmeans # Show results
 ```
 
 Note that we can also visualize the **centers** (i.e., the "average" of each variable for each cluster):
 
 
 ```{r}
-plot(summary(rez_kmeans))  # Visualize cluster centers
+plot(summary(rez_kmeans)) # Visualize cluster centers
 ```
 
 One can extract the cluster assignments to use it as a new variable by using `predict()`.
 
 ```{r}
-predict(rez_kmeans)  # Get clusters
+predict(rez_kmeans) # Get clusters
 ```
 
 
@@ -147,10 +147,10 @@ Hierarchical clustering is also a common clustering algorithm, available in base
 ```{r}
 rez_hclust <- cluster_analysis(data, n = 3, method = "hclust")
 
-rez_hclust  # Show results
+rez_hclust # Show results
 
 # Visualize
-plot(rez_hclust) + theme_modern()  # Visualize 
+plot(rez_hclust) + theme_modern() # Visualize
 ```
 
 ### Hierarchical K-Means
@@ -160,10 +160,10 @@ Hierarchical K-Means, as its name suggest, is essentially a combination of K-Mea
 ```{r}
 rez_hkmeans <- cluster_analysis(data, n = 3, method = "hkmeans")
 
-rez_hkmeans  # Show results
+rez_hkmeans # Show results
 
 # Visualize
-plot(rez_hkmeans) + theme_modern()  # Visualize 
+plot(rez_hkmeans) + theme_modern() # Visualize
 ```
 
 ### K-Medoids (PAM)
@@ -173,10 +173,10 @@ Clustering around "medoids", instead of "centroid", is considered to be a more r
 ```{r}
 rez_pam <- cluster_analysis(data, n = 3, method = "pam")
 
-rez_pam  # Show results
+rez_pam # Show results
 
 # Visualize
-plot(rez_pam) + theme_modern()  # Visualize 
+plot(rez_pam) + theme_modern() # Visualize
 ```
 
 
@@ -189,14 +189,15 @@ Unsupervised clustering methods estimate the optimal number of clusters themselv
 This method computes p-values for each cluster of the hierarchical cluster structure, and returns the **significant** clusters. This method can return a larger number of smaller clusters and, because it's based on bootstrapping, is quite slow.
 
 ```{r}
-rez_hclust2 <- cluster_analysis(data, 
-                        n = NULL, 
-                        method = "hclust", 
-                        iterations = 500,
-                        ci = 0.90)
+rez_hclust2 <- cluster_analysis(data,
+  n = NULL,
+  method = "hclust",
+  iterations = 500,
+  ci = 0.90
+)
 
-rez_hclust2  # Show results
-plot(rez_hclust2) + theme_modern()  # Visualize
+rez_hclust2 # Show results
+plot(rez_hclust2) + theme_modern() # Visualize
 ```
 
 
@@ -207,7 +208,7 @@ Although the DBSCAN method is quite powerful to identify clusters, it is highly 
 The "optimal" **eps** value can be estimated using the [`n_clusters_dbscan()`](https://easystats.github.io/parameters/reference/cluster_analysis.html) function:
 
 ```{r}
-eps <- n_clusters_dbscan(data, min_size = 0.1) 
+eps <- n_clusters_dbscan(data, min_size = 0.1)
 eps
 plot(eps)
 ```
@@ -217,8 +218,8 @@ It seems like the numeric method to find the elbow of the curve doesn't work wel
 ```{r}
 rez_dbscan <- cluster_analysis(data, method = "dbscan", dbscan_eps = 1.45)
 
-rez_dbscan  # Show results
-plot(rez_dbscan) + theme_modern()  # Visualize
+rez_dbscan # Show results
+plot(rez_dbscan) + theme_modern() # Visualize
 ```
 
 ### Hierarchical K-Means
@@ -228,10 +229,10 @@ Hierarchical DBSCAN is a variant that does not require the critical **EPS** argu
 ```{r}
 rez_hdbscan <- cluster_analysis(data, method = "hdbscan")
 
-rez_hdbscan  # Show results
+rez_hdbscan # Show results
 
 # Visualize
-plot(rez_hdbscan) + theme_modern()  # Visualize 
+plot(rez_hdbscan) + theme_modern() # Visualize
 ```
 
 
@@ -242,10 +243,10 @@ This is K-Medoids with an integrated estimation of the number of clusters. See `
 ```{r}
 rez_pamk <- cluster_analysis(data, method = "pamk")
 
-rez_pamk  # Show results
+rez_pamk # Show results
 
 # Visualize
-plot(rez_pamk) + theme_modern()  # Visualize 
+plot(rez_pamk) + theme_modern() # Visualize
 ```
 
 ### Mixture
@@ -257,10 +258,10 @@ library(mclust)
 
 rez_mixture <- cluster_analysis(data, method = "mixture")
 
-rez_mixture  # Show results
+rez_mixture # Show results
 
 # Visualize
-plot(rez_mixture) + theme_modern()  # Visualize 
+plot(rez_mixture) + theme_modern() # Visualize
 ```
 
 ## Metaclustering
@@ -271,14 +272,18 @@ Metaclustering is based on the hypothesis that, as each clustering algorithm emb
 
 
 ```{r}
-list_of_results <- list(rez_kmeans, rez_hclust, rez_hkmeans, rez_pam,
-                        rez_hclust2, rez_dbscan, rez_hdbscan, rez_mixture)
+list_of_results <- list(
+  rez_kmeans, rez_hclust, rez_hkmeans, rez_pam,
+  rez_hclust2, rez_dbscan, rez_hdbscan, rez_mixture
+)
 
 probability_matrix <- cluster_meta(list_of_results)
 
 # Plot the matrix as a reordered heatmap
-heatmap(probability_matrix, scale = "none", 
-        col = grDevices::hcl.colors(256, palette = "inferno"))
+heatmap(probability_matrix,
+  scale = "none",
+  col = grDevices::hcl.colors(256, palette = "inferno")
+)
 ```
 
 

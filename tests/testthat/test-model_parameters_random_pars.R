@@ -57,7 +57,7 @@ if (.runThisTest &&
   }
 
   model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = sleepstudy)
-  mp <- model_parameters(model, effects = "random")
+  mp <- model_parameters(model, effects = "random", ci_random = TRUE)
 
   test_that("model_parameters-random pars 5", {
     expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor, tolerance = 1e-3)
@@ -88,9 +88,11 @@ if (.runThisTest &&
     expect_equal(mp$CI_low, c(16.7131, 21.12065, 24.1964, -0.36662, -0.59868, -0.93174, 24.18608), tolerance = 1e-3)
     expect_equal(
       mp$Parameter,
-      c("SD (Intercept)", "SD (Days2(3,6])", "SD (Days2(6,10])", "Cor (Intercept~Days2(3,6])",
+      c(
+        "SD (Intercept)", "SD (Days2(3,6])", "SD (Days2(6,10])", "Cor (Intercept~Days2(3,6])",
         "Cor (Intercept~Days2(6,10])", "Cor (Days2(3,6]~Days2(6,10])",
-        "SD (Observations)")
+        "SD (Observations)"
+      )
     )
   })
 
@@ -103,9 +105,11 @@ if (.runThisTest &&
     expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, -0.99569, 24.18612), tolerance = 1e-3)
     expect_equal(
       mp$Parameter,
-      c("SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+      c(
+        "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
         "Cor (Days2(-1,3]~Days2(3,6])", "Cor (Days2(-1,3]~Days2(6,10])",
-        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)")
+        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)"
+      )
     )
   })
 
@@ -117,9 +121,11 @@ if (.runThisTest &&
     expect_true(all(is.na(mp$SE)))
     expect_equal(
       mp$Parameter,
-      c("SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+      c(
+        "SD (Intercept)", "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
         "Cor (Days2(-1,3]~Days2(3,6])", "Cor (Days2(-1,3]~Days2(6,10])",
-        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)")
+        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)"
+      )
     )
   })
 
@@ -132,9 +138,11 @@ if (.runThisTest &&
     expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, -0.99569, 24.18612), tolerance = 1e-3)
     expect_equal(
       mp$Parameter,
-      c("SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
+      c(
+        "SD (Days2(-1,3])", "SD (Days2(3,6])", "SD (Days2(6,10])",
         "Cor (Days2(-1,3]~Days2(3,6])", "Cor (Days2(-1,3]~Days2(6,10])",
-        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)")
+        "Cor (Days2(3,6]~Days2(6,10])", "SD (Observations)"
+      )
     )
   })
 }

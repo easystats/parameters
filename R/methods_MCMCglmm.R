@@ -39,7 +39,6 @@ model_parameters.MCMCglmm <- function(model,
                                       parameters = keep,
                                       verbose = TRUE,
                                       ...) {
-
   # Processing
   params <-
     .extract_parameters_bayesian(

@@ -54,7 +54,6 @@
 #' @return A data frame.
 #' @export
 parameters_type <- function(model, ...) {
-
   # Get info
   params <- data.frame(
     Parameter = insight::find_parameters(model, effects = "fixed", flatten = TRUE),
@@ -161,7 +160,6 @@ parameters_type <- function(model, ...) {
 #' @keywords internal
 .parameters_type <- function(name, data, reference) {
   if (grepl(":", name, fixed = TRUE)) {
-
     # Split
     var <- unlist(strsplit(name, ":", fixed = TRUE))
     if (length(var) > 2) {

@@ -21,14 +21,14 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 options(digits = 2)
 knitr::opts_chunk$set(comment = "#>")
 
 if (!requireNamespace("poorman", quietly = TRUE) ||
-    !requireNamespace("clubSandwich", quietly = TRUE) ||
-    !requireNamespace("sandwich", quietly = TRUE) ||
-    !requireNamespace("lme4", quietly = TRUE)) {
+  !requireNamespace("clubSandwich", quietly = TRUE) ||
+  !requireNamespace("sandwich", quietly = TRUE) ||
+  !requireNamespace("lme4", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
@@ -85,9 +85,9 @@ Usually, clustered covariance matrix estimation is used when there is a cluster-
 iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 # change estimation-type, defining additional arguments
 mp <- model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CL", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CL",
   vcov_type = "HC1",
   vcov_args = list(cluster = iris$cluster)
 )
@@ -108,10 +108,10 @@ iris$cluster <- factor(rep(LETTERS[1:8], length.out = nrow(iris)))
 
 # cluster-robust estimation
 mp <- model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$cluster)
 )
 mp
@@ -155,10 +155,10 @@ model_parameters(model)
 
 # model parameters, cluster robust estimation for mixed models
 model_parameters(
-  model, 
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  model,
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$grp)
 )
 ```
@@ -170,11 +170,11 @@ Again, robust estimation can be combined with standardization for linear mixed m
 ```{r}
 # model parameters, cluster robust estimation on standardized mixed model
 model_parameters(
-  model, 
+  model,
   standardize = "refit",
-  robust = TRUE, 
-  vcov_estimation = "CR", 
-  vcov_type = "CR1", 
+  robust = TRUE,
+  vcov_estimation = "CR",
+  vcov_type = "CR1",
   vcov_args = list(cluster = iris$grp)
 )
 ```

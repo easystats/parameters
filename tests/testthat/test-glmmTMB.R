@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-    getRversion() >= "3.6.0" &&
-    requiet("testthat") &&
-    requiet("parameters") &&
-    requiet("glmmTMB")) {
+  getRversion() >= "3.6.0" &&
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("glmmTMB")) {
   data("fish")
   data("Salamanders")
 
@@ -425,7 +425,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "random", component = "conditional")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out,
@@ -440,7 +440,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "fixed", component = "zero_inflated")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "fixed", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-6],
@@ -454,7 +454,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "random", component = "zero_inflated")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out,
@@ -469,7 +469,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "all", component = "conditional")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-5],
@@ -491,7 +491,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "all", component = "zero_inflated")
+      mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated")
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-6],
@@ -513,7 +513,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "all", component = "all")
+      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE)
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-c(5, 14)],
@@ -553,7 +553,7 @@ if (.runThisTest &&
     # proper printing of digits ---------------------
 
     test_that("print-model_parameters glmmTMB digits", {
-      mp <- model_parameters(m4, effects = "all", component = "all")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
       expect_equal(
         out[-c(5, 14)],
@@ -590,7 +590,7 @@ if (.runThisTest &&
         )
       )
 
-      mp <- model_parameters(m4, effects = "all", component = "all", digits = 4, ci_digits = 5)
+      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE, digits = 4, ci_digits = 5)
       out <- utils::capture.output(print(mp))
       expect_equal(
         out[-c(5, 14)],
@@ -647,7 +647,7 @@ if (.runThisTest &&
 
     if (!is.null(model_pr)) {
       test_that("print-model_parameters glmmTMB CI alignment", {
-        mp <- model_parameters(model_pr, effects = "random", component = "all")
+        mp <- model_parameters(model_pr, effects = "random", component = "all", ci_random = TRUE)
         out <- utils::capture.output(print(mp))
         expect_equal(
           out,
@@ -671,7 +671,8 @@ if (.runThisTest &&
         out <- utils::capture.output(print(mp))
         expect_equal(
           out,
-          c("# Fixed Effects",
+          c(
+            "# Fixed Effects",
             "",
             "Parameter          | Log-Mean |   SE |        95% CI |     z |      p",
             "---------------------------------------------------------------------",

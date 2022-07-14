@@ -45,7 +45,6 @@ model_parameters.brmsfit <- function(model,
       ...
     )
   } else {
-
     # Processing
     params <- .extract_parameters_bayesian(
       model,
@@ -115,8 +114,6 @@ model_parameters.brmsfit <- function(model,
                                         drop_parameters = NULL,
                                         verbose = TRUE,
                                         ...) {
-
-
   # parameters
   smd <- insight::get_parameters(model, effects = "fixed", component = "conditional")
   studies <- insight::get_parameters(model, effects = "random", parameters = "^(?!sd_)")

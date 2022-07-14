@@ -152,7 +152,7 @@
 # that contain the random effects or zero-inflated parameters
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "IRR", "Log-Odds", "Log-Mean", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
+  c("Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds", "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
 }
 
 
@@ -334,7 +334,6 @@
   indent_parameters <- NULL
 
   if (is.list(groups)) {
-
     # find parameter names and replace by rowindex
     group_rows <- lapply(groups, function(i) {
       if (is.character(i)) {
@@ -373,7 +372,6 @@
     }
     names(groups) <- names(group_rows)
   } else {
-
     # find parameter names and replace by rowindex
     group_names <- names(groups)
     groups <- match(groups, x$Parameter)
@@ -607,7 +605,6 @@
 
 
   for (type in names(tables)) {
-
     # do we have emmeans emlist? and contrasts?
     model_class <- attributes(tables[[type]])$model_class
     em_list_coef_name <- (!is.null(model_class) && "emm_list" %in% model_class &&

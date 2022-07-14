@@ -6,7 +6,6 @@ if (.runThisTest &&
   requiet("tripack") &&
   requiet("insight") &&
   requiet("quantreg")) {
-
   # rqss ---------
 
   data("CobarOre")

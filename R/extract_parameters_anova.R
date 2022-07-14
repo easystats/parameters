@@ -1,6 +1,5 @@
 #' @keywords internal
 .extract_parameters_anova <- function(model, test = "multivariate") {
-
   # Processing
   if ("manova" %in% class(model)) {
     parameters <- .extract_anova_manova(model)
@@ -193,8 +192,9 @@
     hypothesis <- m_attr$heading[grep("=", m_attr$heading)]
     parameters_xtra <- data.frame(
       Parameter = hypothesis,
-      Coefficient = m_attr$value, 
-      SE = sqrt(as.numeric(diag(m_attr$vcov))))
+      Coefficient = m_attr$value,
+      SE = sqrt(as.numeric(diag(m_attr$vcov)))
+    )
     row.names(parameters_xtra) <- row.names(parameters) <- NULL
     parameters <- cbind(parameters_xtra, parameters)
     parameters$Parameter <- gsub("  ", " ", parameters$Parameter) ## Annoying extra space sometimes
@@ -307,7 +307,7 @@
   if (requireNamespace("effectsize", quietly = TRUE)) {
     power <- tryCatch(
       {
-        cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE)
+        cohens_f2 <- effectsize::cohens_f_squared(model, partial = TRUE, verbose = FALSE)
 
         f2 <- cohens_f2$Cohens_f2[match(cohens_f2$Parameter, params$Parameter)]
         u <- params$df[params$Parameter != "Residuals"]

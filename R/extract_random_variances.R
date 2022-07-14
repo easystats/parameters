@@ -11,6 +11,7 @@
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
+                                              ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
   out <- suppressWarnings(
@@ -20,6 +21,7 @@
       effects = effects,
       component = component,
       ci_method = ci_method,
+      ci_random = ci_random,
       verbose = verbose,
       ...
     )
@@ -43,6 +45,7 @@
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
+                                              ci_random = NULL,
                                               verbose = FALSE,
                                               ...) {
   component <- match.arg(component, choices = c("all", "conditional", "zero_inflated", "zi", "dispersion"))
@@ -54,6 +57,7 @@
       effects = effects,
       component = "conditional",
       ci_method = ci_method,
+      ci_random = ci_random,
       verbose = verbose,
       ...
     )
@@ -77,6 +81,7 @@
         effects = effects,
         component = "zi",
         ci_method = ci_method,
+        ci_random = ci_random,
         verbose = FALSE,
         ...
       )
@@ -116,6 +121,7 @@
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
+                                             ci_random = NULL,
                                              verbose = FALSE,
                                              ...) {
   varcorr <- .get_variance_information(model, component)
@@ -211,8 +217,8 @@
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
-  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1) {
-    out <- .random_sd_ci(model, out, ci_method, ci, corr_param, sigma_param, component, verbose = verbose)
+  if (!is.null(ci) && !all(is.na(ci)) && length(ci) == 1 && !isFALSE(ci_random)) {
+    out <- .random_sd_ci(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component, verbose = verbose)
   }
 
   out <- out[c("Parameter", "Level", "Coefficient", "SE", ci_cols, stat_column, "df_error", "p", "Effects", "Group")]
@@ -297,15 +303,41 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
-
+.random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
     return(out)
   }
 
-  if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
+  # heuristic to check whether CIs for random effects should be computed or
+  # not. If `ci_random=NULL`, we check model complexity and decide whether to
+  # go on or not. For models with larger samples sized or more complex random
+  # effects, this might be quite time consuming.
 
+  if (is.null(ci_random)) {
+    # check sample size, don't compute by default when larger than 1000
+    nobs <- insight::n_obs(model)
+    if (nobs >= 1000) {
+      return(out)
+    }
+
+    # check complexity of random effects
+    re <- insight::find_random(model, flatten = TRUE)
+    rs <- insight::find_random_slopes(model)
+
+    # quit if if random slopes and larger sample size or more than 1 grouping factor
+    if (!is.null(rs) && (nobs >= 500 || length(re) > 1)) {
+      return(out)
+    }
+
+    # quit if if than two grouping factors
+    if (length(re) > 2) {
+      return(out)
+    }
+  }
+
+
+  if (inherits(model, c("merMod", "glmerMod", "lmerMod"))) {
     # lme4 - boot and profile
 
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
@@ -348,13 +380,13 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         }
       )
     } else if (!is.null(ci_method)) {
-
       # lme4 - wald / normal CI
+
+      merDeriv_loaded <- isNamespaceLoaded("merDeriv")
 
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
-      if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
-
+      if (all(suppressMessages(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE)))) {
         # this may fail, so wrap in try-catch
         out <- tryCatch(
           {
@@ -460,9 +492,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
                 message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
               }
+              if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
+                message(insight::format_message("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables."))
+              }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
-                  grepl("computationally singular", e$message, fixed = TRUE) ||
-                  grepl("Exact singular", e$message, fixed = TRUE)) {
+                grepl("computationally singular", e$message, fixed = TRUE) ||
+                grepl("Exact singular", e$message, fixed = TRUE)) {
                 message(insight::format_message(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
                   "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
@@ -472,12 +507,16 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out
           }
         )
+
+        # detach
+        if (!merDeriv_loaded) {
+          .unregister_vcov()
+        }
       } else if (isTRUE(verbose)) {
         message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
       }
     }
   } else if (inherits(model, "glmmTMB")) {
-
     # glmmTMB random-effects-CI
 
     ## TODO "profile" seems to be less stable, so only wald?
@@ -601,7 +640,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-
   # reason to be installed
   reason <- "to compute random effect variances for mixed models"
 
@@ -769,4 +807,20 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   } else {
     x
   }
+}
+
+
+
+
+# this is used to only temporarily load merDeriv and to point registered
+# methods from merDeriv to lme4-methods. if merDeriv was loaded before,
+# nothing will be changed. If merDeriv was not loaded, vcov-methods registered
+# by merDeriv will be re-registered to use lme4::vcov.merMod. This is no problem,
+# because *if* useres load merDeriv later manually, merDeriv-vcov-methods will
+# be registered again.
+
+.unregister_vcov <- function() {
+  unloadNamespace("merDeriv")
+  suppressWarnings(suppressMessages(registerS3method("vcov", "lmerMod", method = lme4::vcov.merMod)))
+  suppressWarnings(suppressMessages(registerS3method("vcov", "glmerMod", method = lme4::vcov.merMod)))
 }

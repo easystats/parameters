@@ -138,7 +138,6 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
 
   # Add labels
   if (!is.null(names)) {
-
     # List
     if (is.list(names)) {
       out <- as.factor(out)

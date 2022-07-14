@@ -62,7 +62,6 @@ p_value.lme <- function(model,
                         vcov = NULL,
                         vcov_args = NULL,
                         ...) {
-
   # default values
   if (is.null(vcov)) {
     cs <- stats::coef(summary(model))

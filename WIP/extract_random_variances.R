@@ -116,20 +116,23 @@
                                              ci_method = NULL,
                                              verbose = FALSE,
                                              ...) {
-
   varcorr <- .get_variance_information(model, component)
 
   ran_intercept <- tryCatch(data.frame(.random_intercept_variance(varcorr)),
-                            error = function(e) NULL)
+    error = function(e) NULL
+  )
 
   ran_slope <- tryCatch(data.frame(.random_slope_variance(model, varcorr)),
-                        error = function(e) NULL)
+    error = function(e) NULL
+  )
 
   ran_corr <- tryCatch(data.frame(.random_slope_intercept_corr(model, varcorr)),
-                       error = function(e) NULL)
+    error = function(e) NULL
+  )
 
   ran_slopes_corr <- tryCatch(data.frame(.random_slopes_corr(model, varcorr)),
-                              error = function(e) NULL)
+    error = function(e) NULL
+  )
 
 
   # sigma/dispersion only once,
@@ -302,7 +305,6 @@
 # extract CI for random SD ------------------------
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
-
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
     return(out)
@@ -338,7 +340,6 @@
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
       if (all(insight::check_if_installed(c("merDeriv", "lme4"), quietly = TRUE))) {
-
         # this may fail, so wrap in try-catch
         tryCatch(
           {
@@ -444,8 +445,8 @@
                 message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
-                  grepl("computationally singular", e$message, fixed = TRUE) ||
-                  grepl("Exact singular", e$message, fixed = TRUE)) {
+                grepl("computationally singular", e$message, fixed = TRUE) ||
+                grepl("Exact singular", e$message, fixed = TRUE)) {
                 message(insight::format_message(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
                   "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
@@ -618,7 +619,6 @@
 # store essential information about variance components...
 # basically, this function should return lme4::VarCorr(x)
 .get_variance_information <- function(model, model_component = "conditional") {
-
   # reason to be installed
   reason <- "to compute random effect variances for mixed models"
 

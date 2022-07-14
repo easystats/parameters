@@ -17,11 +17,13 @@ bibliography: bibliography.bib
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-knitr::opts_chunk$set(comment = ">",
-                      warning = FALSE,
-                      message = FALSE)
+knitr::opts_chunk$set(
+  comment = ">",
+  warning = FALSE,
+  message = FALSE
+)
 options(digits = 2)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 
 pkgs <- c("effectsize", "parameters", "correlation")
 if (!all(sapply(pkgs, requireNamespace, quietly = TRUE))) {
@@ -103,7 +105,7 @@ standard deviation of `mpg` (because the response variable was standardized,
 right?). Let's compute the **Cohen's *d*** between these two levels:
 
 ```{r}
-cohens_d(mpg ~ am, data = mtcars) 
+cohens_d(mpg ~ am, data = mtcars)
 ```
 
 ***It is larger!*** Why? How? Both differences should be expressed in units of
@@ -184,14 +186,15 @@ correlation::correlation(
   select = "salary",
   select2 = c("xtra_hours", "n_comps", "age", "seniority"),
   partial = TRUE # get partial correlations
-) 
+)
 ```
 
 Let's compare these to the standardized slopes:
 
 ```{r}
 mod <- lm(salary ~ xtra_hours + n_comps + age + seniority,
-          data = hardlyworking)
+  data = hardlyworking
+)
 
 standardize_parameters(mod)
 ```
@@ -221,10 +224,12 @@ Let's convert `age` into a 3-level factor:
 
 ```{r}
 hardlyworking$age_g <- cut(hardlyworking$age,
-                           breaks = c(25,30,35,45))
+  breaks = c(25, 30, 35, 45)
+)
 
 mod <- lm(salary ~ xtra_hours + n_comps + age_g + seniority,
-          data = hardlyworking)
+  data = hardlyworking
+)
 
 model_parameters(mod)
 ```
@@ -337,7 +342,7 @@ are also called *pseudo*-standardized coefficients.[^Note that like method
 `"basic"`, these are based on the model matrix.]
 
 ```{r, eval=knitr::opts_chunk$get("eval") && require(lme4) && require(lmerTest), warning=FALSE}
-m <- lme4::lmer(Reaction ~ Days + (Days|Subject), data = lme4::sleepstudy)
+m <- lme4::lmer(Reaction ~ Days + (Days | Subject), data = lme4::sleepstudy)
 
 standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 
@@ -362,8 +367,9 @@ predictors:
 
 ```{r}
 mod_b <- glm(am ~ mpg + factor(cyl),
-             data = mtcars,
-             family = binomial())
+  data = mtcars,
+  family = binomial()
+)
 
 standardize_parameters(mod_b, method = "refit", two_sd = TRUE)
 # standardize_parameters(mod_b, method = "posthoc", two_sd = TRUE)

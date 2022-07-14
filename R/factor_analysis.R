@@ -22,7 +22,6 @@ factor_analysis.data.frame <- function(x,
                                        standardize = TRUE,
                                        cor = NULL,
                                        ...) {
-
   # Standardize
   if (standardize && is.null(cor)) {
     x <- as.data.frame(scale(x))

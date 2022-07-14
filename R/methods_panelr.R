@@ -7,14 +7,15 @@
 #' @export
 model_parameters.wbm <- function(model,
                                  ci = .95,
-                                 effects = "all",
-                                 group_level = FALSE,
+                                 ci_random = NULL,
                                  bootstrap = FALSE,
                                  iterations = 1000,
+                                 effects = "all",
+                                 group_level = FALSE,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
-                                 verbose = TRUE,
                                  include_sigma = FALSE,
+                                 verbose = TRUE,
                                  ...) {
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
@@ -31,6 +32,7 @@ model_parameters.wbm <- function(model,
     group_level = group_level,
     ci_method = NULL,
     include_sigma = include_sigma,
+    ci_random = ci_random,
     verbose = verbose,
     ...
   )
@@ -109,6 +111,7 @@ p_value.wbgee <- p_value.wbm
 
 .mixed_model_parameters_generic <- function(model,
                                             ci,
+                                            ci_random = NULL,
                                             bootstrap,
                                             iterations,
                                             merge_by,
@@ -148,7 +151,7 @@ p_value.wbgee <- p_value.wbm
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, verbose = verbose)
+    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
   }
 
 

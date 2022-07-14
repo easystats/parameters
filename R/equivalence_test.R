@@ -226,7 +226,6 @@ equivalence_test.merMod <- function(x,
                                     effects = c("fixed", "random"),
                                     verbose = TRUE,
                                     ...) {
-
   # ==== argument matching ====
 
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
@@ -270,7 +269,6 @@ equivalence_test.parameters_simulate_model <- function(x,
                                                        ci = .95,
                                                        verbose = TRUE,
                                                        ...) {
-
   # ==== retrieve model, to define rope range for simulated model parameters ====
 
   model <- .get_object(x)
@@ -310,7 +308,6 @@ equivalence_test.parameters_simulate_model <- function(x,
                                           rule = "classic",
                                           verbose = TRUE,
                                           ...) {
-
   # ==== define rope range ====
 
   if (all(range == "default")) {
@@ -601,7 +598,6 @@ format.equivalence_test_lm <- function(x,
                                        format = "text",
                                        zap_small = FALSE,
                                        ...) {
-
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
     ci_brackets <- c("(", ")")

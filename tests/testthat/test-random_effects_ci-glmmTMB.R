@@ -25,12 +25,11 @@ win_os <- tryCatch(
 ## TODO also check messages for profiled CI
 
 if (.runThisTest && win_os &&
-    requiet("testthat") &&
-    requiet("parameters") &&
-    requiet("glmmTMB") &&
-    requiet("lme4") &&
-    packageVersion("glmmTMB") > "1.1.3") {
-
+  requiet("testthat") &&
+  requiet("parameters") &&
+  requiet("glmmTMB") &&
+  requiet("lme4") &&
+  packageVersion("glmmTMB") > "1.1.3") {
   data(sleepstudy)
   data(cake)
   set.seed(123)
@@ -53,7 +52,8 @@ if (.runThisTest && win_os &&
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
       mp1$CI_low,
-      c(28.9123, 5.03115, -1.87304, -2.42081, -3.2708, -2.57695, 0.21571,
+      c(
+        28.9123, 5.03115, -1.87304, -2.42081, -3.2708, -2.57695, 0.21571,
         4.17466, NaN, 0, 0.26247, 0.34089, 0.02477, 0.65731, 0.3902,
         0.14685, 0.01322, 0.62182, 0.99915, NaN, NaN, NaN, -0.31609,
         -0.48806, NaN, -0.8346, NaN, -0.60153, NA, NA, NA, NA, NA, NA,
@@ -65,7 +65,8 @@ if (.runThisTest && win_os &&
 
     expect_equal(
       mp1$Parameter,
-      c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
+      c(
+        "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (Intercept)",
         "SD (temperature.L)", "SD (temperature.Q)", "SD (temperature.C)",
         "SD (temperature^4)", "SD (temperature^5)", "SD (temperature.L)",
@@ -85,12 +86,14 @@ if (.runThisTest && win_os &&
         "Cor (temperature.Q~temperature.C)", "Cor (temperature.Q~temperature^4)",
         "Cor (temperature.Q~temperature^5)", "Cor (temperature.C~temperature^4)",
         "Cor (temperature.C~temperature^5)", "Cor (temperature^4~temperature^5)",
-        "SD (Observations)")
+        "SD (Observations)"
+      )
     )
 
     expect_equal(
       mp1$Group,
-      c("", "", "", "", "", "", "recipe", "replicate", "recipe", "recipe",
+      c(
+        "", "", "", "", "", "", "recipe", "replicate", "recipe", "recipe",
         "recipe", "recipe", "recipe", "replicate", "replicate", "replicate",
         "replicate", "replicate", "recipe", "recipe", "recipe", "recipe",
         "recipe", "replicate", "replicate", "replicate", "replicate",
@@ -113,8 +116,10 @@ if (.runThisTest && win_os &&
 
     expect_equal(
       mp2$Parameter,
-      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
-        "SD (Observations)")
+      c(
+        "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
+        "SD (Observations)"
+      )
     )
   })
 
@@ -122,16 +127,19 @@ if (.runThisTest && win_os &&
   test_that("random effects CIs, categorical slope-1", {
     expect_equal(
       mp3$CI_low,
-      c(31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
+      c(
+        31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
         0, NaN, NaN, 0, NaN, NaN, NaN, NaN, -0.49203, -0.41167, NaN,
-        NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 7.08478),
+        NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 7.08478
+      ),
       tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
     expect_equal(
       mp3$Parameter,
-      c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
+      c(
+        "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
         "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
@@ -141,15 +149,18 @@ if (.runThisTest && win_os &&
         "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
         "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
         "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
-        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+        "Cor (temperature^4~temperature^5)", "SD (Observations)"
+      )
     )
 
     expect_equal(
       mp3$Group,
-      c("", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
+      c(
+        "", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
         "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
         "recipe", "recipe", "recipe", "recipe", "recipe", "recipe", "recipe",
-        "recipe", "recipe", "recipe", "Residual")
+        "recipe", "recipe", "recipe", "Residual"
+      )
     )
   })
 
@@ -157,17 +168,20 @@ if (.runThisTest && win_os &&
   test_that("random effects CIs, categorical slope-2", {
     expect_equal(
       mp4$CI_low,
-      c(29.01131, 5.01247, -1.89444, -1.96275, -2.66798, -2.50892,
+      c(
+        29.01131, 5.01247, -1.89444, -1.96275, -2.66798, -2.50892,
         4.23497, 0.62985, 0.36934, 0.1398, 0.01133, 0.60758, 0.56678,
         0.26866, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN,
-        4.23582),
+        4.23582
+      ),
       tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
     expect_equal(
       mp4$Parameter,
-      c("(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
+      c(
+        "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
         "temperature^4", "temperature^5", "SD (Intercept)", "SD (temperature.L)",
         "SD (temperature.Q)", "SD (temperature.C)", "SD (temperature^4)",
         "SD (temperature^5)", "Cor (Intercept~temperature.L)", "Cor (Intercept~temperature.Q)",
@@ -177,16 +191,19 @@ if (.runThisTest && win_os &&
         "Cor (temperature.L~temperature^5)", "Cor (temperature.Q~temperature.C)",
         "Cor (temperature.Q~temperature^4)", "Cor (temperature.Q~temperature^5)",
         "Cor (temperature.C~temperature^4)", "Cor (temperature.C~temperature^5)",
-        "Cor (temperature^4~temperature^5)", "SD (Observations)")
+        "Cor (temperature^4~temperature^5)", "SD (Observations)"
+      )
     )
 
     expect_equal(
       mp4$Group,
-      c("", "", "", "", "", "", "replicate", "replicate", "replicate",
+      c(
+        "", "", "", "", "", "", "replicate", "replicate", "replicate",
         "replicate", "replicate", "replicate", "replicate", "replicate",
         "replicate", "replicate", "replicate", "replicate", "replicate",
         "replicate", "replicate", "replicate", "replicate", "replicate",
-        "replicate", "replicate", "replicate", "Residual")
+        "replicate", "replicate", "replicate", "Residual"
+      )
     )
   })
 
@@ -194,17 +211,21 @@ if (.runThisTest && win_os &&
   test_that("random effects CIs, double slope", {
     expect_equal(
       mp5$CI_low,
-      c(238.40607, 7.52296, 15.01708, 3.80547, NaN, -0.48781, NaN,
-        NaN, 22.80046),
+      c(
+        238.40607, 7.52296, 15.01708, 3.80547, NaN, -0.48781, NaN,
+        NaN, 22.80046
+      ),
       tolerance = 1e-2,
       ignore_attr = TRUE
     )
 
     expect_equal(
       mp5$Parameter,
-      c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
+      c(
+        "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
         "Cor (Intercept~Days)", "Cor (Intercept~Months)",
-        "Cor (Days~Months)", "SD (Observations)")
+        "Cor (Days~Months)", "SD (Observations)"
+      )
     )
   })
 
@@ -249,8 +270,10 @@ if (.runThisTest && win_os &&
 
     expect_equal(
       mp5$Parameter,
-      c("(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
-        "SD (Observations)")
+      c(
+        "(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
+        "SD (Observations)"
+      )
     )
   })
 
@@ -260,5 +283,4 @@ if (.runThisTest && win_os &&
     mp2 <- model_parameters(m2, ci_method = "profile")
     expect_message(print(mp2), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
   })
-
 }

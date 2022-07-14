@@ -108,7 +108,6 @@ print_html.compare_parameters <- function(x,
                                           footer = NULL,
                                           style = NULL,
                                           ...) {
-
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)

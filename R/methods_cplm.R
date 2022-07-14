@@ -220,19 +220,19 @@ standard_error.cpglm <- function(model, ...) {
 #' @export
 model_parameters.cpglmm <- function(model,
                                     ci = .95,
+                                    ci_method = NULL,
+                                    ci_random = NULL,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
                                     effects = "all",
                                     group_level = FALSE,
                                     exponentiate = FALSE,
-                                    ci_method = NULL,
                                     p_adjust = NULL,
+                                    include_sigma = FALSE,
                                     verbose = TRUE,
                                     df_method = ci_method,
-                                    include_sigma = FALSE,
                                     ...) {
-
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
     warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
@@ -264,6 +264,7 @@ model_parameters.cpglmm <- function(model,
     group_level = group_level,
     ci_method = ci_method,
     include_sigma = include_sigma,
+    ci_random = ci_random,
     verbose = verbose,
     ...
   )
