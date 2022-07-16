@@ -19,6 +19,9 @@
   (like `MASS::polr()`), that failed when argument `component` was set to
   `"conditional"` (the default).
 
+* Fix issues in `model_parameters()` for multiple imputation models from
+  package *Hmisc*.
+
 # parameters 0.18.1
 
 ## General
