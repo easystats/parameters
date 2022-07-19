@@ -388,9 +388,9 @@
   not_allowed <- not_allowed[which(not_allowed %in% names(dots))]
   if (length(not_allowed)) {
     if (verbose) {
+      not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
       warning(insight::format_message(
-        sprintf("Following arguments are not supported in `%s()` for models of class '%s' and will be ignored:", function_name, model_class),
-        paste0("\"", not_allowed, "\"", collapse = ", "),
+        sprintf("Following arguments are not supported in `%s()` for models of class '%s' and will be ignored: %s", function_name, model_class, not_allowed_string),
         sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name)
       ), call. = FALSE)
     }
