@@ -59,6 +59,16 @@ pool_parameters <- function(x,
 
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
     original_model <- x[[1]]
+
+    # Add exceptions for models with uncommon components here ---------------
+    exception_model_class <- "polr"
+
+    # exceptions for "component" argument. Eg, MASS::polr has components
+    # "alpha" and "beta", and "component" needs to be set to all by default
+    if (identical(component, "conditional") && inherits(original_model, exception_model_class)) {
+      component <- "all"
+    }
+
     x <- lapply(x, model_parameters, effects = effects, component = component, ...)
   }
 
@@ -138,15 +148,22 @@ pool_parameters <- function(x,
     alpha <- (1 + ci) / 2
     fac <- suppressWarnings(stats::qt(alpha, df = pooled_df))
 
-    data.frame(
+    out <- data.frame(
       Coefficient = pooled_estimate,
       SE = pooled_se,
       CI_low = pooled_estimate - pooled_se * fac,
       CI_high = pooled_estimate + pooled_se * fac,
       Statistic = pooled_statistic,
       df_error = pooled_df,
-      p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE)
+      p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE),
+      stringsAsFactors = FALSE
     )
+
+    # add component, when pooling for all components
+    if (identical(component, "all") && "Component" %in% colnames(i)) {
+      out$Component <- i$Component[1]
+    }
+    out
   }))
 
 
@@ -170,7 +187,8 @@ pool_parameters <- function(x,
   # reorder ------
 
   pooled_params$Parameter <- parameter_values
-  pooled_params <- pooled_params[c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p")]
+  columns <- c("Parameter", "Coefficient", "SE", "CI_low", "CI_high", "Statistic", "df_error", "p", "Component")
+  pooled_params <- pooled_params[intersect(columns, colnames(pooled_params))]
 
 
   # final attributes -----

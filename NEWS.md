@@ -1,3 +1,27 @@
+# parameters 0.18.x
+
+## New functions
+
+* New function `dominance_analysesis()`, to compute dominance analysis 
+  statistics and designations.
+
+## Changes to functions
+
+* Argument `ci_random` in `model_parameters()` defaults to `NULL`. It uses a
+  heuristic to determine if random effects confidence intervals are likely to
+  take a long time to compute, and automatically includes or excludes those
+  confidence intervals. Set `ci_random` to `TRUE` or `FALSE` to explicitly
+  calculate or omit confidence intervals for random effects.
+
+## Bug fixes
+
+* Fix issues in `pool_parameters()` for certain models with special components
+  (like `MASS::polr()`), that failed when argument `component` was set to
+  `"conditional"` (the default).
+
+* Fix issues in `model_parameters()` for multiple imputation models from
+  package *Hmisc*.
+
 # parameters 0.18.1
 
 ## General
