@@ -7,9 +7,9 @@
 
 ## Changes to functions
 
-* Argument `ci_random` in `model_parameters()` defaults to `NULL` and uses a
-  heuristic to determine if random effects confidence intervals take longer
-  time to compute or not, and automatically includes or excludes those
+* Argument `ci_random` in `model_parameters()` defaults to `NULL`. It uses a
+  heuristic to determine if random effects confidence intervals are likely to
+  take a long time to compute, and automatically includes or excludes those
   confidence intervals. Set `ci_random` to `TRUE` or `FALSE` to explicitly
   calculate or omit confidence intervals for random effects.
 
