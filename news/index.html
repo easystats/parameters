@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.8</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,6 +68,20 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.18" id="parameters-018x">parameters 0.18.x<a class="anchor" aria-label="anchor" href="#parameters-018x"></a></h2>
+<div class="section level3">
+<h3 id="new-functions-0-18">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-18"></a></h3>
+<ul><li>New function <code>dominance_analysesis()</code>, to compute dominance analysis statistics and designations.</li></ul></div>
+<div class="section level3">
+<h3 id="changes-to-functions-0-18">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18"></a></h3>
+<ul><li>Argument <code>ci_random</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> defaults to <code>NULL</code>. It uses a heuristic to determine if random effects confidence intervals are likely to take a long time to compute, and automatically includes or excludes those confidence intervals. Set <code>ci_random</code> to <code>TRUE</code> or <code>FALSE</code> to explicitly calculate or omit confidence intervals for random effects.</li></ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-18">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18"></a></h3>
+<ul><li><p>Fix issues in <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> for certain models with special components (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code>), that failed when argument <code>component</code> was set to <code>"conditional"</code> (the default).</p></li>
+<li><p>Fix issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for multiple imputation models from package <em>Hmisc</em>.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.18.1" id="parameters-0181">parameters 0.18.1<a class="anchor" aria-label="anchor" href="#parameters-0181"></a></h2><p class="text-muted">CRAN release: 2022-05-29</p>
 <div class="section level3">
