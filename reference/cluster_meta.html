@@ -130,7 +130,7 @@ This metaclustering probability matrix can be transformed into a dissimilarity m
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/heatmap.html" class="external-link">heatmap</a></span><span class="op">(</span><span class="va">m</span>, scale <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Extract 3 clusters</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, n<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Convert to dissimilarity</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">as.dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">m</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
