@@ -262,7 +262,6 @@ library(parameters)
 
 # lavaan -------------------------------------
 if (require("lavaan", quietly = TRUE)) {
-
   # Confirmatory Factor Analysis (CFA) ---------
 
   structure <- " visual  =~ x1 + x2 + x3

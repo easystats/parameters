@@ -29,8 +29,8 @@
 \method{model_parameters}{mhurdle}(
   model,
   ci = 0.95,
-  component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase",
-    "ip", "auxiliary"),
+  component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip",
+    "auxiliary"),
   exponentiate = FALSE,
   p_adjust = NULL,
   verbose = TRUE,
