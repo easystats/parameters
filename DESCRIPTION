@@ -199,4 +199,4 @@ Language: en-US
 RoxygenNote: 7.2.1
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-Remotes: easystats/insight
+Remotes: easystats/datawizard
