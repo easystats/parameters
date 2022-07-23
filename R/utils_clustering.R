@@ -17,7 +17,7 @@
     if (any(factors)) {
       x[factors] <- sapply(
         x[factors],
-        datawizard::data_to_numeric,
+        datawizard::to_numeric,
         dummy_factors = FALSE,
         preserve_levels = TRUE
       )
