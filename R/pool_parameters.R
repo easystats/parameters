@@ -193,9 +193,8 @@ pool_parameters <- function(x,
 
   # final attributes -----
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    pooled_params <- .exponentiate_parameters(pooled_params, NULL, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  pooled_params <- .exponentiate_parameters(pooled_params, NULL, exponentiate)
 
   if (!is.null(pooled_random)) {
     pooled_params <- merge(pooled_params, pooled_random, all = TRUE, sort = FALSE)

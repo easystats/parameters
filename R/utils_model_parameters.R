@@ -58,6 +58,9 @@
   attr(params, "ignore_group") <- isFALSE(group_level)
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
+  attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
+  attr(params, "log_response") <- isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE))
+  attr(params, "log_predictors") <- any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -270,16 +273,35 @@
 }
 
 
+.is_valid_exponentiate_argument <- function(exponentiate) {
+  isTRUE(exponentiate) || identical(exponentiate, "nongaussian") || identical(exponentiate, "log_predictors")
+}
+
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
+
+  # "exponentiate" must be
+  # - TRUE, will always exponentiate all coefficients
+  # - "nongaussian", will exponentiate all coefficients for models with non-gaussian family
+  # - "log_predictors", will exponentiate all coefficients log-transformed *predictors*
+  if (!.is_valid_exponentiate_argument(exponentiate)) {
+    return(params)
+  }
+
+  # check if non-gaussian applies
   if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear && identical(exponentiate, "nongaussian")) {
     return(params)
   }
+
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
   if (any(columns)) {
-    if (inherits(model, "mvord")) {
+    # check if log-predictors applies
+    if (identical(exponentiate, "log_predictors")) {
+      rows <- grepl("log", params$Parameter, fixed = TRUE)
+    } else if (inherits(model, "mvord")) {
       rows <- params$Component != "correlation"
     } else {
+      # don't exponentiate dispersion
       if (!is.null(params$Component)) {
         rows <- !tolower(params$Component) %in% c("dispersion", "residual")
       } else {

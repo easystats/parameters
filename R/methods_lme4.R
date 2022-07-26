@@ -211,9 +211,8 @@ model_parameters.merMod <- function(model,
 
     params$Effects <- "fixed"
 
-    if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-      params <- .exponentiate_parameters(params, model, exponentiate)
-    }
+    # exponentiate coefficients and SE/CI, if requested
+    params <- .exponentiate_parameters(params, model, exponentiate)
   }
 
   att <- attributes(params)

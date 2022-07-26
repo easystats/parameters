@@ -319,17 +319,19 @@ parameters <- model_parameters
 #'   effects will be returned.
 #'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of standardized parameters only
 #'   works when `standardize="refit"`.
-#' @param exponentiate Logical, indicating whether or not to exponentiate the
-#'   the coefficients (and related confidence intervals). This is typical for
-#'   logistic regression, or more generally speaking, for models with log
-#'   or logit links. **Note:** Delta-method standard errors are also
-#'   computed (by multiplying the standard errors by the transformed
-#'   coefficients). This is to mimic behaviour of other software packages, such
-#'   as Stata, but these standard errors poorly estimate uncertainty for the
-#'   transformed coefficient. The transformed confidence interval more clearly
-#'   captures this uncertainty. For `compare_parameters()`,
-#'   `exponentiate = "nongaussian"` will only exponentiate coefficients
-#'   from non-Gaussian families.
+#' @param exponentiate Either a logical, indicating whether or not to
+#'   exponentiate the the coefficients (and related confidence intervals). This
+#'   is typical for logistic regression, or more generally speaking, for models
+#'   with log or logit links. It is also recommended to use `exponentiate = TRUE`
+#'   for models with log-transformed response values. If `exponentiate = "log_predictors"`,
+#'   only coefficients for log-transformed predictors will be exponentiated.
+#'   **Note:** Delta-method standard errors are also computed (by multiplying
+#'   the standard errors by the transformed coefficients). This is to mimic
+#'   behaviour of other software packages, such as Stata, but these standard
+#'   errors poorly estimate uncertainty for the transformed coefficient. The
+#'   transformed confidence interval more clearly captures this uncertainty. For
+#'   `compare_parameters()`, `exponentiate = "nongaussian"` will only
+#'   exponentiate coefficients from non-Gaussian families.
 #' @param p_adjust Character vector, if not `NULL`, indicates the method to
 #'   adjust p-values. See [stats::p.adjust()] for details. Further
 #'   possible adjustment methods are `"tukey"`, `"scheffe"`,
@@ -561,9 +563,7 @@ model_parameters.default <- function(model,
   }
 
   # exponentiate coefficients and SE/CI, if requested
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  params <- .exponentiate_parameters(params, model, exponentiate)
 
   # add further information as attributes
   params <- .add_model_parameters_attributes(

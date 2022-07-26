@@ -116,9 +116,8 @@ model_parameters.emmGrid <- function(model,
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params))
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, model, exponentiate)
 
   # filter parameters
   if (!is.null(parameters)) {
@@ -161,9 +160,9 @@ model_parameters.emm_list <- function(model,
   params <- do.call(rbind, params)
   params$Component <- .pretty_emmeans_Component_names(s)
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, model, exponentiate)
+
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
 
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)

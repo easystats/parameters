@@ -658,3 +658,29 @@ format.parameters_sem <- function(x,
     }
   }
 }
+
+
+.print_footer_exp <- function(x) {
+  msg <- NULL
+  exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
+  if (!.is_valid_exponentiate_argument(exponentiate)) {
+    # if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
+    # } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+    # } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
+    # }
+
+    if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+      msg <- insight::format_message(
+        "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interprete coefficients as rates."
+      )
+    } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
+      msg <- insight::format_message(
+        "The model has log-transformed predictors. Consider using `exponentiate = TRUE` to interprete coefficients as rates."
+      )
+    }
+
+    if (!is.null(msg)) {
+      message(insight::color_text(paste0("\n", msg), "red"))
+    }
+  }
+}
