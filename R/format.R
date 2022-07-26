@@ -671,11 +671,11 @@ format.parameters_sem <- function(x,
 
     if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
       msg <- insight::format_message(
-        "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interprete coefficients as rates."
+        "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       )
     } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
       msg <- insight::format_message(
-        "The model has log-transformed predictors. Consider using `exponentiate = TRUE` to interprete coefficients as rates."
+        "The model has log-transformed predictors. Consider using `exponentiate = \"log_predictors\"` to interpret coefficients of log-transformed predictors as ratios."
       )
     }
 
