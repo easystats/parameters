@@ -33,9 +33,8 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
     params <- .p_adjust(params, p_adjust, model, verbose)
   }
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, model, exponentiate)
 
   params <- .add_model_parameters_attributes(
     params,

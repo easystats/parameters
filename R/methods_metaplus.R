@@ -216,9 +216,9 @@ model_parameters.meta_random <- function(model,
     out <- out[out$Parameter %in% c("Overall", "tau"), ]
   }
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    out <- .exponentiate_parameters(out, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model, exponentiate)
+
   out <- .add_model_parameters_attributes(
     params = out,
     model = model,
@@ -362,9 +362,9 @@ model_parameters.meta_bma <- function(model,
     out <- out[out$Parameter %in% c("averaged", "fixed", "random"), ]
   }
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    out <- .exponentiate_parameters(out, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model, exponentiate)
+
   out <- .add_model_parameters_attributes(
     params = out,
     model = model,

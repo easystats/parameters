@@ -17,9 +17,9 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verb
     params$Component <- gsub("(.*)\\((.*)\\)$", "\\2", params$Parameter)
   }
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, model, exponentiate)
+
   attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))

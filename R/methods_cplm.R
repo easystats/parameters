@@ -67,10 +67,8 @@ model_parameters.zcpglm <- function(model,
     )
   }
 
-
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    params <- .exponentiate_parameters(params, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, model, exponentiate)
 
   params <- .add_model_parameters_attributes(
     params,

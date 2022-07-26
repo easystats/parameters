@@ -11,9 +11,8 @@ model_parameters.fitdistr <- function(model,
     stringsAsFactors = FALSE
   )
 
-  if (isTRUE(exponentiate) || identical(exponentiate, "nongaussian")) {
-    out <- .exponentiate_parameters(out, model, exponentiate)
-  }
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model, exponentiate)
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
