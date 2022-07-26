@@ -2,7 +2,7 @@
 
 ## New functions
 
-* New function `dominance_analysesis()`, to compute dominance analysis 
+* New function `dominance_analysis()`, to compute dominance analysis 
   statistics and designations.
 
 ## Changes to functions
@@ -12,6 +12,10 @@
   take a long time to compute, and automatically includes or excludes those
   confidence intervals. Set `ci_random` to `TRUE` or `FALSE` to explicitly
   calculate or omit confidence intervals for random effects.
+
+* Argument `exponentiate` in `model_parameters()` gains a new option, 
+  `"log_predictors"`, to exponentiate only coefficients of log-transformed
+  predictor variables.
 
 ## Bug fixes
 
