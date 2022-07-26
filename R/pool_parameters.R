@@ -101,10 +101,33 @@ pool_parameters <- function(x,
   # preparation ----
 
   params <- do.call(rbind, x)
+
   len <- length(x)
   ci <- attributes(original_x[[1]])$ci
   if (is.null(ci)) ci <- .95
   parameter_values <- x[[1]]$Parameter
+
+  # exceptions ----
+
+  # check for special models, like "htest", which have no "Parameter" columns
+  if (!"Parameter" %in% colnames(params)) {
+    # check for possible column names
+    if (all(c("Parameter1", "Parameter2") %in% colnames(params))) {
+      # create combined Parameter column
+      params$Parameter <- paste0(params$Parameter1, " and ", params$Parameter2)
+      # remove old columns
+      params$Parameter1 <- NULL
+      params$Parameter2 <- NULL
+      # update values
+      parameter_values <- paste0(x[[1]]$Parameter1, " and ", x[[1]]$Parameter2)#
+      # fix coefficient column
+      colnames(params)[colnames(params) == "r"] <- "Coefficient"
+      colnames(params)[colnames(params) == "rho"] <- "Coefficient"
+      colnames(params)[colnames(params) == "tau"] <- "Coefficient"
+      colnames(params)[colnames(params) == "Estimate"] <- "Coefficient"
+      colnames(params)[colnames(params) == "Difference"] <- "Coefficient"
+    }
+  }
 
   # split multiply (imputed) datasets by parameters,
   # but only for fixed effects. Filter random effects,
