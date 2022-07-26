@@ -120,13 +120,13 @@ pool_parameters <- function(x,
       params$Parameter2 <- NULL
       # update values
       parameter_values <- paste0(x[[1]]$Parameter1, " and ", x[[1]]$Parameter2)#
-      # fix coefficient column
-      colnames(params)[colnames(params) == "r"] <- "Coefficient"
-      colnames(params)[colnames(params) == "rho"] <- "Coefficient"
-      colnames(params)[colnames(params) == "tau"] <- "Coefficient"
-      colnames(params)[colnames(params) == "Estimate"] <- "Coefficient"
-      colnames(params)[colnames(params) == "Difference"] <- "Coefficient"
     }
+    # fix coefficient column
+    colnames(params)[colnames(params) == "r"] <- "Coefficient"
+    colnames(params)[colnames(params) == "rho"] <- "Coefficient"
+    colnames(params)[colnames(params) == "tau"] <- "Coefficient"
+    colnames(params)[colnames(params) == "Estimate"] <- "Coefficient"
+    colnames(params)[colnames(params) == "Difference"] <- "Coefficient"
   }
 
   # split multiply (imputed) datasets by parameters,
