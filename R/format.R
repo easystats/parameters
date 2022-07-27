@@ -661,22 +661,36 @@ format.parameters_sem <- function(x,
 
 
 .print_footer_exp <- function(x) {
-  msg <- NULL
-  exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
-  if (!.is_valid_exponentiate_argument(exponentiate)) {
-    # if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
-    # } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-    # } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
-    # }
+  if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
+    msg <- NULL
+    exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
+    if (!.is_valid_exponentiate_argument(exponentiate)) {
+      # if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
+      # } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+      # } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
+      # }
 
-    if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-      msg <- insight::format_message(
-        "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
-      )
-    } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
-      msg <- insight::format_message(
-        "The model has log-transformed predictors. Consider using `exponentiate = \"log_predictors\"` to interpret coefficients of log-transformed predictors as ratios."
-      )
+      if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+        msg <- insight::format_message(
+          "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
+        )
+      } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
+        msg <- insight::format_message(
+          "The model has log-transformed predictors. Consider using `exponentiate = \"log_predictors\"` to interpret coefficients of log-transformed predictors as ratios."
+        )
+      }
+    } else if (.is_valid_exponentiate_argument(exponentiate)) {
+      if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+        msg <- insight::format_message(
+          "This model has a log-transformed response variable, and exponentiated parameters are reported.",
+          "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
+        )
+      } else if (isTRUE(.additional_arguments(x, "log_predictors", FALSE))) {
+        msg <- insight::format_message(
+          "This model has a log-transformed predictor variables, and exponentiated parameters for those predictors are reported.",
+          "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
+        )
+      }
     }
 
     if (!is.null(msg)) {
