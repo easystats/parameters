@@ -43,6 +43,31 @@
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
 #'
+#' @section Global Options to Customize Messages when Printing:
+#' The `verbose` argument can be used to display or silence messages and
+#' warnings for the different functions in the **parameters** package. However,
+#' some messages providing additional information can be displayed or suppressed
+#' using `options()`:
+#'
+#' - `parameters_summary`: `options(parameters_summary = TRUE)` will override the
+#' `summary` argument in `model_parameters()` and always show the model summary
+#' for non-mixed models.
+#'
+#' - `parameters_mixed_summary`: `options(parameters_mixed_summary = TRUE)` will
+#' override the `summary` argument in `model_parameters()` for mixed models, and
+#' will then always show the model summary.
+#'
+#' - `parameters_cimethod`: `options(parameters_cimethod = TRUE)` will show the
+#' additional information about the approximation method used to calculate
+#' confidence intervals and p-values. Set to `FALSE` to hide this message when
+#' printing `model_parameters()` objects.
+#'
+#' - `parameters_exponentiate`: `options(parameters_exponentiate = TRUE)` will
+#' show the additional information on how to interpret coefficients of models
+#' with log-transformed response variables or with log-/logit-links when the
+#' `exponentiate` argument in `model_parameters()` is not `TRUE`. Set this option
+#' to `FALSE` to hide this message when printing `model_parameters()` objects.
+#'
 #' @details `summary()` is a convenient shortcut for
 #'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
