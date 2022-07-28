@@ -18,19 +18,18 @@ pool_parameters(
 \code{\link[=model_parameters]{model_parameters()}}, or a list of model-objects that is
 supported by \code{model_parameters()}.}
 
-\item{exponentiate}{Either a logical, indicating whether or not to
-exponentiate the the coefficients (and related confidence intervals). This
-is typical for logistic regression, or more generally speaking, for models
-with log or logit links. It is also recommended to use \code{exponentiate = TRUE}
-for models with log-transformed response values. If \code{exponentiate = "log_predictors"},
-only coefficients for log-transformed predictors will be exponentiated.
-\strong{Note:} Delta-method standard errors are also computed (by multiplying
-the standard errors by the transformed coefficients). This is to mimic
-behaviour of other software packages, such as Stata, but these standard
-errors poorly estimate uncertainty for the transformed coefficient. The
-transformed confidence interval more clearly captures this uncertainty. For
-\code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
-exponentiate coefficients from non-Gaussian families.}
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use \code{exponentiate = TRUE} for models
+with log-transformed response values. \strong{Note:} Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For \code{compare_parameters()},
+\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
+non-Gaussian families.}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies

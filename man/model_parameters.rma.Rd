@@ -45,19 +45,18 @@ effects will be returned.
 works when \code{standardize="refit"}.
 }}
 
-\item{exponentiate}{Either a logical, indicating whether or not to
-exponentiate the the coefficients (and related confidence intervals). This
-is typical for logistic regression, or more generally speaking, for models
-with log or logit links. It is also recommended to use \code{exponentiate = TRUE}
-for models with log-transformed response values. If \code{exponentiate = "log_predictors"},
-only coefficients for log-transformed predictors will be exponentiated.
-\strong{Note:} Delta-method standard errors are also computed (by multiplying
-the standard errors by the transformed coefficients). This is to mimic
-behaviour of other software packages, such as Stata, but these standard
-errors poorly estimate uncertainty for the transformed coefficient. The
-transformed confidence interval more clearly captures this uncertainty. For
-\code{compare_parameters()}, \code{exponentiate = "nongaussian"} will only
-exponentiate coefficients from non-Gaussian families.}
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use \code{exponentiate = TRUE} for models
+with log-transformed response values. \strong{Note:} Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For \code{compare_parameters()},
+\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
+non-Gaussian families.}
 
 \item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
 for all studies. Else, only parameters for overall-effects are shown.}
