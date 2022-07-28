@@ -13,10 +13,6 @@
   confidence intervals. Set `ci_random` to `TRUE` or `FALSE` to explicitly
   calculate or omit confidence intervals for random effects.
 
-* Argument `exponentiate` in `model_parameters()` gains a new option, 
-  `"log_predictors"`, to exponentiate only coefficients of log-transformed
-  predictor variables.
-
 ## Bug fixes
 
 * Fix issues in `pool_parameters()` for certain models with special components

@@ -274,7 +274,7 @@
 
 
 .is_valid_exponentiate_argument <- function(exponentiate) {
-  isTRUE(exponentiate) || identical(exponentiate, "nongaussian") || identical(exponentiate, "log_predictors")
+  isTRUE(exponentiate) || identical(exponentiate, "nongaussian")
 }
 
 #' @keywords internal
@@ -283,7 +283,6 @@
   # "exponentiate" must be
   # - TRUE, will always exponentiate all coefficients
   # - "nongaussian", will exponentiate all coefficients for models with non-gaussian family
-  # - "log_predictors", will exponentiate all coefficients log-transformed *predictors*
   if (!.is_valid_exponentiate_argument(exponentiate)) {
     return(params)
   }
@@ -295,10 +294,7 @@
 
   columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
   if (any(columns)) {
-    # check if log-predictors applies
-    if (identical(exponentiate, "log_predictors")) {
-      rows <- grepl("log", params$Parameter, fixed = TRUE)
-    } else if (inherits(model, "mvord")) {
+    if (inherits(model, "mvord")) {
       rows <- params$Component != "correlation"
     } else {
       # don't exponentiate dispersion
