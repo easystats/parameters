@@ -82,7 +82,12 @@ predict.parameters_efa <- function(object,
       out <- .merge_na(object, out)
     }
   } else {
-    out <- as.data.frame(stats::predict(attributes(object)$model, newdata = newdata, ...))
+    if (inherits(attributes(object)$model, c("psych", "fa"))) {
+      # psych:::predict.fa(object, data)
+      out <- as.data.frame(stats::predict(attributes(object)$model, data = newdata))
+    } else {
+      out <- as.data.frame(stats::predict(attributes(object)$model, newdata = newdata, ...))
+    }
   }
   if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names
