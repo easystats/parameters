@@ -71,6 +71,8 @@ model_parameters.BFBayesFactor <- function(model,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
                                            ...) {
+  insight::check_if_installed("BayesFactor")
+
   if (any(grepl("^Null", names(model@numerator)))) {
     if (isTRUE(verbose)) {
       insight::print_color("Nothing to compute for point-null models.\nSee github.com/easystats/parameters/issues/226\n", "red")
@@ -292,10 +294,6 @@ p_value.BFBayesFactor <- function(model, ...) {
 }
 
 .method_BFBayesFactor <- function(x) {
-  if (!requireNamespace("BayesFactor", quietly = TRUE)) {
-    stop("This function needs `BayesFactor` to be installed.")
-  }
-
   if (any(class(x@denominator) %in% c("BFcorrelation"))) {
     "Bayesian correlation analysis"
   } else if (any(class(x@denominator) %in% c("BFoneSample", "BFindepSample"))) {
