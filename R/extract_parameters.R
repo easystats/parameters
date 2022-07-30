@@ -105,7 +105,7 @@
     intercept_groups <- NULL
   }
 
-  original_order <- parameters$.id <- 1:nrow(parameters)
+  original_order <- parameters$.id <- seq_len(nrow(parameters))
 
   # column name for coefficients, non-standardized
   coef_col <- "Coefficient"
@@ -444,7 +444,7 @@
   parameters <- .check_rank_deficiency(parameters)
 
   # sometimes, due to merge(), row-order messes up, so we save this here
-  original_order <- parameters$.id <- 1:nrow(parameters)
+  original_order <- parameters$.id <- seq_len(nrow(parameters))
 
   # remove SE column
   parameters <- datawizard::data_remove(parameters, c("SE", "Std. Error"), verbose = FALSE)
