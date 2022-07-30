@@ -22,3 +22,5 @@
 ^cran-comments\.md$
 ^revdep$
 ^CODE_OF_CONDUCT\.md$
+\.code-workspace$
+\.lintr$
