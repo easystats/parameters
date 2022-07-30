@@ -800,7 +800,7 @@
   if ("ROPE_CI" %in% names(parameters) && insight::n_unique(parameters$ROPE_CI) == 1) {
     parameters$ROPE_CI <- NULL
   }
-  if ("ROPE_low" %in% names(parameters) & "ROPE_high" %in% names(parameters)) {
+  if ("ROPE_low" %in% names(parameters) && "ROPE_high" %in% names(parameters)) {
     parameters$ROPE_low <- NULL
     parameters$ROPE_high <- NULL
   }
