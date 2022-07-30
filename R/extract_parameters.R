@@ -26,14 +26,18 @@
 
   if (isTRUE(standardize)) {
     if (verbose) {
-      insight::format_message(warning("'standardize' must be on of 'refit', 'posthoc', 'basic', 'smart' or 'pseudo'.", call. = FALSE))
+      warning(insight::format_message(
+        "'standardize' must be on of 'refit', 'posthoc', 'basic', 'smart' or 'pseudo'."
+      ), call. = FALSE)
     }
     standardize <- NULL
   }
 
   if (!is.null(standardize) && !requireNamespace("datawizard", quietly = TRUE)) {
     if (verbose) {
-      insight::format_message(warning("Package 'datawizard' required to calculate standardized coefficients. Please install it.", call. = FALSE))
+      warning(insight::format_message(
+        "Package 'datawizard' required to calculate standardized coefficients. Please install it."
+      ), call. = FALSE)
     }
     standardize <- NULL
   }
@@ -88,9 +92,15 @@
     intercept_groups <- which(grepl("Intercept:", parameters$Parameter, fixed = TRUE))
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
-    intercept_groups <- rep(c("intercept", "location", "scale"), vapply(model[c("alpha", "beta", "zeta")], length, numeric(1)))
+    intercept_groups <- rep(
+      c("intercept", "location", "scale"),
+      vapply(model[c("alpha", "beta", "zeta")], length, numeric(1))
+    )
   } else if (inherits(model, "clm2") && !is.null(model$Alpha)) {
-    intercept_groups <- rep(c("intercept", "location", "scale"), vapply(model[c("Alpha", "beta", "zeta")], length, numeric(1)))
+    intercept_groups <- rep(
+      c("intercept", "location", "scale"),
+      vapply(model[c("Alpha", "beta", "zeta")], length, numeric(1))
+    )
   } else {
     intercept_groups <- NULL
   }
