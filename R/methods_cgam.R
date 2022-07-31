@@ -47,7 +47,7 @@ model_parameters.cgam <- function(model,
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
-    not_allowed = c("vcov", "vcov_args"),
+    not_allowed = c("vcov", "vcov_args", "component"),
     class(model)[1],
     verbose = verbose
   )
@@ -61,7 +61,7 @@ model_parameters.cgam <- function(model,
       ...
     )
   } else {
-    params <- .extract_parameters_generic(
+    args <- list(
       model,
       ci = ci,
       ci_method = ci_method,
@@ -71,8 +71,12 @@ model_parameters.cgam <- function(model,
       p_adjust = p_adjust,
       keep_parameters = keep,
       drop_parameters = drop,
-      ...
+      verbose = verbose,
+      vcov = NULL,
+      vcov_args = NULL
     )
+    args <- c(args, dot_args)
+    params <- do.call(".extract_parameters_generic", args)
   }
 
   # fix statistic column
