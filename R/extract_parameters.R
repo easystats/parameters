@@ -776,7 +776,7 @@
 
     parameters <- merge(
       std_parameters,
-      parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))], 
+      parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
       sort = FALSE
     )
   } else {

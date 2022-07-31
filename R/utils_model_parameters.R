@@ -279,7 +279,6 @@
 
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
-
   # "exponentiate" must be
   # - TRUE, will always exponentiate all coefficients
   # - "nongaussian", will exponentiate all coefficients for models with non-gaussian family

@@ -119,7 +119,7 @@ pool_parameters <- function(x,
       params$Parameter1 <- NULL
       params$Parameter2 <- NULL
       # update values
-      parameter_values <- paste0(x[[1]]$Parameter1, " and ", x[[1]]$Parameter2)#
+      parameter_values <- paste0(x[[1]]$Parameter1, " and ", x[[1]]$Parameter2) #
     }
     # fix coefficient column
     colnames(params)[colnames(params) == "r"] <- "Coefficient"

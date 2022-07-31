@@ -121,7 +121,7 @@ statistic and designation computations has only been tested to R version
 }
 \examples{
 if (getRversion() >= "3.5.0" && require("domir") &&
-require("performance")) {
+  require("performance")) {
   data(mtcars)
 
   # Dominance Analysis with Logit Regression
@@ -131,11 +131,12 @@ require("performance")) {
   dominance_analysis(model)
 
   # Dominance Analysis with Weighted Logit Regression
-  model_wt <- glm(vs ~ cyl + carb + mpg, data = mtcars,
-    weights = wt, family = binomial())
+  model_wt <- glm(vs ~ cyl + carb + mpg,
+    data = mtcars,
+    weights = wt, family = binomial()
+  )
 
- dominance_analysis(model_wt, quote_args = "weights")
-
+  dominance_analysis(model_wt, quote_args = "weights")
 }
 }
 \references{
