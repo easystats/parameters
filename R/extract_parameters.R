@@ -774,7 +774,11 @@
       ...
     )
 
-    parameters <- merge(std_parameters, parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))], sort = FALSE)
+    parameters <- merge(
+      std_parameters,
+      parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))], 
+      sort = FALSE
+    )
   } else {
     parameters <- bayestestR::describe_posterior(
       model,
