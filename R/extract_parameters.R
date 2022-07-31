@@ -367,7 +367,9 @@
   if (!is.null(keep) && length(keep) > 1) {
     keep <- paste0("(", paste0(keep, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(sprintf("The 'keep' argument has more than 1 element. Merging into following regular expression: '%s'.", keep)))
+      message(insight::format_message(
+        sprintf("The 'keep' argument has more than 1 element. Merging into following regular expression: '%s'.", keep)
+      ))
     }
   }
 
@@ -375,7 +377,9 @@
   if (!is.null(drop) && length(drop) > 1) {
     drop <- paste0("(", paste0(drop, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(sprintf("The 'drop' argument has more than 1 element. Merging into following regular expression: '%s'.", drop)))
+      message(insight::format_message(
+        sprintf("The 'drop' argument has more than 1 element. Merging into following regular expression: '%s'.", drop)
+      ))
     }
   }
 
