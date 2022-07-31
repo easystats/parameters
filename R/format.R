@@ -684,7 +684,7 @@ format.parameters_sem <- function(x,
     }
 
     if (!is.null(msg)) {
-      message(insight::color_text(paste0("\n", msg), "red"))
+      message(paste0("\n", msg))
     }
   }
 }
