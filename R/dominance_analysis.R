@@ -114,7 +114,7 @@
 #'
 #' @examples
 #' if (getRversion() >= "3.5.0" && require("domir") &&
-#' require("performance")) {
+#'   require("performance")) {
 #'   data(mtcars)
 #'
 #'   # Dominance Analysis with Logit Regression
@@ -124,17 +124,17 @@
 #'   dominance_analysis(model)
 #'
 #'   # Dominance Analysis with Weighted Logit Regression
-#'   model_wt <- glm(vs ~ cyl + carb + mpg, data = mtcars,
-#'     weights = wt, family = binomial())
+#'   model_wt <- glm(vs ~ cyl + carb + mpg,
+#'     data = mtcars,
+#'     weights = wt, family = binomial()
+#'   )
 #'
-#'  dominance_analysis(model_wt, quote_args = "weights")
-#'
-#'}
+#'   dominance_analysis(model_wt, quote_args = "weights")
+#' }
 #' @export
 dominance_analysis <- function(model, sets = NULL, all = NULL,
                                conditional = TRUE, complete = TRUE,
                                quote_args = NULL, ...) {
-
   # Exit Conditions ----
   insight::check_if_installed("domir")
   insight::check_if_installed("performance")
@@ -147,7 +147,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   if (!any(utils::.S3methods("r2", class = class(model)[[1]], envir = getNamespace("performance")) ==
-           paste0("r2.", class(model)[[1]]))) {
+    paste0("r2.", class(model)[[1]]))) {
     stop(insight::format_message(
       paste(deparse(substitute(model)), "does not have a perfomance-supported r2 method."),
       "You may be able to dominance analyze this model using the domir package."
@@ -194,7 +194,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop("Each element of list in sets must be a formula.", call. = FALSE)
     }
 
-    if (any(sapply(sets, function(x)  attr(stats::terms(x), "response")==1))) {
+    if (any(sapply(sets, function(x) attr(stats::terms(x), "response") == 1))) {
       stop("Formulas in sets argument must not have responses/left hand sides.", call. = FALSE)
     }
   }
@@ -235,7 +235,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
         insight::format_message(
           "Terms",
           paste(wrong_set_terms, sep = " "),
-          "in sets argument do not match any predictors in model."), call. = FALSE)
+          "in sets argument do not match any predictors in model."
+        ),
+        call. = FALSE
+      )
     }
 
     ivs <- ivs[-set_remove_loc]
@@ -245,14 +248,18 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
     missing_set_names <- which(set_names == "")
 
-    if (length(missing_set_names) > 0)
+    if (length(missing_set_names) > 0) {
       set_names[missing_set_names] <- paste0("set", missing_set_names)
+    }
 
     if (any(set_names %in% c("all", "constant"))) {
       stop(
         insight::format_message(
           "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
-          "Please rename any sets currently named 'all' or 'constant.'"), call. = FALSE)
+          "Please rename any sets currently named 'all' or 'constant.'"
+        ),
+        call. = FALSE
+      )
     }
 
     if (any(set_names %in% ivs)) {
@@ -261,12 +268,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop(insight::format_message(
         "Set names",
         paste(repeat_names, sep = " "), "are also the names of invidiual predictors.",
-           "Please rename these sets."), call. = FALSE)
+        "Please rename these sets."
+      ), call. = FALSE)
     }
-
+  } else {
+    sets_processed <- NULL
   }
-
-  else sets_processed <- NULL
 
   # Process all ----
   if (!is.null(all)) {
@@ -274,7 +281,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     all_processed <- attr(stats::terms(all), "term.labels")
 
     # remove predictors in all from `ivs` list
-    all_remove_loc <-  which(ivs %in% all_processed)
+    all_remove_loc <- which(ivs %in% all_processed)
 
     if (any(all_processed %in% unlist(sets_processed))) {
       reused_terms <- all_processed[which(all_processed %in% unlist(sets_processed))]
@@ -282,7 +289,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop(insight::format_message(
         "Terms",
         paste(reused_terms, sep = " "),
-        "in all argument are also used in sets argument."), call. = FALSE)
+        "in all argument are also used in sets argument."
+      ), call. = FALSE)
     }
 
     if (length(all_remove_loc) != length(unlist(all_processed))) {
@@ -291,14 +299,14 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop(insight::format_message(
         "Terms",
         paste(wrong_all_terms, sep = " "),
-        "in all argument do not match any predictors in model."), call. = FALSE)
+        "in all argument do not match any predictors in model."
+      ), call. = FALSE)
     }
 
     ivs <- ivs[-all_remove_loc] # update IVs
-
+  } else {
+    all_processed <- NULL
   }
-
-  else all_processed <- NULL
 
   # name collisions across subsets - exit
   if (any(ivs %in% c("all", "constant"))) {
@@ -306,13 +314,22 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       insight::format_message(
         "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
         "Please rename any predictors currently named 'all' or 'constant.'",
-        "Alternatively, put the predictor in a set by itself."), call. = FALSE)
+        "Alternatively, put the predictor in a set by itself."
+      ),
+      call. = FALSE
+    )
   }
 
   # big DA warning
-  if (length(c(ivs, unlist(sets_processed))) > 15) warning(
-    cat(paste("Total of", 2^length(ivs)-1, "models to be estimated.\n",
-              "Process may take some time.")) , call. = FALSE)
+  if (length(c(ivs, unlist(sets_processed))) > 15) {
+    warning(
+      cat(paste(
+        "Total of", 2^length(ivs) - 1, "models to be estimated.\n",
+        "Process may take some time."
+      )),
+      call. = FALSE
+    )
+  }
 
   # Build non-formula model arguments to `domin` ----
   fml <- stats::reformulate(ivs, response = dv, intercept = insight::has_intercept(model))
@@ -323,7 +340,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   loc <- which(!(names(args) %in% c("formula", "data"))) # find formula and data arguments
 
-  if (length(which(names(args) %in% c("formula", "data"))) != 2) { # exit if formula and data arguments missing
+  if (length(which(names(args) %in% c("formula", "data"))) != 2) {
+    # exit if formula and data arguments missing
     stop("Model submitted does not have a formula and data argument.", call. = FALSE)
   }
 
@@ -332,10 +350,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   # quote arguments for domin
   for (arg in quote_args) {
-    if (!(arg %in% names(args))) stop(arg, " in quote_args not among arguments in model.", call. = FALSE)
-
-    else args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
-
+    if (!(arg %in% names(args))) {
+      stop(arg, " in quote_args not among arguments in model.", call. = FALSE)
+    } else {
+      args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
+    }
   }
 
   # Internal wrapper to ensure r2 values conform to domin ----
@@ -344,28 +363,28 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   # Finalize and implement DA
-  args2domin <- append(list(formula_overall = fml, reg = reg, fitstat = list(.r2_wrap, "fitstat"),
-                    data = data, conditional = conditional, complete = complete,
-                    sets = sets_processed, all = all_processed), args)
+  args2domin <- append(list(
+    formula_overall = fml, reg = reg, fitstat = list(.r2_wrap, "fitstat"),
+    data = data, conditional = conditional, complete = complete,
+    sets = sets_processed, all = all_processed
+  ), args)
 
   utils::capture.output(domir_res <- do.call(domir::domin, args2domin))
 
   # Set up returned data.frames ----
   if (!is.null(sets)) {
-
     names(domir_res$General_Dominance) <-
-      c(names(domir_res$General_Dominance)[1:(length(domir_res$General_Dominance) - length(set_names))],
-        set_names)
+      c(
+        names(domir_res$General_Dominance)[1:(length(domir_res$General_Dominance) - length(set_names))],
+        set_names
+      )
 
     if (conditional) {
       rownames(domir_res$Conditional_Dominance) <- names(domir_res$General_Dominance)
-
     }
-
   }
 
   if (complete) {
-
     colnames(domir_res$Complete_Dominance) <- paste0("dmn_", names(domir_res$General_Dominance))
 
     dimnames(domir_res$Complete_Dominance) <- list(
@@ -374,117 +393,142 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     )
 
     domir_res$Complete_Dominance <- t(domir_res$Complete_Dominance)
-
   }
 
   da_df_res <- da_df_cat <-
     data.frame(parameter = insight::find_parameters(model, flatten = TRUE))
 
-  da_df_cat = data.frame(da_df_cat, subset = NA_character_)
+  da_df_cat <- data.frame(da_df_cat, subset = NA_character_)
 
   if (!is.null(sets)) {
-
     for (set in 1:length(sets)) {
-
       set_name <- ifelse(!is.null(names(sets)[[set]]), names(sets)[[set]],
-                         paste0("set", set))
+        paste0("set", set)
+      )
 
       da_df_cat$subset <-
-        replace(da_df_cat$subset,
-                da_df_res$parameter %in% all.vars(sets[[set]]), set_name)
-
+        replace(
+          da_df_cat$subset,
+          da_df_res$parameter %in% all.vars(sets[[set]]), set_name
+        )
     }
-
   }
 
   if (!is.null(all)) {
-
-      da_df_cat$subset <-
-        replace(da_df_cat$subset,
-                da_df_res$parameter %in% all.vars(all), "all")
-
+    da_df_cat$subset <-
+      replace(
+        da_df_cat$subset,
+        da_df_res$parameter %in% all.vars(all), "all"
+      )
   }
 
   da_df_cat$subset <-
     ifelse((da_df_res$parameter %in% (insight::find_predictors(model, flatten = TRUE))) &
-             (is.na(da_df_cat$subset)),
-           da_df_res$parameter,
-           da_df_cat$subset)
+      (is.na(da_df_cat$subset)),
+    da_df_res$parameter,
+    da_df_cat$subset
+    )
 
   da_df_cat$subset <-
-    replace(da_df_cat$subset,
-            is.na(da_df_cat$subset), "constant")
+    replace(
+      da_df_cat$subset,
+      is.na(da_df_cat$subset), "constant"
+    )
 
   da_df_res <-
-    datawizard::data_merge(da_df_cat,
-                           data.frame(subset = names(domir_res$General_Dominance),
-                                      general_dominance = domir_res$General_Dominance))
+    datawizard::data_merge(
+      da_df_cat,
+      data.frame(
+        subset = names(domir_res$General_Dominance),
+        general_dominance = domir_res$General_Dominance
+      )
+    )
 
   if (!is.null(all)) {
-
     da_df_res$general_dominance <-
       replace(da_df_res$general_dominance, da_df_res$subset == "all", domir_res$Fit_Statistic_All_Subsets)
-
   }
 
   da_df_res <-
-    datawizard::data_merge(da_df_res,
-                           data.frame(subset = names(domir_res$General_Dominance),
-                                      standardized = domir_res$Standardized))
+    datawizard::data_merge(
+      da_df_res,
+      data.frame(
+        subset = names(domir_res$General_Dominance),
+        standardized = domir_res$Standardized
+      )
+    )
 
   da_df_res <-
-    datawizard::data_merge(da_df_res,
-                           data.frame(subset = names(domir_res$General_Dominance),
-                                      ranks = domir_res$Ranks))
+    datawizard::data_merge(
+      da_df_res,
+      data.frame(
+        subset = names(domir_res$General_Dominance),
+        ranks = domir_res$Ranks
+      )
+    )
 
   da_df_res <-
     datawizard::data_relocate(da_df_res, "subset", after = "ranks")
 
   if (conditional) {
-
     da_df_cdl <-
       data.frame(Subset = names(domir_res$General_Dominance))
 
     da_df_cdl <-
-      datawizard::data_merge(da_df_cdl,
-                             data.frame(Subset = names(domir_res$General_Dominance),
-                                        domir_res$Conditional_Dominance))
+      datawizard::data_merge(
+        da_df_cdl,
+        data.frame(
+          Subset = names(domir_res$General_Dominance),
+          domir_res$Conditional_Dominance
+        )
+      )
 
     da_df_cdl <-
-      datawizard::data_rename(da_df_cdl,
-                              names(da_df_cdl)[2:length(da_df_cdl)],
-                              colnames(domir_res$Conditional_Dominance))
+      datawizard::data_rename(
+        da_df_cdl,
+        names(da_df_cdl)[2:length(da_df_cdl)],
+        colnames(domir_res$Conditional_Dominance)
+      )
+  } else {
+    da_df_cdl <- NULL
   }
-
-  else da_df_cdl <- NULL
 
   if (complete) {
+    da_df_cpt <-
+      data.frame(Subset = names(domir_res$General_Dominance))
 
-  da_df_cpt <-
-    data.frame(Subset = names(domir_res$General_Dominance))
+    da_df_cpt <-
+      datawizard::data_merge(
+        da_df_cpt,
+        data.frame(
+          Subset = names(domir_res$General_Dominance),
+          domir_res$Complete_Dominance
+        )
+      )
 
-  da_df_cpt <-
-    datawizard::data_merge(da_df_cpt,
-                           data.frame(Subset = names(domir_res$General_Dominance),
-                                      domir_res$Complete_Dominance))
-
-  da_df_cpt <-
-    datawizard::data_rename(da_df_cpt,
-                            names(da_df_cpt)[2:length(da_df_cpt)],
-                            colnames(domir_res$Complete_Dominance))
-
+    da_df_cpt <-
+      datawizard::data_rename(
+        da_df_cpt,
+        names(da_df_cpt)[2:length(da_df_cpt)],
+        colnames(domir_res$Complete_Dominance)
+      )
+  } else {
+    da_df_cpt <- NULL
   }
-
-  else da_df_cpt <- NULL
 
   da_df_res <-
     datawizard::data_rename(da_df_res,
-                            replacement = c("Parameter", "General_Dominance",
-                                            "Percent", "Ranks", "Subset"))
+      replacement = c(
+        "Parameter", "General_Dominance",
+        "Percent", "Ranks", "Subset"
+      )
+    )
 
-  da_list <- list(General = da_df_res,
-                  Conditional = da_df_cdl,
-                  Complete = da_df_cpt)
+  da_list <- list(
+    General = da_df_res,
+    Conditional = da_df_cdl,
+    Complete = da_df_cpt
+  )
 
   # add attributes and class
   attr(da_list, "model_R2") <- domir_res$Fit_Statistic_Overall
@@ -495,7 +539,6 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   class(da_list) <- c("parameters_da")
 
   da_list
-
 }
 
 
@@ -514,40 +557,40 @@ print.parameters_da <- function(x, digits = 3, ...) {
   printed_x <- x
 
   printed_x$General <- datawizard::data_rename(x$General,
-                                               pattern = "General_Dominance",
-                                               replacement = "General Dominance")
+    pattern = "General_Dominance",
+    replacement = "General Dominance"
+  )
 
   if (!is.null(x$Conditional)) {
-
     cdl_col <- ncol(x$Conditional)
 
-    cdl_names<- paste0("IVs_", 1:(cdl_col - 1))
+    cdl_names <- paste0("IVs_", 1:(cdl_col - 1))
 
     cdl_names_rep <- paste("IVs:", 1:(cdl_col - 1))
 
     printed_x$Conditional <-
       datawizard::data_rename(x$Conditional,
-                  pattern = cdl_names,
-                  replacement = cdl_names_rep)
-
+        pattern = cdl_names,
+        replacement = cdl_names_rep
+      )
   }
 
   if (!is.null(x$Complete)) {
-
     cpt_names <- names(x$Complete)[-1]
 
-    cpt_names_rep <- gsub("dmn_", "< ",
-                          cpt_names)
+    cpt_names_rep <- gsub(
+      "dmn_", "< ",
+      cpt_names
+    )
 
     printed_x$Complete <-
       datawizard::data_rename(x$Complete,
-                              pattern = cpt_names,
-                              replacement = cpt_names_rep)
-
+        pattern = cpt_names,
+        replacement = cpt_names_rep
+      )
   }
 
   cat(insight::export_table(printed_x, digits = digits, ...))
 
   invisible(x)
-
 }
