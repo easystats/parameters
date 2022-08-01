@@ -33,7 +33,7 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 
   # Long means
   means <- datawizard::reshape_longer(params,
-    cols = 4:ncol(params),
+    select = 4:ncol(params),
     values_to = "Mean",
     names_to = "Variable"
   )

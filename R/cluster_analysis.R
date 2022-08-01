@@ -342,7 +342,7 @@ summary.cluster_analysis <- function(object, ...) {
 visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
   data <- datawizard::data_to_long(
     x,
-    cols = names(x)[-1], # skip 'Cluster' column
+    select = names(x)[-1], # skip 'Cluster' column
     names_to = "Group",
     values_to = "Center"
   )
