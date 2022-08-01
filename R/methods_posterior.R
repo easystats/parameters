@@ -77,7 +77,7 @@ p_value.draws <- function(model, ...) {
 }
 
 .posterior_draws_to_df.default <- function(x) {
-  stop(paste0("Objects of class '%s' are not yet supported.", class(x)[1]))
+  stop(sprintf("Objects of class '%s' are not yet supported.", class(x)[1]))
 }
 
 .posterior_draws_to_df.data.frame <- function(x) {
