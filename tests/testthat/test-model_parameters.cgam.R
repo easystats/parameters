@@ -102,20 +102,20 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") && utils::packageVers
 
     expect_equal(
       df,
-      structure(list(
-        Parameter = c("(Intercept)", "s.incr(x)"),
-        Coefficient = c(5.5174, NA),
-        SE = c(0.3631, NA),
-        CI = c(0.95, NA),
-        CI_low = c(4.80573707721351, NA),
-        CI_high = c(6.22906292278649, NA),
-        `t / F` = c(15.1954, NA),
-        p = c(0, 0),
-        Component = c("conditional", "smooth_terms"),
-        df = c(NA, 8.4),
-        df_error = c(NA, NA),
-        df_error.1 = c(NA, NA),
-        df.1 = c(NA, 8.4)),
+      structure(
+        list(
+          Parameter = c("(Intercept)", "s.incr(x)"),
+          Coefficient = c(5.6703, NA),
+          SE = c(0.3334, NA),
+          CI = c(0.95, NA),
+          CI_low = c(5.0159573478772, NA),
+          CI_high = c(6.3246426521228, NA),
+          `t / F` = c(17.0069, NA),
+          df = c(NA, 9.6),
+          df_error = c(889.2, NA),
+          p = c(0, 0),
+          Component = c("conditional", "smooth_terms")
+        ),
         row.names = c(NA, -2L),
         ci = 0.95,
         verbose = TRUE,

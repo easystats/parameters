@@ -182,3 +182,23 @@ degrees_of_freedom.cgam <- function(model, method = "wald", ...) {
     degrees_of_freedom.default(model, method = method, ...)
   }
 }
+
+
+#' @export
+degrees_of_freedom.cgamm <- function(model, method = "wald", ...) {
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  method <- match.arg(tolower(method), choices = c("analytical", "any", "fit", "wald", "residual", "normal"))
+
+  if (method %in% c("wald", "residual", "fit")) {
+    dof <- model$resid_df_obs
+    if (is.null(dof)) {
+      dof <- degrees_of_freedom.default(model, method = method, ...)
+    }
+  } else {
+    dof <- degrees_of_freedom.default(model, method = method, ...)
+  }
+
+  dof
+}
