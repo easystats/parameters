@@ -43,11 +43,11 @@ if (.runThisTest && win_os &&
   m5 <- suppressWarnings(glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
   set.seed(123)
-  expect_message(mp1 <- model_parameters(m1), "singularity")
-  mp2 <- model_parameters(m2) # works
-  expect_message(mp3 <- model_parameters(m3), "singularity") # no SE/CI
-  expect_message(mp4 <- model_parameters(m4), "singularity") # no SE/CI
-  expect_message(mp5 <- model_parameters(m5), "singularity") # no SE/CI
+  expect_message(mp1 <- model_parameters(m1, ci_random = TRUE), "singularity")
+  mp2 <- model_parameters(m2, ci_random = TRUE) # works
+  expect_message(mp3 <- model_parameters(m3, ci_random = TRUE), "singularity") # no SE/CI
+  expect_message(mp4 <- model_parameters(m4, ci_random = TRUE), "singularity") # no SE/CI
+  expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
 
   test_that("random effects CIs, two slopes, categorical", {
     expect_equal(
@@ -243,8 +243,8 @@ if (.runThisTest && win_os &&
   m5 <- suppressWarnings(glmmTMB(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy))
 
   set.seed(123)
-  mp2 <- model_parameters(m2)
-  expect_message(mp5 <- model_parameters(m5), "singularity") # no SE/CI
+  mp2 <- model_parameters(m2, ci_random = TRUE)
+  expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
 
   test_that("random effects CIs, simple slope", {
     expect_equal(
