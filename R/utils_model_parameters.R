@@ -43,7 +43,6 @@
   attr(params, "ci") <- ci
   attr(params, "ci_method") <- .format_ci_method_name(ci_method)
   attr(params, "df_method") <- .format_ci_method_name(ci_method)
-  attr(params, "test_statistic") <- insight::find_statistic(model)
   attr(params, "verbose") <- verbose
   attr(params, "exponentiate") <- exponentiate
   attr(params, "ordinal_model") <- isTRUE(info$is_ordinal) | isTRUE(info$is_multinomial)
@@ -59,8 +58,11 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
-  attr(params, "log_response") <- isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE))
-  attr(params, "log_predictors") <- any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))
+
+  # use tryCatch, these might fail...
+  attr(params, "test_statistic") <- tryCatch(insight::find_statistic(model), error = function(e) NULL)
+  attr(params, "log_response") <- tryCatch(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)), error = function(e) NULL)
+  attr(params, "log_predictors") <- tryCatch(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE)), error = function(e) NULL)
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
