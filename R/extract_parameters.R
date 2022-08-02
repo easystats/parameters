@@ -516,7 +516,12 @@
       se_kr$df_error <- NULL
       parameters <- merge(parameters, se_kr, by = "Parameter", sort = FALSE)
     } else {
-      parameters <- merge(parameters, standard_error(model, method = ci_method, effects = "fixed"), by = "Parameter", sort = FALSE)
+      parameters <- merge(
+        parameters,
+        standard_error(model, method = ci_method, effects = "fixed"),
+        by = "Parameter",
+        sort = FALSE
+      )
     }
   }
 
@@ -536,9 +541,19 @@
     } else if (ci_method %in% special_ci_methods) {
       # special handling for KR-p, which we already have computed from dof
       # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
-      parameters <- merge(parameters, .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE), by = "Parameter", sort = FALSE)
+      parameters <- merge(
+        parameters,
+        .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE),
+        by = "Parameter",
+        sort = FALSE
+      )
     } else {
-      parameters <- merge(parameters, p_value(model, dof = df, effects = "fixed"), by = "Parameter", sort = FALSE)
+      parameters <- merge(
+        parameters,
+        p_value(model, dof = df, effects = "fixed"),
+        by = "Parameter",
+        sort = FALSE
+      )
     }
   }
 
@@ -676,7 +691,8 @@
     parameters$Component[interactions] <- "interactions"
   }
 
-  if (((!("within" %in% parameters$Component) || !("between" %in% parameters$Component)) && inherits(model, "merMod")) || all(parameters$Component == "rewb-contextual")) {
+  if (((!all(c("within", "between") %in% parameters$Component)) && inherits(model, "merMod")) ||
+      all(parameters$Component == "rewb-contextual")) {
     parameters$Component <- NULL
   }
 
@@ -722,7 +738,10 @@
   # no ROPE for multi-response models
   if (insight::is_multivariate(model)) {
     test <- setdiff(test, c("rope", "p_rope"))
-    warning(insight::format_message("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."), call. = FALSE)
+    warning(insight::format_message(
+      "Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."),
+      call. = FALSE
+    )
   }
 
   # MCMCglmm need special handling
@@ -852,7 +871,10 @@
   if (!is.logical(standardize)) {
     if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
       if (verbose) {
-        warning(insight::format_message("'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'. Returning unstandardized solution."), call. = FALSE)
+        warning(insight::format_message(
+          "'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'.",
+          "Returning unstandardized solution."
+        ), call. = FALSE)
       }
       standardize <- FALSE
     }
@@ -862,7 +884,9 @@
   if (length(ci) > 1) {
     ci <- ci[1]
     if (verbose) {
-      warning(insight::format_message(paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`.")), call. = FALSE)
+      warning(insight::format_message(
+        paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`.")
+      ), call. = FALSE)
     }
   }
 
@@ -979,7 +1003,14 @@
 
 .check_rank_deficiency <- function(p, verbose = TRUE) {
   if (anyNA(p$Estimate)) {
-    if (isTRUE(verbose)) warning(insight::format_message(sprintf("Model matrix is rank deficient. Parameters %s were not estimable.", paste(p$Parameter[is.na(p$Estimate)], collapse = ", "))), call. = FALSE)
+    if (isTRUE(verbose)) {
+      warning(insight::format_message(
+        sprintf(
+          "Model matrix is rank deficient. Parameters %s were not estimable.",
+          paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")
+        )
+      ), call. = FALSE)
+    }
     p <- p[!is.na(p$Estimate), ]
   }
   p
