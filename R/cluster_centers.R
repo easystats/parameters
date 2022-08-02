@@ -53,7 +53,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
   # Long means
   means <- datawizard::reshape_longer(params,
-    cols = 4:ncol(params),
+    select = 4:ncol(params),
     values_to = "Mean",
     names_to = "Variable"
   )
