@@ -105,14 +105,14 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") && utils::packageVers
       structure(
         list(
           Parameter = c("(Intercept)", "s.incr(x)"),
-          Coefficient = c(5.6703, NA),
-          SE = c(0.3334, NA),
+          Coefficient = c(5.5174,NA),
+          SE = c(0.3631, NA),
           CI = c(0.95, NA),
-          CI_low = c(5.0159573478772, NA),
-          CI_high = c(6.3246426521228, NA),
-          `t / F` = c(17.0069, NA),
-          df = c(NA, 9.6),
-          df_error = c(889.2, NA),
+          CI_low = c(4.80476838465533, NA),
+          CI_high = c(6.23003161534467, NA),
+          `t / F` = c(15.1954, NA),
+          df = c(NA, 8.4),
+          df_error = c(890.4, NA),
           p = c(0, 0),
           Component = c("conditional", "smooth_terms")
         ),
