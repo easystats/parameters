@@ -1,9 +1,12 @@
+# generic function for CI calculation
 .ci_generic <- function(model,
                         ci = .95,
                         method = "wald",
                         dof = NULL,
                         effects = c("fixed", "random", "all"),
-                        component = c("all", "conditional", "zi", "zero_inflated", "dispersion", "precision", "scale", "smooth_terms", "full", "marginal"),
+                        component = c("all", "conditional", "zi", "zero_inflated",
+                                      "dispersion", "precision", "scale", 
+                                      "smooth_terms", "full", "marginal"),
                         vcov = NULL,
                         vcov_args = NULL,
                         verbose = TRUE,
@@ -31,6 +34,7 @@
     return(ci_kenward(model, ci = ci))
   }
 
+  # default CIs follow here (methods wald, boot, profile, residual, normal)
   out <- lapply(ci, function(i) {
     .ci_dof(
       model = model,
@@ -64,6 +68,8 @@
                     vcov_args = NULL,
                     verbose = TRUE,
                     ...) {
+
+  # need parameters to calculate the CIs
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
       model,
@@ -110,18 +116,23 @@
       )
     }
 
+    # if we have a non-empty stderror, use it
     if (datawizard::is_empty_object(stderror)) {
       return(NULL)
     }
 
     # filter non-matching parameters, resp. sort stderror and parameters,
     # so both have the identical order of values
-    if (nrow(stderror) != nrow(params) || !all(stderror$Parameter %in% params$Parameter) || !all(order(stderror$Parameter) == order(params$Parameter))) {
+    if (nrow(stderror) != nrow(params) ||
+        !all(stderror$Parameter %in% params$Parameter) ||
+        !all(order(stderror$Parameter) == order(params$Parameter))) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
+
     se <- stderror$SE
   }
 
+  # check if we have a valid dof vector
   if (is.null(dof)) {
     # residual df
     dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
@@ -130,10 +141,11 @@
       dof <- Inf
     } else if (length(dof) > nrow(params)) {
       # filter non-matching parameters
-      dof <- dof[1:nrow(params)]
+      dof <- dof[seq_len(nrow(params))]
     }
   }
 
+  # calculate CIs
   alpha <- (1 + ci) / 2
   fac <- suppressWarnings(stats::qt(alpha, df = dof))
   out <- cbind(
