@@ -437,6 +437,7 @@ model_parameters.default <- function(model,
                                      vcov_args = NULL,
                                      ...) {
   # sanity check, warn if unsupported argument is used.
+  # unsupported arguments will be removed from the argument list.
   dots <- .check_dots(
     dots = list(...),
     not_allowed = c("include_sigma", "wb_component"),
@@ -476,12 +477,18 @@ model_parameters.default <- function(model,
   # tell user if something went wrong...
   if (length(out) == 1 && isTRUE(is.na(out))) {
     msg <- insight::format_message(
-      paste0("Sorry, `model_parameters()` failed with the following error (possible class '", class(model)[1], "' not supported):\n"),
+      paste0("Sorry, `model_parameters()` failed with the following error (possible class '",
+             class(model)[1],
+             "' not supported):\n"),
       attr(out, "error")
     )
     stop(msg, call. = FALSE)
   } else if (is.null(out)) {
-    stop(paste0("Sorry, `model_parameters()` does currently not work for objects of class '", class(model)[1], "'."), call. = FALSE)
+    stop(paste0(
+      "Sorry, `model_parameters()` does currently not work for objects of class '",
+      class(model)[1],
+      "'."), call. = FALSE
+    )
   }
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -518,11 +525,16 @@ model_parameters.default <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
+    warning(insight::format_message(
+      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
+    ), call. = FALSE)
     ci_method <- df_method
   }
 
-  # Processing
+
+  # ==== 1. first step, extracting (bootstrapped) model parameters -------
+
+  # Processing, bootstrapped parameters
   if (bootstrap) {
     # set default method for bootstrapped CI
     if (is.null(ci_method) || missing(ci_method)) {
@@ -537,6 +549,8 @@ model_parameters.default <- function(model,
     )
     args <- c(args, dots)
     params <- do.call("bootstrap_parameters", args)
+
+  # Processing, non-bootstrapped parameters
   } else {
     # set default method for CI
     if (is.null(ci_method) || missing(ci_method)) {
@@ -562,8 +576,14 @@ model_parameters.default <- function(model,
     params <- do.call(".extract_parameters_generic", args)
   }
 
+
+  # ==== 2. second step, exponentiate -------
+
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
+
+
+  # ==== 3. third step, add information as attributes -------
 
   # add further information as attributes
   params <- .add_model_parameters_attributes(
@@ -619,8 +639,11 @@ model_parameters.glm <- function(model,
     ci_method <- df_method
   }
 
+  # profiled CIs may take a long time to compute, so we warn the user about it
   if (insight::n_obs(model) > 1e4 && identical(ci_method, "profile")) {
-    message(insight::format_message("Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."))
+    message(insight::format_message(
+      "Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."
+    ))
   }
 
   args <- list(
