@@ -128,7 +128,11 @@
     ci_df <- suppressMessages(do.call("ci", args))
 
     if (!is.null(ci_df)) {
-      if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
+      # for multiple CI columns, reshape CI-dataframe to match parameters df
+      if (length(ci) > 1) {
+        ci_df <- datawizard::reshape_ci(ci_df)
+      }
+      # remember names of CI columns, used for later sorting of columns
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
