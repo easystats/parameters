@@ -67,7 +67,7 @@ dof_kenward <- function(model) {
 
 .divZero <- function(x, y, tol = 1e-14) {
   ## ratio x/y is set to 1 if both |x| and |y| are below tol
-  if (abs(x) < tol & abs(y) < tol) {
+  if (abs(x) < tol && abs(y) < tol) {
     1
   } else {
     x / y
