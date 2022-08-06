@@ -20,6 +20,19 @@ if (requiet("testthat") && requiet("parameters") && requiet("psych") && requiet(
       colnames(x),
       c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA")
     )
+
+    expect_equal(
+      dim(predict(x)),
+      c(32, 2)
+    )
+    expect_equal(
+      names(predict(x, names=c("A", "B"))),
+      c("A", "B")
+    )
+    expect_equal(
+      nrow(predict(x, newdata = mtcars[1:3, 1:7])),
+      3
+    )
   })
 
 
@@ -46,6 +59,38 @@ if (requiet("testthat") && requiet("parameters") && requiet("psych") && requiet(
     )
   })
 
+  test_that("principal_components", {
+    x <- model_parameters(principal(mtcars[, 1:7], nfactors = 2))
+
+    expect_equal(
+      x$RC1,
+      c(
+        -0.836114674884308,
+        0.766808147590597,
+        0.85441780762136,
+        0.548502661888057,
+        -0.889046093964722,
+        0.931879020871552,
+        -0.030485507571411
+      ),
+      tolerance = 0.01
+    )
+
+    expect_equal(
+      colnames(x),
+      c("Variable", "RC1", "RC2", "Complexity", "Uniqueness")
+    )
+
+    expect_equal(
+      dim(suppressWarnings(predict(x))),
+      c(32, 2)
+    )
+    expect_equal(
+      dim(suppressWarnings(predict(x, newdata=mtcars[1:3, 1:7]))),
+      c(3, 2)
+    )
+  })
+
 
   # predict ----------------------
   # N.B tests will fail if `GPArotation` package is not installed
@@ -67,6 +112,36 @@ if (requiet("testthat") && requiet("parameters") && requiet("psych") && requiet(
       out$Opennness,
       c(-1.6092, -0.17222, 0.23341, -1.06152, -0.66086),
       tolerance = 0.01
+    )
+
+    expect_equal(
+      nrow(predict(mp, keep_na = FALSE)),
+      2436
+    )
+
+    expect_equal(
+      nrow(predict(mp, newdata=d[1:10, ], keep_na = FALSE)),
+      10
+    )
+  })
+
+
+  model <- factor_analysis(d, n = 5)
+
+  test_that("predict factor_analysis", {
+    expect_equal(
+      nrow(predict(model, keep_na = FALSE)),
+      2436
+    )
+
+    expect_equal(
+      nrow(predict(mp, newdata=d[1:10, ], keep_na = FALSE)),
+      10
+    )
+
+    expect_equal(
+      names(predict(mp, names=c("A", "B", "C", "D", "E"), keep_na = FALSE)),
+      c('A', 'B', 'C', 'D', 'E')
     )
   })
 }

@@ -76,24 +76,52 @@ predict.parameters_efa <- function(object,
                                    names = NULL,
                                    keep_na = TRUE,
                                    ...) {
-  if (is.null(newdata)) {
-    out <- as.data.frame(attributes(object)$scores)
-    if (isTRUE(keep_na)) {
-      out <- .merge_na(object, out)
+
+  attri <- attributes(object)
+
+  if (inherits(attri$model, c("psych", "principal"))) {
+    if (is.null(newdata)) {
+      if("scores" %in% names(attri)) {
+        out <- as.data.frame(attri$scores)
+        if (isTRUE(keep_na)) {
+          # Because pre-made scores don't preserve NA
+          out <- .merge_na(object, out)
+        }
+      } else {
+        d <- attri$data_set
+        d <- d[sapply(d, is.numeric)]
+        out <- as.data.frame(stats::predict(attri$model, data = d))
+      }
+    } else {
+      # psych:::predict.principal(object, data)
+      out <- predict(attri$model, data=newdata)
+    }
+  } else if(inherits(attri$model, c("psych", "fa"))) {
+    if (is.null(newdata)) {
+      if("scores" %in% names(attri)) {
+        out <- as.data.frame(attri$scores)
+        if (isTRUE(keep_na)) {
+          # Because pre-made scores don't preserve NA
+          out <- .merge_na(object, out)
+        }
+      } else {
+        d <- attri$data_set
+        d <- d[sapply(d, is.numeric)]
+        out <- as.data.frame(stats::predict(attri$model, data = d))
+      }
+    } else {
+      # psych:::predict.fa(object, data)
+      out <- as.data.frame(stats::predict(attri$model, data = newdata))
     }
   } else {
-    if (inherits(attributes(object)$model, c("psych", "fa"))) {
-      # psych:::predict.fa(object, data)
-      out <- as.data.frame(stats::predict(attributes(object)$model, data = newdata))
-    } else {
-      out <- as.data.frame(stats::predict(attributes(object)$model, newdata = newdata, ...))
-    }
+    out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
   }
+
+
   if (!is.null(names)) {
     names(out)[1:length(c(names))] <- names
-  } else {
-    names(out) <- names(get_scores(object))
   }
+
   row.names(out) <- NULL
   out
 }
