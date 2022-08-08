@@ -201,7 +201,7 @@ through which we will use 70\% of the sample as training and the rest as test.
 # to have reproducible result, we will also set seed here so that similar
 # portions of the data are used each time we run the following code
 partitions <- datawizard::data_partition(data, training_proportion = 0.7, seed = 111)
-training <- partitions$training
+training <- partitions$p_0.7
 test <- partitions$test
 ```
 
