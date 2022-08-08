@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -248,16 +248,17 @@ case of bootstrapped frequentist models.</p></dd>
 
 <dt>exponentiate</dt>
 <dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
+with log-transformed response values. <strong>Note:</strong> Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
+<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
+non-Gaussian families.</p></dd>
 
 
 <dt>p_adjust</dt>

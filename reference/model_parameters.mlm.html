@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.9</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.1.11</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -182,16 +182,17 @@ works when <code>standardize="refit"</code>.</p></li>
 
 <dt>exponentiate</dt>
 <dd><p>Logical, indicating whether or not to exponentiate the
-the coefficients (and related confidence intervals). This is typical for
-logistic regression, or more generally speaking, for models with log
-or logit links. <strong>Note:</strong> Delta-method standard errors are also
-computed (by multiplying the standard errors by the transformed
-coefficients). This is to mimic behaviour of other software packages, such
-as Stata, but these standard errors poorly estimate uncertainty for the
-transformed coefficient. The transformed confidence interval more clearly
-captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
-<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients
-from non-Gaussian families.</p></dd>
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use <code>exponentiate = TRUE</code> for models
+with log-transformed response values. <strong>Note:</strong> Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For <code><a href="compare_parameters.html">compare_parameters()</a></code>,
+<code>exponentiate = "nongaussian"</code> will only exponentiate coefficients from
+non-Gaussian families.</p></dd>
 
 
 <dt>verbose</dt>
@@ -293,6 +294,9 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The model has a log- or logit-link. Consider using `exponentiate = TRUE`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   to interpret coefficients as ratios.</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
