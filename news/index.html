@@ -69,21 +69,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.18.1" id="parameters-0181">parameters 0.18.1<a class="anchor" aria-label="anchor" href="#parameters-0181"></a></h2><p class="text-muted">CRAN release: 2022-05-29</p>
+<h2 class="pkg-version" data-toc-text="0.18.2" id="parameters-0182">parameters 0.18.2<a class="anchor" aria-label="anchor" href="#parameters-0182"></a></h2>
 <div class="section level3">
-<h3 id="new-functions-0-18-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-18-1"></a></h3>
+<h3 id="new-functions-0-18-2">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-18-2"></a></h3>
 <ul><li>New function <code><a href="../reference/dominance_analysis.html">dominance_analysis()</a></code>, to compute dominance analysis statistics and designations.</li></ul></div>
 <div class="section level3">
-<h3 id="changes-to-functions-0-18-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-1"></a></h3>
+<h3 id="changes-to-functions-0-18-2">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-2"></a></h3>
 <ul><li>Argument <code>ci_random</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> defaults to <code>NULL</code>. It uses a heuristic to determine if random effects confidence intervals are likely to take a long time to compute, and automatically includes or excludes those confidence intervals. Set <code>ci_random</code> to <code>TRUE</code> or <code>FALSE</code> to explicitly calculate or omit confidence intervals for random effects.</li></ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-18-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-1"></a></h3>
+<h3 id="bug-fixes-0-18-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-2"></a></h3>
 <ul><li><p>Fix issues in <code><a href="../reference/pool_parameters.html">pool_parameters()</a></code> for certain models with special components (like <code><a href="https://rdrr.io/pkg/MASS/man/polr.html" class="external-link">MASS::polr()</a></code>), that failed when argument <code>component</code> was set to <code>"conditional"</code> (the default).</p></li>
 <li><p>Fix issues in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for multiple imputation models from package <em>Hmisc</em>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.18.1" id="parameters-0181-1">parameters 0.18.1<a class="anchor" aria-label="anchor" href="#parameters-0181-1"></a></h2><p class="text-muted">CRAN release: 2022-05-29</p>
+<h2 class="pkg-version" data-toc-text="0.18.1" id="parameters-0181">parameters 0.18.1<a class="anchor" aria-label="anchor" href="#parameters-0181"></a></h2><p class="text-muted">CRAN release: 2022-05-29</p>
 <div class="section level3">
 <h3 id="general-0-18-1">General<a class="anchor" aria-label="anchor" href="#general-0-18-1"></a></h3>
 <ul><li><p>It is now possible to hide messages about CI method below tables by specifying <code>options("parameters_cimethod" = FALSE)</code> (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>). By default, these messages are displayed.</p></li>
@@ -92,13 +92,13 @@
 <li><p>Reorganization of docs for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-functions-0-18-1-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-1-1"></a></h3>
+<h3 id="changes-to-functions-0-18-1">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-1"></a></h3>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> now also includes standard errors and confidence intervals for slope-slope-correlations of random effects variances.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models gains a <code>ci_random</code> argument, to toggle whether confidence intervals for random effects parameters should also be computed. Set to <code>FALSE</code> if calculation of confidence intervals for random effects parameters takes too long.</p></li>
 <li><p><code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> for <em>glmmTMB</em> models with <code>method = "profile"</code> is now more robust.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-18-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-1-1"></a></h3>
+<h3 id="bug-fixes-0-18-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-1"></a></h3>
 <ul><li><p>Fixed issue with <em>glmmTMB</em> models when calculating confidence intervals for random effects failed due to singular fits.</p></li>
 <li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> now correctly includes custom text and additional information in the footer (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>).</p></li>
 <li><p>Fixed issue with argument <code>column_names</code> in <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> when strings contained characters that needed to be escaped for regular expressions.</p></li>
