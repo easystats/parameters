@@ -1,18 +1,8 @@
-## Test environments
-* local R installation, R 4.0.5
-* ubuntu 16.04 (on github-actions ci), R 4.0.5
-* win-builder (on github-actions ci)
+This submission fixes CRAN check failures (related to the last *datawizard* update).
 
-## R CMD check results
-
-0 errors | 0 warnings | 0 note
-
-## revdepcheck results
-
-We checked 19 reverse dependencies, comparing R CMD check results across CRAN
+We checked all reverse dependencies, comparing R CMD check results across CRAN
 and dev versions of this package.
 
- * We saw 1 new problems: *effectsize*
- * We failed to check 0 packages
+ * We saw 1 new problems: *cvms*
  
-We have already informed the maintainer of this breaking change and the new version of *effectsize* on GitHub should soon be submitted to CRAN.
+We have already informed the maintainer of this breaking change and he is prepared to submit a new version of *cvms* to CRAN once *parameters* update is accepted on CRAN.
