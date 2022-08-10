@@ -182,7 +182,6 @@ Suggests:
     survival,
     testthat,
     TMB,
-    tripack,
     truncreg,
     VGAM,
     WRS2

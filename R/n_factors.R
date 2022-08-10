@@ -126,11 +126,11 @@ n_factors <- function(x,
   }
 
   # Get number of observations
-  if(!is.data.frame(x)) {
-    if(is.numeric(x) && !is.null(cor)) {
+  if (!is.data.frame(x)) {
+    if (is.numeric(x) && !is.null(cor)) {
       nobs <- x
       package <- package[!package %in% c("pcdimension", "PCDimension")]
-    } else if(is.matrix(x) || inherits(x, "easycormatrix")) {
+    } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
       stop("Please input the correlation matrix via the `cor = ...` argument and
            the number of rows / observations via the first argument.")
     }
@@ -145,7 +145,7 @@ n_factors <- function(x,
   eigen_values <- eigen(cor)$values
 
   # Smooth matrix if negative eigen values
-  if(any(eigen_values < 0)) {
+  if (any(eigen_values < 0)) {
     insight::check_if_installed("psych")
     cor <- psych::cor.smooth(cor, ...)
     eigen_values <- eigen(cor)$values
@@ -324,7 +324,7 @@ n_factors <- function(x,
   out <- out[order(out$n_Factors), ] # Arrange by n factors
   row.names(out) <- NULL # Reset row index
 
-  if(!is.null(n_max)) {
+  if (!is.null(n_max)) {
     out <-  out[out$n_Factors <= n_max, ]
   }
 
@@ -674,35 +674,35 @@ print.n_clusters <- print.n_factors
   # an "elbow"/"knee". Here we take the first value that reaches 90 percent
   # of the range between the max and the min (when 'threshold = 0.1').
   # Fit
-  if(all(is.na(rez$Fit))) {
+  if (all(is.na(rez$Fit))) {
     fit_off <- NA
   } else {
     target <- max(rez$Fit, na.rm = TRUE) - threshold * diff(range(rez$Fit, na.rm = TRUE))
     fit_off <- rez[!is.na(rez$Fit) & rez$Fit >= target, "n"][1]
   }
   # TLI
-  if(all(is.na(rez$TLI))) {
+  if (all(is.na(rez$TLI))) {
     TLI <- NA
   } else {
     target <- max(rez$TLI, na.rm = TRUE) - threshold * diff(range(rez$TLI, na.rm = TRUE))
     TLI <- rez[!is.na(rez$TLI) & rez$TLI >= target, "n"][1]
   }
   # RMSEA
-  if(all(is.na(rez$RMSEA))) {
+  if (all(is.na(rez$RMSEA))) {
     RMSEA <- NA
   } else {
     target <- min(rez$RMSEA, na.rm = TRUE) + threshold * diff(range(rez$RMSEA, na.rm = TRUE))
     RMSEA <- rez[!is.na(rez$RMSEA) & rez$RMSEA <= target, "n"][1]
   }
   # RMSR
-  if(all(is.na(rez$RMSR))) {
+  if (all(is.na(rez$RMSR))) {
     RMSR <- NA
   } else {
     target <- min(rez$RMSR, na.rm = TRUE) + threshold * diff(range(rez$RMSR, na.rm = TRUE))
     RMSR <- rez[!is.na(rez$RMSR) & rez$RMSR <= target, "n"][1]
   }
   # CRMS
-  if(all(is.na(rez$CRMS))) {
+  if (all(is.na(rez$CRMS))) {
     CRMS <- NA
   } else {
     target <- min(rez$CRMS, na.rm = TRUE) + threshold * diff(range(rez$CRMS, na.rm = TRUE))
@@ -727,7 +727,7 @@ print.n_clusters <- print.n_factors
   insight::check_if_installed("ClassDiscovery")
 
   # Only applies to PCA with full data
-  if(tolower(type) %in% c("fa", "factor", "efa") || !is.data.frame(x)) {
+  if (tolower(type) %in% c("fa", "factor", "efa") || !is.data.frame(x)) {
     return(data.frame())
   }
   # Randomization-Based Methods
@@ -735,19 +735,21 @@ print.n_clusters <- print.n_factors
 
   # Broken-Stick
   spca <- ClassDiscovery::SamplePCA(t(x))
-  lambda <- spca@variances[1:(ncol(x)-1)]
+  lambda <- spca@variances[1:(ncol(x) - 1)]
   rez_bokenstick <- PCDimension::bsDimension(lambda)
 
   # Auer-Gervini
   ag <- PCDimension::AuerGervini(spca)
-  agfuns <- list(twice=PCDimension::agDimTwiceMean,
-                 specc=PCDimension::agDimSpectral,
-                 km=PCDimension::agDimKmeans,
-                 km3=PCDimension::agDimKmeans3,
-                 # tt=PCDimension::agDimTtest,  # known to overestimate
-                 # cpm=PCDimension::makeAgCpmFun("Exponential"), # known to overestimate
-                 tt2=PCDimension::agDimTtest2,
-                 cpt=PCDimension::agDimCPT)
+  agfuns <- list(
+    twice = PCDimension::agDimTwiceMean,
+    specc = PCDimension::agDimSpectral,
+    km = PCDimension::agDimKmeans,
+    km3 = PCDimension::agDimKmeans3,
+    # tt=PCDimension::agDimTtest,  # known to overestimate
+    # cpm=PCDimension::makeAgCpmFun("Exponential"), # known to overestimate
+    tt2 = PCDimension::agDimTtest2,
+    cpt = PCDimension::agDimCPT
+  )
   rez_ag <- PCDimension::compareAgDimMethods(ag, agfuns)
 
   data.frame(
