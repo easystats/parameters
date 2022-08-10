@@ -31,8 +31,9 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            any::pkgdown
             local::.
+            r-lib/pkgdown
+            easystats/easystatstemplate
             any::BH
             any::RcppEigen
           needs: website
