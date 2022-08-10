@@ -1,312 +1,312 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://easystats.github.io/parameters/404.html</loc>
   </url>
   <url>
-    <loc>/CODE_OF_CONDUCT.html</loc>
+    <loc>https://easystats.github.io/parameters/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>/CONTRIBUTING.html</loc>
+    <loc>https://easystats.github.io/parameters/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://easystats.github.io/parameters/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/articles/clustering.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/clustering.html</loc>
   </url>
   <url>
-    <loc>/articles/demean.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/demean.html</loc>
   </url>
   <url>
-    <loc>/articles/efa_cfa.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/efa_cfa.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters_formatting.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters_formatting.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters_mice.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters_mice.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters_print.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters_print.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters_robust.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters_robust.html</loc>
   </url>
   <url>
-    <loc>/articles/model_parameters_standardized.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/model_parameters_standardized.html</loc>
   </url>
   <url>
-    <loc>/articles/overview_of_vignettes.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/overview_of_vignettes.html</loc>
   </url>
   <url>
-    <loc>/articles/parameters_reduction.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/parameters_reduction.html</loc>
   </url>
   <url>
-    <loc>/articles/parameters_selection.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/parameters_selection.html</loc>
   </url>
   <url>
-    <loc>/articles/standardize_parameters_effsize.html</loc>
+    <loc>https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://easystats.github.io/parameters/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://easystats.github.io/parameters/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://easystats.github.io/parameters/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/bootstrap_model.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/bootstrap_model.html</loc>
   </url>
   <url>
-    <loc>/reference/bootstrap_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/bootstrap_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/check_clusterstructure.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/check_clusterstructure.html</loc>
   </url>
   <url>
-    <loc>/reference/check_factorstructure.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/check_factorstructure.html</loc>
   </url>
   <url>
-    <loc>/reference/check_heterogeneity.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/check_heterogeneity.html</loc>
   </url>
   <url>
-    <loc>/reference/check_kmo.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/check_kmo.html</loc>
   </url>
   <url>
-    <loc>/reference/check_sphericity_bartlett.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/check_sphericity_bartlett.html</loc>
   </url>
   <url>
-    <loc>/reference/ci.default.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/ci.default.html</loc>
   </url>
   <url>
-    <loc>/reference/ci_robust.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/ci_robust.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_analysis.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/cluster_analysis.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_centers.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/cluster_centers.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_discrimination.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/cluster_discrimination.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_meta.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/cluster_meta.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_performance.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/cluster_performance.html</loc>
   </url>
   <url>
-    <loc>/reference/compare_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/compare_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_efa_to_cfa.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/convert_efa_to_cfa.html</loc>
   </url>
   <url>
-    <loc>/reference/degrees_of_freedom.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/degrees_of_freedom.html</loc>
   </url>
   <url>
-    <loc>/reference/display.parameters_model.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/display.parameters_model.html</loc>
   </url>
   <url>
-    <loc>/reference/dominance_analysis.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dominance_analysis.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-data_frame.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-data_frame.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-factor_to_dummy.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-factor_to_dummy.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-filter_component.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-filter_component.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_bartlett.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_bartlett.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_bentler.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_bentler.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_cng.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_cng.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_mreg.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_mreg.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_scree.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_scree.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-n_factors_sescree.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/dot-n_factors_sescree.html</loc>
   </url>
   <url>
-    <loc>/reference/equivalence_test.lm.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/equivalence_test.lm.html</loc>
   </url>
   <url>
-    <loc>/reference/fish.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/fish.html</loc>
   </url>
   <url>
-    <loc>/reference/format_df_adjust.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/format_df_adjust.html</loc>
   </url>
   <url>
-    <loc>/reference/format_order.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/format_order.html</loc>
   </url>
   <url>
-    <loc>/reference/format_p_adjust.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/format_p_adjust.html</loc>
   </url>
   <url>
-    <loc>/reference/format_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/format_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/get_scores.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/get_scores.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.BFBayesFactor.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.BFBayesFactor.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.aov.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.aov.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.averaging.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.averaging.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.befa.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.befa.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.cgam.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.cgam.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.default.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.default.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.htest.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.htest.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.kmeans.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.kmeans.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.merMod.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.merMod.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.mira.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.mira.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.mlm.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.mlm.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.principal.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.principal.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.rma.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.rma.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.stanreg.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.stanreg.html</loc>
   </url>
   <url>
-    <loc>/reference/model_parameters.zcpglm.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/model_parameters.zcpglm.html</loc>
   </url>
   <url>
-    <loc>/reference/n_clusters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/n_clusters.html</loc>
   </url>
   <url>
-    <loc>/reference/n_factors.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/n_factors.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.BFBayesFactor.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value.BFBayesFactor.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.DirichletRegModel.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value.DirichletRegModel.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.poissonmfx.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value.poissonmfx.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value.zcpglm.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value.zcpglm.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value_betwithin.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value_betwithin.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value_kenward.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value_kenward.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value_ml1.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value_ml1.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value_robust.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value_robust.html</loc>
   </url>
   <url>
-    <loc>/reference/p_value_satterthwaite.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/p_value_satterthwaite.html</loc>
   </url>
   <url>
-    <loc>/reference/parameters_type.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/parameters_type.html</loc>
   </url>
   <url>
-    <loc>/reference/pool_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/pool_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/predict.parameters_clusters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/predict.parameters_clusters.html</loc>
   </url>
   <url>
-    <loc>/reference/principal_components.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/principal_components.html</loc>
   </url>
   <url>
-    <loc>/reference/print.parameters_model.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/print.parameters_model.html</loc>
   </url>
   <url>
-    <loc>/reference/qol_cancer.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/qol_cancer.html</loc>
   </url>
   <url>
-    <loc>/reference/random_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/random_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/reduce_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/reduce_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/reexports.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>/reference/reshape_loadings.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/reshape_loadings.html</loc>
   </url>
   <url>
-    <loc>/reference/select_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/select_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/simulate_model.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/simulate_model.html</loc>
   </url>
   <url>
-    <loc>/reference/simulate_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/simulate_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/sort_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/sort_parameters.html</loc>
   </url>
   <url>
-    <loc>/reference/standard_error.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/standard_error.html</loc>
   </url>
   <url>
-    <loc>/reference/standard_error_robust.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/standard_error_robust.html</loc>
   </url>
   <url>
-    <loc>/reference/standardize_info.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/standardize_info.html</loc>
   </url>
   <url>
-    <loc>/reference/standardize_parameters.html</loc>
+    <loc>https://easystats.github.io/parameters/reference/standardize_parameters.html</loc>
   </url>
 </urlset>
