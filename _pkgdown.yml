@@ -120,99 +120,33 @@ reference:
   - check_heterogeneity
 
 
-# Keep articles organized
-navbar:
-  left:
-    - icon: fa fa-file-code
-      text: Reference
-      href: reference/index.html
-    - text: "Articles"
-      icon: fa fa-book-reader
-      menu:
-      - title: Overview of vignettes
-        navbar: ~
-        contents:
-        - overview_of_vignettes
+articles:
 
-      - title: Parameters Description
-        navbar: Parameters Description
-        # desc:
-        contents:
-        - model_parameters
-        - model_parameters_standardized
-        - standardize_parameters_effsize
-        - model_parameters_robust
-        - model_parameters_mice
-        - demean
+  - title: Overview of vignettes
+    navbar: ~
+    contents:
+    - overview_of_vignettes
 
-      - title: Formatting and Printing
-        navbar: Formatting and Printing
-        # desc:
-        contents:
-        - model_parameters_formatting
-        - model_parameters_print
+  - title: Parameters Description
+    navbar: ~
+    contents:
+    - model_parameters
+    - model_parameters_standardized
+    - standardize_parameters_effsize
+    - model_parameters_robust
+    - model_parameters_mice
+    - demean
 
-      - title: Dimension Reduction and Clustering
-        navbar: Dimension Reduction and Clustering
-        # desc:
-        contents:
-        - parameters_reduction
-        - efa_cfa
-        - parameters_selection
-        - clustering
-    - icon: fa fa-newspaper
-      text: News
-      href: news/index.html
+  - title: Formatting and Printing
+    navbar: ~
+    contents:
+    - model_parameters_formatting
+    - model_parameters_print
 
-
-# articles:
-#   - title: Overview of vignettes
-#     navbar: ~
-#     contents:
-#     - overview_of_vignettes
-#
-#   - title: Parameters Description
-#     navbar: Parameters Description
-#     # desc:
-#     contents:
-#     - model_parameters
-#     - model_parameters_standardized
-#     - standardize_parameters_effsize
-#     - model_parameters_robust
-#     - model_parameters_mice
-#     - demean
-#
-#   - title: Formatting and Printing
-#     navbar: Formatting and Printing
-#     # desc:
-#     contents:
-#     - model_parameters_formatting
-#     - model_parameters_print
-#
-#   - title: Dimension Reduction and Clustering
-#     navbar: Dimension Reduction and Clustering
-#     # desc:
-#     contents:
-#     - parameters_reduction
-#     - efa_cfa
-#     - parameters_selection
-#     - clustering
-
-# navbar:
-#   type: default
-#   right:
-#   - icon: fa-twitter
-#     href: http://twitter.com/easystats4u
-#     aria-label: Twitter
-#   - icon: fa-github
-#     href: https://github.com/easystats/parameters/
-#     aria-label: GitHub
-  # left:
-  # - icon: fa-home fa-lg
-  #   href: index
-  # - text: News
-  #   href: news/index
-  # - text: Features
-  #   href: reference/index
-  # - text: Articles
-  #   href: articles/index
+  - title: Dimension Reduction and Clustering
+    navbar: ~
+    contents:
+    - parameters_reduction
+    - efa_cfa
+    - parameters_selection
+    - clustering
