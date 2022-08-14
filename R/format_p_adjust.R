@@ -72,7 +72,12 @@ format_p_adjust <- function(method) {
       } else if (tolower(p_adjust) == "tukey") {
         # tukey adjustment
         if ("df" %in% colnames(params) && length(stat_column) > 0) {
-          params$p <- suppressWarnings(stats::ptukey(sqrt(2) * abs(params[[stat_column]]), nrow(params) / rank_adjust, params$df, lower.tail = FALSE))
+          params$p <- suppressWarnings(stats::ptukey(
+            sqrt(2) * abs(params[[stat_column]]),
+            nrow(params) / rank_adjust,
+            params$df,
+            lower.tail = FALSE
+          ))
           # for specific contrasts, ptukey might fail, and the tukey-adjustement
           # could just be simple p-value calculation
           if (all(is.na(params$p))) {
@@ -106,7 +111,7 @@ format_p_adjust <- function(method) {
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
       }
 
-      if (isTRUE(all.equal(old_p_vals, params$p)) && !identical(p_adjust, "none")) {
+      if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none")) {
         if (verbose) {
           warning(insight::format_message(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large.")), call. = FALSE)
         }
