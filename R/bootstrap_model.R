@@ -11,6 +11,8 @@
 #'   `"ordinary"`).
 #' @param parallel The type of parallel operation to be used (if any).
 #' @param n_cpus Number of processes to be used in parallel operation.
+#' @param cluster Optional cluster when `parallel = "snow"`. See `?lme4::bootMer`
+#' for details.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams p_value
 #'
@@ -152,6 +154,7 @@ bootstrap_model.merMod <- function(model,
                                    type = "parametric",
                                    parallel = c("no", "multicore", "snow"),
                                    n_cpus = 1,
+                                   cluster = NULL,
                                    verbose = FALSE,
                                    ...) {
   insight::check_if_installed("lme4")
@@ -178,7 +181,8 @@ bootstrap_model.merMod <- function(model,
       nsim = iterations,
       type = type,
       parallel = parallel,
-      ncpus = n_cpus
+      ncpus = n_cpus,
+      cl = cluster
     )
   } else {
     results <- suppressMessages(lme4::bootMer(
@@ -188,7 +192,8 @@ bootstrap_model.merMod <- function(model,
       verbose = FALSE,
       type = type,
       parallel = parallel,
-      ncpus = n_cpus
+      ncpus = n_cpus,
+      cl = cluster
     ))
   }
 
