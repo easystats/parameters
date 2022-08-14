@@ -1,3 +1,16 @@
+# parameters 0.18.3
+
+## Changes to functions
+
+* `bootstrap_model()` for models of class `glmmTMB` and `merMod` gains a
+  `cluster` argument to specify optional clusters when the `parallel`
+  option is set to `"snow"`.
+
+## Bug fixes
+
+* Fix erroneous warning for p-value adjustments when the differences between
+  original and adjusted p-values were very small.
+
 # parameters 0.18.2
 
 ## New functions
