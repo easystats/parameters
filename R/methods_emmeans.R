@@ -121,10 +121,10 @@ model_parameters.emmGrid <- function(model,
   params <- .exponentiate_parameters(params, model, exponentiate)
 
   # filter parameters
-  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+  if (!is.null(keep) || !is.null(drop)) {
     params <- .filter_parameters(params,
-      keep = keep_parameters,
-      drop = drop_parameters,
+      keep = keep,
+      drop = drop,
       verbose = verbose
     )
   }

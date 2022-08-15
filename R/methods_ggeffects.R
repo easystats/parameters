@@ -45,10 +45,10 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
   }
 
   # filter parameters
-  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+  if (!is.null(keep) || !is.null(drop)) {
     model <- .filter_parameters(model,
-      keep = keep_parameters,
-      drop = drop_parameters,
+      keep = keep,
+      drop = drop,
       verbose = verbose
     )
   }
