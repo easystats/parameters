@@ -180,7 +180,8 @@ Parameters from Hypothesis Testing."><meta property="og:image" content="https://
 <span>  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -202,7 +203,7 @@ Parameters from Hypothesis Testing."><meta property="og:image" content="https://
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, exponentiate <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for ggeffects</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, parameters <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, keep <span class="op">=</span> <span class="cn">NULL</span>, drop <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for SemiParBIV</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
@@ -829,11 +830,6 @@ the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
 proportion of HDI, to use for the percentage in ROPE.</p></dd>
 
 
-<dt>effects</dt>
-<dd><p>Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.</p></dd>
-
-
 <dt>keep</dt>
 <dd><p>Character containing a regular expression pattern that
 describes the parameters that should be included (for <code>keep</code>) or excluded
@@ -858,6 +854,11 @@ names.</p></dd>
 
 <dt>drop</dt>
 <dd><p>See <code>keep</code>.</p></dd>
+
+
+<dt>effects</dt>
+<dd><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></dd>
 
 
 <dt>include_studies</dt>
