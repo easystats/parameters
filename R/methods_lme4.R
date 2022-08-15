@@ -76,7 +76,8 @@
 #'   rename columns into a consistent, standardized naming scheme.
 #'
 #' @note If the calculation of random effects parameters takes too long, you may
-#' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
+#' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @examples
 #' library(parameters)
@@ -149,9 +150,16 @@ model_parameters.merMod <- function(model,
   ci_method <- tolower(ci_method)
 
   if (isTRUE(bootstrap)) {
-    ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+    ci_method <- match.arg(
+      ci_method,
+      choices = c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")
+    )
   } else {
-    ci_method <- match.arg(ci_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite", "kenward", "kr", "boot", "profile", "uniroot"))
+    ci_method <- match.arg(
+      ci_method,
+      choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
+                  "kenward", "kr", "boot", "profile", "uniroot")
+    )
   }
 
   # which component to return?
@@ -161,7 +169,9 @@ model_parameters.merMod <- function(model,
   # post hoc standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
+      warning(insight::format_message(
+        "Standardizing coefficients only works for fixed effects of the mixed model."
+      ), call. = FALSE)
     }
     effects <- "fixed"
   }
@@ -185,7 +195,9 @@ model_parameters.merMod <- function(model,
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          warning(insight::format_message("Bootstrapping only returns fixed effects of the mixed model."), call. = FALSE)
+          warning(insight::format_message(
+            "Bootstrapping only returns fixed effects of the mixed model."
+          ), call. = FALSE)
         }
       }
     } else {

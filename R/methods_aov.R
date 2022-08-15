@@ -565,8 +565,14 @@ model_parameters.maov <- model_parameters.aov
     fx$CI <- NULL
   }
 
-  params$.id  <- 1:nrow(params)
-  params <- merge(params, fx, all.x = TRUE, sort = FALSE, by = intersect(c("Response", "Group", "Parameter"), intersect(colnames(params), colnames(fx))))
+  params$.id  <- seq_len(nrow(params))
+  params <- merge(
+    params,
+    fx,
+    all.x = TRUE,
+    sort = FALSE,
+    by = intersect(c("Response", "Group", "Parameter"), intersect(colnames(params), colnames(fx)))
+  )
   params <- params[order(params$.id), ]
   params$.id <- NULL
   params
@@ -622,7 +628,7 @@ model_parameters.maov <- model_parameters.aov
   }
 
   # reorder columns
-  col_order <- union(c('Parameter', 'F', 'df', 'df_error', 'p'), names(data))
+  col_order <- union(c("Parameter", "F", "df", "df_error", "p"), names(data))
 
   data[, col_order]
 }

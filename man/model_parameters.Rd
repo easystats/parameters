@@ -23,7 +23,9 @@ in \code{\link[=print.parameters_model]{print.parameters_model()}} and 'Examples
 A data frame of indices related to the model's parameters.
 }
 \description{
-Compute and extract model parameters. The available options and arguments depend on the modeling \strong{package} and model \code{class}. Follow one of these links to read the model-specific documentation:
+Compute and extract model parameters. The available options and arguments depend
+on the modeling \strong{package} and model \code{class}. Follow one of these links to read
+the model-specific documentation:
 \itemize{
 \item{\link[=model_parameters.default]{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg}, \strong{MASS}, \strong{survey}, ... }
 \item{\link[=model_parameters.cgam]{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv}, \strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...}

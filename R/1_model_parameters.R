@@ -4,7 +4,9 @@
 
 #' Model Parameters
 #'
-#' Compute and extract model parameters. The available options and arguments depend on the modeling **package** and model `class`. Follow one of these links to read the model-specific documentation:
+#' Compute and extract model parameters. The available options and arguments depend
+#' on the modeling **package** and model `class`. Follow one of these links to read
+#' the model-specific documentation:
 #' \itemize{
 #'  \item{[Default method][model_parameters.default]: `lm`, `glm`, **stats**, **censReg**, **MASS**, **survey**, ... }
 #'  \item{[Additive models][model_parameters.cgam]: **bamlss**, **gamlss**, **mgcv**, **scam**, **VGAM**, `Gam`, `gamm`, ...}
@@ -633,7 +635,9 @@ model_parameters.glm <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
+    warning(insight::format_message(
+      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
+    ), call. = FALSE)
     ci_method <- df_method
   }
 

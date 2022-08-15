@@ -144,7 +144,7 @@ compare_parameters <- function(...,
   }
 
   # iterate all models and create list of model parameters
-  m <- lapply(1:length(models), function(i) {
+  m <- lapply(seq_along(models), function(i) {
     model <- models[[i]]
     model_name <- model_names[[i]]
 
