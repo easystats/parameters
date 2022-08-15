@@ -27,7 +27,7 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     mp <- model_parameters(model, summary = TRUE, keep = c("wt", "hp"), p_adjust = "bonferroni")
     expect_equal(
       mp[["p"]],
-      p.adjust(coef(summary(model))[c(2,5), 4], "bonferroni"),
+      p.adjust(coef(summary(model))[c(2, 5), 4], "bonferroni"),
       tolerance = 1e-4,
       ignore_attr = TRUE
     )
