@@ -147,7 +147,8 @@
   rope_ci = 0.95,
   exponentiate = FALSE,
   p_adjust = NULL,
-  parameters = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -165,7 +166,7 @@
 
 \method{model_parameters}{fitdistr}(model, exponentiate = FALSE, verbose = TRUE, ...)
 
-\method{model_parameters}{ggeffects}(model, parameters = NULL, verbose = TRUE, ...)
+\method{model_parameters}{ggeffects}(model, keep = NULL, drop = NULL, verbose = TRUE, ...)
 
 \method{model_parameters}{SemiParBIV}(
   model,
@@ -712,9 +713,6 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
 
-\item{effects}{Should results for fixed effects, random effects or both be
-returned? Only applies to mixed models. May be abbreviated.}
-
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
 (for \code{drop}) in the returned data frame. \code{keep} may also be a
@@ -736,6 +734,9 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
 \item{include_studies}{Logical, if \code{TRUE} (default), includes parameters
 for all studies. Else, only parameters for overall-effects are shown.}

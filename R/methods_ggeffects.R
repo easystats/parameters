@@ -1,6 +1,6 @@
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.ggeffects <- function(model, parameters = NULL, verbose = TRUE, ...) {
+model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
   terms <- attributes(model)$terms[-1]
   focal_term <- attributes(model)$terms[1]
@@ -45,8 +45,12 @@ model_parameters.ggeffects <- function(model, parameters = NULL, verbose = TRUE,
   }
 
   # filter parameters
-  if (!is.null(parameters)) {
-    model <- .filter_parameters(model, parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+    model <- .filter_parameters(model,
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
   model <- .add_model_parameters_attributes(model, model, ci = ci, verbose = verbose)

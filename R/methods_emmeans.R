@@ -15,7 +15,8 @@ model_parameters.emmGrid <- function(model,
                                      rope_ci = 0.95,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
-                                     parameters = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
                                      verbose = TRUE,
                                      ...) {
   # set default for p-adjust
@@ -120,8 +121,12 @@ model_parameters.emmGrid <- function(model,
   params <- .exponentiate_parameters(params, model, exponentiate)
 
   # filter parameters
-  if (!is.null(parameters)) {
-    params <- .filter_parameters(params, parameters, verbose = verbose)
+  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+    params <- .filter_parameters(params,
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
   }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
