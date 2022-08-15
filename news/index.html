@@ -88,9 +88,13 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.18.3" id="parameters-0183">parameters 0.18.3<a class="anchor" aria-label="anchor" href="#parameters-0183"></a></h2>
 <div class="section level3">
+<h3 id="breaking-0-18-3">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-18-3"></a></h3>
+<ul><li>Removed depricated argument <code>parameters</code> from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</li></ul></div>
+<div class="section level3">
 <h3 id="changes-to-functions-0-18-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-3"></a></h3>
-<ul><li>
-<code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> for models of class <code>glmmTMB</code> and <code>merMod</code> gains a <code>cluster</code> argument to specify optional clusters when the <code>parallel</code> option is set to <code>"snow"</code>.</li></ul></div>
+<ul><li><p><code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> for models of class <code>glmmTMB</code> and <code>merMod</code> gains a <code>cluster</code> argument to specify optional clusters when the <code>parallel</code> option is set to <code>"snow"</code>.</p></li>
+<li><p>P-value adjustment (argument <code>p_adjust</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) is now performed after potential parameters were removed (using <code>keep</code> or <code>drop</code>), so adjusted p-values is only applied to the parameters of interest.</p></li>
+</ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-18-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-3"></a></h3>
 <ul><li>Fix erroneous warning for p-value adjustments when the differences between original and adjusted p-values were very small.</li></ul></div>
