@@ -273,7 +273,6 @@
   summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   vcov = NULL,
   vcov_args = NULL,
@@ -292,7 +291,6 @@
   summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   vcov = NULL,
   vcov_args = NULL,
@@ -466,7 +464,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -507,7 +504,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -523,7 +519,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -716,8 +711,6 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}

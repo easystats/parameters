@@ -18,7 +18,6 @@ compare_parameters(
   column_names = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method
 )
@@ -36,7 +35,6 @@ compare_models(
   column_names = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method
 )
@@ -133,8 +131,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

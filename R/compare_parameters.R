@@ -77,7 +77,6 @@ compare_parameters <- function(...,
                                column_names = NULL,
                                keep = NULL,
                                drop = NULL,
-                               parameters = keep,
                                verbose = TRUE,
                                df_method = ci_method) {
   models <- list(...)

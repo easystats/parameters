@@ -245,6 +245,17 @@
   if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
 
 
+  # ==== filter parameters, if requested
+
+  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+    parameters <- .filter_parameters(parameters,
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
+  }
+
+
   # ==== adjust p-values?
 
   if (!is.null(p_adjust)) {
@@ -301,17 +312,6 @@
 
   if (isTRUE(include_sigma) || isTRUE(summary)) {
     parameters <- .add_sigma_residual_df(parameters, model)
-  }
-
-
-  # ==== filter parameters, if requested
-
-  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
-      keep = keep_parameters,
-      drop = drop_parameters,
-      verbose = verbose
-    )
   }
 
 
@@ -600,6 +600,15 @@
   names(parameters) <- gsub("t value", "t", names(parameters))
   names(parameters) <- gsub("z value", "z", names(parameters))
 
+  # filter parameters, if requested
+  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
+    parameters <- .filter_parameters(parameters,
+      keep = keep_parameters,
+      drop = drop_parameters,
+      verbose = verbose
+    )
+  }
+
   # adjust p-values?
   if (!is.null(p_adjust)) {
     parameters <- .p_adjust(parameters, p_adjust, model, verbose)
@@ -640,15 +649,6 @@
     parameters <- .add_sigma_residual_df(parameters, model)
   }
 
-
-  # filter parameters, if requested
-  if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
-    parameters <- .filter_parameters(parameters,
-      keep = keep_parameters,
-      drop = drop_parameters,
-      verbose = verbose
-    )
-  }
 
   rownames(parameters) <- NULL
   parameters

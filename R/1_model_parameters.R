@@ -370,7 +370,6 @@ parameters <- model_parameters
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
 #' @param drop See `keep`.
-#' @param parameters Deprecated, alias for `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
 #' @param ... Arguments passed to or from other methods. For instance, when
@@ -431,7 +430,6 @@ model_parameters.default <- function(model,
                                      summary = getOption("parameters_summary", FALSE),
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      vcov = NULL,
                                      vcov_args = NULL,

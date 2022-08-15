@@ -53,7 +53,6 @@
   summary = getOption("parameters_mixed_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
@@ -76,7 +75,6 @@
   summary = getOption("parameters_mixed_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
@@ -111,7 +109,6 @@
   summary = getOption("parameters_mixed_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
@@ -135,7 +132,6 @@
   summary = getOption("parameters_mixed_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
@@ -171,7 +167,6 @@
   summary = getOption("parameters_mixed_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   df_method = ci_method,
   include_sigma = FALSE,
@@ -241,7 +236,6 @@
   summary = getOption("parameters_summary", FALSE),
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   vcov = NULL,
   vcov_args = NULL,
@@ -377,8 +371,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance matrix,

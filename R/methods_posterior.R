@@ -10,7 +10,6 @@ model_parameters.draws <- function(model,
                                    rope_ci = 0.95,
                                    keep = NULL,
                                    drop = NULL,
-                                   parameters = keep,
                                    verbose = TRUE,
                                    ...) {
   out <- .posterior_draws_to_df(model)

@@ -15,7 +15,6 @@ model_parameters.stanfit <- function(model,
                                      group_level = FALSE,
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   # Processing

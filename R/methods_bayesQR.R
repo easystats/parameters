@@ -13,7 +13,6 @@ model_parameters.bayesQR <- function(model,
                                      priors = TRUE,
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   # Processing

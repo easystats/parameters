@@ -76,7 +76,6 @@ model_parameters.stanreg <- function(model,
                                      group_level = FALSE,
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   # Processing
@@ -144,7 +143,6 @@ model_parameters.stanmvreg <- function(model,
                                        standardize = NULL,
                                        keep = NULL,
                                        drop = NULL,
-                                       parameters = keep,
                                        verbose = TRUE,
                                        ...) {
   # Processing

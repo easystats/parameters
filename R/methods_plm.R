@@ -57,7 +57,6 @@ model_parameters.pgmm <- function(model,
                                   p_adjust = NULL,
                                   keep = NULL,
                                   drop = NULL,
-                                  parameters = keep,
                                   verbose = TRUE,
                                   ...) {
   component <- match.arg(component)

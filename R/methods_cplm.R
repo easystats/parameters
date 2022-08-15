@@ -38,7 +38,6 @@ model_parameters.zcpglm <- function(model,
                                     p_adjust = NULL,
                                     keep = NULL,
                                     drop = NULL,
-                                    parameters = keep,
                                     summary = getOption("parameters_summary", FALSE),
                                     verbose = TRUE,
                                     ...) {

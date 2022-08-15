@@ -23,7 +23,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -42,7 +41,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -61,7 +59,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -76,7 +73,6 @@
   type = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -94,7 +90,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -113,7 +108,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -132,7 +126,6 @@
   power = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   table_wide = FALSE,
   verbose = TRUE,
   ...
@@ -204,8 +197,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom

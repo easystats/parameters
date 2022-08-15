@@ -19,7 +19,6 @@ model_parameters.brmsfit <- function(model,
                                      group_level = FALSE,
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   modelinfo <- insight::model_info(model, verbose = FALSE)

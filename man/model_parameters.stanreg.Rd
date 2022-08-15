@@ -31,7 +31,6 @@
   priors = TRUE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -50,7 +49,6 @@
   standardize = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -71,7 +69,6 @@
   priors = TRUE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -95,7 +92,6 @@
   group_level = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -116,7 +112,6 @@
   priors = TRUE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -135,7 +130,6 @@
   priors = TRUE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -151,7 +145,6 @@
   rope_ci = 0.95,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -172,7 +165,6 @@
   group_level = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -195,7 +187,6 @@
   group_level = FALSE,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -267,8 +258,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle messages and warnings.}
 

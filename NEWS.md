@@ -1,10 +1,18 @@
 # parameters 0.18.3
 
+## Breaking
+
+* Removed depricated argument `parameters` from `model_parameters()`.
+
 ## Changes to functions
 
 * `bootstrap_model()` for models of class `glmmTMB` and `merMod` gains a
   `cluster` argument to specify optional clusters when the `parallel`
   option is set to `"snow"`.
+
+* P-value adjustment (argument `p_adjust` in `model_parameters()`) is now
+  performed after potential parameters were removed (using `keep` or `drop`),
+  so adjusted p-values is only applied to the parameters of interest.
 
 ## Bug fixes
 

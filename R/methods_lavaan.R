@@ -12,7 +12,6 @@ model_parameters.lavaan <- function(model,
                                     component = c("regression", "correlation", "loading", "defined"),
                                     keep = NULL,
                                     drop = NULL,
-                                    parameters = keep,
                                     verbose = TRUE,
                                     ...) {
   params <- .extract_parameters_lavaan(model,
@@ -53,7 +52,6 @@ model_parameters.blavaan <- function(model,
                                      standardize = NULL,
                                      keep = NULL,
                                      drop = NULL,
-                                     parameters = keep,
                                      verbose = TRUE,
                                      ...) {
   # Processing

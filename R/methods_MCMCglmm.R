@@ -36,7 +36,6 @@ model_parameters.MCMCglmm <- function(model,
                                       priors = TRUE,
                                       keep = NULL,
                                       drop = NULL,
-                                      parameters = keep,
                                       verbose = TRUE,
                                       ...) {
   # Processing

@@ -23,7 +23,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -39,7 +38,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -55,7 +53,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -92,7 +89,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -108,7 +104,6 @@
   p_adjust = NULL,
   keep = NULL,
   drop = NULL,
-  parameters = keep,
   verbose = TRUE,
   ...
 )
@@ -192,8 +187,6 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
-
-\item{parameters}{Deprecated, alias for \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
 

@@ -106,7 +106,8 @@ bayestestR::equivalence_test
 #'   for further information.
 #' }
 #'
-#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @references
 #' \itemize{
@@ -275,7 +276,7 @@ equivalence_test.parameters_simulate_model <- function(x,
 
   if (all(range == "default") && !is.null(model)) {
     range <- bayestestR::rope_range(model, verbose = verbose)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -315,7 +316,7 @@ equivalence_test.parameters_simulate_model <- function(x,
     if (is.list(range)) {
       range <- range[[which.max(sapply(range, diff))]]
     }
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -383,7 +384,7 @@ equivalence_test.parameters_simulate_model <- function(x,
                                                  ...) {
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 

@@ -14,7 +14,6 @@ model_parameters.bamlss <- function(model,
                                     standardize = NULL,
                                     keep = NULL,
                                     drop = NULL,
-                                    parameters = keep,
                                     verbose = TRUE,
                                     ...) {
   # Processing

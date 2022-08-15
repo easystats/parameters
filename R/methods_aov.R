@@ -118,7 +118,6 @@ model_parameters.aov <- function(model,
                                  power = FALSE,
                                  keep = NULL,
                                  drop = NULL,
-                                 parameters = keep,
                                  table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
@@ -271,7 +270,6 @@ model_parameters.afex_aov <- function(model,
                                       type = NULL,
                                       keep = NULL,
                                       drop = NULL,
-                                      parameters = keep,
                                       verbose = TRUE,
                                       ...) {
   if (inherits(model$Anova, "Anova.mlm")) {

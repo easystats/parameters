@@ -41,7 +41,6 @@ model_parameters.cgam <- function(model,
                                   p_adjust = NULL,
                                   keep = NULL,
                                   drop = NULL,
-                                  parameters = keep,
                                   verbose = TRUE,
                                   ...) {
   # sanity check, warn if unsupported argument is used.
