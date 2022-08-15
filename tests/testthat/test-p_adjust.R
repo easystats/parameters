@@ -13,6 +13,35 @@ if (.runThisTest && requiet("testthat") && requiet("parameters")) {
     expect_equal(mp$p, c(0, 0.01824, 0.16588, 1, 0.06411, 0.13869), tolerance = 1e-3)
   })
 
+
+  test_that("model_parameters, p-adjust after keep/drop", {
+    model <- lm(mpg ~ wt + cyl + gear + hp, data = mtcars)
+    mp <- model_parameters(model, p_adjust = "bonferroni")
+    expect_equal(
+      mp[["p"]],
+      p.adjust(coef(summary(model))[, 4], "bonferroni"),
+      tolerance = 1e-4,
+      ignore_attr = TRUE
+    )
+
+    mp <- model_parameters(model, summary = TRUE, keep = c("wt", "hp"), p_adjust = "bonferroni")
+    expect_equal(
+      mp[["p"]],
+      p.adjust(coef(summary(model))[c(2,5), 4], "bonferroni"),
+      tolerance = 1e-4,
+      ignore_attr = TRUE
+    )
+
+    mp <- model_parameters(model, summary = TRUE, keep = c("cyl", "gear"), p_adjust = "bonferroni")
+    expect_equal(
+      mp[["p"]],
+      p.adjust(coef(summary(model))[3:4, 4], "bonferroni"),
+      tolerance = 1e-4,
+      ignore_attr = TRUE
+    )
+  })
+
+
   if (requiet("emmeans")) {
     data(iris)
     m <- pairs(emmeans(aov(Sepal.Width ~ Species, data = iris), ~Species))
