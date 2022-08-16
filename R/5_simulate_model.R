@@ -247,7 +247,9 @@ simulate_model.bracl <- simulate_model.default
 .mvrnorm <- function(n = 1, mu, Sigma, tol = 1e-06) {
   p <- length(mu)
   if (!all(dim(Sigma) == c(p, p))) {
-    stop(insight::format_message("Incompatible arguments to calculate multivariate normal distribution."), call. = FALSE)
+    stop(insight::format_message(
+      "Incompatible arguments to calculate multivariate normal distribution."
+    ), call. = FALSE)
   }
 
   eS <- eigen(Sigma, symmetric = TRUE)

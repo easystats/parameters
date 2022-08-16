@@ -43,7 +43,9 @@ Methods for calculating degrees of freedom:
 \item \code{"ml1"} calls \code{\link[=dof_ml1]{dof_ml1()}}.
 \item \code{"betwithin"} calls \code{\link[=dof_betwithin]{dof_betwithin()}}.
 }
-For models with z-statistic, the returned degrees of freedom for model parameters is \code{Inf} (unless \code{method = "ml1"} or \code{method = "betwithin"}), because there is only one distribution for the related test statistic.
+For models with z-statistic, the returned degrees of freedom for model parameters
+is \code{Inf} (unless \code{method = "ml1"} or \code{method = "betwithin"}), because there is
+only one distribution for the related test statistic.
 }
 \note{
 In many cases, \code{degrees_of_freedom()} returns the same as \code{df.residuals()},

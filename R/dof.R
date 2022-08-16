@@ -26,7 +26,9 @@
 #' \item `"ml1"` calls [`dof_ml1()`].
 #' \item `"betwithin"` calls [`dof_betwithin()`].
 #' }
-#' For models with z-statistic, the returned degrees of freedom for model parameters is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is only one distribution for the related test statistic.
+#' For models with z-statistic, the returned degrees of freedom for model parameters
+#' is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is
+#' only one distribution for the related test statistic.
 #'
 #' @note
 #'
