@@ -13,6 +13,9 @@ model_parameters.clm2 <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component")

@@ -41,6 +41,9 @@ model_parameters.zcpglm <- function(model,
                                     summary = getOption("parameters_summary", FALSE),
                                     verbose = TRUE,
                                     ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   component <- match.arg(component)
 
   # fix argument, if model has no zi-part

@@ -6,6 +6,9 @@ model_parameters.bfsl <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

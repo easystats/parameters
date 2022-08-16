@@ -112,7 +112,11 @@ standard_error.zerocount <- standard_error.zeroinfl
 
 #' @rdname p_value.zcpglm
 #' @export
-p_value.zeroinfl <- function(model, component = c("all", "conditional", "zi", "zero_inflated"), method = NULL, verbose = TRUE, ...) {
+p_value.zeroinfl <- function(model,
+                             component = c("all", "conditional", "zi", "zero_inflated"),
+                             method = NULL,
+                             verbose = TRUE,
+                             ...) {
   component <- match.arg(component)
   if (is.null(.check_component(model, component, verbose = verbose))) {
     return(NULL)

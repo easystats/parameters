@@ -1,6 +1,9 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   dots <- list(...)
   if ("ci" %in% names(dots)) {
     warning(insight::format_message("The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead."), call. = FALSE)

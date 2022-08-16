@@ -11,6 +11,9 @@ model_parameters.systemfit <- function(model,
                                        summary = FALSE,
                                        verbose = TRUE,
                                        ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -87,7 +90,7 @@ degrees_of_freedom.systemfit <- function(model, ...) {
   f <- insight::find_formula(model)
   system_names <- names(f)
 
-  for (i in 1:length(system_names)) {
+  for (i in seq_along(system_names)) {
     dfs <- rep(s[[i]]$df[2], length(params[[i]]))
     df_names <- rep(names(params[i]), length(params[[i]]))
     df <- c(df, stats::setNames(dfs, df_names))

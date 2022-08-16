@@ -7,21 +7,33 @@
 #' Compute and extract model parameters. The available options and arguments depend
 #' on the modeling **package** and model `class`. Follow one of these links to read
 #' the model-specific documentation:
-#' \itemize{
-#'  \item{[Default method][model_parameters.default]: `lm`, `glm`, **stats**, **censReg**, **MASS**, **survey**, ... }
-#'  \item{[Additive models][model_parameters.cgam]: **bamlss**, **gamlss**, **mgcv**, **scam**, **VGAM**, `Gam`, `gamm`, ...}
-#'  \item{[ANOVA][model_parameters.aov]: **afex**, `aov`, `anova`, ...}
-#'  \item{[Bayesian][model_parameters.stanreg]: **BayesFactor**, **blavaan**, **brms**, **MCMCglmm**, **posterior**, **rstanarm**, `bayesQR`, `bcplm`, `BGGM`, `blmrm`, `blrm`, `mcmc.list`, `MCMCglmm`, ...}
-#'  \item{[Clustering][model_parameters.kmeans]: **hclust**, **kmeans**, **mclust**, **pam**, ...}
-#'  \item{[Correlations, t-tests, etc.:][model_parameters.htest] **lmtest**, `htest`, `pairwise.htest`, ...}
-#'  \item{[Meta-Analysis][model_parameters.rma]: **metaBMA**, **metafor**, **metaplus**, ...}
-#'  \item{[Mixed models][model_parameters.merMod]: **cplm**, **glmmTMB**, **lme4**, **lmerTest**, **nlme**, **ordinal**, **robustlmm**, **spaMM**, `mixed`, `MixMod`, ...}
-#'  \item{[Multinomial, ordinal and cumulative link][model_parameters.mlm]: **brglm2**, **DirichletReg**, **nnet**, **ordinal**, `mlm`, ...}
-#'  \item{[Multiple imputation][model_parameters.mira]: **mice**}
-#'  \item{[PCA, FA, CFA, SEM][model_parameters.principal]: **FactoMineR**, **lavaan**, **psych**, `sem`, ...}
-#'  \item{[Zero-inflated and hurdle][model_parameters.zcpglm]: **cplm**, **mhurdle**, **pscl**, ...}
-#'  \item{[Other models][model_parameters.averaging]: **aod**, **bbmle**, **betareg**, **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**, **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**, **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**, **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**, **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...}
-#'  }
+#' - [Default method](model_parameters.default): `lm`, `glm`, **stats**, **censReg**,
+#'   **MASS**, **survey**, ...
+#' - [Additive models](model_parameters.cgam): **bamlss**, **gamlss**, **mgcv**,
+#'   **scam**, **VGAM**, `Gam`, `gamm`, ...
+#' - [ANOVA](model_parameters.aov): **afex**, `aov`, `anova`, ...
+#' - [Bayesian](model_parameters.stanreg): **BayesFactor**, **blavaan**, **brms**,
+#'   **MCMCglmm**, **posterior**, **rstanarm**, `bayesQR`, `bcplm`, `BGGM`, `blmrm`,
+#'   `blrm`, `mcmc.list`, `MCMCglmm`, ...
+#' - [Clustering](model_parameters.kmeans): **hclust**, **kmeans**, **mclust**, **pam**, ...
+#' - [Correlations, t-tests, etc.](model_parameters.htest): **lmtest**, `htest`,
+#'   `pairwise.htest`, ...
+#' - [Meta-Analysis](model_parameters.rma): **metaBMA**, **metafor**, **metaplus**, ...
+#' - [Mixed models](model_parameters.merMod): **cplm**, **glmmTMB**, **lme4**,
+#'   **lmerTest**, **nlme**, **ordinal**, **robustlmm**, **spaMM**, `mixed`, `MixMod`, ...
+#' - [Multinomial, ordinal and cumulative link](model_parameters.mlm): **brglm2**,
+#'   **DirichletReg**, **nnet**, **ordinal**, `mlm`, ...
+#' - [Multiple imputation](model_parameters.mira): **mice**
+#' - [PCA, FA, CFA, SEM](model_parameters.principal): **FactoMineR**, **lavaan**,
+#'   **psych**, `sem`, ...
+#' - [Zero-inflated and hurdle](model_parameters.zcpglm): **cplm**, **mhurdle**,
+#'   **pscl**, ...
+#' - [Other models](model_parameters.averaging): **aod**, **bbmle**, **betareg**,
+#'   **emmeans**, **epiR**, **ggeffects**, **glmx**, **ivfixed**, **ivprobit**,
+#'   **JRM**, **lmodel2**, **logitsf**, **marginaleffects**, **margins**, **maxLik**,
+#'   **mediation**, **mfx**, **multcomp**, **mvord**, **plm**, **PMCMRplus**,
+#'   **quantreg**, **selection**, **systemfit**, **tidymodels**, **varEST**,
+#'   **WRS2**, `bfsl`, `deltaMethod`, `fitdistr`, `mjoint`, `mle`, `model.avg`, ...
 #'
 #' @param model Statistical Model.
 #' @param ... Arguments passed to or from other methods. Non-documented
@@ -289,6 +301,14 @@ model_parameters <- function(model, ...) {
 # https://github.com/easystats/parameters/issues/455
 
 
+# Options -------------------------------------
+
+# getOption("parameters_summary"): show model summary
+# getOption("parameters_mixed_summary"): show model summary for mixed models
+# getOption("parameters_cimethod"): show message about CI approximation
+# getOption("parameters_exponentiate"): show warning about exp for log/logit links
+
+
 
 #' @rdname model_parameters
 #' @export
@@ -436,6 +456,9 @@ model_parameters.default <- function(model,
                                      vcov = NULL,
                                      vcov_args = NULL,
                                      ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   # sanity check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
   dots <- .check_dots(
@@ -626,6 +649,9 @@ model_parameters.glm <- function(model,
                                  vcov_args = NULL,
                                  verbose = TRUE,
                                  ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   dots <- list(...)
 
   # set default

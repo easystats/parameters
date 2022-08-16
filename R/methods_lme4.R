@@ -126,6 +126,9 @@ model_parameters.merMod <- function(model,
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   dots <- list(...)
 
   ## TODO remove later

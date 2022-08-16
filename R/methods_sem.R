@@ -10,7 +10,9 @@ standard_error.sem <- function(model, ...) {
     return(NULL)
   }
   if (is.null(model$se)) {
-    warning(insight::format_message("Model has no standard errors. Please fit model again with bootstrapped standard errors."), call. = FALSE)
+    warning(insight::format_message(
+      "Model has no standard errors. Please fit model again with bootstrapped standard errors."
+    ), call. = FALSE)
     return(NULL)
   }
   .data_frame(

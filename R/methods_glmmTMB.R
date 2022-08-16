@@ -27,6 +27,9 @@ model_parameters.glmmTMB <- function(model,
                                      df_method = ci_method,
                                      include_sigma = FALSE,
                                      ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   insight::check_if_installed("glmmTMB")
 
   ## TODO remove later

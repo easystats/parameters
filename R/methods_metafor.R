@@ -141,7 +141,7 @@ model_parameters.rma <- function(model,
   }
 
   original_attributes$names <- names(out)
-  original_attributes$row.names <- 1:nrow(out)
+  original_attributes$row.names <- seq_len(nrow(out))
   original_attributes$pretty_names <- stats::setNames(out$Parameter, out$Parameter)
   attributes(out) <- original_attributes
 

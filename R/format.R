@@ -403,7 +403,7 @@ format.parameters_sem <- function(x,
 # footer: generic text
 .add_footer_text <- function(footer = NULL, text, type = "text") {
   if (!is.null(text)) {
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -428,7 +428,7 @@ format.parameters_sem <- function(x,
       res_df <- ""
     }
 
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -457,7 +457,7 @@ format.parameters_sem <- function(x,
       }
     )
     if (!is.null(rsq)) {
-      if (type == "text" | type == "markdown") {
+      if (type == "text" || type == "markdown") {
         if (is.null(footer)) {
           fill <- "\n"
         } else {
@@ -476,7 +476,7 @@ format.parameters_sem <- function(x,
 # footer: anova type
 .add_footer_anova_type <- function(footer = NULL, aov_type, type = "text") {
   if (!is.null(aov_type)) {
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -494,7 +494,7 @@ format.parameters_sem <- function(x,
 # footer: anova test
 .add_footer_anova_test <- function(footer = NULL, test, type = "text") {
   if (!is.null(test)) {
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -512,7 +512,7 @@ format.parameters_sem <- function(x,
 # footer: htest alternative
 .add_footer_alternative <- function(footer = NULL, text_alternative, type = "text") {
   if (!is.null(text_alternative)) {
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -530,7 +530,7 @@ format.parameters_sem <- function(x,
 # footer: p-adjustment
 .add_footer_padjust <- function(footer = NULL, p_adjust, type = "text") {
   if (!is.null(p_adjust) && p_adjust != "none") {
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {
@@ -555,7 +555,7 @@ format.parameters_sem <- function(x,
       n <- ""
     }
 
-    if (type == "text" | type == "markdown") {
+    if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
         fill <- "\n"
       } else {

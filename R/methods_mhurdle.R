@@ -7,6 +7,9 @@ model_parameters.mhurdle <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   component <- match.arg(component)
 
   params <- .model_parameters_generic(
@@ -28,7 +31,9 @@ model_parameters.mhurdle <- function(model,
 
 
 #' @export
-p_value.mhurdle <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"), ...) {
+p_value.mhurdle <- function(model,
+                            component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"),
+                            ...) {
   component <- match.arg(component)
   s <- summary(model)
   params <- insight::get_parameters(model, component = "all")

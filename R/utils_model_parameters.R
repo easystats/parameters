@@ -279,6 +279,7 @@
   isTRUE(exponentiate) || identical(exponentiate, "nongaussian")
 }
 
+
 #' @keywords internal
 .exponentiate_parameters <- function(params, model = NULL, exponentiate = TRUE) {
   # "exponentiate" must be
@@ -289,7 +290,8 @@
   }
 
   # check if non-gaussian applies
-  if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear && identical(exponentiate, "nongaussian")) {
+  if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear &&
+      identical(exponentiate, "nongaussian")) {
     return(params)
   }
 
@@ -302,7 +304,7 @@
       if (!is.null(params$Component)) {
         rows <- !tolower(params$Component) %in% c("dispersion", "residual")
       } else {
-        rows <- 1:nrow(params)
+        rows <- seq_len(nrow(params))
       }
     }
     params[rows, columns] <- exp(params[rows, columns])
@@ -419,4 +421,13 @@
     }
   }
   dots
+}
+
+
+.is_model_valid <- function(model) {
+  if (missing(model) || is.null(model)) {
+    stop(insight::format_message(
+      "You must provide a model-object. Argument `model` cannot be missing or `NULL`."
+    ), call. = FALSE)
+  }
 }

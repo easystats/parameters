@@ -1,6 +1,9 @@
 #' @rdname model_parameters.stanreg
 #' @export
 model_parameters.data.frame <- function(model, as_draws = FALSE, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   # treat data frame as bootstraps/posteriors?
   if (isTRUE(as_draws)) {
     return(model_parameters.draws(model, verbose = verbose, ...))

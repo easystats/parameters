@@ -71,6 +71,9 @@ model_parameters.BFBayesFactor <- function(model,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
                                            ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   insight::check_if_installed("BayesFactor")
 
   if (any(grepl("^Null", names(model@numerator)))) {

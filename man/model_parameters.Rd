@@ -27,19 +27,33 @@ Compute and extract model parameters. The available options and arguments depend
 on the modeling \strong{package} and model \code{class}. Follow one of these links to read
 the model-specific documentation:
 \itemize{
-\item{\link[=model_parameters.default]{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg}, \strong{MASS}, \strong{survey}, ... }
-\item{\link[=model_parameters.cgam]{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv}, \strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...}
-\item{\link[=model_parameters.aov]{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, ...}
-\item{\link[=model_parameters.stanreg]{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms}, \strong{MCMCglmm}, \strong{posterior}, \strong{rstanarm}, \code{bayesQR}, \code{bcplm}, \code{BGGM}, \code{blmrm}, \code{blrm}, \code{mcmc.list}, \code{MCMCglmm}, ...}
-\item{\link[=model_parameters.kmeans]{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...}
-\item{\link[=model_parameters.htest]{Correlations, t-tests, etc.:} \strong{lmtest}, \code{htest}, \code{pairwise.htest}, ...}
-\item{\link[=model_parameters.rma]{Meta-Analysis}: \strong{metaBMA}, \strong{metafor}, \strong{metaplus}, ...}
-\item{\link[=model_parameters.merMod]{Mixed models}: \strong{cplm}, \strong{glmmTMB}, \strong{lme4}, \strong{lmerTest}, \strong{nlme}, \strong{ordinal}, \strong{robustlmm}, \strong{spaMM}, \code{mixed}, \code{MixMod}, ...}
-\item{\link[=model_parameters.mlm]{Multinomial, ordinal and cumulative link}: \strong{brglm2}, \strong{DirichletReg}, \strong{nnet}, \strong{ordinal}, \code{mlm}, ...}
-\item{\link[=model_parameters.mira]{Multiple imputation}: \strong{mice}}
-\item{\link[=model_parameters.principal]{PCA, FA, CFA, SEM}: \strong{FactoMineR}, \strong{lavaan}, \strong{psych}, \code{sem}, ...}
-\item{\link[=model_parameters.zcpglm]{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle}, \strong{pscl}, ...}
-\item{\link[=model_parameters.averaging]{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg}, \strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit}, \strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik}, \strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus}, \strong{quantreg}, \strong{selection}, \strong{systemfit}, \strong{tidymodels}, \strong{varEST}, \strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...}
+\item \href{model_parameters.default}{Default method}: \code{lm}, \code{glm}, \strong{stats}, \strong{censReg},
+\strong{MASS}, \strong{survey}, ...
+\item \href{model_parameters.cgam}{Additive models}: \strong{bamlss}, \strong{gamlss}, \strong{mgcv},
+\strong{scam}, \strong{VGAM}, \code{Gam}, \code{gamm}, ...
+\item \href{model_parameters.aov}{ANOVA}: \strong{afex}, \code{aov}, \code{anova}, ...
+\item \href{model_parameters.stanreg}{Bayesian}: \strong{BayesFactor}, \strong{blavaan}, \strong{brms},
+\strong{MCMCglmm}, \strong{posterior}, \strong{rstanarm}, \code{bayesQR}, \code{bcplm}, \code{BGGM}, \code{blmrm},
+\code{blrm}, \code{mcmc.list}, \code{MCMCglmm}, ...
+\item \href{model_parameters.kmeans}{Clustering}: \strong{hclust}, \strong{kmeans}, \strong{mclust}, \strong{pam}, ...
+\item \href{model_parameters.htest}{Correlations, t-tests, etc.}: \strong{lmtest}, \code{htest},
+\code{pairwise.htest}, ...
+\item \href{model_parameters.rma}{Meta-Analysis}: \strong{metaBMA}, \strong{metafor}, \strong{metaplus}, ...
+\item \href{model_parameters.merMod}{Mixed models}: \strong{cplm}, \strong{glmmTMB}, \strong{lme4},
+\strong{lmerTest}, \strong{nlme}, \strong{ordinal}, \strong{robustlmm}, \strong{spaMM}, \code{mixed}, \code{MixMod}, ...
+\item \href{model_parameters.mlm}{Multinomial, ordinal and cumulative link}: \strong{brglm2},
+\strong{DirichletReg}, \strong{nnet}, \strong{ordinal}, \code{mlm}, ...
+\item \href{model_parameters.mira}{Multiple imputation}: \strong{mice}
+\item \href{model_parameters.principal}{PCA, FA, CFA, SEM}: \strong{FactoMineR}, \strong{lavaan},
+\strong{psych}, \code{sem}, ...
+\item \href{model_parameters.zcpglm}{Zero-inflated and hurdle}: \strong{cplm}, \strong{mhurdle},
+\strong{pscl}, ...
+\item \href{model_parameters.averaging}{Other models}: \strong{aod}, \strong{bbmle}, \strong{betareg},
+\strong{emmeans}, \strong{epiR}, \strong{ggeffects}, \strong{glmx}, \strong{ivfixed}, \strong{ivprobit},
+\strong{JRM}, \strong{lmodel2}, \strong{logitsf}, \strong{marginaleffects}, \strong{margins}, \strong{maxLik},
+\strong{mediation}, \strong{mfx}, \strong{multcomp}, \strong{mvord}, \strong{plm}, \strong{PMCMRplus},
+\strong{quantreg}, \strong{selection}, \strong{systemfit}, \strong{tidymodels}, \strong{varEST},
+\strong{WRS2}, \code{bfsl}, \code{deltaMethod}, \code{fitdistr}, \code{mjoint}, \code{mle}, \code{model.avg}, ...
 }
 }
 \note{

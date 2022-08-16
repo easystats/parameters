@@ -16,6 +16,9 @@ model_parameters.bracl <- function(model,
                                    p_adjust = NULL,
                                    verbose = TRUE,
                                    ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -173,7 +176,7 @@ standard_error.multinom <- function(model, ...) {
       } else {
         if (is.matrix(stderr)) {
           tmp <- c()
-          for (i in 1:nrow(stderr)) {
+          for (i in seq_len(nrow(stderr))) {
             tmp <- c(tmp, as.vector(stderr[i, ]))
           }
         } else {

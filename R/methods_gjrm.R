@@ -9,6 +9,9 @@ model_parameters.SemiParBIV <- function(model,
                                         p_adjust = NULL,
                                         verbose = TRUE,
                                         ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
@@ -31,7 +34,7 @@ model_parameters.SemiParBIV <- function(model,
 p_value.SemiParBIV <- function(model, ...) {
   s <- summary(model)
   s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
-  params <- do.call(rbind, lapply(1:length(s), function(i) {
+  params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
     out$Component <- paste0("Equation", i)
@@ -47,7 +50,7 @@ p_value.SemiParBIV <- function(model, ...) {
 standard_error.SemiParBIV <- function(model, ...) {
   s <- summary(model)
   s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
-  params <- do.call(rbind, lapply(1:length(s), function(i) {
+  params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
     out$Component <- paste0("Equation", i)

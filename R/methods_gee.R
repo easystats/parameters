@@ -25,9 +25,17 @@ p_value.gee <- function(model, method = NULL, ...) {
   }
 
   if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
-    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Robust S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
+    p <- 2 * stats::pt(
+      abs(cs[, "Estimate"] / cs[, "Robust S.E."]),
+      df = degrees_of_freedom(model, method = method),
+      lower.tail = FALSE
+    )
   } else {
-    p <- 2 * stats::pt(abs(cs[, "Estimate"] / cs[, "Naive S.E."]), df = degrees_of_freedom(model, method = method), lower.tail = FALSE)
+    p <- 2 * stats::pt(
+      abs(cs[, "Estimate"] / cs[, "Naive S.E."]),
+      df = degrees_of_freedom(model, method = method),
+      lower.tail = FALSE
+    )
   }
 
   .data_frame(
@@ -50,7 +58,11 @@ p_value.geeglm <- function(model, method = "wald", ...) {
   if (!is.null(stat)) {
     if (identical(method, "residual")) {
       dof <- degrees_of_freedom(model, method = "residual")
-      p <- as.vector(2 * stats::pt(sqrt(abs(stat$Statistic)), df = dof, lower.tail = FALSE))
+      p <- as.vector(2 * stats::pt(
+        sqrt(abs(stat$Statistic)),
+        df = dof,
+        lower.tail = FALSE
+      ))
     } else {
       p <- as.vector(1 - stats::pchisq(stat$Statistic, df = 1))
     }

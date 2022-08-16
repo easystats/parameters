@@ -15,9 +15,14 @@ model_parameters.metaplus <- function(model,
                                       include_studies = TRUE,
                                       verbose = TRUE,
                                       ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
-      message(insight::format_message("'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."))
+      message(insight::format_message(
+        "'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."
+      ))
     }
     ci <- .95
   }
@@ -40,7 +45,7 @@ model_parameters.metaplus <- function(model,
   } else if (!is.null(model$k)) {
     sprintf("Study %i", 1:model[["k"]])
   } else {
-    sprintf("Study %i", 1:length(model$yi))
+    sprintf("Study %i", seq_along(model$yi))
   }
 
   alpha <- (1 + ci) / 2
@@ -78,7 +83,7 @@ model_parameters.metaplus <- function(model,
   }
 
   original_attributes$names <- names(out)
-  original_attributes$row.names <- 1:nrow(out)
+  original_attributes$row.names <- seq_len(nrow(out))
   original_attributes$pretty_names <- stats::setNames(out$Parameter, out$Parameter)
   attributes(out) <- original_attributes
 

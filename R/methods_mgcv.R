@@ -6,6 +6,9 @@ model_parameters.gamm <- function(model,
                                   iterations = 1000,
                                   verbose = TRUE,
                                   ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   model <- model$gam
   class(model) <- c("gam", "lm", "glm")
   model_parameters(

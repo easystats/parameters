@@ -21,6 +21,9 @@ model_parameters.brmsfit <- function(model,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   modelinfo <- insight::model_info(model, verbose = FALSE)
 
   # Bayesian meta analysis

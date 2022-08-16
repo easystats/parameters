@@ -59,6 +59,9 @@ model_parameters.pgmm <- function(model,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   component <- match.arg(component)
 
   params <- .extract_parameters_generic(

@@ -42,6 +42,9 @@ model_parameters.averaging <- function(model,
                                        p_adjust = NULL,
                                        verbose = TRUE,
                                        ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,

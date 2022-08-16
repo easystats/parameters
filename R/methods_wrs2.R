@@ -16,6 +16,9 @@
 
 #' @rdname model_parameters.averaging
 model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -54,6 +57,9 @@ model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.med1way <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_med1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -76,6 +82,9 @@ model_parameters.dep.effect <- function(model,
                                         keep = NULL,
                                         verbose = TRUE,
                                         ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_dep.effect(model, keep = keep)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
@@ -126,6 +135,9 @@ model_parameters.dep.effect <- function(model,
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_yuen(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -177,6 +189,9 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.mcp1 <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_mcp12(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -211,6 +226,9 @@ model_parameters.mcp2 <- model_parameters.mcp1
 
 #' @export
 model_parameters.robtab <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_robtab(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -248,6 +266,9 @@ model_parameters.robtab <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_onesampb(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -270,6 +291,9 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.trimcibt <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_trimcibt(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -296,6 +320,9 @@ model_parameters.trimcibt <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.AKP <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_AKP(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
@@ -315,6 +342,9 @@ model_parameters.AKP <- function(model, verbose = TRUE, ...) {
 
 #' @export
 model_parameters.wmcpAKP <- function(model, verbose = TRUE, ...) {
+  # sanity check for inputs
+  .is_model_valid(model)
+
   parameters <- .extract_wrs2_wmcpAKP(model)
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
   parameters
