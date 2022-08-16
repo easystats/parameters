@@ -248,7 +248,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   if (any(grps)) {
     from <- which(grps)
     to <- c(which(grps) - 1, length(grps))[-1]
-    out_sd <- do.call(rbind, lapply(1:length(from), function(i) {
+    out_sd <- do.call(rbind, lapply(seq_along(from), function(i) {
       values <- stddevs[from[i]:to[i]]
       .data_frame(
         grp = gsub("(.*) =$", "\\1", names(values[1])),
@@ -258,7 +258,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       )
     }))
     if (!is.null(corrs)) {
-      out_cor <- do.call(rbind, lapply(1:length(from), function(i) {
+      out_cor <- do.call(rbind, lapply(seq_along(from), function(i) {
         values <- corrs[from[i]:to[i]]
         .data_frame(
           grp = gsub("(.*) =$", "\\1", names(values[1])),
@@ -449,7 +449,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)", var_ci$Parameter[var_ci_others])
 
             # merge with random effect coefficients
-            out$.sort_id <- 1:nrow(out)
+            out$.sort_id <- seq_len(nrow(out))
             tmp <- merge(
               datawizard::data_remove(out, "SE", verbose = FALSE),
               var_ci,
@@ -610,7 +610,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         }
 
         # merge and sort
-        out$.sort_id <- 1:nrow(out)
+        out$.sort_id <- seq_len(nrow(out))
         out <- merge(out, var_ci, sort = FALSE, all.x = TRUE)
         out <- out[order(out$.sort_id), ]
         out$.sort_id <- NULL
@@ -706,7 +706,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     }
 
     varcorr <- datawizard::compact_list(list(vc1, vc2))
-    names(varcorr) <- c("cond", "zi")[1:length(varcorr)]
+    names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
 
     # joineRML
     # ---------------------------

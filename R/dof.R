@@ -72,6 +72,9 @@ degrees_of_freedom <- function(model, ...) {
 #' @rdname degrees_of_freedom
 #' @export
 degrees_of_freedom.default <- function(model, method = "analytical", ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   if (is.null(method)) {
     method <- "wald"
   }

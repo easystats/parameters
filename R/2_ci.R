@@ -48,6 +48,8 @@
 #' }
 #' @export
 ci.default <- function(x, ci = .95, dof = NULL, method = NULL, ...) {
+  # check for valid input
+  .is_model_valid(x)
   .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
 }
 

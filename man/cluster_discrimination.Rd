@@ -15,7 +15,9 @@ be retrieved from the \code{\link[=cluster_analysis]{cluster_analysis()}} functi
 \item{...}{Other arguments to be passed to or from.}
 }
 \description{
-Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See \code{MASS::lda()} for details.
+Computes linear discriminant analysis (LDA) on classified cluster groups, and
+determines the goodness of classification for each cluster group. See \code{MASS::lda()}
+for details.
 }
 \examples{
 if (requireNamespace("MASS", quietly = TRUE)) {
@@ -27,5 +29,7 @@ if (requireNamespace("MASS", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract, \code{\link[=cluster_analysis]{cluster_analysis()}} to compute a cluster analysis and \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data for clustering.
+\code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
+\code{\link[=cluster_analysis]{cluster_analysis()}} to compute a cluster analysis and \code{\link[=check_clusterstructure]{check_clusterstructure()}}
+to check suitability of data for clustering.
 }

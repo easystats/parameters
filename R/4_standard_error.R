@@ -72,8 +72,10 @@ standard_error.default <- function(model,
                                    vcov_args = NULL,
                                    verbose = TRUE,
                                    ...) {
-  dots <- list(...)
+  # check for valid input
+  .is_model_valid(model)
 
+  dots <- list(...)
   se <- NULL
 
   # vcov: matrix

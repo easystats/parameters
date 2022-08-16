@@ -6,6 +6,8 @@ se_satterthwaite <- function(model) {
 
 #' @export
 se_satterthwaite.default <- function(model) {
+  # check for valid input
+  .is_model_valid(model)
   standard_error(model)
 }
 

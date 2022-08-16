@@ -37,6 +37,9 @@ standardize_info.default <- function(model,
                                      two_sd = FALSE,
                                      include_pseudo = FALSE,
                                      ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   mi <- .get_model_info(model, ...)
 
   params <- if (inherits(model, c("glmmTMB", "MixMod"))) {
@@ -52,7 +55,9 @@ standardize_info.default <- function(model,
 
   # Sanity Check for ZI
   if (mi$is_zero_inflated) {
-    warning(insight::format_message("Non-refit parameter standardization is ignoring the zero-inflation component."), call. = FALSE)
+    warning(insight::format_message(
+      "Non-refit parameter standardization is ignoring the zero-inflation component."
+    ), call. = FALSE)
     # would need to also get the binomial model matrix...
   }
 

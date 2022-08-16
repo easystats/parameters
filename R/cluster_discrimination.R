@@ -1,13 +1,17 @@
 #' Compute a linear discriminant analysis on classified cluster groups
 #'
-#' Computes linear discriminant analysis (LDA) on classified cluster groups, and determines the goodness of classification for each cluster group. See `MASS::lda()` for details.
+#' Computes linear discriminant analysis (LDA) on classified cluster groups, and
+#' determines the goodness of classification for each cluster group. See `MASS::lda()`
+#' for details.
 #'
 #' @param x A data frame
 #' @param cluster_groups Group classification of the cluster analysis, which can
 #'   be retrieved from the [cluster_analysis()] function.
 #' @param ... Other arguments to be passed to or from.
 #'
-#' @seealso [n_clusters()] to determine the number of clusters to extract, [cluster_analysis()] to compute a cluster analysis and [check_clusterstructure()] to check suitability of data for clustering.
+#' @seealso [n_clusters()] to determine the number of clusters to extract,
+#' [cluster_analysis()] to compute a cluster analysis and [check_clusterstructure()]
+#' to check suitability of data for clustering.
 #'
 #' @examples
 #' if (requireNamespace("MASS", quietly = TRUE)) {
@@ -35,7 +39,7 @@ cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ..
 #' @export
 cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {
-    stop("Please provide cluster assignments via 'cluster_groups'.")
+    stop("Please provide cluster assignments via 'cluster_groups'.", call. = FALSE)
   }
 
   x <- stats::na.omit(x)

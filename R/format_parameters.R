@@ -46,14 +46,11 @@ format_parameters <- function(model, ...) {
 #' @rdname format_parameters
 #' @export
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
-  tryCatch(
-    {
-      .format_parameter_default(model, brackets = brackets, ...)
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  # check for valid input
+  .is_model_valid(model)
+
+  tryCatch(.format_parameter_default(model, brackets = brackets, ...),
+           error = function(e) NULL)
 }
 
 
@@ -103,7 +100,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
   # special handling hurdle- and zeroinfl-models ---------------------
-  if (isTRUE(info$is_zero_inflated) | isTRUE(info$is_hurdle)) {
+  if (isTRUE(info$is_zero_inflated) || isTRUE(info$is_hurdle)) {
     names <- gsub("^(count_|zero_)", "", names)
     types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
@@ -140,7 +137,7 @@ format_parameters.parameters_model <- function(model, ...) {
   names <- .clean_parameter_names(names)
 
 
-  for (i in 1:nrow(types)) {
+  for (i in seq_len(nrow(types))) {
     name <- types$Parameter[i]
 
     # No interaction
@@ -160,7 +157,7 @@ format_parameters.parameters_model <- function(model, ...) {
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
 
-      for (j in 1:length(components)) {
+      for (j in seq_along(components)) {
         if (components[j] %in% types$Parameter) {
           type <- types[types$Parameter == components[j], ]
 

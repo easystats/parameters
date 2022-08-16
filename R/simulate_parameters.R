@@ -61,6 +61,9 @@ simulate_parameters.default <- function(model,
                                         ci_method = "quantile",
                                         test = "p-value",
                                         ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
     data = data,

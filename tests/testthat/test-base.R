@@ -10,3 +10,8 @@ test_that("model_parameters.data.frame as draws", {
   expect_equal(mp$Parameter, c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"))
   expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage"))
 })
+
+# require model input
+test_that("model_parameters", {
+  expect_error(model_parameters())
+})

@@ -59,6 +59,9 @@ simulate_model <- function(model, iterations = 1000, ...) {
 
 #' @export
 simulate_model.default <- function(model, iterations = 1000, ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
 
   class(out) <- c("parameters_simulate_model", class(out))

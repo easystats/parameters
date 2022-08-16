@@ -45,6 +45,9 @@ p_value.default <- function(model,
                             vcov_args = NULL,
                             verbose = TRUE,
                             ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   dots <- list(...)
 
   if (is.character(method)) {

@@ -74,6 +74,9 @@ bootstrap_model.default <- function(model,
                                     n_cpus = 1,
                                     verbose = FALSE,
                                     ...) {
+  # check for valid input
+  .is_model_valid(model)
+
   insight::check_if_installed("boot")
 
   type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))

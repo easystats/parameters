@@ -424,6 +424,9 @@
 }
 
 
+
+# functions to check if necessary default argument was provided ------------
+
 .is_model_valid <- function(model) {
   if (missing(model) || is.null(model)) {
     stop(insight::format_message(
