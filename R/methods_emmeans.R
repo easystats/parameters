@@ -19,9 +19,6 @@ model_parameters.emmGrid <- function(model,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   # set default for p-adjust
   emm_padjust <- tryCatch(model@misc$adjust, error = function(e) NULL)
   if (!is.null(emm_padjust) && is.null(p_adjust)) {

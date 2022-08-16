@@ -17,9 +17,6 @@ model_parameters.model_fit <- function(model,
                                        p_adjust = NULL,
                                        verbose = TRUE,
                                        ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   model_parameters(
     model$fit,
     ci = ci,

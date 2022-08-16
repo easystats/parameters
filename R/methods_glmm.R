@@ -9,9 +9,6 @@ model_parameters.glmm <- function(model,
                                   exponentiate = FALSE,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   effects <- match.arg(effects)
   out <- .model_parameters_generic(
     model = model,

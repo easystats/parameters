@@ -15,9 +15,6 @@
 #' }
 #' @export
 model_parameters.pam <- function(model, data = NULL, clusters = NULL, ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   if (is.null(data)) data <- as.data.frame(model$data)
   if (is.null(clusters)) clusters <- model$clustering
 

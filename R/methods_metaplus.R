@@ -15,9 +15,6 @@ model_parameters.metaplus <- function(model,
                                       include_studies = TRUE,
                                       verbose = TRUE,
                                       ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
       message(insight::format_message(

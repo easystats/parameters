@@ -16,9 +16,6 @@ model_parameters.bamlss <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   # Processing
   params <- .extract_parameters_bayesian(
     model,

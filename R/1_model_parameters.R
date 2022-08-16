@@ -649,9 +649,6 @@ model_parameters.glm <- function(model,
                                  vcov_args = NULL,
                                  verbose = TRUE,
                                  ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   dots <- list(...)
 
   # set default

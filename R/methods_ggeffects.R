@@ -1,9 +1,6 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose = TRUE, ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   ci <- attributes(model)$ci.lvl
   terms <- attributes(model)$terms[-1]
   focal_term <- attributes(model)$terms[1]

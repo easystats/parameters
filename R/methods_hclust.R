@@ -22,9 +22,6 @@
 #' attributes(rez)$Between_Sum_Squares
 #' @export
 model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   if (is.null(data)) {
     stop("This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself.", call. = FALSE)
   }

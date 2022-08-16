@@ -253,9 +253,6 @@ model_parameters.fa.ci <- model_parameters.fa
 #' @rdname model_parameters.principal
 #' @export
 model_parameters.omega <- function(model, verbose = TRUE, ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   # Table of omega coefficients
   table_om <- model$omega.group
   colnames(table_om) <- c("Omega_Total", "Omega_Hierarchical", "Omega_Group")

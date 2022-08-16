@@ -7,9 +7,6 @@ model_parameters.PCA <- function(model,
                                  labels = NULL,
                                  verbose = TRUE,
                                  ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   loadings <- as.data.frame(model$var$coord)
   n <- model$call$ncp
 

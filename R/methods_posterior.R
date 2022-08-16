@@ -12,9 +12,6 @@ model_parameters.draws <- function(model,
                                    drop = NULL,
                                    verbose = TRUE,
                                    ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   out <- .posterior_draws_to_df(model)
 
   # Processing

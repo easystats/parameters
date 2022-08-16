@@ -27,14 +27,13 @@ model_parameters.glmmTMB <- function(model,
                                      df_method = ci_method,
                                      include_sigma = FALSE,
                                      ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   insight::check_if_installed("glmmTMB")
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
+    warning(insight::format_message(
+      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
+    ), call. = FALSE)
     ci_method <- df_method
   }
 
@@ -56,7 +55,9 @@ model_parameters.glmmTMB <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
+      warning(insight::format_message(
+        "Standardizing coefficients only works for fixed effects of the mixed model."
+      ), call. = FALSE)
     }
     effects <- "fixed"
   }
@@ -85,7 +86,9 @@ model_parameters.glmmTMB <- function(model,
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          warning(insight::format_message("Bootstrapping only returns fixed effects of the mixed model."), call. = FALSE)
+          warning(insight::format_message(
+            "Bootstrapping only returns fixed effects of the mixed model."
+          ), call. = FALSE)
         }
       }
     } else {
@@ -167,7 +170,15 @@ model_parameters.glmmTMB <- function(model,
         warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
       }
     } else {
-      params_variance <- .extract_random_variances(model, ci = ci, effects = effects, component = component, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
+      params_variance <- .extract_random_variances(
+        model,
+        ci = ci,
+        effects = effects,
+        component = component,
+        ci_method = ci_method,
+        ci_random = ci_random,
+        verbose = verbose
+      )
       # remove redundant dispersion parameter
       if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
         disp <- which(params$Component == "dispersion")
@@ -361,7 +372,11 @@ standard_error.glmmTMB <- function(model,
 
 #' @rdname simulate_model
 #' @export
-simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "dispersion"), verbose = FALSE, ...) {
+simulate_model.glmmTMB <- function(model,
+                                   iterations = 1000,
+                                   component = c("all", "conditional", "zi", "zero_inflated", "dispersion"),
+                                   verbose = FALSE,
+                                   ...) {
   component <- match.arg(component)
   info <- insight::model_info(model, verbose = FALSE)
 
@@ -378,13 +393,19 @@ simulate_model.glmmTMB <- function(model, iterations = 1000, component = c("all"
 
   if (component == "all") {
     if (!has_zeroinflated && !has_dispersion) {
-      if (verbose) insight::print_color("No zero-inflation and dispersion components. Simulating from conditional parameters.\n", "red")
+      if (verbose) {
+        insight::print_color("No zero-inflation and dispersion components. Simulating from conditional parameters.\n", "red")
+      }
       component <- "conditional"
     } else if (!has_zeroinflated && has_dispersion) {
-      if (verbose) insight::print_color("No zero-inflation component. Simulating from conditional and dispersion parameters.\n", "red")
+      if (verbose) {
+        insight::print_color("No zero-inflation component. Simulating from conditional and dispersion parameters.\n", "red")
+      }
       component <- c("conditional", "dispersion")
     } else if (has_zeroinflated && !has_dispersion) {
-      if (verbose) insight::print_color("No dispersion component. Simulating from conditional and zero-inflation parameters.\n", "red")
+      if (verbose) {
+        insight::print_color("No dispersion component. Simulating from conditional and zero-inflation parameters.\n", "red")
+      }
       component <- c("conditional", "zero_inflated")
     }
   } else if (component %in% c("zi", "zero_inflated") && !has_zeroinflated) {

@@ -37,9 +37,6 @@ model_parameters.glht <- function(model,
                                   exponentiate = FALSE,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   # p-adjustment method
   s <- summary(model)
   p_adjust <- s$test$type

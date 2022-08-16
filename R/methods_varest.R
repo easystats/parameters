@@ -11,9 +11,6 @@ model_parameters.varest <- function(model,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   params <- lapply(names(model$varresult), function(i) {
     out <- model_parameters(
       model = model$varresult[[i]],

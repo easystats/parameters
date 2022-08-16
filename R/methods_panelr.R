@@ -17,9 +17,6 @@ model_parameters.wbm <- function(model,
                                  include_sigma = FALSE,
                                  verbose = TRUE,
                                  ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
 
   params <- .mixed_model_parameters_generic(

@@ -18,9 +18,6 @@ model_parameters.rqs <- function(model,
                                  exponentiate = FALSE,
                                  verbose = TRUE,
                                  ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   out <- .model_parameters_generic(
     model = model,
     ci = ci,

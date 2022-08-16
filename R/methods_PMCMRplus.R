@@ -1,8 +1,6 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.PMCMR <- function(model, ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
   insight::check_if_installed("PMCMRplus")
   parameters <- PMCMRplus::toTidy(model)
 

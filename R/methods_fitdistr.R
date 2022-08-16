@@ -4,9 +4,6 @@ model_parameters.fitdistr <- function(model,
                                       exponentiate = FALSE,
                                       verbose = TRUE,
                                       ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   out <- data.frame(
     Parameter = names(model$estimate),
     Coefficient = as.vector(model$estimate),

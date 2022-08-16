@@ -12,9 +12,6 @@ model_parameters.logitor <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   model_parameters.default(
     model$fit,
     ci = ci,
@@ -50,9 +47,6 @@ model_parameters.poissonmfx <- function(model,
                                         p_adjust = NULL,
                                         verbose = TRUE,
                                         ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,
@@ -99,9 +93,6 @@ model_parameters.betaor <- function(model,
                                     p_adjust = NULL,
                                     verbose = TRUE,
                                     ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   component <- match.arg(component)
   model_parameters.betareg(
     model$fit,
@@ -129,9 +120,6 @@ model_parameters.betamfx <- function(model,
                                      p_adjust = NULL,
                                      verbose = TRUE,
                                      ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   component <- match.arg(component)
   out <- .model_parameters_generic(
     model = model,

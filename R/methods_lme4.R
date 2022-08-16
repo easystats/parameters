@@ -126,14 +126,13 @@ model_parameters.merMod <- function(model,
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   dots <- list(...)
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
+    warning(insight::format_message(
+      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
+    ), call. = FALSE)
     ci_method <- df_method
   }
 

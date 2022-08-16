@@ -29,9 +29,6 @@ model_parameters.befa <- function(model,
                                   test = NULL,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   if (!attr(model, "post.column.switch") || !attr(model, "post.sign.switch")) {
     insight::check_if_installed("BayesFM")
     if (!attr(model, "post.column.switch")) model <- BayesFM::post.column.switch(model)

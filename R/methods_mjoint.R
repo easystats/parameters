@@ -10,9 +10,6 @@ model_parameters.mjoint <- function(model,
                                     drop = NULL,
                                     verbose = TRUE,
                                     ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
   component <- match.arg(component)
 

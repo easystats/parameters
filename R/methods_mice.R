@@ -129,9 +129,6 @@ model_parameters.mira <- function(model,
                                   p_adjust = NULL,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   insight::check_if_installed("mice")
 
   out <- .model_parameters_generic(

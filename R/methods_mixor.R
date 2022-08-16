@@ -11,9 +11,6 @@ model_parameters.mixor <- function(model,
                                    verbose = TRUE,
                                    include_sigma = FALSE,
                                    ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
 
   # standardize only works for fixed effects...

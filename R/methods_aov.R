@@ -121,9 +121,6 @@ model_parameters.aov <- function(model,
                                  table_wide = FALSE,
                                  verbose = TRUE,
                                  ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   # save model object, for later checks
   original_model <- model
   object_name <- deparse(substitute(model), width.cutoff = 500)
@@ -275,9 +272,6 @@ model_parameters.afex_aov <- function(model,
                                       drop = NULL,
                                       verbose = TRUE,
                                       ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-  
   if (inherits(model$Anova, "Anova.mlm")) {
     params <- model$anova_table
     with_df_and_p <- summary(model$Anova)$univariate.tests

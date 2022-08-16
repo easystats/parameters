@@ -10,9 +10,6 @@ model_parameters.DirichletRegModel <- function(model,
                                                exponentiate = FALSE,
                                                verbose = TRUE,
                                                ...) {
-  # sanity check for inputs
-  .is_model_valid(model)
-
   component <- match.arg(component)
   if (component == "all") {
     merge_by <- c("Parameter", "Component", "Response")
