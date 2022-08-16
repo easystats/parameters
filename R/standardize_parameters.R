@@ -149,14 +149,27 @@
 #' }
 #' }
 #' @references
-#' - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation and change. Routledge.
-#' - Jones, J. A., & Waller, N. G. (2015). The normal-theory and asymptotic distribution-free (ADF) covariance matrix of standardized regression coefficients: theoretical extensions and finite sample behavior. Psychometrika, 80(2), 365-378.
-#' - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear regression models.
-#' - Gelman, A. (2008). Scaling regression inputs by dividing by two standard deviations. Statistics in medicine, 27(15), 2865-2873.
+#' - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation
+#'   and change. Routledge.
+#' - Jones, J. A., & Waller, N. G. (2015). The normal-theory and asymptotic
+#'   distribution-free (ADF) covariance matrix of standardized regression
+#'   coefficients: theoretical extensions and finite sample behavior.
+#'   Psychometrika, 80(2), 365-378.
+#' - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+#'   regression models.
+#' - Gelman, A. (2008). Scaling regression inputs by dividing by two standard
+#'   deviations. Statistics in medicine, 27(15), 2865-2873.
 #'
 #' @export
 #' @aliases standardise_parameters
-standardize_parameters <- function(model, method = "refit", ci = 0.95, robust = FALSE, two_sd = FALSE, include_response = TRUE, verbose = TRUE, ...) {
+standardize_parameters <- function(model,
+                                   method = "refit",
+                                   ci = 0.95,
+                                   robust = FALSE,
+                                   two_sd = FALSE,
+                                   include_response = TRUE,
+                                   verbose = TRUE,
+                                   ...) {
   UseMethod("standardize_parameters")
 }
 
@@ -197,7 +210,9 @@ standardize_parameters.default <- function(model,
 
   if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo")) {
     if (m_info$is_multivariate) {
-      stop(insight::format_message("Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."), call. = FALSE)
+      stop(insight::format_message(
+        "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
+      ), call. = FALSE)
     }
 
     pars <- .standardize_parameters_posthoc(pars, method, model, m_info, robust, two_sd, exponentiate,
@@ -247,10 +262,12 @@ standardize_parameters.mediate <- function(model,
                                            include_response = TRUE,
                                            verbose = TRUE,
                                            ...) {
-  if (method != "refit")
-    warning("Only method = 'refit' is supported for mediation models.", immediate. = TRUE)
+  if (method != "refit") {
+    warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE)
+  }
 
-  NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust, two_sd = two_sd, include_response = include_response, verbose = verbose)
+  NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust, 
+             two_sd = two_sd, include_response = include_response, verbose = verbose)
 }
 
 
@@ -264,11 +281,16 @@ standardize_parameters.parameters_model <- function(model,
                                                     verbose = TRUE,
                                                     ...) {
   if (method == "refit") {
-    stop("Method 'refit' not supported for 'model_parameters()", call. = TRUE)
+    stop(
+      "Argument 'refit' not supported for standardizing results from 'model_parameters()'.",
+      call. = FALSE
+    )
   }
 
   if (!is.null(ci)) {
-    warning(insight::format_message("Argument 'ci' argument not supported for 'model_parameters(). It is ignored."), call. = TRUE)
+    warning(insight::format_message(
+      "Argument 'ci' not supported for standardizing results from 'model_parameters()'. It is ignored."
+    ), call. = FALSE)
   }
 
   pars <- model
@@ -280,7 +302,9 @@ standardize_parameters.parameters_model <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (is.null(exponentiate <- attr(pars, "exponentiate"))) exponentiate <- FALSE
-  pars <- .standardize_parameters_posthoc(pars, method, model, m_info, robust, two_sd, exponentiate, include_response, verbose)
+  pars <- .standardize_parameters_posthoc(
+    pars, method, model, m_info, robust, two_sd, exponentiate, include_response, verbose
+  )
   method <- attr(pars, "std_method")
   robust <- attr(pars, "robust")
 
@@ -588,8 +612,10 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     }
 
     if (cant_posthocsmart) {
-      warning(insight::format_message("Method '", method, "' does not currently support models with transformed parameters.",
-                                      "Reverting to 'basic' method. Concider using the 'refit' method directly."), call. = FALSE)
+      warning(insight::format_message(
+        "Method '", method, "' does not currently support models with transformed parameters.",
+        "Reverting to 'basic' method. Concider using the 'refit' method directly."
+      ), call. = FALSE)
       method <- "basic"
     }
   }
