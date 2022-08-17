@@ -424,5 +424,3 @@ principal_components.data.frame <- function(x,
   attr(out, "complete_cases") <- stats::complete.cases(original_data)
   out
 }
-
-

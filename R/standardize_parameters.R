@@ -266,7 +266,7 @@ standardize_parameters.mediate <- function(model,
     warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE)
   }
 
-  NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust, 
+  NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust,
              two_sd = two_sd, include_response = include_response, verbose = verbose)
 }
 
