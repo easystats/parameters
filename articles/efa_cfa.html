@@ -286,7 +286,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># to have reproducible result, we will also set seed here so that similar</span></span>
 <span><span class="co"># portions of the data are used each time we run the following code</span></span>
-<span><span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/datawizard/man/data_partition.html" class="external-link">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span></span>
+<span><span class="va">partitions</span> <span class="op">&lt;-</span> <span class="fu">datawizard</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_partition.html" class="external-link">data_partition</a></span><span class="op">(</span><span class="va">data</span>, training_proportion <span class="op">=</span> <span class="fl">0.7</span>, seed <span class="op">=</span> <span class="fl">111</span><span class="op">)</span></span>
 <span><span class="va">training</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">p_0.7</span></span>
 <span><span class="va">test</span> <span class="op">&lt;-</span> <span class="va">partitions</span><span class="op">$</span><span class="va">test</span></span></code></pre></div>
 </div>
