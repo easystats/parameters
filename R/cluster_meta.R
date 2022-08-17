@@ -1,17 +1,34 @@
 #' Metaclustering
 #'
-#' One of the core "issue" of statistical clustering is that, in many cases, different methods will give different results. The **metaclustering** approach proposed by *easystats* (that finds echoes in *consensus clustering*; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability matrix. This matrix contains, for each pair of observations, the probability of being in the same cluster. For instance, if the 6th and the 9th row of a dataframe has been assigned to a similar cluster by 5 our of 10 clustering methods, then its probability of being grouped together is 0.5.
-#' \cr\cr
-#' Metaclustering is based on the hypothesis that, as each clustering algorithm embodies a different prism by which it sees the data, running an infinite amount of algorithms would result in the emergence of the "true" clusters. As the number of algorithms and parameters is finite, the probabilistic perspective is a useful proxy. This method is interesting where there is no obvious reasons to prefer one over another clustering method, as well as to investigate how robust some clusters are under different algorithms.
-#' \cr\cr
-#' This metaclustering probability matrix can be transformed into a dissimilarity matrix (such as the one produced by `dist()`) and submitted for instance to hierarchical clustering (`hclust()`). See the example below.
+#' One of the core "issue" of statistical clustering is that, in many cases,
+#' different methods will give different results. The **metaclustering** approach
+#' proposed by *easystats* (that finds echoes in *consensus clustering*; see Monti
+#' et al., 2003) consists of treating the unique clustering solutions as a ensemble,
+#' from which we can derive a probability matrix. This matrix contains, for each
+#' pair of observations, the probability of being in the same cluster. For instance,
+#' if the 6th and the 9th row of a dataframe has been assigned to a similar cluster
+#' by 5 our of 10 clustering methods, then its probability of being grouped together
+#' is 0.5.
+#'
+#' Metaclustering is based on the hypothesis that, as each clustering algorithm
+#' embodies a different prism by which it sees the data, running an infinite
+#' amount of algorithms would result in the emergence of the "true" clusters.
+#' As the number of algorithms and parameters is finite, the probabilistic
+#' perspective is a useful proxy. This method is interesting where there is no
+#' obvious reasons to prefer one over another clustering method, as well as to
+#' investigate how robust some clusters are under different algorithms.
+#'
+#' This metaclustering probability matrix can be transformed into a dissimilarity
+#' matrix (such as the one produced by `dist()`) and submitted for instance to
+#' hierarchical clustering (`hclust()`). See the example below.
 #'
 #'
 #' @param list_of_clusters A list of vectors with the clustering assignments from various methods.
 #' @param rownames An optional vector of row.names for the matrix.
 #' @param ... Currently not used.
 #'
-#' @return A matrix containing all the pairwise (between each observation) probabilities of being clustered together by the methods.
+#' @return A matrix containing all the pairwise (between each observation)
+#' probabilities of being clustered together by the methods.
 #'
 #'
 #' @examples
@@ -44,7 +61,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
   x <- list()
 
   # Sanitize output
-  for (i in 1:length(list_of_clusters)) {
+  for (i in seq_along(list_of_clusters)) {
     # Get name
     name <- names(list_of_clusters[i])
     if (is.null(name)) name <- paste0("Solution", i)
@@ -62,7 +79,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
   # Sanity check
   if (length(unique(sapply(x, length))) != 1) {
-    stop("The clustering solutions are not of equal lengths.")
+    stop("The clustering solutions are not of equal lengths.", call. = FALSE)
   }
 
   # Convert to dataframe

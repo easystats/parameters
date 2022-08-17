@@ -14,14 +14,32 @@ cluster_meta(list_of_clusters, rownames = NULL, ...)
 \item{...}{Currently not used.}
 }
 \value{
-A matrix containing all the pairwise (between each observation) probabilities of being clustered together by the methods.
+A matrix containing all the pairwise (between each observation)
+probabilities of being clustered together by the methods.
 }
 \description{
-One of the core "issue" of statistical clustering is that, in many cases, different methods will give different results. The \strong{metaclustering} approach proposed by \emph{easystats} (that finds echoes in \emph{consensus clustering}; see Monti et al., 2003) consists of treating the unique clustering solutions as a ensemble, from which we can derive a probability matrix. This matrix contains, for each pair of observations, the probability of being in the same cluster. For instance, if the 6th and the 9th row of a dataframe has been assigned to a similar cluster by 5 our of 10 clustering methods, then its probability of being grouped together is 0.5.
-\cr\cr
-Metaclustering is based on the hypothesis that, as each clustering algorithm embodies a different prism by which it sees the data, running an infinite amount of algorithms would result in the emergence of the "true" clusters. As the number of algorithms and parameters is finite, the probabilistic perspective is a useful proxy. This method is interesting where there is no obvious reasons to prefer one over another clustering method, as well as to investigate how robust some clusters are under different algorithms.
-\cr\cr
-This metaclustering probability matrix can be transformed into a dissimilarity matrix (such as the one produced by \code{dist()}) and submitted for instance to hierarchical clustering (\code{hclust()}). See the example below.
+One of the core "issue" of statistical clustering is that, in many cases,
+different methods will give different results. The \strong{metaclustering} approach
+proposed by \emph{easystats} (that finds echoes in \emph{consensus clustering}; see Monti
+et al., 2003) consists of treating the unique clustering solutions as a ensemble,
+from which we can derive a probability matrix. This matrix contains, for each
+pair of observations, the probability of being in the same cluster. For instance,
+if the 6th and the 9th row of a dataframe has been assigned to a similar cluster
+by 5 our of 10 clustering methods, then its probability of being grouped together
+is 0.5.
+}
+\details{
+Metaclustering is based on the hypothesis that, as each clustering algorithm
+embodies a different prism by which it sees the data, running an infinite
+amount of algorithms would result in the emergence of the "true" clusters.
+As the number of algorithms and parameters is finite, the probabilistic
+perspective is a useful proxy. This method is interesting where there is no
+obvious reasons to prefer one over another clustering method, as well as to
+investigate how robust some clusters are under different algorithms.
+
+This metaclustering probability matrix can be transformed into a dissimilarity
+matrix (such as the one produced by \code{dist()}) and submitted for instance to
+hierarchical clustering (\code{hclust()}). See the example below.
 }
 \examples{
 \dontrun{

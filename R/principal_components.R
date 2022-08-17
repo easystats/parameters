@@ -225,8 +225,8 @@ rotated_data <- function(pca_results) {
       warning("Could not retrieve information about missing data.", call. = FALSE)
       return(NULL)
     }
-    original_data$.parameters_merge_id <- 1:nrow(original_data)
-    rotated_matrix$.parameters_merge_id <- (1:nrow(original_data))[compl_cases]
+    original_data$.parameters_merge_id <- seq_len(nrow(original_data))
+    rotated_matrix$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]
     out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
     out$.parameters_merge_id <- NULL
   } else {
@@ -325,7 +325,8 @@ principal_components.data.frame <- function(x,
 
   # Add information
   loading_cols <- 2:(n + 1)
-  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 / apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
+  loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 /
+                         apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary
@@ -396,7 +397,7 @@ principal_components.data.frame <- function(x,
                         original_data = NULL,
                         ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
+    stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".", call. = FALSE)
   }
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
@@ -408,6 +409,7 @@ principal_components.data.frame <- function(x,
   }
 
   # rotate loadings
+  insight::check_if_installed("psych", reason = sprintf("`%s`-rotation.", rotation))
   if (!requireNamespace("psych", quietly = TRUE)) {
     stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
   }

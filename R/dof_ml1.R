@@ -2,7 +2,7 @@
 #' @export
 dof_ml1 <- function(model) {
   if (!insight::is_mixed_model(model)) {
-    stop("Model must be a mixed model.")
+    stop("Model must be a mixed model.", call. = FALSE)
   }
 
   re_groups <- insight::get_random(model)
@@ -65,11 +65,11 @@ dof_ml1 <- function(model) {
 
 
 .find_term_assignment <- function(model_data, predictors, parameters) {
-  parms <- unlist(lapply(1:length(predictors), function(i) {
+  parms <- unlist(lapply(seq_along(predictors), function(i) {
     p <- predictors[i]
     if (is.factor(model_data[[p]])) {
       ps <- paste0(p, levels(model_data[[p]]))
-      names(ps)[1:length(ps)] <- i
+      names(ps)[seq_along(ps)] <- i
       ps
     } else {
       names(p) <- i

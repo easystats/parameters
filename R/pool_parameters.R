@@ -73,7 +73,9 @@ pool_parameters <- function(x,
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
-    stop("'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function.", call. = FALSE)
+    stop(insight::format_message(
+      "'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function."
+    ), call. = FALSE)
   }
 
   if (is.null(original_model)) {
@@ -81,7 +83,9 @@ pool_parameters <- function(x,
   }
 
   if (isTRUE(attributes(x[[1]])$exponentiate)) {
-    warning(insight::format_message("Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and then call 'pool_parameters(..., exponentiate = TRUE)'."), call. = FALSE)
+    warning(insight::format_message(
+      "Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and then call 'pool_parameters(..., exponentiate = TRUE)'."
+    ), call. = FALSE)
   }
 
 

@@ -13,9 +13,7 @@ se_satterthwaite.default <- function(model) {
 
 #' @export
 se_satterthwaite.lme <- function(model) {
-  if (!requireNamespace("lavaSearch2", quietly = TRUE)) {
-    stop("Package `lavaSearch2` required for Satterthwaite approximation.", call. = FALSE)
-  }
+  insight::check_if_installed("lavaSearch2")
   params <- insight::get_parameters(model, effects = "fixed")
   lavaSearch2::sCorrect(model) <- TRUE
   s <- lavaSearch2::summary2(model)

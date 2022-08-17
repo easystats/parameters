@@ -79,7 +79,7 @@ model_parameters.htest <- function(model,
                                    verbose = TRUE,
                                    ...) {
   if (bootstrap) {
-    stop("Bootstrapped h-tests are not yet implemented.")
+    stop("Bootstrapped h-tests are not yet implemented.", call. = FALSE)
   } else {
     parameters <- .extract_parameters_htest(
       model,
@@ -275,7 +275,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     # F test for equal variances --------------
     out <- .extract_htest_vartest(model)
   } else {
-    stop("model_parameters not implemented for such h-tests yet.")
+    stop("model_parameters not implemented for such h-tests yet.", call. = FALSE)
   }
 
   row.names(out) <- NULL

@@ -352,7 +352,7 @@ standardize_parameters.bootstrap_model <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    stop("The 'refit' method is not supported for bootstrapped models.")
+    stop("The 'refit' method is not supported for bootstrapped models.", call. = FALSE)
     ## But it would look something like this:
     # model <- standardize(model, robust = robust, two_sd = two_sd, verbose = verbose, m_info = m_info)
     # model <- parameters::bootstrap_model(model, iterations = 1000, verbose = verbose)

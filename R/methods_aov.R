@@ -429,7 +429,9 @@ model_parameters.maov <- model_parameters.aov
 
     # successfully checked predictors, or if not possible, at least found interactions?
     if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
-      message(insight::format_message("Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."))
+      message(insight::format_message(
+        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."
+      ))
     }
   }
 }
@@ -453,9 +455,13 @@ model_parameters.maov <- model_parameters.aov
   insight::check_if_installed("effectsize", minimum_version = "0.5.0")
 
   # set error-df, when provided.
-  if (!is.null(df_error) && is.data.frame(model) && !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
+  if (!is.null(df_error) &&
+      is.data.frame(model) &&
+      !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
     if (length(df_error) > nrow(model)) {
-      stop(insight::format_message("Number of degrees of freedom in argument 'df_error' is larger than number of parameters."), call. = FALSE)
+      stop(insight::format_message(
+        "Number of degrees of freedom in argument 'df_error' is larger than number of parameters."
+      ), call. = FALSE)
     }
     model$df_error <- df_error
   }
@@ -600,7 +606,9 @@ model_parameters.maov <- model_parameters.aov
 
 
 .is_levenetest <- function(x) {
-  inherits(x, "anova") && !is.null(attributes(x)$heading) && all(isTRUE(grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)))
+  inherits(x, "anova") &&
+  !is.null(attributes(x)$heading) &&
+  all(isTRUE(grepl("Levene's Test", attributes(x)$heading, fixed = TRUE)))
 }
 
 

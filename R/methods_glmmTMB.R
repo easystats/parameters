@@ -394,24 +394,33 @@ simulate_model.glmmTMB <- function(model,
   if (component == "all") {
     if (!has_zeroinflated && !has_dispersion) {
       if (verbose) {
-        insight::print_color("No zero-inflation and dispersion components. Simulating from conditional parameters.\n", "red")
+        insight::print_color(
+          "No zero-inflation and dispersion components. Simulating from conditional parameters.\n",
+          "red"
+        )
       }
       component <- "conditional"
     } else if (!has_zeroinflated && has_dispersion) {
       if (verbose) {
-        insight::print_color("No zero-inflation component. Simulating from conditional and dispersion parameters.\n", "red")
+        insight::print_color(
+          "No zero-inflation component. Simulating from conditional and dispersion parameters.\n",
+          "red"
+        )
       }
       component <- c("conditional", "dispersion")
     } else if (has_zeroinflated && !has_dispersion) {
       if (verbose) {
-        insight::print_color("No dispersion component. Simulating from conditional and zero-inflation parameters.\n", "red")
+        insight::print_color(
+          "No dispersion component. Simulating from conditional and zero-inflation parameters.\n",
+          "red"
+        )
       }
       component <- c("conditional", "zero_inflated")
     }
   } else if (component %in% c("zi", "zero_inflated") && !has_zeroinflated) {
-    stop("No zero-inflation model found.")
+    stop("No zero-inflation model found.", call. = FALSE)
   } else if (component == "dispersion" && !has_dispersion) {
-    stop("No dispersion model found.")
+    stop("No dispersion model found.", call. = FALSE)
   }
 
 

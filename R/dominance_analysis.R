@@ -396,12 +396,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   da_df_res <- da_df_cat <-
-    data.frame(parameter = insight::find_parameters(model, flatten = TRUE))
+    .data_frame(parameter = insight::find_parameters(model, flatten = TRUE))
 
-  da_df_cat <- data.frame(da_df_cat, subset = NA_character_)
+  da_df_cat <- .data_frame(da_df_cat, subset = NA_character_)
 
   if (!is.null(sets)) {
-    for (set in 1:length(sets)) {
+    for (set in seq_along(sets)) {
       set_name <- ifelse(!is.null(names(sets)[[set]]), names(sets)[[set]],
         paste0("set", set)
       )
@@ -438,7 +438,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   da_df_res <-
     datawizard::data_merge(
       da_df_cat,
-      data.frame(
+      .data_frame(
         subset = names(domir_res$General_Dominance),
         general_dominance = domir_res$General_Dominance
       )
@@ -452,7 +452,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   da_df_res <-
     datawizard::data_merge(
       da_df_res,
-      data.frame(
+      .data_frame(
         subset = names(domir_res$General_Dominance),
         standardized = domir_res$Standardized
       )
@@ -461,7 +461,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   da_df_res <-
     datawizard::data_merge(
       da_df_res,
-      data.frame(
+      .data_frame(
         subset = names(domir_res$General_Dominance),
         ranks = domir_res$Ranks
       )
@@ -472,12 +472,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (conditional) {
     da_df_cdl <-
-      data.frame(Subset = names(domir_res$General_Dominance))
+      .data_frame(Subset = names(domir_res$General_Dominance))
 
     da_df_cdl <-
       datawizard::data_merge(
         da_df_cdl,
-        data.frame(
+        .data_frame(
           Subset = names(domir_res$General_Dominance),
           domir_res$Conditional_Dominance
         )
@@ -495,12 +495,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (complete) {
     da_df_cpt <-
-      data.frame(Subset = names(domir_res$General_Dominance))
+      .data_frame(Subset = names(domir_res$General_Dominance))
 
     da_df_cpt <-
       datawizard::data_merge(
         da_df_cpt,
-        data.frame(
+        .data_frame(
           Subset = names(domir_res$General_Dominance),
           domir_res$Complete_Dominance
         )

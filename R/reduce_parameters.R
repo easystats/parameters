@@ -106,7 +106,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
   } else if (tolower(method) %in% c("ica")) {
     features <- .ica(x, n = nfac, ...)
   } else {
-    stop("'method' must be one of 'PCA', 'cMDS', 'DRR' or 'ICA'.")
+    stop("'method' must be one of 'PCA', 'cMDS', 'DRR' or 'ICA'.", call. = FALSE)
   }
 
   # Get weights / pseudo-loadings (correlations)
@@ -143,9 +143,14 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  data <- reduce_parameters(datawizard::to_numeric(insight::get_predictors(x, ...), ...), method = method, n = n, distance = distance)
+  data <- reduce_parameters(
+    datawizard::to_numeric(insight::get_predictors(x, ...), ...),
+    method = method,
+    n = n,
+    distance = distance
+  )
 
-  y <- data.frame(.row = 1:length(insight::get_response(x)))
+  y <- data.frame(.row = seq_along(insight::get_response(x)))
   y[insight::find_response(x)] <- insight::get_response(x)
   y$.row <- NULL
 
@@ -182,7 +187,7 @@ principal_components.merMod <- principal_components.lm
   cmd <- stats::cmdscale(d, k = n, eig = TRUE)
 
   features <- as.data.frame(cmd$points)
-  names(features) <- paste0("CMDS", 1:ncol(features))
+  names(features) <- paste0("CMDS", seq_len(ncol(features)))
   features
 }
 
@@ -202,7 +207,7 @@ principal_components.merMod <- principal_components.lm
   junk <- utils::capture.output(suppressMessages(rez <- DRR::drr(x, n)))
 
   features <- as.data.frame(rez$fitted.data)
-  names(features) <- paste0("DRR", 1:ncol(features))
+  names(features) <- paste0("DRR", seq_len(ncol(features)))
   features
 }
 
@@ -218,6 +223,6 @@ principal_components.merMod <- principal_components.lm
   rez <- fastICA::fastICA(x, n.comp = ncol(x) - 1)
 
   features <- as.data.frame(rez$S)
-  names(features) <- paste0("ICA", 1:ncol(features))
+  names(features) <- paste0("ICA", seq_len(ncol(features)))
   features
 }

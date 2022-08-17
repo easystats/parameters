@@ -99,7 +99,9 @@ n_clusters <- function(x,
   out <- out[!is.na(out$n_Clusters), ]
 
   # Error if no solution
-  if (nrow(out) == 0) stop("No complete solution was found. Please try again with more methods.")
+  if (nrow(out) == 0) {
+    stop("No complete solution was found. Please try again with more methods.", call. = FALSE)
+  }
 
   # Clean
   out <- out[order(out$n_Clusters), ] # Arrange by n clusters
@@ -108,7 +110,7 @@ n_clusters <- function(x,
 
   # Remove duplicate methods starting with the smallest
   dupli <- c()
-  for (i in 1:nrow(out)) {
+  for (i in seq_len(nrow(out))) {
     if (i > 1 && out[i, "Method"] %in% out$Method[1:i - 1]) {
       dupli <- c(dupli, i)
     }
@@ -168,10 +170,16 @@ n_clusters <- function(x,
   gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
 
   data.frame(
-    n_Clusters = c(attributes(elb)$n, attributes(sil)$n, attributes(gap1)$n, attributes(gap2)$n),
+    n_Clusters = c(attributes(elb)$n,
+                   attributes(sil)$n,
+                   attributes(gap1)$n,
+                   attributes(gap2)$n),
     Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
     Package = "easystats",
-    Duration = c(attributes(elb)$duration, attributes(sil)$duration, attributes(gap1)$duration, attributes(gap2)$duration)
+    Duration = c(attributes(elb)$duration,
+                 attributes(sil)$duration,
+                 attributes(gap1)$duration,
+                 attributes(gap2)$duration)
   )
 }
 
@@ -183,7 +191,11 @@ n_clusters <- function(x,
   insight::check_if_installed("NbClust")
 
   if (all(indices == "all")) {
-    indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw", "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette", "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial", "Frey", "Mcclain", "Dunn", "SDindex", "SDbw", "gap", "gamma", "gplus", "tau")
+    indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw",
+                 "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette",
+                 "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial",
+                 "Frey", "Mcclain", "Dunn", "SDindex", "SDbw", "gap", "gamma",
+                 "gplus", "tau")
     # c("hubert", "dindex") are graphical methods
   }
   if (fast) {
@@ -234,7 +246,9 @@ n_clusters <- function(x,
 #' @keywords internal
 .n_clusters_M3C <- function(x, n_max = 10, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
-    stop("Package 'M3C' required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN).") # Not on CRAN (but on github and bioconductor)
+    stop(insight::format_message(
+      "Package 'M3C' required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
+    ), call. = FALSE) # Not on CRAN (but on github and bioconductor)
   }
 
   data <- data.frame(t(x))

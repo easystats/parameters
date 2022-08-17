@@ -2,7 +2,7 @@
 #' @export
 dof_betwithin <- function(model) {
   if (!insight::is_mixed_model(model)) {
-    stop("Model must be a mixed model.")
+    stop("Model must be a mixed model.", call. = FALSE)
   }
 
   ngrps <- sum(.n_randomeffects(model))
@@ -19,7 +19,7 @@ dof_betwithin <- function(model) {
   }
 
   within_index <- match(within_effects, parameters)
-  ddf <- stats::setNames(1:length(parameters), parameters)
+  ddf <- stats::setNames(seq_along(parameters), parameters)
 
   if (length(within_index) > 0) {
     ddf[match(within_effects, parameters)] <- ddf_within
