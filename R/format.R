@@ -40,7 +40,9 @@ format.parameters_model <- function(x,
   }
 
   # remove method for htest
-  if (!is.null(m_class) && any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen", "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {
+  if (!is.null(m_class) &&
+      any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen",
+                         "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {
     x$Method <- NULL
     x$Alternative <- NULL
   }
@@ -72,9 +74,19 @@ format.parameters_model <- function(x,
     if (!is.null(x$Group) && !is.null(x$Effects)) {
       ran_pars <- which(x$Effects == "random")
       stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
-      x$Parameter[ran_pars[stddevs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]), ": ", x$Group[ran_pars[stddevs]], ")")
+      x$Parameter[ran_pars[stddevs]] <- paste0(
+        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
+        ": ",
+        x$Group[ran_pars[stddevs]],
+        ")"
+      )
       corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
-      x$Parameter[ran_pars[corrs]] <- paste0(gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]), ": ", x$Group[ran_pars[corrs]], ")")
+      x$Parameter[ran_pars[corrs]] <- paste0(
+        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
+        ": ",
+        x$Group[ran_pars[corrs]],
+        ")"
+      )
       x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
       x$Group <- NULL
     }
@@ -95,9 +107,34 @@ format.parameters_model <- function(x,
 
   # print everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
-    formatted_table <- .format_columns_multiple_components(x, pretty_names, split_column = split_by, digits = digits, ci_digits = ci_digits, p_digits = p_digits, coef_column = coef_name, format = format, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+    formatted_table <- .format_columns_multiple_components(
+      x,
+      pretty_names,
+      split_column = split_by,
+      digits = digits,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      coef_column = coef_name,
+      format = format,
+      ci_width = ci_width,
+      ci_brackets = ci_brackets,
+      zap_small = zap_small,
+      ...
+    )
   } else {
-    formatted_table <- .format_columns_single_component(x, pretty_names = pretty_names, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, format = format, coef_name = coef_name, zap_small = zap_small, ...)
+    formatted_table <- .format_columns_single_component(
+      x,
+      pretty_names = pretty_names,
+      digits = digits,
+      ci_width = ci_width,
+      ci_brackets = ci_brackets,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      format = format,
+      coef_name = coef_name,
+      zap_small = zap_small,
+      ...
+    )
   }
 
   # remove unique columns
@@ -182,7 +219,15 @@ format.compare_parameters <- function(x,
     colnames(cols) <- gsub(pattern, "", colnames(cols))
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
-    cols <- insight::format_table(cols, digits = digits, ci_width = ci_width, ci_brackets = ci_brackets, ci_digits = ci_digits, p_digits = p_digits, zap_small = zap_small)
+    cols <- insight::format_table(
+      cols,
+      digits = digits,
+      ci_width = ci_width,
+      ci_brackets = ci_brackets,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      zap_small = zap_small
+    )
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
@@ -317,7 +362,18 @@ format.parameters_sem <- function(x,
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
   if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
-  .format_columns_multiple_components(x, pretty_names = TRUE, split_column = "Component", digits = digits, ci_digits = ci_digits, p_digits = p_digits, format = format, ci_width = ci_width, ci_brackets = ci_brackets, ...)
+  .format_columns_multiple_components(
+    x,
+    pretty_names = TRUE,
+    split_column = "Component",
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    format = format,
+    ci_width = ci_width,
+    ci_brackets = ci_brackets,
+    ...
+  )
 }
 
 
