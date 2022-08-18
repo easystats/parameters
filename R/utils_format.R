@@ -80,7 +80,7 @@
     steps <- (ncol(x) - 1) / length(observations)
     empty_row[[1]] <- "Observations"
     insert_at <- seq(2, ncol(x), by = steps)
-    for (i in 1:length(insert_at)) {
+    for (i in seq_along(insert_at)) {
       empty_row[[insert_at[i]]] <- observations[i]
     }
     x <- rbind(x, empty_row)
@@ -121,7 +121,9 @@
   }
 
   # fix coefficient column name for mixed count and zi pars
-  if (!is.null(x$Component) && sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 && any(colnames(x) %in% .all_coefficient_types())) {
+  if (!is.null(x$Component) &&
+      sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
+      any(colnames(x) %in% .all_coefficient_types())) {
     colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
@@ -323,7 +325,7 @@
   if ("Component" %in% colnames(x)) {
     row_index <- which(x$Component == "conditional")
   } else {
-    row_index <- 1:nrow(x)
+    row_index <- seq_len(nrow(x))
   }
 
   x_other <- x[-row_index, ]
@@ -383,7 +385,7 @@
 
 
   empty_row <- x[1, ]
-  for (i in 1:ncol(empty_row)) {
+  for (i in seq_len(ncol(empty_row))) {
     empty_row[[i]] <- NA
   }
 
@@ -770,7 +772,7 @@
 .fix_nonmatching_columns <- function(final_table, is_lavaan = FALSE) {
   # fix for lavaan here
   if (is_lavaan) {
-    for (i in 1:length(final_table)) {
+    for (i in seq_along(final_table)) {
       if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To)) {
         if (all(is.na(final_table[[i]]$Link))) {
           final_table[[i]]$Link <- final_table[[i]]$To
@@ -790,7 +792,7 @@
   # remove non matching columns
   if (!all(col_len) == max(col_len)) {
     all_columns <- unique(unlist(lapply(final_table, colnames)))
-    for (i in 1:length(final_table)) {
+    for (i in seq_along(final_table)) {
       missing_columns <- setdiff(all_columns, colnames(final_table[[i]]))
       if (length(missing_columns)) {
         a <- attributes(final_table[[i]])

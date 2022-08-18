@@ -425,17 +425,17 @@ summary.parameters_stan <- function(object, ...) {
       cat(sprintf("%s %s\n", i$Value, i$SD))
     } else if ("Between-Group Variance" %in% i$Description) {
       insight::print_color("Between-Group Variance\n", "blue")
-      for (j in 1:nrow(i)) {
+      for (j in seq_len(nrow(i))) {
         cat(sprintf("%s  %s %s\n", i$Line[j], i$Value[j], i$SD[j]))
       }
     } else if ("Correlations" %in% i$Description) {
       insight::print_color("Correlations\n", "blue")
-      for (j in 1:nrow(i)) {
+      for (j in seq_len(nrow(i))) {
         cat(sprintf("%s  %s\n", i$Line[j], i$Value[j]))
       }
     } else if ("N" %in% i$Description) {
       insight::print_color("N (groups per factor)\n", "blue")
-      for (j in 1:nrow(i)) {
+      for (j in seq_len(nrow(i))) {
         cat(sprintf("  %s%s\n", format(i$Term[j], width = max_len - 2), i$Value[j]))
       }
     } else if ("Observations" %in% i$Description) {
@@ -450,7 +450,7 @@ summary.parameters_stan <- function(object, ...) {
 .find_min_colwidth <- function(formatted_table) {
   shared_cols <- unique(unlist(lapply(formatted_table, colnames)))
   col_width <- rep(NA, length(shared_cols))
-  for (i in 1:length(shared_cols)) {
+  for (i in seq_along(shared_cols)) {
     col_width[i] <- max(unlist(lapply(formatted_table, function(j) {
       col <- j[[shared_cols[i]]]
       if (!is.null(col)) {
