@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -132,9 +132,23 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Standardizing parameters (<em>i.e.</em>, coefficients) can allow for their comparison within and between models, variables and studies. Moreover, as it returns coefficients expressed in terms of <strong>change of variance</strong> (for instance, coefficients expressed in terms of SD of the response variable), it can allow for the usage of <a href="https://easystats.github.io/effectsize/articles/interpret.html" class="external-link">effect size interpretation guidelines</a>, such as Cohen’s (1988) famous rules of thumb.</p>
-<p>However, standardizing a model’s parameters should <em>not</em> be automatically and mindlessly done: for some research fields, particular variables or types of studies (<em>e.g.</em>, replications), it sometimes makes more sense to keep, use and interpret the original parameters, especially if they are well known or easily understood.</p>
-<p>Critically, <strong>parameters standardization is not a trivial process</strong>. Different techniques exist, that can lead to drastically different results. Thus, it is critical that the standardization method is explicitly documented and detailed.</p>
+<p>Standardizing parameters (<em>i.e.</em>, coefficients) can allow for
+their comparison within and between models, variables and studies.
+Moreover, as it returns coefficients expressed in terms of
+<strong>change of variance</strong> (for instance, coefficients
+expressed in terms of SD of the response variable), it can allow for the
+usage of <a href="https://easystats.github.io/effectsize/articles/interpret.html" class="external-link">effect
+size interpretation guidelines</a>, such as Cohen’s (1988) famous rules
+of thumb.</p>
+<p>However, standardizing a model’s parameters should <em>not</em> be
+automatically and mindlessly done: for some research fields, particular
+variables or types of studies (<em>e.g.</em>, replications), it
+sometimes makes more sense to keep, use and interpret the original
+parameters, especially if they are well known or easily understood.</p>
+<p>Critically, <strong>parameters standardization is not a trivial
+process</strong>. Different techniques exist, that can lead to
+drastically different results. Thus, it is critical that the
+standardization method is explicitly documented and detailed.</p>
 <!-- **`parameters` include different techniques of parameters
 standardization**, described below
 [@bring1994standardize;@menard2004six;@gelman2008scaling;@schielzeth2010simple;@menard2011standards].
@@ -151,54 +165,100 @@ standardization**, described below
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">complaints</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
-<p>Standardizing the coefficient of this <em>simple</em> linear regression gives a value of <code>0.87</code>, but did you know that for a simple regression this is actually the <strong>same as a correlation</strong>? Thus, you can eventually apply some (<em>in</em>)famous interpretation guidelines (e.g., Cohen’s rules of thumb).</p>
+<p>Standardizing the coefficient of this <em>simple</em> linear
+regression gives a value of <code>0.87</code>, but did you know that for
+a simple regression this is actually the <strong>same as a
+correlation</strong>? Thus, you can eventually apply some
+(<em>in</em>)famous interpretation guidelines (e.g., Cohen’s rules of
+thumb).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">correlation</span><span class="fu">::</span><span class="fu">correlation</span><span class="op">(</span><span class="va">attitude</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rating"</span>, <span class="st">"complaints"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="standardized-differences">Standardized Differences<a class="anchor" aria-label="anchor" href="#standardized-differences"></a>
 </h4>
-<p>How does it work in the case of differences, when <strong>factors</strong> are entered and differences between a given level and a reference level? You might have heard that it is similar to a <strong>Cohen’s <em>d</em></strong>. Well, let’s see.</p>
+<p>How does it work in the case of differences, when
+<strong>factors</strong> are entered and differences between a given
+level and a reference level? You might have heard that it is similar to
+a <strong>Cohen’s <em>d</em></strong>. Well, let’s see.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Select portion of data containing the two levels of interest</span></span>
 <span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Manual"</span>, <span class="st">"Automatic"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
-<p>This linear model suggests that the <em>standardized</em> difference between <em>Manual</em> (the reference level - the model’s intercept) and <em>Automatic</em> is of 1.20 standard deviation of <code>mpg</code> (because the response variable was standardized, right?). Let’s compute the <strong>Cohen’s <em>d</em></strong> between these two levels:</p>
+<p>This linear model suggests that the <em>standardized</em> difference
+between <em>Manual</em> (the reference level - the model’s intercept)
+and <em>Automatic</em> is of 1.20 standard deviation of <code>mpg</code>
+(because the response variable was standardized, right?). Let’s compute
+the <strong>Cohen’s <em>d</em></strong> between these two levels:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">cohens_d</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
-<p><strong><em>It is larger!</em></strong> Why? How? Both differences should be expressed in units of SD! But which SDs? Different SDs!</p>
-<p>When looking at the difference between groups as a <strong>slope</strong>, the standardized parameter is the difference between the means in <span class="math inline">\(SD_{mpg}\)</span>. That is, the <em>slope</em> between <code>Manual</code> and <code>Automatic</code> is a change of 1.20 <span class="math inline">\(SD_{mpg}\)</span>s.</p>
-<p>However, when looking a the difference as a <strong>distance between two populations</strong>, Cohen’s d is the distance between the means in units of <a href="https://easystats.github.io/effectsize/reference/sd_pooled.html" class="external-link"><strong>pooled SDs</strong></a>. That is, the <em>distance</em> between <code>Manual</code> and <code>Automatic</code> is of 1.48 SDs of <em>each of the groups</em> (here assumed to be equal).</p>
-<p>In this simple model, the pooled SD is the residual SD, so we can also estimate Cohen’s <em>d</em> as:</p>
+<p><strong><em>It is larger!</em></strong> Why? How? Both differences
+should be expressed in units of SD! But which SDs? Different SDs!</p>
+<p>When looking at the difference between groups as a
+<strong>slope</strong>, the standardized parameter is the difference
+between the means in <span class="math inline">\(SD_{mpg}\)</span>. That
+is, the <em>slope</em> between <code>Manual</code> and
+<code>Automatic</code> is a change of 1.20 <span class="math inline">\(SD_{mpg}\)</span>s.</p>
+<p>However, when looking a the difference as a <strong>distance between
+two populations</strong>, Cohen’s d is the distance between the means in
+units of <a href="https://easystats.github.io/effectsize/reference/sd_pooled.html" class="external-link"><strong>pooled
+SDs</strong></a>. That is, the <em>distance</em> between
+<code>Manual</code> and <code>Automatic</code> is of 1.48 SDs of
+<em>each of the groups</em> (here assumed to be equal).</p>
+<p>In this simple model, the pooled SD is the residual SD, so we can
+also estimate Cohen’s <em>d</em> as:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sigma.html" class="external-link">sigma</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
-<p>And we can also get an approximation of Cohen’s <em>d</em> by converting the <span class="math inline">\(t\)</span>-statistic from the regression model via <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
+<p>And we can also get an approximation of Cohen’s <em>d</em> by
+converting the <span class="math inline">\(t\)</span>-statistic from the
+regression model via <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d</a></span><span class="op">(</span><span class="fl">4.11</span>, df_error <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
-<p>It is also interesting to note that using the <code>smart</code> method (explained in detail below) when standardizing parameters will give you indices equivalent to <strong>Glass’ <em>delta</em></strong>, which is a standardized difference expressed in terms of SD of the reference group.</p>
+<p>It is also interesting to note that using the <code>smart</code>
+method (explained in detail below) when standardizing parameters will
+give you indices equivalent to <strong>Glass’ <em>delta</em></strong>,
+which is a standardized difference expressed in terms of SD of the
+reference group.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">glass_delta</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
-<p><strong><em>… So note that some standardized differences are different than others! :)</em></strong></p>
+<p><strong><em>… So note that some standardized differences are
+different than others! :)</em></strong></p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="standardizing-parameters-of-linear-models">Standardizing Parameters of Linear Models<a class="anchor" aria-label="anchor" href="#standardizing-parameters-of-linear-models"></a>
 </h3>
-<p>As mentioned above, standardization of parameters can also be used to compare among parameters within the same model. Essentially, what prevents us from normally being able to compare among different parameters is that their underlying variables are on different scales.[^But also as noted above, this is not always an issue. For example, when the variables scale is important for the interpretation of results, standardization might in fact hinder interpretation!]</p>
-<p>For example, in the following example, we use a liner regression model to predict a worker’s salary (in Shmekels) from their age (years), seniority (years), overtime (<code>xtra_hours</code>) and how many compliments they give their boss (<code>n_comps</code>).</p>
-<p>Let us explore the different parameter standardization methods provided by <em>parameters</em>.</p>
+<p>As mentioned above, standardization of parameters can also be used to
+compare among parameters within the same model. Essentially, what
+prevents us from normally being able to compare among different
+parameters is that their underlying variables are on different
+scales.[^But also as noted above, this is not always an issue. For
+example, when the variables scale is important for the interpretation of
+results, standardization might in fact hinder interpretation!]</p>
+<p>For example, in the following example, we use a liner regression
+model to predict a worker’s salary (in Shmekels) from their age (years),
+seniority (years), overtime (<code>xtra_hours</code>) and how many
+compliments they give their boss (<code>n_comps</code>).</p>
+<p>Let us explore the different parameter standardization methods
+provided by <em>parameters</em>.</p>
 <div class="section level4">
 <h4 id="standardized-slopes-are-not-always-correlations">Standardized Slopes are Not (Always) Correlations<a class="anchor" aria-label="anchor" href="#standardized-slopes-are-not-always-correlations"></a>
 </h4>
-<p>We saw that in simple linear models, the standardized slope is equal to the correlation between the outcome and predictor - does this hold for <strong>multiple regression</strong> as well? As in each effect in a regression model is “adjusted” for the other ones, we might expect coefficients to be somewhat alike to <strong>partial correlations</strong>. Let’s first start by computing the partial correlation between numeric predictors and the outcome.</p>
+<p>We saw that in simple linear models, the standardized slope is equal
+to the correlation between the outcome and predictor - does this hold
+for <strong>multiple regression</strong> as well? As in each effect in a
+regression model is “adjusted” for the other ones, we might expect
+coefficients to be somewhat alike to <strong>partial
+correlations</strong>. Let’s first start by computing the partial
+correlation between numeric predictors and the outcome.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hardlyworking"</span>, package <span class="op">=</span> <span class="st">"effectsize"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hardlyworking</span><span class="op">)</span></span>
@@ -216,13 +276,21 @@ standardization**, described below
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
-<p>They are quite different! It seems then that <strong><em>standardized slopes in multiple linear regressions are not the same a correlations or partial correlations</em></strong> :(</p>
-<p>However, not all hope is lost yet - we can still try and recover the partial correlations from our model, in another way: by converting the <em>t</em>-statistics (and their degrees of freedom, <em>df</em>) into a partial correlation coefficient <em>r</em>.</p>
+<p>They are quite different! It seems then that <strong><em>standardized
+slopes in multiple linear regressions are not the same a correlations or
+partial correlations</em></strong> :(</p>
+<p>However, not all hope is lost yet - we can still try and recover the
+partial correlations from our model, in another way: by converting the
+<em>t</em>-statistics (and their degrees of freedom, <em>df</em>) into a
+partial correlation coefficient <em>r</em>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_r</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">t</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, df_error <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">df_error</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p>Wow, the retrieved correlations coefficients from the regression model are <strong>exactly</strong> the same as the partial correlations we estimated above! So these “<em>r</em>” effect sizes can also be used.</p>
+<p>Wow, the retrieved correlations coefficients from the regression
+model are <strong>exactly</strong> the same as the partial correlations
+we estimated above! So these “<em>r</em>” effect sizes can also be
+used.</p>
 </div>
 <div class="section level4">
 <h4 id="methods-of-standardizing-parameters">Methods of Standardizing Parameters<a class="anchor" aria-label="anchor" href="#methods-of-standardizing-parameters"></a>
@@ -238,21 +306,44 @@ standardization**, described below
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
-<p>It seems like the best or most important predictor is <code>n_comps</code> as it has the coefficient. However, it is hard to compare among predictors, as they are on different scales. To address this issue, we must have all the predictors on the same scale - usually in the arbitrary unit of <em>standard deviations</em>.</p>
+<p>It seems like the best or most important predictor is
+<code>n_comps</code> as it has the coefficient. However, it is hard to
+compare among predictors, as they are on different scales. To address
+this issue, we must have all the predictors on the same scale - usually
+in the arbitrary unit of <em>standard deviations</em>.</p>
 <div class="section level5">
 <h5 id="refit-re-fitting-the-model-with-standardized-data">
-<strong><code>"refit"</code></strong>: Re-fitting the model with standardized data<a class="anchor" aria-label="anchor" href="#refit-re-fitting-the-model-with-standardized-data"></a>
+<strong><code>"refit"</code></strong>: Re-fitting the model with
+standardized data<a class="anchor" aria-label="anchor" href="#refit-re-fitting-the-model-with-standardized-data"></a>
 </h5>
-<p><strong>This method is based on a complete model re-fit with a standardized version of data</strong>. Hence, this method is equal to standardizing the variables <em>before</em> fitting the model. It is the “purest” and the most accurate <span class="citation">(Neter, Wasserman, and Kutner 1989)</span>, but it is also the most computationally costly and long (especially for heavy models such as Bayesian models, or complex mixed models). This method is particularly recommended for models that include interactions or transformations (e.g., exponentiation, log, polynomial or spline terms).</p>
+<p><strong>This method is based on a complete model re-fit with a
+standardized version of data</strong>. Hence, this method is equal to
+standardizing the variables <em>before</em> fitting the model. It is the
+“purest” and the most accurate <span class="citation">(Neter, Wasserman,
+and Kutner 1989)</span>, but it is also the most computationally costly
+and long (especially for heavy models such as Bayesian models, or
+complex mixed models). This method is particularly recommended for
+models that include interactions or transformations (e.g.,
+exponentiation, log, polynomial or spline terms).</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span></code></pre></div>
-<p><code>standardize_parameters</code> also has a <code>robust</code> argument (default to <code>FALSE</code>), which enables a <strong>robust standardization of the data</strong>, <em>i.e.</em>, based on the <strong>median</strong> and <strong>MAD</strong> instead of the <strong>mean</strong> and <strong>SD</strong>:</p>
+<p><code>standardize_parameters</code> also has a <code>robust</code>
+argument (default to <code>FALSE</code>), which enables a <strong>robust
+standardization of the data</strong>, <em>i.e.</em>, based on the
+<strong>median</strong> and <strong>MAD</strong> instead of the
+<strong>mean</strong> and <strong>SD</strong>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"refit"</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>Note that since <code>age_g</code> is a factor, it is not numerically standardized, and so it standardized parameter is still not directly comparable to those of numeric variables. To address this, we can set <code>two_sd = TRUE</code>, thereby scaling parameters on 2 SDs (or MADs) of the predictors <span class="citation">(Gelman 2008)</span>.</p>
+<p>Note that since <code>age_g</code> is a factor, it is not numerically
+standardized, and so it standardized parameter is still not directly
+comparable to those of numeric variables. To address this, we can set
+<code>two_sd = TRUE</code>, thereby scaling parameters on 2 SDs (or
+MADs) of the predictors <span class="citation">(Gelman 2008)</span>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"refit"</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><em>parameters</em> also comes with a helper function that returns the re-fit model, without summarizing it, which can then be used as the original model would:</p>
+<p><em>parameters</em> also comes with a helper function that returns
+the re-fit model, without summarizing it, which can then be used as the
+original model would:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">standardize</a></span><span class="op">(</span><span class="va">mod</span>, two_sd <span class="op">=</span> <span class="cn">FALSE</span>, robust <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">mod_z</span></span>
@@ -261,28 +352,58 @@ standardization**, described below
 </div>
 <div class="section level5">
 <h5 id="posthoc-refit-without-refitting">
-<strong><code>"posthoc"</code></strong>: Refit without refitting<a class="anchor" aria-label="anchor" href="#posthoc-refit-without-refitting"></a>
+<strong><code>"posthoc"</code></strong>: Refit without
+refitting<a class="anchor" aria-label="anchor" href="#posthoc-refit-without-refitting"></a>
 </h5>
-<p>Post-hoc standardization of the parameters aims at emulating the results obtained by <code>"refit"</code> without refitting the model. The coefficients are divided by the standard deviation (or MAD if <code>robust</code>) of the outcome (which becomes their expression ‘unit’). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation (or MAD if <code>robust</code>) of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., “A change in 1 SD of <em>x</em> is related to a change of 0.24 of the SD of <em>y</em>). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels. This method is not accurate and tend to give aberrant results when interactions are specified.</p>
+<p>Post-hoc standardization of the parameters aims at emulating the
+results obtained by <code>"refit"</code> without refitting the model.
+The coefficients are divided by the standard deviation (or MAD if
+<code>robust</code>) of the outcome (which becomes their expression
+‘unit’). Then, the coefficients related to numeric variables are
+additionally multiplied by the standard deviation (or MAD if
+<code>robust</code>) of the related terms, so that they correspond to
+changes of 1 SD of the predictor (e.g., “A change in 1 SD of <em>x</em>
+is related to a change of 0.24 of the SD of <em>y</em>). This does not
+apply to binary variables or factors, so the coefficients are still
+related to changes in levels. This method is not accurate and tend to
+give aberrant results when interactions are specified.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="smart-standardization-of-models-parameters-with-adjustment-reconnaissance-and-transformation">
-<strong><code>"smart"</code></strong>: Standardization of Model’s parameters with Adjustment, Reconnaissance and Transformation<a class="anchor" aria-label="anchor" href="#smart-standardization-of-models-parameters-with-adjustment-reconnaissance-and-transformation"></a>
+<strong><code>"smart"</code></strong>: Standardization of Model’s
+parameters with Adjustment, Reconnaissance and Transformation<a class="anchor" aria-label="anchor" href="#smart-standardization-of-models-parameters-with-adjustment-reconnaissance-and-transformation"></a>
 </h5>
 <blockquote>
 <p>Experimental</p>
 </blockquote>
-<p>Similar to <code>method = "posthoc"</code> in that it does not involve model refitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B vs. A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ <em>delta</em>.</p>
+<p>Similar to <code>method = "posthoc"</code> in that it does not
+involve model refitting. The difference is that the SD of the response
+is computed on the relevant section of the data. For instance, if a
+factor with 3 levels A (the intercept), B and C is entered as a
+predictor, the effect corresponding to B vs. A will be scaled by the
+variance of the response at the intercept only. As a results, the
+coefficients for effects of factors are similar to a Glass’
+<em>delta</em>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="basic-raw-scaling-of-the-model-frame">
-<strong><code>"basic"</code></strong>: Raw scaling of the model frame<a class="anchor" aria-label="anchor" href="#basic-raw-scaling-of-the-model-frame"></a>
+<strong><code>"basic"</code></strong>: Raw scaling of the model
+frame<a class="anchor" aria-label="anchor" href="#basic-raw-scaling-of-the-model-frame"></a>
 </h5>
-<p>This method is similar to <code>method = "posthoc"</code>, but treats all variables as continuous: it scales the coefficient by the standard deviation of model’s matrix’ parameter of factors levels (transformed to integers) or binary predictors. Although it can be argued that this might be inappropriate for these cases, this method allows for easier importance judgment across all predictor type (numeric, factor, interactions…). It is also the type of standardization implemented by default in other software packages (also <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta::lm.beta()</a></code>), and, such as can be used for reproducibility and replication purposes.</p>
+<p>This method is similar to <code>method = "posthoc"</code>, but treats
+all variables as continuous: it scales the coefficient by the standard
+deviation of model’s matrix’ parameter of factors levels (transformed to
+integers) or binary predictors. Although it can be argued that this
+might be inappropriate for these cases, this method allows for easier
+importance judgment across all predictor type (numeric, factor,
+interactions…). It is also the type of standardization implemented by
+default in other software packages (also
+<code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta::lm.beta()</a></code>), and, such as can be used for
+reproducibility and replication purposes.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod</span>, method <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -290,8 +411,16 @@ standardization**, described below
 <div class="section level4">
 <h4 id="standardizing-parameters-in-mixed-models">Standardizing Parameters In Mixed Models<a class="anchor" aria-label="anchor" href="#standardizing-parameters-in-mixed-models"></a>
 </h4>
-<p>Linear mixed models (LMM/HLM/MLM) offer an additional conundrum to standardization - how does one even calculate the SDs of the various predictors? Or of the response - is it the deviations within each group? Or perhaps between them?</p>
-<p>The solution: standardize according to level of the predictor <span class="citation">(Hoffman 2015, 342)</span>! Level 1 parameters are standardized according to variance <em>within</em> groups, while level 2 parameters are standardized according to variance <em>between</em> groups. The resulting standardized coefficient are also called <em>pseudo</em>-standardized coefficients.[^Note that like method <code>"basic"</code>, these are based on the model matrix.]</p>
+<p>Linear mixed models (LMM/HLM/MLM) offer an additional conundrum to
+standardization - how does one even calculate the SDs of the various
+predictors? Or of the response - is it the deviations within each group?
+Or perhaps between them?</p>
+<p>The solution: standardize according to level of the predictor <span class="citation">(Hoffman 2015, 342)</span>! Level 1 parameters are
+standardized according to variance <em>within</em> groups, while level 2
+parameters are standardized according to variance <em>between</em>
+groups. The resulting standardized coefficient are also called
+<em>pseudo</em>-standardized coefficients.[^Note that like method
+<code>"basic"</code>, these are based on the model matrix.]</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Reaction</span> <span class="op">~</span> <span class="va">Days</span> <span class="op">+</span> <span class="op">(</span><span class="va">Days</span> <span class="op">|</span> <span class="va">Subject</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu">lme4</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/lme4/man/sleepstudy.html" class="external-link">sleepstudy</a></span><span class="op">)</span></span>
 <span></span>
@@ -303,8 +432,19 @@ standardization**, described below
 <div class="section level4">
 <h4 id="standardizing-parameters-in-generalized-linear-models">Standardizing Parameters In Generalized Linear Models<a class="anchor" aria-label="anchor" href="#standardizing-parameters-in-generalized-linear-models"></a>
 </h4>
-<p>Unlike linear (/mixed) models, in generalized linear (/mixed) models (GLMs) there is <em>less</em> of a need for standardization. Why? Because in many GLMs the estimated coefficients are themselves measures of effect size, such as <em>odds-ratios</em> (OR) in logistic regression, or <em>incidence rate ratios</em> (IRR) in Poisson regressions. This is because in such model the outcome is <strong>not</strong> on an arbitrary scale - that is, the meaning of rates and probabilities are changed by arbitrary linear transformations.</p>
-<p>But still, some standardization is sometimes needed, for the predictors. Luckily, <code><a href="../reference/standardize_parameters.html">standardize_parameters()</a></code> (and <code><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">standardize()</a></code>) are smart enough to know when GLMs are passed so as to only standardize according to the predictors:</p>
+<p>Unlike linear (/mixed) models, in generalized linear (/mixed) models
+(GLMs) there is <em>less</em> of a need for standardization. Why?
+Because in many GLMs the estimated coefficients are themselves measures
+of effect size, such as <em>odds-ratios</em> (OR) in logistic
+regression, or <em>incidence rate ratios</em> (IRR) in Poisson
+regressions. This is because in such model the outcome is
+<strong>not</strong> on an arbitrary scale - that is, the meaning of
+rates and probabilities are changed by arbitrary linear
+transformations.</p>
+<p>But still, some standardization is sometimes needed, for the
+predictors. Luckily, <code><a href="../reference/standardize_parameters.html">standardize_parameters()</a></code> (and
+<code><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">standardize()</a></code>) are smart enough to know when GLMs are
+passed so as to only standardize according to the predictors:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="va">mpg</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">mtcars</span>,</span>
@@ -314,7 +454,9 @@ standardization**, described below
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod_b</span>, method <span class="op">=</span> <span class="st">"refit"</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co"># standardize_parameters(mod_b, method = "posthoc", two_sd = TRUE)</span></span>
 <span><span class="co"># standardize_parameters(mod_b, method = "basic")</span></span></code></pre></div>
-<p>These can then be converted to OR (with <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>) and discussed as the “<em>change in Odds as a function of a change in one SD of x</em>”.</p>
+<p>These can then be converted to OR (with <code><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp()</a></code>) and
+discussed as the “<em>change in Odds as a function of a change in one SD
+of x</em>”.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod_b</span>, method <span class="op">=</span> <span class="st">"refit"</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">std</span><span class="op">$</span><span class="va">Std_Coefficient</span><span class="op">)</span></span></code></pre></div>
@@ -326,7 +468,11 @@ standardization**, described below
 <div class="section level3">
 <h3 id="cohens-f">Cohen’s <em>f</em><a class="anchor" aria-label="anchor" href="#cohens-f"></a>
 </h3>
-<p>Cohen’s <span class="math inline">\(f\)</span> (of <a href="https://easystats.github.io/effectsize/articles/anovaES.html" class="external-link">ANOVA fame</a>) can be used as a measure of effect size in the context of sequential multiple regression (i.e., <a href="https://easystats.github.io/performance/reference/test_performance.html" class="external-link"><strong>nested models</strong></a>). That is, when comparing two models, we can examine the ratio between the increase in <span class="math inline">\(R^2\)</span> and the unexplained variance:</p>
+<p>Cohen’s <span class="math inline">\(f\)</span> (of <a href="https://easystats.github.io/effectsize/articles/anovaES.html" class="external-link">ANOVA
+fame</a>) can be used as a measure of effect size in the context of
+sequential multiple regression (i.e., <a href="https://easystats.github.io/performance/reference/test_performance.html" class="external-link"><strong>nested
+models</strong></a>). That is, when comparing two models, we can examine
+the ratio between the increase in <span class="math inline">\(R^2\)</span> and the unexplained variance:</p>
 <p><span class="math display">\[
 f^{2}={R_{AB}^{2}-R_{A}^{2} \over 1-R_{AB}^{2}}
 \]</span></p>
@@ -509,13 +655,17 @@ Group_Sepal.Width * Petal.Width, data=data) -->
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-gelman2008scaling" class="csl-entry">
-Gelman, Andrew. 2008. <span>“Scaling Regression Inputs by Dividing by Two Standard Deviations.”</span> <em>Statistics in Medicine</em> 27 (15): 2865–73.
+Gelman, Andrew. 2008. <span>“Scaling Regression Inputs by Dividing by
+Two Standard Deviations.”</span> <em>Statistics in Medicine</em> 27
+(15): 2865–73.
 </div>
 <div id="ref-hoffman2015longitudinal" class="csl-entry">
-Hoffman, Lesa. 2015. <em>Longitudinal Analysis: Modeling Within-Person Fluctuation and Change</em>. Routledge.
+Hoffman, Lesa. 2015. <em>Longitudinal Analysis: Modeling Within-Person
+Fluctuation and Change</em>. Routledge.
 </div>
 <div id="ref-neter1989applied" class="csl-entry">
-Neter, John, William Wasserman, and Michael H Kutner. 1989. <span>“Applied Linear Regression Models.”</span>
+Neter, John, William Wasserman, and Michael H Kutner. 1989.
+<span>“Applied Linear Regression Models.”</span>
 </div>
 </div>
 </div>

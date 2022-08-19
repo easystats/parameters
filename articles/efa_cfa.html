@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -131,18 +131,49 @@
 <div class="section level2">
 <h2 id="how-to-perform-a-factor-analysis-fa">How to perform a Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-to-perform-a-factor-analysis-fa"></a>
 </h2>
-<p>The difference between PCA and EFA can be quite hard to intuitively grasp as their output is very familiar. The idea is that PCA aims at extracting the most variance possible from all variables of the dataset, whereas EFA aims at creating consistent factors from the dataset without desperately trying to represent all the variables.</p>
-<p>This is why PCA is popular for feature reduction, as it will try to best represent the variance contained in the original data, minimizing the loss of information. On the other hand, EFA is usually in the context of exploring the latent dimensions that might be hidden in the observed variables, without necessarily striving to represent the whole dataset.</p>
-<p>To illustrate EFA, let us use the <a href="https://ipip.ori.org/" class="external-link">International Personality Item Pool</a> data available in the <a href="https://www.personality-project.org/r/html/bfi.html" class="external-link"><code>psych</code></a> package. It includes 25 personality self report items. The authors built these items following the <strong>big 5</strong> personality structure.</p>
+<p>The difference between PCA and EFA can be quite hard to intuitively
+grasp as their output is very familiar. The idea is that PCA aims at
+extracting the most variance possible from all variables of the dataset,
+whereas EFA aims at creating consistent factors from the dataset without
+desperately trying to represent all the variables.</p>
+<p>This is why PCA is popular for feature reduction, as it will try to
+best represent the variance contained in the original data, minimizing
+the loss of information. On the other hand, EFA is usually in the
+context of exploring the latent dimensions that might be hidden in the
+observed variables, without necessarily striving to represent the whole
+dataset.</p>
+<p>To illustrate EFA, let us use the <a href="https://ipip.ori.org/" class="external-link">International Personality Item Pool</a>
+data available in the <a href="https://www.personality-project.org/r/html/bfi.html" class="external-link"><code>psych</code></a>
+package. It includes 25 personality self report items. The authors built
+these items following the <strong>big 5</strong> personality
+structure.</p>
 <div class="section level3">
 <h3 id="factor-structure-sphericity-and-kmo">Factor Structure (Sphericity and KMO)<a class="anchor" aria-label="anchor" href="#factor-structure-sphericity-and-kmo"></a>
 </h3>
-<p>The first step is to test if the dataset is suitable for carrying out factor analysis. There are two</p>
+<p>The first step is to test if the dataset is suitable for carrying out
+factor analysis. There are two</p>
 <ul>
-<li><p><strong>Bartlett’s Test of Sphericity</strong>: This tests whether a matrix (of correlations) is significantly different from an identity matrix. The test provides probability that the correlation matrix has significant correlations among at least some of the variables in a dataset, a prerequisite for factor analysis to work. In other words, before starting with factor analysis, one needs to check whether Bartlett’s test of sphericity is significant.</p></li>
-<li><p><strong>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy (MSA)</strong>: This test was introduced by Kaiser (1970) as the Measure of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974). The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1, indicates the degree to which each variable in a set is predicted without error by the other variables. A value of 0 indicates that the sum of partial correlations is large relative to the sum correlations, indicating factor analysis is likely to be inappropriate. A KMO value close to 1 indicates that the sum of partial correlations is not large relative to the sum of correlations and so factor analysis should yield distinct and reliable factors.</p></li>
+<li><p><strong>Bartlett’s Test of Sphericity</strong>: This tests
+whether a matrix (of correlations) is significantly different from an
+identity matrix. The test provides probability that the correlation
+matrix has significant correlations among at least some of the variables
+in a dataset, a prerequisite for factor analysis to work. In other
+words, before starting with factor analysis, one needs to check whether
+Bartlett’s test of sphericity is significant.</p></li>
+<li><p><strong>Kaiser, Meyer, Olkin (KMO) Measure of Sampling Adequacy
+(MSA)</strong>: This test was introduced by Kaiser (1970) as the Measure
+of Sampling Adequacy (MSA), later modified by Kaiser and Rice (1974).
+The Kaiser-Meyer-Olkin (KMO) statistic, which can vary from 0 to 1,
+indicates the degree to which each variable in a set is predicted
+without error by the other variables. A value of 0 indicates that the
+sum of partial correlations is large relative to the sum correlations,
+indicating factor analysis is likely to be inappropriate. A KMO value
+close to 1 indicates that the sum of partial correlations is not large
+relative to the sum of correlations and so factor analysis should yield
+distinct and reliable factors.</p></li>
 </ul>
-<p>Both tests can be performed by using the <code><a href="../reference/check_factorstructure.html">check_factorstructure()</a></code> function.</p>
+<p>Both tests can be performed by using the
+<code><a href="../reference/check_factorstructure.html">check_factorstructure()</a></code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span></span>
@@ -161,7 +192,9 @@
 <div class="section level3">
 <h3 id="exploratory-factor-analysis-efa">Exploratory Factor Analysis (EFA)<a class="anchor" aria-label="anchor" href="#exploratory-factor-analysis-efa"></a>
 </h3>
-<p>Now that we are confident that our dataset is appropriate, we will explore a factor structure made of 5 latent variables, corresponding to the items’ authors theory of personality.</p>
+<p>Now that we are confident that our dataset is appropriate, we will
+explore a factor structure made of 5 latent variables, corresponding to
+the items’ authors theory of personality.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Fit an EFA</span></span>
 <span><span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">data</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -199,7 +232,9 @@
 <span><span class="co">#&gt; O4       |      |       |       |       | 0.36  |    2.65    |    0.75   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The 5 latent factors (oblimin rotation) accounted for 42.36% of the total variance of the original data (MR2 = 10.31%, MR1 = 8.83%, MR3 = 8.39%, MR5 = 8.29%, MR4 = 6.55%).</span></span></code></pre></div>
-<p>As we can see, the 25 items nicely spread on the 5 latent factors, the famous <strong>big 5</strong>. Based on this model, we can now predict back the scores for each individual for these new variables:</p>
+<p>As we can see, the 25 items nicely spread on the 5 latent factors,
+the famous <strong>big 5</strong>. Based on this model, we can now
+predict back the scores for each individual for these new variables:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># let's look only at the first five individuals</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Neuroticism"</span>, <span class="st">"Conscientiousness"</span>, <span class="st">"Extraversion"</span>, <span class="st">"Agreeableness"</span>, <span class="st">"Opennness"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -213,24 +248,40 @@
 <div class="section level3">
 <h3 id="how-many-factors-to-retain-in-factor-analysis-fa">How many factors to retain in Factor Analysis (FA)<a class="anchor" aria-label="anchor" href="#how-many-factors-to-retain-in-factor-analysis-fa"></a>
 </h3>
-<p>When running a <strong>factor analysis (FA)</strong>, one often needs to specify <strong>how many components</strong> (or latent variables) to retain or to extract. This decision is often motivated or supported by some statistical indices and procedures aiming at finding the optimal number of factors.</p>
-<p>There are a huge number of methods exist to statistically address this issue, and they can sometimes give very different results.</p>
+<p>When running a <strong>factor analysis (FA)</strong>, one often needs
+to specify <strong>how many components</strong> (or latent variables) to
+retain or to extract. This decision is often motivated or supported by
+some statistical indices and procedures aiming at finding the optimal
+number of factors.</p>
+<p>There are a huge number of methods exist to statistically address
+this issue, and they can sometimes give very different results.</p>
 <blockquote>
-<p><strong>Unfortunately, there is no consensus on which method to use, or which is the best.</strong></p>
+<p><strong>Unfortunately, there is no consensus on which method to use,
+or which is the best.</strong></p>
 </blockquote>
 <div class="section level4">
 <h4 id="the-method-agreement-procedure">The Method Agreement procedure<a class="anchor" aria-label="anchor" href="#the-method-agreement-procedure"></a>
 </h4>
-<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html" class="external-link"><code>psycho</code></a> package <span class="citation">(Makowski 2018)</span>, proposes to rely on the consensus of methods, rather than on one method in particular.</p>
-<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code> function, re-implemented and improved in the <a href="https://github.com/easystats/parameters" class="external-link"><strong>parameters</strong></a> package. One can provide a dataframe, and the function will run a large number of routines and return the optimal number of factors based on the higher consensus.</p>
+<p>The Method Agreement procedure, first implemented in the <a href="https://neuropsychology.github.io/psycho.R/2018/05/24/n_factors.html" class="external-link"><code>psycho</code></a>
+package <span class="citation">(Makowski 2018)</span>, proposes to rely
+on the consensus of methods, rather than on one method in
+particular.</p>
+<p>This procedure can be easily used via the <code><a href="../reference/n_factors.html">n_factors()</a></code>
+function, re-implemented and improved in the <a href="https://github.com/easystats/parameters" class="external-link"><strong>parameters</strong></a>
+package. One can provide a dataframe, and the function will run a large
+number of routines and return the optimal number of factors based on the
+higher consensus.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n_factors.html">n_factors</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="va">n</span></span>
 <span><span class="co">#&gt; # Method Agreement Procedure:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; The choice of 6 dimensions is supported by 3 (15.79%) methods out of 19 (Optimal coordinates, Parallel analysis, Kaiser criterion).</span></span></code></pre></div>
-<p>Interestingly, the smallest nubmer of factors that most methods suggest is 6, which is consistent with the newer models of personality (e.g., HEXACO).</p>
-<p>More details, as well as a summary table can be obtained as follows:</p>
+<p>Interestingly, the smallest nubmer of factors that most methods
+suggest is 6, which is consistent with the newer models of personality
+(e.g., HEXACO).</p>
+<p>More details, as well as a summary table can be obtained as
+follows:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    n_Factors              Method              Family</span></span>
@@ -265,7 +316,8 @@
 <span><span class="co">#&gt; 8         11         1</span></span>
 <span><span class="co">#&gt; 9         22         1</span></span>
 <span><span class="co">#&gt; 10        24         3</span></span></code></pre></div>
-<p>A plot can also be obtained (the <code>see</code> package must be loaded):</p>
+<p>A plot can also be obtained (the <code>see</code> package must be
+loaded):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span></span>
 <span></span>
@@ -276,13 +328,26 @@
 <div class="section level3">
 <h3 id="confirmatory-factor-analysis-cfa">Confirmatory Factor Analysis (CFA)<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis-cfa"></a>
 </h3>
-<p>We’ve seen above that while an EFA with 5 latent variables works great on our dataset, a structure with 6 latent factors might in fact be more appropriate. How can we <strong>statistically test</strong> if that is actually the case? This can be done using <strong>Confirmatory Factor Analysis (CFA)</strong> (as opposed to <strong>Exploratory</strong> FA), which bridges factor analysis with Structural Equation Modeling (SEM).</p>
-<p>However, in order to do that cleanly, EFA should be <strong>independent</strong> from CFA: the factor structure should be explored in a <strong>“training” set</strong>, and then tested (or “confirmed”) in a <strong>“testing” set</strong>.</p>
-<p>In other words, the dataset used for exploration and confirmation should not be the same, a standard widely adopted in the field of machine learning.</p>
+<p>We’ve seen above that while an EFA with 5 latent variables works
+great on our dataset, a structure with 6 latent factors might in fact be
+more appropriate. How can we <strong>statistically test</strong> if that
+is actually the case? This can be done using <strong>Confirmatory Factor
+Analysis (CFA)</strong> (as opposed to <strong>Exploratory</strong> FA),
+which bridges factor analysis with Structural Equation Modeling
+(SEM).</p>
+<p>However, in order to do that cleanly, EFA should be
+<strong>independent</strong> from CFA: the factor structure should be
+explored in a <strong>“training” set</strong>, and then tested (or
+“confirmed”) in a <strong>“testing” set</strong>.</p>
+<p>In other words, the dataset used for exploration and confirmation
+should not be the same, a standard widely adopted in the field of
+machine learning.</p>
 <div class="section level4">
 <h4 id="partition-the-data">Partition the data<a class="anchor" aria-label="anchor" href="#partition-the-data"></a>
 </h4>
-<p>The data can be easily split into two sets with the <code>data_partition()</code> function, through which we will use 70% of the sample as training and the rest as test.</p>
+<p>The data can be easily split into two sets with the
+<code>data_partition()</code> function, through which we will use 70% of
+the sample as training and the rest as test.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># to have reproducible result, we will also set seed here so that similar</span></span>
 <span><span class="co"># portions of the data are used each time we run the following code</span></span>
@@ -293,7 +358,9 @@
 <div class="section level4">
 <h4 id="create-cfa-structures-out-of-efa-models">Create CFA structures out of EFA models<a class="anchor" aria-label="anchor" href="#create-cfa-structures-out-of-efa-models"></a>
 </h4>
-<p>In the next step, we will run two EFA models on the training set, specifying 5 and 6 latent factors respectively, that we will then transform into CFA structures.</p>
+<p>In the next step, we will run two EFA models on the training set,
+specifying 5 and 6 latent factors respectively, that we will then
+transform into CFA structures.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">structure_big5</span> <span class="op">&lt;-</span> <span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="va">training</span>, nfactors <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -317,12 +384,16 @@
 <span><span class="co">#&gt; MR5 =~ A1 + A2 + A3 + A4 + A5</span></span>
 <span><span class="co">#&gt; MR4 =~ E3 + O1 + O2 + O3</span></span>
 <span><span class="co">#&gt; MR6 =~ O5</span></span></code></pre></div>
-<p>As we can see, a structure is just a string encoding how the <strong>manifest variables</strong> (the observed variables) are integrated into <strong>latent variables</strong>.</p>
+<p>As we can see, a structure is just a string encoding how the
+<strong>manifest variables</strong> (the observed variables) are
+integrated into <strong>latent variables</strong>.</p>
 </div>
 <div class="section level4">
 <h4 id="fit-and-compare-models">Fit and Compare models<a class="anchor" aria-label="anchor" href="#fit-and-compare-models"></a>
 </h4>
-<p>We can finally apply this structure to the testing dataset using the <code>lavaan</code> package, and compare these models against each other:</p>
+<p>We can finally apply this structure to the testing dataset using the
+<code>lavaan</code> package, and compare these models against each
+other:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
@@ -337,7 +408,8 @@
 <span><span class="co">#&gt; -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; big5 | lavaan | 1366.793 | 289.000 |   &lt; .001 |      5413.276 |       &lt; .001 | 0.861 | 0.831 | 0.748 | 0.762 | 0.788 | 0.071 | [0.07, 0.08] |    &lt; .001 | 12.332 | 0.076 | 0.716 | 0.665 | 0.790 | 0.788 |    -35860.601 | 71845.202 |        1.00 | 72130.055 |        1.00 |    71933.186</span></span>
 <span><span class="co">#&gt; big6 | lavaan | 1504.653 | 285.000 |   &lt; .001 |      5413.276 |       &lt; .001 | 0.854 | 0.820 | 0.722 | 0.727 | 0.760 | 0.077 | [0.07, 0.08] |    &lt; .001 | 12.595 | 0.083 | 0.683 | 0.633 | 0.762 | 0.760 |    -35929.531 | 71991.062 |    2.12e-32 | 72294.293 |    2.17e-36 |    72084.722</span></span></code></pre></div>
-<p>All in all, it seems that the Big-5 structure remains quite reliable.</p>
+<p>All in all, it seems that the Big-5 structure remains quite
+reliable.</p>
 </div>
 </div>
 </div>
@@ -345,7 +417,10 @@
 <h2 id="structural-equation-modeling">Structural Equation Modeling<a class="anchor" aria-label="anchor" href="#structural-equation-modeling"></a>
 </h2>
 <!-- TO DO: needs a better intro -->
-<p>The previous example shows one of the enormous amount of modeling possibilities for structural equation models, in particular an example for mediation analysis, i.e. a model that estimates indirect effects in partial mediation structures.</p>
+<p>The previous example shows one of the enormous amount of modeling
+possibilities for structural equation models, in particular an example
+for mediation analysis, i.e. a model that estimates indirect effects in
+partial mediation structures.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
@@ -385,7 +460,9 @@
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-makowski2018psycho" class="csl-entry">
-Makowski, Dominique. 2018. <span>“The Psycho Package: An Efficient and Publishing-Oriented Workflow for Psychological Science.”</span> <em>Journal of Open Source Software</em> 3 (22): 470.
+Makowski, Dominique. 2018. <span>“The Psycho Package: An Efficient and
+Publishing-Oriented Workflow for Psychological Science.”</span>
+<em>Journal of Open Source Software</em> 3 (22): 470.
 </div>
 </div>
 </div>

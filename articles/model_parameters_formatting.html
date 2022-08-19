@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -128,11 +128,19 @@
 
     
     
-<p>The <em>parameters</em> package, together with the <a href="https://easystats.github.io/insight/" class="external-link"><em>insight</em> package</a>, provides tools to format the layout and style of tables from model parameters. When you use the <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function, you usually don’t have to take care about formatting and layout, at least not for simple purposes like printing to the console or inside rmarkdown documents. However, sometime you may want to do the formatting steps manually. This vignette introduces the various functions that are used for parameters table formatting.</p>
+<p>The <em>parameters</em> package, together with the <a href="https://easystats.github.io/insight/" class="external-link"><em>insight</em>
+package</a>, provides tools to format the layout and style of tables
+from model parameters. When you use the <code><a href="../reference/model_parameters.html">model_parameters()</a></code>
+function, you usually don’t have to take care about formatting and
+layout, at least not for simple purposes like printing to the console or
+inside rmarkdown documents. However, sometime you may want to do the
+formatting steps manually. This vignette introduces the various
+functions that are used for parameters table formatting.</p>
 <div class="section level2">
 <h2 id="an-example-model">An Example Model<a class="anchor" aria-label="anchor" href="#an-example-model"></a>
 </h2>
-<p>We start with a model that does not make much sense, but it is useful for demonstrating the formatting functions.</p>
+<p>We start with a model that does not make much sense, but it is useful
+for demonstrating the formatting functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">iris</span><span class="op">$</span><span class="va">Petlen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Length</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
@@ -166,8 +174,17 @@
 <div class="section level2">
 <h2 id="formatting-parameter-names">Formatting Parameter Names<a class="anchor" aria-label="anchor" href="#formatting-parameter-names"></a>
 </h2>
-<p>As we can see, in such cases, the standard R output looks a bit cryptic, although all necessary and important information is included in the summary. The formatting of coefficients for polynomial transformation is difficult to read, factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> always require a short time of thinking to find out which of the bound (in this case, <code>Petlen(3,7]</code>, 3 and 7) is included in the range, and names of factor levels are directly concatenated to the name of the factor variable.</p>
-<p>Thus, the first step would be to format the parameter names, which can be done with <code><a href="../reference/format_parameters.html">format_parameters()</a></code> from the <em>parameters</em> package:</p>
+<p>As we can see, in such cases, the standard R output looks a bit
+cryptic, although all necessary and important information is included in
+the summary. The formatting of coefficients for polynomial
+transformation is difficult to read, factors grouped with
+<code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> always require a short time of thinking to find out
+which of the bound (in this case, <code>Petlen(3,7]</code>, 3 and 7) is
+included in the range, and names of factor levels are directly
+concatenated to the name of the factor variable.</p>
+<p>Thus, the first step would be to format the parameter names, which
+can be done with <code><a href="../reference/format_parameters.html">format_parameters()</a></code> from the
+<em>parameters</em> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -177,7 +194,10 @@
 <span><span class="co">#&gt; "Sepal Length [2nd degree]"      "Species [versicolor]" </span></span>
 <span><span class="co">#&gt;            Speciesvirginica                 Petlen(3,7] </span></span>
 <span><span class="co">#&gt;       "Species [virginica]"              "Petlen [4-7]"</span></span></code></pre></div>
-<p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> returns a (named) character vector with the original coefficients as <em>names</em> of each character element, and the formatted names of the coefficients as values of the character vector. Let’s look at the results again:</p>
+<p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> returns a (named) character vector
+with the original coefficients as <em>names</em> of each character
+element, and the formatted names of the coefficients as values of the
+character vector. Let’s look at the results again:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/format_parameters.html">format_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; (Intercept)</span></span>
@@ -186,23 +206,44 @@
 <span><span class="co">#&gt; Species [versicolor]</span></span>
 <span><span class="co">#&gt; Species [virginica]</span></span>
 <span><span class="co">#&gt; Petlen [4-7]</span></span></code></pre></div>
-<p>Now variable names and factor levels, but also polynomial terms or even factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> are much more readable. Factor levels are separated from the variable name, inside brackets. Same for the coefficients of the different polynomial degrees. And the exact range for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>-factors is also clearer now.</p>
+<p>Now variable names and factor levels, but also polynomial terms or
+even factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> are much more readable.
+Factor levels are separated from the variable name, inside brackets.
+Same for the coefficients of the different polynomial degrees. And the
+exact range for <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>-factors is also clearer now.</p>
 </div>
 <div class="section level2">
 <h2 id="standardizing-column-names-of-parameter-tables">Standardizing Column Names of Parameter Tables<a class="anchor" aria-label="anchor" href="#standardizing-column-names-of-parameter-tables"></a>
 </h2>
-<p>As seen above, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns columns named <code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>. While <code>Estimate</code> is not specific for certain models, <code>t value</code> is. For logistic regression models, you would get <code>z value</code>. Some packages alter the names, so you get just <code>t</code> or <code>t-value</code> etc.</p>
-<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column names, where applicable:</p>
+<p>As seen above, the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> returns columns named
+<code>Estimate</code>, <code>t value</code> or <code>Pr(&gt;|t|)</code>.
+While <code>Estimate</code> is not specific for certain models,
+<code>t value</code> is. For logistic regression models, you would get
+<code>z value</code>. Some packages alter the names, so you get just
+<code>t</code> or <code>t-value</code> etc.</p>
+<p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> also uses context-specific column
+names, where applicable:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Parameter"   "Coefficient" "SE"          "CI"          "CI_low"     </span></span>
 <span><span class="co">#&gt; [6] "CI_high"     "t"           "df_error"    "p"</span></span></code></pre></div>
-<p>For Bayesian models, <code>Coefficient</code> is usually named <code>Median</code> etc. While this makes sense from a user perspective, because you instantly know which type of statistic or coefficient you have, it becomes difficult when you need a generic naming scheme to access model parameters when the input model is unknown. This is the typical approach from the <em>broom</em> package, where you get “standardized” column names:</p>
+<p>For Bayesian models, <code>Coefficient</code> is usually named
+<code>Median</code> etc. While this makes sense from a user perspective,
+because you instantly know which type of statistic or coefficient you
+have, it becomes difficult when you need a generic naming scheme to
+access model parameters when the input model is unknown. This is the
+typical approach from the <em>broom</em> package, where you get
+“standardized” column names:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/" class="external-link">broom</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "term"      "estimate"  "std.error" "statistic" "p.value"</span></span></code></pre></div>
-<p>To deal with such situations, the <em>insight</em> package provides a <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> function, which exactly does that: standardizing the column names of the input. In the following example, you see that the statistic-column is no longer named <code>t</code>, but <code>statistic</code>. <code>df_error</code> or <code>df_residuals</code> will be renamed to <code>df</code>.</p>
+<p>To deal with such situations, the <em>insight</em> package provides a
+<code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> function, which exactly does that:
+standardizing the column names of the input. In the following example,
+you see that the statistic-column is no longer named <code>t</code>, but
+<code>statistic</code>. <code>df_error</code> or
+<code>df_residuals</code> will be renamed to <code>df</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/insight/" class="external-link">insight</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
@@ -224,7 +265,10 @@
 <div class="section level2">
 <h2 id="formatting-column-names-and-columns">Formatting Column Names and Columns<a class="anchor" aria-label="anchor" href="#formatting-column-names-and-columns"></a>
 </h2>
-<p>Beside formatting parameter names (coefficient names) using <code><a href="../reference/format_parameters.html">format_parameters()</a></code>, we can do even more to make the output more readable. Let’s look at an example that includes confidence intervals.</p>
+<p>Beside formatting parameter names (coefficient names) using
+<code><a href="../reference/format_parameters.html">format_parameters()</a></code>, we can do even more to make the output
+more readable. Let’s look at an example that includes confidence
+intervals.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span>, <span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|) 2.5 % 97.5 %</span></span>
@@ -247,8 +291,18 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Speciesvirginica         -<span style="color: #BB0000;">0.991</span>    0.285     -<span style="color: #BB0000;">3.48</span>  6.72<span style="color: #949494;">e</span><span style="color: #BB0000;">-  4</span>   -<span style="color: #BB0000;">1.55</span>   -<span style="color: #BB0000;">0.428</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Petlen(3,7]              -<span style="color: #BB0000;">0.136</span>    0.282     -<span style="color: #BB0000;">0.482</span> 6.30<span style="color: #949494;">e</span><span style="color: #BB0000;">-  1</span>   -<span style="color: #BB0000;">0.693</span>   0.421</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​conf.high</span></span></span></code></pre></div>
-<p>Some improvements according to readability could be collapsing and formatting the confidence intervals, and maybe the p-values. This would require some effort, for instance, to format the values of the lower and upper confidence intervals and collapsing them into one column. However, the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that does all the work for you.</p>
-<p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model parameters as input, however, there are some requirements to make <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must follow a certain pattern to be recognized, and this pattern may either be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em> packages</a>.</p>
+<p>Some improvements according to readability could be collapsing and
+formatting the confidence intervals, and maybe the p-values. This would
+require some effort, for instance, to format the values of the lower and
+upper confidence intervals and collapsing them into one column. However,
+the <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> function is a convenient function that
+does all the work for you.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> requires a data frame with model
+parameters as input, however, there are some requirements to make
+<code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> work. In particular, the column names must
+follow a certain pattern to be recognized, and this pattern may either
+be the naming convention from <em>broom</em> or the <a href="https://easystats.github.io/easystats/" class="external-link"><em>easystats</em>
+packages</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -260,7 +314,10 @@
 <span><span class="co">#&gt; 4      Speciesversicolor    -1.01      0.28     -3.62  &lt; .001 [-1.56, -0.46]</span></span>
 <span><span class="co">#&gt; 5       Speciesvirginica    -0.99      0.29     -3.48  &lt; .001 [-1.55, -0.43]</span></span>
 <span><span class="co">#&gt; 6            Petlen(3,7]    -0.14      0.28     -0.48  0.630  [-0.69,  0.42]</span></span></code></pre></div>
-<p>When the parameters table also includes degrees of freedom, and the degrees of freedom are the same for each parameter, then this information is included in the statistic-column. This is usually the default for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
+<p>When the parameters table also includes degrees of freedom, and the
+degrees of freedom are the same for each parameter, then this
+information is included in the statistic-column. This is usually the
+default for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -276,7 +333,10 @@
 <div class="section level2">
 <h2 id="exporting-the-parameters-table">Exporting the Parameters Table<a class="anchor" aria-label="anchor" href="#exporting-the-parameters-table"></a>
 </h2>
-<p>Finally, <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> from <em>insight</em> formats the data frame and returns a character vector that can be printed to the console or inside rmarkdown documents. The data frame then looks more “table-like”.</p>
+<p>Finally, <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> from <em>insight</em> formats
+the data frame and returns a character vector that can be printed to the
+console or inside rmarkdown documents. The data frame then looks more
+“table-like”.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
@@ -290,7 +350,8 @@
 <span><span class="co">#&gt; 18.10 |   6 | 225.00 | 105 | 2.76</span></span>
 <span><span class="co">#&gt; 14.30 |   8 | 360.00 | 245 | 3.21</span></span>
 <span><span class="co">#&gt; 24.40 |   4 | 146.70 |  62 | 3.69</span></span></code></pre></div>
-<p>Putting all this together allows us to create nice tabular outputs of parameters tables. This can be done using <em>broom</em>:</p>
+<p>Putting all this together allows us to create nice tabular outputs of
+parameters tables. This can be done using <em>broom</em>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -304,7 +365,10 @@
 <span><span class="co">#&gt; Speciesversicolor      |    -1.01 |      0.28 |     -3.62 |  &lt; .001 | [-1.56, -0.46]</span></span>
 <span><span class="co">#&gt; Speciesvirginica       |    -0.99 |      0.29 |     -3.48 |  &lt; .001 | [-1.55, -0.43]</span></span>
 <span><span class="co">#&gt; Petlen(3,7]            |    -0.14 |      0.28 |     -0.48 |  0.630  | [-0.69,  0.42]</span></span></code></pre></div>
-<p>Or, in a simpler way and with much more options (like standardizing, robust standard errors, bootstrapping, …) using <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>-method does all these steps automatically:</p>
+<p>Or, in a simpler way and with much more options (like standardizing,
+robust standard errors, bootstrapping, …) using
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>-method does
+all these steps automatically:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                 | Coefficient |   SE |         95% CI | t(144) |      p</span></span>
@@ -319,16 +383,32 @@
 <div class="section level2">
 <h2 id="formatting-the-parameters-table-in-markdown">Formatting the Parameters Table in Markdown<a class="anchor" aria-label="anchor" href="#formatting-the-parameters-table-in-markdown"></a>
 </h2>
-<p><code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> provides a few options to generate tables in markdown-format. This allows to easily render nice-looking tables inside markdown-documents. First of all, use <code>format = "markdown"</code> to activate the markdown-formatting. <code>caption</code> can be used to add a table caption. Furthermore, <code>align</code> allows to choose an alignment for all table columns, or to specify the alignment for each column individually.</p>
-<p>The following table has six columns. Using <code>align = "lcccrr"</code> would left-align the first column, center columns two to four, and right-align the last two columns.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table()</a></code> provides a few options to generate tables
+in markdown-format. This allows to easily render nice-looking tables
+inside markdown-documents. First of all, use
+<code>format = "markdown"</code> to activate the markdown-formatting.
+<code>caption</code> can be used to add a table caption. Furthermore,
+<code>align</code> allows to choose an alignment for all table columns,
+or to specify the alignment for each column individually.</p>
+<p>The following table has six columns. Using
+<code>align = "lcccrr"</code> would left-align the first column, center
+columns two to four, and right-align the last two columns.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span>conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="co"># parenthesis look better in markdown-tables, so we use "brackets" here</span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table</a></span><span class="op">(</span>ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"("</span>, <span class="st">")"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">export_table</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"markdown"</span>, caption <span class="op">=</span> <span class="st">"My Table"</span>, align <span class="op">=</span> <span class="st">"lcccrr"</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<table style="width:100%;" class="table">
 <caption>My Table</caption>
+<colgroup>
+<col width="29%">
+<col width="12%">
+<col width="14%">
+<col width="14%">
+<col width="10%">
+<col width="19%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">term</th>
 <th align="center">estimate</th>
@@ -388,11 +468,27 @@
 </tr>
 </tbody>
 </table>
-<p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> is a convenient wrapper around <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and <code>export_table(format = "markdown")</code>, and allows to directly format the output of functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> or other <em>parameters</em> functions in markdown-format.</p>
-<p>These tables are also nicely formatted when knitting markdown-documents into Word or PDF. <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> applies some default settings that have proven to work well for markdown, PDF or Word tables.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> is a convenient wrapper around
+<code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and
+<code>export_table(format = "markdown")</code>, and allows to directly
+format the output of functions like <code><a href="../reference/model_parameters.html">model_parameters()</a></code>,
+<code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> or other <em>parameters</em>
+functions in markdown-format.</p>
+<p>These tables are also nicely formatted when knitting
+markdown-documents into Word or PDF. <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> applies
+some default settings that have proven to work well for markdown, PDF or
+Word tables.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="33%">
+<col width="16%">
+<col width="7%">
+<col width="20%">
+<col width="10%">
+<col width="10%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="center">Coefficient</th>
@@ -452,7 +548,11 @@
 </tr>
 </tbody>
 </table>
-<p>A similar option is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>, which is a convenient wrapper for <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and <code>export_table(format = "html")</code>. Using HTML in markdown has the advantage that it will be properly rendered when exporting to PDF.</p>
+<p>A similar option is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>, which is a convenient
+wrapper for <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">format_table()</a></code> and
+<code>export_table(format = "html")</code>. Using HTML in markdown has
+the advantage that it will be properly rendered when exporting to
+PDF.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div id="niwbgbfclw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
@@ -931,7 +1031,11 @@
     </tr></tfoot>
 </table>
 </div>
-<p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> are considered as main functions for users who want to generate nicely rendered tables inside markdown-documents. A wrapper around these both is <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, which either calls <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p>
+<p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> are considered
+as main functions for users who want to generate nicely rendered tables
+inside markdown-documents. A wrapper around these both is
+<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code>, which either calls <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or
+<code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
 <div id="ghawkzfndf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">

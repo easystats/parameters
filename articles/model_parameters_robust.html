@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -128,30 +128,50 @@
 
     
     
-<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function also allows the computation of standard errors, confidence intervals, and <em>p</em>-values based on various covariance matrices: heteroskedasticity-consistent, cluster-robust, bootstrap, etc. This functionality relies on the <a href="https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf" class="external-link"><code>sandwich</code></a> and <a href="https://cran.r-project.org/web/packages/clubSandwich/index.html" class="external-link"><code>clubSandwich</code></a> packages. This means that all models supported by either of these packages should work with <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
-<p>The computation of robust standard errors is controlled by two arguments:</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a>
+function also allows the computation of standard errors, confidence
+intervals, and <em>p</em>-values based on various covariance matrices:
+heteroskedasticity-consistent, cluster-robust, bootstrap, etc. This
+functionality relies on the <a href="https://cran.r-project.org/web/packages/sandwich/vignettes/sandwich-CL.pdf" class="external-link"><code>sandwich</code></a>
+and <a href="https://cran.r-project.org/web/packages/clubSandwich/index.html" class="external-link"><code>clubSandwich</code></a>
+packages. This means that all models supported by either of these
+packages should work with <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
+<p>The computation of robust standard errors is controlled by two
+arguments:</p>
 <ol style="list-style-type: decimal">
 <li>
 <code>vcov</code>: accepts 3 types of arguments
 <ul>
 <li>A covariance matrix</li>
-<li>A function which returns a covariance matrix (e.g., <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</li>
-<li>A string which indicates the kind of uncertainty estimates to return.
+<li>A function which returns a covariance matrix (e.g.,
+<code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">stats::vcov()</a></code>)</li>
+<li>A string which indicates the kind of uncertainty estimates to
+return.
 <ul>
-<li>Heteroskedasticity-consistent: <code>"vcovHC"</code>, <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>, <code>"HC2"</code>, <code>"HC3"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>
+<li>Heteroskedasticity-consistent: <code>"vcovHC"</code>,
+<code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>,
+<code>"HC2"</code>, <code>"HC3"</code>, <code>"HC4"</code>,
+<code>"HC4m"</code>, <code>"HC5"</code>
 </li>
-<li>Cluster-robust: <code>"vcovCR"</code>, <code>"CR0"</code>, <code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>, <code>"CR2"</code>, <code>"CR3"</code>
+<li>Cluster-robust: <code>"vcovCR"</code>, <code>"CR0"</code>,
+<code>"CR1"</code>, <code>"CR1p"</code>, <code>"CR1S"</code>,
+<code>"CR2"</code>, <code>"CR3"</code>
 </li>
-<li>Bootstrap: <code>"vcovBS"</code>, <code>"xy"</code>, <code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>, <code>"webb"</code>
+<li>Bootstrap: <code>"vcovBS"</code>, <code>"xy"</code>,
+<code>"residual"</code>, <code>"wild"</code>, <code>"mammen"</code>,
+<code>"webb"</code>
 </li>
-<li>Other <code>sandwich</code> functions: <code>"vcovHAC"</code>, <code>"vcovPC"</code>, <code>"vcovCL"</code>, <code>"vcovPL"</code>
+<li>Other <code>sandwich</code> functions: <code>"vcovHAC"</code>,
+<code>"vcovPC"</code>, <code>"vcovCL"</code>, <code>"vcovPL"</code>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<code>vcov_args</code>: list of arguments passed to the <em>sandwich</em> or <em>clubSandwich</em> function used to compute the covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
+<code>vcov_args</code>: list of arguments passed to the
+<em>sandwich</em> or <em>clubSandwich</em> function used to compute the
+covariance matrix. See for example <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHAC.html" class="external-link">?sandwich::vcovHAC</a></code>
 </li>
 </ol>
 <div class="section level2">
@@ -160,9 +180,17 @@
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-from-model-parameters">Robust Covariance Matrix Estimation from Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-from-model-parameters"></a>
 </h3>
-<p>There are two arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error.html"><code>?standard_error</code></a> for further details) that allow for choosing different methods and options of robust estimation: - <code>vcov</code> - <code>vcov_args</code></p>
-<p>Let us start with a simple example, which uses a heteroskedasticity-consistent covariance matrix estimation with estimation-type “HC3” (i.e. <code>sandwich::vcovHC(type = "HC3")</code>).</p>
-<p>First let’s create a simple linear regression model, which we know violates homoscedasticity assumption, and thus robust estimation methods are to be considered.</p>
+<p>There are two arguments (see <a href="https://easystats.github.io/parameters/reference/standard_error.html"><code>?standard_error</code></a>
+for further details) that allow for choosing different methods and
+options of robust estimation: - <code>vcov</code> -
+<code>vcov_args</code></p>
+<p>Let us start with a simple example, which uses a
+heteroskedasticity-consistent covariance matrix estimation with
+estimation-type “HC3” (i.e.
+<code>sandwich::vcovHC(type = "HC3")</code>).</p>
+<p>First let’s create a simple linear regression model, which we know
+violates homoscedasticity assumption, and thus robust estimation methods
+are to be considered.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">dist</span> <span class="op">~</span> <span class="va">speed</span>, data <span class="op">=</span> <span class="va">cars</span><span class="op">)</span></span>
@@ -170,7 +198,10 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html" class="external-link">check_heteroscedasticity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.031).</span></span></code></pre></div>
-<p>We would extract model parameters both with and without robust estimation to highlight the difference it makes to standard errors, confidence intervals, <em>t</em>-statistic, and <em>p</em>-values. Also, note that the coefficient estimate remains unchanged.</p>
+<p>We would extract model parameters both with and without robust
+estimation to highlight the difference it makes to standard errors,
+confidence intervals, <em>t</em>-statistic, and <em>p</em>-values. Also,
+note that the coefficient estimate remains unchanged.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># model parameters, where SE, CI, and p-values are *not* based on robust estimation</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
@@ -196,8 +227,18 @@
 <div class="section level3">
 <h3 id="cluster-robust-covariance-matrix-estimation-sandwich">Cluster-Robust Covariance Matrix Estimation (sandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-sandwich"></a>
 </h3>
-<p>If a different type of covariance matrix estimation is required, use the <code>vcov</code>-argument. This argument accepts the name of a function from the <em>sandwich</em> or <em>clubSandwich</em> packages as a string, such as <code>"vcovCL"</code> (or just its suffix <code>"CL"</code>). <em>parameters</em> will then call the corresponding function with the content of <code>vcov_args</code> as arguments.</p>
-<p>The specific estimation type can be controlled by passing a <code>type</code> argument via <code>vcov_args</code>. See <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types of covariance matrices that this function can produce (<code>HC0</code> to <code>HC3</code>). In the next example, we use a clustered covariance matrix estimation with <code>HC1</code>-estimation type.</p>
+<p>If a different type of covariance matrix estimation is required, use
+the <code>vcov</code>-argument. This argument accepts the name of a
+function from the <em>sandwich</em> or <em>clubSandwich</em> packages as
+a string, such as <code>"vcovCL"</code> (or just its suffix
+<code>"CL"</code>). <em>parameters</em> will then call the corresponding
+function with the content of <code>vcov_args</code> as arguments.</p>
+<p>The specific estimation type can be controlled by passing a
+<code>type</code> argument via <code>vcov_args</code>. See
+<code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">?sandwich::vcovCL</a></code> for information about the different types
+of covariance matrices that this function can produce (<code>HC0</code>
+to <code>HC3</code>). In the next example, we use a clustered covariance
+matrix estimation with <code>HC1</code>-estimation type.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># let's create a more complicated model</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
@@ -226,7 +267,13 @@
 <span><span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu">sandwich</span><span class="fu">::</span><span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">vcovCL</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.422 0.111 0.653 0.587 0.079 0.123 0.111</span></span></code></pre></div>
-<p>Usually, clustered covariance matrix estimation is used when there is a cluster-structure in the data. The variable indicating the cluster-structure can be defined in <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, additional arguments that should be passed down to functions from the <em>sandwich</em> package can be specified in <code>vcov_args</code>:</p>
+<p>Usually, clustered covariance matrix estimation is used when there is
+a cluster-structure in the data. The variable indicating the
+cluster-structure can be defined in <code><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html" class="external-link">sandwich::vcovCL()</a></code> with
+the <code>cluster</code>-argument. In <code><a href="../reference/model_parameters.html">model_parameters()</a></code>,
+additional arguments that should be passed down to functions from the
+<em>sandwich</em> package can be specified in
+<code>vcov_args</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span><span class="op">$</span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -257,7 +304,11 @@
 <div class="section level3">
 <h3 id="cluster-robust-covariance-matrix-estimation-clubsandwich">Cluster-Robust Covariance Matrix Estimation (clubSandwich)<a class="anchor" aria-label="anchor" href="#cluster-robust-covariance-matrix-estimation-clubsandwich"></a>
 </h3>
-<p>using <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>. Thus, when <code>vcov = "CR"</code>, the related function from the <code>clubSandwich</code> package is called. Note that this function <em>requires</em> the specification of the <code>cluster</code>-argument.</p>
+<p>using <code><a href="http://jepusto.github.io/clubSandwich/reference/vcovCR.html" class="external-link">clubSandwich::vcovCR()</a></code>. Thus, when
+<code>vcov = "CR"</code>, the related function from the
+<code>clubSandwich</code> package is called. Note that this function
+<em>requires</em> the specification of the
+<code>cluster</code>-argument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create fake-cluster-variable, to demonstrate cluster robust standard errors</span></span>
 <span><span class="va">iris</span><span class="op">$</span><span class="va">cluster</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -287,9 +338,12 @@
 <span><span class="co">#&gt; [1] 0.330 0.070 0.508 0.259 0.071 0.095 0.050</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="robust-covariance-matrix-estimation-on-standardized-model-parameters">Robust Covariance Matrix Estimation on Standardized Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-model-parameters"></a>
+<h3 id="robust-covariance-matrix-estimation-on-standardized-model-parameters">Robust Covariance Matrix Estimation on Standardized Model
+Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-model-parameters"></a>
 </h3>
-<p>Finally, robust estimation can be combined with <a href="https://easystats.github.io/parameters/articles/model_parameters_standardized.html">standardization</a>. However, robust covariance matrix estimation only works for <code>standardize = "refit"</code>.</p>
+<p>Finally, robust estimation can be combined with <a href="https://easystats.github.io/parameters/articles/model_parameters_standardized.html">standardization</a>.
+However, robust covariance matrix estimation only works for
+<code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># model parameters, robust estimation on standardized model</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span>, vcov <span class="op">=</span> <span class="st">"HC3"</span><span class="op">)</span></span>
@@ -310,7 +364,11 @@
 <div class="section level3">
 <h3 id="robust-covariance-matrix-estimation-for-mixed-models">Robust Covariance Matrix Estimation for Mixed Models<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-for-mixed-models"></a>
 </h3>
-<p>For linear mixed-effects models, that by definition have a clustered (<em>hierarchical</em> or <em>multilevel</em>) structure in the data, it is also possible to estimate a cluster-robust covariance matrix. This is possible due to the <em>clubSandwich</em> package, thus we need to define the same arguments as in the above example.</p>
+<p>For linear mixed-effects models, that by definition have a clustered
+(<em>hierarchical</em> or <em>multilevel</em>) structure in the data, it
+is also possible to estimate a cluster-robust covariance matrix. This is
+possible due to the <em>clubSandwich</em> package, thus we need to
+define the same arguments as in the above example.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
@@ -368,12 +426,18 @@
 <span><span class="co">#&gt; -------------------------------------------------------</span></span>
 <span><span class="co">#&gt; SD (Intercept: grp) |        0.08 | 0.05 | [0.02, 0.29]</span></span>
 <span><span class="co">#&gt; SD (Residual)       |        0.30 | 0.02 | [0.27, 0.33]</span></span></code></pre></div>
-<p>Notice that robust estimation returns different standard errors, confidence intervals, test statistic and <em>p</em>-values compared to the standard estimation. Also, note that the coefficient estimate remains unchanged.</p>
+<p>Notice that robust estimation returns different standard errors,
+confidence intervals, test statistic and <em>p</em>-values compared to
+the standard estimation. Also, note that the coefficient estimate
+remains unchanged.</p>
 </div>
 <div class="section level3">
-<h3 id="robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters">Robust Covariance Matrix Estimation on Standardized Mixed Model Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters"></a>
+<h3 id="robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters">Robust Covariance Matrix Estimation on Standardized Mixed Model
+Parameters<a class="anchor" aria-label="anchor" href="#robust-covariance-matrix-estimation-on-standardized-mixed-model-parameters"></a>
 </h3>
-<p>Once again, robust estimation can be combined with standardization for linear mixed-effects models as well and works only with <code>standardize = "refit"</code>.</p>
+<p>Once again, robust estimation can be combined with standardization
+for linear mixed-effects models as well and works only with
+<code>standardize = "refit"</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># model parameters, cluster robust estimation of standardized mixed model</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
@@ -400,7 +464,8 @@
 <span><span class="co">#&gt; -------------------------------------------------------</span></span>
 <span><span class="co">#&gt; SD (Intercept: grp) |        0.10 | 0.06 | [0.03, 0.35]</span></span>
 <span><span class="co">#&gt; SD (Residual)       |        0.36 | 0.02 | [0.32, 0.40]</span></span></code></pre></div>
-<p>Notice how drastically some of the <em>p</em>-values change between robust-unstandardized model and robust-standardized model.</p>
+<p>Notice how drastically some of the <em>p</em>-values change between
+robust-unstandardized model and robust-standardized model.</p>
 <!-- TO DO: Maybe provide references to read more? -->
 </div>
 </div>

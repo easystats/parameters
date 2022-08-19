@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -128,8 +128,18 @@
 
     
     
-<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (also accessible via the shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>) can also be used to calculate standardized model parameters via the <code>standardize</code>-argument. Recall that standardizing data/variable (<em>z</em>-scoring), i.e. centering and scaling, involves expressing data in terms of standard deviation (i.e., mean = 0, SD = 1). That is, it the process of subtracting the mean and dividing the quantity by standard deviation. Standardization can help avoid multicollinearity issues when more complex (polynomial, for instance) terms are included in the model.</p>
-<p>There are different methods of standardizing model parameters (see also <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>?effectsize::standardize_parameters</code></a>):</p>
+<p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a>
+function (also accessible via the shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>)
+can also be used to calculate standardized model parameters via the
+<code>standardize</code>-argument. Recall that standardizing
+data/variable (<em>z</em>-scoring), i.e. centering and scaling, involves
+expressing data in terms of standard deviation (i.e., mean = 0, SD = 1).
+That is, it the process of subtracting the mean and dividing the
+quantity by standard deviation. Standardization can help avoid
+multicollinearity issues when more complex (polynomial, for instance)
+terms are included in the model.</p>
+<p>There are different methods of standardizing model parameters (see
+also <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>?effectsize::standardize_parameters</code></a>):</p>
 <ul>
 <li>
 <code>"refit"</code>,</li>
@@ -137,12 +147,32 @@
 <li><code>"smart"</code></li>
 <li><code>"basic"</code></li>
 </ul>
-<p>If you are interested in more statistical and technical details, and how standardization methods relate to different (standardized) effect size measures, read the following vignette from <em>effectsize</em> package, from whence this functionality comes: <a href="https://easystats.github.io/effectsize/articles/standardize_parameters.html" class="external-link uri">https://easystats.github.io/effectsize/articles/standardize_parameters.html</a></p>
+<p>If you are interested in more statistical and technical details, and
+how standardization methods relate to different (standardized) effect
+size measures, read the following vignette from <em>effectsize</em>
+package, from whence this functionality comes: <a href="https://easystats.github.io/effectsize/articles/standardize_parameters.html" class="external-link uri">https://easystats.github.io/effectsize/articles/standardize_parameters.html</a></p>
 <div class="section level2">
 <h2 id="standardization-by-re-fitting-the-model">Standardization by re-fitting the model<a class="anchor" aria-label="anchor" href="#standardization-by-re-fitting-the-model"></a>
 </h2>
-<p><code>standardize = "refit"</code> is based on a complete model re-fit with a standardized version of data. Hence, this method is equal to standardizing the variables <em>before</em> fitting the model. It is the most accurate (Neter et al., 1989), but it is also the most computationally costly and long (especially for heavy models such as, for instance, Bayesian models). This method is particularly recommended for complex models that include interactions or transformations (e.g., polynomial or spline terms).</p>
-<p>When <code>standardize = "refit"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link"><code>effectsize::standardize()</code></a> to standardize the data that was used to fit the model and updates the model with the standardized data. Note that <code><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">effectsize::standardize()</a></code> tries to detect which variables should be standardized and which not. For instance, having a <code>log(x)</code> in the model formula would exclude <code>x</code> from being standardized, because <code>x</code> might get negative values, and thus <code>log(x)</code> would no longer be defined. Factors or dates will also <em>not</em> be standardized. Response variables will be standardized, if appropriate.</p>
+<p><code>standardize = "refit"</code> is based on a complete model
+re-fit with a standardized version of data. Hence, this method is equal
+to standardizing the variables <em>before</em> fitting the model. It is
+the most accurate (Neter et al., 1989), but it is also the most
+computationally costly and long (especially for heavy models such as,
+for instance, Bayesian models). This method is particularly recommended
+for complex models that include interactions or transformations (e.g.,
+polynomial or spline terms).</p>
+<p>When <code>standardize = "refit"</code>,
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize.html" class="external-link"><code>effectsize::standardize()</code></a>
+to standardize the data that was used to fit the model and updates the
+model with the standardized data. Note that
+<code><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">effectsize::standardize()</a></code> tries to detect which variables
+should be standardized and which not. For instance, having a
+<code>log(x)</code> in the model formula would exclude <code>x</code>
+from being standardized, because <code>x</code> might get negative
+values, and thus <code>log(x)</code> would no longer be defined. Factors
+or dates will also <em>not</em> be standardized. Response variables will
+be standardized, if appropriate.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
@@ -227,9 +257,24 @@
 <div class="section level2">
 <h2 id="post-hoc-standardization">Post-hoc standardization<a class="anchor" aria-label="anchor" href="#post-hoc-standardization"></a>
 </h2>
-<p><code>standardize = "posthoc"</code> aims at emulating the results obtained by <code>"refit"</code> without refitting the model. The coefficients are divided by the standard deviation of the outcome (which becomes their expression <em>unit</em>). Then, the coefficients related to numeric variables are additionally multiplied by the standard deviation of the related terms, so that they correspond to changes of 1 SD of the predictor (e.g., “a change in 1 SD of <code>x</code> is related to a change of 0.24 of the SD of <code>y</code>”). This does not apply to binary variables or factors, so the coefficients are still related to changes in levels.</p>
-<p>This method is not accurate and tends to give aberrant results when interactions are specified. However, this method of standardization is the “classic” result obtained by many statistical packages when standardized coefficients are requested.</p>
-<p>When <code>standardize = "posthoc"</code>, <code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>. Test statistic and p-values are not affected, i.e. they are the same as if no standardization would be applied.</p>
+<p><code>standardize = "posthoc"</code> aims at emulating the results
+obtained by <code>"refit"</code> without refitting the model. The
+coefficients are divided by the standard deviation of the outcome (which
+becomes their expression <em>unit</em>). Then, the coefficients related
+to numeric variables are additionally multiplied by the standard
+deviation of the related terms, so that they correspond to changes of 1
+SD of the predictor (e.g., “a change in 1 SD of <code>x</code> is
+related to a change of 0.24 of the SD of <code>y</code>”). This does not
+apply to binary variables or factors, so the coefficients are still
+related to changes in levels.</p>
+<p>This method is not accurate and tends to give aberrant results when
+interactions are specified. However, this method of standardization is
+the “classic” result obtained by many statistical packages when
+standardized coefficients are requested.</p>
+<p>When <code>standardize = "posthoc"</code>,
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> internally calls <a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html" class="external-link"><code>effectsize::standardize_parameters(method = "posthoc")</code></a>.
+Test statistic and p-values are not affected, i.e. they are the same as
+if no standardization would be applied.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -243,7 +288,11 @@
 <span><span class="co">#&gt; Petal Length                       |       1.74 | 0.14 | [ 1.47,  2.02] |  12.52 | &lt; .001</span></span>
 <span><span class="co">#&gt; Species [versicolor] * Sepal Width |      -0.25 | 0.10 | [-0.45, -0.06] |  -2.60 | 0.010 </span></span>
 <span><span class="co">#&gt; Species [virginica] * Sepal Width  |      -0.19 | 0.09 | [-0.38,  0.00] |  -1.99 | 0.048</span></span></code></pre></div>
-<p><code>standardize = "basic"</code> also applies post-hoc standardization, however, factors are converted to numeric, which means that it also scales the coefficient by the standard deviation of model’s matrix’ parameter of factor levels (transformed to integers) or binary predictors.</p>
+<p><code>standardize = "basic"</code> also applies post-hoc
+standardization, however, factors are converted to numeric, which means
+that it also scales the coefficient by the standard deviation of model’s
+matrix’ parameter of factor levels (transformed to integers) or binary
+predictors.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -257,8 +306,12 @@
 <span><span class="co">#&gt; Petal Length                       |       1.74 | 0.14 | [ 1.47,  2.02] |  12.52 | &lt; .001</span></span>
 <span><span class="co">#&gt; Species [versicolor] * Sepal Width |      -0.77 | 0.30 | [-1.36, -0.19] |  -2.60 | 0.010 </span></span>
 <span><span class="co">#&gt; Species [virginica] * Sepal Width  |      -0.61 | 0.31 | [-1.22,  0.00] |  -1.99 | 0.048</span></span></code></pre></div>
-<p>Compare the two outputs above and notice how coefficient estimates, standard errors, confidence intervals, and <em>p</em>-values change for main effect and interaction effect terms containing <code>Species</code> variable, the only factor variable in our model.</p>
-<p>This method is the one implemented by default in other software packages, such as <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta::lm.beta()</a></code>:</p>
+<p>Compare the two outputs above and notice how coefficient estimates,
+standard errors, confidence intervals, and <em>p</em>-values change for
+main effect and interaction effect terms containing <code>Species</code>
+variable, the only factor variable in our model.</p>
+<p>This method is the one implemented by default in other software
+packages, such as <code><a href="https://rdrr.io/pkg/lm.beta/man/lm.beta.html" class="external-link">lm.beta::lm.beta()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">lm.beta</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
@@ -279,7 +332,14 @@
 <div class="section level2">
 <h2 id="smart-standardization">Smart standardization<a class="anchor" aria-label="anchor" href="#smart-standardization"></a>
 </h2>
-<p><code>standardize = "smart"</code> is similar to <code>standardize = "posthoc"</code> in that it does not involve model re-fitting. The difference is that the SD of the response is computed on the relevant section of the data. For instance, if a factor with 3 levels A (the intercept), B and C is entered as a predictor, the effect corresponding to B versus A will be scaled by the variance of the response at the intercept only. As a results, the coefficients for effects of factors are similar to a Glass’ delta.</p>
+<p><code>standardize = "smart"</code> is similar to
+<code>standardize = "posthoc"</code> in that it does not involve model
+re-fitting. The difference is that the SD of the response is computed on
+the relevant section of the data. For instance, if a factor with 3
+levels A (the intercept), B and C is entered as a predictor, the effect
+corresponding to B versus A will be scaled by the variance of the
+response at the intercept only. As a results, the coefficients for
+effects of factors are similar to a Glass’ delta.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
