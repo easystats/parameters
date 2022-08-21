@@ -866,6 +866,14 @@
                                        ...) {
   insight::check_if_installed("lavaan")
 
+
+  # lavaan::parameterEstimates does not accept NULL `level`, but a lot of our
+  # other methods do. It is often useful to pass `NULL` to speed things up,
+  # but it doesn't work here.
+  if (is.null(ci)) {
+    ci <- 0.95
+  }
+
   # set proper default
   if (is.null(standardize)) {
     standardize <- FALSE

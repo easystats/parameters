@@ -52,4 +52,11 @@ if (requiet("testthat") && requiet("parameters") && requiet("lavaan")) {
     expect_equal(mp$Coefficient, ml$est, tolerance = 1e-3)
     expect_equal(mp$SE, ml$se, tolerance = 1e-3)
   })
+
+  test_that("standardized no CI", {
+    mod <- cfa('ind60 =~ x1 + x2 + x3', data = PoliticalDemocracy)
+    p <- parameters(mod, standardize = "all", ci = NULL)
+    expect_s3_class(p, "parameters_sem")
+  })
+
 }
