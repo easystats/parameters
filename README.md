@@ -30,7 +30,7 @@ of (model) objects from many different packages.
 [![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![parameters status
 badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
-[![R-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
+[![R-CMD-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
 Run the following to install the stable release of **parameters** from
 CRAN:
@@ -63,22 +63,22 @@ Click on the buttons above to access the package
 [easystats blog](https://easystats.github.io/blog/posts/), and check-out
 these vignettes:
 
--   [Summary of Model
-    Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
--   [Standardized Model
-    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
--   [Robust Estimation of Standard Errors, Confidence Intervals and
-    p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
--   [Model Parameters and Missing
-    Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
--   [Feature reduction (PCA, cMDS,
-    ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
--   [Structural models (EFA, CFA,
-    SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
--   [Parameters
-    selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
--   [A Practical Guide for Panel Data
-    Analysis](https://easystats.github.io/parameters/articles/demean.html)
+- [Summary of Model
+  Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
+- [Standardized Model
+  Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+- [Robust Estimation of Standard Errors, Confidence Intervals and
+  p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
+- [Model Parameters and Missing
+  Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
+- [Feature reduction (PCA, cMDS,
+  ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+- [Structural models (EFA, CFA,
+  SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+- [Parameters
+  selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+- [A Practical Guide for Panel Data
+  Analysis](https://easystats.github.io/parameters/articles/demean.html)
 
 ## Contributing and Support
 
@@ -92,7 +92,7 @@ email or also file an issue.
 
 ## Model’s parameters description
 
-<img src="man/figures/figure1.png" style="display: block; margin: auto;" />
+<img src="man/figures/figure1.png" width="100%" style="display: block; margin: auto;" />
 
 The
 [`model_parameters()`](https://easystats.github.io/parameters/articles/model_parameters.html)
@@ -102,16 +102,16 @@ models in a consistent way. It can be considered as a lightweight
 alternative to [`broom::tidy()`](https://github.com/tidymodels/broom),
 with some notable differences:
 
--   The column names of the returned data frame are *specific* to their
-    content. For instance, the column containing the statistic is named
-    following the statistic name, i.e., *t*, *z*, etc., instead of a
-    generic name such as *statistic* (however, you can get standardized
-    (generic) column names using
-    [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
--   It is able to compute or extract indices not available by default,
-    such as *p-values*, *CIs*, etc.
--   It includes *feature engineering* capabilities, including parameters
-    [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
+- The column names of the returned data frame are *specific* to their
+  content. For instance, the column containing the statistic is named
+  following the statistic name, i.e., *t*, *z*, etc., instead of a
+  generic name such as *statistic* (however, you can get standardized
+  (generic) column names using
+  [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
+- It is able to compute or extract indices not available by default,
+  such as *p-values*, *CIs*, etc.
+- It includes *feature engineering* capabilities, including parameters
+  [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 ### Classical Regression Models
 
@@ -148,7 +148,7 @@ model_parameters(model, standardize = "refit")
 ``` r
 library(lme4)
 
-model <- lmer(Sepal.Width ~ Petal.Length + (1|Species), data = iris)
+model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
 model_parameters(model, effects = "all")
@@ -212,15 +212,15 @@ model_parameters(model)
 
 ## Variable and parameters selection
 
-<img src="man/figures/figure2.png" style="display: block; margin: auto;" />
+<img src="man/figures/figure2.png" width="100%" style="display: block; margin: auto;" />
 
 [`select_parameters()`](https://easystats.github.io/parameters/articles/parameters_selection.html)
 can help you quickly select and retain the most relevant predictors
 using methods tailored for the model type.
 
 ``` r
-lm(disp ~ ., data = mtcars) |> 
-  select_parameters() |> 
+lm(disp ~ ., data = mtcars) |>
+  select_parameters() |>
   model_parameters()
 #> Parameter   | Coefficient |     SE |            95% CI | t(26) |      p
 #> -----------------------------------------------------------------------
@@ -241,10 +241,10 @@ citation("parameters")
 
 To cite package 'parameters' in publications use:
 
-  Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting, Computing and
-  Exploring the Parameters of Statistical Models using R." _Journal of Open Source
-  Software_, *5*(53), 2445. doi:10.21105/joss.02445
-  <https://doi.org/10.21105/joss.02445>.
+  Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting,
+  Computing and Exploring the Parameters of Statistical Models using
+  R." _Journal of Open Source Software_, *5*(53), 2445.
+  doi:10.21105/joss.02445 <https://doi.org/10.21105/joss.02445>.
 
 A BibTeX entry for LaTeX users is
 

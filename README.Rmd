@@ -1,29 +1,17 @@
 ---
-output: 
-  github_document:
-    toc: false
-tags: [r, reports]
-vignette: >
-  \usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+output: github_document
 ---
 
 ```{r, warning=FALSE, message=FALSE, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   dpi = 300,
-  tidy.opts = list(width.cutoff = 100),
   fig.path = "man/figures/",
   comment = "#>",
   warning = FALSE,
   message = FALSE,
   out.width = "100%"
 )
-# options(knitr.kable.NA = '',
-#         digits = 1,
-#         width = 100)
 
 set.seed(333)
 library(parameters)
@@ -44,7 +32,7 @@ Another important goal of the **parameters** package is to facilitate and stream
 
 ## Installation
 
-[![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
+[![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
 Run the following to install the stable release of **parameters** from CRAN:
 
