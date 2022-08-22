@@ -140,7 +140,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><a href="https://cran.r-project.org/package=parameters" class="external-link"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a> <a href="https://easystats.r-universe.dev" class="external-link"><img src="https://easystats.r-universe.dev/badges/parameters" alt="parameters status badge"></a> <a href="https://github.com/easystats/parameters/actions" class="external-link"><img src="https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main" alt="R-check"></a></p>
+<p><a href="https://cran.r-project.org/package=parameters" class="external-link"><img src="http://www.r-pkg.org/badges/version/parameters" alt="CRAN"></a> <a href="https://easystats.r-universe.dev" class="external-link"><img src="https://easystats.r-universe.dev/badges/parameters" alt="parameters status badge"></a> <a href="https://github.com/easystats/parameters/actions" class="external-link"><img src="https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main" alt="R-CMD-check"></a></p>
 <p>Run the following to install the stable release of <strong>parameters</strong> from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"parameters"</span><span class="op">)</span></span></code></pre></div>
@@ -180,7 +180,7 @@
 <div class="section level2">
 <h2 id="models-parameters-description">Model’s parameters description<a class="anchor" aria-label="anchor" href="#models-parameters-description"></a>
 </h2>
-<p><img src="reference/figures/figure1.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/figure1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>The <a href="https://easystats.github.io/parameters/articles/model_parameters.html"><code>model_parameters()</code></a> function (that can be accessed via the <code><a href="reference/model_parameters.html">parameters()</a></code> shortcut) allows you to extract the parameters and their characteristics from various models in a consistent way. It can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom" class="external-link"><code>broom::tidy()</code></a>, with some notable differences:</p>
 <ul>
 <li>The column names of the returned data frame are <em>specific</em> to their content. For instance, the column containing the statistic is named following the statistic name, i.e., <em>t</em>, <em>z</em>, etc., instead of a generic name such as <em>statistic</em> (however, you can get standardized (generic) column names using <a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link"><code>standardize_names()</code></a>).</li>
@@ -223,7 +223,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># model parameters with CI, df and p-values based on Wald approximation</span></span>
 <span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
@@ -284,11 +284,11 @@
 <div class="section level2">
 <h2 id="variable-and-parameters-selection">Variable and parameters selection<a class="anchor" aria-label="anchor" href="#variable-and-parameters-selection"></a>
 </h2>
-<p><img src="reference/figures/figure2.png" style="display: block; margin: auto;"></p>
+<p><img src="reference/figures/figure2.png" width="100%" style="display: block; margin: auto;"></p>
 <p><a href="https://easystats.github.io/parameters/articles/parameters_selection.html"><code>select_parameters()</code></a> can help you quickly select and retain the most relevant predictors using methods tailored for the model type.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">disp</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter   | Coefficient |     SE |            95% CI | t(26) |      p</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
@@ -307,10 +307,10 @@
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>To cite package <span class="st">'parameters'</span> <span class="cf">in</span> publications use<span class="sc">:</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  Lüdecke D, Ben<span class="sc">-</span>Shachar M, Patil I, Makowski <span class="fu">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting, Computing and</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Exploring the Parameters of Statistical Models using R."</span> _Journal of Open Source</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  Software_, <span class="sc">*</span><span class="dv">5</span><span class="sc">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span> doi<span class="sc">:</span><span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span><span class="sc">&gt;</span>.</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  Lüdecke D, Ben<span class="sc">-</span>Shachar M, Patil I, Makowski <span class="fu">D</span> (<span class="dv">2020</span>). <span class="st">"Extracting,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Computing and Exploring the Parameters of Statistical Models using</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">  R."</span> _Journal of Open Source Software_, <span class="sc">*</span><span class="dv">5</span><span class="sc">*</span>(<span class="dv">53</span>), <span class="fl">2445.</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  doi<span class="sc">:</span><span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span> <span class="sc">&lt;</span>https<span class="sc">:</span><span class="er">//</span>doi.org<span class="sc">/</span><span class="fl">10.21105</span><span class="sc">/</span>joss<span class="fl">.02445</span><span class="sc">&gt;</span>.</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>A BibTeX entry <span class="cf">for</span> LaTeX users is</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
