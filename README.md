@@ -2,7 +2,7 @@
 # parameters <img src="man/figures/logo.png" align="right" height="139" />
 
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
-[![downloads](http://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
+[![downloads](https://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
 [![status](https://tinyverse.netlify.com/badge/parameters)](https://CRAN.R-project.org/package=parameters)
 
@@ -27,7 +27,7 @@ of (model) objects from many different packages.
 
 ## Installation
 
-[![CRAN](http://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
+[![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters)
 [![parameters status
 badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
 [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
