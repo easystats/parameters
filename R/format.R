@@ -39,7 +39,7 @@ format.parameters_model <- function(x,
     attr(x, "zi_coefficient_name") <- NULL
   }
 
-  # remove method for htest
+  # remove method for htest and friends
   if (!is.null(m_class) &&
       any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen",
                          "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {

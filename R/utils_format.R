@@ -425,6 +425,7 @@
     colnames(x)[which(colnames(x) == "Group")] <- "Subgroup"
   }
 
+  # check which columns to be printed
   if (!is.null(select)) {
     if (all(select == "minimal")) {
       select <- c("Parameter", "Coefficient", "Std_Coefficient", "CI", "CI_low", "CI_high", "p")
@@ -472,6 +473,8 @@
     colnames(x)[which(colnames(x) == "Std_Coefficient")] <- paste0("Std_", coef_name)
   }
 
+  # cpmpute s- instead of p-value?
+  # see 10.1186/s12874-020-01105-9
   if (isTRUE(s_value) && "p" %in% colnames(x)) {
     colnames(x)[colnames(x) == "p"] <- "s"
     x[["s"]] <- log2(1 / x[["s"]])
