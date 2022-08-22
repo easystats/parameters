@@ -1,30 +1,25 @@
 # .fixest -----------------------
 
 #' @export
-standard_error.fixest <- function(model, ...) {
-  stats <- summary(model)
+standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
   params <- insight::get_parameters(model)
+
+  if (!is.null(vcov)) {
+    # we don't want to wrap this in a tryCatch because the `fixest` error is
+    # informative when `vcov` is wrong.
+    V <- insight::get_varcov(model, vcov = vcov, vcov_args = vcov_args)
+    SE <- sqrt(diag(V))
+
+  } else {
+    stats <- summary(model)
+    SE <- as.vector(stats$se)
+  }
 
   .data_frame(
     Parameter = params$Parameter,
-    SE = as.vector(stats$se)
+    SE = SE
   )
 }
-
-## TODO add ci_method later?
-
-#' @export
-p_value.fixest <- function(model, ...) {
-  stats <- summary(model)$coeftable
-  params <- insight::get_parameters(model)
-  stat_col <- which(colnames(stats) %in% c("Pr(>|t|)", "Pr(>|z|)"))
-
-  .data_frame(
-    Parameter = params$Parameter,
-    p = as.vector(stats[, stat_col])
-  )
-}
-
 
 
 #' @export

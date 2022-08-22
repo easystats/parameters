@@ -44,3 +44,30 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
     })
   }
 }
+
+
+test_that("robust standard errors", {
+  requiet("fixest")
+  requiet("sandwich")
+  mod <- feols(mpg ~ hp + am | cyl, data = mtcars)
+
+  se1 <- sqrt(diag(vcov(mod)))
+  se2 <- sqrt(diag(vcov(mod, vcov = "HC1")))
+  se3 <- sqrt(diag(vcov(mod, vcov = ~gear)))
+  expect_equal(standard_error(mod)$SE, se1, ignore_attr = TRUE)
+  expect_equal(standard_error(mod, vcov = "HC1")$SE, se2, ignore_attr = TRUE)
+  expect_equal(standard_error(mod, vcov = ~gear)$SE, se3, ignore_attr = TRUE)
+
+  p1 <- p_value(mod)
+  p2 <- p_value(mod, vcov = "HC1")
+  p3 <- p_value(mod, vcov = ~gear)
+  expect_true(all(p1$p != p2$p))
+  expect_true(all(p2$p != p3$p))
+  expect_true(all(p1$p != p3$p))
+
+  expect_error(standard_error(mod, vcov = "HC3"))
+  expect_error(parameters(mod, vcov = "HC3"))
+  expect_error(parameters(mod, vcov = "hetero"), NA)
+  expect_error(parameters(mod, vcov = "iid"), NA)
+})
+

@@ -34,14 +34,6 @@ analysis and the R2 value associated with them is subtracted from the
 overall value.  Predictors in \code{all} must be present in the model
 submitted to the \code{model} argument and cannot be in the \code{sets} argument.}
 
-\item{conditional}{Logical.  If \code{FALSE} then conditional dominance matrix is not computed.
-
-If conditional dominance is not desired as an importance criterion, avoiding computing the conditional dominance matrix can save computation time.}
-
-\item{complete}{Logical.  If \code{FALSE} then complete dominance matrix is not computed.
-
-If complete dominance is not desired as an importance criterion, avoiding computing complete dominance designations can save computation time.}
-
 \item{quote_args}{A character vector of arguments in the model submitted to
 \code{model} to \code{quote()} prior to submitting to the dominance analysis.  This
 is necessary for data masked arguments (e.g., \code{weights}) to prevent them
