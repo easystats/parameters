@@ -14,6 +14,9 @@
   performed after potential parameters were removed (using `keep` or `drop`),
   so adjusted p-values is only applied to the parameters of interest.
 
+* Robust standard errors are now supported for `fixest` models with the `vcov`
+  argument.
+
 ## Bug fixes
 
 * Fix erroneous warning for p-value adjustments when the differences between

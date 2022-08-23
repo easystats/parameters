@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.18.2.4
+Version: 0.18.2.5
 Authors@R: 
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -76,6 +76,7 @@ Description: Utilities for processing the parameters of various
 License: GPL-3
 URL: https://easystats.github.io/parameters/
 BugReports: https://github.com/easystats/parameters/issues
+Remotes: easystats/insight
 Depends:
     R (>= 3.5)
 Imports:
