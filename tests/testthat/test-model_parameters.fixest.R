@@ -31,9 +31,9 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
         c(
           "# Fixed Effects",
           "",
-          "Parameter | Coefficient |   SE |         95% CI | t(561) |      p",
+          "Parameter | Coefficient |   SE |         95% CI | t(187) |      p",
           "-----------------------------------------------------------------",
-          "time      |        1.09 | 0.67 | [-0.23,  2.40] |   1.63 | 0.106 ",
+          "time      |        1.09 | 0.67 | [-0.23,  2.41] |   1.63 | 0.106 ",
           "phq4      |       -3.66 | 0.67 | [-4.98, -2.34] |  -5.45 | < .001",
           "",
           "Model: QoL ~ time + phq4 (564 Observations)",
