@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.4</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +95,7 @@
 <h3 id="changes-to-functions-0-18-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-3"></a></h3>
 <ul><li><p><code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> for models of class <code>glmmTMB</code> and <code>merMod</code> gains a <code>cluster</code> argument to specify optional clusters when the <code>parallel</code> option is set to <code>"snow"</code>.</p></li>
 <li><p>P-value adjustment (argument <code>p_adjust</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) is now performed after potential parameters were removed (using <code>keep</code> or <code>drop</code>), so adjusted p-values is only applied to the parameters of interest.</p></li>
+<li><p>Robust standard errors are now supported for <code>fixest</code> models with the <code>vcov</code> argument.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-18-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-3"></a></h3>
