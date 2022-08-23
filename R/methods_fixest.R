@@ -26,6 +26,7 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
 degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
   # fixest degrees of freedom can be tricky. best to use the function by the
   # package.
+  insight::check_if_installed("fixest")
   if (is.null(method)) {
     method <- "wald"
   }
