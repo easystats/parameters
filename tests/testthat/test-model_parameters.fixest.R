@@ -16,7 +16,7 @@ if (.runThisTest && requiet("testthat") && requiet("parameters") && requiet("fix
   test_that("model_parameters.fixest", {
     expect_equal(c(nrow(params), ncol(params)), c(2, 9))
     expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-3)
-    expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "resid")), tolerance = 1e-3)
+    expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-3)
     expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-3)
   })
 
