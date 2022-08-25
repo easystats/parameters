@@ -31,6 +31,10 @@ format.parameters_model <- function(x,
     groups <- attributes(x)$coef_groups
   }
 
+  # for the current HTML backend we use (package "gt"), we cannot change
+  # the column header for subtables, so we need to remove the attributes
+  # for the "Coefficient" column here, which else allows us to use different
+  # column labels for subtables by model components
   if (identical(format, "html")) {
     coef_name <- NULL
     coef_name2 <- NULL
@@ -39,7 +43,7 @@ format.parameters_model <- function(x,
     attr(x, "zi_coefficient_name") <- NULL
   }
 
-  # remove method for htest and friends
+  # remove method columns for htest and friends - this should be printed as footer
   if (!is.null(m_class) &&
       any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen",
                          "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {
@@ -92,21 +96,30 @@ format.parameters_model <- function(x,
     }
   }
 
-  # group parameters
+  # group parameters - this function find those parameters that should be
+  # grouped, reorders parameters into groups and indents lines that belong
+  # to one group, adding a header for each group
   if (!is.null(groups)) {
     x <- .parameter_groups(x, groups)
   }
   indent_groups <- attributes(x)$indent_groups
   indent_rows <- attributes(x)$indent_rows
 
-  # prepare output, to have in shape for printing
+  # prepare output, to have in shape for printing. this function removes
+  # empty columns, or selects only those columns that should be printed
   x <- .prepare_x_for_print(x, select, coef_name, s_value)
 
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
-  # print everything now...
+  # format everything now... 
   if (split_components && !is.null(split_by) && length(split_by)) {
+    # this function mainly sets the appropriate column names for each
+    # "sub table" (i.e. we print a table for each model component, like count,
+    # zero-inflated, smooth, random, ...) and formats some parameter labels.
+    # moreover, insight::format_table() is called to do the final formatting
+    # and .format_model_component_header() is called to set captions for each
+    # "sub table".
     formatted_table <- .format_columns_multiple_components(
       x,
       pretty_names,
@@ -122,6 +135,8 @@ format.parameters_model <- function(x,
       ...
     )
   } else {
+    # for tables that don't have multiple components, formatting is rather
+    # easy, since we don't need to split the data frame into "sub tables"
     formatted_table <- .format_columns_single_component(
       x,
       pretty_names = pretty_names,
@@ -231,7 +246,9 @@ format.compare_parameters <- function(x,
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
-  # group parameters
+  # group parameters - this function find those parameters that should be
+  # grouped, reorders parameters into groups and indents lines that belong
+  # to one group, adding a header for each group
   if (!is.null(groups)) {
     out <- .parameter_groups(out, groups)
   }

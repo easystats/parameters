@@ -383,7 +383,7 @@ standardize_info.default <- function(model,
                              two_sd = FALSE,
                              ...) {
   if (robust) {
-    warning("'robust' standardization not available for 'pseudo' method.",
+    warning("`robust` standardization not available for `pseudo` method.",
       call. = FALSE
     )
   }
@@ -441,7 +441,7 @@ standardize_info.default <- function(model,
           "The following within-group terms have between-group variance:",
           paste0(also_between, collapse = ", "),
           "This can inflate standardized within-group parameters associated with these terms.",
-          "See help(\"demean\", package = \"datawizard\") for modeling between- and within-subject effects."
+          "See `help(\"demean\", package = \"datawizard\")` for modeling between- and within-subject effects."
         ),
         call. = FALSE
       )

@@ -57,7 +57,7 @@ standardise_posteriors <- standardize_posteriors
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    warning("'robust' standardization not available for 'pseudo' method.",
+    warning("`robust` standardization not available for `pseudo` method.",
       call. = FALSE
     )
     robust <- FALSE
@@ -87,7 +87,7 @@ standardise_posteriors <- standardize_posteriors
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop(insight::format_message("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'."), call. = FALSE)
+    stop(insight::format_message("`method` must be one of `basic`, `posthoc`, `smart` or `pseudo`."), call. = FALSE)
   }
 
   .dev_pred <- deviations[[col_dev_pred]]

@@ -417,7 +417,7 @@
     if (verbose) {
       not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
       warning(insight::format_message(
-        sprintf("Following arguments are not supported in `%s()` for models of class '%s' and will be ignored: %s", function_name, model_class, not_allowed_string),
+        sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string),
         sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name)
       ), call. = FALSE)
     }

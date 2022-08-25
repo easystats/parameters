@@ -282,14 +282,14 @@ standardize_parameters.parameters_model <- function(model,
                                                     ...) {
   if (method == "refit") {
     stop(
-      "Argument 'refit' not supported for standardizing results from 'model_parameters()'.",
+      "Argument `refit` not supported for standardizing results from `model_parameters()`.",
       call. = FALSE
     )
   }
 
   if (!is.null(ci)) {
     warning(insight::format_message(
-      "Argument 'ci' not supported for standardizing results from 'model_parameters()'. It is ignored."
+      "Argument `ci` not supported for standardizing results from `model_parameters()`. It is ignored."
     ), call. = FALSE)
   }
 
@@ -352,7 +352,7 @@ standardize_parameters.bootstrap_model <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    stop("The 'refit' method is not supported for bootstrapped models.", call. = FALSE)
+    stop("The `refit` method is not supported for bootstrapped models.", call. = FALSE)
     ## But it would look something like this:
     # model <- standardize(model, robust = robust, two_sd = two_sd, verbose = verbose, m_info = m_info)
     # model <- parameters::bootstrap_model(model, iterations = 1000, verbose = verbose)
@@ -520,7 +520,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    warning("'robust' standardization not available for 'pseudo' method.", call. = FALSE)
+    warning("`robust` standardization not available for `pseudo` method.", call. = FALSE)
     robust <- FALSE
   }
 
@@ -552,7 +552,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop(insight::format_message("'method' must be one of 'basic', 'posthoc', 'smart' or 'pseudo'."), call. = FALSE)
+    stop(insight::format_message("`method` must be one of `basic`, `posthoc`, `smart` or `pseudo`."), call. = FALSE)
   }
 
 
@@ -613,8 +613,8 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
     if (cant_posthocsmart) {
       warning(insight::format_message(
-        "Method '", method, "' does not currently support models with transformed parameters.",
-        "Reverting to 'basic' method. Concider using the 'refit' method directly."
+        "Method `", method, "` does not currently support models with transformed parameters.",
+        "Reverting to `basic` method. Concider using the `refit` method directly."
       ), call. = FALSE)
       method <- "basic"
     }
@@ -629,8 +629,8 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
       !(mi$is_mixed &&
         length(insight::find_random(model)$random) == 1)) {
     warning(insight::format_message(
-      "'pseudo' method only available for 2-level (G)LMMs.",
-      "Setting method to 'basic'."),
+      "`pseudo` method only available for 2-level (G)LMMs.",
+      "Setting method to `basic`."),
       call. = FALSE
     )
     method <- "basic"

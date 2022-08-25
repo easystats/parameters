@@ -34,7 +34,7 @@ reshape_loadings.parameters_efa <- function(x, threshold = NULL, ...) {
 #' @param loadings_columns Vector indicating the columns corresponding to loadings.
 #' @export
 reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = NULL, ...) {
-  if (is.null(loadings_columns)) loadings_columns <- 1:ncol(x)
+  if (is.null(loadings_columns)) loadings_columns <- seq_len(ncol(x))
   if (length(loadings_columns) > 1) {
     .long_loadings(x, threshold = threshold, loadings_columns = loadings_columns)
   }

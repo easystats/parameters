@@ -172,7 +172,7 @@ cluster_analysis <- function(x,
       error = function(e) {
         if (isTRUE(verbose)) {
           stop(insight::format_message(
-            "Could not extract number of clusters. Please provide argument 'n'."
+            "Could not extract number of clusters. Please provide argument `n`."
           ), call. = FALSE)
         }
         2
@@ -208,7 +208,7 @@ cluster_analysis <- function(x,
   } else if (any(method %in% c("mixture", "mclust"))) {
     rez <- .cluster_analysis_mixture(data, n = n, ...)
   } else {
-    stop("Did not find 'method' argument. Could be misspecified.", call. = FALSE)
+    stop("Did not find `method` argument. Could be misspecified.", call. = FALSE)
   }
 
   # Assign clusters to observations
@@ -297,7 +297,7 @@ cluster_analysis <- function(x,
   } else {
     if (distance_method %in% c("correlation", "uncentered", "abscor")) {
       warning(insight::format_message(paste0(
-        "method '", distance_method, "' not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
+        "Method `", distance_method, "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
       )), call. = FALSE)
     }
     dist <- dist(data, method = distance_method, ...)
@@ -361,7 +361,7 @@ print.cluster_analysis <- function(x, ...) {
   cat("\n")
   print(attributes(x)$performance)
 
-  insight::print_color("\n# You can access the predicted clusters via 'predict()'.\n", "yellow")
+  insight::print_color("\n# You can access the predicted clusters via `predict()`.\n", "yellow")
   invisible(x)
 }
 

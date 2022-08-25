@@ -1,6 +1,8 @@
 # output-format helper  -------------------------
 
-# this function does the main composition of columns for the output
+# this function does the main composition of columns for the output.
+# it's used by "compare_parameters()", where users can choose between
+# different pre-sets of "print-layouts"
 
 .format_output_style <- function(x, style, format, modelname) {
   linesep <- " "
@@ -154,7 +156,9 @@
 # that contain the random effects or zero-inflated parameters
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds", "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means", "Estimated Counts", "Ratio")
+  c("Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
+    "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
+    "Estimated Counts", "Ratio")
 }
 
 
@@ -663,7 +667,10 @@
 
     # random pars with level? combine into parameter column
     if (all(c("Parameter", "Level") %in% colnames(tables[[type]]))) {
-      tables[[type]]$Parameter <- paste0(tables[[type]]$Parameter, " ", ci_brackets[1], tables[[type]]$Level, ci_brackets[2])
+      tables[[type]]$Parameter <- paste0(
+        tables[[type]]$Parameter, " ", ci_brackets[1],
+        tables[[type]]$Level, ci_brackets[2]
+      )
       tables[[type]]$Level <- NULL
     }
 
@@ -707,8 +714,15 @@
       tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
     }
 
-    formatted_table <- insight::format_table(tables[[type]], digits = digits, ci_digits = ci_digits, p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width, ci_brackets = ci_brackets, zap_small = zap_small, ...)
-    component_header <- .format_model_component_header(x, type, split_column, is_zero_inflated, is_ordinal_model, is_multivariate, ran_pars, formatted_table)
+    formatted_table <- insight::format_table(
+      tables[[type]], digits = digits, ci_digits = ci_digits,
+      p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width,
+      ci_brackets = ci_brackets, zap_small = zap_small, ...
+    )
+    component_header <- .format_model_component_header(
+      x, type, split_column, is_zero_inflated, is_ordinal_model,
+      is_multivariate, ran_pars, formatted_table
+    )
 
     # exceptions for random effects
     if (insight::n_unique(formatted_table$Group) == 1) {
@@ -730,7 +744,10 @@
     if (is.null(format) || format %in% c("markdown", "text")) {
       # Print
       if (component_header$name != "rewb-contextual") {
-        table_caption <- c(sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)), "blue")
+        table_caption <- c(
+          sprintf("# %s %s", component_header$subheader1, tolower(component_header$subheader2)),
+          "blue"
+        )
       }
     } else if (format %in% c("markdown", "html")) {
       # Print
@@ -759,7 +776,10 @@
 
   if (identical(format, "html")) {
     # fix non-equal length of columns
-    final_table <- .fix_nonmatching_columns(final_table, is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan")))
+    final_table <- .fix_nonmatching_columns(
+      final_table,
+      is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan"))
+    )
     do.call(rbind, final_table)
   } else {
     datawizard::compact_list(final_table)
