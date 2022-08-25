@@ -4,9 +4,9 @@
   }
 
   # session warnings
-  options("parameters_exponentiate_warning" = TRUE)
+  options("parameters_warning_exponentiate" = TRUE)
 }
 
 .onUnload <- function(libpath) {
-  options("parameters_exponentiate_warning" = NULL)
+  options("parameters_warning_exponentiate" = NULL)
 }
