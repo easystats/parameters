@@ -739,8 +739,10 @@ format.parameters_sem <- function(x,
       }
     }
 
-    if (!is.null(msg)) {
+    if (!is.null(msg) && isTRUE(getOption("parameters_exponentiate_warning", TRUE))) {
       message(paste0("\n", msg))
+      # set flag, so message only displayed once per session
+      options("parameters_exponentiate_warning" = FALSE)
     }
   }
 }
