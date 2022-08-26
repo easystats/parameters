@@ -5,7 +5,6 @@ if (.runThisTest &&
   requiet("parameters") &&
   requiet("insight") &&
   requiet("quantreg")) {
-  
   # rqss ---------
 
   # data("CobarOre")

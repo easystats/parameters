@@ -50,7 +50,6 @@ if (.runThisTest && win_os &&
   expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
 
   if (getRversion() >= "4.3.0") {
-
     # ===================================================================
     # Test on R 4.3 and newer -------------------------------------------
     # ===================================================================
@@ -59,11 +58,13 @@ if (.runThisTest && win_os &&
       # differs from R 4.2 and older
       expect_equal(
         mp1$CI_low,
-        c(28.91302, 5.03135, -1.87308, -2.42036, -3.27027, -2.57673,
+        c(
+          28.91302, 5.03135, -1.87308, -2.42036, -3.27027, -2.57673,
           0.21565, 4.24433, NaN, 0, 0.26244, 0.3409, 0.02473, 0.72171,
           0.40269, 0.16856, 0.01426, 0.63288, NaN, NaN, NaN, NaN, NaN,
           0.17252, NaN, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA,
-          NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12602),
+          NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12602
+        ),
         tolerance = 1e-2,
         ignore_attr = TRUE
       )
@@ -134,9 +135,11 @@ if (.runThisTest && win_os &&
       # differs from R 4.2 and older
       expect_equal(
         mp3$CI_low,
-        c(31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
+        c(
+          31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
           0, 0, 0, 0, NaN, NaN, NaN, -0.99015, NaN, -0.73848, -0.32151,
-          NA, NA, NA, NA, NA, NA, NA, NA, NA, 0.80363, 7.08478),
+          NA, NA, NA, NA, NA, NA, NA, NA, NA, 0.80363, 7.08478
+        ),
         tolerance = 1e-2,
         ignore_attr = TRUE
       )
@@ -174,9 +177,11 @@ if (.runThisTest && win_os &&
       # differs from R 4.2 and older
       expect_equal(
         mp4$CI_low,
-        c(29.01135, 5.01249, -1.8945, -1.96273, -2.66794, -2.50896, 4.23513,
+        c(
+          29.01135, 5.01249, -1.8945, -1.96273, -2.66794, -2.50896, 4.23513,
           0.62982, 0.36957, 0.13986, 0.0113, 0.60768, NaN, NaN, NaN, NaN,
-          NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.23582),
+          NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.23582
+        ),
         tolerance = 1e-2,
         ignore_attr = TRUE
       )
@@ -286,9 +291,7 @@ if (.runThisTest && win_os &&
       mp2 <- model_parameters(m2, ci_method = "profile")
       expect_message(print(mp2), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
     })
-
   } else {
-
     # ===================================================================
     # Test on R 4.2 and older -------------------------------------------
     # ===================================================================

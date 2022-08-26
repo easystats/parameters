@@ -54,9 +54,8 @@ if (requiet("testthat") && requiet("parameters") && requiet("lavaan")) {
   })
 
   test_that("standardized no CI", {
-    mod <- cfa('ind60 =~ x1 + x2 + x3', data = PoliticalDemocracy)
+    mod <- cfa("ind60 =~ x1 + x2 + x3", data = PoliticalDemocracy)
     p <- parameters(mod, standardize = "all", ci = NULL)
     expect_s3_class(p, "parameters_sem")
   })
-
 }

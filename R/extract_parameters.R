@@ -696,7 +696,7 @@
   }
 
   if (((!all(c("within", "between") %in% parameters$Component)) && inherits(model, "merMod")) ||
-      all(parameters$Component == "rewb-contextual")) {
+    all(parameters$Component == "rewb-contextual")) {
     parameters$Component <- NULL
   }
 
@@ -742,8 +742,10 @@
   # no ROPE for multi-response models
   if (insight::is_multivariate(model)) {
     test <- setdiff(test, c("rope", "p_rope"))
-    warning(insight::format_message(
-      "Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."),
+    warning(
+      insight::format_message(
+        "Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."
+      ),
       call. = FALSE
     )
   }

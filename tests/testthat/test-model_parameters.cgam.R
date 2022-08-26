@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("testthat") && requiet("cgam") && 
-    utils::packageVersion("insight") > "0.18.0") {
+if (.runThisTest && requiet("testthat") && requiet("cgam") &&
+  utils::packageVersion("insight") > "0.18.0") {
   test_that("model_parameters - cgam", {
     # cgam -----------------------
 
@@ -14,16 +14,18 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
 
     expect_equal(
       df_cgam,
-      structure(list(
-        Parameter = "(Intercept)",
-        Coefficient = 1.187,
-        SE = 0.3054,
-        CI = 0.95,
-        CI_low = 0.569520101908619,
-        CI_high = 1.80447989809138,
-        t = 3.8868,
-        df_error = 39.5,
-        p = 4e-04),
+      structure(
+        list(
+          Parameter = "(Intercept)",
+          Coefficient = 1.187,
+          SE = 0.3054,
+          CI = 0.95,
+          CI_low = 0.569520101908619,
+          CI_high = 1.80447989809138,
+          t = 3.8868,
+          df_error = 39.5,
+          p = 4e-04
+        ),
         row.names = c(NA, -1L),
         sigma = 2.15946395506817,
         residual_df = 39.5,
@@ -55,7 +57,8 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
         p_digits = 3,
         footer_digits = 3,
         class = c("parameters_model", "see_parameters_model", "data.frame"),
-        object_name = "m_cgam"),
+        object_name = "m_cgam"
+      ),
       tolerance = 0.01
     )
   })
@@ -106,7 +109,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
       structure(
         list(
           Parameter = c("(Intercept)", "s.incr(x)"),
-          Coefficient = c(5.5174,NA),
+          Coefficient = c(5.5174, NA),
           SE = c(0.3631, NA),
           CI = c(0.95, NA),
           CI_low = c(4.80476838465533, NA),
@@ -142,7 +145,8 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
         ci_digits = 2,
         p_digits = 3,
         footer_digits = 3,
-        class = c("parameters_model", "see_parameters_model", "data.frame"), object_name = "ans"),
+        class = c("parameters_model", "see_parameters_model", "data.frame"), object_name = "ans"
+      ),
       tolerance = 0.01
     )
   })

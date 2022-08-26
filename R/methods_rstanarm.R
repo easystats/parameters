@@ -102,7 +102,7 @@ model_parameters.stanreg <- function(model,
   if (effects != "fixed") {
     random_effect_levels <- which(
       params$Effects %in% "random" &
-      grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE)
+        grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE)
     )
     if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
   }

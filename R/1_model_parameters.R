@@ -500,9 +500,11 @@ model_parameters.default <- function(model,
   # tell user if something went wrong...
   if (length(out) == 1 && isTRUE(is.na(out))) {
     msg <- insight::format_message(
-      paste0("Sorry, `model_parameters()` failed with the following error (possible class '",
-             class(model)[1],
-             "' not supported):\n"),
+      paste0(
+        "Sorry, `model_parameters()` failed with the following error (possible class '",
+        class(model)[1],
+        "' not supported):\n"
+      ),
       attr(out, "error")
     )
     stop(msg, call. = FALSE)
@@ -510,8 +512,8 @@ model_parameters.default <- function(model,
     stop(paste0(
       "Sorry, `model_parameters()` does currently not work for objects of class '",
       class(model)[1],
-      "'."), call. = FALSE
-    )
+      "'."
+    ), call. = FALSE)
   }
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
@@ -573,7 +575,7 @@ model_parameters.default <- function(model,
     args <- c(args, dots)
     params <- do.call("bootstrap_parameters", args)
 
-  # Processing, non-bootstrapped parameters
+    # Processing, non-bootstrapped parameters
   } else {
     # set default method for CI
     if (is.null(ci_method) || missing(ci_method)) {

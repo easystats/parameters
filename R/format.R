@@ -45,8 +45,10 @@ format.parameters_model <- function(x,
 
   # remove method columns for htest and friends - this should be printed as footer
   if (!is.null(m_class) &&
-      any(m_class %in% c("BFBayesFactor", "htest", "rma", "t1way", "yuen",
-                         "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"))) {
+    any(m_class %in% c(
+      "BFBayesFactor", "htest", "rma", "t1way", "yuen",
+      "PMCMR", "osrt", "trendPMCMR", "anova", "afex_aov"
+    ))) {
     x$Method <- NULL
     x$Alternative <- NULL
   }
@@ -112,7 +114,7 @@ format.parameters_model <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
-  # format everything now... 
+  # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
     # "sub table" (i.e. we print a table for each model component, like count,

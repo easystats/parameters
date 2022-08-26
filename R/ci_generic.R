@@ -4,9 +4,11 @@
                         method = "wald",
                         dof = NULL,
                         effects = c("fixed", "random", "all"),
-                        component = c("all", "conditional", "zi", "zero_inflated",
-                                      "dispersion", "precision", "scale", 
-                                      "smooth_terms", "full", "marginal"),
+                        component = c(
+                          "all", "conditional", "zi", "zero_inflated",
+                          "dispersion", "precision", "scale",
+                          "smooth_terms", "full", "marginal"
+                        ),
                         vcov = NULL,
                         vcov_args = NULL,
                         verbose = TRUE,
@@ -68,7 +70,6 @@
                     vcov_args = NULL,
                     verbose = TRUE,
                     ...) {
-
   # need parameters to calculate the CIs
   if (inherits(model, "emmGrid")) {
     params <- insight::get_parameters(
@@ -124,8 +125,8 @@
     # filter non-matching parameters, resp. sort stderror and parameters,
     # so both have the identical order of values
     if (nrow(stderror) != nrow(params) ||
-        !all(stderror$Parameter %in% params$Parameter) ||
-        !all(order(stderror$Parameter) == order(params$Parameter))) {
+      !all(stderror$Parameter %in% params$Parameter) ||
+      !all(order(stderror$Parameter) == order(params$Parameter))) {
       params <- stderror <- merge(stderror, params, sort = FALSE)
     }
 

@@ -189,7 +189,8 @@ cluster_analysis <- function(x,
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
   } else if (any(method %in% c("hkmeans"))) {
     rez <- .cluster_analysis_hkmeans(
-      data, n = n, kmeans_method = kmeans_method, hclust_method = hclust_method,
+      data,
+      n = n, kmeans_method = kmeans_method, hclust_method = hclust_method,
       iterations = iterations, ...
     )
   } else if (any(method %in% c("pam"))) {
@@ -198,7 +199,8 @@ cluster_analysis <- function(x,
     rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
   } else if (any(method %in% c("hclust"))) {
     rez <- .cluster_analysis_hclust(
-      data, n = n, distance_method = distance_method, hclust_method = hclust_method,
+      data,
+      n = n, distance_method = distance_method, hclust_method = hclust_method,
       iterations = iterations, ...
     )
   } else if (any(method == "dbscan")) {
@@ -251,8 +253,10 @@ cluster_analysis <- function(x,
                                       iterations = 100,
                                       ...) {
   insight::check_if_installed("factoextra")
-  model <- factoextra::hkmeans(data, k = n, km.algorithm = kmeans_method,
-                               iter.max = iterations, hc.method = hclust_method, ...)
+  model <- factoextra::hkmeans(data,
+    k = n, km.algorithm = kmeans_method,
+    iter.max = iterations, hc.method = hclust_method, ...
+  )
   list(model = model, clusters = model$cluster)
 }
 

@@ -70,4 +70,3 @@ test_that("robust standard errors", {
   expect_error(parameters(mod, vcov = "hetero"), NA)
   expect_error(parameters(mod, vcov = "iid"), NA)
 })
-

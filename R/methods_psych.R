@@ -61,8 +61,10 @@
 #'
 #'   # Exploratory Factor Analysis (EFA) ---------
 #'   efa <- psych::fa(attitude, nfactors = 3)
-#'   model_parameters(efa, threshold = "max", sort = TRUE,
-#'                    labels = as.character(1:ncol(attitude)))
+#'   model_parameters(efa,
+#'     threshold = "max", sort = TRUE,
+#'     labels = as.character(1:ncol(attitude))
+#'   )
 #'
 #'
 #'   # Omega ---------
