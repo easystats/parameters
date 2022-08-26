@@ -271,7 +271,7 @@ p_value.BFBayesFactor <- function(model, ...) {
 
 .classify_BFBayesFactor <- function(x) {
   if (!requireNamespace("BayesFactor", quietly = TRUE)) {
-    stop("This function needs `BayesFactor` to be installed.")
+    stop("This function needs `BayesFactor` to be installed.", call. = FALSE)
   }
 
   if (any(class(x@denominator) %in% c("BFcorrelation"))) {

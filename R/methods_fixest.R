@@ -9,7 +9,6 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     # informative when `vcov` is wrong.
     V <- insight::get_varcov(model, vcov = vcov, vcov_args = vcov_args)
     SE <- sqrt(diag(V))
-
   } else {
     stats <- summary(model)
     SE <- as.vector(stats$se)
@@ -32,11 +31,12 @@ degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
   }
   method <- match.arg(
     tolower(method),
-    choices = c("wald", "residual"))
-  method <- switch(
-    method,
+    choices = c("wald", "residual")
+  )
+  method <- switch(method,
     "wald" = "t",
-    "residual" = "resid")
+    "residual" = "resid"
+  )
   fixest::degrees_freedom(model, type = method)
 }
 

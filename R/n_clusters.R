@@ -170,16 +170,20 @@ n_clusters <- function(x,
   gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
 
   data.frame(
-    n_Clusters = c(attributes(elb)$n,
-                   attributes(sil)$n,
-                   attributes(gap1)$n,
-                   attributes(gap2)$n),
+    n_Clusters = c(
+      attributes(elb)$n,
+      attributes(sil)$n,
+      attributes(gap1)$n,
+      attributes(gap2)$n
+    ),
     Method = c("Elbow", "Silhouette", "Gap_Maechler2012", "Gap_Dudoit2002"),
     Package = "easystats",
-    Duration = c(attributes(elb)$duration,
-                 attributes(sil)$duration,
-                 attributes(gap1)$duration,
-                 attributes(gap2)$duration)
+    Duration = c(
+      attributes(elb)$duration,
+      attributes(sil)$duration,
+      attributes(gap1)$duration,
+      attributes(gap2)$duration
+    )
   )
 }
 
@@ -191,11 +195,13 @@ n_clusters <- function(x,
   insight::check_if_installed("NbClust")
 
   if (all(indices == "all")) {
-    indices <- c("kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw",
-                 "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette",
-                 "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial",
-                 "Frey", "Mcclain", "Dunn", "SDindex", "SDbw", "gap", "gamma",
-                 "gplus", "tau")
+    indices <- c(
+      "kl", "Ch", "Hartigan", "CCC", "Scott", "Marriot", "trcovw",
+      "Tracew", "Friedman", "Rubin", "Cindex", "DB", "Silhouette",
+      "Duda", "Pseudot2", "Beale", "Ratkowsky", "Ball", "PtBiserial",
+      "Frey", "Mcclain", "Dunn", "SDindex", "SDbw", "gap", "gamma",
+      "gplus", "tau"
+    )
     # c("hubert", "dindex") are graphical methods
   }
   if (fast) {

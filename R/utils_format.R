@@ -124,8 +124,8 @@
 
   # fix coefficient column name for mixed count and zi pars
   if (!is.null(x$Component) &&
-      sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
-      any(colnames(x) %in% .all_coefficient_types())) {
+    sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
+    any(colnames(x) %in% .all_coefficient_types())) {
     colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
   }
 
@@ -156,9 +156,11 @@
 # that contain the random effects or zero-inflated parameters
 
 .all_coefficient_types <- function() {
-  c("Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
+  c(
+    "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
     "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
-    "Estimated Counts", "Ratio")
+    "Estimated Counts", "Ratio"
+  )
 }
 
 
@@ -715,7 +717,8 @@
     }
 
     formatted_table <- insight::format_table(
-      tables[[type]], digits = digits, ci_digits = ci_digits,
+      tables[[type]],
+      digits = digits, ci_digits = ci_digits,
       p_digits = p_digits, pretty_names = pretty_names, ci_width = ci_width,
       ci_brackets = ci_brackets, zap_small = zap_small, ...
     )

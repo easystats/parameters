@@ -263,7 +263,7 @@ standardize_parameters.mediate <- function(model,
                                            verbose = TRUE,
                                            ...) {
   if (method != "refit") {
-    warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE)
+    warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE, call. = FALSE)
   }
 
   NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust,

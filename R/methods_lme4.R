@@ -159,8 +159,10 @@ model_parameters.merMod <- function(model,
   } else {
     ci_method <- match.arg(
       ci_method,
-      choices = c("wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
-                  "kenward", "kr", "boot", "profile", "uniroot")
+      choices = c(
+        "wald", "normal", "residual", "ml1", "betwithin", "satterthwaite",
+        "kenward", "kr", "boot", "profile", "uniroot"
+      )
     )
   }
 

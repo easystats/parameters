@@ -50,7 +50,8 @@ format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   .is_model_valid(model)
 
   tryCatch(.format_parameter_default(model, brackets = brackets, ...),
-           error = function(e) NULL)
+    error = function(e) NULL
+  )
 }
 
 
