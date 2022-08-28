@@ -19,11 +19,11 @@ p_value.lm_robust <- function(model, ...) {
 
 
 #' @export
-ci.lm_robust <- function(model, ...) {
-  if (insight::is_multivariate(model)) {
-    ci.mlm(model, ...)
+ci.lm_robust <- function(x, ...) {
+  if (insight::is_multivariate(x)) {
+    ci.mlm(x, ...)
   } else {
-    ci.default(model, ...)
+    ci.default(x, ...)
   }
 }
 
