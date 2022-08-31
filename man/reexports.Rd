@@ -7,6 +7,8 @@
 \alias{display}
 \alias{equivalence_test}
 \alias{ci}
+\alias{p_direction}
+\alias{pd}
 \alias{n_parameters}
 \alias{print_md}
 \alias{standardize_names}
@@ -25,7 +27,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
+  \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}, \code{\link[bayestestR]{p_direction}}, \code{\link[bayestestR:p_direction]{pd}}}
 
   \item{datawizard}{\code{\link[datawizard]{demean}}, \code{\link[datawizard]{describe_distribution}}, \code{\link[datawizard:skewness]{kurtosis}}, \code{\link[datawizard]{rescale_weights}}, \code{\link[datawizard]{skewness}}, \code{\link[datawizard]{visualisation_recipe}}}
 
