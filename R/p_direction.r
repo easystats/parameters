@@ -15,5 +15,6 @@ p_direction.lm <- function(x, dof = NULL, ...) {
   if (!is.null(stats$Component)) {
     out$Component <- stats$Component
   }
+  class(out) <- c("p_direction", "data.frame")
   out
 }
