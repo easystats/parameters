@@ -132,15 +132,15 @@ case of bootstrapped frequentist models.</p></dd>
 <code>NULL</code> (default; no standardization), <code>"refit"</code> (for re-fitting the model
 on standardized data) or one of <code>"basic"</code>, <code>"posthoc"</code>, <code>"smart"</code>,
 <code>"pseudo"</code>. See 'Details' in <code><a href="standardize_parameters.html">standardize_parameters()</a></code>.
-<strong>Important:</strong></p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardized categorical predictors (i.e.
+<strong>Importantly</strong>:</p><ul><li><p>The <code>"refit"</code> method does <em>not</em> standardize categorical predictors (i.e.
 factors), which may be a different behaviour compared to other R packages
 (such as <strong>lm.beta</strong>) or other software packages (like SPSS). to mimic
 such behaviours, either use <code>standardize="basic"</code> or standardize the data
 with <code>datawizard::standardize(force=TRUE)</code> <em>before</em> fitting the model.</p></li>
 <li><p>For mixed models, when using methods other than <code>"refit"</code>, only the fixed
-effects will be returned.</p></li>
-<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of standardized parameters only
-works when <code>standardize="refit"</code>.</p></li>
+effects will be standardized.</p></li>
+<li><p>Robust estimation (i.e., <code>vcov</code> set to a value other than <code>NULL</code>) of
+standardized parameters only works when <code>standardize="refit"</code>.</p></li>
 </ul></dd>
 
 
@@ -194,7 +194,7 @@ are passed down to <code><a href="https://easystats.github.io/bayestestR/referen
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading the 'metafor' package (version 3.4-0). For an</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading the 'metafor' package (version 3.8-1). For an</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> introduction to the package please type: help(metafor)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘metafor’</span>
