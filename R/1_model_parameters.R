@@ -332,16 +332,16 @@ parameters <- model_parameters
 #'   `NULL` (default; no standardization), `"refit"` (for re-fitting the model
 #'   on standardized data) or one of `"basic"`, `"posthoc"`, `"smart"`,
 #'   `"pseudo"`. See 'Details' in [standardize_parameters()].
-#'   **Important:**
-#'   - The `"refit"` method does *not* standardized categorical predictors (i.e.
+#'   **Importantly**:
+#'   - The `"refit"` method does *not* standardize categorical predictors (i.e.
 #'   factors), which may be a different behaviour compared to other R packages
 #'   (such as **lm.beta**) or other software packages (like SPSS). to mimic
 #'   such behaviours, either use `standardize="basic"` or standardize the data
 #'   with `datawizard::standardize(force=TRUE)` *before* fitting the model.
 #'   - For mixed models, when using methods other than `"refit"`, only the fixed
-#'   effects will be returned.
-#'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of standardized parameters only
-#'   works when `standardize="refit"`.
+#'   effects will be standardized.
+#'   - Robust estimation (i.e., `vcov` set to a value other than `NULL`) of
+#'   standardized parameters only works when `standardize="refit"`.
 #' @param exponentiate Logical, indicating whether or not to exponentiate the
 #'   coefficients (and related confidence intervals). This is typical for
 #'   logistic regression, or more generally speaking, for models with log or
