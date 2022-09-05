@@ -17,11 +17,13 @@ averaged_parameters <- function(..., ci = .95, verbose = TRUE) {
     new_data <- as.data.frame(lapply(d, function(i) {
       if (is.factor(i)) {
         as.factor(levels(i)[1])
+      } else if (is.numeric(i)) {
+        mean(i, na.rm = TRUE)
       } else {
         unique(i)[1]
       }
     }))
-    insight::get_predicted(n, data = new_data, ci = .95)
+    insight::get_predicted(m, data = new_data, ci = .95, predict = "link")
   })
 
   theta_hats <- unlist(predictions)
@@ -29,23 +31,25 @@ averaged_parameters <- function(..., ci = .95, verbose = TRUE) {
     attributes(p)$ci_data$SE
   })
 
+  alpha <- (1 - ci) / 2
+
   CI_low <- stats::uniroot(
-    f = .tailarea, interval = c(-1e+10, 1e+10), theta.hats = theta_hats,
-    se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = alpha,
-    residual.dfs = residual_dfs, tol = 1e-10
+    f = .tailarea, interval = c(-1e+10, 1e+10), theta_hats = theta_hats,
+    se_theta_hats = se_theta_hats, model_weights = model_weights, alpha = alpha,
+    residual_dfs = residual_dfs, tol = 1e-10
   )$root
 
   CI_high <- stats::uniroot(
-    f = .tailarea, interval = c(-1e+10, 1e+10), theta.hats = theta_hats,
-    se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = 1 - alpha,
-    residual.dfs = residual_dfs, tol = 1e-10
+    f = .tailarea, interval = c(-1e+10, 1e+10), theta_hats = theta_hats,
+    se_theta_hats = se_theta_hats, model_weights = model_weights, alpha = 1 - alpha,
+    residual_dfs = residual_dfs, tol = 1e-10
   )$root
 
   c(CI_low, CI_high)
 }
 
 
-.tailarea <- function(theta, theta.hats, se.theta.hats, model.weights, alpha, residual.dfs) {
-  t.quantiles <- (theta - theta.hats) / se.theta.hats
-  sum(model.weights * stats::pt(t.quantiles, df = residual.dfs)) - alpha
+.tailarea <- function(theta, theta_hats, se_theta_hats, model_weights, alpha, residual_dfs) {
+  t_quantiles <- (theta - theta_hats) / se_theta_hats
+  sum(model_weights * stats::pt(t_quantiles, df = residual_dfs)) - alpha
 }
