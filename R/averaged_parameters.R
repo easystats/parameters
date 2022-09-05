@@ -1,5 +1,5 @@
-
-average_parameters <- function(..., ci = .95, verbose = TRUE) {
+#' @export
+averaged_parameters <- function(..., ci = .95, verbose = TRUE) {
   insight::check_if_installed("performance")
   models <- list(...)
 
