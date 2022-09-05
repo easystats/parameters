@@ -1,54 +1,51 @@
-library(insight)
-library(parameters)
-library(MATA)
 
-set.seed(0)
-n <- 20 # 'n' is assumed to be even
-x1 <- c(rep(0, n / 2), rep(1, n / 2)) # two groups: x1=0, and x1=1
-x2 <- rnorm(n, mean = 10, sd = 3)
-y <- rnorm(n, mean = 3 * x1 + 0.1 * x2) # data generation
+average_parameters <- function(..., ci = .95, verbose = TRUE) {
+  insight::check_if_installed("performance")
+  models <- list(...)
 
-x1 <- factor(x1)
-m1 <- glm(y ~ x1) # using 'glm' provides AIC values.
-m2 <- glm(y ~ x1 + x2) # using 'lm' doesn't.
-aic <- c(m1$aic, m2$aic)
-delta.aic <- aic - min(aic)
-model.weights <- exp(-0.5 * delta.aic) / sum(exp(-0.5 * delta.aic))
+  # compute model weights
+  aic_values <- sapply(models, performance::performance_aic)
+  delta_aic <- aic_values - min(aic_values)
+  model_weights <- exp(-0.5 * delta_aic) / sum(exp(-0.5 * delta_aic))
 
-# see also
-# performance::compare_performance(m1, m2)
+  # residual df's
+  residual_dfs <- sapply(models, degrees_of_freedom, method = "residual")
 
-residual.dfs <- c(insight::get_df(m1), insight::get_df(m2))
-# parameters::degrees_of_freedom(m1,method="residual")
+  # data grid for average predictions
+  predictions <- lapply(models, function(m) {
+    d <- insight::get_datagrid(m)
+    new_data <- as.data.frame(lapply(d, function(i) {
+      if (is.factor(i)) {
+        as.factor(levels(i)[1])
+      } else {
+        unique(i)[1]
+      }
+    }))
+    insight::get_predicted(n, data = new_data, ci = .95)
+  })
 
-g1 <- insight::get_datagrid(m1)
-g2 <- insight::get_datagrid(m2)
+  theta_hats <- unlist(predictions)
+  se_theta_hats <- sapply(predictions, function(p) {
+    attributes(p)$ci_data$SE
+  })
 
-nd1 <- as.data.frame(lapply(g1, function(i) {
-  if (is.factor(i)) {
-    as.factor(levels(i)[1])
-  } else {
-    unique(i)[1]
-  }
-}))
+alpha <- (1 - ci) / 2
+
+  CI_low <- stats::uniroot(
+    f = .tailarea, interval = c(-1e+10, 1e+10), theta.hats = theta_hats,
+    se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = alpha,
+    residual.dfs = residual_dfs, tol = 1e-10
+  )$root
+
+  CI_high <- stats::uniroot(
+    f = .tailarea, interval = c(-1e+10, 1e+10), theta.hats = theta_hats,
+    se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = 1 - alpha,
+    residual.dfs = residual_dfs, tol = 1e-10
+  )$root
+}
 
 
-nd2 <- as.data.frame(lapply(g2, function(i) {
-  if (is.factor(i)) {
-    as.factor(levels(i)[1])
-  } else {
-    unique(i)[1]
-  }
-}))
-
-p1 <- get_predicted(m1, data = nd1, ci = .95)
-p2 <- get_predicted(m2, data = nd2, , ci = .95)
-
-theta.hats <- c(p1, p2)
-se.theta.hats <- c(attributes(p1)$ci_data$SE, attributes(p2)$ci_data$SE)
-
-#  95% MATA-Wald confidence interval for theta:
-mata.wald(theta.hats, se.theta.hats, model.weights,
-  mata.t = TRUE,
-  residual.dfs = residual.dfs
-)
+.tailarea <- function(theta, theta.hats, se.theta.hats, model.weights, alpha, residual.dfs) {
+  t.quantiles <- (theta - theta.hats) / se.theta.hats
+  sum(model.weights * stats::pt(t.quantiles, df = residual.dfs)) - alpha
+}
