@@ -29,8 +29,6 @@ average_parameters <- function(..., ci = .95, verbose = TRUE) {
     attributes(p)$ci_data$SE
   })
 
-alpha <- (1 - ci) / 2
-
   CI_low <- stats::uniroot(
     f = .tailarea, interval = c(-1e+10, 1e+10), theta.hats = theta_hats,
     se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = alpha,
@@ -42,6 +40,8 @@ alpha <- (1 - ci) / 2
     se.theta.hats = se_theta_hats, model.weights = model_weights, alpha = 1 - alpha,
     residual.dfs = residual_dfs, tol = 1e-10
   )$root
+
+  c(CI_low, CI_high)
 }
 
 
