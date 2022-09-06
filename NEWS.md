@@ -19,8 +19,8 @@
 
 ## Bug fixes
 
-* Fix erroneous warning for p-value adjustments when the differences between
-  original and adjusted p-values were very small.
+* Fix erroneous warning for *p*-value adjustments when the differences between
+  original and adjusted *p*-values were very small.
 
 # parameters 0.18.2
 
