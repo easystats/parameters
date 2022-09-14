@@ -278,7 +278,7 @@ equivalence_test.parameters_simulate_model <- function(x,
     range <- bayestestR::rope_range(model, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop(insight::format_message(
-      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+      "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
     ), call. = FALSE)
   }
 
@@ -319,7 +319,9 @@ equivalence_test.parameters_simulate_model <- function(x,
       range <- range[[which.max(sapply(range, diff))]]
     }
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    stop(insight::format_message(
+      "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
+    ), call. = FALSE)
   }
 
   if (length(ci) > 1) {
@@ -388,7 +390,7 @@ equivalence_test.parameters_simulate_model <- function(x,
     range <- bayestestR::rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop(insight::format_message(
-      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+      "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
     ), call. = FALSE)
   }
 
