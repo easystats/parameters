@@ -1,7 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  getRversion() >= "3.6.0" &&
   requiet("testthat") &&
   requiet("parameters") &&
   requiet("lme4")) {

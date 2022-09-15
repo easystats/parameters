@@ -1,7 +1,7 @@
 requiet("nlme")
 requiet("lme4")
 requiet("lavaSearch2")
-skip_if_not(getRversion() >= "3.6.0")
+
 
 data("sleepstudy")
 m1 <- nlme::lme(Reaction ~ Days,

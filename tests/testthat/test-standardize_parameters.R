@@ -280,7 +280,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
   test_that("standardize_parameters (Bayes)", {
     skip_on_cran()
     skip_if_not_installed("rstanarm")
-    skip_if_not(getRversion() >= "3.6.0")
+
     set.seed(1234)
     suppressWarnings(
       model <- rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Width,

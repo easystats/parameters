@@ -2,7 +2,9 @@
 
 ## Breaking
 
-* Removed depricated argument `parameters` from `model_parameters()`.
+* The minimum needed R version has been bumped to `3.6`.
+
+* Removed deprecated argument `parameters` from `model_parameters()`.
 
 ## Changes to functions
 

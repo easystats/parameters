@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("survival") && getRversion() >= "3.6.0") {
+if (requiet("testthat") && requiet("parameters") && requiet("survival")) {
   lung <- subset(lung, subset = ph.ecog %in% 0:2)
   lung$sex <- factor(lung$sex, labels = c("male", "female"))
   lung$ph.ecog <- factor(lung$ph.ecog, labels = c("good", "ok", "limited"))

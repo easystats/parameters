@@ -36,7 +36,7 @@ Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
 it is recommended to approximate a more accurate number of degrees of freedom
-for such inferential statitics. Unlike simpler approximation heuristics
+for such inferential statistics. Unlike simpler approximation heuristics
 like the "m-l-1" rule (\code{dof_ml1}), the Satterthwaite approximation is
 also applicable in more complex multilevel designs. However, the "m-l-1"
 heuristic also applies to generalized mixed models, while approaches like

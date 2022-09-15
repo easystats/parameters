@@ -206,8 +206,7 @@ if (require("dbscan", quietly = TRUE)) {
 \donttest{
 #
 # hclust method -------------------------------
-if (require("pvclust", quietly = TRUE) &&
-  getRversion() >= "3.6.0") {
+if (require("pvclust", quietly = TRUE) {
   # iterations should be higher for real analyses
   x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
   x

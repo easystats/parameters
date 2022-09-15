@@ -1,8 +1,7 @@
 if (requiet("testthat") &&
   requiet("parameters") &&
   requiet("BayesFactor") &&
-  requiet("logspline") &&
-  getRversion() >= "3.6") {
+  requiet("logspline")) {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
   # if (.runThisTest) {
