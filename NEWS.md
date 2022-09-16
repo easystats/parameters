@@ -8,6 +8,11 @@
 
 ## Changes to functions
 
+* The `pretty_names` argument from the `print()` method can now also be
+  `"labels"`, which will then use variable and value labels (if data is
+  labelled) as pretty names. If no labels were found, default pretty names
+  are used.
+
 * `bootstrap_model()` for models of class `glmmTMB` and `merMod` gains a
   `cluster` argument to specify optional clusters when the `parallel`
   option is set to `"snow"`.

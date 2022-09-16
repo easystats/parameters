@@ -330,3 +330,57 @@ format_parameters.parameters_model <- function(model, ...) {
     paste0(brackets[1], parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE), " degree", brackets[2])
   )
 }
+
+
+
+# replace pretty names with value labels, when present ---------------
+
+.format_value_labels <- function(params) {
+  labels <- NULL
+  model <- .get_object(params)
+
+  if (!is.null(model)) {
+    # get data, but exclude response - we have no need for that label
+    mf <- insight::get_data(model)[, -1, drop = FALSE]
+
+    # return variable labels, and for factors, add labels for each level
+    lbs <- lapply(colnames(mf), function(i) {
+      vec <- mf[[i]]
+      if (is.factor(vec)) {
+        variable_label <- attr(vec, "label", exact = TRUE)
+        value_labels <- names(attr(vec, "labels", exact = TRUE))
+        if (!is.null(variable_label) && !is.null(value_labels)) {
+          paste0(variable_label, " [", value_labels, "]")
+        } else {
+          NULL
+        }
+      } else {
+        attr(vec, "label", exact = TRUE)
+      }
+    })
+
+    # coefficient names (not labels)
+    preds <- lapply(colnames(mf), function(i) {
+      if (is.factor(mf[[i]])) {
+        i <- paste0(i, levels(mf[[i]]))
+      }
+      i
+    })
+
+    # name elements
+    names(lbs) <- names(preds) <- colnames(mf)
+    labels <- tryCatch(setNames(unlist(lbs), unlist(preds)), error = function(e) NULL)
+
+    # retrieve pretty names attribute
+    pn <- attributes(params)$pretty_names
+    # replace former pretty names with labels, if we have any labels
+    # (else, default pretty names are returned)
+    if (!is.null(labels)) {
+      common_labels <- intersect(names(labels), names(pn))
+      pn[common_labels] <- labels[common_labels]
+    }
+    labels <- pn
+  }
+
+  labels
+}

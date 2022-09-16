@@ -154,6 +154,13 @@ print.parameters_model <- function(x,
   # save original input
   orig_x <- x
 
+  # check if pretty names should be replaced by value labels
+  # (if we have labelled data)
+  if (!isTRUE(pretty_names) && identical(pretty_names, "labels")) {
+    attr(x, "pretty_names") <- .format_value_labels(x)
+    pretty_names <- TRUE
+  }
+
   # check if user supplied digits attributes
   if (missing(digits)) {
     digits <- .additional_arguments(x, "digits", digits)

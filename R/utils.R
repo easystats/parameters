@@ -80,24 +80,10 @@
   obj_name <- attr(x, attribute_name, exact = TRUE)
   model <- NULL
   if (!is.null(obj_name)) {
-    model <- tryCatch(
-      {
-        get(obj_name, envir = parent.frame())
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    model <- tryCatch(get(obj_name, envir = parent.frame()), error = function(e) NULL)
+    # prevent self reference
     if (is.null(model) || inherits(model, "parameters_model")) {
-      # prevent self reference
-      model <- tryCatch(
-        {
-          get(obj_name, envir = globalenv())
-        },
-        error = function(e) {
-          NULL
-        }
-      )
+      model <- tryCatch(get(obj_name, envir = globalenv()), error = function(e) NULL)
     }
   }
   model

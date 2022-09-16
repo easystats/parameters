@@ -32,12 +32,14 @@ knitr::opts_chunk$set(
 
 if (!requireNamespace("gt", quietly = TRUE) ||
   !requireNamespace("magrittr", quietly = TRUE) ||
+  !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("glmmTMB", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 } else {
   library(parameters)
   library(gt)
   library(magrittr)
+  library(datawizard)
   library(insight)
 }
 
@@ -64,6 +66,20 @@ model_parameters(model)
 
 mp <- model_parameters(model)
 print(mp, pretty_names = FALSE)
+```
+
+If data is [labelled](https://strengejacke.github.io/sjlabelled/articles/intro_sjlabelled.html), `pretty_names = "labels"` will use variable and value labels as pretty names. If data is not labelled, default pretty names will be used.
+
+```{r}
+data(efc, package = "datawizard")
+model <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
+
+# default printing
+model_parameters(model)
+
+# using value and variable labels
+mp <- model_parameters(model)
+print(mp, pretty_names = "labels")
 ```
 
 ## Splitting model components
