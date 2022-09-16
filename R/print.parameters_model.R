@@ -68,6 +68,10 @@
 #' `exponentiate` argument in `model_parameters()` is not `TRUE`. Set this option
 #' to `FALSE` to hide this message when printing `model_parameters()` objects.
 #'
+#' - `parameters_labels`: `options(parameters_labels = TRUE)` will use variable
+#' and value labels for pretty names, if data is labelled. If no labels
+#' available, default pretty names are used.
+#'
 #' @details `summary()` is a convenient shortcut for
 #'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
@@ -156,7 +160,8 @@ print.parameters_model <- function(x,
 
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
-  if (!isTRUE(pretty_names) && identical(pretty_names, "labels")) {
+  if (isTRUE(getOption("parameters_labels", TRUE)) ||
+      (!isTRUE(pretty_names) && identical(pretty_names, "labels"))) {
     attr(x, "pretty_names") <- .format_value_labels(x)
     pretty_names <- TRUE
   }

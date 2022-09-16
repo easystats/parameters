@@ -116,6 +116,9 @@ show the additional information on how to interpret coefficients of models
 with log-transformed response variables or with log-/logit-links when the
 \code{exponentiate} argument in \code{model_parameters()} is not \code{TRUE}. Set this option
 to \code{FALSE} to hide this message when printing \code{model_parameters()} objects.
+\item \code{parameters_labels}: \code{options(parameters_labels = TRUE)} will use variable
+and value labels for pretty names, if data is labelled. If no labels
+available, default pretty names are used.
 }
 }
 
