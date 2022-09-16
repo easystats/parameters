@@ -104,7 +104,7 @@ newdata$rating <- attitude$rating
 We can know update the model with this new component:
 
 ```{r}
-update(model, rating ~ Component_1, data = newdata) %>%
+update(model, rating ~ PC1, data = newdata) %>%
   parameters()
 ```
 
