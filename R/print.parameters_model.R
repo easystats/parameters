@@ -422,7 +422,10 @@ summary.parameters_stan <- function(object, ...) {
 
   # format values
   random_params$Value <- format(sprintf("%g", round(random_params$Value, digits = digits)), justify = "right")
-  random_params$SD[var_components] <- format(sprintf("(%g)", round(random_params$SD[var_components], digits = digits)), justify = "right")
+  random_params$SD[var_components] <- format(
+    sprintf("(%g)", round(random_params$SD[var_components], digits = digits)),
+    justify = "right"
+  )
 
   # create summary-information for each component
   random_params$Line <- ""

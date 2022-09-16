@@ -189,7 +189,17 @@ print_md.parameters_sem <- function(x,
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
   }
 
-  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
+  formatted_table <- format(
+    x = x,
+    digits = digits,
+    ci_digits,
+    p_digits = p_digits,
+    format = "markdown",
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    ...
+  )
+
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
@@ -215,7 +225,15 @@ print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
 print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  .print_parameters_cfa_efa(x, threshold = threshold, sort = sort, format = "markdown", digits = digits, labels = labels, ...)
+  .print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "markdown",
+    digits = digits,
+    labels = labels,
+    ...
+  )
 }
 
 #' @export
@@ -248,7 +266,15 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  formatted_table <- insight::format_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+  formatted_table <- insight::format_table(
+    x,
+    pretty_names = TRUE,
+    digits = digits,
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    ...
+  )
 
   colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
   formatted_table$ROPE <- NULL
@@ -278,7 +304,15 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
 
 #' @export
 print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
-  formatted_table <- format(x = x, digits = digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
+  formatted_table <- format(
+    x = x,
+    digits = digits,
+    format = "markdown",
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    ...
+  )
+
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
