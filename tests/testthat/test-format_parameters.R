@@ -278,21 +278,21 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "elder's dependency [slightly dependent]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
         "elder's dependency [moderately dependent]"
       )
 
       out <- utils::capture.output(print(mp))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "e42dep [2]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
         "e42dep [3]"
       )
     })
@@ -304,21 +304,21 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "Species [versicolor]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
         "Species [virginica]"
       )
 
       out <- utils::capture.output(print(mp))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "Species [versicolor]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
         "Species [virginica]"
       )
     })
@@ -330,21 +330,21 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "elder's dependency [slightly dependent]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
         "elder's dependency [slightly dependent] * average number of hours of care per week"
       )
 
       out <- utils::capture.output(print(mp))
       expect_equal(
-        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
         "e42dep [2]"
       )
       expect_equal(
-        trimws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+        insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
         "e42dep [2] * c12hour"
       )
     })
