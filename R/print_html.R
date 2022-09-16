@@ -40,7 +40,7 @@ print_html.parameters_model <- function(x,
 
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
-  if (isTRUE(getOption("parameters_labels", TRUE)) ||
+  if (isTRUE(getOption("parameters_labels", FALSE)) ||
       (!isTRUE(pretty_names) && identical(pretty_names, "labels"))) {
     attr(x, "pretty_names") <- .format_value_labels(x)
     pretty_names <- TRUE
