@@ -6,6 +6,10 @@
 
 * Removed deprecated argument `parameters` from `model_parameters()`.
 
+* `standard_error_robust()`, `ci_robust()` and `p_value_robust()` are now
+  deprecated and superseded by the `vcov` and `vcov_args` arguments in the
+  related methods `standard_error()`, `ci()` and `p_value()`, respectively.
+
 ## Changes to functions
 
 * The `pretty_names` argument from the `print()` method can now also be
