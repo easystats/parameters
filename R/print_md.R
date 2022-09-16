@@ -35,6 +35,14 @@ print_md.parameters_model <- function(x,
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
   }
 
+  # check if pretty names should be replaced by value labels
+  # (if we have labelled data)
+  if (isTRUE(getOption("parameters_labels", TRUE)) ||
+      (!isTRUE(pretty_names) && identical(pretty_names, "labels"))) {
+    attr(x, "pretty_names") <- .format_value_labels(x)
+    pretty_names <- TRUE
+  }
+
   # table caption
   table_caption <- .print_caption(x, caption, format = "markdown")
 
