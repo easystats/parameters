@@ -11,6 +11,9 @@ standard_error_robust <- function(model,
                                   vcov_args = NULL,
                                   component = "conditional",
                                   ...) {
+  ## TODO: Remove deprecated message later
+  .Deprecated("standard_error()")
+
   # exceptions
   if (inherits(model, "gee")) {
     return(standard_error(model, ...))
@@ -40,6 +43,9 @@ p_value_robust <- function(model,
                            component = "conditional",
                            method = NULL,
                            ...) {
+  ## TODO: Remove deprecated message later
+  .Deprecated("p_value()")
+
   # exceptions
   if (inherits(model, "gee")) {
     return(p_value(model, ...))
@@ -72,6 +78,9 @@ ci_robust <- function(model,
                       vcov_args = NULL,
                       component = "conditional",
                       ...) {
+  ## TODO: Remove deprecated message later
+  .Deprecated("ci()")
+
   out <- .ci_generic(
     model = model,
     ci = ci,
