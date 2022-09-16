@@ -272,7 +272,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
 
   if (requiet("datawizard")) {
     test_that("format_parameters-labelled data-1", {
-      data(efc, package = "datawizard")
+      data(efc, package = "datawizard", envir = globalenv())
       m <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
       mp <- model_parameters(m)
 
@@ -324,7 +324,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     })
 
     test_that("format_parameters-labelled data-3", {
-      data(efc, package = "datawizard")
+      data(efc, package = "datawizard", envir = globalenv())
       m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
       mp <- model_parameters(m)
 
