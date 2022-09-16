@@ -395,7 +395,7 @@
     empty_row[[i]] <- NA
   }
 
-  for (i in length(groups):1) {
+  for (i in rev(seq_along(groups))) {
     x[seq(groups[i] + 1, nrow(x) + 1), ] <- x[seq(groups[i], nrow(x)), ]
     x[groups[i], ] <- empty_row
     x$Parameter[groups[i]] <- paste0("# ", names(groups[i]))
