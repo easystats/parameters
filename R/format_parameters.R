@@ -335,6 +335,12 @@ format_parameters.parameters_model <- function(model, ...) {
 
 # replace pretty names with value labels, when present ---------------
 
+## TODO: This currently does not work with interaction terms, see
+# data(efc, package = "datawizard")
+# m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
+# mp <- model_parameters(m)
+# print(mp, pretty_names = "labels")
+
 .format_value_labels <- function(params) {
   labels <- NULL
   model <- .get_object(params)
