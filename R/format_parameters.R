@@ -36,7 +36,8 @@
 #'
 #' model <- lm(Sepal.Length ~ Species + poly(Sepal.Width, 2, raw = TRUE), data = iris)
 #' format_parameters(model)
-#' @return A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
+#' @return A (names) character vector with formatted parameter names. The value
+#' names refer to the original names of the coefficients.
 #' @export
 format_parameters <- function(model, ...) {
   UseMethod("format_parameters")
@@ -275,7 +276,13 @@ format_parameters.parameters_model <- function(model, ...) {
 
   if (length(components) > 2) {
     if (type == "interaction") {
-      components <- paste0("(", paste0(utils::head(components, -1), collapse = " * "), ")", sep, utils::tail(components, 1))
+      components <- paste0(
+        "(",
+        paste0(utils::head(components, -1), collapse = " * "),
+        ")",
+        sep,
+        utils::tail(components, 1)
+      )
     } else {
       components <- paste0(components, collapse = sep)
     }
@@ -327,7 +334,12 @@ format_parameters.parameters_model <- function(model, ...) {
     ".L" = paste0(brackets[1], "linear", brackets[2]),
     ".Q" = paste0(brackets[1], "quadratic", brackets[2]),
     ".C" = paste0(brackets[1], "cubic", brackets[2]),
-    paste0(brackets[1], parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE), " degree", brackets[2])
+    paste0(
+      brackets[1],
+      parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE),
+      " degree",
+      brackets[2]
+    )
   )
 }
 

@@ -119,6 +119,9 @@ to \code{FALSE} to hide this message when printing \code{model_parameters()} obj
 \item \code{parameters_labels}: \code{options(parameters_labels = TRUE)} will use variable
 and value labels for pretty names, if data is labelled. If no labels
 available, default pretty names are used.
+\item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
+default for the \code{select} argument. See argument's documentation for available
+options.
 }
 }
 
