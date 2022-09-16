@@ -59,6 +59,9 @@
   attr(params, "show_summary") <- isTRUE(summary)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
 
+  # add parameters with value and variable
+  attr(params, "pretty_labels") <- .format_value_labels(params, model)
+
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- tryCatch(insight::find_statistic(model), error = function(e) NULL)
   attr(params, "log_response") <- tryCatch(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)), error = function(e) NULL)

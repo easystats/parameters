@@ -335,9 +335,11 @@ format_parameters.parameters_model <- function(model, ...) {
 
 # replace pretty names with value labels, when present ---------------
 
-.format_value_labels <- function(params) {
+.format_value_labels <- function(params, model = NULL) {
   labels <- NULL
-  model <- .get_object(params)
+  if (is.null(model)) {
+    model <- .get_object(params)
+  }
 
   if (!is.null(model)) {
     # get data, but exclude response - we have no need for that label
