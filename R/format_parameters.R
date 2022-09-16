@@ -335,12 +335,6 @@ format_parameters.parameters_model <- function(model, ...) {
 
 # replace pretty names with value labels, when present ---------------
 
-## TODO: This currently does not work with interaction terms, see
-# data(efc, package = "datawizard")
-# m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
-# mp <- model_parameters(m)
-# print(mp, pretty_names = "labels")
-
 .format_value_labels <- function(params) {
   labels <- NULL
   model <- .get_object(params)
@@ -382,6 +376,21 @@ format_parameters.parameters_model <- function(model, ...) {
     # replace former pretty names with labels, if we have any labels
     # (else, default pretty names are returned)
     if (!is.null(labels)) {
+      # check if we have any interactions, and if so, create combined labels
+      interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
+      if (length(interactions)) {
+        labs <- c()
+        for (i in names(interactions)) {
+          # extract single coefficient names from interaction term
+          out <- unlist(strsplit(i, ":", fixed = TRUE))
+          # combine labels
+          labs <- c(labs, paste0(sapply(out, function(l) labels[l]), collapse = " * "))
+        }
+        # add interaction terms to labels string
+        names(labs) <- names(interactions)
+        labels <- c(labels, labs)
+      }
+      # make sure "invalid" labels are ignored
       common_labels <- intersect(names(labels), names(pn))
       pn[common_labels] <- labels[common_labels]
     }

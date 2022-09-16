@@ -322,5 +322,31 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
         "Species [virginica]"
       )
     })
+
+    test_that("format_parameters-labelled data-3", {
+      data(efc, package = "datawizard")
+      m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
+      mp <- model_parameters(m)
+
+      out <- utils::capture.output(print(mp, pretty_names = "labels"))
+      expect_equal(
+        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        "elder's dependency [slightly dependent]"
+      )
+      expect_equal(
+        trimws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+        "elder's dependency [slightly dependent] * average number of hours of care per week"
+      )
+
+      out <- utils::capture.output(print(mp))
+      expect_equal(
+        trimws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+        "e42dep [2]"
+      )
+      expect_equal(
+        trimws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+        "e42dep [2] * c12hour"
+      )
+    })
   }
 }
