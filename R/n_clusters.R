@@ -127,7 +127,9 @@ n_clusters <- function(x,
   )
 
   attr(out, "summary") <- by_clusters
-  attr(out, "n") <- min(as.numeric(as.character(by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), c("n_Clusters")])))
+  attr(out, "n") <- min(as.numeric(as.character(
+    by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), c("n_Clusters")]
+  )))
 
   class(out) <- c("n_clusters", "see_n_clusters", class(out))
   out
@@ -253,7 +255,7 @@ n_clusters <- function(x,
 .n_clusters_M3C <- function(x, n_max = 10, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
     stop(insight::format_message(
-      "Package 'M3C' required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
+      "Package `M3C` required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
     ), call. = FALSE) # Not on CRAN (but on github and bioconductor)
   }
 
