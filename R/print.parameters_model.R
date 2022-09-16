@@ -72,6 +72,10 @@
 #' and value labels for pretty names, if data is labelled. If no labels
 #' available, default pretty names are used.
 #'
+#' - `parameters_select`: `options(parameters_select = <value>)` will set the
+#' default for the `select` argument. See argument's documentation for available
+#' options.
+#'
 #' @details `summary()` is a convenient shortcut for
 #'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
@@ -158,12 +162,19 @@ print.parameters_model <- function(x,
   # save original input
   orig_x <- x
 
+  # check options ---------------
+
   # check if pretty names should be replaced by value labels
   # (if we have labelled data)
   if (isTRUE(getOption("parameters_labels", FALSE)) ||
       (!isTRUE(pretty_names) && identical(pretty_names, "labels"))) {
     attr(x, "pretty_names") <- .format_value_labels(x)
     pretty_names <- TRUE
+  }
+
+  # select which columns to print
+  if (is.null(select)) {
+    select <- getOption("parameters_select")
   }
 
   # check if user supplied digits attributes
