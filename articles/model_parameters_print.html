@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,6 +178,34 @@ variable names, interactions are denoted by <code>*</code> etc.</p>
 <span><span class="co">#&gt; Petal.Length                   |        0.54 | 0.28 | [ 0.00,  1.09] |   1.96 | 0.052 </span></span>
 <span><span class="co">#&gt; Speciesversicolor:Petal.Length |        0.29 | 0.30 | [-0.30,  0.87] |   0.97 | 0.334 </span></span>
 <span><span class="co">#&gt; Speciesvirginica:Petal.Length  |        0.45 | 0.29 | [-0.12,  1.03] |   1.56 | 0.120</span></span></code></pre></div>
+<p>If data is <a href="https://strengejacke.github.io/sjlabelled/articles/intro_sjlabelled.html" class="external-link">labelled</a>,
+<code>pretty_names = "labels"</code> will use variable and value labels
+as pretty names. If data is not labelled, default pretty names will be
+used.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">efc</span>, package <span class="op">=</span> <span class="st">"datawizard"</span><span class="op">)</span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">neg_c_7</span> <span class="op">~</span> <span class="va">e42dep</span> <span class="op">+</span> <span class="va">c172code</span>, data <span class="op">=</span> <span class="va">efc</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># default printing</span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(80) |     p</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |        8.72 | 3.56 | [ 1.63, 15.80] |  2.45 | 0.017</span></span>
+<span><span class="co">#&gt; e42dep [2]  |       -1.00 | 3.72 | [-8.41,  6.41] | -0.27 | 0.789</span></span>
+<span><span class="co">#&gt; e42dep [3]  |        2.68 | 3.16 | [-3.60,  8.96] |  0.85 | 0.398</span></span>
+<span><span class="co">#&gt; e42dep [4]  |        3.88 | 3.10 | [-2.29, 10.04] |  1.25 | 0.214</span></span>
+<span><span class="co">#&gt; c172code    |        1.14 | 0.93 | [-0.70,  2.99] |  1.23 | 0.221</span></span>
+<span></span>
+<span><span class="co"># using value and variable labels</span></span>
+<span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, pretty_names <span class="op">=</span> <span class="st">"labels"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter                                 | Coefficient |   SE |         95% CI | t(80) |     p</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                               |        8.72 | 3.56 | [ 1.63, 15.80] |  2.45 | 0.017</span></span>
+<span><span class="co">#&gt; elder's dependency [slightly dependent]   |       -1.00 | 3.72 | [-8.41,  6.41] | -0.27 | 0.789</span></span>
+<span><span class="co">#&gt; elder's dependency [moderately dependent] |        2.68 | 3.16 | [-3.60,  8.96] |  0.85 | 0.398</span></span>
+<span><span class="co">#&gt; elder's dependency [severely dependent]   |        3.88 | 3.10 | [-2.29, 10.04] |  1.25 | 0.214</span></span>
+<span><span class="co">#&gt; carer's level of education                |        1.14 | 0.93 | [-0.70,  2.99] |  1.23 | 0.221</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="splitting-model-components">Splitting model components<a class="anchor" aria-label="anchor" href="#splitting-model-components"></a>
@@ -186,7 +214,7 @@ variable names, interactions are denoted by <code>*</code> etc.</p>
 <code>TRUE</code>, which means that models with multiple components like
 fixed and random effects, count and zero-inflated part etc. are split
 into separate tables in the output.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
@@ -234,7 +262,7 @@ into separate tables in the output.</p>
 <span><span class="co">#&gt; SD (Intercept: site) |        0.38 | [0.17, 0.87]</span></span></code></pre></div>
 <p>Redundant columns are removed. The related model component is shown
 as table header. However, you can also return a single table:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, split_component <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -266,7 +294,7 @@ as table header. However, you can also return a single table:</p>
 <p>A model summary can be added to the table when
 <code>summary = TRUE</code> in the call to
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(144) |      p</span></span>
@@ -288,7 +316,7 @@ as table header. However, you can also return a single table:</p>
 <p><code>digits</code> changes the digits for coefficients, standard
 errors and statistics. <code>ci_digits</code> and <code>p_digits</code>
 are especially for the confidence intervals and p-values.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |     SE |       95% CI |  t(147) |      p</span></span>
@@ -298,7 +326,7 @@ are especially for the confidence intervals and p-values.</p>
 <span><span class="co">#&gt; Species [virginica]  |      1.5820 | 0.1030 | [1.38, 1.79] | 15.3655 | &lt; .001</span></span></code></pre></div>
 <p>p-values can be displayed in exact, scientific notation if
 required.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |   SE |       95% CI | t(147) |            p</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
@@ -315,7 +343,7 @@ for models with multiple components, where each component is shown as
 separate table, columns are possibly no longer aligned across tables.
 See the following example from a zero-inflated mixed model that has
 three components (fixed count, fixed zero-inflated, random effects):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span></span>
 <span><span class="co"># we create very long parameter names for this predictor here</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span><span class="op">)</span></span>
@@ -359,7 +387,7 @@ the width of specific columns, or to fix column widths of the same
 columns across tables to have the same width. In the latter case, use
 <code>column_width = "fixed"</code> in the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>
 method.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
@@ -390,7 +418,7 @@ method.</p>
 <p>If <code>column_width</code> is a named vector, names are matched
 against column names, and those columns gain the specified minimum
 width.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SE <span class="op">=</span> <span class="fl">8</span>, `95% CI` <span class="op">=</span> <span class="fl">12</span>, p <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -429,7 +457,7 @@ parameters in the table (data frame).</p>
 <p>In the following example, we see the names of the parameters in the
 <code>Parameter</code> column, while the rownumbers indicate their
 position.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span>
 <span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span></span>
@@ -458,7 +486,7 @@ group <code>"controls"</code> has the parameters from rows 2, 3 and
 7.</p>
 <p>Note that the parameters in the table summary are re-ordered
 according to the order specified in <code>groups</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Engine"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
@@ -483,7 +511,7 @@ according to the order specified in <code>groups</code>.</p>
 <code>sep</code> argument to define the string that is used as
 border-separator. This argument is passed down to
 <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">"  "</span>,</span>
@@ -516,7 +544,7 @@ border-separator. This argument is passed down to
 <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) allows to create tables for multiple
 models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -538,7 +566,7 @@ models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown. Using
 <code>style</code> allows us to create different output, e.g. standard
 errors instead of confidence intervals, or including p-values.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, style <span class="op">=</span> <span class="st">"se_p"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
@@ -557,7 +585,7 @@ errors instead of confidence intervals, or including p-values.</p>
 <p>The column names for the models are by default the objects’ names.
 You can define own names using the <code>column_names</code>
 argument.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>,</span>
 <span>  column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First Model"</span>, <span class="st">"Second Model"</span>, <span class="st">"Third Model"</span><span class="op">)</span></span>
@@ -578,7 +606,7 @@ argument.</p>
 </h3>
 <p>Grouping parameters works for <code><a href="../reference/compare_parameters.html">compare_models()</a></code> in the
 same way as shown above for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span></span>
@@ -630,7 +658,7 @@ wider than the current available width (i.e. line length) of the console
 is split into multiple parts. Else, if <code>table_width</code> is
 numeric and table rows are wider than <code>table_width</code>, the
 table is split into multiple parts.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>

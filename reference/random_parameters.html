@@ -12,7 +12,7 @@ mixed model and returns the result as a data frame."><meta property="og:image" c
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,35 +122,29 @@ observations in the model.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The variance components are obtained from
-<code><a href="https://easystats.github.io/insight/reference/get_variance.html" class="external-link">insight::get_variance()</a></code> and are denoted as following:</p><div class="section">
-<h3 id="within-group-or-residual-variance">Within-group (or residual) variance<a class="anchor" aria-label="anchor" href="#within-group-or-residual-variance"></a></h3>
+    <p>The variance components are obtained from <code><a href="https://easystats.github.io/insight/reference/get_variance.html" class="external-link">insight::get_variance()</a></code>
+and are denoted as following:</p>
+<p><strong>Within-group (or residual) variance</strong></p>
 <p>The residual variance, σ<sup>2</sup><sub>ε</sub>,
 is the sum of the distribution-specific variance and the variance due to additive dispersion.
 It indicates the <em>within-group variance</em>.</p>
-</div>
-<div class="section">
-<h3 id="between-group-random-intercept-variance">Between-group random intercept variance<a class="anchor" aria-label="anchor" href="#between-group-random-intercept-variance"></a></h3>
+<p><strong>Between-group random intercept variance</strong></p>
 <p>The random intercept variance, or <em>between-group</em> variance
 for the intercept (τ<sub>00</sub>),
 is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. It indicates how much groups
 or subjects differ from each other.</p>
-</div>
-<div class="section">
-<h3 id="between-group-random-slope-variance">Between-group random slope variance<a class="anchor" aria-label="anchor" href="#between-group-random-slope-variance"></a></h3>
+<p><strong>Between-group random slope variance</strong></p>
 <p>The random slope variance, or <em>between-group</em> variance
 for the slopes (τ<sub>11</sub>)
 is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
 for mixed models with random slopes. It indicates how much groups
 or subjects differ from each other according to their slopes.</p>
-</div>
-<div class="section">
-<h3 id="random-slope-intercept-correlation">Random slope-intercept correlation<a class="anchor" aria-label="anchor" href="#random-slope-intercept-correlation"></a></h3>
+<p><strong>Random slope-intercept correlation</strong></p>
 <p>The random slope-intercept correlation
 (ρ<sub>01</sub>)
 is obtained from <code><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr()</a></code>. This measure is only available
 for mixed models with random intercepts and slopes.</p>
-</div><p><strong>Note:</strong> For the within-group and between-group variance, variance
+<p><strong>Note:</strong> For the within-group and between-group variance, variance
 and standard deviations (which are simply the square root of the variance)
 are shown.</p>
     </div>

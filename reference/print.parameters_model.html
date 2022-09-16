@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -236,6 +236,12 @@ show the additional information on how to interpret coefficients of models
 with log-transformed response variables or with log-/logit-links when the
 <code>exponentiate</code> argument in <code><a href="model_parameters.html">model_parameters()</a></code> is not <code>TRUE</code>. Set this option
 to <code>FALSE</code> to hide this message when printing <code><a href="model_parameters.html">model_parameters()</a></code> objects.</p></li>
+<li><p><code>parameters_labels</code>: <code>options(parameters_labels = TRUE)</code> will use variable
+and value labels for pretty names, if data is labelled. If no labels
+available, default pretty names are used.</p></li>
+<li><p><code>parameters_select</code>: <code>options(parameters_select = &lt;value&gt;)</code> will set the
+default for the <code>select</code> argument. See argument's documentation for available
+options.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="interpretation-of-interaction-terms">Interpretation of Interaction Terms<a class="anchor" aria-label="anchor" href="#interpretation-of-interaction-terms"></a></h2>
