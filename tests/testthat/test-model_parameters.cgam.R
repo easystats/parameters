@@ -45,6 +45,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
         ran_pars = TRUE,
         show_summary = FALSE,
         log_link = FALSE,
+        pretty_labels = c(`(Intercept)` = "(Intercept)"),
         test_statistic = "t-statistic",
         log_response = FALSE,
         log_predictors = FALSE,
