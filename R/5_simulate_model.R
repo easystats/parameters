@@ -1,6 +1,8 @@
-#' Simulated draws from model coefficients
+#' @title Simulated draws from model coefficients
+#' @name simulate_model
 #'
-#' Simulate draws from a statistical model to return a data frame of estimates.
+#' @description Simulate draws from a statistical model to return a data frame
+#' of estimates.
 #'
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,
@@ -13,24 +15,23 @@
 #'
 #' @return A data frame.
 #'
-#' @seealso [`simulate_parameters()`][simulate_parameters],
-#' [`bootstrap_model()`][bootstrap_model],
-#' [`bootstrap_parameters()`][bootstrap_parameters]
+#' @seealso [`simulate_parameters()`], [`bootstrap_model()`], [`bootstrap_parameters()`]
 #'
 #' @details
-#'   \subsection{Technical Details}{
-#'     `simulate_model()` is a computationally faster alternative
-#'     to `bootstrap_model()`. Simulated draws for coefficients are based
-#'     on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
-#'     `mu = coef(model)` and variance `Sigma = vcov(model)`.
-#'   }
-#'   \subsection{Models with Zero-Inflation Component}{
-#'     For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
-#'     **countreg**, the `component` argument can be used to specify
-#'     which parameters should be simulated. For all other models, parameters
-#'     from the conditional component (fixed effects) are simulated. This may
-#'     include smooth terms, but not random effects.
-#'   }
+#' **Technical Details**
+#'
+#' `simulate_model()` is a computationally faster alternative
+#' to `bootstrap_model()`. Simulated draws for coefficients are based
+#' on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
+#' `mu = coef(model)` and variance `Sigma = vcov(model)`.
+#'
+#' **Models with Zero-Inflation Component**
+#'
+#' For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
+#' **countreg**, the `component` argument can be used to specify
+#' which parameters should be simulated. For all other models, parameters
+#' from the conditional component (fixed effects) are simulated. This may
+#' include smooth terms, but not random effects.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)

@@ -58,22 +58,25 @@ included in the summary output.}
 A data frame with simulated parameters.
 }
 \description{
-Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.
+Compute simulated draws of parameters and their related indices
+such as Confidence Intervals (CI) and p-values. Simulating parameter draws
+can be seen as a (computationally faster) alternative to bootstrapping.
 }
 \details{
-\subsection{Technical Details}{
+\strong{Technical Details}
+
 \code{simulate_parameters()} is a computationally faster alternative
 to \code{bootstrap_parameters()}. Simulated draws for coefficients are based
 on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
-}
-\subsection{Models with Zero-Inflation Component}{
+
+\strong{Models with Zero-Inflation Component}
+
 For models from packages \strong{glmmTMB}, \strong{pscl}, \strong{GLMMadaptive} and
 \strong{countreg}, the \code{component} argument can be used to specify
 which parameters should be simulated. For all other models, parameters
 from the conditional component (fixed effects) are simulated. This may
 include smooth terms, but not random effects.
-}
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
@@ -96,7 +99,9 @@ if (require("glmmTMB", quietly = TRUE)) {
 }
 }
 \references{
-Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143
+Gelman A, Hill J. Data analysis using regression and
+multilevel/hierarchical models. Cambridge; New York: Cambridge University
+Press 2007: 140-143
 }
 \seealso{
 \code{\link[=bootstrap_model]{bootstrap_model()}}, \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}

@@ -1,7 +1,7 @@
 #' @title Confidence Intervals (CI)
 #' @name ci.default
 #'
-#' @description Compute confidence intervals (CI) for frequentist models.
+#' @description `ci()` attempts to return confidence intervals of model parameters.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).

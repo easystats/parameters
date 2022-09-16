@@ -1,13 +1,12 @@
-#' p-values
+#' @title p-values
+#' @name p_value
 #'
-#' This function attempts to return, or compute, p-values of a model's
+#' @description This function attempts to return, or compute, p-values of a model's
 #' parameters. See the documentation for your object's class:
-#' \itemize{
-#'  \item{[Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)}
-#'  \item{[Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)}
-#'  \item{[Marginal effects models][p_value.poissonmfx] (**mfx**)}
-#'  \item{[Models with special components][p_value.DirichletRegModel] (`DirichletRegModel`, `clm2`, `cgam`, ...)}
-#'  }
+#' - [Bayesian models][p_value.BFBayesFactor] (**rstanarm**, **brms**, **MCMCglmm**, ...)
+#' - [Zero-inflated models][p_value.zeroinfl] (`hurdle`, `zeroinfl`, `zerocount`, ...)
+#' - [Marginal effects models][p_value.poissonmfx] (**mfx**)
+#' - [Models with special components][p_value.DirichletRegModel] (`DirichletRegModel`, `clm2`, `cgam`, ...)
 #'
 #' @param model A statistical model.
 #' @param adjust Character value naming the method used to adjust p-values or

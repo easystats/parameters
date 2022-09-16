@@ -56,7 +56,7 @@ of class \code{merMod} when \code{method=boot}.}
 A data frame containing the CI bounds.
 }
 \description{
-Compute confidence intervals (CI) for frequentist models.
+\code{ci()} attempts to return confidence intervals of model parameters.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 

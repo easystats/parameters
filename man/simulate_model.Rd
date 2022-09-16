@@ -34,22 +34,24 @@ may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"
 A data frame.
 }
 \description{
-Simulate draws from a statistical model to return a data frame of estimates.
+Simulate draws from a statistical model to return a data frame
+of estimates.
 }
 \details{
-\subsection{Technical Details}{
+\strong{Technical Details}
+
 \code{simulate_model()} is a computationally faster alternative
 to \code{bootstrap_model()}. Simulated draws for coefficients are based
 on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
-}
-\subsection{Models with Zero-Inflation Component}{
+
+\strong{Models with Zero-Inflation Component}
+
 For models from packages \strong{glmmTMB}, \strong{pscl}, \strong{GLMMadaptive} and
 \strong{countreg}, the \code{component} argument can be used to specify
 which parameters should be simulated. For all other models, parameters
 from the conditional component (fixed effects) are simulated. This may
 include smooth terms, but not random effects.
-}
 }
 \examples{
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
@@ -68,7 +70,5 @@ if (require("glmmTMB", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[=simulate_parameters]{simulate_parameters()}},
-\code{\link[=bootstrap_model]{bootstrap_model()}},
-\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
+\code{\link[=simulate_parameters]{simulate_parameters()}}, \code{\link[=bootstrap_model]{bootstrap_model()}}, \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
 }
