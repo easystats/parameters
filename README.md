@@ -84,7 +84,7 @@ these vignettes:
 
 In case you want to file an issue or contribute in another way to the
 package, please follow [this
-guide](https://github.com/easystats/parameters/blob/master/.github/CONTRIBUTING.md).
+guide](https://github.com/easystats/parameters/blob/main/.github/CONTRIBUTING.md).
 For questions about the functionality, you may either contact us via
 email or also file an issue.
 
