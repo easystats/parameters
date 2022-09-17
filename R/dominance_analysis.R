@@ -141,24 +141,24 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (!insight::is_regression_model(model)) {
     stop(insight::format_message(
-      paste(deparse(substitute(model)), "is not a supported insight model."),
-      "You may be able to dominance analyze this model using the domir package."
+      paste(deparse(substitute(model)), "is not a supported {.pkg insight} model."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
     ), call. = FALSE)
   }
 
   if (!any(utils::.S3methods("r2", class = class(model)[[1]], envir = getNamespace("performance")) ==
     paste0("r2.", class(model)[[1]]))) {
     stop(insight::format_message(
-      paste(deparse(substitute(model)), "does not have a perfomance-supported r2 method."),
-      "You may be able to dominance analyze this model using the domir package."
+      paste(deparse(substitute(model)), "does not have a {.pkg perfomance}-supported `r2()` method."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
     ), call. = FALSE)
   }
 
   model_info <- insight::model_info(model)
   if (any(unlist(model_info[c("is_bayesian", "is_mixed", "is_gam", "is_multivariate", "is_zero_inflated", "is_hurdle")]))) {
     stop(insight::format_message(
-      paste0("`dominance_analysis()` does not yet support models of class ", class(model), "."),
-      "You may be able to dominance analyze this model using the domir package."
+      paste0("`dominance_analysis()` does not yet support models of class `", class(model), "`."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
     ), call. = FALSE)
   }
 
