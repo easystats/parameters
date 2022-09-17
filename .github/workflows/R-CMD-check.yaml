@@ -1,6 +1,5 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
-
 on:
   push:
     branches: [main, master]
@@ -11,66 +10,4 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: macOS-latest,   r: 'release'}
-          - {os: macOS-latest,   r: 'oldrel'}
-
-          - {os: windows-latest, r: 'devel'}
-          - {os: windows-latest, r: 'release'}
-          - {os: windows-latest, r: 'oldrel'}
-
-          - {os: ubuntu-latest,  r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,  r: 'release'}
-          - {os: ubuntu-latest,  r: 'oldrel'}
-
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
-      _R_CHECK_CRAN_INCOMING_: false
-      _R_CHECK_FORCE_SUGGESTS_: false
-
-    steps:
-      - uses: actions/checkout@v2
-
-      # Always try to use the latest pandoc version
-      # https://github.com/jgm/pandoc/releases
-      - uses: r-lib/actions/setup-pandoc@v2
-        with:
-          pandoc-version: '2.19.2'
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
-
-      # TODO: Check which of the ignore conditions are still relevant given the
-      # current suggested dependencies and the minimum supported R version.
-      # Update if anything out of date or not needed anymore.
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::rcmdcheck
-            any::XML
-            metafor=?ignore-before-r=4.0.0
-            emmeans=?ignore-before-r=4.1.0
-            rmcorr=?ignore-before-r=4.1.0
-            randomForest=?ignore-before-r=4.1.0
-            MuMIn=?ignore-before-r=4.2.0
-            FactoMineR=?ignore-before-r=4.0.0
-            fastICA=?ignore-before-r=4.0.0
-          needs: check
-
-      # Don't error on "note" because if any of the suggested packages are not available
-      # for a given R version, this generates a NOTE causing unnecessary build failure
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          error-on: '"warning"'
-          upload-snapshots: true
+    uses: easystats/workflows/.github/workflows/R-CMD-check.yaml@main
