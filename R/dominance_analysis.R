@@ -190,18 +190,18 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop("Nested lists are not allowed in sets.", call. = FALSE)
     }
 
-    if (!all(sapply(sets, isa, "formula"))) {
-      stop("Each element of list in sets must be a formula.", call. = FALSE)
+    if (!all(sapply(sets, inherits, "formula"))) {
+      stop("Each element of list in `sets` must be a formula.", call. = FALSE)
     }
 
     if (any(sapply(sets, function(x) attr(stats::terms(x), "response") == 1))) {
-      stop("Formulas in sets argument must not have responses/left hand sides.", call. = FALSE)
+      stop("Formulas in `sets` argument must not have responses/left hand sides.", call. = FALSE)
     }
   }
 
   if (!is.null(all)) {
-    if (!isa(all, "formula")) {
-      stop("all argument must be submitted as a formula.", call. = FALSE)
+    if (!inherits(all, "formula")) {
+      stop("`all` argument must be submitted as a formula.", call. = FALSE)
     }
 
     if (attr(stats::terms(all), "response") == 1) {
