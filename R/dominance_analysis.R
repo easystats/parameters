@@ -169,7 +169,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   if (!all(insight::find_predictors(model)$conditional %in% attr(stats::terms(insight::find_formula(model)$conditional), "term.labels"))) {
     stop(insight::format_message(
       "Predictors do not match terms.",
-      "This usually occurs when there are in-formula predictor transformations such as log(x) or I(x+z)."
+      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z).`"
     ), call. = FALSE)
   }
 
@@ -183,11 +183,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (!is.null(sets)) {
     if (!is.list(sets)) {
-      stop("sets argument must be submitted as list.", call. = FALSE)
+      stop("`sets` argument must be submitted as list.", call. = FALSE)
     }
 
     if (length(sets) != length(unlist(sets))) {
-      stop("Nested lists are not allowed in sets.", call. = FALSE)
+      stop("Nested lists are not allowed in `sets`.", call. = FALSE)
     }
 
     if (!all(sapply(sets, inherits, "formula"))) {
@@ -205,12 +205,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     }
 
     if (attr(stats::terms(all), "response") == 1) {
-      stop("Formula in all argument must not have a response/left hand side.", call. = FALSE)
+      stop("Formula in `all` argument must not have a response/left hand side.", call. = FALSE)
     }
   }
 
   if (!is.null(quote_args) && !all(is.character(quote_args))) {
-    stop("All arguments in quote_args must be characters.", call. = FALSE)
+    stop("All arguments in `quote_args` must be characters.", call. = FALSE)
   }
 
   # Collect components for arguments ----
@@ -235,7 +235,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
         insight::format_message(
           "Terms",
           paste(wrong_set_terms, sep = " "),
-          "in sets argument do not match any predictors in model."
+          "in `sets` argument do not match any predictors in model."
         ),
         call. = FALSE
       )
@@ -255,8 +255,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     if (any(set_names %in% c("all", "constant"))) {
       stop(
         insight::format_message(
-          "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
-          "Please rename any sets currently named 'all' or 'constant.'"
+          "Names \"all\" and \"constant\" are reserved for subset names in the `dominance_analysis()` function.",
+          "Please rename any sets currently named \"all\" or \"constant\"."
         ),
         call. = FALSE
       )
@@ -289,7 +289,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop(insight::format_message(
         "Terms",
         paste(reused_terms, sep = " "),
-        "in all argument are also used in sets argument."
+        "in all argument are also used in `sets` argument."
       ), call. = FALSE)
     }
 
@@ -299,7 +299,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       stop(insight::format_message(
         "Terms",
         paste(wrong_all_terms, sep = " "),
-        "in all argument do not match any predictors in model."
+        "in `all` argument do not match any predictors in model."
       ), call. = FALSE)
     }
 
@@ -312,7 +312,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   if (any(ivs %in% c("all", "constant"))) {
     stop(
       insight::format_message(
-        "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
+        "Names 'all' and 'constant' are reserved for subset names in the `dominance_analysis()` function.",
         "Please rename any predictors currently named 'all' or 'constant.'",
         "Alternatively, put the predictor in a set by itself."
       ),
@@ -342,7 +342,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (length(which(names(args) %in% c("formula", "data"))) != 2) {
     # exit if formula and data arguments missing
-    stop("Model submitted does not have a formula and data argument.", call. = FALSE)
+    stop("Model submitted does not have a formula and `data` argument.", call. = FALSE)
   }
 
   args <- args[loc] # remove formula and data arguments
@@ -351,7 +351,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   # quote arguments for domin
   for (arg in quote_args) {
     if (!(arg %in% names(args))) {
-      stop(arg, " in quote_args not among arguments in model.", call. = FALSE)
+      stop(arg, " in `quote_args` not among arguments in model.", call. = FALSE)
     } else {
       args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
     }
