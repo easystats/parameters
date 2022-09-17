@@ -89,7 +89,11 @@ if (.runThisTest &&
       c("(Intercept)", "cyl", "(Intercept)", "(Intercept)", "(Intercept)")
     )
     expect_equal(as.vector(params$Level), c(NA, NA, "3", "4", "5"))
-    expect_equal(params$Coefficient, c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586), tolerance = 1e-2)
+    expect_equal(
+      params$Coefficient,
+      c(0.65112, 0.40418, 0.16923, 0.05663, -0.22586),
+      tolerance = 1e-2
+    )
   })
 
 
