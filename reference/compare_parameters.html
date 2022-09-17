@@ -106,6 +106,7 @@ models. See <code><a href="model_parameters.html">model_parameters()</a></code> 
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -123,6 +124,7 @@ models. See <code><a href="model_parameters.html">model_parameters()</a></code> 
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  pretty_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -216,6 +218,14 @@ templates are possible:</p><ul><li><p><code>"ci"</code>: Estimate and confidence
 <dt>column_names</dt>
 <dd><p>Character vector with strings that should be used as
 column headers. Must be of same length as number of models in <code>...</code>.</p></dd>
+
+
+<dt>pretty_names</dt>
+<dd><p>Can be <code>TRUE</code>, which will return "pretty" (i.e. more human
+readable) parameter names. Or <code>"labels"</code>, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had <code>"label"</code> and <code>"labels"</code>
+attributes. See also section <em>Global Options to Customize Messages when Printing</em>.</p></dd>
 
 
 <dt>keep</dt>

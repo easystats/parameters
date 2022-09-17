@@ -225,8 +225,11 @@ or <code>"html"</code>.</p></dd>
 
 
 <dt>pretty_names</dt>
-<dd><p>Return "pretty" (i.e. more human readable) parameter
-names.</p></dd>
+<dd><p>Can be <code>TRUE</code>, which will return "pretty" (i.e. more human
+readable) parameter names. Or <code>"labels"</code>, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had <code>"label"</code> and <code>"labels"</code>
+attributes. See also section <em>Global Options to Customize Messages when Printing</em>.</p></dd>
 
 
 <dt>split_components</dt>
