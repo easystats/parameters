@@ -38,6 +38,11 @@
 #'   number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
 #'   to have scientific notation with 4 decimal places, or `digits = "signif5"`
 #'   for 5 significant figures (see also [signif()]).
+#' @param pretty_names Can be `TRUE`, which will return "pretty" (i.e. more human
+#'   readable) parameter names. Or `"labels"`, in which case value and variable
+#'   labels will be used as parameters names. The latter only works for "labelled"
+#'   data, i.e. if the data used to fit the model had `"label"` and `"labels"`
+#'   attributes. See also section _Global Options to Customize Messages when Printing_.
 #' @inheritParams insight::format_table
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms

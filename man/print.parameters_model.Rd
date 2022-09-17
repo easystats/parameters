@@ -29,8 +29,11 @@
 \arguments{
 \item{x, object}{An object returned by \code{\link[=model_parameters]{model_parameters()}}.}
 
-\item{pretty_names}{Return "pretty" (i.e. more human readable) parameter
-names.}
+\item{pretty_names}{Can be \code{TRUE}, which will return "pretty" (i.e. more human
+readable) parameter names. Or \code{"labels"}, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had \code{"label"} and \code{"labels"}
+attributes. See also section \emph{Global Options to Customize Messages when Printing}.}
 
 \item{split_components}{Logical, if \code{TRUE} (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is

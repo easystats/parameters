@@ -75,6 +75,7 @@ compare_parameters <- function(...,
                                p_adjust = NULL,
                                style = NULL,
                                column_names = NULL,
+                               pretty_names = TRUE,
                                keep = NULL,
                                drop = NULL,
                                verbose = TRUE,
@@ -182,7 +183,7 @@ compare_parameters <- function(...,
     }
 
     # set pretty parameter names
-    dat <- .set_pretty_names(dat)
+    dat <- .set_pretty_names(dat, pretty_names)
 
     # make sure we have a component-column, for merging
     if (!"Component" %in% colnames(dat)) {
@@ -237,7 +238,14 @@ compare_models <- compare_parameters
 # helper ----------------------------
 
 
-.set_pretty_names <- function(x) {
+.set_pretty_names <- function(x, pretty_names) {
+  # check if pretty names should be replaced by value labels
+  # (if we have labelled data)
+  if (isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")) {
+    attr(x, "pretty_names") <- attr(x, "pretty_labels", exact = TRUE)
+    pretty_names <- TRUE
+  }
+
   att <- attributes(x)
 
   if (!is.null(att$pretty_names)) {

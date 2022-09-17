@@ -16,6 +16,7 @@ compare_parameters(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
+  pretty_names = TRUE,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -33,6 +34,7 @@ compare_models(
   p_adjust = NULL,
   style = NULL,
   column_names = NULL,
+  pretty_names = TRUE,
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
@@ -109,6 +111,12 @@ templates are possible:
 
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
+
+\item{pretty_names}{Can be \code{TRUE}, which will return "pretty" (i.e. more human
+readable) parameter names. Or \code{"labels"}, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had \code{"label"} and \code{"labels"}
+attributes. See also section \emph{Global Options to Customize Messages when Printing}.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
