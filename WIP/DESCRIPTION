@@ -177,7 +177,6 @@ Suggests:
     rstanarm,
     sandwich,
     see (>= 0.6.9),
-    sjstats,
     survey,
     survival,
     testthat,
