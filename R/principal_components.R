@@ -252,7 +252,7 @@ principal_components.data.frame <- function(x,
   # original data
   original_data <- x
 
-  # remove missings
+  # remove missing
   x <- stats::na.omit(x)
 
   # PCA
@@ -360,7 +360,7 @@ principal_components.data.frame <- function(x,
     .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
   attr(loadings, "data") <- data_name
 
-  attr(loadings, "data_set") <- original_data
+  attr(loadings, "dataset") <- original_data
 
   # add class-attribute for printing
   class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))

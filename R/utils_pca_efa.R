@@ -39,11 +39,11 @@
 #' @export
 get_scores <- function(x, n_items = NULL) {
   subscales <- closest_component(x)
-  data_set <- attributes(x)$data_set
+  dataset <- attributes(x)$dataset
 
   out <- lapply(sort(unique(subscales)), function(.subscale) {
     columns <- names(subscales)[subscales == .subscale]
-    items <- data_set[columns]
+    items <- dataset[columns]
 
     if (is.null(n_items)) {
       .n_items <- round(ncol(items) / 2)
@@ -149,8 +149,8 @@ predict.parameters_efa <- function(object,
         out <- .merge_na(object, out)
       }
     } else {
-      if ("data_set" %in% names(attri)) {
-        out <- as.data.frame(stats::predict(attri$model, data = attri$data_set))
+      if ("dataset" %in% names(attri)) {
+        out <- as.data.frame(stats::predict(attri$model, data = attri$dataset))
       } else {
         stop(insight::format_message(
           "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}."
