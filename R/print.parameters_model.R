@@ -368,6 +368,7 @@ summary.parameters_stan <- function(object, ...) {
 
 .print_caption <- function(x, caption = NULL, format = "text") {
   no_caption <- attributes(x)$no_caption
+  # no table-title for certain model tables, indicated by the no_caption attribute
   if (isTRUE(no_caption)) {
     return(NULL)
   }
@@ -386,6 +387,7 @@ summary.parameters_stan <- function(object, ...) {
     zero_inflated <- ""
   }
 
+  # caption = NULL, set default for HTML tables
   if (identical(format, "html") && is.null(caption)) {
     if (isTRUE(attributes(x)$is_ggeffects)) {
       table_caption <- title_attribute
@@ -394,16 +396,24 @@ summary.parameters_stan <- function(object, ...) {
     }
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
+
+  # caption is NULL, set default title, using title-attribute
   } else if (!is.null(title_attribute) && is.null(caption)) {
     if (length(title_attribute) == 1 && title_attribute == "") {
       table_caption <- NULL
     } else {
       table_caption <- title_attribute
     }
+
+  # if caption is not empty, use it as title
   } else if (!is.null(caption) && caption != "") {
     table_caption <- caption
+
+  # no table-title if caption is empty string
   } else if (!is.null(caption) && caption == "") {
     table_caption <- NULL
+
+  # default title for sub-components of models
   } else if (identical(format, "text")) {
     table_caption <- c(paste0("# ", eff_name, " Effects", zero_inflated), "blue")
   } else {
