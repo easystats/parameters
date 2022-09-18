@@ -2,6 +2,8 @@
 
 ## Breaking
 
+* The attribute name in PCA / EFA has been changed from `data_set` to `dataset`.
+
 * The minimum needed R version has been bumped to `3.6`.
 
 * Removed deprecated argument `parameters` from `model_parameters()`.
@@ -37,7 +39,7 @@
 
 ## New functions
 
-* New function `dominance_analysis()`, to compute dominance analysis 
+* New function `dominance_analysis()`, to compute dominance analysis
   statistics and designations.
 
 ## Changes to functions
@@ -79,20 +81,20 @@
 
 * `model_parameters()` for mixed models gains a `ci_random` argument, to toggle
   whether confidence intervals for random effects parameters should also be
-  computed. Set to `FALSE` if calculation of confidence intervals for random 
+  computed. Set to `FALSE` if calculation of confidence intervals for random
   effects parameters takes too long.
 
 * `ci()` for *glmmTMB* models with `method = "profile"` is now more robust.
 
 ## Bug fixes
 
-* Fixed issue with *glmmTMB* models when calculating confidence 
+* Fixed issue with *glmmTMB* models when calculating confidence
   intervals for random effects failed due to singular fits.
-  
+
 * `display()` now correctly includes custom text and additional information
   in the footer (#722).
 
-* Fixed issue with argument `column_names` in `compare_parameters()` when 
+* Fixed issue with argument `column_names` in `compare_parameters()` when
   strings contained characters that needed to be escaped for regular expressions.
 
 * Fixed issues with unknown arguments in `model_parameters()` for *lavaan* models
@@ -119,10 +121,10 @@
 
 * `model_parameters()` for mixed models from package *lme4* now also reports
   confidence intervals for random effect variances by default. Formerly, CIs
-  were only included when `ci_method` was `"profile"` or `"boot"`. The 
+  were only included when `ci_method` was `"profile"` or `"boot"`. The
   *merDeriv* package is required for this feature.
 
-* `model_parameters()` for `htest` objects now also supports models from 
+* `model_parameters()` for `htest` objects now also supports models from
   `var.test()`.
 
 * Improved support for `anova.rms` models in `model_parameters()`.
@@ -131,12 +133,12 @@
   and `deltaMethods` objects from package *car*.
 
 * `model_parameters()` now checks arguments and informs the user if specific
-  given arguments are not supported for that model class (e.g., `"vcov"` is 
+  given arguments are not supported for that model class (e.g., `"vcov"` is
   currently not supported for models of class *glmmTMB*).
 
 ## Bug fixes
 
-* The `vcov` argument, used for computing robust standard errors, did not 
+* The `vcov` argument, used for computing robust standard errors, did not
   calculate the correct p-values and confidence intervals for models of class
   `lme`.
 
@@ -154,7 +156,7 @@
 * Added options to set defaults for different arguments. Currently supported:
   - `options("parameters_summary" = TRUE/FALSE)`, which sets the default value
     for the `summary` argument in `model_parameters()` for non-mixed models.
-  - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default 
+  - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default
     value for the `summary` argument in `model_parameters()` for mixed models.
 
 * Minor improvements for `print()` methods.
@@ -192,8 +194,8 @@
 
 * `model_parameters()` for mixed models gains an `include_sigma` argument. If
   `TRUE`, adds the residual variance, computed from the random effects variances,
-  as an attribute to the returned data frame. Including sigma was the default 
-  behaviour, but now defaults to `FALSE` and is only included when 
+  as an attribute to the returned data frame. Including sigma was the default
+  behaviour, but now defaults to `FALSE` and is only included when
   `include_sigma = TRUE`, because the calculation was very time consuming.
 
 * `model_parameters()` for `merMod` models now also computes CIs for the random
@@ -213,14 +215,14 @@
 * `model_prameters()` for `MixMod` objects (package *GLMMadaptive*) gains a
   `robust` argument, to compute robust standard errors.
 
-## Bug fixes 
+## Bug fixes
 
 * Fixed bug with `ci()` for class `merMod` when `method="boot"`.
 
-* Fixed issue with correct association of components for ordinal models of 
+* Fixed issue with correct association of components for ordinal models of
   classes `clm` and `clm2`.
 
-* Fixed issues in `random_parameters()` and  `model_parameters()` for mixed 
+* Fixed issues in `random_parameters()` and  `model_parameters()` for mixed
   models without random intercept.
 
 * Confidence intervals for random parameters in `model_parameters()` failed for
