@@ -19,9 +19,9 @@
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
 #'   or `"cluster"` (and more). See [psych::fa()] for details.
 #' @param sparse Whether to compute sparse PCA (SPCA, using [sparsepca::spca()]).
-#' SPCA attempts to find sparse loadings (with few nonzero values), which improves
-#' interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
-#' [sparsepca::robspca()]).
+#'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
+#'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
+#'   [sparsepca::robspca()]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
