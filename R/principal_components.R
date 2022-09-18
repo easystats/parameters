@@ -18,6 +18,10 @@
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
 #'   or `"cluster"` (and more). See [psych::fa()] for details.
+#' @param sparse Whether to compute sparse PCA (SPCA, using [sparsepca::spca()]).
+#' SPCA attempts to find sparse loadings (with few nonzero values), which improves
+#' interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
+#' [sparsepca::robspca()]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
@@ -143,8 +147,19 @@
 #'
 #' \donttest{
 #' # Principal Component Analysis (PCA) -------------------
+#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'
+#' # Automated number of components
+#' principal_components(mtcars[, 1:4], n = "auto")
+#'
+#' # Sparse PCA
+#' if (require("sparsepca")) {
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
+#' }
+#'
+#' # Rotated PCA
 #' if (require("psych")) {
-#'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'   principal_components(mtcars[, 1:7],
 #'     n = 2, rotation = "oblimin",
 #'     threshold = "max", sort = TRUE
@@ -159,9 +174,6 @@
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
 #'   # rotated_data(pca)  # TODO: doesn't work
-#'
-#'   # Automated number of components
-#'   principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #' }
 #'
@@ -201,6 +213,7 @@
 principal_components <- function(x,
                                  n = "auto",
                                  rotation = "none",
+                                 sparse = FALSE,
                                  sort = FALSE,
                                  threshold = NULL,
                                  standardize = TRUE,
@@ -242,6 +255,7 @@ rotated_data <- function(pca_results) {
 principal_components.data.frame <- function(x,
                                             n = "auto",
                                             rotation = "none",
+                                            sparse = FALSE,
                                             sort = FALSE,
                                             threshold = NULL,
                                             standardize = TRUE,
@@ -255,19 +269,13 @@ principal_components.data.frame <- function(x,
   # remove missings
   x <- stats::na.omit(x)
 
-  # PCA
-  model <- stats::prcomp(x,
-                  retx = TRUE,
-                  center = standardize,
-                  scale. = standardize,
-                  ...)
-
-
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
 
-  # Rotation
+  # Catch and compute Rotated PCA
   if (rotation != "none") {
+    if(sparse) stop("Sparse PCA is currently incompatible with rotation. Use either `sparse=TRUE` or rotation.")
+
     loadings <- .pca_rotate(
       x,
       n,
@@ -281,7 +289,43 @@ principal_components.data.frame <- function(x,
     attr(loadings, "data") <- data_name
 
     return(loadings)
+
   }
+
+  # Compute PCA
+  if(is.character(sparse) && sparse == "robust") {
+    # Robust sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::robspca(x,
+                                center=standardize,
+                                scale=standardize,
+                                verbose=FALSE,
+                                ...)
+    model$rotation <- model$loadings
+    model$x <- model$scores
+
+  } else if(sparse == TRUE) {
+    # Sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::spca(x,
+                             center=standardize,
+                             scale=standardize,
+                             verbose=FALSE,
+                             ...)
+    model$rotation <- model$loadings
+    model$x <- model$scores
+
+  } else {
+    # Normal PCA
+    model <- stats::prcomp(x,
+                           retx = TRUE,
+                           center = standardize,
+                           scale. = standardize,
+                           ...)
+  }
+
 
   # Re-add centers and scales
   # if (standardize) {
