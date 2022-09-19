@@ -205,7 +205,6 @@ variance of the data along the new feature axes.
 }
 }
 \examples{
-
 library(parameters)
 
 \donttest{

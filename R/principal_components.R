@@ -142,7 +142,6 @@
 #'
 #'
 #' @examples
-#'
 #' library(parameters)
 #'
 #' \donttest{

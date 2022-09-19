@@ -550,9 +550,7 @@ model_parameters.default <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message(
-      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
-    ), call. = FALSE)
+    insight::format_warning("Argument `df_method` is deprecated. Please use `ci_method` instead.")
     ci_method <- df_method
   }
 
@@ -660,17 +658,16 @@ model_parameters.glm <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message(
-      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
-    ), call. = FALSE)
+    insight::format_warning("Argument `df_method` is deprecated. Please use `ci_method` instead.")
     ci_method <- df_method
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it
   if (insight::n_obs(model) > 1e4 && identical(ci_method, "profile")) {
-    message(insight::format_message(
-      "Profiled confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."
-    ))
+    insight::format_alert(
+      "Profiled confidence intervals may take longer time to compute.",
+      "Use `ci_method=\"wald\"` for faster computation of CIs."
+    )
   }
 
   args <- list(
