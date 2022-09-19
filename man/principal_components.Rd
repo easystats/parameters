@@ -26,6 +26,7 @@ principal_components(
   x,
   n = "auto",
   rotation = "none",
+  sparse = FALSE,
   sort = FALSE,
   threshold = NULL,
   standardize = TRUE,
@@ -75,6 +76,11 @@ data must still be passed as the first argument). If \code{NULL}, will
 compute it by running \code{cor()} on the passed data.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{sparse}{Whether to compute sparse PCA (SPCA, using \code{\link[sparsepca:spca]{sparsepca::spca()}}).
+SPCA attempts to find sparse loadings (with few nonzero values), which improves
+interpretability and avoids overfitting. Can be \code{TRUE} or \code{"robust"} (see
+\code{\link[sparsepca:robspca]{sparsepca::robspca()}}).}
 
 \item{pca_results}{The output of the \code{principal_components()} function.}
 
@@ -199,13 +205,23 @@ variance of the data along the new feature axes.
 }
 }
 \examples{
-
 library(parameters)
 
 \donttest{
 # Principal Component Analysis (PCA) -------------------
+principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+
+# Automated number of components
+principal_components(mtcars[, 1:4], n = "auto")
+
+# Sparse PCA
+if (require("sparsepca")) {
+  principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+  principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
+}
+
+# Rotated PCA
 if (require("psych")) {
-  principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
   principal_components(mtcars[, 1:7],
     n = 2, rotation = "oblimin",
     threshold = "max", sort = TRUE
@@ -220,9 +236,6 @@ if (require("psych")) {
   # which variables from the original data belong to which extracted component?
   closest_component(pca)
   # rotated_data(pca)  # TODO: doesn't work
-
-  # Automated number of components
-  principal_components(mtcars[, 1:4], n = "auto")
 }
 }
 

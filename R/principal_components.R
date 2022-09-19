@@ -18,6 +18,10 @@
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
 #'   or `"cluster"` (and more). See [psych::fa()] for details.
+#' @param sparse Whether to compute sparse PCA (SPCA, using [sparsepca::spca()]).
+#'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
+#'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
+#'   [sparsepca::robspca()]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
@@ -138,13 +142,23 @@
 #'
 #'
 #' @examples
-#'
 #' library(parameters)
 #'
 #' \donttest{
 #' # Principal Component Analysis (PCA) -------------------
+#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'
+#' # Automated number of components
+#' principal_components(mtcars[, 1:4], n = "auto")
+#'
+#' # Sparse PCA
+#' if (require("sparsepca")) {
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
+#' }
+#'
+#' # Rotated PCA
 #' if (require("psych")) {
-#'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'   principal_components(mtcars[, 1:7],
 #'     n = 2, rotation = "oblimin",
 #'     threshold = "max", sort = TRUE
@@ -159,9 +173,6 @@
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
 #'   # rotated_data(pca)  # TODO: doesn't work
-#'
-#'   # Automated number of components
-#'   principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #' }
 #'
@@ -201,6 +212,7 @@
 principal_components <- function(x,
                                  n = "auto",
                                  rotation = "none",
+                                 sparse = FALSE,
                                  sort = FALSE,
                                  threshold = NULL,
                                  standardize = TRUE,
@@ -222,7 +234,7 @@ rotated_data <- function(pca_results) {
   if (!is.null(original_data) && !is.null(rotated_matrix)) {
     compl_cases <- attributes(pca_results)$complete_cases
     if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
-      warning("Could not retrieve information about missing data.", call. = FALSE)
+      insight::format_warning("Could not retrieve information about missing data.")
       return(NULL)
     }
     original_data$.parameters_merge_id <- seq_len(nrow(original_data))
@@ -230,7 +242,7 @@ rotated_data <- function(pca_results) {
     out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
     out$.parameters_merge_id <- NULL
   } else {
-    warning(insight::format_message("Either the original or the rotated data could not be retrieved."), call. = FALSE)
+    insight::format_warning("Either the original or the rotated data could not be retrieved.")
     return(NULL)
   }
   out
@@ -242,6 +254,7 @@ rotated_data <- function(pca_results) {
 principal_components.data.frame <- function(x,
                                             n = "auto",
                                             rotation = "none",
+                                            sparse = FALSE,
                                             sort = FALSE,
                                             threshold = NULL,
                                             standardize = TRUE,
@@ -255,19 +268,15 @@ principal_components.data.frame <- function(x,
   # remove missings
   x <- stats::na.omit(x)
 
-  # PCA
-  model <- stats::prcomp(x,
-                  retx = TRUE,
-                  center = standardize,
-                  scale. = standardize,
-                  ...)
-
-
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
 
-  # Rotation
+  # Catch and compute Rotated PCA
   if (rotation != "none") {
+    if (sparse) {
+      insight::format_error("Sparse PCA is currently incompatible with rotation. Use either `sparse=TRUE` or `rotation`.")
+    }
+
     loadings <- .pca_rotate(
       x,
       n,
@@ -279,9 +288,47 @@ principal_components.data.frame <- function(x,
     )
 
     attr(loadings, "data") <- data_name
-
     return(loadings)
   }
+
+  # Compute PCA
+  if(is.character(sparse) && sparse == "robust") {
+    # Robust sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::robspca(
+      x,
+      center = standardize,
+      scale = standardize,
+      verbose = FALSE,
+      ...
+    )
+    model$rotation <- model$loadings
+    model$x <- model$scores
+
+  } else if(sparse == TRUE) {
+    # Sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::spca(
+      x,
+      center = standardize,
+      scale = standardize,
+      verbose = FALSE,
+      ...
+    )
+    model$rotation <- model$loadings
+    model$x <- model$scores
+
+  } else {
+    # Normal PCA
+    model <- stats::prcomp(x,
+                           retx = TRUE,
+                           center = standardize,
+                           scale. = standardize,
+                           ...)
+  }
+
 
   # Re-add centers and scales
   # if (standardize) {
@@ -397,21 +444,21 @@ principal_components.data.frame <- function(x,
                         original_data = NULL,
                         ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".", call. = FALSE)
+    insight::format_error("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
-    stop("`x` must be of class `prcomp` or a data frame.", call. = FALSE)
+    insight::format_error("`x` must be of class `prcomp` or a data frame.")
   }
 
   if (!inherits(x, "data.frame") && rotation != "varimax") {
-    stop(sprintf("`x` must be a data frame for `%s`-rotation.", rotation), call. = FALSE)
+    insight::format_error(sprintf("`x` must be a data frame for `%s`-rotation.", rotation))
   }
 
   # rotate loadings
   insight::check_if_installed("psych", reason = sprintf("`%s`-rotation.", rotation))
   if (!requireNamespace("psych", quietly = TRUE)) {
-    stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
+    insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
   }
 
   pca <- psych::principal(x, nfactors = n, rotate = rotation, ...)

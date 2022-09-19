@@ -2,7 +2,7 @@ Type: Package
 Package: parameters
 Title: Processing of Model Parameters
 Version: 0.18.2.7
-Authors@R: 
+Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
              role = c("aut", "cre"),
@@ -58,7 +58,7 @@ Authors@R:
              family = "Morrison",
              role = "ctb",
              email = "dmorrison01@ucla.edu",
-             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")),  
+             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")),
       person(given = "Joseph",
              family = "Luchman",
              role = "ctb",
@@ -82,7 +82,7 @@ Depends:
 Imports:
     bayestestR (>= 0.12.1),
     datawizard (>= 0.6.0),
-    insight (>= 0.18.2),
+    insight (>= 0.18.3),
     graphics,
     methods,
     stats,
@@ -182,8 +182,10 @@ Suggests:
     rmarkdown,
     rms,
     rstanarm,
+    rsvd,
     sandwich,
     see (>= 0.6.9),
+    sparsepca,
     survey,
     survival,
     testthat,
@@ -191,7 +193,7 @@ Suggests:
     truncreg,
     VGAM,
     WRS2
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
