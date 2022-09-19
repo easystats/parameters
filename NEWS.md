@@ -2,6 +2,8 @@
 
 ## Breaking
 
+* The attribute name in PCA / EFA has been changed from `data_set` to `dataset`.
+
 * The minimum needed R version has been bumped to `3.6`.
 
 * Removed deprecated argument `parameters` from `model_parameters()`.

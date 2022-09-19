@@ -81,6 +81,6 @@ factor_analysis.data.frame <- function(x,
     )
   }
 
-  attr(out, "data_set") <- x
+  attr(out, "dataset") <- x
   out
 }

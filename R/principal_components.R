@@ -227,7 +227,7 @@ principal_components <- function(x,
 #' @rdname principal_components
 #' @export
 rotated_data <- function(pca_results) {
-  original_data <- attributes(pca_results)$data_set
+  original_data <- attributes(pca_results)$dataset
   rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
 
@@ -265,7 +265,7 @@ principal_components.data.frame <- function(x,
   # original data
   original_data <- x
 
-  # remove missings
+  # remove missing
   x <- stats::na.omit(x)
 
   # N factors
@@ -407,7 +407,7 @@ principal_components.data.frame <- function(x,
     .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
   attr(loadings, "data") <- data_name
 
-  attr(loadings, "data_set") <- original_data
+  attr(loadings, "dataset") <- original_data
 
   # add class-attribute for printing
   class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
@@ -467,7 +467,7 @@ principal_components.data.frame <- function(x,
   attr(pca, "MSA") <- msa$MSAi
   out <- model_parameters(pca, sort = sort, threshold = threshold)
 
-  attr(out, "data_set") <- original_data
+  attr(out, "dataset") <- original_data
   attr(out, "complete_cases") <- stats::complete.cases(original_data)
   out
 }
