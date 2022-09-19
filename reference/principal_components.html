@@ -119,6 +119,7 @@ Details section).</p>
 <span>  <span class="va">x</span>,</span>
 <span>  n <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  rotation <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  sparse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sort <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  threshold <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  standardize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -188,6 +189,13 @@ compute it by running <code><a href="https://rdrr.io/r/stats/cor.html" class="ex
 
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
+
+
+<dt>sparse</dt>
+<dd><p>Whether to compute sparse PCA (SPCA, using <code><a href="https://rdrr.io/pkg/sparsepca/man/spca.html" class="external-link">sparsepca::spca()</a></code>).
+SPCA attempts to find sparse loadings (with few nonzero values), which improves
+interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robust"</code> (see
+<code><a href="https://rdrr.io/pkg/sparsepca/man/robspca.html" class="external-link">sparsepca::robspca()</a></code>).</p></dd>
 
 
 <dt>pca_results</dt>
@@ -335,13 +343,60 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Principal Component Analysis (PCA) -------------------</span></span></span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Loadings from Principal Component Analysis (no rotation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  |  PC2  | PC3  |  PC4  | PC5  |  PC6  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |       |      | -0.30 |      |       |    1.30   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |       |      |       |      | -0.21 |    1.18   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |       |      | -0.23 |      |       |    1.16   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.87  | 0.36  |      |       | 0.30 |       |    1.64   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.75 | 0.48  | 0.44 |       |      |       |    2.47   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       | 0.88  | -0.35 | 0.26 |       |      |       |    1.54   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     | -0.54 | -0.81 |      |       |      |       |    1.96   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The 6 principal components accounted for 99.30% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%, PC3 = 4.93%, PC4 = 2.26%, PC5 = 1.85%, PC6 = 1.08%).</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Automated number of components</span></span></span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Loadings from Principal Component Analysis (no rotation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.91  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The unique principal component accounted for 87.55% of the total variance of the original data.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Sparse PCA</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/erichson/spca" class="external-link">"sparsepca"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="st">"robust"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sparsepca</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # Loadings from Principal Component Analysis (no rotation)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  |  PC2  |  PC3  |  PC4  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        | -0.92 | 0.03  | -0.11 | -0.31 |    1.27   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        | 1.00  | 0.07  | -0.07 | -0.05 |    1.03   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        | 0.96  | -0.06 | 0.08  | -0.23 |    1.14   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        | 0.74  | 0.32  | 0.07  | 0.00  |    1.38   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        | -0.68 | 0.46  | 0.47  | -0.03 |    2.62   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        | 1.03  | -0.32 | 0.24  | -0.03 |    1.31   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        | -0.49 | -0.85 | 0.17  | 0.00  |    1.69   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.75%, PC2 = 16.53%, PC3 = 4.91%, PC4 = 2.24%).</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Rotated PCA</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>    n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>,</span></span>
 <span class="r-in"><span>    threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span></span></span>
@@ -356,20 +411,9 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span>  <span class="co"># which variables from the original data belong to which extracted component?</span></span></span>
 <span class="r-in"><span>  <span class="fu">closest_component</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="co"># rotated_data(pca)  # TODO: doesn't work</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># Automated number of components</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Loadings from Principal Component Analysis (no rotation)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.91  |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> The unique principal component accounted for 87.55% of the total variance of the original data.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  mpg  cyl disp   hp drat </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1    1    1    1    2 </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
