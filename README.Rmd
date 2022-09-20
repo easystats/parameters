@@ -34,24 +34,17 @@ Another important goal of the **parameters** package is to facilitate and stream
 
 [![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
-Run the following to install the stable release of **parameters** from CRAN:
+Type | Source | Command
+---|---|---
+Release | CRAN | `install.packages("parameters")`
+Development | r - universe | `install.packages("parameters", repos = "https://easystats.r-universe.dev")`
+Development | GitHub | `remotes::install_github("easystats/parameters")`
 
-```{r, eval=FALSE}
-install.packages("parameters")
-```
-
-Or this one to install the latest development version from R-universe...
-
-```{r, eval=FALSE}
-install.packages("parameters", repos = "https://easystats.r-universe.dev")
-```
-
-...or from GitHub:
-
-```{r, eval=FALSE}
-install.packages("remotes")
-remotes::install_github("easystats/parameters")
-```
+> **Tip**
+>
+> Instead of `library(parameters)`, use `library(easystats)`. This will make all features of the  easystats-ecosystem available.
+>
+> To stay updated, use `easystats::install_latest()`.
 
 ## Documentation
 

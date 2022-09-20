@@ -32,25 +32,18 @@ of (model) objects from many different packages.
 badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
 [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
-Run the following to install the stable release of **parameters** from
-CRAN:
+| Type        | Source       | Command                                                                      |
+|-------------|--------------|------------------------------------------------------------------------------|
+| Release     | CRAN         | `install.packages("parameters")`                                             |
+| Development | r - universe | `install.packages("parameters", repos = "https://easystats.r-universe.dev")` |
+| Development | GitHub       | `remotes::install_github("easystats/parameters")`                            |
 
-``` r
-install.packages("parameters")
-```
-
-Or this one to install the latest development version from R-universe…
-
-``` r
-install.packages("parameters", repos = "https://easystats.r-universe.dev")
-```
-
-…or from GitHub:
-
-``` r
-install.packages("remotes")
-remotes::install_github("easystats/parameters")
-```
+> **Tip**
+>
+> Instead of `library(parameters)`, use `library(easystats)`. This will
+> make all features of the easystats-ecosystem available.
+>
+> To stay updated, use `easystats::install_latest()`.
 
 ## Documentation
 
@@ -63,22 +56,22 @@ Click on the buttons above to access the package
 [easystats blog](https://easystats.github.io/blog/posts/), and check-out
 these vignettes:
 
-- [Summary of Model
-  Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
-- [Standardized Model
-  Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
-- [Robust Estimation of Standard Errors, Confidence Intervals and
-  p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
-- [Model Parameters and Missing
-  Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
-- [Feature reduction (PCA, cMDS,
-  ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
-- [Structural models (EFA, CFA,
-  SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
-- [Parameters
-  selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
-- [A Practical Guide for Panel Data
-  Analysis](https://easystats.github.io/parameters/articles/demean.html)
+-   [Summary of Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
+-   [Standardized Model
+    Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+-   [Robust Estimation of Standard Errors, Confidence Intervals and
+    p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
+-   [Model Parameters and Missing
+    Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
+-   [Feature reduction (PCA, cMDS,
+    ICA…)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
+-   [Structural models (EFA, CFA,
+    SEM…)](https://easystats.github.io/parameters/articles/efa_cfa.html)
+-   [Parameters
+    selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
+-   [A Practical Guide for Panel Data
+    Analysis](https://easystats.github.io/parameters/articles/demean.html)
 
 ## Contributing and Support
 
@@ -102,16 +95,16 @@ models in a consistent way. It can be considered as a lightweight
 alternative to [`broom::tidy()`](https://github.com/tidymodels/broom),
 with some notable differences:
 
-- The column names of the returned data frame are *specific* to their
-  content. For instance, the column containing the statistic is named
-  following the statistic name, i.e., *t*, *z*, etc., instead of a
-  generic name such as *statistic* (however, you can get standardized
-  (generic) column names using
-  [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
-- It is able to compute or extract indices not available by default,
-  such as *p-values*, *CIs*, etc.
-- It includes *feature engineering* capabilities, including parameters
-  [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
+-   The column names of the returned data frame are *specific* to their
+    content. For instance, the column containing the statistic is named
+    following the statistic name, i.e., *t*, *z*, etc., instead of a
+    generic name such as *statistic* (however, you can get standardized
+    (generic) column names using
+    [`standardize_names()`](https://easystats.github.io/insight/reference/standardize_names.html)).
+-   It is able to compute or extract indices not available by default,
+    such as *p-values*, *CIs*, etc.
+-   It includes *feature engineering* capabilities, including parameters
+    [bootstrapping](https://easystats.github.io/parameters/reference/bootstrap_parameters.html).
 
 ### Classical Regression Models
 
