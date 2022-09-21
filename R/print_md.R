@@ -83,10 +83,17 @@ print_md.parameters_model <- function(x,
     show_formula = show_formula,
     format = "markdown"
   )
-  if (!is.null(footer)) {
-    footer <- paste0("\n", footer, "\n", footer_stats)
-  } else {
-    footer <- footer_stats
+
+  # check if footer should be printed at all. can be FALSE, or "" to suppress footer
+  if (isFALSE(footer)) {
+    footer <- ""
+  }
+  if (!identical(footer, "")) {
+    if (!is.null(footer)) {
+      footer <- paste0("\n", footer, "\n", footer_stats)
+    } else {
+      footer <- footer_stats
+    }
   }
 
 

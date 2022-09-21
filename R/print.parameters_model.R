@@ -15,7 +15,11 @@
 #' @param show_sigma Logical, if `TRUE`, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
-#' @param caption Table caption as string. If `NULL`, no table caption is printed.
+#' @param caption Table caption as string. If `NULL`, depending on the model,
+#'   either a default caption or no table caption is printed. Use `caption = ""`
+#'   to suppress the table caption.
+#' @param footer Logical, if `TRUE`, print the default footer for the model.
+#'   If `FALSE`, no footer is printed.
 #' @param footer_digits Number of decimal places for values in the footer summary.
 #' @param groups Named list, can be used to group parameters in the printed output.
 #'   List elements may either be character vectors that match the name of those
@@ -153,6 +157,7 @@ print.parameters_model <- function(x,
                                    split_components = TRUE,
                                    select = NULL,
                                    caption = NULL,
+                                   footer = TRUE,
                                    digits = 2,
                                    ci_digits = 2,
                                    p_digits = 3,
@@ -221,12 +226,16 @@ print.parameters_model <- function(x,
   }
 
   # footer
-  footer <- .print_footer(
-    x,
-    digits = footer_digits,
-    show_sigma = show_sigma,
-    show_formula = show_formula
-  )
+  if (isTRUE(footer)) {
+    footer_string <- .print_footer(
+      x,
+      digits = footer_digits,
+      show_sigma = show_sigma,
+      show_formula = show_formula
+    )
+  } else {
+    footer_string <- NULL
+  }
 
   # get attributes
   verbose <- .additional_arguments(x, "verbose", TRUE)
@@ -236,7 +245,7 @@ print.parameters_model <- function(x,
     formatted_table,
     format = "text",
     caption = table_caption,
-    footer = footer,
+    footer = footer_string,
     width = column_width,
     ...
   ))

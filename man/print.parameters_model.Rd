@@ -11,6 +11,7 @@
   split_components = TRUE,
   select = NULL,
   caption = NULL,
+  footer = TRUE,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -45,7 +46,12 @@ be printed. If \code{NULL} (default), all columns are printed. The shortcut
 \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
 while \code{select = "short"} prints coefficient, standard errors and p-values.}
 
-\item{caption}{Table caption as string. If \code{NULL}, no table caption is printed.}
+\item{caption}{Table caption as string. If \code{NULL}, depending on the model,
+either a default caption or no table caption is printed. Use \code{caption = ""}
+to suppress the table caption.}
+
+\item{footer}{Logical, if \code{TRUE}, print the default footer for the model.
+If \code{FALSE}, no footer is printed.}
 
 \item{digits, ci_digits, p_digits}{Number of digits for rounding or
 significant figures. May also be \code{"signif"} to return significant
