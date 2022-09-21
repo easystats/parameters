@@ -159,6 +159,8 @@ predict.parameters_efa <- function(object,
     }
   } else {
     if (inherits(attri$model, c("psych", "fa"))) {
+      # Clean-up newdata (keep only the variables used in the model)
+      newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
       # psych:::predict.fa(object, data)
       out <- as.data.frame(stats::predict(attri$model, data = newdata))
     } else {
