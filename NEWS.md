@@ -32,6 +32,10 @@
 * Robust standard errors are now supported for `fixest` models with the `vcov`
   argument.
 
+* `print()` for `model_parameters()` gains a `foote` argument, which can be
+  used to suppress the footer in the output. Further more, if `footer = ""`
+  in `print_md()`, no footer is printed.
+
 ## Bug fixes
 
 * Fix erroneous warning for *p*-value adjustments when the differences between
