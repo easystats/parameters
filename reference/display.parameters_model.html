@@ -247,7 +247,9 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 
 
 <dt>caption</dt>
-<dd><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></dd>
+<dd><p>Table caption as string. If <code>NULL</code>, depending on the model,
+either a default caption or no table caption is printed. Use <code>caption = ""</code>
+to suppress the table caption.</p></dd>
 
 
 <dt>subtitle</dt>
@@ -258,10 +260,8 @@ data frames, <code>caption</code> may be a list of table captions, one for each 
 
 
 <dt>footer</dt>
-<dd><p>Table footer, as string. For markdown-formatted tables, table
-footers, due to the limitation in markdown rendering, are actually just a
-new text line under the table. If <code>x</code> is a list of data frames, <code>footer</code>
-may be a list of table captions, one for each table.</p></dd>
+<dd><p>Logical, if <code>TRUE</code>, print the default footer for the model.
+If <code>FALSE</code>, no footer is printed.</p></dd>
 
 
 <dt>align</dt>

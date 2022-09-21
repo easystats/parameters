@@ -99,6 +99,7 @@
 <span>  split_components <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footer <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  digits <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  ci_digits <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  p_digits <span class="op">=</span> <span class="fl">3</span>,</span>
@@ -145,7 +146,14 @@ while <code>select = "short"</code> prints coefficient, standard errors and p-va
 
 
 <dt>caption</dt>
-<dd><p>Table caption as string. If <code>NULL</code>, no table caption is printed.</p></dd>
+<dd><p>Table caption as string. If <code>NULL</code>, depending on the model,
+either a default caption or no table caption is printed. Use <code>caption = ""</code>
+to suppress the table caption.</p></dd>
+
+
+<dt>footer</dt>
+<dd><p>Logical, if <code>TRUE</code>, print the default footer for the model.
+If <code>FALSE</code>, no footer is printed.</p></dd>
 
 
 <dt>digits, ci_digits, p_digits</dt>
