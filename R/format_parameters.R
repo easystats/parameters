@@ -383,7 +383,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # name elements
     names(lbs) <- names(preds) <- colnames(mf)
-    labels <- tryCatch(setNames(unlist(lbs), unlist(preds)), error = function(e) NULL)
+    labels <- tryCatch(stats::setNames(unlist(lbs), unlist(preds)), error = function(e) NULL)
 
     # retrieve pretty names attribute
     pn <- attributes(params)$pretty_names
