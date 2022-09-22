@@ -15,7 +15,8 @@
 #' Elbow or the Gap method, with their own visualization functionalities. See
 #' the examples below for more details.
 #'
-#' @inheritParams check_clusterstructure
+#' @param x A data frame.
+#' @param standardize Standardize the dataframe before clustering (default).
 #' @param include_factors Logical, if `TRUE`, factors are converted to numerical
 #'   values in order to be included in the data for determining the number of
 #'   clusters. By default, factors are removed, because most methods that

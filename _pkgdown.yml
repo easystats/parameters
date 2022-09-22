@@ -79,7 +79,6 @@ reference:
 - title: "Data Reduction"
 - subtitle: "Cluster Analysis"
   contents:
-  - check_clusterstructure
   - cluster_analysis
   - cluster_centers
   - cluster_discrimination
@@ -89,9 +88,6 @@ reference:
   - predict.parameters_clusters
 - subtitle: "Factors and Principal Components"
   contents:
-  - check_factorstructure
-  - check_kmo
-  - check_sphericity_bartlett
   - convert_efa_to_cfa
   - factor_analysis
   - get_scores
