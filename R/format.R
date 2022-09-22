@@ -243,7 +243,8 @@ format.compare_parameters <- function(x,
       ci_brackets = ci_brackets,
       ci_digits = ci_digits,
       p_digits = p_digits,
-      zap_small = zap_small
+      zap_small = zap_small,
+      ...
     )
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
