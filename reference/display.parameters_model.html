@@ -12,7 +12,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.8</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -260,8 +260,9 @@ data frames, <code>caption</code> may be a list of table captions, one for each 
 
 
 <dt>footer</dt>
-<dd><p>Logical, if <code>TRUE</code>, print the default footer for the model.
-If <code>FALSE</code>, no footer is printed.</p></dd>
+<dd><p>Can either be <code>FALSE</code> or an empty string (i.e. <code>""</code>) to
+suppress the footer, <code>NULL</code> to print the default footer, or a string. The
+latter will combine the string value with the default footer.</p></dd>
 
 
 <dt>align</dt>
