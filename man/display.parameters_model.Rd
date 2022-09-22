@@ -152,8 +152,9 @@ no title or subtitle is printed, unless it is stored as attributes (\code{table_
 or its alias \code{table_caption}, and \code{table_subtitle}). If \code{x} is a list of
 data frames, \code{caption} may be a list of table captions, one for each table.}
 
-\item{footer}{Logical, if \code{TRUE}, print the default footer for the model.
-If \code{FALSE}, no footer is printed.}
+\item{footer}{Can either be \code{FALSE} or an empty string (i.e. \code{""}) to
+suppress the footer, \code{NULL} to print the default footer, or a string. The
+latter will combine the string value with the default footer.}
 
 \item{align}{Only applies to HTML tables. May be one of \code{"left"},
 \code{"right"} or \code{"center"}.}

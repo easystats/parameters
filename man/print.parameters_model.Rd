@@ -11,7 +11,7 @@
   split_components = TRUE,
   select = NULL,
   caption = NULL,
-  footer = TRUE,
+  footer = NULL,
   digits = 2,
   ci_digits = 2,
   p_digits = 3,
@@ -50,8 +50,9 @@ while \code{select = "short"} prints coefficient, standard errors and p-values.}
 either a default caption or no table caption is printed. Use \code{caption = ""}
 to suppress the table caption.}
 
-\item{footer}{Logical, if \code{TRUE}, print the default footer for the model.
-If \code{FALSE}, no footer is printed.}
+\item{footer}{Can either be \code{FALSE} or an empty string (i.e. \code{""}) to
+suppress the footer, \code{NULL} to print the default footer, or a string. The
+latter will combine the string value with the default footer.}
 
 \item{digits, ci_digits, p_digits}{Number of digits for rounding or
 significant figures. May also be \code{"signif"} to return significant

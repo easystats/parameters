@@ -18,8 +18,9 @@
 #' @param caption Table caption as string. If `NULL`, depending on the model,
 #'   either a default caption or no table caption is printed. Use `caption = ""`
 #'   to suppress the table caption.
-#' @param footer Logical, if `TRUE`, print the default footer for the model.
-#'   If `FALSE`, no footer is printed.
+#' @param footer Can either be `FALSE` or an empty string (i.e. `""`) to
+#'   suppress the footer, `NULL` to print the default footer, or a string. The
+#'   latter will combine the string value with the default footer.
 #' @param footer_digits Number of decimal places for values in the footer summary.
 #' @param groups Named list, can be used to group parameters in the printed output.
 #'   List elements may either be character vectors that match the name of those
@@ -157,7 +158,7 @@ print.parameters_model <- function(x,
                                    split_components = TRUE,
                                    select = NULL,
                                    caption = NULL,
-                                   footer = TRUE,
+                                   footer = NULL,
                                    digits = 2,
                                    ci_digits = 2,
                                    p_digits = 3,
@@ -226,15 +227,23 @@ print.parameters_model <- function(x,
   }
 
   # footer
-  if (isTRUE(footer)) {
-    footer_string <- .print_footer(
-      x,
-      digits = footer_digits,
-      show_sigma = show_sigma,
-      show_formula = show_formula
-    )
-  } else {
-    footer_string <- NULL
+  footer_stats <- .print_footer(
+    x,
+    digits = footer_digits,
+    show_sigma = show_sigma,
+    show_formula = show_formula
+  )
+
+  # check if footer should be printed at all. can be FALSE, or "" to suppress footer
+  if (isFALSE(footer)) {
+    footer <- ""
+  }
+  if (!identical(footer, "")) {
+    if (!is.null(footer)) {
+      footer <- paste0("\n", footer, "\n", footer_stats)
+    } else {
+      footer <- footer_stats
+    }
   }
 
   # get attributes
@@ -245,7 +254,7 @@ print.parameters_model <- function(x,
     formatted_table,
     format = "text",
     caption = table_caption,
-    footer = footer_string,
+    footer = footer,
     width = column_width,
     ...
   ))

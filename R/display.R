@@ -63,9 +63,23 @@ display.parameters_model <- function(object,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
-    print_html(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, footer_digits = footer_digits, align = align, ci_brackets = ci_brackets, show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small, verbose = verbose, ...)
+    print_html(
+      x = object, pretty_names = pretty_names, split_components = split_components,
+      select = select, digits = digits, caption = caption, subtitle = subtitle,
+      footer = footer, ci_digits = ci_digits, p_digits = p_digits,
+      footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
+      show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
+      verbose = verbose, ...
+    )
   } else {
-    print_md(x = object, pretty_names = pretty_names, split_components = split_components, select = select, digits = digits, caption = caption, subtitle = subtitle, footer = footer, ci_digits = ci_digits, p_digits = p_digits, footer_digits = footer_digits, ci_brackets = ci_brackets, show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small, verbose = verbose, ...)
+    print_md(
+      x = object, pretty_names = pretty_names, split_components = split_components,
+      select = select, digits = digits, caption = caption, subtitle = subtitle,
+      footer = footer, ci_digits = ci_digits, p_digits = p_digits,
+      footer_digits = footer_digits, ci_brackets = ci_brackets,
+      show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
+      verbose = verbose, ...
+    )
   }
 }
 
