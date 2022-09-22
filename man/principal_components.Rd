@@ -109,100 +109,88 @@ functions are available to access / display other information (see the
 Details section).
 }
 \details{
-\subsection{Methods and Utilities}{
+\strong{Methods and Utilities}
 \itemize{
-\item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically
-estimates the optimal number of dimensions to retain.
-
+\item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically estimates the optimal
+number of dimensions to retain.
 \item \code{performance::check_factorstructure()} checks the suitability of the
-data for factor analysis using the
-sphericity (see \code{performance::check_sphericity_bartlett()}) and the
-kmo (see \code{performance::check_kmo()}) KMO measure.
-
-\item{\code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures
-of internal consistencies applied to the (sub)scales (i.e., components)
-extracted from the PCA.}
-
-\item{Running \code{summary} returns information related to each
-component/factor, such as the explained variance and the Eivenvalues.}
-
-\item{Running \code{\link[=get_scores]{get_scores()}} computes scores for each subscale.}
-
-\item{Running \code{\link[=closest_component]{closest_component()}} will return a numeric vector
-with the assigned component index for each column from the original data
-frame.}
-
-\item{Running \code{\link[=rotated_data]{rotated_data()}} will return the rotated data,
-including missing values, so it matches the original data frame.}
-
-\item{Running
+data for factor analysis using the sphericity (see
+\code{performance::check_sphericity_bartlett()}) and the kmo (see
+\code{performance::check_kmo()}) KMO measure.
+\item \code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures of internal
+consistencies applied to the (sub)scales (i.e., components) extracted from
+the PCA.
+\item Running \code{summary()} returns information related to each component/factor,
+such as the explained variance and the Eivenvalues.
+\item Running \code{\link[=get_scores]{get_scores()}} computes scores for each subscale.
+\item Running \code{\link[=closest_component]{closest_component()}} will return a numeric vector with the
+assigned component index for each column from the original data frame.
+\item Running \code{\link[=rotated_data]{rotated_data()}} will return the rotated data, including missing
+values, so it matches the original data frame.
+\item Running
 \href{https://easystats.github.io/see/articles/parameters.html#principal-component-analysis}{\code{plot()}}
 visually displays the loadings (that requires the
-\href{https://easystats.github.io/see/}{\strong{see}-package} to work).}
-}
+\href{https://easystats.github.io/see/}{\strong{see}-package} to work).
 }
 
-\subsection{Complexity}{
+\strong{Complexity}
+
 Complexity represents the number of latent components needed to account
 for the observed variables. Whereas a perfect simple structure solution
 has a complexity of 1 in that each item would only load on one factor,
 a solution with evenly distributed items has a complexity greater than 1
-(\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
-}
+(\emph{Hofman, 1978; Pettersson and Turkheimer, 2010}).
 
-\subsection{Uniqueness}{
+\strong{Uniqueness}
+
 Uniqueness represents the variance that is 'unique' to the variable and
 not shared with other variables. It is equal to \verb{1 – communality}
 (variance that is shared with other variables). A uniqueness of \code{0.20}
 suggests that \verb{20\%} or that variable's variance is not shared with other
 variables in the overall factor model. The greater 'uniqueness' the lower
 the relevance of the variable in the factor model.
-}
 
-\subsection{MSA}{
+\strong{MSA}
+
 MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
-(\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there
-is enough data for each factor give reliable results for the PCA. The
-value should be > 0.6, and desirable values are > 0.8
-(\cite{Tabachnick and Fidell, 2013}).
-}
+(\emph{Kaiser and Rice, 1974}) for each item. It indicates whether there is
+enough data for each factor give reliable results for the PCA. The value
+should be > 0.6, and desirable values are > 0.8 (\emph{Tabachnick and Fidell, 2013}).
 
-\subsection{PCA or FA?}{
+\strong{PCA or FA?}
+
 There is a simplified rule of thumb that may help do decide whether to run
 a factor analysis or a principal component analysis:
 \itemize{
-\item Run \emph{factor analysis} if you assume or wish to test a
-theoretical model of \emph{latent factors} causing observed variables.
-
-\item Run \emph{principal component analysis} If you want to simply
-\emph{reduce} your correlated observed variables to a smaller set of
-important independent composite variables.
+\item Run \emph{factor analysis} if you assume or wish to test a theoretical model of
+\emph{latent factors} causing observed variables.
+\item Run \emph{principal component analysis} If you want to simply \emph{reduce} your
+correlated observed variables to a smaller set of important independent
+composite variables.
 }
+
 (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
-}
 
-\subsection{Computing Item Scores}{
-Use \code{\link[=get_scores]{get_scores()}} to compute scores for the "subscales"
-represented by the extracted principal components. \code{get_scores()}
-takes the results from \code{principal_components()} and extracts the
-variables for each component found by the PCA. Then, for each of these
-"subscales", raw means are calculated (which equals adding up the single
-items and dividing by the number of items). This results in a sum score
-for each component from the PCA, which is on the same scale as the
-original, single items that were used to compute the PCA.
+\strong{Computing Item Scores}
+
+Use \code{\link[=get_scores]{get_scores()}} to compute scores for the "subscales" represented by the
+extracted principal components. \code{get_scores()} takes the results from
+\code{principal_components()} and extracts the variables for each component found
+by the PCA. Then, for each of these "subscales", raw means are calculated
+(which equals adding up the single items and dividing by the number of items).
+This results in a sum score for each component from the PCA, which is on the
+same scale as the original, single items that were used to compute the PCA.
 One can also use \code{predict()} to back-predict scores for each component,
-to which one can provide \code{newdata} or a vector of \code{names} for the
-components.
-}
+to which one can provide \code{newdata} or a vector of \code{names} for the components.
 
-\subsection{Explained Variance and Eingenvalues}{
-Use \code{summary()} to get the Eigenvalues and the explained variance
-for each extracted component. The eigenvectors and eigenvalues represent
-the "core" of a PCA: The eigenvectors (the principal components)
-determine the directions of the new feature space, and the eigenvalues
-determine their magnitude. In other words, the eigenvalues explain the
-variance of the data along the new feature axes.
-}
+\strong{Explained Variance and Eingenvalues}
+
+Use \code{summary()} to get the Eigenvalues and the explained variance for each
+extracted component. The eigenvectors and eigenvalues represent the "core"
+of a PCA: The eigenvectors (the principal components) determine the
+directions of the new feature space, and the eigenvalues determine their
+magnitude. In other words, the eigenvalues explain the variance of the
+data along the new feature axes.
 }
 \examples{
 library(parameters)
