@@ -62,7 +62,7 @@
 #' - [n_clusters()] to determine the number of clusters to extract.
 #' - [cluster_discrimination()] to determine the accuracy of cluster group
 #' classification via linear discriminant analysis (LDA).
-#' - [check_clusterstructure()] to check suitability of data
+#' - `performance::check_clusterstructure()` to check suitability of data
 #' for clustering.
 #' - https://www.datanovia.com/en/lessons/
 #'

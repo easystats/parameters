@@ -156,7 +156,7 @@ Analysis Basics and Extensions. R package.
 \item \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract.
 \item \code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group
 classification via linear discriminant analysis (LDA).
-\item \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data
+\item \code{performance::check_clusterstructure()} to check suitability of data
 for clustering.
 \item https://www.datanovia.com/en/lessons/
 }

@@ -114,10 +114,10 @@ Details section).
 \item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically
 estimates the optimal number of dimensions to retain.
 
-\item \code{\link[=check_factorstructure]{check_factorstructure()}} checks the suitability of the
+\item \code{performance::check_factorstructure()} checks the suitability of the
 data for factor analysis using the
-\code{\link[=check_sphericity_bartlett]{sphericity()}} and the
-\code{\link[=check_kmo]{sphericity()}} KMO measure.
+sphericity (see \code{performance::check_sphericity_bartlett()}) and the
+kmo (see \code{performance::check_kmo()}) KMO measure.
 
 \item{\code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures
 of internal consistencies applied to the (sub)scales (i.e., components)

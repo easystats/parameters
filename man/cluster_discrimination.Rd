@@ -30,6 +30,7 @@ if (requireNamespace("MASS", quietly = TRUE)) {
 }
 \seealso{
 \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,
-\code{\link[=cluster_analysis]{cluster_analysis()}} to compute a cluster analysis and \code{\link[=check_clusterstructure]{check_clusterstructure()}}
-to check suitability of data for clustering.
+\code{\link[=cluster_analysis]{cluster_analysis()}} to compute a cluster analysis and
+\code{performance::check_clusterstructure()} to check suitability of data for
+clustering.
 }
