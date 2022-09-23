@@ -92,10 +92,11 @@ indicates that the sum of partial correlations is not large relative to the sum
 of correlations and so factor analysis should yield distinct and reliable
 factors.
 
-Both tests can be performed by using the `check_factorstructure()` function.
+Both tests can be performed by using the `performance::check_factorstructure()` function.
 
 ```{r}
 library(parameters)
+library(performance)
 library(psych)
 
 # Load the data
