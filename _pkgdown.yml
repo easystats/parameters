@@ -111,11 +111,6 @@ reference:
   - qol_cancer
   - fish
 
-- title: "Deprecated"
-  contents:
-  - check_heterogeneity
-
-
 articles:
 
   - title: Overview of vignettes
