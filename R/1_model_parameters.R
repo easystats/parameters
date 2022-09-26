@@ -508,10 +508,12 @@ model_parameters.default <- function(model,
       attr(out, "error")
     )
   } else if (is.null(out)) {
-    insight::format_error(paste0(
-      "Sorry, `model_parameters()` does currently not work for objects of class `",
-      class(model)[1],
-      "`."
+    insight::format_error(
+      paste0(
+        "Sorry, `model_parameters()` does currently not work for objects of class `",
+        class(model)[1],
+        "`."
+      )
     )
   }
 
