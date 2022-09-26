@@ -499,21 +499,20 @@ model_parameters.default <- function(model,
 
   # tell user if something went wrong...
   if (length(out) == 1 && isTRUE(is.na(out))) {
-    msg <- insight::format_message(
+    insight::format_error(
       paste0(
-        "Sorry, `model_parameters()` failed with the following error (possible class '",
+        "Sorry, `model_parameters()` failed with the following error (possible class `",
         class(model)[1],
-        "' not supported):\n"
+        "` not supported):\n"
       ),
       attr(out, "error")
     )
-    stop(msg, call. = FALSE)
   } else if (is.null(out)) {
-    stop(paste0(
-      "Sorry, `model_parameters()` does currently not work for objects of class '",
+    insight::format_error(paste0(
+      "Sorry, `model_parameters()` does currently not work for objects of class `",
       class(model)[1],
-      "'."
-    ), call. = FALSE)
+      "`."
+    )
   }
 
   attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
