@@ -15,7 +15,7 @@ articles:
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
   standardize_parameters_effsize: standardize_parameters_effsize.html
-last_built: 2022-09-22T19:10Z
+last_built: 2022-09-26T14:20Z
 urls:
   reference: https://easystats.github.io/parameters/reference
   article: https://easystats.github.io/parameters/articles
