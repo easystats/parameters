@@ -257,7 +257,7 @@ simulate_model.bracl <- simulate_model.default
   ev <- eS$values
 
   if (!all(ev >= -tol * abs(ev[1L]))) {
-    insight::format_error("`Sigma` is not positive definite.", call. = FALSE)
+    insight::format_error("`Sigma` is not positive definite.")
   }
 
   X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
