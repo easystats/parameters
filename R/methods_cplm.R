@@ -29,7 +29,7 @@
 #' @inheritParams simulate_model
 #' @export
 model_parameters.zcpglm <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     component = c("all", "conditional", "zi", "zero_inflated"),
@@ -216,7 +216,7 @@ standard_error.cpglm <- function(model, ...) {
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.cpglmm <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = NULL,
                                     ci_random = NULL,
                                     bootstrap = FALSE,

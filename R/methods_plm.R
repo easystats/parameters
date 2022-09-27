@@ -51,7 +51,7 @@ p_value.pggls <- function(model, ...) {
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.pgmm <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   component = c("conditional", "all"),
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
@@ -106,7 +106,7 @@ standard_error.pgmm <- function(model, component = c("conditional", "all"), ...)
 
 
 #' @export
-ci.pgmm <- function(x, ci = .95, dof = Inf, method = NULL, component = "conditional", ...) {
+ci.pgmm <- function(x, ci = 0.95, dof = Inf, method = NULL, component = "conditional", ...) {
   if (!is.null(method)) {
     method <- tolower(method)
   } else {

@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.systemfit <- function(model,
-                                       ci = .95,
+                                       ci = 0.95,
                                        ci_method = NULL,
                                        bootstrap = FALSE,
                                        iterations = 1000,

@@ -1,7 +1,7 @@
 # .ergm, btergm -----------------------
 
 #' @export
-ci.btergm <- function(x, ci = .95, ...) {
+ci.btergm <- function(x, ci = 0.95, ...) {
   as.data.frame(ci(as.data.frame(x@boot$t), ci = ci, ...))
 }
 

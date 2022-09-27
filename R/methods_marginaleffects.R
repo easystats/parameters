@@ -6,7 +6,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.marginaleffects <- function(model,
-                                             ci = .95,
+                                             ci = 0.95,
                                              ...) {
   out <- insight::standardize_names(
     marginaleffects::tidy(model, conf_level = ci, ...),

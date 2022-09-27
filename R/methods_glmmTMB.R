@@ -8,7 +8,7 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.glmmTMB <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "wald",
                                      ci_random = NULL,
                                      bootstrap = FALSE,
@@ -259,7 +259,7 @@ model_parameters.glmmTMB <- function(model,
 #' @rdname ci.default
 #' @export
 ci.glmmTMB <- function(x,
-                       ci = .95,
+                       ci = 0.95,
                        dof = NULL,
                        method = "wald",
                        component = "all",
@@ -467,7 +467,7 @@ simulate_model.glmmTMB <- function(model,
 simulate_parameters.glmmTMB <- function(model,
                                         iterations = 1000,
                                         centrality = "median",
-                                        ci = .95,
+                                        ci = 0.95,
                                         ci_method = "quantile",
                                         test = "p-value",
                                         ...) {

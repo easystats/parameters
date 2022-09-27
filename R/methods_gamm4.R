@@ -1,6 +1,6 @@
 
 #' @export
-ci.gamm4 <- function(x, ci = .95, ...) {
+ci.gamm4 <- function(x, ci = 0.95, ...) {
   x <- x$gam
   class(x) <- c("gam", "lm", "glm")
   ci(x, ci = ci, ...)

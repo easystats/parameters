@@ -36,7 +36,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.averaging <- function(model,
-                                       ci = .95,
+                                       ci = 0.95,
                                        component = c("conditional", "full"),
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
@@ -93,7 +93,7 @@ p_value.averaging <- function(model, component = c("conditional", "full"), ...) 
 
 
 #' @export
-ci.averaging <- function(x, ci = .95, component = c("conditional", "full"), ...) {
+ci.averaging <- function(x, ci = 0.95, component = c("conditional", "full"), ...) {
   component <- match.arg(component)
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

@@ -8,7 +8,7 @@ standard_error.bayesx <- function(model, ...) {
 
 
 #' @export
-ci.bayesx <- function(x, ci = .95, ...) {
+ci.bayesx <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, dof = Inf, component = "conditional", ...)
 }
 

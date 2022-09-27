@@ -32,7 +32,7 @@
 #' }
 #' @export
 model_parameters.cgam <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   ci_method = "residual",
                                   bootstrap = FALSE,
                                   iterations = 1000,

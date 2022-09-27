@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.glmm <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   effects = c("all", "fixed", "random"),
                                   bootstrap = FALSE,
                                   iterations = 1000,
@@ -28,7 +28,7 @@ model_parameters.glmm <- function(model,
 
 
 #' @export
-ci.glmm <- function(x, ci = .95, effects = c("all", "fixed", "random"), ...) {
+ci.glmm <- function(x, ci = 0.95, effects = c("all", "fixed", "random"), ...) {
   effects <- match.arg(effects)
   .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, ...)
 }

@@ -5,7 +5,7 @@
 
 
 .extract_random_parameters.merMod <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               ...) {
   insight::check_if_installed("lme4")
@@ -55,7 +55,7 @@
 
 
 .extract_random_parameters.glmmTMB <- function(model,
-                                               ci = .95,
+                                               ci = 0.95,
                                                effects = "random",
                                                component = "conditional",
                                                ...) {

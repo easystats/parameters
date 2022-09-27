@@ -26,7 +26,7 @@ p_value.MCMCglmm <- function(model, ...) {
 model_parameters.MCMCglmm <- function(model,
                                       centrality = "median",
                                       dispersion = FALSE,
-                                      ci = .95,
+                                      ci = 0.95,
                                       ci_method = "eti",
                                       test = c("pd", "rope"),
                                       rope_range = "default",

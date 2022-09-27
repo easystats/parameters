@@ -1,6 +1,6 @@
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_adjust = NULL, verbose = TRUE, ...) {
+model_parameters.margins <- function(model, ci = 0.95, exponentiate = FALSE, p_adjust = NULL, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
   params <- insight::get_parameters(model)
   params <- .data_frame(
@@ -54,7 +54,7 @@ model_parameters.margins <- function(model, ci = .95, exponentiate = FALSE, p_ad
 
 
 #' @export
-ci.margins <- function(x, ci = .95, ...) {
+ci.margins <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, dof = Inf, ...)
 }
 

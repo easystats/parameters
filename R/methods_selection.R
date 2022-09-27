@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.selection <- function(model,
-                                       ci = .95,
+                                       ci = 0.95,
                                        component = c("all", "selection", "outcome", "auxiliary"),
                                        bootstrap = FALSE,
                                        iterations = 1000,

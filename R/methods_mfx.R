@@ -4,7 +4,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.logitor <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
                                      standardize = NULL,
@@ -38,7 +38,7 @@ model_parameters.negbinirr <- model_parameters.logitor
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.poissonmfx <- function(model,
-                                        ci = .95,
+                                        ci = 0.95,
                                         bootstrap = FALSE,
                                         iterations = 1000,
                                         component = c("all", "conditional", "marginal"),
@@ -84,7 +84,7 @@ model_parameters.negbinmfx <- model_parameters.poissonmfx
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.betaor <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     component = c("conditional", "precision", "all"),
@@ -111,7 +111,7 @@ model_parameters.betaor <- function(model,
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.betamfx <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
                                      component = c("all", "conditional", "precision", "marginal"),
@@ -145,7 +145,7 @@ model_parameters.betamfx <- function(model,
 
 
 #' @export
-ci.logitor <- function(x, ci = .95, method = NULL, ...) {
+ci.logitor <- function(x, ci = 0.95, method = NULL, ...) {
   .ci_generic(model = x$fit, ci = ci, method = method, ...)
 }
 
@@ -160,7 +160,7 @@ ci.negbinirr <- ci.logitor
 
 #' @export
 ci.poissonmfx <- function(x,
-                          ci = .95,
+                          ci = 0.95,
                           component = c("all", "conditional", "marginal"),
                           method = NULL,
                           ...) {
@@ -183,7 +183,7 @@ ci.probitmfx <- ci.poissonmfx
 
 #' @export
 ci.betaor <- function(x,
-                      ci = .95,
+                      ci = 0.95,
                       component = c("all", "conditional", "precision"),
                       ...) {
   component <- match.arg(component)
@@ -193,7 +193,7 @@ ci.betaor <- function(x,
 
 #' @export
 ci.betamfx <- function(x,
-                       ci = .95,
+                       ci = 0.95,
                        method = NULL,
                        component = c("all", "conditional", "precision", "marginal"),
                        ...) {

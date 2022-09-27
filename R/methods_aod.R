@@ -10,7 +10,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.glimML <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     component = c("conditional", "random", "dispersion", "all"),

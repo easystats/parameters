@@ -8,7 +8,7 @@ p_value.lm <- p_value.default
 
 
 #' @export
-ci.lm <- function(x, ci = .95, method = "residual", ...) {
+ci.lm <- function(x, ci = 0.95, method = "residual", ...) {
   .ci_generic(model = x, ci = ci, method = method, ...)
 }
 
@@ -44,7 +44,7 @@ p_value.summary.lm <- function(model, ...) {
 
 
 #' @export
-ci.summary.lm <- function(x, ci = .95, method = "residual", ...) {
+ci.summary.lm <- function(x, ci = 0.95, method = "residual", ...) {
   .ci_generic(model = x, ci = ci, method = method, dof = degrees_of_freedom(x), ...)
 }
 

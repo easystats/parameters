@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.SemiParBIV <- function(model,
-                                        ci = .95,
+                                        ci = 0.95,
                                         bootstrap = FALSE,
                                         iterations = 1000,
                                         standardize = NULL,

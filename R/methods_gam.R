@@ -10,7 +10,7 @@ model_parameters.gam <- model_parameters.cgam
 
 
 #' @export
-ci.gam <- function(x, ci = .95, method = NULL, ...) {
+ci.gam <- function(x, ci = 0.95, method = NULL, ...) {
   .ci_generic(model = x, ci = ci, method = "wald", ...)
 }
 
@@ -87,7 +87,7 @@ model_parameters.list <- function(model, ...) {
 
 
 #' @export
-ci.list <- function(x, ci = .95, ...) {
+ci.list <- function(x, ci = 0.95, ...) {
   if ("gam" %in% names(x)) {
     x <- x$gam
     class(x) <- c("gam", "lm", "glm")

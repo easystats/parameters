@@ -6,7 +6,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.mvord <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    component = c("all", "conditional", "thresholds", "correlation"),
                                    standardize = NULL,
                                    exponentiate = FALSE,

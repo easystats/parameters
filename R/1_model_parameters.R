@@ -442,7 +442,7 @@ parameters <- model_parameters
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.default <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = NULL,
                                      bootstrap = FALSE,
                                      iterations = 1000,
@@ -510,7 +510,7 @@ model_parameters.default <- function(model,
   } else if (is.null(out)) {
     insight::format_error(
       paste0(
-        "Sorry, `model_parameters()` does currently not work for objects of class `",
+        "Sorry, `model_parameters()` does not currently work for objects of class `",
         class(model)[1],
         "`."
       )
@@ -529,7 +529,7 @@ model_parameters.default <- function(model,
 # (like printing etc.)
 
 .model_parameters_generic <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       bootstrap = FALSE,
                                       iterations = 1000,
                                       merge_by = "Parameter",
@@ -637,7 +637,7 @@ model_parameters.default <- function(model,
 #' @rdname model_parameters.default
 #' @export
 model_parameters.glm <- function(model,
-                                 ci = .95,
+                                 ci = 0.95,
                                  ci_method = NULL,
                                  bootstrap = FALSE,
                                  iterations = 1000,

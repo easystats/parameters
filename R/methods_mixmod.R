@@ -6,7 +6,7 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
 #' @export
 ci.MixMod <- function(x,
-                      ci = .95,
+                      ci = 0.95,
                       component = c("all", "conditional", "zi", "zero_inflated"),
                       verbose = TRUE,
                       ...) {
