@@ -248,16 +248,16 @@ simulate_model.bracl <- simulate_model.default
 .mvrnorm <- function(n = 1, mu, Sigma, tol = 1e-06) {
   p <- length(mu)
   if (!all(dim(Sigma) == c(p, p))) {
-    stop(insight::format_message(
+    insight::format_error(
       "Incompatible arguments to calculate multivariate normal distribution."
-    ), call. = FALSE)
+    )
   }
 
   eS <- eigen(Sigma, symmetric = TRUE)
   ev <- eS$values
 
   if (!all(ev >= -tol * abs(ev[1L]))) {
-    stop("'Sigma' is not positive definite.", call. = FALSE)
+    insight::format_error("`Sigma` is not positive definite.", call. = FALSE)
   }
 
   X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))

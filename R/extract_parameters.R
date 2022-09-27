@@ -371,9 +371,9 @@
   if (!is.null(keep) && length(keep) > 1) {
     keep <- paste0("(", paste0(keep, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(
-        sprintf("The 'keep' argument has more than 1 element. Merging into following regular expression: '%s'.", keep)
-      ))
+      insight::format_alert(
+        sprintf("The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.", keep)
+      )
     }
   }
 
@@ -381,9 +381,9 @@
   if (!is.null(drop) && length(drop) > 1) {
     drop <- paste0("(", paste0(drop, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(
-        sprintf("The 'drop' argument has more than 1 element. Merging into following regular expression: '%s'.", drop)
-      ))
+      insight::format_alert(
+        sprintf("The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.", drop)
+      )
     }
   }
 
@@ -413,7 +413,9 @@
 
   if (nrow(out) == 0) {
     if (verbose) {
-      warning(insight::format_message("The pattern defined in the 'keep' (and 'drop') arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
+      insight::format_warning(
+        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."
+      )
     }
     return(params)
   }
@@ -742,11 +744,8 @@
   # no ROPE for multi-response models
   if (insight::is_multivariate(model)) {
     test <- setdiff(test, c("rope", "p_rope"))
-    warning(
-      insight::format_message(
-        "Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."
-      ),
-      call. = FALSE
+    insight::format_warning(
+      "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
     )
   }
 
@@ -885,10 +884,10 @@
   if (!is.logical(standardize)) {
     if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
       if (verbose) {
-        warning(insight::format_message(
-          "'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'.",
+        insight::format_warning(
+          "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
           "Returning unstandardized solution."
-        ), call. = FALSE)
+        )
       }
       standardize <- FALSE
     }
@@ -898,9 +897,9 @@
   if (length(ci) > 1) {
     ci <- ci[1]
     if (verbose) {
-      warning(insight::format_message(
-        paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`.")
-      ), call. = FALSE)
+      insight::format_warning(
+        paste0("lavaan models only accept one level of CI. Keeping the first one: `ci = ", ci, "`.")
+      )
     }
   }
 
@@ -979,21 +978,17 @@
     params$Label <- label
   }
 
-  params$Component <- switch(params$Operator,
-    "=~" = "Loading",
-    "~" = "Regression",
-    "~~" = "Correlation",
-    ":=" = "Defined",
-    "~1" = "Mean",
-    NA_character_
-  )
+  params$Component <- NA_character_
+  params$Component[params$Operator == "=~"] <- "Loading"
+  params$Component[params$Operator == "~"] <- "Regression"
+  params$Component[params$Operator == "~~"] <- "Correlation"
+  params$Component[params$Operator == ":="] <- "Defined"
+  params$Component[params$Operator == "~1"] <- "Mean"
 
-  if (as.character(params$From) == as.character(params$To)) {
-    params$Component <- "Variance"
-  }
+  params$Component[as.character(params$From) == as.character(params$To)] <- "Variance"
 
-  if ("p" %in% colnames(params) && is.na(params$p)) {
-    params$p <- 0
+  if ("p" %in% colnames(params)) {
+    params$p[is.na(params$p)] <- 0
   }
 
   if ("group" %in% names(data)) {
@@ -1020,12 +1015,12 @@
 .check_rank_deficiency <- function(p, verbose = TRUE) {
   if (anyNA(p$Estimate)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message(
+      insight::format_warning(
         sprintf(
-          "Model matrix is rank deficient. Parameters %s were not estimable.",
+          "Model matrix is rank deficient. Parameters `%s` were not estimable.",
           paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")
         )
-      ), call. = FALSE)
+      )
     }
     p <- p[!is.na(p$Estimate), ]
   }

@@ -597,11 +597,7 @@
 
   # fix column output
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
-    x$From <- if (x$Label == "" || x$Label == x$To) {
-      x$From
-    } else {
-      paste0(x$From, " (", x$Label, ")")
-    }
+    x$From <- ifelse(x$Label == "" | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
     x$Label <- NULL
   }
 
@@ -612,11 +608,7 @@
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
-    x$To <- if (x$Component == "Defined") {
-      paste0("(", x$To, ")")
-    } else {
-      x$To
-    }
+    x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
   }
 
   # set up split-factor

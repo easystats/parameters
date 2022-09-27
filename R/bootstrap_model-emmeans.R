@@ -6,9 +6,9 @@ emm_basis.bootstrap_model <- function(object, trms, xlev, grid, ...) {
   emb <- emmeans::emm_basis(model, trms, xlev, grid, ...)
 
   if (ncol(object) != ncol(emb$V) || !all(colnames(object) == colnames(emb$V))) {
-    stop(insight::format_message(
-      "Oops! Cannot create the reference grid. Please open an issue at github.com/easystats/parameters/issues."
-    ), call. = FALSE)
+    insight::format_error(
+      "Oops! Cannot create the reference grid. Please open an issue at {.url https://github.com/easystats/parameters/issues}."
+    )
   }
 
   emb$post.beta <- as.matrix(object)

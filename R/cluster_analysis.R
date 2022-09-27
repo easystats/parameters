@@ -171,9 +171,9 @@ cluster_analysis <- function(x,
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          stop(insight::format_message(
+          insight::format_error(
             "Could not extract number of clusters. Please provide argument `n`."
-          ), call. = FALSE)
+          )
         }
         2
       }
@@ -210,7 +210,7 @@ cluster_analysis <- function(x,
   } else if (any(method %in% c("mixture", "mclust"))) {
     rez <- .cluster_analysis_mixture(data, n = n, ...)
   } else {
-    stop("Did not find `method` argument. Could be misspecified.", call. = FALSE)
+    insight::format_error("Did not find `method` argument. Could be misspecified.")
   }
 
   # Assign clusters to observations
