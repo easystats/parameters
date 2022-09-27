@@ -979,14 +979,12 @@
     params$Label <- label
   }
 
-  params$Component <- switch(params$Operator,
-    "=~" = "Loading",
-    "~" = "Regression",
-    "~~" = "Correlation",
-    ":=" = "Defined",
-    "~1" = "Mean",
-    NA_character_
-  )
+  params$Component <- NA_character_
+  params$Component[params$Operator == "=~"] <- "Loading"
+  params$Component[params$Operator == "~"] <- "Regression"
+  params$Component[params$Operator == "~~"] <- "Correlation"
+  params$Component[params$Operator == ":="] <- "Defined"
+  params$Component[params$Operator == "~1"] <- "Mean"
 
   params$Component[as.character(params$From) == as.character(params$To)] <- "Variance"
 
