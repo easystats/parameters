@@ -292,7 +292,7 @@ principal_components.data.frame <- function(x,
   }
 
   # Compute PCA
-  if(is.character(sparse) && sparse == "robust") {
+  if (is.character(sparse) && sparse == "robust") {
     # Robust sparse PCA
     insight::check_if_installed("sparsepca")
 

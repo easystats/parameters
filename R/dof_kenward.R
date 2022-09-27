@@ -37,7 +37,11 @@ dof_kenward <- function(model) {
   n.ggamma <- length(P)
   for (ii in 1:n.ggamma) {
     for (jj in c(ii:n.ggamma)) {
-      e <- ifelse(ii == jj, 1, 2)
+      if (ii == jj) {
+        e <- 1
+      } else {
+        e <- 2
+      }
       ui <- as.matrix(theta_unadjusted_vcov %*% P[[ii]] %*% unadjusted_vcov)
       uj <- as.matrix(theta_unadjusted_vcov %*% P[[jj]] %*% unadjusted_vcov)
       A1 <- A1 + e * W[ii, jj] * (sum(diag(ui)) * sum(diag(uj)))

@@ -103,7 +103,11 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
     if (any(is.na(x))) {
       NA
     } else {
-      ifelse(length(unique(x[!is.na(x)])) == 1, 0, 1)
+      if (length(unique(x[!is.na(x)])) == 1) {
+        0
+      } else {
+        1
+      }
     }
   }
 

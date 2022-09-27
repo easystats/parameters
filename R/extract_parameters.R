@@ -979,19 +979,21 @@
     params$Label <- label
   }
 
-  params$Component <- ifelse(params$Operator == "=~", "Loading",
-    ifelse(params$Operator == "~", "Regression",
-      ifelse(params$Operator == "~~", "Correlation",
-        ifelse(params$Operator == ":=", "Defined",
-          ifelse(params$Operator == "~1", "Mean", NA)
-        )
-      )
-    )
+  params$Component <- switch(params$Operator,
+    "=~" = "Loading",
+    "~" = "Regression",
+    "~~" = "Correlation",
+    ":=" = "Defined",
+    "~1" = "Mean",
+    NA_character_
   )
-  params$Component <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Component)
 
-  if ("p" %in% colnames(params)) {
-    params$p <- ifelse(is.na(params$p), 0, params$p)
+  if (as.character(params$From) == as.character(params$To)) {
+    params$Component <- "Variance"
+  }
+
+  if ("p" %in% colnames(params) && is.na(params$p)) {
+    params$p <- 0
   }
 
   if ("group" %in% names(data)) {

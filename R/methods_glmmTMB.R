@@ -167,7 +167,9 @@ model_parameters.glmmTMB <- function(model,
     if (isTRUE(group_level)) {
       params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
       if (length(random_effects) > 1) {
-        warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
+        insight::format_warning(
+          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."
+        )
       }
     } else {
       params_variance <- .extract_random_variances(
@@ -203,7 +205,11 @@ model_parameters.glmmTMB <- function(model,
     params$Group <- ""
     # add component column
     if (!"Component" %in% colnames(params)) {
-      params$Component <- ifelse(component %in% c("zi", "zero_inflated"), "zero_inflated", "conditional")
+      if (component %in% c("zi", "zero_inflated")) {
+        params$Component <- "zero_inflated"
+      } else {
+        params$Component <- "conditional"
+      }
     }
 
     # reorder

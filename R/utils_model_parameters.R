@@ -127,7 +127,11 @@
   } else {
     coef_col <- .find_coefficient_type(info, exponentiate, model)
     attr(params, "coefficient_name") <- coef_col
-    attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+    attr(params, "zi_coefficient_name") <- if (isTRUE(exponentiate)) {
+      "Odds Ratio"
+    } else {
+      "Log-Odds"
+    }
   }
 
 
