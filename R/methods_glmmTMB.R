@@ -424,9 +424,9 @@ simulate_model.glmmTMB <- function(model,
       component <- c("conditional", "zero_inflated")
     }
   } else if (component %in% c("zi", "zero_inflated") && !has_zeroinflated) {
-    stop("No zero-inflation model found.", call. = FALSE)
+    insight::format_error("No zero-inflation model found.")
   } else if (component == "dispersion" && !has_dispersion) {
-    stop("No dispersion model found.", call. = FALSE)
+    insight::format_error("No dispersion model found.")
   }
 
 
