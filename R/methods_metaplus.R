@@ -7,7 +7,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.metaplus <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       bootstrap = FALSE,
                                       iterations = 1000,
                                       standardize = NULL,
@@ -147,7 +147,7 @@ ci.metaplus <- function(x, ...) {
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_random <- function(model,
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "eti",
                                          exponentiate = FALSE,
                                          include_studies = TRUE,
@@ -271,7 +271,7 @@ ci.meta_random <- function(x, method = "eti", ...) {
 
   out <- data.frame(
     Parameter = rownames(params),
-    CI = .95,
+    ci = 0.95,
     CI_low = params[[ci_cols[1]]],
     CI_high = params[[ci_cols[2]]],
     stringsAsFactors = FALSE
@@ -307,7 +307,7 @@ ci.meta_fixed <- ci.meta_random
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_bma <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       ci_method = "eti",
                                       exponentiate = FALSE,
                                       include_studies = TRUE,

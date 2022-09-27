@@ -44,7 +44,7 @@
 bootstrap_parameters <- function(model,
                                  iterations = 1000,
                                  centrality = "median",
-                                 ci = .95,
+                                 ci = 0.95,
                                  ci_method = "quantile",
                                  test = "p-value",
                                  ...) {

@@ -42,7 +42,7 @@ model_parameters.lavaan <- function(model,
 model_parameters.blavaan <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "eti",
                                      test = c("pd", "rope"),
                                      rope_range = "default",
@@ -101,7 +101,7 @@ model_parameters.blavaan <- function(model,
 
 
 #' @export
-ci.lavaan <- function(x, ci = .95, ...) {
+ci.lavaan <- function(x, ci = 0.95, ...) {
   out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
   out$CI <- ci
   out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]

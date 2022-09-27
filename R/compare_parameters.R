@@ -66,7 +66,7 @@
 #' }
 #' @export
 compare_parameters <- function(...,
-                               ci = .95,
+                               ci = 0.95,
                                effects = "fixed",
                                component = "conditional",
                                standardize = NULL,

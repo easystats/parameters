@@ -3,7 +3,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.betareg <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      bootstrap = FALSE,
                                      iterations = 1000,
                                      component = c("conditional", "precision", "all"),
@@ -52,7 +52,7 @@ model_parameters.betareg <- function(model,
 
 #' @export
 ci.betareg <- function(x,
-                       ci = .95,
+                       ci = 0.95,
                        component = "all",
                        verbose = TRUE,
                        ...) {

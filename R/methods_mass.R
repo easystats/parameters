@@ -17,7 +17,7 @@ ci.negbin <- ci.glm
 
 
 #' @export
-ci.polr <- function(x, ci = .95, dof = NULL, method = "profile", ...) {
+ci.polr <- function(x, ci = 0.95, dof = NULL, method = "profile", ...) {
   method <- match.arg(method, choices = c("profile", "wald", "robust"))
 
   robust <- !is.null(method) && method == "robust"

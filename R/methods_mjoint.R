@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.mjoint <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     effects = "fixed",
                                     component = c("all", "conditional", "survival"),
                                     exponentiate = FALSE,
@@ -116,7 +116,7 @@ p_value.mjoint <- function(model, component = c("all", "conditional", "survival"
 
 
 #' @export
-ci.mjoint <- function(x, ci = .95, ...) {
+ci.mjoint <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, dof = Inf, ...)
 }
 

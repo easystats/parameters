@@ -73,7 +73,7 @@ model_parameters.htest <- function(model,
                                    rank_biserial = NULL,
                                    rank_epsilon_squared = NULL,
                                    kendalls_w = NULL,
-                                   ci = .95,
+                                   ci = 0.95,
                                    alternative = NULL,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
@@ -669,7 +669,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                  out,
                                  cramers_v = NULL,
                                  phi = NULL,
-                                 ci = .95,
+                                 ci = 0.95,
                                  alternative = NULL,
                                  verbose = TRUE) {
   if (!requireNamespace("effectsize", quietly = TRUE) || (is.null(cramers_v) && is.null(phi))) {
@@ -762,7 +762,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .add_effectsize_mcnemar <- function(model,
                                     out,
                                     cohens_g = NULL,
-                                    ci = .95,
+                                    ci = 0.95,
                                     verbose = TRUE) {
   if (is.null(cohens_g)) {
     return(out)
@@ -794,7 +794,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                   out,
                                   standardized_d = NULL,
                                   hedges_g = NULL,
-                                  ci = .95,
+                                  ci = 0.95,
                                   alternative = NULL,
                                   verbose = TRUE,
                                   ...) {
@@ -859,7 +859,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .add_effectsize_rankbiserial <- function(model,
                                          out,
                                          rank_biserial = NULL,
-                                         ci = .95,
+                                         ci = 0.95,
                                          verbose = TRUE,
                                          ...) {
   if (is.null(rank_biserial)) {
@@ -896,7 +896,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .add_effectsize_rankepsilon <- function(model,
                                         out,
                                         rank_epsilon_squared = NULL,
-                                        ci = .95,
+                                        ci = 0.95,
                                         verbose = TRUE,
                                         ...) {
   if (is.null(rank_epsilon_squared)) {
@@ -935,7 +935,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .add_effectsize_kendalls_w <- function(model,
                                        out,
                                        kendalls_w = NULL,
-                                       ci = .95,
+                                       ci = 0.95,
                                        verbose = TRUE,
                                        ...) {
   if (is.null(kendalls_w)) {
@@ -975,7 +975,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                    omega_squared = NULL,
                                    eta_squared = NULL,
                                    epsilon_squared = NULL,
-                                   ci = .95,
+                                   ci = 0.95,
                                    verbose = TRUE) {
   if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
     return(out)

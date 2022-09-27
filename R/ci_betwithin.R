@@ -1,6 +1,6 @@
 #' @rdname p_value_betwithin
 #' @export
-ci_betwithin <- function(model, ci = .95, ...) {
+ci_betwithin <- function(model, ci = 0.95, ...) {
   df_bet <- dof_ml1(model)
   out <- lapply(ci, function(i) {
     .ci_dof(

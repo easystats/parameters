@@ -3,7 +3,7 @@
 model_parameters.draws <- function(model,
                                    centrality = "median",
                                    dispersion = FALSE,
-                                   ci = .95,
+                                   ci = 0.95,
                                    ci_method = "eti",
                                    test = c("pd", "rope"),
                                    rope_range = "default",

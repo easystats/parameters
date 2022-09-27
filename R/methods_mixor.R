@@ -2,7 +2,7 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    effects = "all",
                                    bootstrap = FALSE,
                                    iterations = 1000,
@@ -43,7 +43,7 @@ model_parameters.mixor <- function(model,
 
 
 #' @export
-ci.mixor <- function(x, ci = .95, effects = "all", ...) {
+ci.mixor <- function(x, ci = 0.95, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, ...)
 }

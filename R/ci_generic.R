@@ -1,6 +1,6 @@
 # generic function for CI calculation
 .ci_generic <- function(model,
-                        ci = .95,
+                        ci = 0.95,
                         method = "wald",
                         dof = NULL,
                         effects = c("fixed", "random", "all"),

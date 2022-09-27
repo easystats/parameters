@@ -4,7 +4,7 @@
 #' @rdname model_parameters.mlm
 #' @export
 model_parameters.clm2 <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
                                   component = c("all", "conditional", "scale"),
@@ -58,7 +58,7 @@ model_parameters.clmm <- model_parameters.cpglmm
 ## TODO residual df?
 
 #' @export
-ci.clm2 <- function(x, ci = .95, component = c("all", "conditional", "scale"), ...) {
+ci.clm2 <- function(x, ci = 0.95, component = c("all", "conditional", "scale"), ...) {
   component <- match.arg(component)
   .ci_generic(model = x, ci = ci, dof = Inf, component = component)
 }

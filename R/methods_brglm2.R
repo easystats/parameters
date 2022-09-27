@@ -8,7 +8,7 @@
 #' @rdname model_parameters.mlm
 #' @export
 model_parameters.bracl <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    bootstrap = FALSE,
                                    iterations = 1000,
                                    standardize = NULL,
@@ -62,7 +62,7 @@ model_parameters.bracl <- function(model,
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, verbose = TRUE, ...) {
+ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -221,7 +221,7 @@ p_value.multinom <- function(model, method = "residual", ...) {
 simulate_parameters.multinom <- function(model,
                                          iterations = 1000,
                                          centrality = "median",
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {

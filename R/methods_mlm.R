@@ -36,7 +36,7 @@
 #' @inheritParams simulate_model
 #' @export
 model_parameters.mlm <- function(model,
-                                 ci = .95,
+                                 ci = 0.95,
                                  vcov = NULL,
                                  vcov_args = NULL,
                                  bootstrap = FALSE,
@@ -135,7 +135,7 @@ p_value.mlm <- function(model, vcov = NULL, vcov_args = NULL, ...) {
 ci.mlm <- function(x,
                    vcov = NULL,
                    vcov_args = NULL,
-                   ci = .95, ...) {
+                   ci = 0.95, ...) {
   # .ci_generic may not handle weights properly (not sure)
   if (is.null(insight::find_weights(x)) && is.null(vcov)) {
     out <- lapply(ci, function(i) {
@@ -195,7 +195,7 @@ simulate_model.mlm <- function(model, iterations = 1000, ...) {
 simulate_parameters.mlm <- function(model,
                                     iterations = 1000,
                                     centrality = "median",
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = "quantile",
                                     test = "p-value",
                                     ...) {

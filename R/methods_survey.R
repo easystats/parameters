@@ -3,7 +3,7 @@
 #' @rdname model_parameters.default
 #' @export
 model_parameters.svyglm <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = "wald",
                                     bootstrap = FALSE,
                                     iterations = 1000,
@@ -85,7 +85,7 @@ standard_error.svyolr <- standard_error.svyglm
 # confidence intervals -----------------------------------
 
 #' @export
-ci.svyglm <- function(x, ci = .95, method = "wald", ...) {
+ci.svyglm <- function(x, ci = 0.95, method = "wald", ...) {
   method <- match.arg(method, choices = c("wald", "residual", "normal", "likelihood"))
   if (method == "likelihood") {
     out <- lapply(ci, function(i) .ci_likelihood(model = x, ci = i))

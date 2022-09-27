@@ -427,7 +427,7 @@
 
 #' @keywords internal
 .extract_parameters_mixed <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       ci_method = "wald",
                                       standardize = NULL,
                                       p_adjust = NULL,
@@ -726,7 +726,7 @@
 .extract_parameters_bayesian <- function(model,
                                          centrality = "median",
                                          dispersion = FALSE,
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "eti",
                                          test = c("pd", "rope"),
                                          rope_range = "default",

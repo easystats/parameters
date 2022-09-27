@@ -22,7 +22,7 @@ model_parameters.zerocount <- model_parameters.zcpglm
 
 #' @export
 ci.zeroinfl <- function(x,
-                        ci = .95,
+                        ci = 0.95,
                         dof = NULL,
                         method = "wald",
                         component = "all",
@@ -184,7 +184,7 @@ simulate_model.zerocount <- simulate_model.zeroinfl
 simulate_parameters.zeroinfl <- function(model,
                                          iterations = 1000,
                                          centrality = "median",
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {

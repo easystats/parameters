@@ -1,7 +1,7 @@
 #' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.mhurdle <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"),
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
@@ -52,7 +52,7 @@ p_value.mhurdle <- function(model,
 
 
 #' @export
-ci.mhurdle <- function(x, ci = .95, ...) {
+ci.mhurdle <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, ...)
 }
 

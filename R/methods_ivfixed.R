@@ -37,7 +37,7 @@ p_value.ivFixed <- function(model, method = "wald", ...) {
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.ivFixed <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "wald",
                                      verbose = TRUE,
                                      ...) {

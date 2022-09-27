@@ -3,7 +3,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.varest <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     standardize = NULL,
@@ -35,7 +35,7 @@ model_parameters.varest <- function(model,
 
 
 #' @export
-ci.varest <- function(x, ci = .95, method = NULL, ...) {
+ci.varest <- function(x, ci = 0.95, method = NULL, ...) {
   params <- lapply(names(x$varresult), function(i) {
     out <- ci(x = x$varresult[[i]], ci = ci, method = method, ...)
     out$Group <- paste0("Equation ", i)
@@ -89,7 +89,7 @@ simulate_model.varest <- function(model, iterations = 1000, ...) {
 simulate_parameters.varest <- function(model,
                                        iterations = 1000,
                                        centrality = "median",
-                                       ci = .95,
+                                       ci = 0.95,
                                        ci_method = "quantile",
                                        test = "p-value",
                                        ...) {

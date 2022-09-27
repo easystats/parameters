@@ -7,7 +7,7 @@
 # default method -------------------
 
 .extract_random_variances.default <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
@@ -41,7 +41,7 @@
 # glmmTMB -------------------
 
 .extract_random_variances.glmmTMB <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
@@ -117,7 +117,7 @@
 # workhorse ------------------------
 
 .extract_random_variances_helper <- function(model,
-                                             ci = .95,
+                                             ci = 0.95,
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,

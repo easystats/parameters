@@ -33,7 +33,7 @@
 #' }
 #' @export
 model_parameters.glht <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   exponentiate = FALSE,
                                   verbose = TRUE,
                                   ...) {
@@ -61,7 +61,7 @@ model_parameters.glht <- function(model,
 
 
 #' @export
-ci.glht <- function(x, ci = .95, ...) {
+ci.glht <- function(x, ci = 0.95, ...) {
   # backward compatibility with `robust` argument
   dots <- list(...)
   if ("robust" %in% names(dots) && !"vcov" %in% names(dots)) {

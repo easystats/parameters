@@ -9,7 +9,7 @@ p_value.Sarlm <- function(model, ...) {
 
 
 #' @export
-ci.Sarlm <- function(x, ci = .95, ...) {
+ci.Sarlm <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, ...)
 }
 

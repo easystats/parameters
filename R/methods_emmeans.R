@@ -6,7 +6,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.emmGrid <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      centrality = "median",
                                      dispersion = FALSE,
                                      ci_method = "eti",
@@ -134,7 +134,7 @@ model_parameters.emmGrid <- function(model,
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.emm_list <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       exponentiate = FALSE,
                                       p_adjust = NULL,
                                       verbose = TRUE,
@@ -280,7 +280,7 @@ boot_em_df <- function(model) {
 
 #' @rdname p_value
 #' @export
-p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
+p_value.emmGrid <- function(model, ci = 0.95, adjust = "none", ...) {
   if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
     return(boot_em_pval(model, adjust))
   }

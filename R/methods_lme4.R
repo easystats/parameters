@@ -106,7 +106,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.merMod <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = NULL,
                                     ci_random = NULL,
                                     bootstrap = FALSE,
