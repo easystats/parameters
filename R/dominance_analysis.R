@@ -402,9 +402,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (!is.null(sets)) {
     for (set in seq_along(sets)) {
-      set_name <- ifelse(!is.null(names(sets)[[set]]), names(sets)[[set]],
+      set_name <- if (!is.null(names(sets)[[set]])) {
+        names(sets)[[set]]
+      } else {
         paste0("set", set)
-      )
+      }
 
       da_df_cat$subset <-
         replace(
