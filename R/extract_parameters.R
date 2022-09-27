@@ -988,12 +988,10 @@
     NA_character_
   )
 
-  if (as.character(params$From) == as.character(params$To)) {
-    params$Component <- "Variance"
-  }
+  params$Component[as.character(params$From) == as.character(params$To)] <- "Variance"
 
-  if ("p" %in% colnames(params) && is.na(params$p)) {
-    params$p <- 0
+  if ("p" %in% colnames(params)) { {
+    params$p[is.na(params$p)] <- 0
   }
 
   if ("group" %in% names(data)) {
