@@ -14,6 +14,10 @@ model_parameters.marginaleffects <- function(model,
     style = "easystats"
   )
 
+  # contrast_ columns provide indispensable information about the comparisons 
+  colnames(out)[colnames(out) == "contrast"] <- "Comparison"
+  colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
+
   out <- tryCatch(
     .add_model_parameters_attributes(out, model, ci, ...),
     error = function(e) out

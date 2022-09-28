@@ -46,3 +46,17 @@ test_that("deltamethod()", {
   m <- deltamethod(x, "hp = wt")
   expect_equal(nrow(parameters(m)), 1)
 })
+
+
+
+test_that("multiple contrasts: Issue #779", {
+  mod <- lm(mpg ~ as.factor(gear) * as.factor(cyl), data = mtcars)
+  cmp <- suppressWarnings(comparisons(
+    mod,
+    variables = c("gear", "cyl"),
+    newdata = insight::get_datagrid(mod, at = c("gear", "cyl")),
+    interaction = TRUE))
+  cmp <- parameters(cmp)
+  expect_true("Comparison: gear" %in% colnames(cmp))
+  expect_true("Comparison: cyl" %in% colnames(cmp))
+})
