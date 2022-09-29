@@ -30,24 +30,15 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 120)
 )
 
-if (!requireNamespace("poorman", quietly = TRUE) ||
-  !requireNamespace("effectsize", quietly = TRUE) ||
-  !requireNamespace("BayesFactor", quietly = TRUE) ||
-  !requireNamespace("lme4", quietly = TRUE) ||
-  !requireNamespace("metafor", quietly = TRUE) ||
-  !requireNamespace("lavaan", quietly = TRUE) ||
-  !requireNamespace("nFactors", quietly = TRUE) ||
-  !requireNamespace("EGAnet", quietly = TRUE) ||
-  !requireNamespace("brms", quietly = TRUE) ||
-  !requireNamespace("psych", quietly = TRUE) ||
-  !requireNamespace("rstanarm", quietly = TRUE) ||
-  !requireNamespace("glmmTMB", quietly = TRUE) ||
-  !requireNamespace("GLMMadaptive", quietly = TRUE) ||
-  !requireNamespace("FactoMineR", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-} else {
+pkgs <- c(
+  "effectsize", "BayesFactor", "lme4", "metafor", "lavaan", "nFactors",
+  "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR"
+)
+
+successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
+
+if (all(successfully_loaded)) {
   library(parameters)
-  library(poorman)
   library(effectsize)
   library(EGAnet)
   library(psych)
@@ -83,27 +74,28 @@ notable differences:
 ### Frequentist
 
 ```{r}
-cor.test(iris$Sepal.Length, iris$Sepal.Width) %>%
+library(parameters)
+cor.test(iris$Sepal.Length, iris$Sepal.Width) |>
   parameters()
 ```
 
 ```{r}
-t.test(mpg ~ vs, data = mtcars) %>%
+t.test(mpg ~ vs, data = mtcars) |>
   parameters()
 ```
 
 
 ### Bayesian
 
-```{r}
+```{r eval=successfully_loaded["BayesFactor"]}
 library(BayesFactor)
 
-BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) %>%
+BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) |>
   parameters()
 ```
 
-```{r}
-BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) %>%
+```{r eval=successfully_loaded["BayesFactor"]}
+BayesFactor::ttestBF(formula = mpg ~ vs, data = mtcars) |>
   parameters()
 ```
 
@@ -117,8 +109,8 @@ summaries, including confidence intervals
 
 ### Simple
 
-```{r}
-aov(Sepal.Length ~ Species, data = iris) %>%
+```{r eval=successfully_loaded["effectsize"]}
+aov(Sepal.Length ~ Species, data = iris) |>
   parameters(
     omega_squared = "partial",
     eta_squared = "partial",
@@ -128,8 +120,8 @@ aov(Sepal.Length ~ Species, data = iris) %>%
 
 Let's complicate things further with an interaction term:
 
-```{r}
-aov(Sepal.Length ~ Species * Sepal.Width, data = iris) %>%
+```{r eval=successfully_loaded["effectsize"]}
+aov(Sepal.Length ~ Species * Sepal.Width, data = iris) |>
   parameters(
     omega_squared = "partial",
     eta_squared = "partial",
@@ -143,7 +135,7 @@ aov(Sepal.Length ~ Species * Sepal.Width, data = iris) %>%
 measures ANOVAs, whether computed from `aov()` or from a mixed model.
 
 ```{r}
-aov(mpg ~ am + Error(gear), data = mtcars) %>%
+aov(mpg ~ am + Error(gear), data = mtcars) |>
   parameters()
 ```
 
@@ -156,35 +148,35 @@ including mixed models and Bayesian models.
 ### GLMs
 
 ```{r}
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) |>
   parameters()
 ```
 
 ```{r}
 # show Odds Ratios and Wald-method for degrees of freedom
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) |>
   parameters(exponentiate = TRUE, ci_method = "wald")
 ```
 
 ```{r}
 # show Odds Ratios and include model summary
-glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) %>%
+glm(vs ~ poly(mpg, 2) + cyl, data = mtcars, family = binomial()) |>
   parameters(exponentiate = TRUE, summary = TRUE)
 ```
 
 ### Mixed Models
 
-```{r}
+```{r eval=successfully_loaded["lme4"]}
 library(lme4)
 
-lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
+lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) |>
   parameters()
 ```
 
 ### Mixed Models, without Random Effects Variances
 
-```{r}
-lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) %>%
+```{r eval=successfully_loaded["effectsize"]}
+lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) |>
   parameters(effects = "fixed")
 ```
 
@@ -239,7 +231,7 @@ library(rstanarm)
 
 # if you are unfamiliar with the `refresh` argument here, it just avoids
 # printing few messages to the console
-stan_glm(mpg ~ wt * cyl, data = mtcars, refresh = 0) %>%
+stan_glm(mpg ~ wt * cyl, data = mtcars, refresh = 0) |>
   parameters()
 ```
 
@@ -285,7 +277,7 @@ The **parameters** package extends the support to structural models.
 ```{r}
 library(psych)
 
-psych::pca(mtcars, nfactors = 3) %>%
+psych::pca(mtcars, nfactors = 3) |>
   parameters()
 ```
 
@@ -294,7 +286,7 @@ We will avoid displaying a graph while carrying out factor analysis:
 ```{r}
 library(FactoMineR)
 
-FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) %>%
+FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) |>
   parameters()
 ```
 
@@ -330,7 +322,7 @@ mydat <- data.frame(
   standarderror = c(0.317, 0.317, 0.13, 0.36)
 )
 
-rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) %>%
+rma(yi = effectsize, sei = standarderror, method = "REML", data = mydat) |>
   model_parameters()
 ```
 
