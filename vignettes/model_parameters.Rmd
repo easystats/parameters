@@ -175,14 +175,14 @@ lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) |>
 
 ### Mixed Models, without Random Effects Variances
 
-```{r eval=successfully_loaded["effectsize"]}
+```{r eval=successfully_loaded["lme4"]}
 lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris) |>
   parameters(effects = "fixed")
 ```
 
 ### Mixed Model with Zero-Inflation Model
 
-```{r}
+```{r eval=all(successfully_loaded[c("glmmTMB", "GLMMadaptive")])}
 library(GLMMadaptive)
 library(glmmTMB)
 data("Salamanders")
@@ -198,7 +198,7 @@ parameters(model)
 
 ### Mixed Models with Dispersion Model
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 library(glmmTMB)
 
 sim1 <- function(nfac = 40, nt = 100, facsd = 0.1, tsd = 0.15, mu = 0, residsd = 1) {
@@ -226,7 +226,7 @@ parameters(model)
 `model_parameters()` also works with Bayesian models from the **rstanarm**
 package:
 
-```{r}
+```{r eval=successfully_loaded["rstanarm"]}
 library(rstanarm)
 
 # if you are unfamiliar with the `refresh` argument here, it just avoids
@@ -240,7 +240,7 @@ Additionally, it also works for models from the **brms** package.
 For more complex models, specific model components can be printed using the
 arguments `effects` and `component` arguments.
 
-```{r}
+```{r eval=successfully_loaded["brms"]}
 library(brms)
 data(fish)
 set.seed(123)
@@ -264,7 +264,7 @@ parameters(model, effects = "all", component = "all")
 To include information about the random effect parameters (group levels), set
 `group_level = TRUE`:
 
-```{r}
+```{r eval=successfully_loaded["brms"]}
 parameters(model, effects = "all", component = "conditional", group_level = TRUE)
 ```
 
@@ -274,7 +274,7 @@ The **parameters** package extends the support to structural models.
 
 ### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
 
-```{r}
+```{r eval=all(successfully_loaded[c("psych", "nFactors")])}
 library(psych)
 
 psych::pca(mtcars, nfactors = 3) |>
@@ -283,7 +283,7 @@ psych::pca(mtcars, nfactors = 3) |>
 
 We will avoid displaying a graph while carrying out factor analysis:
 
-```{r}
+```{r eval=all(successfully_loaded[c("FactoMineR", "psych", "nFactors")])}
 library(FactoMineR)
 
 FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) |>
@@ -294,7 +294,7 @@ FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) |>
 
 #### Frequentist
 
-```{r}
+```{r eval=successfully_loaded["lavaan"]}
 library(lavaan)
 
 model <- lavaan::cfa(" visual  =~ x1 + x2 + x3
@@ -314,7 +314,7 @@ model_parameters(model)
 
 `parameters()` also works for `rma`-objects from the **metafor** package.
 
-```{r}
+```{r eval=successfully_loaded["metafor"]}
 library(metafor)
 
 mydat <- data.frame(
