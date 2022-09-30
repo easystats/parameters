@@ -143,7 +143,7 @@
   centrality = "median",
   dispersion = FALSE,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   exponentiate = FALSE,
