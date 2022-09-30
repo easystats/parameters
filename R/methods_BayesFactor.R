@@ -105,13 +105,13 @@ model_parameters.BFBayesFactor <- function(model,
 
   # Add components and effects columns
   cleaned_params <- NULL
-  tryCatch(
+  out <- tryCatch(
     {
       cleaned_params <- insight::clean_parameters(model)
-      out <- merge(out, cleaned_params[, c("Parameter", "Effects", "Component")], sort = FALSE)
+      merge(out, cleaned_params[, c("Parameter", "Effects", "Component")], sort = FALSE)
     },
     error = function(e) {
-      NULL
+      out
     }
   )
 
@@ -187,6 +187,11 @@ model_parameters.BFBayesFactor <- function(model,
 
   if (!is.null(out$Component) && insight::n_unique(out$Component) == 1) out$Component <- NULL
   if (!is.null(out$Effects) && insight::n_unique(out$Effects) == 1) out$Effects <- NULL
+
+
+  # ==== remove columns with complete NA
+
+  out[sapply(out, function(i) all(is.na(i)))] <- NULL
 
 
   # ==== pretty parameter names
