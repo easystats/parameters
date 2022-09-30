@@ -39,7 +39,7 @@ cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ..
 #' @export
 cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {
-    stop("Please provide cluster assignments via 'cluster_groups'.", call. = FALSE)
+    insight::format_error("Please provide cluster assignments via `cluster_groups`.")
   }
 
   x <- stats::na.omit(x)

@@ -44,14 +44,14 @@ cluster_performance.kmeans <- function(model, ...) {
 #' @export
 cluster_performance.hclust <- function(model, data, clusters, ...) {
   if (is.null(data)) {
-    stop(insight::format_message(
-      "This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself."
-    ), call. = FALSE)
+    insight::format_error(
+      "This function requires the data used to compute the clustering to be provided via `data` as it is not accessible from the clustering object itself."
+    )
   }
   if (is.null(clusters)) {
-    stop(insight::format_message(
+    insight::format_error(
       "This function requires a vector of clusters assignments of same length as data to be passed, as it is not contained in the clustering object itself."
-    ), call. = FALSE)
+    ))
   }
 
   params <- model_parameters(model, data = data, clusters = clusters, ...)
@@ -72,9 +72,9 @@ cluster_performance.hclust <- function(model, data, clusters, ...) {
 #' @export
 cluster_performance.dbscan <- function(model, data, ...) {
   if (is.null(data)) {
-    stop(insight::format_message(
-      "This function requires the data used to compute the clustering to be provided via 'data' as it is not accessible from the clustering object itself."
-    ), call. = FALSE)
+    insight::format_error(
+      "This function requires the data used to compute the clustering to be provided via `data` as it is not accessible from the clustering object itself."
+    )
   }
 
   params <- model_parameters(model, data = data, ...)

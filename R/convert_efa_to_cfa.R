@@ -77,12 +77,14 @@ efa_to_cfa <- convert_efa_to_cfa
 
   # Catch error
   if (length(names) != insight::n_unique(loadings$Component)) {
-    stop(paste("The `names` vector must be of same length as the number of dimensions, in this case", length(unique(loadings$Component))), call. = FALSE)
+    insight::format_error(
+      paste0("The `names` vector must be of same length as the number of dimensions, in this case ", length(unique(loadings$Component)), ".")
+    )
   }
 
   cfa <- c()
   # Iterate over dimensions
-  for (i in 1:length(names)) {
+  for (i in seq_along(names)) {
     cfa <- c(
       cfa,
       paste0(names[i], " =~ ", paste(as.character(loadings[loadings$Component == unique(loadings$Component)[i], "Variable"]), collapse = " + "))
