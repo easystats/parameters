@@ -8,7 +8,7 @@ if (.runThisTest && requiet("posterior") && requiet("brms")) {
     mp <- model_parameters(x)
     expect_equal(mp$Median, c(39.68234, -3.19505, -1.4936, 2.62881, -79.73344), tolerance = 1e-2, ignore_attr = TRUE)
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
-    expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd", "ROPE_Percentage"))
+    expect_equal(colnames(mp), c("Parameter", "Median", "CI_low", "CI_high", "pd"))
   })
 
   test_that("mp-posterior-draws_list", {

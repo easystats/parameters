@@ -73,7 +73,7 @@ if (requiet("testthat") &&
       expect_equal(
         colnames(mp2),
         c(
-          "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+          "Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
           "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
           "Method"
         )
@@ -95,7 +95,7 @@ if (requiet("testthat") &&
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c(
-        "Parameter", "Median", "MAD", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+        "Parameter", "Median", "MAD", "CI", "CI_low", "CI_high", "pd",
         "Prior_Distribution", "Prior_Location", "Prior_Scale", "Effects",
         "Component", "BF", "Method"
       ))
@@ -116,7 +116,7 @@ if (requiet("testthat") &&
   expect_identical(
     colnames(df_t),
     c(
-      "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_Percentage",
+      "Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
       "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
       "Method"
     )
@@ -134,8 +134,8 @@ if (requiet("testthat") &&
       colnames(df_t_es),
       c(
         "Parameter", "Median", "CI", "CI_low", "CI_high", "Cohens_d",
-        "d_CI_low", "d_CI_high", "pd", "ROPE_Percentage",
-        "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF", "Method"
+        "d_CI_low", "d_CI_high", "pd", "Prior_Distribution", "Prior_Location",
+        "Prior_Scale", "BF", "Method"
       )
     )
 
