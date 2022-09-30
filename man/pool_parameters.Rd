@@ -15,8 +15,8 @@ pool_parameters(
 }
 \arguments{
 \item{x}{A list of \code{parameters_model} objects, as returned by
-\code{\link[=model_parameters]{model_parameters()}}, or a list of model-objects that is
-supported by \code{model_parameters()}.}
+\code{\link[=model_parameters]{model_parameters()}}, or a list of model-objects that is supported by
+\code{model_parameters()}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 coefficients (and related confidence intervals). This is typical for
@@ -56,9 +56,9 @@ as \code{mice::pool()}. However, this function pools parameters from
 \code{\link[=model_parameters]{model_parameters()}}.
 }
 \details{
-Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
+Averaging of parameters follows Rubin's rules (\emph{Rubin, 1987, p. 76}).
 The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
-small samples (\cite{Barnard and Rubin, 1999}).
+small samples (\emph{Barnard and Rubin, 1999}).
 }
 \note{
 Models with multiple components, (for instance, models with zero-inflation,
@@ -68,6 +68,10 @@ since the coefficient table is grouped by coefficient names for pooling. In
 such cases, coefficients of count and zero-inflated model parts would be
 combined. Therefore, the \code{component} argument defaults to
 \code{"conditional"} to avoid this.
+
+Some model objects do not return standard errors (e.g. objects of class
+\code{htest}). For these models, no pooled confidence intervals nor p-values
+are returned.
 }
 \examples{
 # example for multiple imputed datasets
