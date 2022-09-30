@@ -51,7 +51,7 @@ cluster_performance.hclust <- function(model, data, clusters, ...) {
   if (is.null(clusters)) {
     insight::format_error(
       "This function requires a vector of clusters assignments of same length as data to be passed, as it is not contained in the clustering object itself."
-    ))
+    )
   }
 
   params <- model_parameters(model, data = data, clusters = clusters, ...)
