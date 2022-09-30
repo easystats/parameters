@@ -115,8 +115,8 @@ as <code><a href="https://amices.org/mice/reference/pool.html" class="external-l
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A list of <code>parameters_model</code> objects, as returned by
-<code><a href="model_parameters.html">model_parameters()</a></code>, or a list of model-objects that is
-supported by <code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
+<code><a href="model_parameters.html">model_parameters()</a></code>, or a list of model-objects that is supported by
+<code><a href="model_parameters.html">model_parameters()</a></code>.</p></dd>
 
 
 <dt>exponentiate</dt>
@@ -165,9 +165,9 @@ may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflate
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Averaging of parameters follows Rubin's rules (<cite>Rubin, 1987, p. 76</cite>).
+    <p>Averaging of parameters follows Rubin's rules (<em>Rubin, 1987, p. 76</em>).
 The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
-small samples (<cite>Barnard and Rubin, 1999</cite>).</p>
+small samples (<em>Barnard and Rubin, 1999</em>).</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -178,6 +178,9 @@ since the coefficient table is grouped by coefficient names for pooling. In
 such cases, coefficients of count and zero-inflated model parts would be
 combined. Therefore, the <code>component</code> argument defaults to
 <code>"conditional"</code> to avoid this.</p>
+<p>Some model objects do not return standard errors (e.g. objects of class
+<code>htest</code>). For these models, no pooled confidence intervals nor p-values
+are returned.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
