@@ -210,7 +210,7 @@ model_parameters.BFBayesFactor <- function(model,
   # reorder
   col_order <- c(
     "Parameter", "Mean", "Median", "MAD",
-    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "d_CI_low", "d_CI_high",
+    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "Cramers_v_adjusted", "d_CI_low", "d_CI_high",
     "Cramers_CI_low", "Cramers_CI_high", "pd", "ROPE_Percentage", "Prior_Distribution",
     "Prior_Location", "Prior_Scale", "Effects", "Component", "BF", "Method"
   )
