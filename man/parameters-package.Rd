@@ -25,9 +25,6 @@ from many different packages.
 
 References: Lüdecke et al. (2020) \url{doi:10.21105/joss.02445}.
 }
-\details{
-\code{parameters}
-}
 \seealso{
 Useful links:
 \itemize{

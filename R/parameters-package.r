@@ -1,5 +1,3 @@
-#' \code{parameters}
-#'
 #' @title parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using R
 #'
 #' @description
