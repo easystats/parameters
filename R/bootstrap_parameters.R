@@ -3,7 +3,12 @@
 #' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
-#' @param test The indices to compute. Character (vector) with one or more of these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each "test", the corresponding **bayestestR** function is called (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results included in the summary output.
+#' @param test The indices to compute. Character (vector) with one or more of
+#' these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`,
+#' `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`)
+#' or `"all"` to compute all tests. For each "test", the corresponding
+#' **bayestestR** function is called (e.g. [bayestestR::rope()] or
+#' [bayestestR::p_direction()]) and its results included in the summary output.
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -11,7 +16,9 @@
 #'
 #' @inheritSection bootstrap_model Using with **emmeans**
 #'
-#' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
+#' @references
+#' Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their
+#' application (Vol. 1). Cambridge university press.
 #'
 #' @seealso [bootstrap_model()], [simulate_parameters()], [simulate_model()]
 #'
