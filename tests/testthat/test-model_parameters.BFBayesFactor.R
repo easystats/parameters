@@ -64,11 +64,11 @@ if (requiet("testthat") &&
         colnames(mp),
         c(
           "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v",
-          "pd", "ROPE_Percentage", "Prior_Distribution", "Prior_Location",
+          "pd", "Prior_Distribution", "Prior_Location",
           "Prior_Scale", "BF", "Method"
         )
       )
-      expect_equal(dim(mp), c(6L, 14L))
+      expect_equal(dim(mp), c(6L, 13L))
 
       expect_equal(
         colnames(mp2),
@@ -78,7 +78,7 @@ if (requiet("testthat") &&
           "Method"
         )
       )
-      expect_equal(dim(mp2), c(1L, 12L))
+      expect_equal(dim(mp2), c(1L, 11L))
     })
 
     data(puzzles)
@@ -122,7 +122,7 @@ if (requiet("testthat") &&
     )
   )
 
-  expect_equal(dim(df_t), c(1L, 12L))
+  expect_equal(dim(df_t), c(1L, 11L))
 
   if (requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
     # with effectsize
@@ -139,6 +139,6 @@ if (requiet("testthat") &&
       )
     )
 
-    expect_equal(dim(df_t_es), c(1L, 15L))
+    expect_equal(dim(df_t_es), c(1L, 14L))
   }
 }
