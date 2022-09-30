@@ -211,7 +211,7 @@
 #' to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 #'
 #' `"profile"`
-#' - Applies to *non-Bayesian models* of class `glm`, `polr` or `glmmTMB`.
+#' - Applies to *non-Bayesian models* of class `glm`, `polr`, `merMod` or `glmmTMB`.
 #'   CIs computed by *profiling the likelihood curve for a parameter*, using
 #'   linear interpolation to find where likelihood ratio equals a critical value;
 #'   p-values computed using the Wald method with a *normal-distribution* (note:

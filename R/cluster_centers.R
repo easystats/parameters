@@ -109,7 +109,9 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   BSS2 <- sum(colSums((gmeans - means)^2) * table(clusters))
 
   # Double check
-  if (BSS2 - BSS > 1e-05) stop("The between sum of squares computation went wrong. Please open an issue at https://github.com/easystats/parameters/issues so we can fix the bug (provide an example and mention that 'BSS != BSS2').", call. = FALSE)
+  if (BSS2 - BSS > 1e-05) {
+    insight::format_error("The between sum of squares computation went wrong. Please open an issue at {.url https://github.com/easystats/parameters/issues} so we can fix the bug (provide an example and mention that `BSS != BSS2`).")
+  }
 
   list(WSS = WSS, BSS = BSS, TSS = TSS)
 }
