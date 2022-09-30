@@ -150,12 +150,12 @@ feedback considered too <strong>critical</strong> and opportunity of
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"attitude"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p>We can explore a reduction of the number of parameters with the
 <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></span></code></pre></div>
 <p>This output <em>hints</em> at the fact that the model could be
 represented via <strong>two “latent” dimensions</strong>, one correlated
 with all the positive things that a company has to offer, and the other
@@ -180,7 +180,7 @@ means that the respective variables (<code>raises</code>,
 .82, .78, .70, .68, respectively) with this dimension.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>A different method (<strong>Classical Multidimensional Scaling -
 cMDS</strong>) suggests that negative critiques do not have a
 significant impact on the rating, and that the lack of opportunities of
@@ -223,7 +223,7 @@ response variable of our initial dataset.</p>
 <p>We can know update the model with this new component:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="using-the-psych-package-for-pca">Using the <code>psych</code> package for PCA<a class="anchor" aria-label="anchor" href="#using-the-psych-package-for-pca"></a>
 </h4>

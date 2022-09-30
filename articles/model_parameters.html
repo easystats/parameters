@@ -129,7 +129,7 @@
     
     
 <p>The <code><a href="../reference/model_parameters.html">model_parameters()</a></code> function (also accessible via the
-shortcut <code><a href="../reference/model_parameters.html">parameters()</a></code>) allows you to extract the parameters
+shortcut <code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters()</a></code>) allows you to extract the parameters
 and their characteristics from various models in a consistent way. It
 can be considered as a lightweight alternative to <a href="https://github.com/tidymodels/broom" class="external-link"><code>broom::tidy()</code></a>,
 with some notable differences:</p>
@@ -154,7 +154,7 @@ including parameters <a href="https://easystats.github.io/parameters/reference/b
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/">parameters</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html" class="external-link">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Pearson's product-moment correlation</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter1        |       Parameter2 |     r |        95% CI | t(148) |     p</span></span>
@@ -164,7 +164,7 @@ including parameters <a href="https://easystats.github.io/parameters/reference/b
 <span><span class="co">#&gt; Alternative hypothesis: true correlation is not equal to 0</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Welch Two Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter | Group | vs = 0 | vs = 1 | Difference |          95% CI | t(22.72) |      p</span></span>
@@ -180,7 +180,7 @@ including parameters <a href="https://easystats.github.io/parameters/reference/b
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://richarddmorey.github.io/BayesFactor/" class="external-link">BayesFactor</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html" class="external-link">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Bayesian correlation analysis</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter | Median |        95% CI |     pd |         Prior |    BF</span></span>
@@ -188,7 +188,7 @@ including parameters <a href="https://easystats.github.io/parameters/reference/b
 <span><span class="co">#&gt; rho       |  -0.11 | [-0.27, 0.04] | 92.25% | Beta (3 +- 3) | 0.509</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Bayesian t-test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter  | Median |          95% CI |     pd |              Prior |     BF</span></span>
@@ -209,7 +209,7 @@ indices for parameters summaries, including confidence intervals</p>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
 <span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
 <span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
 <span>    epsilon_squared <span class="op">=</span> <span class="st">"partial"</span></span>
@@ -223,7 +223,7 @@ indices for parameters summaries, including confidence intervals</p>
 <p>Let’s complicate things further with an interaction term:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
 <span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
 <span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
 <span>    ci <span class="op">=</span> <span class="fl">.8</span></span>
@@ -240,12 +240,12 @@ indices for parameters summaries, including confidence intervals</p>
 <div class="section level3">
 <h3 id="repeated-measures">Repeated measures<a class="anchor" aria-label="anchor" href="#repeated-measures"></a>
 </h3>
-<p><code><a href="../reference/model_parameters.html">parameters()</a></code> (resp. its alias
+<p><code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters()</a></code> (resp. its alias
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) also works on repeated measures ANOVAs,
 whether computed from <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> or from a mixed model.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span> <span class="op">+</span> <span class="fu">Error</span><span class="op">(</span><span class="va">gear</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # gear</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter | Sum_Squares | df | Mean_Square</span></span>
@@ -265,7 +265,7 @@ whether computed from <code><a href="https://rdrr.io/r/stats/aov.html" class="ex
 <div class="section level2">
 <h2 id="regressions-glms-mixed-models-gams">Regressions (GLMs, Mixed Models, GAMs, …)<a class="anchor" aria-label="anchor" href="#regressions-glms-mixed-models-gams"></a>
 </h2>
-<p><code><a href="../reference/model_parameters.html">parameters()</a></code> (resp. its alias
+<p><code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters()</a></code> (resp. its alias
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) was mainly built with regression models
 in mind. It works for many types of models and packages, including mixed
 models and Bayesian models.</p>
@@ -274,7 +274,7 @@ models and Bayesian models.</p>
 </h3>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter        | Log-Odds |   SE |          95% CI |     z |     p</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)      |    13.51 | 7.20 | [  2.56, 33.42] |  1.88 | 0.060</span></span>
@@ -284,7 +284,7 @@ models and Bayesian models.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show Odds Ratios and Wald-method for degrees of freedom</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, ci_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, ci_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter        | Odds Ratio |       SE |           95% CI |     z |     p</span></span>
 <span><span class="co">#&gt; ---------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [0.55, 9.87e+11] |  1.88 | 0.060</span></span>
@@ -294,7 +294,7 @@ models and Bayesian models.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># show Odds Ratios and include model summary</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter        | Odds Ratio |       SE |            95% CI |     z |     p</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)      |   7.38e+05 | 5.31e+06 | [12.95, 3.26e+14] |  1.88 | 0.060</span></span>
@@ -313,7 +313,7 @@ models and Bayesian models.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span></span>
@@ -333,7 +333,7 @@ models and Bayesian models.</p>
 </h3>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span>effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span></span>
@@ -355,7 +355,7 @@ models and Bayesian models.</p>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://drizopoulos.github.io/GLMMadaptive/reference/extra_fams.html" class="external-link">zi.negative.binomial</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">Salamanders</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Log-Mean |   SE |        95% CI |     z |      p</span></span>
@@ -412,7 +412,7 @@ models and Bayesian models.</p>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://amices.org/mice/reference/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">x</span> <span class="op">~</span> <span class="va">sd</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">t</span><span class="op">)</span>, dispformula <span class="op">=</span> <span class="op">~</span><span class="va">sd</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Coefficient |   SE |            95% CI |       z |      p</span></span>
@@ -445,7 +445,7 @@ the <strong>rstanarm</strong> package:</p>
 <span><span class="co"># if you are unfamiliar with the `refresh` argument here, it just avoids</span></span>
 <span><span class="co"># printing few messages to the console</span></span>
 <span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter   | Median |          95% CI |     pd |  Rhat |     ESS |                   Prior</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept) |  52.75 | [ 41.13, 64.66] |   100% | 1.005 | 1081.00 | Normal (20.09 +- 15.07)</span></span>
@@ -473,7 +473,7 @@ arguments.</p>
 <span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% | 1.006 |  267.00</span></span>
@@ -481,7 +481,7 @@ arguments.</p>
 <span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.000 | 2220.00</span></span>
 <span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.000 | 3251.00</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed effects (conditional)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
@@ -513,7 +513,7 @@ arguments.</p>
 <p>To include information about the random effect parameters (group
 levels), set <code>group_level = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"conditional"</span>, group_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"conditional"</span>, group_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
@@ -552,7 +552,7 @@ structural models.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://personality-project.org/r/psych/" class="external-link">psych</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html" class="external-link">pca</a></span><span class="op">(</span><span class="va">mtcars</span>, nfactors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Rotated loadings from Principal Component Analysis (varimax-rotation)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Variable |  RC2  |  RC3  |  RC1  | Complexity | Uniqueness</span></span>
@@ -576,7 +576,7 @@ analysis:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://factominer.free.fr" class="external-link">FactoMineR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">FactoMineR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FactoMineR/man/FAMD.html" class="external-link">FAMD</a></span><span class="op">(</span><span class="va">iris</span>, ncp <span class="op">=</span> <span class="fl">3</span>, graph <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Loadings from Factor Analysis (no rotation)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Variable     | Dim.1 |  Dim.2   |  Dim.3   | Complexity</span></span>
@@ -638,7 +638,7 @@ analysis:</p>
 <div class="section level2">
 <h2 id="meta-analysis">Meta-Analysis<a class="anchor" aria-label="anchor" href="#meta-analysis"></a>
 </h2>
-<p><code><a href="../reference/model_parameters.html">parameters()</a></code> also works for <code>rma</code>-objects
+<p><code><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters()</a></code> also works for <code>rma</code>-objects
 from the <strong>metafor</strong> package.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span></span>
