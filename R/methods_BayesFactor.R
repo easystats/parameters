@@ -191,7 +191,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   # ==== remove columns with complete NA
 
-  out[sapply(out, function(i) all(is.na(i)))] <- NULL
+  out <- datawizard::remove_empty_columns(out)
 
 
   # ==== pretty parameter names
