@@ -100,7 +100,7 @@ bootstrap_parameters <- function(model,
 
   # p-value
   if (p_value) {
-    parameters$.row_order <- 1:nrow(parameters)
+    parameters$.row_order <- seq_len(nrow(parameters))
     # calculate probability of direction, then convert to p.
     p <- bayestestR::p_direction(data, null = 0, ...)
     p$p <- bayestestR::pd_to_p(p$pd)
