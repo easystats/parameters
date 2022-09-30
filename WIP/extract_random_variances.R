@@ -28,7 +28,9 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning(
+        "Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."
+      )
     }
   }
 
@@ -62,14 +64,17 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning(
+        "Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."
+      )
     }
     return(NULL)
   }
 
   out$Component <- "conditional"
 
-  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
+  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated &&
+      !is.null(insight::find_random(model)$zero_inflated_random)) {
     zi_var <- suppressWarnings(
       .extract_random_variances_helper(
         model,
@@ -177,7 +182,12 @@
   # random slope-intercept correlation - rho01
   if (!is.null(ran_corr) && nrow(ran_corr) > 0) {
     if (ncol(ran_corr) > 1 && all(colnames(ran_corr) %in% ran_groups)) {
-      ran_corr <- datawizard::reshape_longer(ran_corr, colnames_to = "Group", values_to = "Coefficient", rows_to = "Slope")
+      ran_corr <- datawizard::reshape_longer(
+        ran_corr,
+        colnames_to = "Group",
+        values_to = "Coefficient",
+        rows_to = "Slope"
+      )
       ran_corr$Parameter <- paste0("Cor (Intercept~", ran_corr$Slope, ": ", ran_intercept$Group, ")")
       ran_corr <- datawizard::data_reorder(ran_corr, select = c("Parameter", "Coefficient", "Group"))
       ran_corr$Slope <- NULL
@@ -382,7 +392,13 @@
             var_ci_corr_param <- grepl("(.*)\\.\\(Intercept\\)", var_ci$Parameter)
             if (any(var_ci_corr_param)) {
               rnd_slope_terms <- gsub("(.*)\\.\\(Intercept\\)", "\\1", var_ci$Parameter[var_ci_corr_param])
-              var_ci$Parameter[var_ci_corr_param] <- paste0("Cor (Intercept~", rnd_slope_terms, ": ", var_ci$Group[var_ci_corr_param], ")")
+              var_ci$Parameter[var_ci_corr_param] <- paste0(
+                "Cor (Intercept~",
+                rnd_slope_terms,
+                ": ",
+                var_ci$Group[var_ci_corr_param],
+                ")"
+              )
             }
 
             # correlations w/o intercept? usually only for factors
@@ -402,7 +418,7 @@
             var_ci$Parameter[var_ci_others] <- gsub("(.*)", "SD (\\1)", var_ci$Parameter[var_ci_others])
 
             # merge with random effect coefficients
-            out$.sort_id <- 1:nrow(out)
+            out$.sort_id <- seq_len(nrow(out))
             tmp <- merge(
               datawizard::data_remove(out, "SE", verbose = FALSE),
               var_ci,
@@ -433,30 +449,30 @@
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
-              message(insight::format_message(
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              insight::format_alert(
+                "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
                 "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
-              ))
+              )
             }
           },
           error = function(e) {
             if (isTRUE(verbose)) {
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-                message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.")
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                 grepl("computationally singular", e$message, fixed = TRUE) ||
                 grepl("Exact singular", e$message, fixed = TRUE)) {
-                message(insight::format_message(
+                insight::format_alert(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                  "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-                ))
+                  "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`)."
+                )
               }
             }
           }
         )
       } else if (isTRUE(verbose)) {
-        message(insight::format_message("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters."))
+        insight::format_alert("Package {.pkg `merDeriv`} needs to be installed to compute confidence intervals for random effect parameters.")
       }
     }
   } else if (inherits(model, "glmmTMB")) {
@@ -683,7 +699,7 @@
     }
 
     varcorr <- datawizard::compact_list(list(vc1, vc2))
-    names(varcorr) <- c("cond", "zi")[1:length(varcorr)]
+    names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
 
     # joineRML
     # ---------------------------
@@ -778,8 +794,8 @@
   class(vcor) <- "matrix"
 
   re_index <- (which(rownames(vcor) == "(Intercept)") - 1)[-1]
-  vc_list <- split(data.frame(vcor, stringsAsFactors = FALSE), findInterval(1:nrow(vcor), re_index))
-  vc_rownames <- split(rownames(vcor), findInterval(1:nrow(vcor), re_index))
+  vc_list <- split(data.frame(vcor, stringsAsFactors = FALSE), findInterval(seq_len(nrow(vcor)), re_index))
+  vc_rownames <- split(rownames(vcor), findInterval(seq_len(nrow(vcor)), re_index))
   re_pars <- unique(unlist(insight::find_parameters(model)["random"]))
   re_names <- insight::find_random(model, split_nested = TRUE, flatten = TRUE)
 
@@ -796,13 +812,13 @@
       vl <- rownames(x) %in% re_pars
       x <- suppressWarnings(apply(x[vl, vl, drop = FALSE], MARGIN = c(1, 2), FUN = as.numeric))
       m1 <- matrix(, nrow = nrow(x), ncol = ncol(x))
-      m1[1:nrow(m1), 1:ncol(m1)] <- as.vector(x[, 1])
+      m1[seq_len(nrow(m1)), seq_len(ncol(m1))] <- as.vector(x[, 1])
       rownames(m1) <- rownames(x)
       colnames(m1) <- rownames(x)
 
       if (!is.null(g_cor)) {
         m1_cov <- sqrt(prod(diag(m1))) * g_cor
-        for (j in 1:ncol(m1)) {
+        for (j in seq_len(ncol(m1))) {
           m1[j, nrow(m1) - j + 1] <- m1_cov[1]
         }
       }
@@ -883,7 +899,7 @@
         if (length(missig_rnd_slope)) {
           # sanity check
           to_remove <- c()
-          for (j in 1:length(out)) {
+          for (j in seq_along(out)) {
             # identical random slopes might have different names, so
             # we here check if random slopes from correlated and uncorrelated
             # are duplicated (i.e. their difference is 0 - including a tolerance)

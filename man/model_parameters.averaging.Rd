@@ -36,6 +36,7 @@
 \alias{model_parameters.comparisons}
 \alias{model_parameters.marginalmeans}
 \alias{model_parameters.deltamethod}
+\alias{model_parameters.predictions}
 \alias{model_parameters.margins}
 \alias{model_parameters.maxLik}
 \alias{model_parameters.maxim}
@@ -142,7 +143,7 @@
   centrality = "median",
   dispersion = FALSE,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   exponentiate = FALSE,
@@ -252,6 +253,8 @@
 \method{model_parameters}{marginalmeans}(model, ci = 0.95, ...)
 
 \method{model_parameters}{deltamethod}(model, ci = 0.95, ...)
+
+\method{model_parameters}{predictions}(model, ci = 0.95, ...)
 
 \method{model_parameters}{margins}(
   model,

@@ -295,7 +295,11 @@ pool_parameters <- function(x,
   # column name for coefficients
   coef_col <- .find_coefficient_type(info, exponentiate)
   attr(pooled_params, "coefficient_name") <- coef_col
-  attr(pooled_params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+  attr(pooled_params, "zi_coefficient_name") <- if (isTRUE(exponentiate)) {
+    "Odds Ratio"
+  } else {
+    "Log-Odds"
+  }
   # formula
   attr(pooled_params, "model_formula") <- insight::find_formula(model)
   pooled_params

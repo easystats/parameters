@@ -176,6 +176,20 @@
                                            is_multivariate = FALSE,
                                            ran_pars,
                                            formatted_table = NULL) {
+  # prepare component names
+  .conditional_fixed_text <- if (is_zero_inflated) {
+    "Fixed Effects (Count Model)"
+  } else {
+    "Fixed Effects"
+  }
+  .conditional_random_text <- if (ran_pars) {
+    "Random Effects Variances"
+  } else if (is_zero_inflated) {
+    "Random Effects (Count Model)"
+  } else {
+    "Random Effects"
+  }
+
   component_name <- switch(type,
     "mu" = ,
     "fixed" = ,
@@ -185,13 +199,8 @@
     "random." = ,
     "random" = "Random Effects",
     "conditional.fixed" = ,
-    "conditional.fixed." = ifelse(is_zero_inflated, "Fixed Effects (Count Model)", "Fixed Effects"),
-    "conditional.random" = ifelse(ran_pars,
-      "Random Effects Variances",
-      ifelse(is_zero_inflated,
-        "Random Effects (Count Model)", "Random Effects"
-      )
-    ),
+    "conditional.fixed." = .conditional_fixed_text,
+    "conditional.random" = .conditional_random_text,
     "zero_inflated" = "Zero-Inflated",
     "zero_inflated.fixed" = ,
     "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
@@ -310,7 +319,11 @@
     s2 <- component_name
   } else {
     s1 <- component_name
-    s2 <- ifelse(tolower(split_column) == "component", "", split_column)
+    if (tolower(split_column) == "component") {
+      s2 <- ""
+    } else {
+      s2 <- split_column
+    }
   }
 
   list(name = component_name, subheader1 = s1, subheader2 = s2)
@@ -497,12 +510,21 @@
     x$Response <- NULL
   }
   split_by <- ""
-  split_by <- c(split_by, ifelse("Component" %in% names(x) && insight::n_unique(x$Component) > 1, "Component", ""))
-  split_by <- c(split_by, ifelse("Effects" %in% names(x) && insight::n_unique(x$Effects) > 1, "Effects", ""))
-  split_by <- c(split_by, ifelse("Response" %in% names(x) && insight::n_unique(x$Response) > 1, "Response", ""))
-  split_by <- c(split_by, ifelse("Group" %in% names(x) && insight::n_unique(x$Group) > 1, "Group", ""))
-  split_by <- c(split_by, ifelse("Subgroup" %in% names(x) && insight::n_unique(x$Subgroup) > 1, "Subgroup", ""))
-
+  if ("Component" %in% names(x) && insight::n_unique(x$Component) > 1) {
+    split_by <- c(split_by, "Component")
+  }
+  if ("Effects" %in% names(x) && insight::n_unique(x$Effects) > 1) {
+    split_by <- c(split_by, "Effects")
+  }
+  if ("Response" %in% names(x) && insight::n_unique(x$Response) > 1) {
+    split_by <- c(split_by, "Response")
+  }
+  if ("Group" %in% names(x) && insight::n_unique(x$Group) > 1) {
+    split_by <- c(split_by, "Group")
+  }
+  if ("Subgroup" %in% names(x) && insight::n_unique(x$Subgroup) > 1) {
+    split_by <- c(split_by, "Subgroup")
+  }
   split_by <- split_by[nchar(split_by) > 0]
   split_by
 }

@@ -64,7 +64,7 @@ model_parameters.stanreg <- function(model,
                                      dispersion = FALSE,
                                      ci = 0.95,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      bf_prior = NULL,
@@ -101,10 +101,11 @@ model_parameters.stanreg <- function(model,
 
   if (effects != "fixed") {
     random_effect_levels <- which(
-      params$Effects %in% "random" &
-        grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE)
+      params$Effects %in% "random" & grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE)
     )
-    if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
+    if (length(random_effect_levels) && isFALSE(group_level)) {
+      params <- params[-random_effect_levels, , drop = FALSE]
+    }
   }
 
   params <- .add_pretty_names(params, model)

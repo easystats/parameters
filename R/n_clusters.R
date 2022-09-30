@@ -1,16 +1,18 @@
-#' Find number of clusters in your data
+#' @title Find number of clusters in your data
+#' @name n_clusters
 #'
-#' Similarly to [n_factors()] for factor / principal component analysis,
-#' `n_clusters` is the main function to find out the optimal numbers of clusters
+#' @description
+#' Similarly to [`n_factors()`] for factor / principal component analysis,
+#' `n_clusters()` is the main function to find out the optimal numbers of clusters
 #' present in the data based on the maximum consensus of a large number of
 #' methods.
-#' \cr
+#'
 #' Essentially, there exist many methods to determine the optimal number of
 #' clusters, each with pros and cons, benefits and limitations. The main
 #' `n_clusters` function proposes to run all of them, and find out the number of
 #' clusters that is suggested by the majority of methods (in case of ties, it
 #' will select the most parsimonious solution with fewer clusters).
-#' \cr
+#'
 #' Note that we also implement some specific, commonly used methods, like the
 #' Elbow or the Gap method, with their own visualization functionalities. See
 #' the examples below for more details.
@@ -28,15 +30,14 @@
 #'   computationally heavy.
 #' @param n_max Maximal number of clusters to test.
 #' @param clustering_function,gap_method Other arguments passed to other
-#'   functions. `clustering_function` is used by `fviz_nbclust` and
-#'   can be `kmeans`, code{cluster::pam}, code{cluster::clara},
-#'   code{cluster::fanny}, and more. `gap_method` is used by
-#'   `cluster::maxSE` to extract the optimal numbers of clusters (see its
-#'   `method` argument).
+#'   functions. `clustering_function` is used by `fviz_nbclust()` and
+#'   can be `kmeans`, `cluster::pam`, `cluster::clara`, `cluster::fanny`, and
+#'   more. `gap_method` is used by `cluster::maxSE` to extract the optimal
+#'   numbers of clusters (see its `method` argument).
 #' @param method,min_size,eps_n,eps_range Arguments for DBSCAN algorithm.
-#' @param distance_method The distance method (passed to [dist()]). Used by
+#' @param distance_method The distance method (passed to [`dist()`]). Used by
 #'   algorithms relying on the distance matrix, such as `hclust` or `dbscan`.
-#' @param hclust_method The hierarchical clustering method (passed to [hclust()]).
+#' @param hclust_method The hierarchical clustering method (passed to [`hclust()`]).
 #' @param nbclust_method The clustering method (passed to `NbClust::NbClust()`
 #'   as `method`).
 #' @inheritParams model_parameters.glm
@@ -100,7 +101,7 @@ n_clusters <- function(x,
 
   # Error if no solution
   if (nrow(out) == 0) {
-    stop("No complete solution was found. Please try again with more methods.", call. = FALSE)
+    insight::format_error("No complete solution was found. Please try again with more methods.")
   }
 
   # Clean

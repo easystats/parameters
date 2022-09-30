@@ -72,7 +72,11 @@ standard_error.zeroinfl <- function(model,
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
+    if (i == "count") {
+      comp <- "conditional"
+    } else {
+      comp <- "zi"
+    }
 
     stats <- cs[[i]]
 
@@ -129,7 +133,11 @@ p_value.zeroinfl <- function(model,
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
+    if (i == "count") {
+      comp <- "conditional"
+    } else {
+      comp <- "zi"
+    }
     stats <- cs[[i]]
 
     # remove log(theta)

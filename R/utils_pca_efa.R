@@ -51,7 +51,13 @@ get_scores <- function(x, n_items = NULL) {
       .n_items <- n_items
     }
 
-    apply(items, 1, function(i) ifelse(sum(!is.na(i)) >= .n_items, mean(i, na.rm = TRUE), NA))
+    apply(items, 1, function(i) {
+      if (sum(!is.na(i)) >= .n_items) {
+        mean(i, na.rm = TRUE)
+      } else {
+        NA
+      }
+    })
   })
 
   out <- as.data.frame(do.call(cbind, out))
