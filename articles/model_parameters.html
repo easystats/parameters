@@ -183,17 +183,17 @@ including parameters <a href="https://easystats.github.io/parameters/reference/b
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Bayesian correlation analysis</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter | Median |        95% CI |     pd | % in ROPE |         Prior |    BF</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; rho       |  -0.11 | [-0.27, 0.04] | 92.25% |    19.82% | Beta (3 +- 3) | 0.509</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter | Median |        95% CI |     pd |         Prior |    BF</span></span>
+<span><span class="co">#&gt; -------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; rho       |  -0.11 | [-0.27, 0.04] | 92.25% | Beta (3 +- 3) | 0.509</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">mpg</span> <span class="op">~</span> <span class="va">vs</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Bayesian t-test</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter  | Median |          95% CI |     pd | % in ROPE |              Prior |     BF</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Difference |  -7.31 | [-10.81, -3.79] | 99.98% |        0% | Cauchy (0 +- 0.71) | 529.27</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter  | Median |          95% CI |     pd |              Prior |     BF</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Difference |  -7.31 | [-10.81, -3.79] | 99.98% | Cauchy (0 +- 0.71) | 529.27</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -446,12 +446,12 @@ the <strong>rstanarm</strong> package:</p>
 <span><span class="co"># printing few messages to the console</span></span>
 <span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Median |          95% CI |     pd | % in ROPE |  Rhat |     ESS |                   Prior</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  52.75 | [ 41.13, 64.66] |   100% |        0% | 1.005 | 1081.00 | Normal (20.09 +- 15.07)</span></span>
-<span><span class="co">#&gt; wt          |  -8.09 | [-12.61, -3.72] |   100% |        0% | 1.006 | 1133.00 |  Normal (0.00 +- 15.40)</span></span>
-<span><span class="co">#&gt; cyl         |  -3.56 | [ -5.52, -1.66] | 99.95% |        0% | 1.003 | 1154.00 |   Normal (0.00 +- 8.44)</span></span>
-<span><span class="co">#&gt; wt:cyl      |   0.73 | [  0.10,  1.37] | 98.65% |        0% | 1.006 | 1034.00 |   Normal (0.00 +- 1.36)</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter   | Median |          95% CI |     pd |  Rhat |     ESS |                   Prior</span></span>
+<span><span class="co">#&gt; -------------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |  52.75 | [ 41.13, 64.66] |   100% | 1.005 | 1081.00 | Normal (20.09 +- 15.07)</span></span>
+<span><span class="co">#&gt; wt          |  -8.09 | [-12.61, -3.72] |   100% | 1.006 | 1133.00 |  Normal (0.00 +- 15.40)</span></span>
+<span><span class="co">#&gt; cyl         |  -3.56 | [ -5.52, -1.66] | 99.95% | 1.003 | 1154.00 |   Normal (0.00 +- 8.44)</span></span>
+<span><span class="co">#&gt; wt:cyl      |   0.73 | [  0.10,  1.37] | 98.65% | 1.006 | 1034.00 |   Normal (0.00 +- 1.36)</span></span></code></pre></div>
 <p>Additionally, it also works for models from the <strong>brms</strong>
 package.</p>
 <p>For more complex models, specific model components can be printed
@@ -474,69 +474,69 @@ arguments.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd | % in ROPE |  Rhat |     ESS</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% |        0% | 1.006 |  267.00</span></span>
-<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% |        0% | 1.005 |  323.00</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% |        0% | 1.000 | 2220.00</span></span>
-<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% |        0% | 1.000 | 3251.00</span></span>
+<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% | 1.006 |  267.00</span></span>
+<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% | 1.005 |  323.00</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.000 | 2220.00</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.000 | 3251.00</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed effects (conditional)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd | % in ROPE |  Rhat |     ESS</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% |        0% | 1.006 |  267.00</span></span>
-<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% |        0% | 1.005 |  323.00</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% |        0% | 1.000 | 2220.00</span></span>
-<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% |        0% | 1.000 | 3251.00</span></span>
+<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% | 1.006 |  267.00</span></span>
+<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% | 1.005 |  323.00</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.000 | 2220.00</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.000 | 3251.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Fixed effects (zero-inflated)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd | % in ROPE |  Rhat |     ESS</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.67 | [-2.24,  0.88] | 82.78% |     7.32% | 1.004 |  762.00</span></span>
-<span><span class="co">#&gt; child       |   1.86 | [ 1.18,  2.55] |   100% |        0% | 1.002 | 1652.00</span></span>
-<span><span class="co">#&gt; camper1     |  -0.84 | [-1.61, -0.10] | 98.60% |     0.11% | 1.003 |  968.00</span></span>
+<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.67 | [-2.24,  0.88] | 82.78% | 1.004 |  762.00</span></span>
+<span><span class="co">#&gt; child       |   1.86 | [ 1.18,  2.55] |   100% | 1.002 | 1652.00</span></span>
+<span><span class="co">#&gt; camper1     |  -0.84 | [-1.61, -0.10] | 98.60% | 1.003 |  968.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random effects (conditional) SD/Cor: persons</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd | % in ROPE |  Rhat |    ESS</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |   0.11 | [0.01, 0.82] | 100% |    45.73% | 1.030 | 141.00</span></span>
+<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd |  Rhat |    ESS</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |   0.11 | [0.01, 0.82] | 100% | 1.030 | 141.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random effects (zero-inflated) SD/Cor: persons</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd | % in ROPE |  Rhat |    ESS</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |   1.35 | [0.53, 3.49] | 100% |        0% | 1.004 | 689.00</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd |  Rhat |    ESS</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |   1.35 | [0.53, 3.49] | 100% | 1.004 | 689.00</span></span></code></pre></div>
 <p>To include information about the random effect parameters (group
 levels), set <code>group_level = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"conditional"</span>, group_level <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed effects</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd | % in ROPE |  Rhat |     ESS</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% |        0% | 1.006 |  267.00</span></span>
-<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% |        0% | 1.005 |  323.00</span></span>
-<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% |        0% | 1.000 | 2220.00</span></span>
-<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% |        0% | 1.000 | 3251.00</span></span>
+<span><span class="co">#&gt; Parameter   | Median |         95% CI |     pd |  Rhat |     ESS</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |  -0.87 | [-1.88, -0.25] | 99.48% | 1.006 |  267.00</span></span>
+<span><span class="co">#&gt; persons     |   0.84 | [ 0.64,  1.13] |   100% | 1.005 |  323.00</span></span>
+<span><span class="co">#&gt; child       |  -1.15 | [-1.34, -0.97] |   100% | 1.000 | 2220.00</span></span>
+<span><span class="co">#&gt; camper1     |   0.73 | [ 0.55,  0.92] |   100% | 1.000 | 3251.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random effects Intercept: persons</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter |    Median |        95% CI |     pd | % in ROPE |  Rhat |    ESS</span></span>
-<span><span class="co">#&gt; ---------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; persons.1 | -2.56e-03 | [-0.44, 0.50] | 52.95% |    66.45% | 1.004 | 329.00</span></span>
-<span><span class="co">#&gt; persons.2 |      0.03 | [-0.19, 0.59] | 65.95% |    68.96% | 1.010 | 206.00</span></span>
-<span><span class="co">#&gt; persons.3 | -7.93e-03 | [-0.25, 0.25] | 56.77% |    76.69% | 1.005 | 448.00</span></span>
-<span><span class="co">#&gt; persons.4 |  2.72e-03 | [-0.30, 0.36] | 52.95% |    69.68% | 1.004 | 670.00</span></span>
+<span><span class="co">#&gt; Parameter |    Median |        95% CI |     pd |  Rhat |    ESS</span></span>
+<span><span class="co">#&gt; ---------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; persons.1 | -2.56e-03 | [-0.44, 0.50] | 52.95% | 1.004 | 329.00</span></span>
+<span><span class="co">#&gt; persons.2 |      0.03 | [-0.19, 0.59] | 65.95% | 1.010 | 206.00</span></span>
+<span><span class="co">#&gt; persons.3 | -7.93e-03 | [-0.25, 0.25] | 56.77% | 1.005 | 448.00</span></span>
+<span><span class="co">#&gt; persons.4 |  2.72e-03 | [-0.30, 0.36] | 52.95% | 1.004 | 670.00</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; # Random effects SD/Cor: persons</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd | % in ROPE |  Rhat |    ESS</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |   0.11 | [0.01, 0.82] | 100% |    45.73% | 1.030 | 141.00</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter   | Median |       95% CI |   pd |  Rhat |    ESS</span></span>
+<span><span class="co">#&gt; -----------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept) |   0.11 | [0.01, 0.82] | 100% | 1.030 | 141.00</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
