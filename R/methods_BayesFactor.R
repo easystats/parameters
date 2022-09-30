@@ -6,35 +6,33 @@
 #' Parameters from `BFBayesFactor` objects from `{BayesFactor}` package.
 #'
 #' @param model Object of class `BFBayesFactor`.
-#' @param cohens_d If `TRUE`, compute Cohens' *d* as index of effect size. Only
-#'   applies to objects from `ttestBF()`. See `effectsize::cohens_d()` for
-#'   details.
 #' @param include_proportions Logical that decides whether to include posterior
 #'   cell proportions/counts for Bayesian contingency table analysis (from
 #'   `BayesFactor::contingencyTableBF()`). Defaults to `FALSE`, as this
 #'   information is often redundant.
-#' @param cramers_v Compute Cramer's V or phi as index of effect size.
-#'   Can be `"raw"` or `"adjusted"` (effect size will be bias-corrected).
-#'   Only applies to objects from `chisq.test()`.
+#' @param effectsize_type The effect size of interest. Not that porribly not all
+#' effect sizes are applicable to the model object. See
+#' [effectsize-vignette](https://easystats.github.io/effectsize/reference/effectsize.html#details).
+#' for details.
+#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
+#' to `TRUE`. Advisable for small samples and large tables.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest
 #'
 #' @details
 #' The meaning of the extracted parameters:
-#' \itemize{
-#'   \item For [BayesFactor::ttestBF()]: `Difference` is the raw
-#'   difference between the means. \item For
-#'   [BayesFactor::correlationBF()]: `rho` is the linear
-#'   correlation estimate (equivalent to Pearson's *r*). \item For
-#'   [BayesFactor::lmBF()] / [BayesFactor::generalTestBF()]
-#'   / [BayesFactor::regressionBF()] /
-#'   [BayesFactor::anovaBF()]: in addition to parameters of the fixed
-#'   and random effects, there are: `mu` is the (mean-centered) intercept;
-#'   `sig2` is the model's sigma; `g` / `g_*` are the *g*
-#'   parameters; See the *Bayes Factors for ANOVAs* paper
+#'
+#' - For [BayesFactor::ttestBF()]: `Difference` is the raw difference between
+#'   the means.
+#' - For [BayesFactor::correlationBF()]: `rho` is the linear correlation
+#'   estimate (equivalent to Pearson's *r*).
+#' - For [BayesFactor::lmBF()] / [BayesFactor::generalTestBF()]
+#'   / [BayesFactor::regressionBF()] / [BayesFactor::anovaBF()]: in addition to
+#'   parameters of the fixed and random effects, there are: `mu` is the
+#'   (mean-centered) intercept; `sig2` is the model's sigma; `g` / `g_*` are
+#'   the *g* parameters; See the *Bayes Factors for ANOVAs* paper
 #'   (\doi{10.1016/j.jmp.2012.08.001}).
-#' }
 #'
 #' @examples
 #' \donttest{
@@ -51,7 +49,7 @@
 #'     centrality = "mean",
 #'     dispersion = TRUE,
 #'     verbose = FALSE,
-#'     cramers_v = TRUE
+#'     effectsize_type = "cramers_v"
 #'   )
 #' }
 #' }
@@ -66,8 +64,8 @@ model_parameters.BFBayesFactor <- function(model,
                                            rope_range = "default",
                                            rope_ci = 0.95,
                                            priors = TRUE,
-                                           cohens_d = NULL,
-                                           cramers_v = NULL,
+                                           effectsize_type = NULL,
+                                           effectsize_adjust = TRUE,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
                                            ...) {
@@ -136,8 +134,7 @@ model_parameters.BFBayesFactor <- function(model,
   }
 
   # Effect size?
-  if (bf_type %in% c("ttest1", "ttest2") && !is.null(cohens_d) ||
-    bf_type == "xtable" && !is.null(cramers_v)) {
+  if (!is.null(effectsize_type)) {
     # needs {effectsize} to be installed
     insight::check_if_installed("effectsize")
 
@@ -148,7 +145,9 @@ model_parameters.BFBayesFactor <- function(model,
           dispersion = dispersion,
           ci = ci,
           ci_method = ci_method,
-          rope_ci = rope_ci
+          rope_ci = rope_ci,
+          type = effectsize_type,
+          adjust = effectsize_adjust
         )
 
         if (bf_type == "xtable" && isTRUE(include_proportions)) {
