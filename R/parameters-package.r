@@ -21,7 +21,7 @@
 #' References: Lüdecke et al. (2020) <doi:10.21105/joss.02445>.
 #'
 #' @docType package
-#' @aliases parameters parameters-package
+#' @aliases parameters-package
 #' @name parameters-package
 #' @keywords internal
 "_PACKAGE"
