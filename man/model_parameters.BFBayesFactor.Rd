@@ -10,7 +10,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
