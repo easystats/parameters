@@ -617,11 +617,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   es$CI <- NULL
   ci_cols <- grepl("^CI", names(es))
-  names(es)[ci_cols] <- paste0(prefix, names(es)[ci_cols])
+  es_ci_cols <- paste0(prefix, names(es)[ci_cols])
+  names(es)[ci_cols] <- es_ci_cols
   out <- cbind(out, es)
 
   # find columns with effectsizes
-  es_columns <- colnames(es)[grepl(effectsize_type, colnames(es), fixed = TRUE)]
+  es_columns <- c(
+    colnames(es)[grepl(effectsize_type, colnames(es), ignore.case = TRUE)],
+    es_ci_cols
+  )
 
   # reorder
   col_order <- c(
