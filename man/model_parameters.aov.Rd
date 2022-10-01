@@ -182,7 +182,9 @@ be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
+to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. See
+also \href{https://easystats.github.io/effectsize/reference/eta_squared.html}{\code{?effectsize::eta_squared}}.}
 
 \item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
 to \code{TRUE}. Advisable for small samples and large tables.}

@@ -38,7 +38,9 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
-#' @param ... Arguments passed to or from other methods.
+#' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
+#'   to calculate _partial_ effect sizes types, use `partial = TRUE`. See
+#'   also [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html).
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
