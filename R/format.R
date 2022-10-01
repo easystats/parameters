@@ -171,11 +171,16 @@ format.parameters_model <- function(x,
     attr(formatted_table, "indent_groups") <- indent_groups
   }
 
-  # vertical layout for htests possible, if these have just one row
+  # vertical layout possible, if these have just one row
   if (identical(list(...)$layout, "vertical")) {
+    if ("Parameter" %in% colnames(formatted_table)) {
+      new_colnames <- c("", formatted_table$Parameter)
+      formatted_table$Parameter <- NULL
+    } else {
+      new_colnames <- c("Type", paste0("Value ", seq_len(nrow(formatted_table))))
+    }
     formatted_table <- datawizard::rownames_as_column(as.data.frame(t(formatted_table)), "Type")
-    n_col <- ncol(formatted_table)
-    colnames(formatted_table)[2:n_col] <- paste0("Value ", 1:(n_col - 1))
+    colnames(formatted_table) <- new_colnames
   }
 
   formatted_table
