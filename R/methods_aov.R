@@ -133,7 +133,7 @@ model_parameters.aov <- function(model,
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
-      warning(insight::format_message("Package 'car' required for type-2 or type-3 anova. Defaulting to type-1."), call. = FALSE)
+      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
     } else {
       model <- car::Anova(model, type = type)
     }
