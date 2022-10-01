@@ -4,17 +4,13 @@
 #'
 #' @param model Object of class `htest` or `pairwise.htest`.
 #' @param bootstrap Should estimates be bootstrapped?
-#' @param effectsize_type The effect size of interest. Not that possibly not all
-#' effect sizes are applicable to the model object. See
-#' [effectsize-vignette](https://easystats.github.io/effectsize/reference/effectsize.html#details).
-#' for details.
-#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
-#' to `TRUE`. Advisable for small samples and large tables.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.aov
 #' @param ... Arguments passed to or from other methods.
+#'
+#' @inherit effectsize::effectsize details
 #'
 #' @examples
 #'

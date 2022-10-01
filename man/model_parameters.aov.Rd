@@ -205,12 +205,46 @@ be in the same row. Default: \code{FALSE}.}
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'.}
+
+\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
+to \code{TRUE}. Advisable for small samples and large tables.}
 }
 \value{
 A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters from ANOVAs
+}
+\details{
+\itemize{
+\item For an object of class \code{htest}, data is extracted via \code{\link[insight:get_data]{insight::get_data()}}, and passed to the relevant function according to:
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default), \code{"hedges_g"}, or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Chi-squared tests of independence}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{Chi-squared tests of goodness-of-fit}, depending on \code{type}: \code{"fei"} (default) \code{"cohens_w"}, \code{"pearsons_c"}
+\item A \strong{One-way ANOVA test}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item A \strong{McNemar test} returns \emph{Cohen's g}.
+\item A \strong{Wilcoxon test} depending on \code{type}: returns "\code{rank_biserial}" correlation (default) or one of \code{"p_superiority"}, \code{"vda"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Kruskal-Wallis test} depending on \code{type}: \code{"epsilon"} (default) or \code{"eta"}.
+\item A \strong{Friedman test} returns \emph{Kendall's W}.
+(Where applicable, \code{ci} and \code{alternative} are taken from the \code{htest} if not otherwise provided.)
+}
+\item For an object of class \code{BFBayesFactor}, using \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}},
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default) or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{correlation test} returns \emph{r}.
+\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{proportion test} returns \emph{p}.
+}
+\item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
+}
+
+\strong{For statistical models it is recommended to directly use the listed
+functions, for the full range of options they provide.}
 }
 \note{
 For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only

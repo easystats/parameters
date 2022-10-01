@@ -7,6 +7,10 @@
 #' @param model Object of class [aov()], [anova()],
 #'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
 #'   `afex_aov` or `maov`.
+#' @param effectsize_type The effect size of interest. Not that possibly not all
+#'   effect sizes are applicable to the model object. See 'Details'.
+#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
+#'   to `TRUE`. Advisable for small samples and large tables.
 #' @param omega_squared Compute omega squared as index of effect size. Can be
 #'   `"partial"` (the default, adjusted for effect size) or `"raw"`.
 #' @param eta_squared Compute eta squared as index of effect size. Can be
@@ -45,6 +49,8 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return A data frame of indices related to the model's parameters.
+#'
+#' @inherit effectsize::effectsize details
 #'
 #' @note For ANOVA-tables from mixed models (i.e. `anova(lmer())`), only
 #'   partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
