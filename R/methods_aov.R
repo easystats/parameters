@@ -438,6 +438,11 @@ model_parameters.maov <- model_parameters.aov
     return(params)
   }
 
+  # is valid effect size?
+  if (!all(effectsize_type %in% c("eta", "omega", "epsilon", "f", "f2"))) {
+    return(params)
+  }
+
   insight::check_if_installed("effectsize", minimum_version = "0.5.0")
 
   # set error-df, when provided.
