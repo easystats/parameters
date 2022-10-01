@@ -128,7 +128,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # ==== extract parameters ====
 
-
 #' @keywords internal
 .extract_parameters_htest <- function(model,
                                       effectsize_type = NULL,
@@ -189,7 +188,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest correlation ----------------------
 
-
+#' @keywords internal
 .extract_htest_correlation <- function(model) {
   names <- unlist(strsplit(model$data.name, " (and|by) "))
   out <- data.frame(
@@ -238,7 +237,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest ranktest ----------------------
 
-
+#' @keywords internal
 .extract_htest_ranktest <- function(model) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
@@ -289,10 +288,9 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 
-
 # extract htest leveneTest ----------------------
 
-
+#' @keywords internal
 .extract_htest_levenetest <- function(model) {
   data.frame(
     "df" = model$Df[1],
@@ -306,9 +304,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 
+
 # extract htest var.test ----------------------
 
-
+#' @keywords internal
 .extract_htest_vartest <- function(model) {
   data.frame(
     "Parameter" = model$data.name,
@@ -329,7 +328,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest ttest ----------------------
 
-
+#' @keywords internal
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
@@ -441,7 +440,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest oneway ----------------------
 
-
+#' @keywords internal
 .extract_htest_oneway <- function(model) {
   data.frame(
     "F" = model$statistic,
@@ -458,7 +457,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest chi2 ----------------------
 
-
+#' @keywords internal
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
   if ((any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
@@ -513,7 +512,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest prop ----------------------
 
-
+#' @keywords internal
 .extract_htest_prop <- function(model) {
   out <- data.frame(
     Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
@@ -542,7 +541,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # extract htest binom ----------------------
 
-
+#' @keywords internal
 .extract_htest_binom <- function(model) {
   out <- data.frame(
     "Probability" = model$estimate,
@@ -563,7 +562,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 # ==== effectsizes =====
-
 
 .add_effectsize_htest <- function(model,
                                   out,
@@ -604,6 +602,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   if (is.null(es)) {
     return(out)
   }
+
+  ## TODO: check if effectsize prefixes are correct @mattansb
 
   # Find prefix for CI-columns
   prefix <- switch(effectsize_type,
