@@ -11,15 +11,6 @@
 #'   effect sizes are applicable to the model object. See 'Details'.
 #' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
 #'   to `TRUE`. Advisable for small samples and large tables.
-#' @param omega_squared Compute omega squared as index of effect size. Can be
-#'   `"partial"` (the default, adjusted for effect size) or `"raw"`.
-#' @param eta_squared Compute eta squared as index of effect size. Can be
-#'   `"partial"` (the default, adjusted for effect size), `"raw"`  or
-#'   `"adjusted"` (the latter option only for ANOVA-tables from mixed
-#'   models).
-#' @param epsilon_squared Compute epsilon squared as index of effect size. Can
-#'   be `"partial"` (the default, adjusted for effect size) or
-#'   `"raw"`.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
 #'   error estimate, i.e., the residuals). This is used to compute effect sizes
 #'   for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
@@ -113,9 +104,7 @@
 #' }
 #' @export
 model_parameters.aov <- function(model,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
+                                 effectsize_type = NULL,
                                  df_error = NULL,
                                  type = NULL,
                                  ci = NULL,
@@ -161,13 +150,12 @@ model_parameters.aov <- function(model,
   params <- .effectsizes_for_aov(
     model,
     parameters = params,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    effectsize_type = effectsize_type,
     df_error = df_error,
     ci = ci,
     alternative = alternative,
-    verbose = FALSE # we get messages for contrasts before
+    verbose = FALSE, # we get messages for contrasts before
+    ...
   )
 
   # add power, if possible
@@ -269,9 +257,7 @@ model_parameters.aovlist <- model_parameters.aov
 #' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
-                                      omega_squared = NULL,
-                                      eta_squared = NULL,
-                                      epsilon_squared = NULL,
+                                      effectsize_type = NULL,
                                       df_error = NULL,
                                       type = NULL,
                                       keep = NULL,
@@ -291,9 +277,7 @@ model_parameters.afex_aov <- function(model,
   out <- .effectsizes_for_aov(
     model,
     parameters = out,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    effectsize_type = effectsize_type,
     df_error = df_error,
     verbose = verbose,
     ...
@@ -435,9 +419,9 @@ model_parameters.maov <- model_parameters.aov
 
     # successfully checked predictors, or if not possible, at least found interactions?
     if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
-      message(insight::format_message(
-        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."
-      ))
+      insight::format_alert(
+        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
+      )
     }
   }
 }
@@ -445,16 +429,14 @@ model_parameters.maov <- model_parameters.aov
 
 .effectsizes_for_aov <- function(model,
                                  parameters,
-                                 omega_squared,
-                                 eta_squared,
-                                 epsilon_squared,
+                                 effectsize_type = NULL,
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
                                  verbose = TRUE,
                                  ...) {
   # user actually does not want to compute effect sizes
-  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
+  if (is.null(effectsize_type)) {
     return(parameters)
   }
 
@@ -465,63 +447,22 @@ model_parameters.maov <- model_parameters.aov
       is.data.frame(model) &&
       !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
     if (length(df_error) > nrow(model)) {
-      stop(insight::format_message(
-        "Number of degrees of freedom in argument 'df_error' is larger than number of parameters."
-      ), call. = FALSE)
+      insight::format_error(
+        "Number of degrees of freedom in argument `df_error` is larger than number of parameters."
+      )
     }
     model$df_error <- df_error
   }
 
-
-  # set defaults
-  if (isTRUE(omega_squared)) {
-    omega_squared <- "partial"
-  }
-  if (isTRUE(eta_squared)) {
-    eta_squared <- "partial"
-  }
-  if (isTRUE(epsilon_squared)) {
-    epsilon_squared <- "partial"
-  }
-
-
-  # Omega squared
-  if (!is.null(omega_squared)) {
-    fx <- effectsize::omega_squared(model,
-                                    partial = omega_squared == "partial",
-                                    ci = ci,
-                                    alternative = alternative,
-                                    verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
-    verbose <- FALSE
-  }
-
-  # Eta squared
-  if (!is.null(eta_squared)) {
-    fx <- effectsize::eta_squared(model,
-                                  partial = eta_squared == "partial",
-                                  ci = ci,
-                                  alternative = alternative,
-                                  verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
-    verbose <- FALSE
-  }
-
-  # Epsilon squared
-  if (!is.null(epsilon_squared)) {
-    fx <- effectsize::epsilon_squared(model,
-                                      partial = epsilon_squared == "partial",
-                                      ci = ci,
-                                      alternative = alternative,
-                                      verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
-    verbose <- FALSE
-  }
-
-  parameters
+  fx <- effectsize::effectsize(
+    model,
+    type = effectsize_type,
+    ci = ci,
+    alternative = alternative,
+    verbose = verbose,
+    ...
+  )
+  .add_effectsize_to_parameters(fx, parameters)
 }
 
 

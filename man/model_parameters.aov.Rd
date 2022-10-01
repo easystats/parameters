@@ -12,9 +12,7 @@
 \usage{
 \method{model_parameters}{aov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -30,9 +28,7 @@
 
 \method{model_parameters}{anova}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -48,9 +44,7 @@
 
 \method{model_parameters}{aovlist}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -66,9 +60,7 @@
 
 \method{model_parameters}{afex_aov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   keep = NULL,
@@ -79,9 +71,7 @@
 
 \method{model_parameters}{anova.rms}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -97,9 +87,7 @@
 
 \method{model_parameters}{Anova.mlm}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -115,9 +103,7 @@
 
 \method{model_parameters}{maov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   ci = NULL,
@@ -136,17 +122,8 @@
 \code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
 \code{afex_aov} or \code{maov}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
-
-\item{eta_squared}{Compute eta squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or
-\code{"adjusted"} (the latter option only for ANOVA-tables from mixed
-models).}
-
-\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can
-be \code{"partial"} (the default, adjusted for effect size) or
-\code{"raw"}.}
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
@@ -205,9 +182,6 @@ be in the same row. Default: \code{FALSE}.}
 \item{verbose}{Toggle warnings and messages.}
 
 \item{...}{Arguments passed to or from other methods.}
-
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'.}
 
 \item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
 to \code{TRUE}. Advisable for small samples and large tables.}
