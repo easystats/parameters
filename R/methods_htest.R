@@ -8,7 +8,7 @@
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.aov
-#' @param ... Arguments passed to or from other methods.
+#' @param cramers_v,phi,cohens_g,standardized_d,hedges_g,omega_squared,eta_squared,epsilon_squared,rank_biserial,rank_epsilon_squared,kendalls_w Deprecated. Please use `effectsize_type`.
 #'
 #' @inherit effectsize::effectsize details
 #'
@@ -49,7 +49,34 @@ model_parameters.htest <- function(model,
                                    alternative = NULL,
                                    bootstrap = FALSE,
                                    verbose = TRUE,
+                                   cramers_v = NULL,
+                                   phi = NULL,
+                                   standardized_d = NULL,
+                                   hedges_g = NULL,
+                                   omega_squared = NULL,
+                                   eta_squared = NULL,
+                                   epsilon_squared = NULL,
+                                   cohens_g = NULL,
+                                   rank_biserial = NULL,
+                                   rank_epsilon_squared = NULL,
+                                   kendalls_w = NULL,
                                    ...) {
+
+  ## TODO: remove in a later update
+  # handle deprected arguments ------
+  if (!is.null(cramers_v)) effectsize_type <- "cramers_v"
+  if (!is.null(phi)) effectsize_type <- "phi"
+  if (!is.null(standardized_d)) effectsize_type <- "standardized_d"
+  if (!is.null(hedges_g)) effectsize_type <- "hedges_g"
+  if (!is.null(omega_squared)) effectsize_type <- "omega_squared"
+  if (!is.null(eta_squared)) effectsize_type <- "eta_squared"
+  if (!is.null(epsilon_squared)) effectsize_type <- "epsilon_squared"
+  if (!is.null(cohens_g)) effectsize_type <- "cohens_g"
+  if (!is.null(rank_biserial)) effectsize_type <- "rank_biserial"
+  if (!is.null(rank_epsilon_squared)) effectsize_type <- "rank_epsilon_squared"
+  if (!is.null(kendalls_w)) effectsize_type <- "rank_epsilon_squared"
+
+
   if (bootstrap) {
     stop("Bootstrapped h-tests are not yet implemented.", call. = FALSE)
   } else {
