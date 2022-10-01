@@ -529,30 +529,6 @@ model_parameters.maov <- model_parameters.aov
 
 # internals --------------------------
 
-
-.fix_effectsize_rows <- function(fx, parameters) {
-  stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
-  if (nrow(parameters) > length(fx)) {
-    es <- rep_len(NA, length.out = nrow(parameters))
-    es[!is.na(parameters[[stat_column]])] <- fx
-    fx <- es
-  }
-  fx
-}
-
-
-# retrieves those rows in a "model_parameters" object where
-# the statistic column is not missing
-.valid_effectsize_rows <- function(parameters, fx_params) {
-  stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
-  out <- !is.na(parameters[[stat_column]])
-  if (sum(out) > length(fx_params)) {
-    out <- out & !is.na(match(parameters$Parameter, fx_params))
-  }
-  out
-}
-
-
 # add effect size column and related CI to the parameters
 # data frame, automatically detecting the effect size name
 .add_effectsize_to_parameters <- function(fx, params) {
@@ -588,26 +564,6 @@ model_parameters.maov <- model_parameters.aov
   params <- params[order(params$.id), ]
   params$.id <- NULL
   params
-
-  # fx_params <- fx$Parameter
-  # if (is.null(fx_params)) {
-  #   fx_params <- params$Parameter
-  # }
-  # fx$Parameter <- NULL
-  # fx$Response <- NULL
-  # fx$Group <- NULL
-  # es <- colnames(fx)[1]
-  # valid_rows <- .valid_effectsize_rows(params, fx_params)
-  # params[[es]][valid_rows] <- fx[[es]]
-  #
-  # if (!is.null(fx$CI_low)) {
-  #   ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
-  #   ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
-  #   params[[ci_low]][valid_rows] <- fx$CI_low
-  #   params[[ci_high]][valid_rows] <- fx$CI_high
-  # }
-  #
-  # params
 }
 
 
