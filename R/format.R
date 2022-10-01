@@ -172,7 +172,7 @@ format.parameters_model <- function(x,
   }
 
   # vertical layout for htests possible, if these have just one row
-  if (identical(attributes(x)$model_class, "htest") && identical(list(...)$layout, "vertical")) {
+  if (identical(list(...)$layout, "vertical")) {
     formatted_table <- datawizard::rownames_as_column(as.data.frame(t(formatted_table)), "Type")
     n_col <- ncol(formatted_table)
     colnames(formatted_table)[2:n_col] <- paste0("Value ", 1:(n_col - 1))
