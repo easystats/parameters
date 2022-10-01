@@ -4,27 +4,12 @@
 #'
 #' @param model Object of class `htest` or `pairwise.htest`.
 #' @param bootstrap Should estimates be bootstrapped?
-#' @param cramers_v,phi Compute Cramer's V or phi as index of effect size.
-#'   Can be `"raw"` or `"adjusted"` (effect size will be bias-corrected).
-#'   Only applies to objects from `chisq.test()`.
-#' @param cohens_g If `TRUE`, compute Cohen's g as index of effect size.
-#'   Only applies to objects from `mcnemar.test()`.
-#' @param standardized_d If `TRUE`, compute standardized d as index of
-#'   effect size. Only applies to objects from `t.test()`. Calculation of
-#'   `d` is based on the t-value (see [effectsize::t_to_d()])
-#'   for details.
-#' @param hedges_g If `TRUE`, compute Hedge's g as index of effect size.
-#'   Only applies to objects from `t.test()`.
-#' @param omega_squared,eta_squared,epsilon_squared Logical, if `TRUE`,
-#'   returns the non-partial effect size Omega, Eta or Epsilon squared. Only
-#'   applies to objects from `oneway.test()`.
-#' @param rank_biserial If `TRUE`, compute the rank-biserial correlation as
-#'   effect size measure. Only applies to objects from `wilcox.test()`.
-#' @param rank_epsilon_squared If `TRUE`, compute the rank epsilon squared
-#'   as effect size measure. Only applies to objects from `kruskal.test()`.
-#' @param kendalls_w If `TRUE`, compute the Kendall's coefficient of
-#'   concordance as effect size measure. Only applies to objects from
-#'   `friedman.test()`.
+#' @param effectsize_type The effect size of interest. Not that possibly not all
+#' effect sizes are applicable to the model object. See
+#' [effectsize-vignette](https://easystats.github.io/effectsize/reference/effectsize.html#details).
+#' for details.
+#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
+#' to `TRUE`. Advisable for small samples and large tables.
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
 #' @inheritParams model_parameters.default
@@ -62,17 +47,8 @@
 #'
 #' @export
 model_parameters.htest <- function(model,
-                                   cramers_v = NULL,
-                                   phi = NULL,
-                                   standardized_d = NULL,
-                                   hedges_g = NULL,
-                                   omega_squared = NULL,
-                                   eta_squared = NULL,
-                                   epsilon_squared = NULL,
-                                   cohens_g = NULL,
-                                   rank_biserial = NULL,
-                                   rank_epsilon_squared = NULL,
-                                   kendalls_w = NULL,
+                                   effectsize_type = NULL,
+                                   effectsize_adjust = TRUE,
                                    ci = 0.95,
                                    alternative = NULL,
                                    bootstrap = FALSE,
@@ -83,17 +59,8 @@ model_parameters.htest <- function(model,
   } else {
     parameters <- .extract_parameters_htest(
       model,
-      cramers_v = cramers_v,
-      phi = phi,
-      standardized_d = standardized_d,
-      hedges_g = hedges_g,
-      omega_squared = omega_squared,
-      eta_squared = eta_squared,
-      epsilon_squared = epsilon_squared,
-      cohens_g = cohens_g,
-      rank_biserial = rank_biserial,
-      rank_epsilon_squared = rank_epsilon_squared,
-      kendalls_w = kendalls_w,
+      effectsize_type = effectsize_type,
+      effectsize_adjust = effectsize_adjust,
       ci = ci,
       alternative = alternative,
       verbose = verbose,
@@ -164,17 +131,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_parameters_htest <- function(model,
-                                      cramers_v = NULL,
-                                      phi = NULL,
-                                      standardized_d = NULL,
-                                      hedges_g = NULL,
-                                      omega_squared = NULL,
-                                      eta_squared = NULL,
-                                      epsilon_squared = NULL,
-                                      cohens_g = NULL,
-                                      rank_biserial = NULL,
-                                      rank_epsilon_squared = NULL,
-                                      kendalls_w = NULL,
+                                      effectsize_type = NULL,
+                                      effectsize_adjust = TRUE,
                                       ci = 0.95,
                                       alternative = NULL,
                                       verbose = TRUE,
@@ -190,81 +148,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   } else if (m_info$is_ttest) {
     # t-test -----------
     out <- .extract_htest_ttest(model)
-    out <- .add_effectsize_ttest(model,
-      out,
-      standardized_d,
-      hedges_g,
-      ci = ci,
-      alternative = alternative,
-      verbose = verbose,
-      ...
-    )
   } else if (m_info$is_ranktest) {
     # rank-test (kruskal / wilcox / friedman) -----------
     out <- .extract_htest_ranktest(model)
-
-    if (grepl("^Wilcox", model$method)) {
-      out <- .add_effectsize_rankbiserial(model,
-        out,
-        rank_biserial,
-        ci = ci,
-        verbose = verbose,
-        ...
-      )
-    }
-
-    if (grepl("^Kruskal", model$method)) {
-      out <- .add_effectsize_rankepsilon(model,
-        out,
-        rank_epsilon_squared,
-        ci = ci,
-        verbose = verbose,
-        ...
-      )
-    }
-
-    if (grepl("^Friedman", model$method)) {
-      out <- .add_effectsize_kendalls_w(model,
-        out,
-        kendalls_w,
-        ci = ci,
-        verbose = verbose,
-        ...
-      )
-    }
   } else if (m_info$is_onewaytest) {
     # one-way test -----------
     out <- .extract_htest_oneway(model)
-    out <- .add_effectsize_oneway(
-      model,
-      out,
-      omega_squared,
-      eta_squared,
-      epsilon_squared,
-      ci = ci,
-      verbose = verbose
-    )
   } else if (m_info$is_chi2test) {
     # chi2- and mcnemar-test -----------
     out <- .extract_htest_chi2(model)
-    if (grepl("^McNemar", model$method)) {
-      out <- .add_effectsize_mcnemar(model,
-        out,
-        cohens_g = cohens_g,
-        ci = ci,
-        verbose = verbose
-      )
-    } else {
-      out <- .add_effectsize_chi2(
-        model,
-        out,
-        cramers_v = cramers_v,
-        phi = phi,
-        ci = ci,
-        alternative = alternative,
-        verbose = verbose
-      )
-    }
   } else if (m_info$is_proptest) {
     # test of proportion --------------
     out <- .extract_htest_prop(model)
@@ -275,8 +167,18 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     # F test for equal variances --------------
     out <- .extract_htest_vartest(model)
   } else {
-    stop("model_parameters not implemented for such h-tests yet.", call. = FALSE)
+    insight::format_error("`model_parameters()` not implemented for such h-tests yet.")
   }
+
+  out <- .add_effectsize_htest(model,
+    out,
+    effectsize_type = effectsize_type,
+    effectsize_adjust = effectsize_adjust,
+    ci = ci,
+    alternative = alternative,
+    verbose = verbose,
+    ...
+  )
 
   row.names(out) <- NULL
   out
@@ -663,232 +565,74 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 # ==== effectsizes =====
 
 
-# effectsize Chi2 (Phi / Cramer's V) ----
-
-.add_effectsize_chi2 <- function(model,
-                                 out,
-                                 cramers_v = NULL,
-                                 phi = NULL,
-                                 ci = 0.95,
-                                 alternative = NULL,
-                                 verbose = TRUE) {
-  if (!requireNamespace("effectsize", quietly = TRUE) || (is.null(cramers_v) && is.null(phi))) {
-    return(out)
-  }
-
-  if (!is.null(cramers_v)) {
-    # Cramers V
-    es <- tryCatch(
-      {
-        effectsize::effectsize(
-          model,
-          type = "cramers_v",
-          ci = ci,
-          alternative = alternative,
-          adjust = identical(cramers_v, "adjusted"),
-          verbose = verbose
-        )
-      },
-      error = function(e) {
-        if (verbose) {
-          msg <- c(
-            "Could not compute effectsize Cramer's V.",
-            paste0("Possible reason: ", e$message)
-          )
-          message(insight::format_message(msg))
-        }
-        NULL
-      }
-    )
-    # return if not successful
-    if (is.null(es)) {
-      return(out)
-    }
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("Cramers_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
-
-  if (!is.null(phi)) {
-    # Phi
-    es <- tryCatch(
-      {
-        effectsize::effectsize(
-          model,
-          type = "phi",
-          ci = ci,
-          alternative = alternative,
-          adjust = identical(phi, "adjusted"),
-          verbose = verbose
-        )
-      },
-      error = function(e) {
-        if (verbose) {
-          msg <- c(
-            "Could not compute effectsize Phi.",
-            paste0("Possible reason: ", e$message)
-          )
-          message(insight::format_message(msg))
-        }
-        NULL
-      }
-    )
-    # return if not successful
-    if (is.null(es)) {
-      return(out)
-    }
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("phi_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
-
-  # reorder
-  col_order <- c(
-    "Chi2", "df", "df_error", "Cramers_v", "Cramers_v_adjusted", "Cramers_CI_low",
-    "Cramers_CI_high", "phi", "phi_adjusted", "phi_CI_low",
-    "phi_CI_high", "p", "Method", "method"
-  )
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-
-
-# effectsize Chi2 (McNemar) ----
-
-.add_effectsize_mcnemar <- function(model,
-                                    out,
-                                    cohens_g = NULL,
-                                    ci = 0.95,
-                                    verbose = TRUE) {
-  if (is.null(cohens_g)) {
-    return(out)
-  }
-
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    es <- effectsize::effectsize(model, type = "cohens_g", ci = ci, verbose = verbose)
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("Cohens_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
-
-  # reorder
-  col_order <- c(
-    "Chi2", "df", "df_error", "Cohens_g", "g", "Cohens_CI_low",
-    "Cohens_CI_high", "p", "Method", "method"
-  )
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-
-
-# effectsize Cohen's d / Hedges g (t-test) ----
-
-.add_effectsize_ttest <- function(model,
+.add_effectsize_htest <- function(model,
                                   out,
-                                  standardized_d = NULL,
-                                  hedges_g = NULL,
+                                  effectsize_type = NULL,
+                                  effectsize_adjust = TRUE,
                                   ci = 0.95,
                                   alternative = NULL,
-                                  verbose = TRUE,
-                                  ...) {
-  if (is.null(standardized_d) && is.null(hedges_g)) {
+                                  verbose = TRUE) {
+  # check if effect sizes are requested
+  if (!requireNamespace("effectsize", quietly = TRUE) || is.null(effectsize_type)) {
     return(out)
   }
 
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    # standardized d
-    if (!is.null(standardized_d)) {
-      es <- effectsize::effectsize(
+  # try to extract effectsize
+  es <- tryCatch(
+    {
+      effectsize::effectsize(
         model,
-        type = "cohens_d",
+        type = effectsize_type,
         ci = ci,
         alternative = alternative,
-        verbose = verbose,
-        ...
+        adjust = effectsize_adjust,
+        verbose = verbose
       )
-      es$CI <- NULL
-      ci_cols <- grepl("^CI", names(es))
-      names(es)[ci_cols] <- paste0("d_", names(es)[ci_cols])
-      out <- cbind(out, es)
+    },
+    error = function(e) {
+      if (verbose) {
+        msg <- c(
+          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(effectsize_type), "."),
+          paste0("Possible reason: ", e$message)
+        )
+        insight::format_alert(msg)
+      }
+      NULL
     }
-
-    # Hedge's g
-    if (!is.null(hedges_g)) {
-      es <- effectsize::effectsize(
-        model,
-        type = "hedges_g",
-        ci = ci,
-        alternative = alternative,
-        verbose = verbose,
-        ...
-      )
-      es$CI <- NULL
-      ci_cols <- grepl("^CI", names(es))
-      names(es)[ci_cols] <- paste0("g_", names(es)[ci_cols])
-      out <- cbind(out, es)
-    }
-  }
-
-  # reorder
-  col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "Group",
-    "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2",
-    "mu", "Difference", "CI_low", "CI_high",
-    "t", "df_error",
-    "d", "Cohens_d", "d_CI_low", "d_CI_high",
-    "g", "Hedges_g", "g_CI_low", "g_CI_high",
-    "p", "Method", "method"
   )
-
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-
-
-# effectsize r (rank biserial) ----
-
-.add_effectsize_rankbiserial <- function(model,
-                                         out,
-                                         rank_biserial = NULL,
-                                         ci = 0.95,
-                                         verbose = TRUE,
-                                         ...) {
-  if (is.null(rank_biserial)) {
+  # return if not successful
+  if (is.null(es)) {
     return(out)
   }
 
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    es <- effectsize::effectsize(model,
-      type = "rank_biserial",
-      ci = ci,
-      verbose = verbose,
-      ...
-    )
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("rank_biserial_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
+  # Find prefix for CI-columns
+  prefix <- switch(effectsize_type,
+    "cohens_g" = "Cohens_",
+    "cramers_v" = "Cramers_",
+    "phi" = "phi_",
+    "cohens_d" = "d_",
+    "hedges_g" = "g_",
+    "rank_biserial" = "rank_biserial_"
+  )
+
+  es$CI <- NULL
+  ci_cols <- grepl("^CI", names(es))
+  names(es)[ci_cols] <- paste0(prefix, names(es)[ci_cols])
+  out <- cbind(out, es)
+
+  # find columns with effectsizes
+  es_columns <- colnames(es)[grepl(effectsize_type, colnames(es), fixed = TRUE)]
 
   # reorder
   col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "W", "r_rank_biserial", "CI",
-    "rank_biserial_CI_low", "rank_biserial_CI_high", "p", "Method", "method"
+    "Chi2", "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
+    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference", "W",
+    "CI_low", "CI_high", "t", "df", "df_error", es_columns, "p", "Method",
+    "method"
   )
-
   out <- out[col_order[col_order %in% names(out)]]
   out
 }
-
 
 
 # effectsize rank Epsilon2 ----

@@ -8,17 +8,8 @@
 \usage{
 \method{model_parameters}{htest}(
   model,
-  cramers_v = NULL,
-  phi = NULL,
-  standardized_d = NULL,
-  hedges_g = NULL,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  cohens_g = NULL,
-  rank_biserial = NULL,
-  rank_epsilon_squared = NULL,
-  kendalls_w = NULL,
+  effectsize_type = NULL,
+  effectsize_adjust = TRUE,
   ci = 0.95,
   alternative = NULL,
   bootstrap = FALSE,
@@ -33,34 +24,13 @@
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
 
-\item{cramers_v, phi}{Compute Cramer's V or phi as index of effect size.
-Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
-Only applies to objects from \code{chisq.test()}.}
-
-\item{standardized_d}{If \code{TRUE}, compute standardized d as index of
-effect size. Only applies to objects from \code{t.test()}. Calculation of
-\code{d} is based on the t-value (see \code{\link[effectsize:t_to_r]{effectsize::t_to_d()}})
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See
+\href{https://easystats.github.io/effectsize/reference/effectsize.html#details}{effectsize-vignette}.
 for details.}
 
-\item{hedges_g}{If \code{TRUE}, compute Hedge's g as index of effect size.
-Only applies to objects from \code{t.test()}.}
-
-\item{omega_squared, eta_squared, epsilon_squared}{Logical, if \code{TRUE},
-returns the non-partial effect size Omega, Eta or Epsilon squared. Only
-applies to objects from \code{oneway.test()}.}
-
-\item{cohens_g}{If \code{TRUE}, compute Cohen's g as index of effect size.
-Only applies to objects from \code{mcnemar.test()}.}
-
-\item{rank_biserial}{If \code{TRUE}, compute the rank-biserial correlation as
-effect size measure. Only applies to objects from \code{wilcox.test()}.}
-
-\item{rank_epsilon_squared}{If \code{TRUE}, compute the rank epsilon squared
-as effect size measure. Only applies to objects from \code{kruskal.test()}.}
-
-\item{kendalls_w}{If \code{TRUE}, compute the Kendall's coefficient of
-concordance as effect size measure. Only applies to objects from
-\code{friedman.test()}.}
+\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
+to \code{TRUE}. Advisable for small samples and large tables.}
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}

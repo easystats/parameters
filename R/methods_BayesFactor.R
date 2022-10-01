@@ -10,12 +10,6 @@
 #'   cell proportions/counts for Bayesian contingency table analysis (from
 #'   `BayesFactor::contingencyTableBF()`). Defaults to `FALSE`, as this
 #'   information is often redundant.
-#' @param effectsize_type The effect size of interest. Not that porribly not all
-#' effect sizes are applicable to the model object. See
-#' [effectsize-vignette](https://easystats.github.io/effectsize/reference/effectsize.html#details).
-#' for details.
-#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
-#' to `TRUE`. Advisable for small samples and large tables.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest
