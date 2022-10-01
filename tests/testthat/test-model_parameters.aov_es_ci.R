@@ -10,7 +10,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   test_that("model_parameters.aov", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(Sepal.Width ~ Species, data = iris)
-    mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
+    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.3122, NA), tolerance = 1e-3, ignore_attr = TRUE)
