@@ -1,3 +1,5 @@
+## TODO: add more tests for different htest objects and effectsize types
+
 if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.0") {
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
