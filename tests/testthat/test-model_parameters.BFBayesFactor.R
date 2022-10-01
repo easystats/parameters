@@ -126,7 +126,7 @@ if (requiet("testthat") &&
   if (requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
     # with effectsize
     set.seed(123)
-    df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), cohens_d = TRUE))
+    df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), effectsize_type = "cohens_d"))
 
     # TODO: fix column order
     expect_identical(
