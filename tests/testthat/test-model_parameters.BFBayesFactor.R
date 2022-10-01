@@ -73,12 +73,11 @@ if (requiet("testthat") &&
       expect_equal(
         colnames(mp2),
         c(
-          "Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
-          "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
-          "Method"
+          "Parameter", "Prior_Distribution", "Prior_Location", "Prior_Scale",
+          "BF", "Method", "CI"
         )
       )
-      expect_equal(dim(mp2), c(1L, 11L))
+      expect_equal(dim(mp2), c(1L, 7L))
     })
 
     data(puzzles)
