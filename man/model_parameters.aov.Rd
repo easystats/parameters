@@ -123,7 +123,8 @@
 \code{afex_aov} or \code{maov}.}
 
 \item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'.}
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
@@ -243,8 +244,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
 
   model_parameters(
     model,
-    omega_squared = "partial",
-    eta_squared = "partial",
+    effectsize_type = c("omega", "eta"),
     ci = .9
   )
 
@@ -252,9 +252,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
   model_parameters(model)
   model_parameters(
     model,
-    omega_squared = "partial",
-    eta_squared = "partial",
-    epsilon_squared = "partial"
+    effectsize_type = c("omega", "eta", "epsilon")
   )
 
   model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -273,7 +271,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
       # parameters table including effect sizes
       model_parameters(
         model,
-        eta_squared = "partial",
+        effectsize_type = "eta",
         ci = .9,
         df_error = dof_satterthwaite(mm)[2:3]
       )

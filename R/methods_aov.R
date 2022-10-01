@@ -8,7 +8,8 @@
 #'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
 #'   `afex_aov` or `maov`.
 #' @param effectsize_type The effect size of interest. Not that possibly not all
-#'   effect sizes are applicable to the model object. See 'Details'.
+#'   effect sizes are applicable to the model object. See 'Details'. For Anova
+#'   models, can also be a character vector with multiple effect size names.
 #' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
 #'   to `TRUE`. Advisable for small samples and large tables.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
@@ -65,8 +66,7 @@
 #'
 #'   model_parameters(
 #'     model,
-#'     omega_squared = "partial",
-#'     eta_squared = "partial",
+#'     effectsize_type = c("omega", "eta"),
 #'     ci = .9
 #'   )
 #'
@@ -74,9 +74,7 @@
 #'   model_parameters(model)
 #'   model_parameters(
 #'     model,
-#'     omega_squared = "partial",
-#'     eta_squared = "partial",
-#'     epsilon_squared = "partial"
+#'     effectsize_type = c("omega", "eta", "epsilon")
 #'   )
 #'
 #'   model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -95,7 +93,7 @@
 #'       # parameters table including effect sizes
 #'       model_parameters(
 #'         model,
-#'         eta_squared = "partial",
+#'         effectsize_type = "eta",
 #'         ci = .9,
 #'         df_error = dof_satterthwaite(mm)[2:3]
 #'       )
@@ -149,7 +147,7 @@ model_parameters.aov <- function(model,
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
     model,
-    parameters = params,
+    params = params,
     effectsize_type = effectsize_type,
     df_error = df_error,
     ci = ci,
@@ -276,7 +274,7 @@ model_parameters.afex_aov <- function(model,
 
   out <- .effectsizes_for_aov(
     model,
-    parameters = out,
+    params = out,
     effectsize_type = effectsize_type,
     df_error = df_error,
     verbose = verbose,
@@ -428,7 +426,7 @@ model_parameters.maov <- model_parameters.aov
 
 
 .effectsizes_for_aov <- function(model,
-                                 parameters,
+                                 params,
                                  effectsize_type = NULL,
                                  df_error = NULL,
                                  ci = NULL,
@@ -437,7 +435,7 @@ model_parameters.maov <- model_parameters.aov
                                  ...) {
   # user actually does not want to compute effect sizes
   if (is.null(effectsize_type)) {
-    return(parameters)
+    return(params)
   }
 
   insight::check_if_installed("effectsize", minimum_version = "0.5.0")
@@ -454,15 +452,22 @@ model_parameters.maov <- model_parameters.aov
     model$df_error <- df_error
   }
 
-  fx <- effectsize::effectsize(
-    model,
-    type = effectsize_type,
-    ci = ci,
-    alternative = alternative,
-    verbose = verbose,
-    ...
-  )
-  .add_effectsize_to_parameters(fx, parameters)
+  # multiple effect sizes possible
+  for (es in effectsize_type) {
+    fx <- effectsize::effectsize(
+      model,
+      type = es,
+      ci = ci,
+      alternative = alternative,
+      verbose = verbose,
+      ...
+    )
+    params <- .add_effectsize_to_parameters(fx, params)
+    # warn only once
+    verbose <- FALSE
+  }
+
+  params
 }
 
 

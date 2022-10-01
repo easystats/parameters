@@ -18,13 +18,13 @@
 #' model_parameters(model)
 #'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-#' model_parameters(model, hedges_g = TRUE)
+#' model_parameters(model, effectsize_type = "hedges_g")
 #'
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
-#' model_parameters(model, hedges_g = TRUE)
+#' model_parameters(model, effectsize_type = "hedges_g")
 #'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
-#' model_parameters(model, standardized_d = TRUE)
+#' model_parameters(model, effectsize_type = "cohens_d")
 #'
 #' data(airquality)
 #' airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -37,7 +37,7 @@
 #' model_parameters(model)
 #'
 #' model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
-#' model_parameters(model, cramers_v = "adjusted")
+#' model_parameters(model, effectsize_type = "cramers_v")
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'

@@ -55,7 +55,8 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{priors}{Add the prior used for each parameter.}
 
 \item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'.}
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
 to \code{TRUE}. Advisable for small samples and large tables.}

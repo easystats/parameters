@@ -25,7 +25,8 @@
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
 
 \item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'.}
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
 to \code{TRUE}. Advisable for small samples and large tables.}
@@ -95,13 +96,13 @@ model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-model_parameters(model, hedges_g = TRUE)
+model_parameters(model, effectsize_type = "hedges_g")
 
 model <- t.test(mtcars$mpg ~ mtcars$vs)
-model_parameters(model, hedges_g = TRUE)
+model_parameters(model, effectsize_type = "hedges_g")
 
 model <- t.test(iris$Sepal.Width, mu = 1)
-model_parameters(model, standardized_d = TRUE)
+model_parameters(model, effectsize_type = "cohens_d")
 
 data(airquality)
 airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -114,6 +115,6 @@ model <- pairwise.prop.test(smokers, patients)
 model_parameters(model)
 
 model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
-model_parameters(model, cramers_v = "adjusted")
+model_parameters(model, effectsize_type = "cramers_v")
 
 }
