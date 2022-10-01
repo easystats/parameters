@@ -2,6 +2,13 @@
 
 ## Breaking
 
+* Arguments that calculate effectsize in `model_parameters()` for `htest`,
+  Anova objects and objects of class `BFBayesFactor` were revised. Instead of
+  single arguments for the different effectsizes, there is now one argument,
+  `effectsize_type`. The reason behind this change is that meanwhile many
+  new type of effectsizes have been added to the _effectsize_ package, and
+  the generic argument allows to make use of those effect sizes.
+
 * The attribute name in PCA / EFA has been changed from `data_set` to `dataset`.
 
 * The minimum needed R version has been bumped to `3.6`.
