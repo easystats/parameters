@@ -54,7 +54,7 @@ if (requiet("testthat") &&
       centrality = "mean",
       dispersion = TRUE,
       verbose = FALSE,
-      cramers_v = TRUE,
+      effectsize_type = "cramers_v",
       include_proportions = TRUE
     ))
     mp2 <- suppressWarnings(model_parameters(bf, verbose = FALSE))
@@ -63,7 +63,7 @@ if (requiet("testthat") &&
       expect_equal(
         colnames(mp),
         c(
-          "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v",
+          "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v_adjusted",
           "pd", "Prior_Distribution", "Prior_Location",
           "Prior_Scale", "BF", "Method"
         )
