@@ -62,13 +62,13 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
     expect_equal(names(mp), c("F", "df", "df_error", "p", "Method"))
   })
 
-  expect_message(mp <- model_parameters(stats::chisq.test(table(mtcars$am)), phi = "adjusted", ci = 0.95))
+  expect_message(mp <- model_parameters(stats::chisq.test(table(mtcars$am)), effectsize_type = "phi", ci = 0.95))
   test_that("model_parameters-chisq-test adjusted", {
     expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
     expect_equal(colnames(mp), c("Chi2", "df", "p", "Method"))
   })
 
-  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), standardized_d = TRUE)
+  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), effectsize_type = "cohens_d")
   test_that("model_parameters-t-test standardized d", {
     expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
     expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
@@ -82,7 +82,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
     )
   })
 
-  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), standardized_d = TRUE, verbose = FALSE)
+  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), effectsize_type = "cohens_d", verbose = FALSE)
   test_that("model_parameters-t-test standardized d", {
     expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
     expect_equal(

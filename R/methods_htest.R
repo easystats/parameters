@@ -556,7 +556,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 
 
-
 # ==== effectsizes =====
 
 .add_effectsize_htest <- function(model,
@@ -608,7 +607,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     "phi" = "phi_",
     "cohens_d" = "d_",
     "hedges_g" = "g_",
-    "rank_biserial" = "rank_biserial_"
+    "rank_biserial" = "rank_biserial_",
+    "rank_epsilon_squared" = "rank_epsilon_squared_",
+    "kendalls_w" = "Kendalls_W_",
+    "omega" = "Omega2_",
+    "eta" = "Eta2_",
+    "epsilon" = "Epsilon2_"
   )
 
   es$CI <- NULL
@@ -621,140 +625,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   # reorder
   col_order <- c(
-    "Chi2", "Parameter1", "Parameter2", "Parameter", "Group", "Mean_Parameter1",
-    "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu", "Difference", "W",
-    "CI_low", "CI_high", "t", "df", "df_error", es_columns, "p", "Method",
-    "method"
-  )
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-# effectsize rank Epsilon2 ----
-
-.add_effectsize_rankepsilon <- function(model,
-                                        out,
-                                        rank_epsilon_squared = NULL,
-                                        ci = 0.95,
-                                        verbose = TRUE,
-                                        ...) {
-  if (is.null(rank_epsilon_squared)) {
-    return(out)
-  }
-
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    es <- effectsize::effectsize(model,
-      type = "rank_epsilon_squared",
-      ci = ci,
-      verbose = verbose,
-      ...
-    )
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("rank_epsilon_squared_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
-
-  # reorder
-  col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "Chi2", "df_error",
-    "rank_epsilon_squared", "CI", "rank_epsilon_squared_CI_low", "rank_epsilon_squared_CI_high",
+    "Parameter1", "Parameter2", "Parameter", "F", "Chi2", "Group",
+    "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu",
+    "Difference", "W", "CI_low", "CI_high", "t", "df", "df_error", es_columns,
     "p", "Method", "method"
-  )
-
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-
-
-# effectsize Kendall's W ----
-
-.add_effectsize_kendalls_w <- function(model,
-                                       out,
-                                       kendalls_w = NULL,
-                                       ci = 0.95,
-                                       verbose = TRUE,
-                                       ...) {
-  if (is.null(kendalls_w)) {
-    return(out)
-  }
-
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    es <- effectsize::effectsize(model,
-      type = "kendalls_w",
-      ci = ci,
-      verbose = verbose,
-      ...
-    )
-    es$CI <- NULL
-    ci_cols <- grepl("^CI", names(es))
-    names(es)[ci_cols] <- paste0("Kendalls_W_", names(es)[ci_cols])
-    out <- cbind(out, es)
-  }
-
-  # reorder
-  col_order <- c(
-    "Parameter1", "Parameter2", "Parameter", "Chi2", "df_error", "Kendalls_W", "CI",
-    "Kendalls_W_CI_low", "Kendalls_W_CI_high", "p", "Method", "method"
-  )
-
-  out <- out[col_order[col_order %in% names(out)]]
-  out
-}
-
-
-
-
-# effectsize One-way Anova (Omega, Eta, ...) ----
-
-.add_effectsize_oneway <- function(model,
-                                   out,
-                                   omega_squared = NULL,
-                                   eta_squared = NULL,
-                                   epsilon_squared = NULL,
-                                   ci = 0.95,
-                                   verbose = TRUE) {
-  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
-    return(out)
-  }
-
-  if (requireNamespace("effectsize", quietly = TRUE)) {
-    # omega_squared
-    if (!is.null(omega_squared)) {
-      es <- effectsize::effectsize(model, ci = ci, type = "omega", partial = TRUE, verbose = verbose)
-      es$CI <- NULL
-      ci_cols <- grepl("^CI", names(es))
-      names(es)[ci_cols] <- paste0("Omega2_", names(es)[ci_cols])
-      out <- cbind(out, es)
-    }
-
-    # eta squared
-    if (!is.null(eta_squared)) {
-      es <- effectsize::effectsize(model, ci = ci, type = "eta", partial = TRUE, verbose = verbose)
-      es$CI <- NULL
-      ci_cols <- grepl("^CI", names(es))
-      names(es)[ci_cols] <- paste0("Eta2_", names(es)[ci_cols])
-      out <- cbind(out, es)
-    }
-
-    # epsilon squared
-    if (!is.null(epsilon_squared)) {
-      es <- effectsize::effectsize(model, ci = ci, type = "epsilon", partial = TRUE, verbose = verbose)
-      es$CI <- NULL
-      ci_cols <- grepl("^CI", names(es))
-      names(es)[ci_cols] <- paste0("Epsilon2_", names(es)[ci_cols])
-      out <- cbind(out, es)
-    }
-  }
-
-  # reorder
-  col_order <- c(
-    "F", "df", "df_error", "Eta2", "Eta2_CI_low", "Eta2_CI_high",
-    "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Epsilon2",
-    "Epsilon2_CI_low", "Epsilon2_CI_high", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
@@ -765,7 +639,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 # ==== add attributes ====
 
-
+#' @keywords internal
 .add_htest_parameters_attributes <- function(params, model, ci = 0.95, ...) {
   attr(params, "title") <- unique(params$Method)
   attr(params, "model_class") <- class(model)
@@ -828,7 +702,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   params
 }
-
 
 
 
