@@ -29,10 +29,10 @@ if (.runThisTest) {
         ))
 
         model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
-        expect_equal(sum(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"))$df), 149)
+        expect_equal(sum(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), verbose = FALSE)$df), 149)
 
         model <- aov(Sepal.Length ~ Species / Cat1 * Cat2, data = iris)
-        expect_equal(sum(model_parameters(model)$df), 149)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)
       })
 
       data(mtcars)
@@ -53,38 +53,38 @@ if (.runThisTest) {
         expect_equal(sum(model_parameters(model)$df), 2)
 
         model <- anova(lmer(wt ~ drat * cyl + (1 | gear), data = mtcars))
-        expect_equal(sum(model_parameters(model)$df), 3)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 3)
 
         model <- anova(lmer(wt ~ drat / cyl + (1 | gear), data = mtcars))
-        expect_equal(sum(model_parameters(model)$df), 2)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 2)
       })
 
       if (.runThisTest && requiet("httr")) {
         test_that("model_parameters.anova", {
           model <- insight::download_model("anova_3")
-          expect_equal(sum(model_parameters(model)$df), 149)
+          expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)
 
           model <- insight::download_model("anova_4")
-          expect_equal(sum(model_parameters(model)$df, na.rm = TRUE), 2)
+          expect_equal(sum(model_parameters(model, verbose = FALSE)$df, na.rm = TRUE), 2)
 
           model <- insight::download_model("anova_lmerMod_5")
-          expect_equal(sum(model_parameters(model)$df), 1)
+          expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 1)
 
           model <- insight::download_model("anova_lmerMod_6")
-          expect_equal(sum(model_parameters(model)$df), 12)
+          expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 12)
         })
       }
 
       data(mtcars)
       test_that("model_parameters.anova", {
         model <- aov(wt ~ cyl + Error(gear), data = mtcars)
-        expect_equal(sum(model_parameters(model)$df), 31)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 31)
 
         model <- aov(Sepal.Length ~ Species * Cat1 + Error(Cat2), data = iris)
-        expect_equal(sum(model_parameters(model)$df), 149)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)
 
         model <- aov(Sepal.Length ~ Species / Cat1 + Error(Cat2), data = iris)
-        expect_equal(sum(model_parameters(model)$df), 149)
+        expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)
       })
     }
   }
