@@ -434,7 +434,7 @@ model_parameters.maov <- model_parameters.aov
     }
 
     # successfully checked predictors, or if not possible, at least found interactions?
-    if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors)) && verbose) {
+    if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
       insight::format_alert(
         "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
       )

@@ -55,6 +55,7 @@ if (requiet("testthat") &&
       dispersion = TRUE,
       verbose = FALSE,
       effectsize_type = "cramers_v",
+      adjust = TRUE,
       include_proportions = TRUE
     ))
     mp2 <- suppressWarnings(model_parameters(bf, verbose = FALSE))
