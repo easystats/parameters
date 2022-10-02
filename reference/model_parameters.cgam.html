@@ -12,7 +12,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="ht
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -309,22 +309,8 @@ passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>
 are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
 
 
-<dt>omega_squared</dt>
-<dd><p>Compute omega squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></dd>
-
-
-<dt>eta_squared</dt>
-<dd><p>Compute eta squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size), <code>"raw"</code>  or
-<code>"adjusted"</code> (the latter option only for ANOVA-tables from mixed
-models).</p></dd>
-
-
-<dt>epsilon_squared</dt>
-<dd><p>Compute epsilon squared as index of effect size. Can
-be <code>"partial"</code> (the default, adjusted for effect size) or
-<code>"raw"</code>.</p></dd>
+<dt>omega_squared, eta_squared, epsilon_squared</dt>
+<dd><p>Deprecated. Please use <code>effectsize_type</code>.</p></dd>
 
 
 <dt>df_error</dt>

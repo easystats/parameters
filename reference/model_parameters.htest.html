@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +95,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for htest</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
+<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  cramers_v <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  phi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  standardized_d <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -106,10 +111,6 @@
 <span>  rank_biserial <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rank_epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  kendalls_w <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -124,51 +125,6 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
 <dd><p>Object of class <code>htest</code> or <code>pairwise.htest</code>.</p></dd>
-
-
-<dt>cramers_v, phi</dt>
-<dd><p>Compute Cramer's V or phi as index of effect size.
-Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
-Only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>.</p></dd>
-
-
-<dt>standardized_d</dt>
-<dd><p>If <code>TRUE</code>, compute standardized d as index of
-effect size. Only applies to objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>. Calculation of
-<code>d</code> is based on the t-value (see <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">effectsize::t_to_d()</a></code>)
-for details.</p></dd>
-
-
-<dt>hedges_g</dt>
-<dd><p>If <code>TRUE</code>, compute Hedge's g as index of effect size.
-Only applies to objects from <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code>.</p></dd>
-
-
-<dt>omega_squared, eta_squared, epsilon_squared</dt>
-<dd><p>Logical, if <code>TRUE</code>,
-returns the non-partial effect size Omega, Eta or Epsilon squared. Only
-applies to objects from <code><a href="https://rdrr.io/r/stats/oneway.test.html" class="external-link">oneway.test()</a></code>.</p></dd>
-
-
-<dt>cohens_g</dt>
-<dd><p>If <code>TRUE</code>, compute Cohen's g as index of effect size.
-Only applies to objects from <code><a href="https://rdrr.io/r/stats/mcnemar.test.html" class="external-link">mcnemar.test()</a></code>.</p></dd>
-
-
-<dt>rank_biserial</dt>
-<dd><p>If <code>TRUE</code>, compute the rank-biserial correlation as
-effect size measure. Only applies to objects from <code><a href="https://rdrr.io/r/stats/wilcox.test.html" class="external-link">wilcox.test()</a></code>.</p></dd>
-
-
-<dt>rank_epsilon_squared</dt>
-<dd><p>If <code>TRUE</code>, compute the rank epsilon squared
-as effect size measure. Only applies to objects from <code><a href="https://rdrr.io/r/stats/kruskal.test.html" class="external-link">kruskal.test()</a></code>.</p></dd>
-
-
-<dt>kendalls_w</dt>
-<dd><p>If <code>TRUE</code>, compute the Kendall's coefficient of
-concordance as effect size measure. Only applies to objects from
-<code><a href="https://rdrr.io/r/stats/friedman.test.html" class="external-link">friedman.test()</a></code>.</p></dd>
 
 
 <dt>ci</dt>
@@ -188,12 +144,25 @@ the <a href="https://easystats.github.io/effectsize/" class="external-link">effe
 <dd><p>Should estimates be bootstrapped?</p></dd>
 
 
+<dt>effectsize_type</dt>
+<dd><p>The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
 
 
+<dt>cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w</dt>
+<dd><p>Deprecated. Please use <code>effectsize_type</code>.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
+<dd><p>Arguments passed to or from other methods. For instance, when
+<code>bootstrap = TRUE</code>, arguments like <code>type</code> or <code>parallel</code> are
+passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>, and arguments like <code>ci_method</code>
+are passed down to <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>.</p></dd>
 
 
 <dt>ci_method</dt>
@@ -214,6 +183,29 @@ cases <code>"wald"</code> is used then.</p></dd>
 
 <p>A data frame of indices related to the model's parameters.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    
+<ul><li><p>For an object of class <code>htest</code>, data is extracted via <code><a href="https://easystats.github.io/insight/reference/get_data.html" class="external-link">insight::get_data()</a></code>, and passed to the relevant function according to:</p><ul><li><p>A <strong>t-test</strong> depending on <code>type</code>: <code>"cohens_d"</code> (default), <code>"hedges_g"</code>, or one of <code>"p_superiority"</code>, <code>"u1"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>Chi-squared tests of independence</strong> or <strong>Fisher's Exact Test</strong>, depending on <code>type</code>: <code>"cramers_v"</code> (default), <code>"tschuprows_t"</code>, <code>"phi"</code>, <code>"cohens_w"</code>, <code>"pearsons_c"</code>, <code>"cohens_h"</code>, <code>"oddsratio"</code>, or <code>"riskratio"</code>.</p></li>
+<li><p>A <strong>Chi-squared tests of goodness-of-fit</strong>, depending on <code>type</code>: <code>"fei"</code> (default) <code>"cohens_w"</code>, <code>"pearsons_c"</code></p></li>
+<li><p>A <strong>One-way ANOVA test</strong>, depending on <code>type</code>: <code>"eta"</code> (default), <code>"omega"</code> or <code>"epsilon"</code> -squared, <code>"f"</code>, or <code>"f2"</code>.</p></li>
+<li><p>A <strong>McNemar test</strong> returns <em>Cohen's g</em>.</p></li>
+<li><p>A <strong>Wilcoxon test</strong> depending on <code>type</code>: returns "<code>rank_biserial</code>" correlation (default) or one of <code>"p_superiority"</code>, <code>"vda"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>Kruskal-Wallis test</strong> depending on <code>type</code>: <code>"epsilon"</code> (default) or <code>"eta"</code>.</p></li>
+<li><p>A <strong>Friedman test</strong> returns <em>Kendall's W</em>.
+(Where applicable, <code>ci</code> and <code>alternative</code> are taken from the <code>htest</code> if not otherwise provided.)</p></li>
+</ul></li>
+<li><p>For an object of class <code>BFBayesFactor</code>, using <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>,</p><ul><li><p>A <strong>t-test</strong> depending on <code>type</code>: <code>"cohens_d"</code> (default) or one of <code>"p_superiority"</code>, <code>"u1"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>correlation test</strong> returns <em>r</em>.</p></li>
+<li><p>A <strong>contingency table test</strong>, depending on <code>type</code>: <code>"cramers_v"</code> (default), <code>"phi"</code>, <code>"tschuprows_t"</code>, <code>"cohens_w"</code>, <code>"pearsons_c"</code>, <code>"cohens_h"</code>, <code>"oddsratio"</code>, or <code>"riskratio"</code>.</p></li>
+<li><p>A <strong>proportion test</strong> returns <em>p</em>.</p></li>
+</ul></li>
+<li><p>Objects of class <code>anova</code>, <code>aov</code>, <code>aovlist</code> or <code>afex_aov</code>, depending on <code>type</code>: <code>"eta"</code> (default), <code>"omega"</code> or <code>"epsilon"</code> -squared, <code>"f"</code>, or <code>"f2"</code>.</p></li>
+<li><p>Other objects are passed to <code><a href="standardize_parameters.html">parameters::standardize_parameters()</a></code>.</p></li>
+</ul><p><strong>For statistical models it is recommended to directly use the listed
+functions, for the full range of options they provide.</strong></p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -229,32 +221,32 @@ cases <code>"wald"</code> is used then.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis: true correlation is not equal to 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, hedges_g <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effectsize_type <span class="op">=</span> <span class="st">"hedges_g"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Welch Two Sample t-test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | t(225.68) | Hedges' g |       g 95% CI |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -36.46 |     -4.20 | [-4.64, -3.75] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter1       |        Parameter2 | Mean_Parameter1 | Mean_Parameter2 | Difference |         95% CI | Hedges_g |       g 95% CI | t(225.68) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | iris$Sepal.Length |            3.06 |            5.84 |      -2.79 | [-2.94, -2.64] |    -4.20 | [-4.64, -3.75] |    -36.46 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis: true difference in means is not equal to 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">mtcars</span><span class="op">$</span><span class="va">vs</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, hedges_g <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effectsize_type <span class="op">=</span> <span class="st">"hedges_g"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Welch Two Sample t-test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |          95% CI | t(22.72) | Hedges' g |       g 95% CI |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mtcars$mpg | mtcars$vs |       16.62 |       24.56 |      -7.94 | [-11.46, -4.42] |    -4.67 |     -1.64 | [-2.46, -0.79] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |     Group | Mean_Group1 | Mean_Group2 | Difference |          95% CI | Hedges_g |       g 95% CI | t(22.72) |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mtcars$mpg | mtcars$vs |       16.62 |       24.56 |      -7.94 | [-11.46, -4.42] |    -1.64 | [-2.46, -0.79] |    -4.67 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, mu <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardized_d <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effectsize_type <span class="op">=</span> <span class="st">"cohens_d"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> One Sample t-test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |   mu | Difference |       95% CI | t(149) | Cohen's d |     d 95% CI |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |   mu | Difference |       95% CI | Cohen's d |     d 95% CI | t(149) |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | 1.00 |       2.06 | [2.99, 3.13] |  57.81 |      4.72 | [4.15, 5.27] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> iris$Sepal.Width | 1.00 |       2.06 | [2.99, 3.13] |      4.72 | [4.15, 5.27] |  57.81 | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Alternative hypothesis: true mean is not equal to 1</span>
 <span class="r-in"><span></span></span>
@@ -301,7 +293,7 @@ cases <code>"wald"</code> is used then.</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">am</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Chi-squared approximation may be incorrect</span>
-<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, cramers_v <span class="op">=</span> <span class="st">"adjusted"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effectsize_type <span class="op">=</span> <span class="st">"cramers_v"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Pearson's Chi-squared test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi2(2) | Cramer's V (adj.) | Cramers 95% CI |     p</span>

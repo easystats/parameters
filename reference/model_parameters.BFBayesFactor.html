@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,10 +103,11 @@
 <span>  rope_range <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  priors <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  cohens_d <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  cramers_v <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_proportions <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  cohens_d <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cramers_v <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -163,16 +164,10 @@ proportion of HDI, to use for the percentage in ROPE.</p></dd>
 <dd><p>Add the prior used for each parameter.</p></dd>
 
 
-<dt>cohens_d</dt>
-<dd><p>If <code>TRUE</code>, compute Cohens' <em>d</em> as index of effect size. Only
-applies to objects from <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF()</a></code>. See <code><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">effectsize::cohens_d()</a></code> for
-details.</p></dd>
-
-
-<dt>cramers_v</dt>
-<dd><p>Compute Cramer's V or phi as index of effect size.
-Can be <code>"raw"</code> or <code>"adjusted"</code> (effect size will be bias-corrected).
-Only applies to objects from <code><a href="https://rdrr.io/r/stats/chisq.test.html" class="external-link">chisq.test()</a></code>.</p></dd>
+<dt>effectsize_type</dt>
+<dd><p>The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.</p></dd>
 
 
 <dt>include_proportions</dt>
@@ -184,6 +179,10 @@ information is often redundant.</p></dd>
 
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
+
+
+<dt>cohens_d, cramers_v</dt>
+<dd><p>Deprecated. Please use <code>effectsize_type</code>.</p></dd>
 
 
 <dt>...</dt>
@@ -198,18 +197,15 @@ information is often redundant.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The meaning of the extracted parameters:</p><ul><li><p>For <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">BayesFactor::ttestBF()</a></code>: <code>Difference</code> is the raw
-difference between the means.</p></li>
-<li><p>For
-<code><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html" class="external-link">BayesFactor::correlationBF()</a></code>: <code>rho</code> is the linear
-correlation estimate (equivalent to Pearson's <em>r</em>).</p></li>
-<li><p>For
-<code><a href="https://rdrr.io/pkg/BayesFactor/man/lmBF.html" class="external-link">BayesFactor::lmBF()</a></code> / <code><a href="https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html" class="external-link">BayesFactor::generalTestBF()</a></code>
-/ <code><a href="https://rdrr.io/pkg/BayesFactor/man/regressionBF.html" class="external-link">BayesFactor::regressionBF()</a></code> /
-<code><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html" class="external-link">BayesFactor::anovaBF()</a></code>: in addition to parameters of the fixed
-and random effects, there are: <code>mu</code> is the (mean-centered) intercept;
-<code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are the <em>g</em>
-parameters; See the <em>Bayes Factors for ANOVAs</em> paper
+    <p>The meaning of the extracted parameters:</p><ul><li><p>For <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">BayesFactor::ttestBF()</a></code>: <code>Difference</code> is the raw difference between
+the means.</p></li>
+<li><p>For <code><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html" class="external-link">BayesFactor::correlationBF()</a></code>: <code>rho</code> is the linear correlation
+estimate (equivalent to Pearson's <em>r</em>).</p></li>
+<li><p>For <code><a href="https://rdrr.io/pkg/BayesFactor/man/lmBF.html" class="external-link">BayesFactor::lmBF()</a></code> / <code><a href="https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html" class="external-link">BayesFactor::generalTestBF()</a></code>
+/ <code><a href="https://rdrr.io/pkg/BayesFactor/man/regressionBF.html" class="external-link">BayesFactor::regressionBF()</a></code> / <code><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html" class="external-link">BayesFactor::anovaBF()</a></code>: in addition to
+parameters of the fixed and random effects, there are: <code>mu</code> is the
+(mean-centered) intercept; <code>sig2</code> is the model's sigma; <code>g</code> / <code>g_*</code> are
+the <em>g</em> parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 (<a href="https://doi.org/10.1016/j.jmp.2012.08.001" class="external-link">doi:10.1016/j.jmp.2012.08.001</a>
 ).</p></li>
 </ul></div>
@@ -230,7 +226,7 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 <span class="r-in"><span>    centrality <span class="op">=</span> <span class="st">"mean"</span>,</span></span>
 <span class="r-in"><span>    dispersion <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>    cramers_v <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>    effectsize_type <span class="op">=</span> <span class="st">"cramers_v"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BayesFactor</span>
@@ -243,9 +239,9 @@ parameters; See the <em>Bayes Factors for ANOVAs</em> paper
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ************</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Bayesian contingency table analysis</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | 95% CI | Cramer's V | Cramers 95% CI |                            Prior |   BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ratio     |        |       0.16 |   [0.02, 0.31] | Independent multinomial (0 +- 1) | 1.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |   SD | Cramer's V (adj.) | Cramers 95% CI |                            Prior |   BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ratio     | 0.08 |              0.14 |   [0.00, 0.30] | Independent multinomial (0 +- 1) | 1.81</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

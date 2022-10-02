@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.18.2.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,66 +95,67 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for aov</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for anova</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for aovlist</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for afex_aov</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -166,57 +167,60 @@
 <span><span class="co"># S3 method for anova.rms</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for Anova.mlm</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for maov</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  test <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  power <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -229,34 +233,16 @@
 <code>afex_aov</code> or <code>maov</code>.</p></dd>
 
 
-<dt>omega_squared</dt>
-<dd><p>Compute omega squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size) or <code>"raw"</code>.</p></dd>
-
-
-<dt>eta_squared</dt>
-<dd><p>Compute eta squared as index of effect size. Can be
-<code>"partial"</code> (the default, adjusted for effect size), <code>"raw"</code>  or
-<code>"adjusted"</code> (the latter option only for ANOVA-tables from mixed
-models).</p></dd>
-
-
-<dt>epsilon_squared</dt>
-<dd><p>Compute epsilon squared as index of effect size. Can
-be <code>"partial"</code> (the default, adjusted for effect size) or
-<code>"raw"</code>.</p></dd>
+<dt>type</dt>
+<dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
+<code>afex_aov</code>.)</p></dd>
 
 
 <dt>df_error</dt>
 <dd><p>Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-<code>afex_aov</code>.)</p></dd>
-
-
-<dt>type</dt>
-<dd><p>Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class="external-link">car::Anova()</a></code> will be returned. (Ignored for
 <code>afex_aov</code>.)</p></dd>
 
 
@@ -285,6 +271,12 @@ the multivariate test (that is also given by the <code>print</code>-method). If
 <dt>power</dt>
 <dd><p>Logical, if <code>TRUE</code>, adds a column with power for each
 parameter.</p></dd>
+
+
+<dt>effectsize_type</dt>
+<dd><p>The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.</p></dd>
 
 
 <dt>keep</dt>
@@ -323,8 +315,22 @@ be in the same row. Default: <code>FALSE</code>.</p></dd>
 <dd><p>Toggle warnings and messages.</p></dd>
 
 
+<dt>omega_squared, eta_squared, epsilon_squared</dt>
+<dd><p>Deprecated. Please use <code>effectsize_type</code>.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
+<dd><p>Arguments passed to <code><a href="https://easystats.github.io/effectsize/reference/effectsize.html" class="external-link">effectsize::effectsize()</a></code>. For example,
+to calculate <em>partial</em> effect sizes types, use <code>partial = TRUE</code>. For objects
+of class <code>htest</code> or <code>BFBayesFactor</code>, <code>adjust = TRUE</code> can be used to return
+bias-corrected effect sizes, which is advisable for small samples and large
+tables. See also
+<a href="https://easystats.github.io/effectsize/reference/eta_squared.html" class="external-link"><code><a href="https://easystats.github.io/effectsize/reference/eta_squared.html" class="external-link">?effectsize::eta_squared</a></code></a>
+for arguments <code>partial</code> and <code>generalized</code>;
+<a href="https://easystats.github.io/effectsize/reference/phi.html" class="external-link"><code><a href="https://easystats.github.io/effectsize/reference/phi.html" class="external-link">?effectsize::phi</a></code></a>
+for <code>adjust</code>; and
+<a href="https://easystats.github.io/effectsize/reference/oddsratio.html" class="external-link"><code>?effectsize::oddratio</code></a>
+for <code>log</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -332,6 +338,29 @@ be in the same row. Default: <code>FALSE</code>.</p></dd>
     
 
 <p>A data frame of indices related to the model's parameters.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    
+<ul><li><p>For an object of class <code>htest</code>, data is extracted via <code><a href="https://easystats.github.io/insight/reference/get_data.html" class="external-link">insight::get_data()</a></code>, and passed to the relevant function according to:</p><ul><li><p>A <strong>t-test</strong> depending on <code>type</code>: <code>"cohens_d"</code> (default), <code>"hedges_g"</code>, or one of <code>"p_superiority"</code>, <code>"u1"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>Chi-squared tests of independence</strong> or <strong>Fisher's Exact Test</strong>, depending on <code>type</code>: <code>"cramers_v"</code> (default), <code>"tschuprows_t"</code>, <code>"phi"</code>, <code>"cohens_w"</code>, <code>"pearsons_c"</code>, <code>"cohens_h"</code>, <code>"oddsratio"</code>, or <code>"riskratio"</code>.</p></li>
+<li><p>A <strong>Chi-squared tests of goodness-of-fit</strong>, depending on <code>type</code>: <code>"fei"</code> (default) <code>"cohens_w"</code>, <code>"pearsons_c"</code></p></li>
+<li><p>A <strong>One-way ANOVA test</strong>, depending on <code>type</code>: <code>"eta"</code> (default), <code>"omega"</code> or <code>"epsilon"</code> -squared, <code>"f"</code>, or <code>"f2"</code>.</p></li>
+<li><p>A <strong>McNemar test</strong> returns <em>Cohen's g</em>.</p></li>
+<li><p>A <strong>Wilcoxon test</strong> depending on <code>type</code>: returns "<code>rank_biserial</code>" correlation (default) or one of <code>"p_superiority"</code>, <code>"vda"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>Kruskal-Wallis test</strong> depending on <code>type</code>: <code>"epsilon"</code> (default) or <code>"eta"</code>.</p></li>
+<li><p>A <strong>Friedman test</strong> returns <em>Kendall's W</em>.
+(Where applicable, <code>ci</code> and <code>alternative</code> are taken from the <code>htest</code> if not otherwise provided.)</p></li>
+</ul></li>
+<li><p>For an object of class <code>BFBayesFactor</code>, using <code><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link">bayestestR::describe_posterior()</a></code>,</p><ul><li><p>A <strong>t-test</strong> depending on <code>type</code>: <code>"cohens_d"</code> (default) or one of <code>"p_superiority"</code>, <code>"u1"</code>, <code>"u2"</code>, <code>"u3"</code>, <code>"overlap"</code>.</p></li>
+<li><p>A <strong>correlation test</strong> returns <em>r</em>.</p></li>
+<li><p>A <strong>contingency table test</strong>, depending on <code>type</code>: <code>"cramers_v"</code> (default), <code>"phi"</code>, <code>"tschuprows_t"</code>, <code>"cohens_w"</code>, <code>"pearsons_c"</code>, <code>"cohens_h"</code>, <code>"oddsratio"</code>, or <code>"riskratio"</code>.</p></li>
+<li><p>A <strong>proportion test</strong> returns <em>p</em>.</p></li>
+</ul></li>
+<li><p>Objects of class <code>anova</code>, <code>aov</code>, <code>aovlist</code> or <code>afex_aov</code>, depending on <code>type</code>: <code>"eta"</code> (default), <code>"omega"</code> or <code>"epsilon"</code> -squared, <code>"f"</code>, or <code>"f2"</code>.</p></li>
+<li><p>Other objects are passed to <code><a href="standardize_parameters.html">parameters::standardize_parameters()</a></code>.</p></li>
+</ul><p><strong>For statistical models it is recommended to directly use the listed
+functions, for the full range of options they provide.</strong></p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -359,8 +388,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">model</span>,</span></span>
-<span class="r-in"><span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span></span>
-<span class="r-in"><span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span></span>
+<span class="r-in"><span>    effectsize_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    ci <span class="op">=</span> <span class="fl">.9</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -368,9 +396,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">model</span>,</span></span>
-<span class="r-in"><span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span></span>
-<span class="r-in"><span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span></span>
-<span class="r-in"><span>    epsilon_squared <span class="op">=</span> <span class="st">"partial"</span></span></span>
+<span class="r-in"><span>    effectsize_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span>, <span class="st">"epsilon"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Big</span> <span class="op">+</span> <span class="fu">Error</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></span>
@@ -389,7 +415,7 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-in"><span>      <span class="co"># parameters table including effect sizes</span></span></span>
 <span class="r-in"><span>      <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>        <span class="va">model</span>,</span></span>
-<span class="r-in"><span>        eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span></span>
+<span class="r-in"><span>        effectsize_type <span class="op">=</span> <span class="st">"eta"</span>,</span></span>
 <span class="r-in"><span>        ci <span class="op">=</span> <span class="fl">.9</span>,</span></span>
 <span class="r-in"><span>        df_error <span class="op">=</span> <span class="fu"><a href="p_value_satterthwaite.html">dof_satterthwaite</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span></span></span>
