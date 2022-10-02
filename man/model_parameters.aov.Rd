@@ -204,7 +204,12 @@ be in the same row. Default: \code{FALSE}.}
 
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. For objects
-of class \code{htest} or \verb{BFBayesFactor, }adjust = TRUE\verb{ can be used to return bias-corrected effect sizes, which is advisable for small samples and large tables. See also [}?effectsize::eta_squared\verb{](https://easystats.github.io/effectsize/reference/eta_squared.html) for arguments }partial\verb{, }generalized\verb{, }include_intercept\verb{, }adjust\code{and}log\code{.}}
+of class \code{htest} or \code{BFBayesFactor}, \code{adjust = TRUE} can be used to return
+bias-corrected effect sizes, which is advisable for small samples and large
+tables. See also
+\href{https://easystats.github.io/effectsize/reference/eta_squared.html}{\code{?effectsize::eta_squared}}
+for arguments \code{partial}, \code{generalized}, \code{include_intercept}, \code{adjust}
+and \code{log}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

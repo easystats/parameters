@@ -39,12 +39,12 @@
 #' @param omega_squared,eta_squared,epsilon_squared Deprecated. Please use `effectsize_type`.
 #' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
 #'   to calculate _partial_ effect sizes types, use `partial = TRUE`. For objects
-#'   of class `htest` or `BFBayesFactor, `adjust = TRUE` can be used to return
+#'   of class `htest` or `BFBayesFactor`, `adjust = TRUE` can be used to return
 #'   bias-corrected effect sizes, which is advisable for small samples and large
 #'   tables. See also
 #'   [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html)
 #'   for arguments `partial`, `generalized`, `include_intercept`, `adjust`
-#'   and `log`.`
+#'   and `log`.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
