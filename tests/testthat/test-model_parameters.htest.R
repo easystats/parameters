@@ -78,8 +78,8 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
       colnames(params),
       c(
         "Parameter1", "Parameter2", "Mean_Parameter1", "Mean_Parameter2",
-        "Difference", "CI", "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low",
-        "d_CI_high", "p", "Method", "Alternative"
+        "Difference", "CI", "CI_low", "CI_high", "Cohens_d", "d_CI_low",
+        "d_CI_high", "t", "df_error", "p", "Method", "Alternative"
       )
     )
   })
@@ -91,7 +91,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
       colnames(mp),
       c(
         "Parameter", "Group", "Mean_Group1", "Mean_Group2", "Difference", "CI",
-        "CI_low", "CI_high", "t", "df_error", "Cohens_d", "d_CI_low", "d_CI_high",
+        "CI_low", "CI_high", "Cohens_d", "d_CI_low", "d_CI_high", "t", "df_error",
         "p", "Method", "Alternative"
       )
     )

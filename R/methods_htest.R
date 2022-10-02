@@ -644,12 +644,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   names(es)[ci_cols] <- es_ci_cols
   out <- cbind(out, es)
 
+  # compose effect size columns
+  es_columns <- unique(c(effectsize::get_effectsize_name(colnames(es)), es_ci_cols))
+
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "F", "Chi2", "Group",
     "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu",
-    "Difference", "W", effectsize::get_effectsize_name(colnames(es)), "CI_low",
-    "CI_high", es_ci_cols, "t", "df", "df_error", "p", "Method", "method"
+    "Difference", "W", "CI_low", "CI_high", es_columns, "t", "df", "df_error",
+    "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
