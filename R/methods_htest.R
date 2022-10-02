@@ -47,7 +47,6 @@ model_parameters.htest <- function(model,
                                    alternative = NULL,
                                    bootstrap = FALSE,
                                    effectsize_type = NULL,
-                                   effectsize_adjust = TRUE,
                                    verbose = TRUE,
                                    cramers_v = NULL,
                                    phi = NULL,
@@ -83,7 +82,6 @@ model_parameters.htest <- function(model,
     parameters <- .extract_parameters_htest(
       model,
       effectsize_type = effectsize_type,
-      effectsize_adjust = effectsize_adjust,
       ci = ci,
       alternative = alternative,
       verbose = verbose,
@@ -154,7 +152,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_parameters_htest <- function(model,
                                       effectsize_type = NULL,
-                                      effectsize_adjust = TRUE,
                                       ci = 0.95,
                                       alternative = NULL,
                                       verbose = TRUE,
@@ -195,7 +192,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out <- .add_effectsize_htest(model,
     out,
     effectsize_type = effectsize_type,
-    effectsize_adjust = effectsize_adjust,
     ci = ci,
     alternative = alternative,
     verbose = verbose,
@@ -588,7 +584,6 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .add_effectsize_htest <- function(model,
                                   out,
                                   effectsize_type = NULL,
-                                  effectsize_adjust = TRUE,
                                   ci = 0.95,
                                   alternative = NULL,
                                   verbose = TRUE) {
@@ -605,8 +600,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
         type = effectsize_type,
         ci = ci,
         alternative = alternative,
-        adjust = effectsize_adjust,
-        verbose = verbose
+        verbose = verbose,
+        ...
       )
     },
     error = function(e) {

@@ -12,7 +12,6 @@
   alternative = NULL,
   bootstrap = FALSE,
   effectsize_type = NULL,
-  effectsize_adjust = TRUE,
   verbose = TRUE,
   cramers_v = NULL,
   phi = NULL,
