@@ -304,6 +304,7 @@ principal_components.data.frame <- function(x,
       ...
     )
     model$rotation <- model$loadings
+    row.names(model$rotation) <- names(x)
     model$x <- model$scores
 
   } else if(sparse == TRUE) {
@@ -317,7 +318,8 @@ principal_components.data.frame <- function(x,
       verbose = FALSE,
       ...
     )
-    model$rotation <- model$loadings
+    model$rotation <- setNames(model$loadings, names(x))
+    row.names(model$rotation) <- names(x)
     model$x <- model$scores
 
   } else {

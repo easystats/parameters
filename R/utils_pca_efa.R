@@ -169,6 +169,9 @@ predict.parameters_efa <- function(object,
       newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
       # psych:::predict.fa(object, data)
       out <- as.data.frame(stats::predict(attri$model, data = newdata))
+    } else if (inherits(attri$model, c("spca"))) {
+      # https://github.com/erichson/spca/issues/7
+      stop("A predict() method is not yet implemented for sparse PCA. See https://github.com/erichson/spca/issues/7")
     } else {
       out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
     }
