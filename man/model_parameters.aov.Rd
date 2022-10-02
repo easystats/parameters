@@ -23,6 +23,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
@@ -39,6 +42,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
@@ -55,6 +61,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
@@ -82,6 +91,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
@@ -98,6 +110,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
@@ -114,6 +129,9 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 }
@@ -181,6 +199,8 @@ wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. See

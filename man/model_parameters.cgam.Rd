@@ -195,6 +195,8 @@ names.}
 passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
 are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
 
+\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
+
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for

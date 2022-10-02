@@ -38,6 +38,7 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
+#' @param omega_squared,eta_squared,epsilon_squared Deprecated. Please use `effectsize_type`.
 #' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
 #'   to calculate _partial_ effect sizes types, use `partial = TRUE`. See
 #'   also [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html).
@@ -115,7 +116,16 @@ model_parameters.aov <- function(model,
                                  drop = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
+                                 omega_squared = NULL,
+                                 eta_squared = NULL,
+                                 epsilon_squared = NULL,
                                  ...) {
+  ## TODO: remove in a later update
+  # handle deprected arguments ------
+  if (!is.null(omega_squared)) effectsize_type <- "omega"
+  if (!is.null(eta_squared)) effectsize_type <- "eta"
+  if (!is.null(epsilon_squared)) effectsize_type <- "epsilon"
+
   # save model object, for later checks
   original_model <- model
   object_name <- deparse(substitute(model), width.cutoff = 500)
