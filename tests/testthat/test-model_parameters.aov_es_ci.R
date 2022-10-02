@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
+if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
@@ -350,7 +350,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with anova", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+      skip_if_not_installed("effectsize", minimum_version = "0.7.1")
 
       set.seed(123)
       mod <-
