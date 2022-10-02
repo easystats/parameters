@@ -363,11 +363,13 @@ format_parameters.parameters_model <- function(model, ...) {
       if (is.factor(vec)) {
         variable_label <- attr(vec, "label", exact = TRUE)
         value_labels <- names(attr(vec, "labels", exact = TRUE))
-        if (!is.null(variable_label) && !is.null(value_labels)) {
-          out <- paste0(variable_label, " [", value_labels, "]")
-        } else {
-          out <- NULL
+        if (is.null(variable_label)) {
+          variable_label <- i
         }
+        if (is.null(value_labels)) {
+          value_labels <- levels(vec)
+        }
+        out <- paste0(variable_label, " [", value_labels, "]")
       } else {
         out <- attr(vec, "label", exact = TRUE)
       }
