@@ -364,9 +364,8 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       df_car <-
         as.data.frame(model_parameters(mod,
           ci = 0.89,
-          eta_squared = "raw",
-          omega_squared = "partial",
-          epsilon_squared = "raw"
+          effectsize_type = c("eta", "epsilon"),
+          partial = FALSE
         ))
 
       expect_equal(
@@ -384,9 +383,6 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
             Mean_Square = c(5.81, 212.21, 87.74, 20.97),
             F = c(0.28, 10.12, 4.18, NA),
             p = c(0.76, 0, 0.02, NA),
-            Omega2_partial = c(-0.03, 0.17, 0.12, NA),
-            Omega2_CI_low = c(0, 0.03, 0, NA),
-            Omega2_CI_high = c(1, 1, 1, NA),
             Eta2 = c(0.01, 0.17, 0.14, NA),
             Eta2_CI_low = c(0, 0.03, 0, NA),
             Eta2_CI_high = c(1, 1, 1, NA),

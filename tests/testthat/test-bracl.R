@@ -7,7 +7,7 @@ if (requiet("testthat") &&
   m1 <- bracl(research ~ as.numeric(religion) + gender, weights = frequency, data = stemcell, type = "ML")
 
   test_that("model_parameters", {
-    params <- model_parameters(m1)
+    params <- model_parameters(m1, verbose = FALSE)
     expect_equal(
       params$Response,
       c("definitly", "alterly", "probably not", "definitly", "alterly", "probably not", "definitly", "alterly", "probably not")
@@ -30,13 +30,13 @@ if (requiet("testthat") &&
 
   # check vcov args
   test_that("model_parameters", {
-    expect_warning(out <- model_parameters(m1, vcov = "vcovHAC"))
+    expect_warning(out <- model_parameters(m1, vcov = "vcovHAC", verbose = FALSE))
     expect_equal(out$SE, unname(coef(summary(m1))[, 2]), tolerance = 1e-3)
   })
 
   # check order of response levels
   test_that("print model_parameters", {
-    out <- utils::capture.output(print(model_parameters(m1)))
+    out <- utils::capture.output(print(model_parameters(m1, verbose = FALSE)))
     expect_equal(out[1], "# Response level: definitly")
     expect_equal(out[9], "# Response level: alterly")
     expect_equal(out[17], "# Response level: probably not")
