@@ -84,3 +84,14 @@ if (requiet("insight") && requiet("testthat") && requiet("parameters") && requie
     )
   })
 }
+
+
+test_that("Issue #785: partial `haven` labels", {
+  requiet("haven")
+  dat <- mtcars
+  dat$hp <- haven::labelled(dat$hp, label = "Horsepower")
+  dat$am <- haven::labelled(dat$hp, label = "Transmission")
+  m <- lm(mpg ~ hp + drat, data = dat)
+  mp <- model_parameters(m)
+  expect_equal(attr(mp, "pretty_labels"), c("(Intercept)", "Horsepower", "drat"), ignore_attr = TRUE)
+})
