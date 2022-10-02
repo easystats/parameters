@@ -129,6 +129,7 @@ Suggests:
     glmmTMB,
     GPArotation,
     gt,
+    haven,
     httr,
     Hmisc,
     ivprobit,
