@@ -60,7 +60,6 @@ model_parameters.htest <- function(model,
                                    rank_epsilon_squared = NULL,
                                    kendalls_w = NULL,
                                    ...) {
-
   ## TODO: remove in a later update
   # handle deprected arguments ------
   if (!is.null(cramers_v)) effectsize_type <- "cramers_v"

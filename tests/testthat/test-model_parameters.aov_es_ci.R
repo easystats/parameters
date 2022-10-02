@@ -153,7 +153,8 @@ if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("par
 
       expect_equal(
         df_aov,
-        structure(list(
+        structure(
+          list(
             Parameter = c("block", "N", "P", "N:P", "Residuals"),
             Sum_Squares = c(343.295, 189.28167, 8.40167, 21.28167, 314.105),
             df = c(5, 1, 1, 1, 15),

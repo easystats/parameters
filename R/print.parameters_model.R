@@ -415,7 +415,7 @@ summary.parameters_stan <- function(object, ...) {
   } else if (isTRUE(attributes(x)$ordinal_model)) {
     table_caption <- ""
 
-  # caption is NULL, set default title, using title-attribute
+    # caption is NULL, set default title, using title-attribute
   } else if (!is.null(title_attribute) && is.null(caption)) {
     if (length(title_attribute) == 1 && title_attribute == "") {
       table_caption <- NULL
@@ -423,15 +423,15 @@ summary.parameters_stan <- function(object, ...) {
       table_caption <- title_attribute
     }
 
-  # if caption is not empty, use it as title
+    # if caption is not empty, use it as title
   } else if (!is.null(caption) && caption != "") {
     table_caption <- caption
 
-  # no table-title if caption is empty string
+    # no table-title if caption is empty string
   } else if (!is.null(caption) && caption == "") {
     table_caption <- NULL
 
-  # default title for sub-components of models
+    # default title for sub-components of models
   } else if (identical(format, "text")) {
     table_caption <- c(paste0("# ", eff_name, " Effects", zero_inflated), "blue")
   } else {
