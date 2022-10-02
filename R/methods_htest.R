@@ -586,7 +586,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                   effectsize_type = NULL,
                                   ci = 0.95,
                                   alternative = NULL,
-                                  verbose = TRUE) {
+                                  verbose = TRUE,
+                                  ...) {
   # check if effect sizes are requested
   if (!requireNamespace("effectsize", quietly = TRUE) || is.null(effectsize_type)) {
     return(out)

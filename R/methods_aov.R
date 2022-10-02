@@ -146,7 +146,7 @@ model_parameters.aov <- function(model,
 
   # try to extract type of anova table
   if (is.null(type)) {
-    type <- .anova_type(model, verbose = verbos)
+    type <- .anova_type(model, verbose = verbose)
   }
 
   # exceptions
