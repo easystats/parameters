@@ -55,7 +55,8 @@ test_that("multiple contrasts: Issue #779", {
     mod,
     variables = c("gear", "cyl"),
     newdata = insight::get_datagrid(mod, at = c("gear", "cyl")),
-    interaction = TRUE))
+    interaction = TRUE
+  ))
   cmp <- parameters(cmp)
   expect_true("Comparison: gear" %in% colnames(cmp))
   expect_true("Comparison: cyl" %in% colnames(cmp))
