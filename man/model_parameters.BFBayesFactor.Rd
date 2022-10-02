@@ -18,6 +18,8 @@
   effectsize_adjust = TRUE,
   include_proportions = FALSE,
   verbose = TRUE,
+  cohens_d = NULL,
+  cramers_v = NULL,
   ...
 )
 }
@@ -67,6 +69,8 @@ cell proportions/counts for Bayesian contingency table analysis (from
 information is often redundant.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{cohens_d, cramers_v}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
