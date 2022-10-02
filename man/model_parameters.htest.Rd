@@ -50,6 +50,9 @@ the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
+\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
+to \code{TRUE}. Advisable for small samples and large tables.}
+
 \item{verbose}{Toggle warnings and messages.}
 
 \item{cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w}{Deprecated. Please use \code{effectsize_type}.}

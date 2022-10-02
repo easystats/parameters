@@ -138,7 +138,7 @@ model_parameters.aov <- function(model,
 
   # try to extract type of anova table
   if (is.null(type)) {
-    type <- .anova_type(model)
+    type <- .anova_type(model, verbose = verbos)
   }
 
   # exceptions
@@ -332,7 +332,7 @@ model_parameters.maov <- model_parameters.aov
 
 # helper ------------------------------
 
-.anova_type <- function(model, type = NULL) {
+.anova_type <- function(model, type = NULL, verbose = TRUE) {
   if (is.null(type)) {
 
     type_to_numeric <- function(type) {
@@ -426,7 +426,7 @@ model_parameters.maov <- model_parameters.aov
     }
 
     # successfully checked predictors, or if not possible, at least found interactions?
-    if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
+    if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors)) && verbose) {
       insight::format_alert(
         "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
       )
