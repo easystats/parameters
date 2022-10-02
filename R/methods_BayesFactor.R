@@ -60,7 +60,6 @@ model_parameters.BFBayesFactor <- function(model,
                                            rope_ci = 0.95,
                                            priors = TRUE,
                                            effectsize_type = NULL,
-                                           effectsize_adjust = TRUE,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
                                            cohens_d = NULL,
@@ -149,7 +148,7 @@ model_parameters.BFBayesFactor <- function(model,
           ci_method = ci_method,
           rope_ci = rope_ci,
           type = effectsize_type,
-          adjust = effectsize_adjust
+          ...
         )
 
         if (bf_type == "xtable" && isTRUE(include_proportions)) {

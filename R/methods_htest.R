@@ -6,8 +6,6 @@
 #' @param bootstrap Should estimates be bootstrapped?
 #' @param ci Level of confidence intervals for effect size statistic. Currently
 #'   only applies to objects from `chisq.test()` or `oneway.test()`.
-#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
-#'   to `TRUE`. Advisable for small samples and large tables.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.aov
 #' @param cramers_v,phi,cohens_g,standardized_d,hedges_g,omega_squared,eta_squared,epsilon_squared,rank_biserial,rank_epsilon_squared,kendalls_w Deprecated. Please use `effectsize_type`.

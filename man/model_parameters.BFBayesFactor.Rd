@@ -15,7 +15,6 @@
   rope_ci = 0.95,
   priors = TRUE,
   effectsize_type = NULL,
-  effectsize_adjust = TRUE,
   include_proportions = FALSE,
   verbose = TRUE,
   cohens_d = NULL,
@@ -59,9 +58,6 @@ proportion of HDI, to use for the percentage in ROPE.}
 \item{effectsize_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
-
-\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
-to \code{TRUE}. Advisable for small samples and large tables.}
 
 \item{include_proportions}{Logical that decides whether to include posterior
 cell proportions/counts for Bayesian contingency table analysis (from
