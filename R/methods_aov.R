@@ -10,8 +10,6 @@
 #' @param effectsize_type The effect size of interest. Not that possibly not all
 #'   effect sizes are applicable to the model object. See 'Details'. For Anova
 #'   models, can also be a character vector with multiple effect size names.
-#' @param effectsize_adjust Should the effect size be bias-corrected? Defaults
-#'   to `TRUE`. Advisable for small samples and large tables.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
 #'   error estimate, i.e., the residuals). This is used to compute effect sizes
 #'   for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
@@ -105,13 +103,13 @@
 #' }
 #' @export
 model_parameters.aov <- function(model,
-                                 effectsize_type = NULL,
-                                 df_error = NULL,
                                  type = NULL,
+                                 df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
                                  test = NULL,
                                  power = FALSE,
+                                 effectsize_type = NULL,
                                  keep = NULL,
                                  drop = NULL,
                                  table_wide = FALSE,

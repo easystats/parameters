@@ -12,13 +12,13 @@
 \usage{
 \method{model_parameters}{aov}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -31,13 +31,13 @@
 
 \method{model_parameters}{anova}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -50,13 +50,13 @@
 
 \method{model_parameters}{aovlist}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -80,13 +80,13 @@
 
 \method{model_parameters}{anova.rms}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -99,13 +99,13 @@
 
 \method{model_parameters}{Anova.mlm}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -118,13 +118,13 @@
 
 \method{model_parameters}{maov}(
   model,
-  effectsize_type = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
@@ -140,17 +140,13 @@
 \code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
 \code{afex_aov} or \code{maov}.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'. For Anova
-models, can also be a character vector with multiple effect size names.}
+\item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
+\code{afex_aov}.)}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-\code{afex_aov}.)}
-
-\item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
 \code{afex_aov}.)}
 
 \item{ci}{Confidence Interval (CI) level for effect sizes
@@ -171,6 +167,10 @@ the multivariate test (that is also given by the \code{print}-method). If
 
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
+
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -205,9 +205,6 @@ be in the same row. Default: \code{FALSE}.}
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. See
 also \href{https://easystats.github.io/effectsize/reference/eta_squared.html}{\code{?effectsize::eta_squared}}.}
-
-\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
-to \code{TRUE}. Advisable for small samples and large tables.}
 }
 \value{
 A data frame of indices related to the model's parameters.

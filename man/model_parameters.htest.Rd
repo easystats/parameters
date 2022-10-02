@@ -8,11 +8,11 @@
 \usage{
 \method{model_parameters}{htest}(
   model,
-  effectsize_type = NULL,
-  effectsize_adjust = TRUE,
   ci = 0.95,
   alternative = NULL,
   bootstrap = FALSE,
+  effectsize_type = NULL,
+  effectsize_adjust = TRUE,
   verbose = TRUE,
   cramers_v = NULL,
   phi = NULL,
@@ -35,13 +35,6 @@
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
-effect sizes are applicable to the model object. See 'Details'. For Anova
-models, can also be a character vector with multiple effect size names.}
-
-\item{effectsize_adjust}{Should the effect size be bias-corrected? Defaults
-to \code{TRUE}. Advisable for small samples and large tables.}
-
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}
 
@@ -52,6 +45,10 @@ Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
 the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
+
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{verbose}{Toggle warnings and messages.}
 

@@ -43,11 +43,11 @@
 #'
 #' @export
 model_parameters.htest <- function(model,
-                                   effectsize_type = NULL,
-                                   effectsize_adjust = TRUE,
                                    ci = 0.95,
                                    alternative = NULL,
                                    bootstrap = FALSE,
+                                   effectsize_type = NULL,
+                                   effectsize_adjust = TRUE,
                                    verbose = TRUE,
                                    cramers_v = NULL,
                                    phi = NULL,
