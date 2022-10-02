@@ -43,8 +43,11 @@
 #'   bias-corrected effect sizes, which is advisable for small samples and large
 #'   tables. See also
 #'   [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html)
-#'   for arguments `partial`, `generalized`, `include_intercept`, `adjust`
-#'   and `log`.
+#'   for arguments `partial` and `generalized`;
+#'   [`?effectsize::phi`](https://easystats.github.io/effectsize/reference/phi.html)
+#'   for `adjust`; and
+#'   [`?effectsize::oddratio`](https://easystats.github.io/effectsize/reference/oddsratio.html)
+#'   for `log`.
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'

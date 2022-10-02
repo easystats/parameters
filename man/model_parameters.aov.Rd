@@ -208,8 +208,11 @@ of class \code{htest} or \code{BFBayesFactor}, \code{adjust = TRUE} can be used 
 bias-corrected effect sizes, which is advisable for small samples and large
 tables. See also
 \href{https://easystats.github.io/effectsize/reference/eta_squared.html}{\code{?effectsize::eta_squared}}
-for arguments \code{partial}, \code{generalized}, \code{include_intercept}, \code{adjust}
-and \code{log}.}
+for arguments \code{partial} and \code{generalized};
+\href{https://easystats.github.io/effectsize/reference/phi.html}{\code{?effectsize::phi}}
+for \code{adjust}; and
+\href{https://easystats.github.io/effectsize/reference/oddsratio.html}{\code{?effectsize::oddratio}}
+for \code{log}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
