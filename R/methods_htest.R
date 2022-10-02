@@ -632,7 +632,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     "hedges_g" = "g_",
     "rank_biserial" = "rank_biserial_",
     "rank_epsilon_squared" = "rank_epsilon_squared_",
-    "kendalls_w" = "Kendalls_W_",
+    "kendalls_w" = "W_",
     "omega" = "Omega2_",
     "eta" = "Eta2_",
     "epsilon" = "Epsilon2_"
@@ -644,18 +644,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   names(es)[ci_cols] <- es_ci_cols
   out <- cbind(out, es)
 
-  # find columns with effectsizes
-  es_columns <- c(
-    colnames(es)[grepl(effectsize_type, colnames(es), ignore.case = TRUE)],
-    es_ci_cols
-  )
-
   # reorder
   col_order <- c(
     "Parameter1", "Parameter2", "Parameter", "F", "Chi2", "Group",
     "Mean_Parameter1", "Mean_Parameter2", "Mean_Group1", "Mean_Group2", "mu",
-    "Difference", "W", "CI_low", "CI_high", "t", "df", "df_error", es_columns,
-    "p", "Method", "method"
+    "Difference", "W", effectsize::get_effectsize_name(colnames(es)), "CI_low",
+    "CI_high", es_ci_cols, "t", "df", "df_error", "p", "Method", "method"
   )
   out <- out[col_order[col_order %in% names(out)]]
   out
