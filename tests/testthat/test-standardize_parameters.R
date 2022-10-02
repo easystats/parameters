@@ -168,9 +168,9 @@ if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
   # with function interactions" -------------------
   test_that("standardize_parameters (with functions /  interactions)", {
     skip_on_cran()
-    X <- scale(rnorm(100), T, F)
-    Z <- scale(rnorm(100), T, F)
-    Y <- scale(Z + X * Z + rnorm(100), T, F)
+    X <- scale(rnorm(100), TRUE, FALSE)
+    Z <- scale(rnorm(100), TRUE, FALSE)
+    Y <- scale(Z + X * Z + rnorm(100), TRUE, FALSE)
 
     m1 <- lm(Y ~ X * Z)
     m2 <- lm(Y ~ X * scale(Z))

@@ -274,7 +274,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     test_that("format_parameters-labelled data-1", {
       data(efc, package = "datawizard", envir = globalenv())
       m <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
-      mp <- model_parameters(m)
+      mp <- model_parameters(m, verbose = FALSE)
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(
@@ -300,7 +300,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     test_that("format_parameters-labelled data-2", {
       data(iris)
       m <- lm(Sepal.Width ~ Species + Sepal.Length, data = iris)
-      mp <- model_parameters(m)
+      mp <- model_parameters(m, verbose = FALSE)
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(
@@ -326,7 +326,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
     test_that("format_parameters-labelled data-3", {
       data(efc, package = "datawizard", envir = globalenv())
       m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
-      mp <- model_parameters(m)
+      mp <- model_parameters(m, verbose = FALSE)
 
       out <- utils::capture.output(print(mp, pretty_names = "labels"))
       expect_equal(

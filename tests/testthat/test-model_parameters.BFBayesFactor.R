@@ -47,14 +47,15 @@ if (requiet("testthat") &&
     )
   })
 
-  if (.runThisTest && requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
+  if (.runThisTest && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
     mp <- suppressWarnings(model_parameters(bf,
       centrality = "mean",
       dispersion = TRUE,
       verbose = FALSE,
-      cramers_v = TRUE,
+      effectsize_type = "cramers_v",
+      adjust = TRUE,
       include_proportions = TRUE
     ))
     mp2 <- suppressWarnings(model_parameters(bf, verbose = FALSE))
@@ -63,7 +64,7 @@ if (requiet("testthat") &&
       expect_equal(
         colnames(mp),
         c(
-          "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v",
+          "Parameter", "Mean", "CI", "CI_low", "CI_high", "SD", "Cramers_v_adjusted",
           "pd", "Prior_Distribution", "Prior_Location",
           "Prior_Scale", "BF", "Method"
         )
@@ -73,12 +74,11 @@ if (requiet("testthat") &&
       expect_equal(
         colnames(mp2),
         c(
-          "Parameter", "Median", "CI", "CI_low", "CI_high", "pd",
-          "Prior_Distribution", "Prior_Location", "Prior_Scale", "BF",
-          "Method"
+          "Parameter", "Prior_Distribution", "Prior_Location", "Prior_Scale",
+          "BF", "Method", "CI"
         )
       )
-      expect_equal(dim(mp2), c(1L, 11L))
+      expect_equal(dim(mp2), c(1L, 7L))
     })
 
     data(puzzles)
@@ -124,10 +124,10 @@ if (requiet("testthat") &&
 
   expect_equal(dim(df_t), c(1L, 11L))
 
-  if (requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
+  if (requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
     # with effectsize
     set.seed(123)
-    df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), cohens_d = TRUE))
+    df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), effectsize_type = "cohens_d"))
 
     # TODO: fix column order
     expect_identical(
