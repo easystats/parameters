@@ -158,9 +158,9 @@ predict.parameters_efa <- function(object,
       if ("dataset" %in% names(attri)) {
         out <- as.data.frame(stats::predict(attri$model, data = attri$dataset))
       } else {
-        stop(insight::format_message(
+        insight::format_error(
           "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}."
-        ), call. = FALSE)
+        )
       }
     }
   } else {
@@ -169,6 +169,15 @@ predict.parameters_efa <- function(object,
       newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
       # psych:::predict.fa(object, data)
       out <- as.data.frame(stats::predict(attri$model, data = newdata))
+    } else if (inherits(attri$model, c("spca"))) {
+      # https://github.com/erichson/spca/issues/7
+      newdata <- newdata[names(attri$model$center)]
+      if(attri$standardize == TRUE) {
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+      }
+      out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
+      out <- setNames(as.data.frame(out), paste0("Component", 1:ncol(out)))
     } else {
       out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
     }
@@ -189,9 +198,9 @@ predict.parameters_pca <- predict.parameters_efa
 .merge_na <- function(object, out) {
   compl_cases <- attributes(object)$complete_cases
   if (is.null(compl_cases)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "Could not retrieve information about missing data. Returning only complete cases."
-    ), call. = FALSE)
+    )
   } else {
     original_data <- data.frame(.parameters_merge_id = seq_along(compl_cases))
     out$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]

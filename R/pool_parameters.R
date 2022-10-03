@@ -6,8 +6,8 @@
 #' [model_parameters()].
 #'
 #' @param x A list of `parameters_model` objects, as returned by
-#'   [model_parameters()], or a list of model-objects that is
-#'   supported by `model_parameters()`.
+#'   [model_parameters()], or a list of model-objects that is supported by
+#'   `model_parameters()`.
 #' @param ... Currently not used.
 #' @inheritParams model_parameters.default
 #' @inheritParams bootstrap_model
@@ -21,9 +21,13 @@
 #'   combined. Therefore, the `component` argument defaults to
 #'   `"conditional"` to avoid this.
 #'
-#' @details Averaging of parameters follows Rubin's rules (\cite{Rubin, 1987, p. 76}).
+#'   Some model objects do not return standard errors (e.g. objects of class
+#'   `htest`). For these models, no pooled confidence intervals nor p-values
+#'   are returned.
+#'
+#' @details Averaging of parameters follows Rubin's rules (_Rubin, 1987, p. 76_).
 #'   The pooled degrees of freedom is based on the Barnard-Rubin adjustment for
-#'   small samples (\cite{Barnard and Rubin, 1999}).
+#'   small samples (_Barnard and Rubin, 1999_).
 #'
 #' @references
 #' Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
@@ -73,19 +77,19 @@ pool_parameters <- function(x,
   }
 
   if (!all(sapply(x, inherits, "parameters_model"))) {
-    stop(insight::format_message(
-      "'x' must be a list of 'parameters_model' objects, as returned by the 'model_parameters()' function."
-    ), call. = FALSE)
+    insight::format_error(
+      "First argument `x` must be a list of `parameters_model` objects, as returned by the `model_parameters()` function."
+    )
   }
 
   if (is.null(original_model)) {
     original_model <- .get_object(x[[1]])
   }
 
-  if (isTRUE(attributes(x[[1]])$exponentiate)) {
-    warning(insight::format_message(
-      "Pooling on exponentiated parameters is not recommended. Please call 'model_parameters()' with 'exponentiate = FALSE', and then call 'pool_parameters(..., exponentiate = TRUE)'."
-    ), call. = FALSE)
+  if (isTRUE(attributes(x[[1]])$exponentiate) && verbose) {
+    insight::format_warning(
+      "Pooling on exponentiated parameters is not recommended. Please call `model_parameters()` with 'exponentiate = FALSE', and then call `pool_parameters(..., exponentiate = TRUE)`."
+    )
   }
 
 
@@ -98,7 +102,9 @@ pool_parameters <- function(x,
       i$Component <- NULL
       i
     })
-    warning(paste0("Pooling applied to the ", component, " model component."), call. = FALSE)
+    if (verbose) {
+      insight::format_warning(paste0("Pooling applied to the ", component, " model component."))
+    }
   }
 
 
@@ -151,40 +157,60 @@ pool_parameters <- function(x,
     # pooled estimate
     pooled_estimate <- mean(i$Coefficient)
 
-    # pooled standard error
-    ubar <- mean(i$SE^2)
-    tmp <- ubar + (1 + 1 / len) * stats::var(i$Coefficient)
-    pooled_se <- sqrt(tmp)
+    # special models that have no standard errors (like "htest" objects)
+    if (is.null(i$SE) || all(is.na(i$SE))) {
+      out <- data.frame(
+        Coefficient = pooled_estimate,
+        SE = NA,
+        CI_low = NA,
+        CI_high = NA,
+        Statistic = NA,
+        df_error = NA,
+        p = NA,
+        stringsAsFactors = FALSE
+      )
 
-    # pooled degrees of freedom, Barnard-Rubin adjustment for small samples
-    df_column <- colnames(i)[grepl("(\\bdf\\b|\\bdf_error\\b)", colnames(i))][1]
-    if (length(df_column)) {
-      pooled_df <- .barnad_rubin(m = nrow(i), b = stats::var(i$Coefficient), t = tmp, dfcom = unique(i[[df_column]]))
-      # sanity check length
-      if (length(pooled_df) > 1 && length(pooled_se) == 1) {
-        pooled_df <- round(mean(pooled_df, na.rm = TRUE))
+      if (verbose) {
+        insight::format_warning("Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values.")
       }
+
+      # regular models that have coefficients and standard errors
     } else {
-      pooled_df <- Inf
+      # pooled standard error
+      ubar <- mean(i$SE^2)
+      tmp <- ubar + (1 + 1 / len) * stats::var(i$Coefficient)
+      pooled_se <- sqrt(tmp)
+
+      # pooled degrees of freedom, Barnard-Rubin adjustment for small samples
+      df_column <- colnames(i)[grepl("(\\bdf\\b|\\bdf_error\\b)", colnames(i))][1]
+      if (length(df_column)) {
+        pooled_df <- .barnad_rubin(m = nrow(i), b = stats::var(i$Coefficient), t = tmp, dfcom = unique(i[[df_column]]))
+        # sanity check length
+        if (length(pooled_df) > 1 && length(pooled_se) == 1) {
+          pooled_df <- round(mean(pooled_df, na.rm = TRUE))
+        }
+      } else {
+        pooled_df <- Inf
+      }
+
+      # pooled statistic
+      pooled_statistic <- pooled_estimate / pooled_se
+
+      # confidence intervals
+      alpha <- (1 + ci) / 2
+      fac <- suppressWarnings(stats::qt(alpha, df = pooled_df))
+
+      out <- data.frame(
+        Coefficient = pooled_estimate,
+        SE = pooled_se,
+        CI_low = pooled_estimate - pooled_se * fac,
+        CI_high = pooled_estimate + pooled_se * fac,
+        Statistic = pooled_statistic,
+        df_error = pooled_df,
+        p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE),
+        stringsAsFactors = FALSE
+      )
     }
-
-    # pooled statistic
-    pooled_statistic <- pooled_estimate / pooled_se
-
-    # confidence intervals
-    alpha <- (1 + ci) / 2
-    fac <- suppressWarnings(stats::qt(alpha, df = pooled_df))
-
-    out <- data.frame(
-      Coefficient = pooled_estimate,
-      SE = pooled_se,
-      CI_low = pooled_estimate - pooled_se * fac,
-      CI_high = pooled_estimate + pooled_se * fac,
-      Statistic = pooled_statistic,
-      df_error = pooled_df,
-      p = 2 * stats::pt(abs(pooled_statistic), df = pooled_df, lower.tail = FALSE),
-      stringsAsFactors = FALSE
-    )
 
     # add component, when pooling for all components
     if (identical(component, "all") && "Component" %in% colnames(i)) {
@@ -241,11 +267,11 @@ pool_parameters <- function(x,
 
   # pool sigma ----
 
-  sig <- unlist(datawizard::compact_list(lapply(original_x, function(i) {
+  sig <- unlist(insight::compact_list(lapply(original_x, function(i) {
     attributes(i)$sigma
   })))
 
-  if (!datawizard::is_empty_object(sig)) {
+  if (!insight::is_empty_object(sig)) {
     attr(pooled_params, "sigma") <- mean(sig, na.rm = TRUE)
   }
 

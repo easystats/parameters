@@ -84,3 +84,15 @@ if (requiet("insight") && requiet("testthat") && requiet("parameters") && requie
     )
   })
 }
+
+
+test_that("Issue #785: partial and factor labels", {
+  dat <- mtcars
+  dat$cyl <- factor(dat$cyl)
+  attr(dat$hp, "label") <- "Horsepower"
+  attr(dat$cyl, "label") <- "Cylinders"
+  m <- lm(mpg ~ hp + drat + cyl, data = dat)
+  mp <- model_parameters(m)
+  known <- c("(Intercept)", "Horsepower", "drat", "Cylinders [6]", "Cylinders [8]")
+  expect_equal(attr(mp, "pretty_labels"), known, ignore_attr = TRUE)
+})

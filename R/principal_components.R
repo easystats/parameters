@@ -298,9 +298,10 @@ principal_components.data.frame <- function(x,
       ...
     )
     model$rotation <- model$loadings
+    row.names(model$rotation) <- names(x)
     model$x <- model$scores
 
-  } else if(sparse == TRUE) {
+  } else if (isTRUE(sparse)) {
     # Sparse PCA
     insight::check_if_installed("sparsepca")
 
@@ -311,7 +312,8 @@ principal_components.data.frame <- function(x,
       verbose = FALSE,
       ...
     )
-    model$rotation <- model$loadings
+    model$rotation <- stats::setNames(model$loadings, names(x))
+    row.names(model$rotation) <- names(x)
     model$x <- model$scores
 
   } else {

@@ -7,15 +7,9 @@
 #' @param model Object of class [aov()], [anova()],
 #'   `aovlist`, `Gam`, [manova()], `Anova.mlm`,
 #'   `afex_aov` or `maov`.
-#' @param omega_squared Compute omega squared as index of effect size. Can be
-#'   `"partial"` (the default, adjusted for effect size) or `"raw"`.
-#' @param eta_squared Compute eta squared as index of effect size. Can be
-#'   `"partial"` (the default, adjusted for effect size), `"raw"`  or
-#'   `"adjusted"` (the latter option only for ANOVA-tables from mixed
-#'   models).
-#' @param epsilon_squared Compute epsilon squared as index of effect size. Can
-#'   be `"partial"` (the default, adjusted for effect size) or
-#'   `"raw"`.
+#' @param effectsize_type The effect size of interest. Not that possibly not all
+#'   effect sizes are applicable to the model object. See 'Details'. For Anova
+#'   models, can also be a character vector with multiple effect size names.
 #' @param df_error Denominator degrees of freedom (or degrees of freedom of the
 #'   error estimate, i.e., the residuals). This is used to compute effect sizes
 #'   for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
@@ -42,9 +36,22 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
-#' @param ... Arguments passed to or from other methods.
+#' @param omega_squared,eta_squared,epsilon_squared Deprecated. Please use `effectsize_type`.
+#' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
+#'   to calculate _partial_ effect sizes types, use `partial = TRUE`. For objects
+#'   of class `htest` or `BFBayesFactor`, `adjust = TRUE` can be used to return
+#'   bias-corrected effect sizes, which is advisable for small samples and large
+#'   tables. See also
+#'   [`?effectsize::eta_squared`](https://easystats.github.io/effectsize/reference/eta_squared.html)
+#'   for arguments `partial` and `generalized`;
+#'   [`?effectsize::phi`](https://easystats.github.io/effectsize/reference/phi.html)
+#'   for `adjust`; and
+#'   [`?effectsize::oddratio`](https://easystats.github.io/effectsize/reference/oddsratio.html)
+#'   for `log`.
 #'
 #' @return A data frame of indices related to the model's parameters.
+#'
+#' @inherit effectsize::effectsize details
 #'
 #' @note For ANOVA-tables from mixed models (i.e. `anova(lmer())`), only
 #'   partial or adjusted effect sizes can be computed. Note that type 3 ANOVAs
@@ -68,8 +75,7 @@
 #'
 #'   model_parameters(
 #'     model,
-#'     omega_squared = "partial",
-#'     eta_squared = "partial",
+#'     effectsize_type = c("omega", "eta"),
 #'     ci = .9
 #'   )
 #'
@@ -77,9 +83,7 @@
 #'   model_parameters(model)
 #'   model_parameters(
 #'     model,
-#'     omega_squared = "partial",
-#'     eta_squared = "partial",
-#'     epsilon_squared = "partial"
+#'     effectsize_type = c("omega", "eta", "epsilon")
 #'   )
 #'
 #'   model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -98,7 +102,7 @@
 #'       # parameters table including effect sizes
 #'       model_parameters(
 #'         model,
-#'         eta_squared = "partial",
+#'         effectsize_type = "eta",
 #'         ci = .9,
 #'         df_error = dof_satterthwaite(mm)[2:3]
 #'       )
@@ -107,27 +111,34 @@
 #' }
 #' @export
 model_parameters.aov <- function(model,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
-                                 df_error = NULL,
                                  type = NULL,
+                                 df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
                                  test = NULL,
                                  power = FALSE,
+                                 effectsize_type = NULL,
                                  keep = NULL,
                                  drop = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
+                                 omega_squared = NULL,
+                                 eta_squared = NULL,
+                                 epsilon_squared = NULL,
                                  ...) {
+  ## TODO: remove in a later update
+  # handle deprected arguments ------
+  if (!is.null(omega_squared)) effectsize_type <- "omega"
+  if (!is.null(eta_squared)) effectsize_type <- "eta"
+  if (!is.null(epsilon_squared)) effectsize_type <- "epsilon"
+
   # save model object, for later checks
   original_model <- model
   object_name <- deparse(substitute(model), width.cutoff = 500)
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
-      warning(insight::format_message("Package 'car' required for type-2 or type-3 anova. Defaulting to type-1."), call. = FALSE)
+      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
     } else {
       model <- car::Anova(model, type = type)
     }
@@ -135,7 +146,7 @@ model_parameters.aov <- function(model,
 
   # try to extract type of anova table
   if (is.null(type)) {
-    type <- .anova_type(model)
+    type <- .anova_type(model, verbose = verbose)
   }
 
   # exceptions
@@ -154,14 +165,13 @@ model_parameters.aov <- function(model,
   # add effect sizes, if available
   params <- .effectsizes_for_aov(
     model,
-    parameters = params,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    params = params,
+    effectsize_type = effectsize_type,
     df_error = df_error,
     ci = ci,
     alternative = alternative,
-    verbose = FALSE # we get messages for contrasts before
+    verbose = FALSE, # we get messages for contrasts before
+    ...
   )
 
   # add power, if possible
@@ -263,9 +273,7 @@ model_parameters.aovlist <- model_parameters.aov
 #' @rdname model_parameters.aov
 #' @export
 model_parameters.afex_aov <- function(model,
-                                      omega_squared = NULL,
-                                      eta_squared = NULL,
-                                      epsilon_squared = NULL,
+                                      effectsize_type = NULL,
                                       df_error = NULL,
                                       type = NULL,
                                       keep = NULL,
@@ -284,10 +292,8 @@ model_parameters.afex_aov <- function(model,
 
   out <- .effectsizes_for_aov(
     model,
-    parameters = out,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    params = out,
+    effectsize_type = effectsize_type,
     df_error = df_error,
     verbose = verbose,
     ...
@@ -334,7 +340,7 @@ model_parameters.maov <- model_parameters.aov
 
 # helper ------------------------------
 
-.anova_type <- function(model, type = NULL) {
+.anova_type <- function(model, type = NULL, verbose = TRUE) {
   if (is.null(type)) {
 
     type_to_numeric <- function(type) {
@@ -429,27 +435,30 @@ model_parameters.maov <- model_parameters.aov
 
     # successfully checked predictors, or if not possible, at least found interactions?
     if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
-      message(insight::format_message(
-        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by 'contr.sum', 'contr.poly', or 'contr.helmert', but *not* by the default 'contr.treatment')."
-      ))
+      insight::format_alert(
+        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
+      )
     }
   }
 }
 
 
 .effectsizes_for_aov <- function(model,
-                                 parameters,
-                                 omega_squared,
-                                 eta_squared,
-                                 epsilon_squared,
+                                 params,
+                                 effectsize_type = NULL,
                                  df_error = NULL,
                                  ci = NULL,
                                  alternative = NULL,
                                  verbose = TRUE,
                                  ...) {
   # user actually does not want to compute effect sizes
-  if (is.null(omega_squared) && is.null(eta_squared) && is.null(epsilon_squared)) {
-    return(parameters)
+  if (is.null(effectsize_type)) {
+    return(params)
+  }
+
+  # is valid effect size?
+  if (!all(effectsize_type %in% c("eta", "omega", "epsilon", "f", "f2"))) {
+    return(params)
   }
 
   insight::check_if_installed("effectsize", minimum_version = "0.5.0")
@@ -459,93 +468,35 @@ model_parameters.maov <- model_parameters.aov
       is.data.frame(model) &&
       !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
     if (length(df_error) > nrow(model)) {
-      stop(insight::format_message(
-        "Number of degrees of freedom in argument 'df_error' is larger than number of parameters."
-      ), call. = FALSE)
+      insight::format_error(
+        "Number of degrees of freedom in argument `df_error` is larger than number of parameters."
+      )
     }
     model$df_error <- df_error
   }
 
-
-  # set defaults
-  if (isTRUE(omega_squared)) {
-    omega_squared <- "partial"
-  }
-  if (isTRUE(eta_squared)) {
-    eta_squared <- "partial"
-  }
-  if (isTRUE(epsilon_squared)) {
-    epsilon_squared <- "partial"
-  }
-
-
-  # Omega squared
-  if (!is.null(omega_squared)) {
-    fx <- effectsize::omega_squared(model,
-                                    partial = omega_squared == "partial",
-                                    ci = ci,
-                                    alternative = alternative,
-                                    verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
+  # multiple effect sizes possible
+  for (es in effectsize_type) {
+    fx <- effectsize::effectsize(
+      model,
+      type = es,
+      ci = ci,
+      alternative = alternative,
+      verbose = verbose,
+      ...
+    )
+    params <- .add_effectsize_to_parameters(fx, params)
+    # warn only once
     verbose <- FALSE
   }
 
-  # Eta squared
-  if (!is.null(eta_squared)) {
-    fx <- effectsize::eta_squared(model,
-                                  partial = eta_squared == "partial",
-                                  ci = ci,
-                                  alternative = alternative,
-                                  verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
-    verbose <- FALSE
-  }
-
-  # Epsilon squared
-  if (!is.null(epsilon_squared)) {
-    fx <- effectsize::epsilon_squared(model,
-                                      partial = epsilon_squared == "partial",
-                                      ci = ci,
-                                      alternative = alternative,
-                                      verbose = verbose)
-    parameters <- .add_effectsize_to_parameters(fx, parameters)
-    # avoid multiple messages
-    verbose <- FALSE
-  }
-
-  parameters
+  params
 }
 
 
 
 
 # internals --------------------------
-
-
-.fix_effectsize_rows <- function(fx, parameters) {
-  stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
-  if (nrow(parameters) > length(fx)) {
-    es <- rep_len(NA, length.out = nrow(parameters))
-    es[!is.na(parameters[[stat_column]])] <- fx
-    fx <- es
-  }
-  fx
-}
-
-
-# retrieves those rows in a "model_parameters" object where
-# the statistic column is not missing
-.valid_effectsize_rows <- function(parameters, fx_params) {
-  stat_column <- colnames(parameters)[colnames(parameters) %in% c("F", "t", "z", "statistic")]
-  out <- !is.na(parameters[[stat_column]])
-  if (sum(out) > length(fx_params)) {
-    out <- out & !is.na(match(parameters$Parameter, fx_params))
-  }
-  out
-}
-
 
 # add effect size column and related CI to the parameters
 # data frame, automatically detecting the effect size name
@@ -582,26 +533,6 @@ model_parameters.maov <- model_parameters.aov
   params <- params[order(params$.id), ]
   params$.id <- NULL
   params
-
-  # fx_params <- fx$Parameter
-  # if (is.null(fx_params)) {
-  #   fx_params <- params$Parameter
-  # }
-  # fx$Parameter <- NULL
-  # fx$Response <- NULL
-  # fx$Group <- NULL
-  # es <- colnames(fx)[1]
-  # valid_rows <- .valid_effectsize_rows(params, fx_params)
-  # params[[es]][valid_rows] <- fx[[es]]
-  #
-  # if (!is.null(fx$CI_low)) {
-  #   ci_low <- paste0(gsub("_partial$", "", es), "_CI_low")
-  #   ci_high <- paste0(gsub("_partial$", "", es), "_CI_high")
-  #   params[[ci_low]][valid_rows] <- fx$CI_low
-  #   params[[ci_high]][valid_rows] <- fx$CI_high
-  # }
-  #
-  # params
 }
 
 

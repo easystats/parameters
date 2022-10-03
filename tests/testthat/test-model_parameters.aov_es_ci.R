@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.5.0") {
+if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
@@ -10,7 +10,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   test_that("model_parameters.aov", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(Sepal.Width ~ Species, data = iris)
-    mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
+    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.3122, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -25,7 +25,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
     ))
 
     model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
-    mp <- model_parameters(model, eta_squared = "raw", ci = .9)
+    mp <- model_parameters(model, effectsize_type = "eta", ci = .9, partial = FALSE)
     es <- effectsize::eta_squared(model, partial = FALSE, ci = .9)
     expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -45,7 +45,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
   test_that("model_parameters.anova", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
-    mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
+    mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
     es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
@@ -63,7 +63,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     suppressWarnings({
-      mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
+      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9, verbose = FALSE)
     })
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low[2], tolerance = 1e-3, ignore_attr = TRUE)
@@ -91,7 +91,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       ))
     test_that("model_parameters.car-anova", {
       skip_if_not_installed("effectsize", minimum_version = "0.5.1")
-      mp <- model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9)
+      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
       es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
       expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
       expect_equal(mp$Omega2_CI_low, c(0, 0.05110, 0.00666, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -116,7 +116,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
   test_that("model_parameters.maov", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
-    mp <- suppressMessages(model_parameters(model, omega_squared = "partial", eta_squared = "partial", epsilon_squared = TRUE, ci = .9))
+    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9))
     es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.58067, NA, 0.74092, NA, 0.55331, NA), tolerance = 1e-3, ignore_attr = TRUE)
@@ -147,8 +147,8 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       df_aov <-
         as.data.frame(parameters::model_parameters(npk.aov,
           ci = 0.95,
-          eta_squared = "partial",
-          omega_squared = "raw"
+          effectsize_type = c("eta", "omega"),
+          partial = FALSE
         ))
 
       expect_equal(
@@ -156,25 +156,21 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
         structure(
           list(
             Parameter = c("block", "N", "P", "N:P", "Residuals"),
-            Sum_Squares = c(343.29, 189.28, 8.4, 21.28, 314.1),
+            Sum_Squares = c(343.295, 189.28167, 8.40167, 21.28167, 314.105),
             df = c(5, 1, 1, 1, 15),
-            Mean_Square = c(68.66, 189.28, 8.4, 21.28, 20.94),
-            F = c(3.28, 9.04, 0.4, 1.02, NA),
-            p = c(0.03, 0.01, 0.54, 0.33, NA),
-            Omega2 = c(0.27, 0.19, -0.01, 0, NA),
+            Mean_Square = c(68.659, 189.28167, 8.40167, 21.28167, 20.94033),
+            F = c(3.27879, 9.0391, 0.40122, 1.0163, NA),
+            p = c(0.03371, 0.00885, 0.536, 0.32938, NA),
+            Eta2 = c(0.39173, 0.21598, 0.00959, 0.02428, NA),
+            Eta2_CI_low = c(0, 0, 0, 0, NA),
+            Eta2_CI_high = c(1, 1, 1, 1, NA),
+            Omega2 = c(0.2659, 0.18761, -0.01397, 0.00038, NA),
             Omega2_CI_low = c(0, 0, 0, 0, NA),
-            Omega2_CI_high = c(1, 1, 1, 1, NA),
-            Eta2_partial = c(0.52, 0.38, 0.03, 0.06, NA),
-            Eta2_CI_low = c(0.04258, 0.0733, 0, 0, NA),
-            Eta2_CI_high = c(1, 1, 1, 1, NA)
+            Omega2_CI_high = c(1, 1, 1, 1, NA)
           ),
-          row.names = c(NA, 5L),
-          class = "data.frame",
-          ci = 0.95,
-          model_class = c("aov", "lm"),
-          digits = 2,
-          ci_digits = 2,
-          p_digits = 3
+          row.names = c(NA, 5L), ci = 0.95, model_class = c("aov", "lm"),
+          anova_type = 1, title = "", digits = 2, ci_digits = 2, p_digits = 3,
+          object_name = "npk.aov", class = "data.frame"
         ),
         tolerance = 0.1,
         ignore_attr = TRUE
@@ -266,9 +262,8 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       df_manova <-
         as.data.frame(model_parameters(m,
           ci = 0.99,
-          eta_squared = NULL,
-          omega_squared = "partial",
-          epsilon_squared = "partial"
+          effectsize_type = c("epsilon", "omega"),
+          partial = TRUE
         ))
 
       expect_equal(
@@ -320,7 +315,8 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       df_Gam <-
         as.data.frame(model_parameters(g,
           ci = 0.50,
-          omega_squared = "partial"
+          effectsize_type = "omega",
+          partial = TRUE
         ))
 
       expect_equal(
@@ -355,7 +351,7 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
 
     test_that("works with anova", {
       skip_on_cran()
-      skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+      skip_if_not_installed("effectsize", minimum_version = "0.7.1")
 
       set.seed(123)
       mod <-
@@ -369,9 +365,8 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
       df_car <-
         as.data.frame(model_parameters(mod,
           ci = 0.89,
-          eta_squared = "raw",
-          omega_squared = "partial",
-          epsilon_squared = "raw"
+          effectsize_type = c("eta", "epsilon"),
+          partial = FALSE
         ))
 
       expect_equal(
@@ -389,9 +384,6 @@ if (requiet("insight") && requiet("effectsize") && requiet("testthat") && requie
             Mean_Square = c(5.81, 212.21, 87.74, 20.97),
             F = c(0.28, 10.12, 4.18, NA),
             p = c(0.76, 0, 0.02, NA),
-            Omega2_partial = c(-0.03, 0.17, 0.12, NA),
-            Omega2_CI_low = c(0, 0.03, 0, NA),
-            Omega2_CI_high = c(1, 1, 1, NA),
             Eta2 = c(0.01, 0.17, 0.14, NA),
             Eta2_CI_low = c(0, 0.03, 0, NA),
             Eta2_CI_high = c(1, 1, 1, NA),
