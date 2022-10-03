@@ -189,9 +189,9 @@ model_parameters.BFBayesFactor <- function(model,
   if (!is.null(out$Effects) && insight::n_unique(out$Effects) == 1) out$Effects <- NULL
 
 
-  # ==== remove columns with complete NA
+  # ==== remove rows and columns with complete `NA`s
 
-  out <- datawizard::remove_empty_columns(out)
+  out <- datawizard::remove_empty(out)
 
 
   # ==== pretty parameter names

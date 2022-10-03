@@ -174,7 +174,7 @@ pool_parameters <- function(x,
         insight::format_warning("Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values.")
       }
 
-    # regular models that have coefficients and standard errors
+      # regular models that have coefficients and standard errors
     } else {
       # pooled standard error
       ubar <- mean(i$SE^2)
