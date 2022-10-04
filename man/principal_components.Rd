@@ -113,10 +113,10 @@ Details section).
 \itemize{
 \item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically estimates the optimal
 number of dimensions to retain.
-\item \code{performance::check_factorstructure()} checks the suitability of the
+\item \code{\link[performance:check_factorstructure]{performance::check_factorstructure()}} checks the suitability of the
 data for factor analysis using the sphericity (see
-\code{performance::check_sphericity_bartlett()}) and the kmo (see
-\code{performance::check_kmo()}) KMO measure.
+\code{\link[performance:check_sphericity_bartlett]{performance::check_sphericity_bartlett()}}) and the KMO (see
+\code{\link[performance:check_kmo]{performance::check_kmo()}}) measure.
 \item \code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures of internal
 consistencies applied to the (sub)scales (i.e., components) extracted from
 the PCA.
@@ -248,15 +248,12 @@ if (require("psych")) {
 \itemize{
 \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 and Psychological Measurement, 34(1):111–117
-
 \item Hofmann, R. (1978). Complexity and simplicity as objective indices
 descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
 247-250, \doi{10.1207/s15327906mbr1302_9}
-
 \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
 and simple structure in personality data. Journal of research in
 personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
-
 \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 statistics (6th ed.). Boston: Pearson Education.
 }

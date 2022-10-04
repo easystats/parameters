@@ -10,18 +10,18 @@
 #' @param n Number of components to extract. If `n="all"`, then `n` is
 #'   set as the number of variables minus 1 (`ncol(x)-1`). If
 #'   `n="auto"` (default) or `n=NULL`, the number of components is
-#'   selected through [n_factors()] resp. [n_components()].
-#'   In [reduce_parameters()], can also be `"max"`, in which case
+#'   selected through [`n_factors()`] resp. [`n_components()`].
+#'   In [`reduce_parameters()`], can also be `"max"`, in which case
 #'   it will select all the components that are maximally pseudo-loaded (i.e.,
 #'   correlated) by at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [psych::fa()] for details.
-#' @param sparse Whether to compute sparse PCA (SPCA, using [sparsepca::spca()]).
+#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
-#'   [sparsepca::robspca()]).
+#'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
@@ -48,27 +48,27 @@
 #'
 #' **Methods and Utilities**
 #'
-#' - [n_components()] and [n_factors()] automatically estimates the optimal
+#' - [`n_components()`] and [`n_factors()`] automatically estimates the optimal
 #'   number of dimensions to retain.
 #'
-#' - `performance::check_factorstructure()` checks the suitability of the
+#' - [`performance::check_factorstructure()`] checks the suitability of the
 #'   data for factor analysis using the sphericity (see
-#'   `performance::check_sphericity_bartlett()`) and the kmo (see
-#'   `performance::check_kmo()`) KMO measure.
+#'   [`performance::check_sphericity_bartlett()`]) and the KMO (see
+#'   [`performance::check_kmo()`]) measure.
 #'
-#' - [performance::check_itemscale()] computes various measures of internal
+#' - [`performance::check_itemscale()`] computes various measures of internal
 #'   consistencies applied to the (sub)scales (i.e., components) extracted from
 #'   the PCA.
 #'
 #' - Running `summary()` returns information related to each component/factor,
 #'   such as the explained variance and the Eivenvalues.
 #'
-#' - Running [get_scores()] computes scores for each subscale.
+#' - Running [`get_scores()`] computes scores for each subscale.
 #'
-#' - Running [closest_component()] will return a numeric vector with the
+#' - Running [`closest_component()`] will return a numeric vector with the
 #'   assigned component index for each column from the original data frame.
 #'
-#' - Running [rotated_data()] will return the rotated data, including missing
+#' - Running [`rotated_data()`] will return the rotated data, including missing
 #'   values, so it matches the original data frame.
 #'
 #' - Running
@@ -187,21 +187,20 @@
 #' }
 #' }
 #' @return A data frame of loadings.
-#' @references \itemize{
-#'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 #'   and Psychological Measurement, 34(1):111–117
 #'
-#'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
 #'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
 #'   247-250, \doi{10.1207/s15327906mbr1302_9}
 #'
-#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
 #'   and simple structure in personality data. Journal of research in
 #'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
 #'
-#'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 #'   statistics (6th ed.). Boston: Pearson Education.
-#' }
 #' @export
 principal_components <- function(x,
                                  n = "auto",
