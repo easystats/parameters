@@ -360,7 +360,7 @@ format.compare_parameters <- function(x,
       table_caption <- .format_model_component_header(
         x, type = tab, split_column = tab, is_zero_inflated = FALSE,
         is_ordinal_model = FALSE, is_multivariate = FALSE, ran_pars = FALSE,
-        formatted_tabl = i
+        formatted_table = i
       )
       # add as attribute, so table captions are printed
       if (identical(format, "html")) {
