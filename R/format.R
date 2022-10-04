@@ -367,14 +367,20 @@ format.compare_parameters <- function(x,
       )
       # add as attribute, so table captions are printed
       if (identical(format, "html")) {
-        i$Component <- table_caption
+        i$Component <- table_caption$name
       } else if (identical(format, "md") || identical(format, "markdown")) {
-        attr(i, "table_caption") <- table_caption
+        attr(i, "table_caption") <- table_caption$name
       } else {
-        attr(i, "table_caption") <- c(paste("#", table_caption), "blue")
+        attr(i, "table_caption") <- c(paste("#", table_caption$name), "blue")
       }
       i
     })
+
+    # for HTML, bind data frames
+    if (identical(format, "html")) {
+      # fix non-equal length of columns and bind data frames
+      formatted_table <- do.call(rbind, .fix_nonmatching_columns(formatted_table))
+    }
   } else {
     formatted_table <- out
     # remove unique columns

@@ -133,6 +133,7 @@ print_md.compare_parameters <- function(x,
                                         subtitle = NULL,
                                         footer = NULL,
                                         style = NULL,
+                                        split_components = TRUE,
                                         ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -153,7 +154,7 @@ print_md.compare_parameters <- function(x,
   formatted_table <- format(
     x,
     style,
-    split_components = TRUE,
+    split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
