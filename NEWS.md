@@ -47,7 +47,7 @@
   used to suppress the footer in the output. Further more, if `footer = ""`
   or `footer = FALSE` in `print_md()`, no footer is printed.
 
-* `sumulate_model()` and `simulate_parameters()` now pass `...` to
+* `simulate_model()` and `simulate_parameters()` now pass `...` to
   `insight::get_varcov()`, to allow simulated draws to be based on
   heteroscedasticity consistent variance covariance matrices.
 
