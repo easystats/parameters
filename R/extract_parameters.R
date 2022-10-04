@@ -26,18 +26,18 @@
 
   if (isTRUE(standardize)) {
     if (verbose) {
-      warning(insight::format_message(
-        "'standardize' must be on of 'refit', 'posthoc', 'basic', 'smart' or 'pseudo'."
-      ), call. = FALSE)
+      insight::format_warning(
+        "`standardize` must be on of \"refit\", \"posthoc\", \"basic\", \"smart\" or \"pseudo\"."
+      )
     }
     standardize <- NULL
   }
 
   if (!is.null(standardize) && !requireNamespace("datawizard", quietly = TRUE)) {
     if (verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Package 'datawizard' required to calculate standardized coefficients. Please install it."
-      ), call. = FALSE)
+      )
     }
     standardize <- NULL
   }

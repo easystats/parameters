@@ -120,10 +120,10 @@ compare_parameters <- function(...,
   supported_models <- sapply(models, function(i) insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model"))
 
   if (!all(supported_models)) {
-    warning(insight::format_message(
+    insight::format_warning(
       sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")),
       "Dropping unsupported models now."
-    ), call. = FALSE)
+    )
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }
@@ -137,7 +137,7 @@ compare_parameters <- function(...,
   if (!is.null(column_names)) {
     if (length(column_names) != length(model_names)) {
       if (isTRUE(verbose)) {
-        warning("Number of column names does not match number of models.", call. = FALSE)
+        insight::format_warning("Number of column names does not match number of models.")
       }
     } else {
       model_names <- column_names

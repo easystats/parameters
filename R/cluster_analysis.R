@@ -145,9 +145,9 @@ cluster_analysis <- function(x,
   # check if we have a correlation/covariance or distance matrix?
   if (nrow(x) == ncol(x) && identical(round(x[lower.tri(x)], 10), round(x[upper.tri(x)], 10))) {
     ## TODO: special handling
-    warning(insight::format_message(
+    insight::format_warning(
       "Input data seems to be a correlation, covariance or similar matrix."
-    ), call. = FALSE)
+    )
   }
 
   # Preprocess data
@@ -300,9 +300,9 @@ cluster_analysis <- function(x,
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
     if (distance_method %in% c("correlation", "uncentered", "abscor")) {
-      warning(insight::format_message(paste0(
+      insight::format_warning(paste0(
         "Method `", distance_method, "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
-      )), call. = FALSE)
+      ))
     }
     dist <- dist(data, method = distance_method, ...)
     model <- stats::hclust(dist, method = hclust_method, ...)
