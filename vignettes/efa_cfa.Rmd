@@ -92,7 +92,7 @@ indicates that the sum of partial correlations is not large relative to the sum
 of correlations and so factor analysis should yield distinct and reliable
 factors.
 
-Both tests can be performed by using the `check_factorstructure()` function.
+Both tests can be performed by using the `performance::check_factorstructure()` function. First, we set up the data.
 
 ```{r}
 library(parameters)
@@ -101,9 +101,14 @@ library(psych)
 # Load the data
 data <- psych::bfi[, 1:25] # Select only the 25 first columns corresponding to the items
 data <- na.omit(data) # remove missing values
+```
 
+Next, we check test if the dataset is suitable for carrying out factor analysis.
+
+```{r eval=utils::packageVersion("performance") >= "0.10.0"}
+library(performance)
 # Check factor structure
-check_factorstructure(data)
+performance::check_factorstructure(data)
 ```
 
 ## Exploratory Factor Analysis (EFA)

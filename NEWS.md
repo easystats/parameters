@@ -1,4 +1,4 @@
-# parameters 0.18.3
+# parameters 0.19.0
 
 ## Breaking
 
@@ -19,6 +19,10 @@
   deprecated and superseded by the `vcov` and `vcov_args` arguments in the
   related methods `standard_error()`, `ci()` and `p_value()`, respectively.
 
+* Following functions were moved from package *parameters* to *performance*:
+  `check_sphericity_bartlett()`, `check_kmo()`, `check_factorstructure()` and
+  `check_clusterstructure()`.
+  
 ## Changes to functions
 
 * Added `sparse` option to `principal_components()` for sparse PCA.

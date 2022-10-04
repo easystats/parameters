@@ -10,18 +10,18 @@
 #' @param n Number of components to extract. If `n="all"`, then `n` is
 #'   set as the number of variables minus 1 (`ncol(x)-1`). If
 #'   `n="auto"` (default) or `n=NULL`, the number of components is
-#'   selected through [n_factors()] resp. [n_components()].
-#'   In [reduce_parameters()], can also be `"max"`, in which case
+#'   selected through [`n_factors()`] resp. [`n_components()`].
+#'   In [`reduce_parameters()`], can also be `"max"`, in which case
 #'   it will select all the components that are maximally pseudo-loaded (i.e.,
 #'   correlated) by at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [psych::fa()] for details.
-#' @param sparse Whether to compute sparse PCA (SPCA, using [sparsepca::spca()]).
+#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
 #'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
 #'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
-#'   [sparsepca::robspca()]).
+#'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
@@ -45,101 +45,95 @@
 #' @inheritParams n_factors
 #'
 #' @details
-#'  \subsection{Methods and Utilities}{
-#'  \itemize{
-#'    \item [n_components()] and [n_factors()] automatically
-#'    estimates the optimal number of dimensions to retain.
 #'
-#'    \item [check_factorstructure()] checks the suitability of the
-#'    data for factor analysis using the
-#'    [`sphericity()`][check_sphericity_bartlett] and the
-#'    [`sphericity()`][check_kmo] KMO measure.
+#' **Methods and Utilities**
 #'
-#'    \item{[performance::check_itemscale()] computes various measures
-#'    of internal consistencies applied to the (sub)scales (i.e., components)
-#'    extracted from the PCA.}
+#' - [`n_components()`] and [`n_factors()`] automatically estimates the optimal
+#'   number of dimensions to retain.
 #'
-#'    \item{Running `summary` returns information related to each
-#'    component/factor, such as the explained variance and the Eivenvalues.}
+#' - [`performance::check_factorstructure()`] checks the suitability of the
+#'   data for factor analysis using the sphericity (see
+#'   [`performance::check_sphericity_bartlett()`]) and the KMO (see
+#'   [`performance::check_kmo()`]) measure.
 #'
-#'    \item{Running [get_scores()] computes scores for each subscale.}
+#' - [`performance::check_itemscale()`] computes various measures of internal
+#'   consistencies applied to the (sub)scales (i.e., components) extracted from
+#'   the PCA.
 #'
-#'   \item{Running [closest_component()] will return a numeric vector
-#'   with the assigned component index for each column from the original data
-#'   frame.}
+#' - Running `summary()` returns information related to each component/factor,
+#'   such as the explained variance and the Eivenvalues.
 #'
-#'   \item{Running [rotated_data()] will return the rotated data,
-#'   including missing values, so it matches the original data frame.}
+#' - Running [`get_scores()`] computes scores for each subscale.
 #'
-#'    \item{Running
-#'    [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
-#'    visually displays the loadings (that requires the
-#'    [**see**-package](https://easystats.github.io/see/) to work).}
-#' }
-#' }
+#' - Running [`closest_component()`] will return a numeric vector with the
+#'   assigned component index for each column from the original data frame.
 #'
-#'  \subsection{Complexity}{
-#'    Complexity represents the number of latent components needed to account
-#'    for the observed variables. Whereas a perfect simple structure solution
-#'    has a complexity of 1 in that each item would only load on one factor,
-#'    a solution with evenly distributed items has a complexity greater than 1
-#'    (\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
-#'  }
+#' - Running [`rotated_data()`] will return the rotated data, including missing
+#'   values, so it matches the original data frame.
 #'
-#'  \subsection{Uniqueness}{
-#'    Uniqueness represents the variance that is 'unique' to the variable and
-#'    not shared with other variables. It is equal to `1 – communality`
-#'    (variance that is shared with other variables). A uniqueness of `0.20`
-#'    suggests that `20%` or that variable's variance is not shared with other
-#'    variables in the overall factor model. The greater 'uniqueness' the lower
-#'    the relevance of the variable in the factor model.
-#'  }
+#' - Running
+#'   [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
+#'   visually displays the loadings (that requires the
+#'   [**see**-package](https://easystats.github.io/see/) to work).
 #'
-#'  \subsection{MSA}{
-#'    MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
-#'    (\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there
-#'    is enough data for each factor give reliable results for the PCA. The
-#'    value should be > 0.6, and desirable values are > 0.8
-#'    (\cite{Tabachnick and Fidell, 2013}).
-#'  }
+#' **Complexity**
 #'
-#'  \subsection{PCA or FA?}{
-#'  There is a simplified rule of thumb that may help do decide whether to run
-#'  a factor analysis or a principal component analysis:
-#'  \itemize{
-#'    \item Run *factor analysis* if you assume or wish to test a
-#'    theoretical model of *latent factors* causing observed variables.
+#' Complexity represents the number of latent components needed to account
+#' for the observed variables. Whereas a perfect simple structure solution
+#' has a complexity of 1 in that each item would only load on one factor,
+#' a solution with evenly distributed items has a complexity greater than 1
+#' (_Hofman, 1978; Pettersson and Turkheimer, 2010_).
 #'
-#'    \item Run *principal component analysis* If you want to simply
-#'    *reduce* your correlated observed variables to a smaller set of
-#'    important independent composite variables.
-#'  }
+#' **Uniqueness**
+#'
+#' Uniqueness represents the variance that is 'unique' to the variable and
+#'  not shared with other variables. It is equal to `1 – communality`
+#'  (variance that is shared with other variables). A uniqueness of `0.20`
+#'  suggests that `20%` or that variable's variance is not shared with other
+#'  variables in the overall factor model. The greater 'uniqueness' the lower
+#'  the relevance of the variable in the factor model.
+#'
+#' **MSA**
+#'
+#' MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
+#' (_Kaiser and Rice, 1974_) for each item. It indicates whether there is
+#' enough data for each factor give reliable results for the PCA. The value
+#' should be > 0.6, and desirable values are > 0.8 (_Tabachnick and Fidell, 2013_).
+#'
+#' **PCA or FA?**
+#'
+#' There is a simplified rule of thumb that may help do decide whether to run
+#' a factor analysis or a principal component analysis:
+#'
+#' - Run *factor analysis* if you assume or wish to test a theoretical model of
+#'   *latent factors* causing observed variables.
+#'
+#' - Run *principal component analysis* If you want to simply *reduce* your
+#'   correlated observed variables to a smaller set of important independent
+#'   composite variables.
+#'
 #'  (Source: [CrossValidated](https://stats.stackexchange.com/q/1576/54740))
-#'  }
 #'
-#'  \subsection{Computing Item Scores}{
-#'    Use [get_scores()] to compute scores for the "subscales"
-#'    represented by the extracted principal components. `get_scores()`
-#'    takes the results from `principal_components()` and extracts the
-#'    variables for each component found by the PCA. Then, for each of these
-#'    "subscales", raw means are calculated (which equals adding up the single
-#'    items and dividing by the number of items). This results in a sum score
-#'    for each component from the PCA, which is on the same scale as the
-#'    original, single items that were used to compute the PCA.
-#'    One can also use `predict()` to back-predict scores for each component,
-#'    to which one can provide `newdata` or a vector of `names` for the
-#'    components.
-#'  }
+#' **Computing Item Scores**
 #'
-#'  \subsection{Explained Variance and Eingenvalues}{
-#'     Use `summary()` to get the Eigenvalues and the explained variance
-#'     for each extracted component. The eigenvectors and eigenvalues represent
-#'     the "core" of a PCA: The eigenvectors (the principal components)
-#'     determine the directions of the new feature space, and the eigenvalues
-#'     determine their magnitude. In other words, the eigenvalues explain the
-#'     variance of the data along the new feature axes.
-#'  }
+#' Use [get_scores()] to compute scores for the "subscales" represented by the
+#' extracted principal components. `get_scores()` takes the results from
+#' `principal_components()` and extracts the variables for each component found
+#' by the PCA. Then, for each of these "subscales", raw means are calculated
+#' (which equals adding up the single items and dividing by the number of items).
+#' This results in a sum score for each component from the PCA, which is on the
+#' same scale as the original, single items that were used to compute the PCA.
+#' One can also use `predict()` to back-predict scores for each component,
+#' to which one can provide `newdata` or a vector of `names` for the components.
 #'
+#' **Explained Variance and Eingenvalues**
+#'
+#' Use `summary()` to get the Eigenvalues and the explained variance for each
+#' extracted component. The eigenvectors and eigenvalues represent the "core"
+#' of a PCA: The eigenvectors (the principal components) determine the
+#' directions of the new feature space, and the eigenvalues determine their
+#' magnitude. In other words, the eigenvalues explain the variance of the
+#' data along the new feature axes.
 #'
 #' @examples
 #' library(parameters)
@@ -193,21 +187,20 @@
 #' }
 #' }
 #' @return A data frame of loadings.
-#' @references \itemize{
-#'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 #'   and Psychological Measurement, 34(1):111–117
 #'
-#'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
 #'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
 #'   247-250, \doi{10.1207/s15327906mbr1302_9}
 #'
-#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
 #'   and simple structure in personality data. Journal of research in
 #'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
 #'
-#'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 #'   statistics (6th ed.). Boston: Pearson Education.
-#' }
 #' @export
 principal_components <- function(x,
                                  n = "auto",
