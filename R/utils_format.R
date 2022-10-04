@@ -506,11 +506,6 @@
 
 
 .prepare_splitby_for_print <- function(x) {
-  # fix colnames for compare_parameters
-  if (inherits(x, "compare_parameters")) {
-    colnames(x) <- gsub("(.*)\\.(.*)$", "\\1", colnames(x))
-  }
-
   if (!is.null(attributes(x)$model_class) && any(attributes(x)$model_class == "mvord")) {
     x$Response <- NULL
   }

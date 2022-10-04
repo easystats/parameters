@@ -185,9 +185,12 @@ compare_parameters <- function(...,
     # set pretty parameter names
     dat <- .set_pretty_names(dat, pretty_names)
 
-    # make sure we have a component-column, for merging
+    # make sure we have a component- and effects column, for merging
     if (!"Component" %in% colnames(dat)) {
       dat$Component <- "conditional"
+    }
+    if (!"Effects" %in% colnames(dat)) {
+      dat$Effects <- "fixed"
     }
 
     # add zi-suffix to parameter names
@@ -196,7 +199,7 @@ compare_parameters <- function(...,
     }
 
     # add suffix
-    ignore <- colnames(dat) %in% c("Parameter", "Component")
+    ignore <- colnames(dat) %in% c("Parameter", "Component", "Effects")
     colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", model_name)
 
     # save model number, for sorting
@@ -210,7 +213,7 @@ compare_parameters <- function(...,
   names(object_attributes) <- model_names
 
   # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component")), m))
+  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects")), m))
 
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of

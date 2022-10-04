@@ -246,6 +246,29 @@ format.compare_parameters <- function(x,
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function
     colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # check if we have mixed models with random variance parameters
+    # in such cases, we don't need the group-column, but we rather
+    # merge it with the parameter column
+    group_col <- paste0("Group.", i)
+    if (!is.null(x[[group_col]]) && !is.null(x$Effects)) {
+      ran_pars <- which(x$Effects == "random")
+      stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[stddevs]] <- paste0(
+        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
+        ": ",
+        x[[group_col]][ran_pars[stddevs]],
+        ")"
+      )
+      corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
+      x$Parameter[ran_pars[corrs]] <- paste0(
+        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
+        ": ",
+        x$Group[ran_pars[corrs]],
+        ")"
+      )
+      x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
+      x$Group <- NULL
+    }
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
     cols <- insight::format_table(
@@ -285,10 +308,23 @@ format.compare_parameters <- function(x,
 
     # make sure we have correct sorting here...
     formatted_table <- split(out, f = split_by)
-    formatted_table <- lapply(formatted_table, function(i) {
+    formatted_table <- lapply(names(formatted_table), function(tab) {
+      i <- formatted_table[[tab]]
       # remove unique columns
       if (insight::n_unique(i$Component) == 1) i$Component <- NULL
       if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
+      # format table captions for sub tables
+      table_caption <- .format_model_component_header(
+        x, type = tab, split_column = tab, is_zero_inflated = FALSE,
+        is_ordinal_model = FALSE, is_multivariate = FALSE, ran_pars = FALSE,
+        formatted_tabl = i
+      )
+      # add as attribute, so table captions are printed
+      if (identical(format, "html")) {
+        i$Component <- table_caption
+      } else {
+        attr(i, "table_caption") <- table_caption
+      }
       i
     })
   } else {
