@@ -118,7 +118,7 @@ format.parameters_model <- function(x,
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
     # "sub table" (i.e. we print a table for each model component, like count,
-    # zero-inflated, smooth, random, ...) and formats some parameter labels.
+    # zero-inflation, smooth, random, ...) and formats some parameter labels.
     # moreover, insight::format_table() is called to do the final formatting
     # and .format_model_component_header() is called to set captions for each
     # "sub table".

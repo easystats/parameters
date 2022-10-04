@@ -153,7 +153,7 @@
 # But for instance, for random effects, however, which are on a different scale,
 # we want a different name for this column. Since print.parameters_model() splits
 # components into different tables, we change the column name for those "tables"
-# that contain the random effects or zero-inflated parameters
+# that contain the random effects or zero-inflation parameters
 
 .all_coefficient_types <- function() {
   c(
@@ -201,10 +201,10 @@
     "conditional.fixed" = ,
     "conditional.fixed." = .conditional_fixed_text,
     "conditional.random" = .conditional_random_text,
-    "zero_inflated" = "Zero-Inflated",
+    "zero_inflated" = "Zero-Inflation",
     "zero_inflated.fixed" = ,
-    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflated Model)",
-    "zero_inflated.random" = "Random Effects (Zero-Inflated Model)",
+    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflation Component)",
+    "zero_inflated.random" = "Random Effects (Zero-Inflation Component)",
     "survival" = ,
     "survival.fixed" = "Survival",
     "dispersion.fixed" = ,
@@ -271,9 +271,9 @@
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
     component_name <- insight::trim_ws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
     if (nchar(component_name) == 0) {
-      component_name <- "Random Effects (Zero-Inflated Model)"
+      component_name <- "Random Effects (Zero-Inflation Component)"
     } else {
-      component_name <- paste0("Random Effects (Zero-Inflated Model): ", component_name)
+      component_name <- paste0("Random Effects (Zero-Inflation Component): ", component_name)
     }
   }
   if (grepl("^random\\.(.*)", component_name)) {
@@ -281,10 +281,10 @@
   }
 
   # if we show ZI component only, make sure this appears in header
-  if (!grepl("(Zero-Inflated Model)", component_name, fixed = TRUE) &&
+  if (!grepl("(Zero-Inflation Component)", component_name, fixed = TRUE) &&
     !is.null(formatted_table$Component) &&
     all(formatted_table$Component == "zero_inflated")) {
-    component_name <- paste0(component_name, " (Zero-Inflated Model)")
+    component_name <- paste0(component_name, " (Zero-Inflation Component)")
   }
 
   # tweaking of sub headers
@@ -577,7 +577,7 @@
   is_ordinal_model <- isTRUE(attributes(x)$ordinal_model)
   is_multivariate <- isTRUE(attributes(x)$multivariate_response)
 
-  # zero-inflated stuff
+  # zero-inflation stuff
   is_zero_inflated <- (!is.null(x$Component) & "zero_inflated" %in% x$Component)
   zi_coef_name <- attributes(x)$zi_coefficient_name
 

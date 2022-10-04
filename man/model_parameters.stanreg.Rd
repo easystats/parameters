@@ -264,9 +264,9 @@ names.}
 \item{...}{Currently not used.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
-conditional model, the zero-inflated part of the model, the dispersion
+conditional model, the zero-inflation part of the model, the dispersion
 term, or other auxiliary parameters be returned? Applies to models with
-zero-inflated and/or dispersion formula, or if parameters such as \code{sigma}
+zero-inflation and/or dispersion formula, or if parameters such as \code{sigma}
 should be included. May be abbreviated. Note that the \emph{conditional}
 component is also called \emph{count} or \emph{mean} component, depending on the
 model. There are three convenient shortcuts: \code{component = "all"} returns

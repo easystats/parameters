@@ -400,7 +400,7 @@ summary.parameters_stan <- function(object, ...) {
     eff_name <- "Fixed"
   }
   if (!is.null(x$Component) && all(x$Component == "zero_inflated")) {
-    zero_inflated <- " (Zero-Inflated Model)"
+    zero_inflated <- " (Zero-Inflation Component)"
   } else {
     zero_inflated <- ""
   }

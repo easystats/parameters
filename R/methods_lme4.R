@@ -16,7 +16,7 @@
 #'   will indicate which variables belong to the within-effects,
 #'   between-effects, and cross-level interactions. By default, the
 #'   `Component` column indicates, which parameters belong to the
-#'   conditional or zero-inflated component of the model.
+#'   conditional or zero-inflation component of the model.
 #' @param include_sigma Logical, if `TRUE`, includes the residual standard
 #'   deviation. For mixed models, this is defined as the sum of the distribution-specific
 #'   variance and the variance for the additive overdispersion term (see

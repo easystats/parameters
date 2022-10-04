@@ -13,9 +13,9 @@
 #'   `group_level = FALSE` (the default), only information on SD and COR
 #'   are shown.
 #' @param component Which type of parameters to return, such as parameters for the
-#'   conditional model, the zero-inflated part of the model, the dispersion
+#'   conditional model, the zero-inflation part of the model, the dispersion
 #'   term, or other auxiliary parameters be returned? Applies to models with
-#'   zero-inflated and/or dispersion formula, or if parameters such as `sigma`
+#'   zero-inflation and/or dispersion formula, or if parameters such as `sigma`
 #'   should be included. May be abbreviated. Note that the *conditional*
 #'   component is also called *count* or *mean* component, depending on the
 #'   model. There are three convenient shortcuts: `component = "all"` returns

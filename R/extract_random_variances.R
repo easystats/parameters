@@ -790,7 +790,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 
 # glmmTMB returns a list of model information, one for conditional
-# and one for zero-inflated part, so here we "unlist" it, returning
+# and one for zero-inflation part, so here we "unlist" it, returning
 # only the conditional part.
 .collapse_cond <- function(x) {
   if (is.list(x) && "cond" %in% names(x)) {
