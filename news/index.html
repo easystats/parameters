@@ -86,17 +86,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.18.3" id="parameters-0183">parameters 0.18.3<a class="anchor" aria-label="anchor" href="#parameters-0183"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.19.0" id="parameters-0190">parameters 0.19.0<a class="anchor" aria-label="anchor" href="#parameters-0190"></a></h2>
 <div class="section level3">
-<h3 id="breaking-0-18-3">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-18-3"></a></h3>
+<h3 id="breaking-0-19-0">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-19-0"></a></h3>
 <ul><li><p>Arguments that calculate effectsize in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>htest</code>, Anova objects and objects of class <code>BFBayesFactor</code> were revised. Instead of single arguments for the different effectsizes, there is now one argument, <code>effectsize_type</code>. The reason behind this change is that meanwhile many new type of effectsizes have been added to the <em>effectsize</em> package, and the generic argument allows to make use of those effect sizes.</p></li>
 <li><p>The attribute name in PCA / EFA has been changed from <code>data_set</code> to <code>dataset</code>.</p></li>
 <li><p>The minimum needed R version has been bumped to <code>3.6</code>.</p></li>
 <li><p>Removed deprecated argument <code>parameters</code> from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 <li><p><code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code>, <code><a href="../reference/ci_robust.html">ci_robust()</a></code> and <code><a href="../reference/p_value_robust.html">p_value_robust()</a></code> are now deprecated and superseded by the <code>vcov</code> and <code>vcov_args</code> arguments in the related methods <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code>, respectively.</p></li>
+<li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_kmo.html" class="external-link">check_kmo()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="changes-to-functions-0-18-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-18-3"></a></h3>
+<h3 id="changes-to-functions-0-19-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-19-0"></a></h3>
 <ul><li><p>Added <code>sparse</code> option to <code><a href="../reference/principal_components.html">principal_components()</a></code> for sparse PCA.</p></li>
 <li><p>The <code>pretty_names</code> argument from the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method can now also be <code>"labels"</code>, which will then use variable and value labels (if data is labelled) as pretty names. If no labels were found, default pretty names are used.</p></li>
 <li><p><code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> for models of class <code>glmmTMB</code> and <code>merMod</code> gains a <code>cluster</code> argument to specify optional clusters when the <code>parallel</code> option is set to <code>"snow"</code>.</p></li>
@@ -105,7 +106,7 @@
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>footer</code> argument, which can be used to suppress the footer in the output. Further more, if <code>footer = ""</code> or <code>footer = FALSE</code> in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>, no footer is printed.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-18-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-3"></a></h3>
+<h3 id="bug-fixes-0-19-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-19-0"></a></h3>
 <ul><li>Fix erroneous warning for <em>p</em>-value adjustments when the differences between original and adjusted <em>p</em>-values were very small.</li>
 </ul></div>
 </div>
@@ -250,7 +251,7 @@
 </ul><p>Note that these functions will be removed in the next release of <em>parameters</em> package and they are currently being re-exported only as a convenience for the package developers. This release should provide them with time to make the necessary changes before this breaking change is implemented.</p>
 <ul><li>
 <p>Following functions were moved to the <em>performance</em> package:</p>
-<ul><li><p><code><a href="../reference/check_heterogeneity.html">check_heterogeneity()</a></code></p></li>
+<ul><li><p><code>check_heterogeneity()</code></p></li>
 <li><p><code><a href="https://easystats.github.io/performance/reference/check_multimodal.html" class="external-link">check_multimodal()</a></code></p></li>
 </ul></li>
 </ul></div>
@@ -300,7 +301,7 @@
 <h2 class="pkg-version" data-toc-text="0.14.0" id="parameters-0140">parameters 0.14.0<a class="anchor" aria-label="anchor" href="#parameters-0140"></a></h2><p class="text-muted">CRAN release: 2021-05-29</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-14-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-14-0"></a></h3>
-<ul><li><p><code><a href="https://easystats.github.io/performance/reference/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="../reference/check_sphericity_bartlett.html">check_sphericity_bartlett()</a></code>.</p></li>
+<ul><li><p><code><a href="https://easystats.github.io/performance/reference/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>.</p></li>
 <li><p>Removed deprecated arguments.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for bootstrapped samples used in <em>emmeans</em> now treats the bootstrap samples as samples from posterior distributions (Bayesian models).</p></li>
 </ul></div>

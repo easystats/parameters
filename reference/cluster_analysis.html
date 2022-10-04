@@ -119,9 +119,9 @@ assignment for each observation as vector.</p>
 
 <dt>n</dt>
 <dd><p>Number of clusters used for supervised cluster methods. If <code>NULL</code>,
-the number of clusters to extract is determined by calling <code><a href="n_clusters.html">n_clusters()</a></code>. Note
-that this argument does not apply for unsupervised clustering methods like
-<code>dbscan</code>, <code>hdbscan</code>, <code>mixture</code>, <code>pvclust</code>, or <code>pamk</code>.</p></dd>
+the number of clusters to extract is determined by calling <code><a href="n_clusters.html">n_clusters()</a></code>.
+Note that this argument does not apply for unsupervised clustering methods
+like <code>dbscan</code>, <code>hdbscan</code>, <code>mixture</code>, <code>pvclust</code>, or <code>pamk</code>.</p></dd>
 
 
 <dt>method</dt>
@@ -176,7 +176,7 @@ this argument.</p></dd>
 
 
 <dt>dbscan_eps</dt>
-<dd><p>The 'eps' argument for DBSCAN method. See <code><a href="n_clusters.html">n_clusters_dbscan()</a></code>.</p></dd>
+<dd><p>The <code>eps</code> argument for DBSCAN method. See <code><a href="n_clusters.html">n_clusters_dbscan()</a></code>.</p></dd>
 
 
 <dt>iterations</dt>
@@ -220,7 +220,7 @@ Analysis Basics and Extensions. R package.</p></li>
 <ul><li><p><code><a href="n_clusters.html">n_clusters()</a></code> to determine the number of clusters to extract.</p></li>
 <li><p><code><a href="cluster_discrimination.html">cluster_discrimination()</a></code> to determine the accuracy of cluster group
 classification via linear discriminant analysis (LDA).</p></li>
-<li><p><code><a href="check_clusterstructure.html">check_clusterstructure()</a></code> to check suitability of data
+<li><p><code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">performance::check_clusterstructure()</a></code> to check suitability of data
 for clustering.</p></li>
 <li><p>https://www.datanovia.com/en/lessons/</p></li>
 </ul></div>
@@ -242,11 +242,8 @@ for clustering.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    33 |       17.33 |        -0.81 |        1.31 |        -1.28 |       -1.22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    96 |      149.26 |         0.57 |       -0.37 |         0.69 |        0.66</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Indices of model performance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 596.000           |             406.249 |            189.751 | 0.682</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               596            406.2488           189.7512 0.6816254</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # You can access the predicted clusters via `predict()`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Get clusters</span></span></span>
@@ -298,11 +295,8 @@ for clustering.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    24 |       18.65 |        -0.40 |       -1.36 |         0.06 |       -0.04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    77 |       94.08 |         0.76 |       -0.15 |         0.81 |        0.81</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Indices of model performance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sum_Squares_Total | Sum_Squares_Between | Sum_Squares_Within |    R2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 596.000           |             443.143 |            152.857 | 0.744</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Sum_Squares_Total Sum_Squares_Between Sum_Squares_Within        R2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               596            443.1431           152.8569 0.7435286</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # You can access the predicted clusters via `predict()`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span> <span class="co"># Get clusters</span></span></span>
