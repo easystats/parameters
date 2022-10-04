@@ -259,11 +259,19 @@ m1 <- glmmTMB(
 
 m2 <- glmmTMB(
   count ~ child + camper + zg + (1 | ID),
+  ziformula = ~ child + (1 | persons),
   data = fish,
-  family = poisson()
+  family = truncated_poisson()
 )
 
 compare_parameters(m0, m1, m2, effects = "all", component = "all")
+```
+
+For such tables, they usually become clearer when the columns per model are aligned to a fixed width. You can do this using `column_width = "fixed"`.
+
+```{r eval=successfully_loaded["glmmTMB"]}
+cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
+print(cp, column_width = "fixed")
 ```
 
 
