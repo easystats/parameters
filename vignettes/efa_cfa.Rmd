@@ -104,7 +104,7 @@ data <- psych::bfi[, 1:25] # Select only the 25 first columns corresponding to t
 data <- na.omit(data) # remove missing values
 
 # Check factor structure
-check_factorstructure(data)
+performance::check_factorstructure(data)
 ```
 
 ## Exploratory Factor Analysis (EFA)
