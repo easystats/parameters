@@ -139,6 +139,7 @@ model_parameters.BFBayesFactor <- function(model,
     # needs {effectsize} to be installed
     insight::check_if_installed("effectsize")
 
+    ## TODO: add back ci-argument, once effectsize >= 0.7.1 is on CRAN.
     tryCatch(
       {
         effsize <- effectsize::effectsize(model,
