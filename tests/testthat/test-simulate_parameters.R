@@ -24,8 +24,8 @@ if (win_os && requiet("testthat") && requiet("parameters") && requiet("sandwich"
     s2 <- simulate_parameters(mod, vcov = "HC1")
     expect_equal(dim(s1), c(3L, 5L))
     expect_equal(dim(s2), c(3L, 5L))
-    expect_false(isTRUE(all.equal(s1$Coefficient, s2$Coefficient, tolerance = 1e-3)))
-    expect_false(isTRUE(all.equal(s1$Coefficient, s2$CI_low, tolerance = 1e-3)))
+    expect_false(isTRUE(all.equal(s1$Coefficient, s2$Coefficient, tolerance = 1e-5)))
+    expect_false(isTRUE(all.equal(s1$Coefficient, s2$CI_low, tolerance = 1e-5)))
   })
 
   if (requiet("glmmTMB") && .runThisTest) {
