@@ -251,7 +251,7 @@ format.compare_parameters <- function(x,
   # find all random effect groups
   group_cols <- grepl("^Group\\.", colnames(x))
   if (any(group_cols)) {
-    ran_groups <- unique(sapply(x[group_cols], insight::compact_character))
+    ran_groups <- unique(unlist(lapply(x[group_cols], insight::compact_character)))
   } else {
     ran_groups <- NULL
   }
@@ -268,39 +268,42 @@ format.compare_parameters <- function(x,
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
     if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
+      # ran_pars has row indices for *all* models in this function -
+      # make sure we have only valid rows for this particular model
+      ran_pars_rows <- ran_pars[ran_pars %in% which(nchar(cols$Group) > 0)]
       # find SD random parameters
-      stddevs <- grepl("^SD \\(", out$Parameter[ran_pars])
+      stddevs <- grepl("^SD \\(", out$Parameter[ran_pars_rows])
       # check if we already fixed that name in a previous loop
       fixed_name <- unlist(lapply(ran_groups, function(g) {
-        which(grepl(g, out$Parameter[ran_pars[stddevs]], fixed = TRUE))
+        which(grepl(g, out$Parameter[ran_pars_rows[stddevs]], fixed = TRUE))
       }))
       if (length(fixed_name)) {
-        stddevs <- stddevs[-fixed_name]
+        stddevs[fixed_name] <- FALSE
       }
       # collapse parameter name with RE grouping factor
       if (length(stddevs)) {
-        out$Parameter[ran_pars[stddevs]] <- paste0(
-          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars[stddevs]]),
+        out$Parameter[ran_pars_rows[stddevs]] <- paste0(
+          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[stddevs]]),
           ": ",
-          cols$Group[ran_pars[stddevs]],
+          cols$Group[ran_pars_rows[stddevs]],
           ")"
         )
       }
       # same for correlations
-      corrs <- grepl("^Cor \\(", out$Parameter[ran_pars])
+      corrs <- grepl("^Cor \\(", out$Parameter[ran_pars_rows])
       # check if we already fixed that name in a previous loop
       fixed_name <- unlist(lapply(ran_groups, function(g) {
-        which(grepl(g, out$Parameter[ran_pars[corrs]], fixed = TRUE))
+        which(grepl(g, out$Parameter[ran_pars_rows[corrs]], fixed = TRUE))
       }))
       if (length(fixed_name)) {
-        corrs <- corrs[-fixed_name]
+        corrs[fixed_name] <- FALSE
       }
       # collapse parameter name with RE grouping factor
       if (length(corrs)) {
-        out$Parameter[ran_pars[corrs]] <- paste0(
-          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars[corrs]]),
+        out$Parameter[ran_pars_rows[corrs]] <- paste0(
+          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[corrs]]),
           ": ",
-          cols$Group[ran_pars[corrs]],
+          cols$Group[ran_pars_rows[corrs]],
           ")"
         )
       }
