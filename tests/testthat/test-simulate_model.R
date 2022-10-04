@@ -24,8 +24,8 @@ if (win_os && requiet("testthat") && requiet("parameters") && requiet("sandwich"
     s2 <- simulate_model(mod, iterations = 100, vcov = "HC1")
     expect_equal(dim(s1), c(100L, 3L))
     expect_equal(dim(s2), c(100L, 3L))
-    expect_false(all.equal(head(s1$wt), head(s2$wt), tolerance = 1e-3))
-    expect_false(all.equal(hemean(s1$cyl), mean(s2$cyl), tolerance = 1e-3))
+    expect_false(isTRUE(all.equal(head(s1$wt), head(s2$wt), tolerance = 1e-3)))
+    expect_false(isTRUE(all.equal(mean(s1$cyl), mean(s2$cyl), tolerance = 1e-3)))
   })
 
   if (requiet("glmmTMB") && .runThisTest) {
