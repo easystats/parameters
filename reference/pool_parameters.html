@@ -143,8 +143,8 @@ parameters takes too long, you may use <code>effects = "fixed"</code>.</p></dd>
 
 <dt>component</dt>
 <dd><p>Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. <code>component</code>
+for the zero-inflation part of the model, or the dispersion model be returned?
+Applies to models with zero-inflation and/or dispersion component. <code>component</code>
 may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflated"</code>, <code>"dispersion"</code> or
 <code>"all"</code> (default). May be abbreviated.</p></dd>
 
@@ -172,10 +172,10 @@ small samples (<em>Barnard and Rubin, 1999</em>).</p>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Models with multiple components, (for instance, models with zero-inflation,
-where predictors appear in the count and zero-inflated part) may fail in
+where predictors appear in the count and zero-inflation part) may fail in
 case of identical names for coefficients in the different model components,
 since the coefficient table is grouped by coefficient names for pooling. In
-such cases, coefficients of count and zero-inflated model parts would be
+such cases, coefficients of count and zero-inflation model parts would be
 combined. Therefore, the <code>component</code> argument defaults to
 <code>"conditional"</code> to avoid this.</p>
 <p>Some model objects do not return standard errors (e.g. objects of class
