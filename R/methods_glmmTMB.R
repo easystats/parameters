@@ -433,28 +433,28 @@ simulate_model.glmmTMB <- function(model,
   if (is.null(iterations)) iterations <- 1000
 
   if (all(component == c("conditional", "zero_inflated"))) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated", ...)
     colnames(d2) <- paste0(colnames(d2), "_zi")
     d <- cbind(d1, d2)
   } else if (all(component == c("conditional", "dispersion"))) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "dispersion")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "dispersion", ...)
     colnames(d2) <- paste0(colnames(d2), "_disp")
     d <- cbind(d1, d2)
   } else if (all(component == "all")) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
-    d3 <- .simulate_model(model, iterations, component = "dispersion")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated", ...)
+    d3 <- .simulate_model(model, iterations, component = "dispersion", ...)
     colnames(d2) <- paste0(colnames(d2), "_zi")
     colnames(d3) <- paste0(colnames(d3), "_disp")
     d <- cbind(d1, d2, d3)
   } else if (all(component == "conditional")) {
-    d <- .simulate_model(model, iterations, component = "conditional")
+    d <- .simulate_model(model, iterations, component = "conditional", ...)
   } else if (all(component %in% c("zi", "zero_inflated"))) {
-    d <- .simulate_model(model, iterations, component = "zero_inflated")
+    d <- .simulate_model(model, iterations, component = "zero_inflated", ...)
   } else {
-    d <- .simulate_model(model, iterations, component = "dispersion")
+    d <- .simulate_model(model, iterations, component = "dispersion", ...)
   }
 
   class(d) <- c("parameters_simulate_model", class(d))

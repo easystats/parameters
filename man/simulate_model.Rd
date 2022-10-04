@@ -20,7 +20,8 @@ simulate_model(model, iterations = 1000, ...)
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to \code{\link[insight:get_varcov]{insight::get_varcov()}}, e.g. to allow simulated
+draws to be based on heteroscedasticity consistent variance covariance matrices.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 for the zero-inflated part of the model, or the dispersion model be returned?

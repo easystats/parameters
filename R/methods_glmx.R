@@ -65,7 +65,7 @@ p_value.glmx <- function(model, ...) {
 #' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))

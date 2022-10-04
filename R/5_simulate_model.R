@@ -10,6 +10,8 @@
 #'   Applies to models with zero-inflated and/or dispersion component. `component`
 #'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
 #'    `"all"` (default). May be abbreviated.
+#' @param ... Arguments passed to [`insight::get_varcov()`], e.g. to allow simulated
+#' draws to be based on heteroscedasticity consistent variance covariance matrices.
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
@@ -63,7 +65,7 @@ simulate_model.default <- function(model, iterations = 1000, ...) {
   # check for valid input
   .is_model_valid(model)
 
-  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed", ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))
@@ -223,13 +225,14 @@ simulate_model.bracl <- simulate_model.default
 # helper -----------------------------------------
 
 
-.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
+.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed", ...) {
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
   beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
-  varcov <- insight::get_varcov(model, component = component, effects = effects)
+  # "..." allow specification of vcov-args (#784)
+  varcov <- insight::get_varcov(model, component = component, effects = effects, ...)
   as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()

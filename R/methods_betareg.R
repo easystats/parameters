@@ -145,7 +145,7 @@ simulate_model.betareg <- function(model,
                                    component = c("all", "conditional", "precision"),
                                    ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))

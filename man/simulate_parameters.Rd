@@ -52,7 +52,8 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to \code{\link[insight:get_varcov]{insight::get_varcov()}}, e.g. to allow simulated
+draws to be based on heteroscedasticity consistent variance covariance matrices.}
 }
 \value{
 A data frame with simulated parameters.

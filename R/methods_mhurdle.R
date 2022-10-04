@@ -90,7 +90,7 @@ standard_error.mhurdle <- function(model, component = c("all", "conditional", "z
 #' @export
 simulate_model.mhurdle <- function(model, iterations = 1000, component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component, effects = "fixed")
+  out <- .simulate_model(model, iterations, component = component, effects = "fixed", ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))

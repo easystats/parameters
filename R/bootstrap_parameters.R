@@ -20,13 +20,13 @@
 #' Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their
 #' application (Vol. 1). Cambridge university press.
 #'
-#' @seealso [bootstrap_model()], [simulate_parameters()], [simulate_model()]
+#' @seealso [`bootstrap_model()`], [`simulate_parameters()`], [`simulate_model()`]
 #'
-#' @details This function first calls [bootstrap_model()] to generate
+#' @details This function first calls [`bootstrap_model()`] to generate
 #'   bootstrapped coefficients. The resulting replicated for each coefficient
-#'   are treated as "distribution", and is passed to [bayestestR::describe_posterior()]
+#'   are treated as "distribution", and is passed to [`bayestestR::describe_posterior()`]
 #'   to calculate the related indices defined in the `"test"` argument.
-#'   \cr\cr
+#'
 #'   Note that that p-values returned here are estimated under the assumption of
 #'   *translation equivariance*: that shape of the sampling distribution is
 #'   unaffected by the null being true or not. If this assumption does not hold,

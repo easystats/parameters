@@ -86,7 +86,7 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
 #' @export
 simulate_model.mvord <- function(model, iterations = 1000, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))

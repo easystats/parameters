@@ -391,13 +391,12 @@ parameters <- model_parameters
 #'   frame, which can be different from how they are printed. Inspect the
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
+#' @param ... Arguments passed to or from other methods. For instance, when
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
+#'   passed down to `bootstrap_model()`.
 #' @param drop See `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
-#' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`, and arguments like `ci_method`
-#'   are passed down to [bayestestR::describe_posterior()].
 #'
 #' @seealso [insight::standardize_names()] to
 #'   rename columns into a consistent, standardized naming scheme.

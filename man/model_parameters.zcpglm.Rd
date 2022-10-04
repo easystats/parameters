@@ -168,8 +168,7 @@ and more).}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+passed down to \code{bootstrap_model()}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

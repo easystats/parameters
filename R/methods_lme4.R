@@ -32,6 +32,9 @@
 #'   computed by default, for simpler models or fewer observations, confidence
 #'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
 #'   or omit calculation of confidence intervals.
+#' @param ... Arguments passed to or from other methods. For instance, when
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
+#'   passed down to `bootstrap_model()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'

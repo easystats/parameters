@@ -56,7 +56,7 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
   if (is.null(iterations)) iterations <- 1000
 
   beta <- stats::coef(model)
-  varcov <- insight::get_varcov(model, component = "all")
+  varcov <- insight::get_varcov(model, component = "all", ...)
 
   out <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 

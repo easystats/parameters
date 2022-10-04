@@ -180,7 +180,7 @@ ci.mlm <- function(x,
 #' @export
 simulate_model.mlm <- function(model, iterations = 1000, ...) {
   responses <- insight::find_response(model, combine = FALSE)
-  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed", ...)
 
   cn <- paste0(colnames(out), rep(responses, each = length(colnames(out)) / length(responses)))
   colnames(out) <- cn

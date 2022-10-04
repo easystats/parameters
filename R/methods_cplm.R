@@ -232,7 +232,7 @@ model_parameters.cpglmm <- function(model,
                                     ...) {
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
+    insight::format_warning("Argument 'df_method' is deprecated. Please use 'ci_method' instead.")
     ci_method <- df_method
   }
 
@@ -243,7 +243,7 @@ model_parameters.cpglmm <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
+      insight::format_warning("Standardizing coefficients only works for fixed effects of the mixed model.")
     }
     effects <- "fixed"
   }

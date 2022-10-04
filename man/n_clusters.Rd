@@ -95,8 +95,7 @@ as \code{method}).}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+passed down to \code{bootstrap_model()}.}
 
 \item{clustering_function, gap_method}{Other arguments passed to other
 functions. \code{clustering_function} is used by \code{fviz_nbclust()} and

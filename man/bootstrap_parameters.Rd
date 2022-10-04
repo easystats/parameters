@@ -50,7 +50,7 @@ This function first calls \code{\link[=bootstrap_model]{bootstrap_model()}} to g
 bootstrapped coefficients. The resulting replicated for each coefficient
 are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}
 to calculate the related indices defined in the \code{"test"} argument.
-\cr\cr
+
 Note that that p-values returned here are estimated under the assumption of
 \emph{translation equivariance}: that shape of the sampling distribution is
 unaffected by the null being true or not. If this assumption does not hold,
@@ -64,7 +64,7 @@ The output can be passed directly to the various functions from the
 slopes, etc. and their confidence intervals. These can then be passed to
 \code{model_parameter()} to obtain standard errors, p-values, etc. (see
 example).
-\cr\cr
+
 Note that that p-values returned here are estimated under the assumption of
 \emph{translation equivariance}: that shape of the sampling distribution is
 unaffected by the null being true or not. If this assumption does not hold,

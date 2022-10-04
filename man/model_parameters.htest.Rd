@@ -55,8 +55,7 @@ models, can also be a character vector with multiple effect size names.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+passed down to \code{bootstrap_model()}.}
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following

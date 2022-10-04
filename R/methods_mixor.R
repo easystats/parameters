@@ -80,7 +80,7 @@ p_value.mixor <- function(model, effects = "all", ...) {
 #' @export
 simulate_model.mixor <- function(model, iterations = 1000, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
-  out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
+  out <- .simulate_model(model, iterations, component = "conditional", effects = effects, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
   attr(out, "object_name") <- insight::safe_deparse(substitute(model))

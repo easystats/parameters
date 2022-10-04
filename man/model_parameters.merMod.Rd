@@ -331,7 +331,9 @@ due to the longer computation time.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
 for the zero-inflated part of the model, or the dispersion model be returned?
