@@ -61,6 +61,7 @@
   c(
     "(intercept)_zi",
     "intercept (zero-inflated)",
+    "intercept (zero-inflation)",
     "intercept",
     "zi_intercept",
     "(intercept)",

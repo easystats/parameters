@@ -14,10 +14,10 @@
 #' @inheritParams model_parameters.merMod
 #'
 #' @note Models with multiple components, (for instance, models with zero-inflation,
-#'   where predictors appear in the count and zero-inflated part) may fail in
+#'   where predictors appear in the count and zero-inflation part) may fail in
 #'   case of identical names for coefficients in the different model components,
 #'   since the coefficient table is grouped by coefficient names for pooling. In
-#'   such cases, coefficients of count and zero-inflated model parts would be
+#'   such cases, coefficients of count and zero-inflation model parts would be
 #'   combined. Therefore, the `component` argument defaults to
 #'   `"conditional"` to avoid this.
 #'

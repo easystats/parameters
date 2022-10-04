@@ -37,8 +37,8 @@ to mixed models. May be abbreviated. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. \code{component}
+for the zero-inflation part of the model, or the dispersion model be returned?
+Applies to models with zero-inflation and/or dispersion component. \code{component}
 may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
 \code{"all"} (default). May be abbreviated.}
 
@@ -62,10 +62,10 @@ small samples (\emph{Barnard and Rubin, 1999}).
 }
 \note{
 Models with multiple components, (for instance, models with zero-inflation,
-where predictors appear in the count and zero-inflated part) may fail in
+where predictors appear in the count and zero-inflation part) may fail in
 case of identical names for coefficients in the different model components,
 since the coefficient table is grouped by coefficient names for pooling. In
-such cases, coefficients of count and zero-inflated model parts would be
+such cases, coefficients of count and zero-inflation model parts would be
 combined. Therefore, the \code{component} argument defaults to
 \code{"conditional"} to avoid this.
 

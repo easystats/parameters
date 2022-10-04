@@ -6,8 +6,8 @@
 #'
 #' @param model A mixed effects model (including `stanreg` models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   for the zero-inflated part of the model, or the dispersion model be returned?
-#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   for the zero-inflation part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflation and/or dispersion component. `component`
 #'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
 #'    `"all"` (default). May be abbreviated.
 #'
