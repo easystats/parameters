@@ -223,9 +223,16 @@ format.compare_parameters <- function(x,
 
   out <- data.frame(
     Parameter = x$Parameter,
+    Effects = x$Effects,
     Component = x$Component,
     stringsAsFactors = FALSE
   )
+
+  # remove zi-suffix if we split components anyway
+  if (isTRUE(split_components)) {
+    out$Parameter <- insight::trim_ws(gsub(" (zi)", "", out$Parameter, fixed = TRUE))
+    out$Effects <- NULL
+  }
 
   # save model names
   models <- attributes(x)$model_names
@@ -238,6 +245,17 @@ format.compare_parameters <- function(x,
     groups <- parameters_attributes[[1]]$coef_groups
   }
 
+  # locate random effects rows
+  ran_pars <- which(x$Effects == "random")
+
+  # find all random effect groups
+  group_cols <- grepl("^Group\\.", colnames(x))
+  if (any(group_cols)) {
+    ran_groups <- unique(sapply(x[group_cols], insight::compact_character))
+  } else {
+    ran_groups <- NULL
+  }
+
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
@@ -246,6 +264,49 @@ format.compare_parameters <- function(x,
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function
     colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # check if we have mixed models with random variance parameters
+    # in such cases, we don't need the group-column, but we rather
+    # merge it with the parameter column
+    if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
+      # find SD random parameters
+      stddevs <- grepl("^SD \\(", out$Parameter[ran_pars])
+      # check if we already fixed that name in a previous loop
+      fixed_name <- unlist(lapply(ran_groups, function(g) {
+        which(grepl(g, out$Parameter[ran_pars[stddevs]], fixed = TRUE))
+      }))
+      if (length(fixed_name)) {
+        stddevs <- stddevs[-fixed_name]
+      }
+      # collapse parameter name with RE grouping factor
+      if (length(stddevs)) {
+        out$Parameter[ran_pars[stddevs]] <- paste0(
+          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars[stddevs]]),
+          ": ",
+          cols$Group[ran_pars[stddevs]],
+          ")"
+        )
+      }
+      # same for correlations
+      corrs <- grepl("^Cor \\(", out$Parameter[ran_pars])
+      # check if we already fixed that name in a previous loop
+      fixed_name <- unlist(lapply(ran_groups, function(g) {
+        which(grepl(g, out$Parameter[ran_pars[corrs]], fixed = TRUE))
+      }))
+      if (length(fixed_name)) {
+        corrs <- corrs[-fixed_name]
+      }
+      # collapse parameter name with RE grouping factor
+      if (length(corrs)) {
+        out$Parameter[ran_pars[corrs]] <- paste0(
+          gsub("(.*)\\)", "\\1", out$Parameter[ran_pars[corrs]]),
+          ": ",
+          cols$Group[ran_pars[corrs]],
+          ")"
+        )
+      }
+      out$Parameter[out$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
+      cols$Group <- NULL
+    }
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
     cols <- insight::format_table(
@@ -261,6 +322,11 @@ format.compare_parameters <- function(x,
     out <- cbind(out, .format_output_style(cols, style, format, i))
   }
 
+  # sort by effects and component
+  if (isFALSE(split_components)) {
+    out <- datawizard::data_arrange(out, c("Effects", "Component"))
+  }
+
   # group parameters - this function find those parameters that should be
   # grouped, reorders parameters into groups and indents lines that belong
   # to one group, adding a header for each group
@@ -274,7 +340,7 @@ format.compare_parameters <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)
 
-  if (length(split_by) > 0) {
+  if (length(split_by) > 0 && isTRUE(split_components)) {
     # set up split-factor
     if (length(split_column) > 1) {
       split_by <- lapply(split_column, function(i) x[[i]])
@@ -285,10 +351,25 @@ format.compare_parameters <- function(x,
 
     # make sure we have correct sorting here...
     formatted_table <- split(out, f = split_by)
-    formatted_table <- lapply(formatted_table, function(i) {
+    formatted_table <- lapply(names(formatted_table), function(tab) {
+      i <- formatted_table[[tab]]
       # remove unique columns
       if (insight::n_unique(i$Component) == 1) i$Component <- NULL
       if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
+      # format table captions for sub tables
+      table_caption <- .format_model_component_header(
+        x, type = tab, split_column = tab, is_zero_inflated = FALSE,
+        is_ordinal_model = FALSE, is_multivariate = FALSE, ran_pars = FALSE,
+        formatted_table = i
+      )
+      # add as attribute, so table captions are printed
+      if (identical(format, "html")) {
+        i$Component <- table_caption
+      } else if (identical(format, "md") || identical(format, "markdown")) {
+        attr(i, "table_caption") <- table_caption
+      } else {
+        attr(i, "table_caption") <- c(paste("#", table_caption), "blue")
+      }
       i
     })
   } else {

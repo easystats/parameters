@@ -12,7 +12,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     expect_equal(
       colnames(x),
       c(
-        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+        "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",
@@ -40,7 +40,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     expect_equal(
       colnames(x),
       c(
-        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+        "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",

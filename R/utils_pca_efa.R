@@ -177,7 +177,7 @@ predict.parameters_efa <- function(object,
         newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
       }
       out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
-      out <- setNames(as.data.frame(out), paste0("Component", 1:ncol(out)))
+      out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
     } else {
       out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
     }

@@ -5,6 +5,8 @@ print.compare_parameters <- function(x,
                                      p_digits = 3,
                                      style = NULL,
                                      groups = NULL,
+                                     split_components = TRUE,
+                                     column_width = NULL,
                                      ...) {
   # save original input
   orig_x <- x
@@ -28,7 +30,7 @@ print.compare_parameters <- function(x,
   formatted_table <- format(
     x,
     style,
-    split_components = TRUE,
+    split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
@@ -38,7 +40,19 @@ print.compare_parameters <- function(x,
     groups = groups
   )
 
-  cat(insight::export_table(formatted_table, format = "text", footer = NULL, empty_line = "-", ...))
+  # if we have multiple components, we can align colum width across components here
+  if (!is.null(column_width) && all(column_width == "fixed") && is.list(formatted_table)) {
+    column_width <- .find_min_colwidth(formatted_table)
+  }
+
+  cat(insight::export_table(
+    formatted_table,
+    format = "text",
+    footer = NULL,
+    empty_line = "-",
+    width = column_width,
+    ...
+  ))
 
   invisible(orig_x)
 }
