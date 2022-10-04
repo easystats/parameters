@@ -30,7 +30,7 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
     }
   }
 
@@ -66,7 +66,7 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
     }
     return(NULL)
   }
@@ -480,28 +480,28 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
-              message(insight::format_message(
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              insight::format_alert(
+                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).",
                 "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
-              ))
+              )
             }
             out
           },
           error = function(e) {
             if (isTRUE(verbose)) {
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-                message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.")
               }
               if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
-                message(insight::format_message("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables."))
+                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.")
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                 grepl("computationally singular", e$message, fixed = TRUE) ||
                 grepl("Exact singular", e$message, fixed = TRUE)) {
-                message(insight::format_message(
+                insight::format_alert(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                  "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-                ))
+                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`)."
+                )
               }
             }
             out
@@ -597,15 +597,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model))
 
           if (singular_fit) {
-            message(insight::format_message(
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+            insight::format_alert(
+              "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
               "Some of the confidence intervals of the random effects parameters are probably not meaningful!"
-            ))
+            )
           } else if (missing_ci) {
-            message(insight::format_message(
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+            insight::format_alert(
+              "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
               "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!"
-            ))
+            )
           }
         }
 
@@ -618,10 +618,10 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          message(insight::format_message(
+          insight::format_alert(
             "Cannot compute confidence intervals for random effects parameters.",
-            "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-          ))
+            "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`)."
+          )
         }
         out
       }
