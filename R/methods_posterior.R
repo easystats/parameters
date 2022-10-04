@@ -76,7 +76,7 @@ p_value.draws <- function(model, ...) {
 }
 
 .posterior_draws_to_df.default <- function(x) {
-  stop(sprintf("Objects of class '%s' are not yet supported.", class(x)[1]), call. = FALSE)
+  insight::format_error(sprintf("Objects of class `%s` are not yet supported.", class(x)[1]))
 }
 
 .posterior_draws_to_df.data.frame <- function(x) {

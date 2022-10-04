@@ -210,9 +210,9 @@ standardize_parameters.default <- function(model,
 
   if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo")) {
     if (m_info$is_multivariate) {
-      stop(insight::format_message(
+      insight::format_error(
         "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
-      ), call. = FALSE)
+      )
     }
 
     pars <- .standardize_parameters_posthoc(pars, method, model, m_info, robust, two_sd, exponentiate,
@@ -552,7 +552,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop(insight::format_message("`method` must be one of `basic`, `posthoc`, `smart` or `pseudo`."), call. = FALSE)
+    insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\" or \"pseudo\".")
   }
 
 

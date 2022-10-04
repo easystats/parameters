@@ -165,11 +165,11 @@ ci.mlm <- function(x,
       out[["Response"]] <- resp
     } else {
       if (!isTRUE(all(out$Response == resp))) {
-        stop(insight::format_message(
-          "Unable to assign labels to the model's parameters. Please report",
-          "this problem to the `parameters` Issue Tracker:",
-          "https://github.com/easystats/parameters/issues"
-        ), call. = FALSE)
+        insight::format_error(
+          "Unable to assign labels to the model's parameters.",
+          "Please report this problem to the {.pkg parameters} issue tracker:",
+          "{.url https://github.com/easystats/parameters/issues}"
+        )
       }
     }
   }

@@ -106,7 +106,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
   } else if (tolower(method) %in% c("ica")) {
     features <- .ica(x, n = nfac, ...)
   } else {
-    stop("'method' must be one of 'PCA', 'cMDS', 'DRR' or 'ICA'.", call. = FALSE)
+    insight::format_error("`method` must be one of \"PCA\", \"cMDS\", \"DRR\" or \"ICA\".")
   }
 
   # Get weights / pseudo-loadings (correlations)

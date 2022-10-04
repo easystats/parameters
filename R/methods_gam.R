@@ -81,7 +81,7 @@ model_parameters.list <- function(model, ...) {
     model <- model$pamobject
     model_parameters(model, ...)
   } else {
-    stop("We don't recognize this object of class 'list'. Please raise an issue.", call. = FALSE)
+    insight::format_error("We don't recognize this object of class `list`. Please raise an issue.")
   }
 }
 

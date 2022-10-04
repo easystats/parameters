@@ -57,7 +57,7 @@ factor_analysis.data.frame <- function(x,
 
   # rotate loadings
   if (!requireNamespace("psych", quietly = TRUE)) {
-    stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
+    insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
   }
 
   # Pass cor if available

@@ -783,9 +783,9 @@ print.n_clusters <- print.n_factors
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
   if (length(which(lambda < 0)) > 0) {
-    stop(insight::format_message(
+    insight::format_error(
       "These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted."
-    ), call. = FALSE)
+    )
   }
 
   minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)

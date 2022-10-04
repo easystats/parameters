@@ -149,7 +149,7 @@ predict.parameters_clusters <- function(object, newdata = NULL, names = NULL, ..
     } else if (is.character(names)) {
       out <- names[as.numeric(out)]
     } else {
-      stop("'names' must be a character vector or a list.", call. = FALSE)
+      stop("`names` must be a character vector or a list.", call. = FALSE)
     }
     out <- as.character(out)
   }

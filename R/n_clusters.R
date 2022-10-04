@@ -256,9 +256,9 @@ n_clusters <- function(x,
 #' @keywords internal
 .n_clusters_M3C <- function(x, n_max = 10, fast = TRUE, ...) {
   if (!requireNamespace("M3C", quietly = TRUE)) {
-    stop(insight::format_message(
+    insight::format_error(
       "Package `M3C` required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
-    ), call. = FALSE) # Not on CRAN (but on github and bioconductor)
+    ) # Not on CRAN (but on github and bioconductor)
   }
 
   data <- data.frame(t(x))

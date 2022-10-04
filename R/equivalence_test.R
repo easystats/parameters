@@ -277,9 +277,9 @@ equivalence_test.parameters_simulate_model <- function(x,
   if (all(range == "default") && !is.null(model)) {
     range <- bayestestR::rope_range(model, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop(insight::format_message(
+    insight::format_error(
       "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
-    ), call. = FALSE)
+    )
   }
 
 
@@ -319,13 +319,13 @@ equivalence_test.parameters_simulate_model <- function(x,
       range <- range[[which.max(sapply(range, diff))]]
     }
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop(insight::format_message(
+    insight::format_error(
       "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
-    ), call. = FALSE)
+    )
   }
 
   if (length(ci) > 1) {
-    warning("`ci` may only be of length 1. Using first ci-value now.", call. = FALSE)
+    insight::format_warning("`ci` may only be of length 1. Using first ci-value now.")
     ci <- ci[1]
   }
 
@@ -389,14 +389,14 @@ equivalence_test.parameters_simulate_model <- function(x,
   if (all(range == "default")) {
     range <- bayestestR::rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop(insight::format_message(
+    insight::format_error(
       "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
-    ), call. = FALSE)
+    )
   }
 
   if (length(ci) > 1) {
     if (isTRUE(verbose)) {
-      warning("`ci` may only be of length 1. Using first ci-value now.", call. = FALSE)
+      insight::format_warning("`ci` may only be of length 1. Using first ci-value now.")
     }
     ci <- ci[1]
   }
