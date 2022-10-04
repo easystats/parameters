@@ -51,6 +51,11 @@
   `insight::get_varcov()`, to allow simulated draws to be based on
   heteroscedasticity consistent variance covariance matrices.
 
+* The `print()` method for `compare_parameters()` was improved for models with
+  multiple components (e.g., mixed models with fixed and random effects, or
+  models with count- and zero-inflation parts). For these models,
+  `compare_parameters(effects = "all", component = "all")` prints more nicely.
+
 ## Bug fixes
 
 * Fix erroneous warning for *p*-value adjustments when the differences between
