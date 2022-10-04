@@ -1,6 +1,20 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (requiet("testthat") && requiet("parameters") && requiet("sandwich")) {
+win_os <- tryCatch(
+  {
+    si <- Sys.info()
+    if (!is.null(si["sysname"])) {
+      si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+    } else {
+      FALSE
+    }
+  },
+  error = function(e) {
+    FALSE
+  }
+)
+
+if (win_os && requiet("testthat") && requiet("parameters") && requiet("sandwich")) {
   mod <- lm(mpg ~ wt + cyl, data = mtcars)
 
   test_that("simulate_parameters, lm", {
