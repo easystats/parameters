@@ -91,6 +91,7 @@ simulate_parameters.default <- function(model,
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method
   attr(out, "centrality") <- centrality
+  attr(out, "simulated") <- TRUE
 
   out
 }

@@ -665,6 +665,7 @@ format.parameters_sem <- function(x,
     ci_method <- .additional_arguments(x, "ci_method", NULL)
     test_statistic <- .additional_arguments(x, "test_statistic", NULL)
     bootstrap <- .additional_arguments(x, "bootstrap", FALSE)
+    simulated <- .additional_arguments(x, "simulated", FALSE)
     residual_df <- .additional_arguments(x, "residual_df", NULL)
     random_variances <- .additional_arguments(x, "ran_pars", FALSE)
     model_class <- .additional_arguments(x, "model_class", NULL)
@@ -690,6 +691,15 @@ format.parameters_sem <- function(x,
         "equal-tailed"
       )
 
+      # sampling method
+      if (isTRUE(bootstrap)) {
+        sampling_method <- "na\u0131ve bootstrap"
+      } else if (isTRUE(simulated)) {
+        sampling_method <- "simulated multivariate normal"
+      } else {
+        sampling_method <- "MCMC"
+      }
+
       string_method <- switch(ci_method,
         "bci" = ,
         "bcai" = "bias-corrected accelerated bootstrap",
@@ -697,7 +707,7 @@ format.parameters_sem <- function(x,
         "ci" = ,
         "quantile" = ,
         "eti" = ,
-        "hdi" = ifelse(isTRUE(bootstrap), "na\u0131ve bootstrap", "MCMC"),
+        "hdi" = sampling_method,
         "normal" = "Wald normal",
         "boot" = "parametric bootstrap",
         "Wald"
