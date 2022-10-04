@@ -168,7 +168,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.8.0),
+    performance (>= 0.10.0),
     plm,
     PMCMRplus,
     poorman,
@@ -204,4 +204,3 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
-Remotes: easystats/effectsize

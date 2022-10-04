@@ -9,9 +9,9 @@
 #'   be retrieved from the [cluster_analysis()] function.
 #' @param ... Other arguments to be passed to or from.
 #'
-#' @seealso [n_clusters()] to determine the number of clusters to extract,
-#' [cluster_analysis()] to compute a cluster analysis and
-#' `performance::check_clusterstructure()` to check suitability of data for
+#' @seealso [`n_clusters()`] to determine the number of clusters to extract,
+#' [`cluster_analysis()`] to compute a cluster analysis and
+#' [`performance::check_clusterstructure()`] to check suitability of data for
 #' clustering.
 #'
 #' @examples
