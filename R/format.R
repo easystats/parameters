@@ -248,6 +248,14 @@ format.compare_parameters <- function(x,
   # locate random effects rows
   ran_pars <- which(x$Effects == "random")
 
+  # find all random effect groups
+  group_cols <- grepl("^Group\\.", colnames(x))
+  if (any(group_cols)) {
+    ran_groups <- unique(sapply(x[group_cols], insight::compact_character))
+  } else {
+    ran_groups <- NULL
+  }
+
   for (i in models) {
     # each column is suffixed with ".model_name", so we extract
     # columns for each model separately here
@@ -259,11 +267,11 @@ format.compare_parameters <- function(x,
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
-    if (!is.null(cols$Group) && length(ran_pars)) {
+    if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
       # find SD random parameters
       stddevs <- grepl("^SD \\(", out$Parameter[ran_pars])
       # check if we already fixed that name in a previous loop
-      fixed_name <- unlist(lapply(cols$Group[ran_pars[stddevs]], function(g) {
+      fixed_name <- unlist(lapply(ran_groups, function(g) {
         which(grepl(g, out$Parameter[ran_pars[stddevs]], fixed = TRUE))
       }))
       if (length(fixed_name)) {
@@ -281,7 +289,7 @@ format.compare_parameters <- function(x,
       # same for correlations
       corrs <- grepl("^Cor \\(", out$Parameter[ran_pars])
       # check if we already fixed that name in a previous loop
-      fixed_name <- unlist(lapply(cols$Group[ran_pars[corrs]], function(g) {
+      fixed_name <- unlist(lapply(ran_groups, function(g) {
         which(grepl(g, out$Parameter[ran_pars[corrs]], fixed = TRUE))
       }))
       if (length(fixed_name)) {
