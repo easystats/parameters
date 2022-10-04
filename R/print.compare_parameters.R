@@ -5,6 +5,7 @@ print.compare_parameters <- function(x,
                                      p_digits = 3,
                                      style = NULL,
                                      groups = NULL,
+                                     split_components = TRUE,
                                      ...) {
   # save original input
   orig_x <- x
@@ -28,7 +29,7 @@ print.compare_parameters <- function(x,
   formatted_table <- format(
     x,
     style,
-    split_components = TRUE,
+    split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
