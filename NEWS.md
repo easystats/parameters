@@ -1,3 +1,9 @@
+# parameters 0.19.1
+
+## Changes
+
+* Consolidation of vignettes on standardization of model parameters.
+
 # parameters 0.19.0
 
 ## Breaking
