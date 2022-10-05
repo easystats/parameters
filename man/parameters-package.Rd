@@ -22,7 +22,7 @@ robust standard errors and p-values. \strong{parameters} therefor offers a
 simple and unified syntax to process a large variety of (model) objects
 from many different packages.
 
-References: Lüdecke et al. (2020) \url{doi:10.21105/joss.02445}.
+References: Lüdecke et al. (2020) \doi{10.21105/joss.02445}
 }
 \seealso{
 Useful links:

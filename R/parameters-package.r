@@ -18,7 +18,7 @@
 #' simple and unified syntax to process a large variety of (model) objects
 #' from many different packages.
 #'
-#' References: Lüdecke et al. (2020) <doi:10.21105/joss.02445>.
+#' References: Lüdecke et al. (2020) \doi{10.21105/joss.02445}
 #'
 #' @docType package
 #' @aliases parameters-package
