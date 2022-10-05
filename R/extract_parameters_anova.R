@@ -212,7 +212,7 @@
     out <- data.frame(Parameter = rownames(ut), stringsAsFactors = FALSE)
     out <- cbind(out, as.data.frame(ut))
   } else {
-    out <- lapply(1:length(model$terms), function(i) {
+    out <- lapply(seq_along(model$terms), function(i) {
       if (model$repeated) {
         qr_value <- qr(model$SSPE[[i]])
       } else {
