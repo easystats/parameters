@@ -30,7 +30,7 @@ dof_ml1 <- function(model) {
   ddf[] <- ltab$ddf[ii]
 
   out <- numeric(length = length(parameters))
-  ## TODO number of items to replace is not a multiple of replacement length
+  ## FIXME: number of items to replace is not a multiple of replacement length
   suppressWarnings(out[which("(Intercept)" != parameters)] <- ddf[term_assignment])
   if (has_intcp) out[which("(Intercept)" == parameters)] <- min(ddf)
 
