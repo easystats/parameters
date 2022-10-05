@@ -373,9 +373,9 @@ parameters_type <- function(model, ...) {
   out$levels_parent <- NA
   for (fac in out$factor) {
     if ((fac %in% out$ordered && is.null(contrast_coding[[fac]])) || (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.poly"))) {
-      levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[1:length(unique(data[[fac]]))])
+      levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[seq_along(unique(data[[fac]]))])
     } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.SAS2", "contr.sum", "contr.bayes", "contr.helmert"))) {
-      levels <- paste0(fac, 1:length(unique(data[[fac]])))
+      levels <- paste0(fac, seq_along(unique(data[[fac]])))
     } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.treatment2"))) {
       levels <- paste0(fac, 2:length(unique(data[[fac]])))
     } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.SAS"))) {
