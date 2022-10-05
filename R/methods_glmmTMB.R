@@ -24,18 +24,9 @@ model_parameters.glmmTMB <- function(model,
                                      keep = NULL,
                                      drop = NULL,
                                      verbose = TRUE,
-                                     df_method = ci_method,
                                      include_sigma = FALSE,
                                      ...) {
   insight::check_if_installed("glmmTMB")
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message(
-      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
-    ), call. = FALSE)
-    ci_method <- df_method
-  }
 
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(

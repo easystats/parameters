@@ -228,14 +228,7 @@ model_parameters.cpglmm <- function(model,
                                     p_adjust = NULL,
                                     include_sigma = FALSE,
                                     verbose = TRUE,
-                                    df_method = ci_method,
                                     ...) {
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_warning("Argument 'df_method' is deprecated. Please use 'ci_method' instead.")
-    ci_method <- df_method
-  }
-
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
