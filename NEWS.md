@@ -1,3 +1,14 @@
+# parameters 0.19.1
+
+## Breaking
+
+* The deprecated argument `df_method` in `model_parameters()` is now defunct
+  and throws an error when used.
+
+* The deprecated functions `ci_robust()`, `p_robust()` and `standard_error_robust`
+  have been removed. These were superseded by the `vcov` argument in `ci()`,
+  `p_value()`, and `standard_error()`, respectively.
+
 # parameters 0.19.0
 
 ## Breaking
