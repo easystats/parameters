@@ -550,8 +550,7 @@ model_parameters.default <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_warning("Argument `df_method` is deprecated. Please use `ci_method` instead.")
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
 
@@ -658,8 +657,7 @@ model_parameters.glm <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_warning("Argument `df_method` is deprecated. Please use `ci_method` instead.")
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it
