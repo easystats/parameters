@@ -88,6 +88,11 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.19.1" id="parameters-0191">parameters 0.19.1<a class="anchor" aria-label="anchor" href="#parameters-0191"></a></h2>
 <div class="section level3">
+<h3 id="breaking-0-19-1">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-19-1"></a></h3>
+<ul><li><p>The deprecated argument <code>df_method</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> is now defunct and throws an error when used.</p></li>
+<li><p>The deprecated functions <code>ci_robust()</code>, <code>p_robust()</code> and <code>standard_error_robust</code> have been removed. These were superseded by the <code>vcov</code> argument in <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code>, and <code><a href="../reference/standard_error.html">standard_error()</a></code>, respectively.</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="changes-0-19-1">Changes<a class="anchor" aria-label="anchor" href="#changes-0-19-1"></a></h3>
 <ul><li>Consolidation of vignettes on standardization of model parameters.</li>
 </ul></div>
@@ -100,7 +105,7 @@
 <li><p>The attribute name in PCA / EFA has been changed from <code>data_set</code> to <code>dataset</code>.</p></li>
 <li><p>The minimum needed R version has been bumped to <code>3.6</code>.</p></li>
 <li><p>Removed deprecated argument <code>parameters</code> from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
-<li><p><code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code>, <code><a href="../reference/ci_robust.html">ci_robust()</a></code> and <code><a href="../reference/p_value_robust.html">p_value_robust()</a></code> are now deprecated and superseded by the <code>vcov</code> and <code>vcov_args</code> arguments in the related methods <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code>, respectively.</p></li>
+<li><p><code>standard_error_robust()</code>, <code>ci_robust()</code> and <code>p_value_robust()</code> are now deprecated and superseded by the <code>vcov</code> and <code>vcov_args</code> arguments in the related methods <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code>, respectively.</p></li>
 <li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_kmo.html" class="external-link">check_kmo()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
 </ul></div>
 <div class="section level3">
@@ -203,7 +208,7 @@
 <li>
 <p>Robust uncertainty estimates:</p>
 <ul><li>The <code>vcov_estimation</code>, <code>vcov_type</code>, and <code>robust</code> arguments are deprecated in these functions: <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, <code><a href="../reference/model_parameters.html">parameters()</a></code>, <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="../reference/p_value.html">p_value()</a></code>, and <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code>. They are replaced by the <code>vcov</code> and <code>vcov_args</code> arguments.</li>
-<li>The <code><a href="../reference/standard_error_robust.html">standard_error_robust()</a></code> and <code><a href="../reference/p_value_robust.html">p_value_robust()</a></code> functions are superseded by the <code>vcov</code> and <code>vcov_args</code> arguments of the <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> functions.</li>
+<li>The <code>standard_error_robust()</code> and <code>p_value_robust()</code> functions are superseded by the <code>vcov</code> and <code>vcov_args</code> arguments of the <code><a href="../reference/standard_error.html">standard_error()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code> functions.</li>
 <li>Vignette: <a href="https://easystats.github.io/parameters/articles/model_parameters_robust.html" class="uri">https://easystats.github.io/parameters/articles/model_parameters_robust.html</a>
 </li>
 </ul></li>

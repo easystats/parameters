@@ -70,9 +70,6 @@
     <loc>https://easystats.github.io/parameters/reference/ci.default.html</loc>
   </url>
   <url>
-    <loc>https://easystats.github.io/parameters/reference/ci_robust.html</loc>
-  </url>
-  <url>
     <loc>https://easystats.github.io/parameters/reference/cluster_analysis.html</loc>
   </url>
   <url>
@@ -232,9 +229,6 @@
     <loc>https://easystats.github.io/parameters/reference/p_value_ml1.html</loc>
   </url>
   <url>
-    <loc>https://easystats.github.io/parameters/reference/p_value_robust.html</loc>
-  </url>
-  <url>
     <loc>https://easystats.github.io/parameters/reference/p_value_satterthwaite.html</loc>
   </url>
   <url>
@@ -284,9 +278,6 @@
   </url>
   <url>
     <loc>https://easystats.github.io/parameters/reference/standard_error.html</loc>
-  </url>
-  <url>
-    <loc>https://easystats.github.io/parameters/reference/standard_error_robust.html</loc>
   </url>
   <url>
     <loc>https://easystats.github.io/parameters/reference/standardize_info.html</loc>
