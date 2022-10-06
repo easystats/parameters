@@ -84,8 +84,7 @@ compare_parameters <- function(...,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   if (length(models) == 1) {

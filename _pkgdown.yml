@@ -49,9 +49,6 @@ reference:
   - p_value.DirichletRegModel
   - degrees_of_freedom
   - n_parameters
-- subtitle: "Robust Estimation Methods"
-  contents:
-  - standard_error_robust
 - subtitle: "Approximation Methods"
   contents:
   - p_value_kenward

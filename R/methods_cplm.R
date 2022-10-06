@@ -232,8 +232,7 @@ model_parameters.cpglmm <- function(model,
                                     ...) {
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_warning("Argument 'df_method' is deprecated. Please use 'ci_method' instead.")
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # p-values, CI and se might be based on different df-methods
