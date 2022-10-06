@@ -114,6 +114,8 @@
 #' @family standardize
 #' @family effect size indices
 #'
+#' @seealso See also [package vignette](https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html).
+#'
 #' @examples
 #' model <- lm(len ~ supp * dose, data = ToothGrowth)
 #' standardize_parameters(model, method = "refit")
@@ -281,16 +283,15 @@ standardize_parameters.parameters_model <- function(model,
                                                     verbose = TRUE,
                                                     ...) {
   if (method == "refit") {
-    stop(
+    insight::format_error(
       "Argument `refit` not supported for standardizing results from `model_parameters()`.",
-      call. = FALSE
     )
   }
 
   if (!is.null(ci)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "Argument `ci` not supported for standardizing results from `model_parameters()`. It is ignored."
-    ), call. = FALSE)
+    )
   }
 
   pars <- model
@@ -352,7 +353,7 @@ standardize_parameters.bootstrap_model <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    stop("The `refit` method is not supported for bootstrapped models.", call. = FALSE)
+    insight::format_error("The `refit` method is not supported for bootstrapped models.")
     ## But it would look something like this:
     # model <- standardize(model, robust = robust, two_sd = two_sd, verbose = verbose, m_info = m_info)
     # model <- parameters::bootstrap_model(model, iterations = 1000, verbose = verbose)
@@ -520,7 +521,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    warning("`robust` standardization not available for `pseudo` method.", call. = FALSE)
+    insight::format_warning("`robust` standardization not available for `pseudo` method.")
     robust <- FALSE
   }
 
