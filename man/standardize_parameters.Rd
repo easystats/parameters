@@ -213,6 +213,8 @@ deviations. Statistics in medicine, 27(15), 2865-2873.
 }
 }
 \seealso{
+See also \href{https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html}{package vignette}.
+
 Other standardize: 
 \code{\link{standardize_info}()}
 }

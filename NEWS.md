@@ -9,6 +9,10 @@
   have been removed. These were superseded by the `vcov` argument in `ci()`,
   `p_value()`, and `standard_error()`, respectively.
 
+## Changes
+
+* Consolidation of vignettes on standardization of model parameters.
+
 # parameters 0.19.0
 
 ## Breaking

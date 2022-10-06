@@ -134,6 +134,8 @@ is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 within-group variable is found to have access between-group variance.
 }
+
+See also \href{https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html}{package vignette}.
 }
 
 \section{Labeling the Degrees of Freedom}{

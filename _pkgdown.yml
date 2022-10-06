@@ -119,7 +119,6 @@ articles:
     navbar: ~
     contents:
     - model_parameters
-    - model_parameters_standardized
     - standardize_parameters_effsize
     - model_parameters_robust
     - model_parameters_mice

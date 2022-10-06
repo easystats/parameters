@@ -31,7 +31,7 @@ All package vignettes are available at [https://easystats.github.io/parameters/]
 ## Description of Parameters
 
 * [Summary of Model Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
-* [Standardized Model Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+* [Parameter and Model Standardization](https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html)
 * [Robust Estimation of Standard Errors, Confidence Intervals, and p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
 * [Model Parameters for Multiply Imputed Repeated Analyses](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
 * [Analysing Longitudinal or Panel Data](https://easystats.github.io/parameters/articles/demean.html)
