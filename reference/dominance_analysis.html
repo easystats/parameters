@@ -106,7 +106,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
-<dd><p>A model object supported by <code><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">performance::r2()</a></code>. See 'Details'.</p></dd>
+<dd><p>A model object supported by <code><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">performance::r2()</a></code>. See 'Details'.</p></dd>
 
 
 <dt>sets</dt>
@@ -222,7 +222,7 @@ functions that accept data as a non-<code>data</code> argument
 function's values "is_bayesian", "is_mixed", "is_gam",
 is_multivariate", "is_zero_inflated",
 or "is_hurdle" are not supported at current.</p>
-<p>When <code><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">performance::r2()</a></code> returns multiple values, only the first is used
+<p>When <code><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">performance::r2()</a></code> returns multiple values, only the first is used
 by default.</p>
 <p>The underlying <code><a href="https://rdrr.io/pkg/domir/man/domin.html" class="external-link">domir::domin()</a></code> function that implements the dominance
 statistic and designation computations has only been tested to R version
@@ -259,7 +259,7 @@ regression based on variance decomposition. The American Statistician,
 <span class="r-in"><span>  <span class="co"># Dominance Analysis with Logit Regression</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">carb</span> <span class="op">+</span> <span class="va">mpg</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">r2</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">r2</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">dominance_analysis</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Dominance Analysis with Weighted Logit Regression</span></span></span>

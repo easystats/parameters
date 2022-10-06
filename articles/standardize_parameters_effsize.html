@@ -476,23 +476,6 @@ of x</em>”.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">mod_b</span>, method <span class="op">=</span> <span class="st">"refit"</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="cohens-f">Cohen’s <em>f</em><a class="anchor" aria-label="anchor" href="#cohens-f"></a>
-</h3>
-<p>Cohen’s <span class="math inline">\(f\)</span> (of <a href="https://easystats.github.io/effectsize/articles/anovaES.html" class="external-link">ANOVA
-fame</a>) can be used as a measure of effect size in the context of
-sequential multiple regression (i.e., <a href="https://easystats.github.io/performance/reference/test_performance.html" class="external-link"><strong>nested
-models</strong></a>). That is, when comparing two models, we can examine
-the ratio between the increase in <span class="math inline">\(R^2\)</span> and the unexplained variance:</p>
-<p><span class="math display">\[
-f^{2}={R_{AB}^{2}-R_{A}^{2} \over 1-R_{AB}^{2}}
-\]</span></p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">salary</span> <span class="op">~</span> <span class="va">xtra_hours</span>, data <span class="op">=</span> <span class="va">hardlyworking</span><span class="op">)</span></span>
-<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">salary</span> <span class="op">~</span> <span class="va">xtra_hours</span> <span class="op">+</span> <span class="va">n_comps</span> <span class="op">+</span> <span class="va">seniority</span>, data <span class="op">=</span> <span class="va">hardlyworking</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/eta_squared.html" class="external-link">cohens_f_squared</a></span><span class="op">(</span><span class="va">m1</span>, model2 <span class="op">=</span> <span class="va">m2</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

@@ -174,10 +174,10 @@ error terms - which, in turn, results in biased estimates, because both
 the within- <em>and</em> between-effect are captured in <em>one</em>
 estimate.</p>
 <p>You can check if your model may suffer from heterogeneity bias using
-the <code><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html" class="external-link">check_heterogeneity_bias()</a></code> function:</p>
+the <code><a href="https://rdrr.io/pkg/performance/man/check_heterogeneity_bias.html" class="external-link">check_heterogeneity_bias()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_heterogeneity_bias.html" class="external-link">check_heterogeneity_bias</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"education"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_heterogeneity_bias.html" class="external-link">check_heterogeneity_bias</a></span><span class="op">(</span><span class="va">qol_cancer</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phq4"</span>, <span class="st">"education"</span><span class="op">)</span>, group <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Possible heterogeneity bias due to following predictors: phq4</span></span></code></pre></div>
 </div>
 <div class="section level2">
