@@ -193,6 +193,12 @@ model_parameters.BFBayesFactor <- function(model,
 
   out <- datawizard::remove_empty(out)
 
+  # sanity check: make sure BF column still exists,
+  # see https://github.com/easystats/correlation/issues/269
+  if (is.null(out$BF)) {
+    out$BF <- NA
+  }
+
 
   # ==== pretty parameter names
 
