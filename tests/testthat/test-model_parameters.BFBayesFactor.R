@@ -11,6 +11,28 @@ if (requiet("testthat") &&
   #   })
   # }
 
+
+  # make sure BF is returned, even if NA
+  # see https://github.com/easystats/correlation/issues/269
+  test_that("model_parameters.BFBayesFactor", {
+    var_x <- c(
+      12.1, 8.7, 10.1, 17.4, 12.5, 2.7, 6.2, 19.4, 11, 14.5, 15.8,
+      10.4, 13.5, 3.5, 5.6, 5.2, 6.3, 12.5, 9.8
+    )
+    var_y <- c(
+      11.9, 15.3, 13.9, 6.6, 11.5, 21.35, 17.8, 4.6, 13, 9.5, 8.2,
+      13.6, 10.5, 20.5, 18.45, 18.8, 17.7, 11.5, 14.2
+    )
+    expect_warning(model <- BayesFactor::correlationBF(var_x, var_y, rscale = "medium"))
+    params <- parameters::model_parameters(model)
+    expect_equal(
+      colnames(params),
+      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Prior_Distribution",
+      "Prior_Location", "Prior_Scale", "BF", "Method")
+    )
+    expect_true(is.na(params$BF))
+  })
+
   test_that("model_parameters.BFBayesFactor", {
     model <- BayesFactor::correlationBF(iris$Sepal.Width, iris$Petal.Length)
     expect_equal(parameters::model_parameters(model)$BF, 348853.6, tolerance = 10)
