@@ -13,6 +13,11 @@
 
 * Consolidation of vignettes on standardization of model parameters.
 
+## Bug fix
+
+* `model_parameters().BFBayesFactor` no longer drops the `BF` column if the
+  Bayes factor is `NA`.
+
 # parameters 0.19.0
 
 ## Breaking
