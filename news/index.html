@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.4</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,8 +98,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fix-0-19-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-0-19-1"></a></h3>
-<ul><li>
-<code>model_parameters().BFBayesFactor</code> no longer drops the <code>BF</code> column if the Bayes factor is <code>NA</code>.</li>
+<ul><li><p><code>model_parameters().BFBayesFactor</code> no longer drops the <code>BF</code> column if the Bayes factor is <code>NA</code>.</p></li>
+<li><p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> from Bayesian models now pass the <code>...</code> to <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">insight::format_table()</a></code>, allowing extra arguments to be recognized.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
