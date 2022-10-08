@@ -18,6 +18,10 @@
 * `model_parameters().BFBayesFactor` no longer drops the `BF` column if the
   Bayes factor is `NA`.
 
+* The `print()` and `display()` methods for `model_parameters()` from Bayesian
+  models now pass the `...` to `insight::format_table()`, allowing extra
+  arguments to be recognized.
+
 # parameters 0.19.0
 
 ## Breaking
