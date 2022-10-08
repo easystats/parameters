@@ -445,7 +445,8 @@ format.parameters_stan <- function(x,
         digits = digits,
         ci_digits = ci_digits,
         p_digits = p_digits,
-        preserve_attributes = TRUE
+        preserve_attributes = TRUE,
+        ...
       )
       param_table$Group <- NULL
       param_table$Response <- NULL
