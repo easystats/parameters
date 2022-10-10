@@ -70,14 +70,14 @@ model_parameters.emmGrid <- function(model,
   if (!is.null(statistic)) {
     names(params) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(params))
   }
-  names(params) <- gsub("Std. Error", "SE", names(params))
-  names(params) <- gsub(estName <- attr(s, "estName"), "Estimate", names(params))
-  names(params) <- gsub("lower.CL", "CI_low", names(params))
-  names(params) <- gsub("upper.CL", "CI_high", names(params))
-  names(params) <- gsub("asymp.LCL", "CI_low", names(params))
-  names(params) <- gsub("asymp.UCL", "CI_high", names(params))
-  names(params) <- gsub("lower.HPD", "CI_low", names(params))
-  names(params) <- gsub("upper.HPD", "CI_high", names(params))
+  names(params) <- gsub("Std. Error", "SE", names(params), fixed = TRUE)
+  names(params) <- gsub(estName <- attr(s, "estName"), "Estimate", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.CL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.CL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.LCL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.UCL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.HPD", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.HPD", "CI_high", names(params), fixed = TRUE)
 
   # check if we have CIs
   if (!any(startsWith(colnames(params), "CI_"))) {
@@ -108,7 +108,7 @@ model_parameters.emmGrid <- function(model,
   params <- params[order[order %in% names(params)]]
 
   # rename
-  names(params) <- gsub("Estimate", "Coefficient", names(params))
+  names(params) <- gsub("Estimate", "Coefficient", names(params), fixed = TRUE)
 
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)

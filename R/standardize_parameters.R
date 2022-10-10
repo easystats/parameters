@@ -230,7 +230,7 @@ standardize_parameters.default <- function(model,
   pars <- pars[, colnm[colnm %in% colnames(pars)]]
 
   if (!is.null(coefficient_name) && coefficient_name %in% c("Odds Ratio", "Risk Ratio", "IRR", "Prevalence Ratio")) {
-    colnames(pars)[colnames(pars) == "Coefficient"] <- gsub(" ", "_", coefficient_name)
+    colnames(pars)[colnames(pars) == "Coefficient"] <- gsub(" ", "_", coefficient_name, fixed = TRUE)
   }
 
   i <- colnames(pars) %in% c("Coefficient", "Median", "Mean", "MAP", "Odds_Ratio", "Risk_Ratio", "IRR", "Prevalence_Ratio")

@@ -62,10 +62,10 @@ reshape_loadings.data.frame <- function(x, threshold = NULL, loadings_columns = 
     idvar = variable_column,
     timevar = component_column,
     direction = "wide",
-    v.names = c(loadings_columns),
+    v.names = loadings_columns,
     sep = "_"
   )
-  names(loadings) <- gsub(paste0(loadings_columns, "_"), "", names(loadings))
+  names(loadings) <- gsub(paste0(loadings_columns, "_"), "", names(loadings), fixed = TRUE)
   attr(loadings, "loadings_format") <- "wide"
   class(loadings) <- unique(c("parameters_loadings", class(loadings)))
 
