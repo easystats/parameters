@@ -221,12 +221,12 @@
   if ("Statistic" %in% names(parameters)) {
     stat_type <- attr(statistic, "statistic", exact = TRUE)
     if (!is.null(stat_type)) {
-      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters))
-      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters))
+      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters), fixed = TRUE)
+      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters), fixed = TRUE)
     }
   }
   names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
 
 
   # ==== add intercept groups for ordinal models
@@ -596,11 +596,11 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
-  names(parameters) <- gsub("Std. Error", "SE", names(parameters))
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
-  names(parameters) <- gsub("t value", "t", names(parameters))
-  names(parameters) <- gsub("z value", "z", names(parameters))
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Std. Error", "SE", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("t value", "t", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("z value", "z", names(parameters), fixed = TRUE)
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {

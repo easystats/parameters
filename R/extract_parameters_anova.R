@@ -181,15 +181,15 @@
 
   # Special catch for car::linearHypothesis
   m_attr <- attributes(model)
-  if (!is.null(m_attr$value) && isTRUE(grepl("^Linear hypothesis", m_attr$heading[[1]]))) {
+  if (!is.null(m_attr$value) && isTRUE(startsWith(m_attr$heading[[1]], "Linear hypothesis"))) {
     # Drop unrestricted model (not interesting in linear hypothesis tests)
     # Use formula to subset if available (e.g. with car::linearHypothesis)
     if (length(grep("Model", m_attr$heading)) != 0) {
-      idx <- sub(".*: ", "", strsplit(m_attr$heading[grep("Model", m_attr$heading)], "\n")[[1]])
+      idx <- sub(".*: ", "", strsplit(m_attr$heading[grep("Model", m_attr$heading, fixed = TRUE)], "\n")[[1]])
       idx <- idx != "restricted model"
       parameters <- parameters[idx, , drop = FALSE]
     }
-    hypothesis <- m_attr$heading[grep("=", m_attr$heading)]
+    hypothesis <- m_attr$heading[grep("=", m_attr$heading, fixed = TRUE)]
     parameters_xtra <- data.frame(
       Parameter = hypothesis,
       Coefficient = m_attr$value,
@@ -197,7 +197,7 @@
     )
     row.names(parameters_xtra) <- row.names(parameters) <- NULL
     parameters <- cbind(parameters_xtra, parameters)
-    parameters$Parameter <- gsub("  ", " ", parameters$Parameter) ## Annoying extra space sometimes
+    parameters$Parameter <- gsub("  ", " ", parameters$Parameter, fixed = TRUE) ## Annoying extra space sometimes
   }
 
   parameters

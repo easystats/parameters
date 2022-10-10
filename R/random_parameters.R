@@ -140,10 +140,10 @@ random_parameters <- function(model, component = "conditional") {
   # Additional information
   out$Component <- ""
   out$Component[out$Description == "Sigma2"] <- "sigma2"
-  out$Component[grepl("^tau00_", out$Description)] <- "tau00"
-  out$Component[grepl("^tau11_", out$Description)] <- "tau11"
-  out$Component[grepl("^rho01_", out$Description)] <- "rho01"
-  out$Component[grepl("^rho00_", out$Description)] <- "rho00"
+  out$Component[startsWith(out$Description, "tau00_")] <- "tau00"
+  out$Component[startsWith(out$Description, "tau11_")] <- "tau11"
+  out$Component[startsWith(out$Description, "rho01_")] <- "rho01"
+  out$Component[startsWith(out$Description, "rho00_")] <- "rho00"
 
   # Additional information
   out$Term <- ""
@@ -160,23 +160,23 @@ random_parameters <- function(model, component = "conditional") {
   out$Description[out$Description == "Sigma2"] <- "Within-Group Variance"
 
   # Between-Group Variance
-  out$Type[grepl("^tau00_", out$Description)] <- "Random Intercept"
+  out$Type[startsWith(out$Description, "tau00_")] <- "Random Intercept"
   out$Description <- gsub("^tau00_(.*)", "Between-Group Variance", out$Description)
-  out$Type[grepl("^tau11_", out$Description)] <- "Random Slope"
+  out$Type[startsWith(out$Description, "tau11_")] <- "Random Slope"
   out$Description <- gsub("^tau11_(.*)", "Between-Group Variance", out$Description)
 
   # correlations
-  out$Type[grepl("^rho01_", out$Description)] <- ""
+  out$Type[startsWith(out$Description, "rho01_")] <- ""
   out$Description <- gsub("^rho01_(.*)", "Correlations", out$Description)
-  out$Type[grepl("^rho00_", out$Description)] <- ""
+  out$Type[startsWith(out$Description, "rho00_")] <- ""
   out$Description <- gsub("^rho00_(.*)", "Correlations", out$Description)
 
   out$Type[grepl("N_(.*)", out$Description)] <- ""
   out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
   out$Description <- gsub("_(.*)", "", out$Description)
 
-  out$Type[grepl("^X", out$Description)] <- ""
-  out$Description[grepl("^X", out$Description)] <- NA
+  out$Type[startsWith(out$Description, "X")] <- ""
+  out$Description[startsWith(out$Description, "X")] <- NA
   out$Component[out$Component == ""] <- NA
   out$Term[out$Term == ""] <- NA
 

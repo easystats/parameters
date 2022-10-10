@@ -72,7 +72,7 @@ model_parameters.BFBayesFactor <- function(model,
   if (!is.null(cramers_v)) effectsize_type <- "cramers_v"
   if (!is.null(cohens_d)) effectsize_type <- "cohens_d"
 
-  if (any(grepl("^Null", names(model@numerator)))) {
+  if (any(startsWith(names(model@numerator), "Null"))) {
     if (isTRUE(verbose)) {
       insight::print_color("Nothing to compute for point-null models.\nSee github.com/easystats/parameters/issues/226\n", "red")
     }
@@ -81,7 +81,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   if (is.null(insight::get_parameters(model, verbose = verbose))) {
     if (isTRUE(verbose)) {
-      warning("Can't extract model parameters.", call. = FALSE)
+      insight::format_warning("Can't extract model parameters.")
     }
     return(NULL)
   }
@@ -131,7 +131,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   # leave out redundant posterior cell proportions/counts
   if (bf_type == "xtable" && isFALSE(include_proportions)) {
-    out <- out[which(!grepl("^cell\\[", out$Parameter)), , drop = FALSE]
+    out <- out[which(!startsWith(out$Parameter, "cell[")), , drop = FALSE]
   }
 
   # Effect size?
@@ -159,7 +159,7 @@ model_parameters.BFBayesFactor <- function(model,
           } else {
             prefix <- "d_"
           }
-          ci_cols <- grepl("^CI_", colnames(effsize))
+          ci_cols <- startsWith(colnames(effsize), "CI_")
           colnames(effsize)[ci_cols] <- paste0(prefix, colnames(effsize)[ci_cols])
           out$CI <- NULL
           out <- cbind(out, effsize)

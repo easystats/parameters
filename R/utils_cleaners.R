@@ -72,5 +72,5 @@
 
 #' @keywords internal
 .in_intercepts <- function(x) {
-  tolower(x) %in% .intercepts() | grepl("^intercept", tolower(x))
+  tolower(x) %in% .intercepts() | startsWith(tolower(x), "intercept")
 }

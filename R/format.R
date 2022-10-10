@@ -79,14 +79,14 @@ format.parameters_model <- function(x,
   if (isTRUE(random_variances)) {
     if (!is.null(x$Group) && !is.null(x$Effects)) {
       ran_pars <- which(x$Effects == "random")
-      stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
+      stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
       x$Parameter[ran_pars[stddevs]] <- paste0(
         gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
         ": ",
         x$Group[ran_pars[stddevs]],
         ")"
       )
-      corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
+      corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
       x$Parameter[ran_pars[corrs]] <- paste0(
         gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
         ": ",
@@ -249,7 +249,7 @@ format.compare_parameters <- function(x,
   ran_pars <- which(x$Effects == "random")
 
   # find all random effect groups
-  group_cols <- grepl("^Group\\.", colnames(x))
+  group_cols <- startsWith(colnames(x), "Group.")
   if (any(group_cols)) {
     ran_groups <- unique(unlist(lapply(x[group_cols], insight::compact_character)))
   } else {
@@ -272,7 +272,7 @@ format.compare_parameters <- function(x,
       # make sure we have only valid rows for this particular model
       ran_pars_rows <- ran_pars[ran_pars %in% which(nchar(cols$Group) > 0)]
       # find SD random parameters
-      stddevs <- grepl("^SD \\(", out$Parameter[ran_pars_rows])
+      stddevs <- startsWith(out$Parameter[ran_pars_rows], "SD (")
       # check if we already fixed that name in a previous loop
       fixed_name <- unlist(lapply(ran_groups, function(g) {
         which(grepl(g, out$Parameter[ran_pars_rows[stddevs]], fixed = TRUE))
@@ -290,7 +290,7 @@ format.compare_parameters <- function(x,
         )
       }
       # same for correlations
-      corrs <- grepl("^Cor \\(", out$Parameter[ran_pars_rows])
+      corrs <- startsWith(out$Parameter[ran_pars_rows], "Cor (")
       # check if we already fixed that name in a previous loop
       fixed_name <- unlist(lapply(ran_groups, function(g) {
         which(grepl(g, out$Parameter[ran_pars_rows[corrs]], fixed = TRUE))

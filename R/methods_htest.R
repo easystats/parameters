@@ -364,7 +364,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
     colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
   } else {
-    paired_test <- grepl("^Paired", model$method) && length(model$estimate) == 1
+    paired_test <- startsWith(model$method, "Paired") && length(model$estimate) == 1
     if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
       names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
       out <- data.frame(
@@ -479,7 +479,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
   if ((any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
-    any(grepl("^svychisq", model$data.name))) {
+    any(startsWith(model$data.name, "svychisq"))) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }
@@ -638,7 +638,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   )
 
   es$CI <- NULL
-  ci_cols <- grepl("^CI", names(es))
+  ci_cols <- startsWith(names(es), "CI")
   es_ci_cols <- paste0(prefix, names(es)[ci_cols])
   names(es)[ci_cols] <- es_ci_cols
   out <- cbind(out, es)

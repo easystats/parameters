@@ -217,7 +217,7 @@ compare_parameters <- function(...,
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of
   # all model-column indices, which then indicates order of parameters/rows.
-  model_cols <- which(grepl("^model", colnames(all_models)))
+  model_cols <- which(startsWith(colnames(all_models), "model"))
   params_order <- as.numeric(substr(gsub("NA", "", do.call(paste0, all_models[model_cols]), fixed = TRUE), 0, 1))
 
   all_models <- all_models[order(params_order), ]

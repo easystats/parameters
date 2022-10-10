@@ -276,7 +276,7 @@
       component_name <- paste0("Random Effects (Zero-Inflation Component): ", component_name)
     }
   }
-  if (grepl("^random\\.(.*)", component_name)) {
+  if (startsWith(component_name, "random.")) {
     component_name <- paste0("Random Effects: ", gsub("^random\\.", "", component_name))
   }
 
@@ -293,7 +293,7 @@
     s1 <- gsub("(.*)\\.(.*) = (.*)", "\\1 (\\2 = \\3)", component_name)
     s2 <- ""
   } else if ("DirichletRegModel" %in% attributes(x)$model_class) {
-    if (grepl("^conditional\\.", component_name) || split_column == "Response") {
+    if (startsWith(component_name, "conditional.") || split_column == "Response") {
       s1 <- "Response level:"
       s2 <- gsub("^conditional\\.(.*)", "\\1", component_name)
     } else {
@@ -631,8 +631,8 @@
   # to prevent this, we "fake" the name of the splitted components by
   # prefixing them with "random."
 
-  if (!is.null(x$Effects) && all(x$Effects == "random") && !all(grepl("^random\\.", names(tables)))) {
-    wrong_names <- !grepl("^random\\.", names(tables))
+  if (!is.null(x$Effects) && all(x$Effects == "random") && !all(startsWith(names(tables), "random."))) {
+    wrong_names <- !startsWith(names(tables), "random.")
     names(tables)[wrong_names] <- paste0("random.", names(tables)[wrong_names])
   }
 
@@ -704,7 +704,7 @@
     }
 
     # rename columns for zero-inflation part
-    if (grepl("^zero", type) && !is.null(zi_coef_name) && !is.null(coef_column)) {
+    if (startsWith(type, "zero") && !is.null(zi_coef_name) && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
@@ -715,7 +715,7 @@
     }
 
     # rename columns for dispersion part
-    if (grepl("^dispersion", type) && !is.null(coef_column)) {
+    if (startsWith(type, "dispersion") && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Coefficient"
     }
 

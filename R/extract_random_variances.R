@@ -213,7 +213,7 @@
   out[ci_cols] <- NA
 
   # variances to SD (sqrt), except correlations and Sigma
-  corr_param <- grepl("^Cor (.*)", out$Parameter)
+  corr_param <- startsWith(out$Parameter, "Cor ")
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
@@ -305,7 +305,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 .random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
-  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+  if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
   }
 
@@ -352,7 +352,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           rn <- gsub("[\\(\\)]", "", rn)
           rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
 
-          var_ci_corr_param <- grepl("^cor ", rn)
+          var_ci_corr_param <- startsWith(rn, "cor ")
           var_ci_sigma_param <- rn == "sigma"
 
           out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
@@ -461,7 +461,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out$.sort_id <- NULL
 
             # ensure correlation CI are within -1/1 bounds
-            var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
+            var_ci_corr_param <- startsWith(out$Parameter, "Cor ")
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
@@ -532,7 +532,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         var_ci$Parameter <- row.names(var_ci)
 
         if (utils::packageVersion("glmmTMB") > "1.1.3") {
-          var_ci$Component[grepl("^zi\\.", var_ci$Parameter)] <- "zi"
+          var_ci$Component[startsWith(var_ci$Parameter, "zi.")] <- "zi"
           # remove cond/zi prefix
           var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
           # copy RE group
@@ -677,14 +677,14 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     vc1 <- vc2 <- NULL
     re_names <- insight::find_random(model)
 
-    vc_cond <- !grepl("^zi_", colnames(model$D))
+    vc_cond <- !startsWith(colnames(model$D), "zi_")
     if (any(vc_cond)) {
       vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
       attr(vc1, "stddev") <- sqrt(diag(vc1))
       attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
     }
 
-    vc_zi <- grepl("^zi_", colnames(model$D))
+    vc_zi <- startsWith(colnames(model$D), "zi_")
     if (any(vc_zi)) {
       colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
       rownames(model$D) <- colnames(model$D)
