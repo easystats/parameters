@@ -479,7 +479,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_chi2 <- function(model) {
   # survey-chisq-test
   if ((any("observed" %in% names(model)) && inherits(model$observed, "svytable")) ||
-    any(grepl("^svychisq", model$data.name))) {
+    any(startsWith(model$data.name, "svychisq"))) {
     if (grepl("Pearson's X", model$method, fixed = TRUE)) {
       model$method <- gsub("(Pearson's X\\^2: )(.*)", "Pearson's Chi2 \\(\\2\\)", model$method)
     }
@@ -638,7 +638,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   )
 
   es$CI <- NULL
-  ci_cols <- grepl("^CI", names(es))
+  ci_cols <- startsWith(names(es), "CI")
   es_ci_cols <- paste0(prefix, names(es)[ci_cols])
   names(es)[ci_cols] <- es_ci_cols
   out <- cbind(out, es)

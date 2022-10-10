@@ -80,7 +80,7 @@ model_parameters.emmGrid <- function(model,
   names(params) <- gsub("upper.HPD", "CI_high", names(params))
 
   # check if we have CIs
-  if (!any(grepl("^CI_", colnames(params)))) {
+  if (!any(startsWith(colnames(params), "CI_"))) {
     df_column <- grep("(df|df_error)", colnames(params))
     if (length(df_column) > 0) {
       df <- params[[df_column[1]]]

@@ -532,7 +532,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         var_ci$Parameter <- row.names(var_ci)
 
         if (utils::packageVersion("glmmTMB") > "1.1.3") {
-          var_ci$Component[grepl("^zi\\.", var_ci$Parameter)] <- "zi"
+          var_ci$Component[startsWith(var_ci$Parameter, "zi.")] <- "zi"
           # remove cond/zi prefix
           var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
           # copy RE group
@@ -677,14 +677,14 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     vc1 <- vc2 <- NULL
     re_names <- insight::find_random(model)
 
-    vc_cond <- !grepl("^zi_", colnames(model$D))
+    vc_cond <- !startsWith(colnames(model$D), "zi_")
     if (any(vc_cond)) {
       vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
       attr(vc1, "stddev") <- sqrt(diag(vc1))
       attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
     }
 
-    vc_zi <- grepl("^zi_", colnames(model$D))
+    vc_zi <- startsWith(colnames(model$D), "zi_")
     if (any(vc_zi)) {
       colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
       rownames(model$D) <- colnames(model$D)
