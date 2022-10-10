@@ -364,7 +364,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
     colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
   } else {
-    paired_test <- grepl("^Paired", model$method) && length(model$estimate) == 1
+    paired_test <- startsWith(model$method, "Paired") && length(model$estimate) == 1
     if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
       names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
       out <- data.frame(

@@ -213,7 +213,7 @@
   out[ci_cols] <- NA
 
   # variances to SD (sqrt), except correlations and Sigma
-  corr_param <- grepl("^Cor (.*)", out$Parameter)
+  corr_param <- startsWith(out$Parameter, "Cor ")
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
@@ -305,7 +305,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 .random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
-  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+  if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
   }
 
@@ -352,7 +352,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           rn <- gsub("[\\(\\)]", "", rn)
           rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
 
-          var_ci_corr_param <- grepl("^cor ", rn)
+          var_ci_corr_param <- startsWith(rn, "cor ")
           var_ci_sigma_param <- rn == "sigma"
 
           out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
@@ -461,7 +461,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out$.sort_id <- NULL
 
             # ensure correlation CI are within -1/1 bounds
-            var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
+            var_ci_corr_param <- startsWith(out$Parameter, "Cor ")
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)

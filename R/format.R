@@ -79,14 +79,14 @@ format.parameters_model <- function(x,
   if (isTRUE(random_variances)) {
     if (!is.null(x$Group) && !is.null(x$Effects)) {
       ran_pars <- which(x$Effects == "random")
-      stddevs <- grepl("^SD \\(", x$Parameter[ran_pars])
+      stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
       x$Parameter[ran_pars[stddevs]] <- paste0(
         gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
         ": ",
         x$Group[ran_pars[stddevs]],
         ")"
       )
-      corrs <- grepl("^Cor \\(", x$Parameter[ran_pars])
+      corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
       x$Parameter[ran_pars[corrs]] <- paste0(
         gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
         ": ",
