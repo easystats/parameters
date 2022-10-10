@@ -594,7 +594,7 @@ print.n_clusters <- print.n_factors
   stats <- vss$vss.stats
   stats$map <- vss$map
   stats$n_Factors <- seq_len(nrow(stats))
-  names(stats) <- gsub("cfit.", "VSS_Complexity_", names(stats), fixed = TRUE)
+  names(stats) <- gsub("cfit.", "VSS_Complexity_", names(stats))
 
   # Indices
   vss_1 <- which.max(stats$VSS_Complexity_1)
