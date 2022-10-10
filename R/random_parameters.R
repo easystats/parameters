@@ -176,7 +176,7 @@ random_parameters <- function(model, component = "conditional") {
   out$Description <- gsub("_(.*)", "", out$Description)
 
   out$Type[startsWith(out$Description, "X")] <- ""
-  out$Description[startsWith(out$Description), "X"] <- NA
+  out$Description[startsWith(out$Description, "X")] <- NA
   out$Component[out$Component == ""] <- NA
   out$Term[out$Term == ""] <- NA
 
