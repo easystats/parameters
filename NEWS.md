@@ -13,6 +13,8 @@
 
 * Consolidation of vignettes on standardization of model parameters.
 
+* Minor speed improvements.
+
 ## Bug fix
 
 * `model_parameters().BFBayesFactor` no longer drops the `BF` column if the
