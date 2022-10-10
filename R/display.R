@@ -92,8 +92,6 @@ display.parameters_simulate <- display.parameters_model
 #' @export
 display.parameters_brms_meta <- display.parameters_model
 
-#' @export
-display.report_table <- display.parameters_model
 
 
 
