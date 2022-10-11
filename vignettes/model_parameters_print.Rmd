@@ -230,6 +230,24 @@ By default, estimates and confidence intervals are shown. Using `style` allows u
 compare_parameters(lm1, lm2, lm3, style = "se_p")
 ```
 
+The `style` argument also has a basic support of glue-like syntax, which lets you layout model elements in a very flexible way. Following tokens are replaced by the related summary coefficients or statistics:
+
+- `{estimate}` (or `{coefficient}` or `{coef}`): coefficient
+- `{se}` (or `{std.error}` or `{standard error}`): standard error
+- `{ci_low}` and `{ci_high}`: lower/upper confidence interval limits
+- `{p}` (or `{pval}` or `{p.value}`): p-values
+- `{stars}`: significant stars for p-values
+
+Note that you have to add parentheses manually, e.g. around confidence intervals.
+
+```{r}
+# estimates, p-stars and standard error in parentheses
+compare_parameters(lm1, lm2, lm3, style = "{estimate}{stars} ({se})")
+
+# estimates, CI, p and stars
+compare_parameters(lm1, lm2, lm3, style = "{estimate} ({ci_low}, {ci_high}), p {p}{stars}")
+```
+
 ## Defining column names
 
 The column names for the models are by default the objects' names. You can define own names using the `column_names` argument.

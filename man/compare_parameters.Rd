@@ -107,6 +107,9 @@ templates are possible:
 \item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
 \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
 \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+\item glue-like syntax: Following tokens are replaced by the related coefficients
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci_low}} and \code{{ci_high}}, \code{{p}}
+and \code{{stars}} See 'Examples'.
 }}
 
 \item{column_names}{Character vector with strings that should be used as
@@ -165,6 +168,9 @@ data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 compare_parameters(lm1, lm2)
+
+# custom style
+compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
 
 data(mtcars)
 m1 <- lm(mpg ~ wt, data = mtcars)

@@ -16,6 +16,10 @@
   `options(parameters_select = <value>)` or the argument `interaction_mark` to
   use a different character as interaction mark.
 
+* The `style` argument in `compare_parameters()`, which is used to control the
+  table column elements, now supports an experimental glue-like syntax.
+  See this vignette _Printing Model Parameters_.
+
 * Consolidation of vignettes on standardization of model parameters.
 
 * Minor speed improvements.
