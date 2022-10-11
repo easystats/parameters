@@ -12,7 +12,7 @@ to make them more human-readable."><meta property="og:image" content="https://ea
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,7 +151,7 @@ of the <code><a href="print.parameters_model.html">print()</a></code> method for
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Speciesvirginica                          Sepal.Width </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                "Species [virginica]"                        "Sepal Width" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Speciesversicolor:Sepal.Width         Speciesvirginica:Sepal.Width </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "Species [versicolor] * Sepal Width"  "Species [virginica] * Sepal Width" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "Species [versicolor] × Sepal Width"  "Species [virginica] × Sepal Width" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Species</span> <span class="op">/</span> <span class="va">Sepal.Width</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">format_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
@@ -160,9 +160,9 @@ of the <code><a href="print.parameters_model.html">print()</a></code> method for
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Speciesversicolor                     Speciesvirginica </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               "Species [versicolor]"                "Species [virginica]" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Speciessetosa:Sepal.Width        Speciesversicolor:Sepal.Width </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     "Species [setosa] * Sepal Width" "Species [versicolor] * Sepal Width" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "Species [setosa] × Sepal Width" "Species [versicolor] × Sepal Width" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Speciesvirginica:Sepal.Width </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  "Species [virginica] * Sepal Width" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  "Species [virginica] × Sepal Width" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Sepal.Width</span>, <span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">format_parameters</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
