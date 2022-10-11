@@ -331,14 +331,13 @@
   attr(params, "model_class") <- class(model)
   cp <- insight::clean_parameters(model)
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
-  attr(params, "cleaned_parameters") <- stats::setNames(
+
+  named_clean_params <- stats::setNames(
     clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)],
     params$Parameter
   )
-  attr(params, "pretty_names") <- stats::setNames(
-    clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)],
-    params$Parameter
-  )
+  attr(params, "cleaned_parameters") <- named_clean_params
+  attr(params, "pretty_names") <- named_clean_params
 
   params
 }
