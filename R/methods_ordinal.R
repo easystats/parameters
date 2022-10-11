@@ -35,7 +35,7 @@ model_parameters.clm2 <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 
@@ -133,7 +133,7 @@ simulate_model.clm2 <- function(model,
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 

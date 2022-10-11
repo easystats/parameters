@@ -129,7 +129,7 @@ model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
   rownames(parameters) <- NULL
 
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(parameters, "object_name") <- insight::safe_deparse_substitute(model)
   parameters
 }
 

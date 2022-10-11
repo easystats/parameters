@@ -190,7 +190,7 @@ standardize_parameters.default <- function(model,
   # check for valid input
   .is_model_valid(model)
 
-  object_name <- insight::safe_deparse(substitute(model))
+  object_name <- insight::safe_deparse_substitute(model)
   method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
 
   m_info <- .get_model_info(model, ...)
@@ -343,7 +343,7 @@ standardize_parameters.bootstrap_model <- function(model,
                                                    include_response = TRUE,
                                                    verbose = TRUE,
                                                    ...) {
-  object_name <- insight::safe_deparse(substitute(model))
+  object_name <- insight::safe_deparse_substitute(model)
   method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
 
   pars <- model

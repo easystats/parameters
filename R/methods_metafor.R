@@ -147,7 +147,7 @@ model_parameters.rma <- function(model,
 
   # no df
   out$df_error <- NULL
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   attr(out, "measure") <- model$measure
 
   if (!"Method" %in% names(out)) {

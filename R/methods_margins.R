@@ -46,7 +46,7 @@ model_parameters.margins <- function(model, ci = 0.95, exponentiate = FALSE, p_a
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

@@ -23,7 +23,7 @@ model_parameters.marginaleffects <- function(model,
     error = function(e) out
   )
 
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
 
   if (inherits(model, "marginalmeans")) {
     attr(out, "coefficient_name") <- "Marginal Means"
@@ -79,7 +79,7 @@ model_parameters.predictions <- function(model,
     error = function(e) out
   )
 
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   attr(out, "coefficient_name") <- "Predicted"
   attr(out, "no_caption") <- TRUE
 

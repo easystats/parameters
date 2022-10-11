@@ -15,7 +15,7 @@ model_parameters.bfsl <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 

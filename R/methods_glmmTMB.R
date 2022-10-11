@@ -249,7 +249,7 @@ model_parameters.glmmTMB <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -455,7 +455,7 @@ simulate_model.glmmTMB <- function(model,
   }
 
   class(d) <- c("parameters_simulate_model", class(d))
-  attr(d, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(d, "object_name") <- insight::safe_deparse_substitute(model)
   d
 }
 
@@ -495,7 +495,7 @@ simulate_parameters.glmmTMB <- function(model,
   }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method

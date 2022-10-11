@@ -18,7 +18,7 @@ model_parameters.merModList <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 
