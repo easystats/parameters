@@ -11,6 +11,11 @@
 
 ## Changes
 
+* `model_parameters()` and `compare_parameters()` now use the unicode character
+  for the multiplication-sign as interaction mark (i.e. `\u00d7`). Use
+  `options(parameters_select = <value>)` or the argument `interaction_mark` to
+  use a different character as interaction mark.
+
 * Consolidation of vignettes on standardization of model parameters.
 
 * Minor speed improvements.

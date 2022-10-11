@@ -275,7 +275,7 @@
 #' which is converted into a p-value using [`bayestestR::pd_to_p()`].
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
-#' @inheritSection print.parameters_model Global Options to Customize Messages when Printing
+#' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
 #'
 #' @references
 #'

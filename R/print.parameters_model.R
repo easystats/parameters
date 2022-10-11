@@ -53,7 +53,7 @@
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
 #'
-#' @section Global Options to Customize Messages when Printing:
+#' @section Global Options to Customize Messages and Tables when Printing:
 #' The `verbose` argument can be used to display or silence messages and
 #' warnings for the different functions in the **parameters** package. However,
 #' some messages providing additional information can be displayed or suppressed
@@ -78,13 +78,15 @@
 #' `exponentiate` argument in `model_parameters()` is not `TRUE`. Set this option
 #' to `FALSE` to hide this message when printing `model_parameters()` objects.
 #'
+#' There are further options that can be used to modify the default behaviour
+#' for printed outputs:
+#'
 #' - `parameters_labels`: `options(parameters_labels = TRUE)` will use variable
 #' and value labels for pretty names, if data is labelled. If no labels
 #' available, default pretty names are used.
 #'
-#' - `parameters_interaction`: `options(parameters_interaction = "*")` will
-#' replace the separator for interactions (by default, `*`) with the related
-#' character.
+#' - `parameters_interaction`: `options(parameters_interaction = <character>)`
+#' will replace the interaction mark (by default, `*`) with the related character.
 #'
 #' - `parameters_select`: `options(parameters_select = <value>)` will set the
 #' default for the `select` argument. See argument's documentation for available

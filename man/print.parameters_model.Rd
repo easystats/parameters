@@ -104,7 +104,7 @@ A \code{print()}-method for objects from \code{\link[=model_parameters]{model_pa
 \code{summary()} is a convenient shortcut for
 \code{print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)}.
 }
-\section{Global Options to Customize Messages when Printing}{
+\section{Global Options to Customize Messages and Tables when Printing}{
 
 The \code{verbose} argument can be used to display or silence messages and
 warnings for the different functions in the \strong{parameters} package. However,
@@ -126,12 +126,16 @@ show the additional information on how to interpret coefficients of models
 with log-transformed response variables or with log-/logit-links when the
 \code{exponentiate} argument in \code{model_parameters()} is not \code{TRUE}. Set this option
 to \code{FALSE} to hide this message when printing \code{model_parameters()} objects.
+}
+
+There are further options that can be used to modify the default behaviour
+for printed outputs:
+\itemize{
 \item \code{parameters_labels}: \code{options(parameters_labels = TRUE)} will use variable
 and value labels for pretty names, if data is labelled. If no labels
 available, default pretty names are used.
-\item \code{parameters_interaction}: \code{options(parameters_interaction = "*")} will
-replace the separator for interactions (by default, \code{*}) with the related
-character.
+\item \code{parameters_interaction}: \verb{options(parameters_interaction = <character>)}
+will replace the interaction mark (by default, \code{*}) with the related character.
 \item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
 default for the \code{select} argument. See argument's documentation for available
 options.
