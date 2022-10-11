@@ -272,7 +272,7 @@ format_parameters.parameters_model <- function(model, ...) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
   # sep <- ifelse(is_nested, " / ", " * ")
   # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
-  sep <- " * "
+  sep <- " x "
 
   if (length(components) > 2) {
     if (type == "interaction") {
