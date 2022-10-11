@@ -45,13 +45,20 @@
     style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
     style <- gsub("{pval}", "{p}", style, fixed = TRUE)
     style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
-    ## TODO: new lines don't work right now...
-    # # new line character
-    # if (identical(format, "html")) {
-    #   newline <- "<br>"
-    # } else {
-    #   newline <- "\n"
-    # }
+    # align column width for text format
+    .align_values <- function(i) {
+      non_empty <- !is.na(i) & nchar(i) > 0
+      i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+      i
+    }
+    if (identical(format, "text") || is.null(format)) {
+      x[[coef_column]] <- .align_values(x[[coef_column]])
+      x$SE <- .align_values(x$SE)
+      x[["p"]] <- .align_values(x[["p"]])
+      x$p_stars <- .align_values(x$p_stars)
+      ci_low <- .align_values(ci_low)
+      ci_high <- .align_values(ci_high)
+    }
     # create new string
     row <- rep(style, times = nrow(x))
     for (r in seq_along(row)) {
@@ -61,7 +68,6 @@
       row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
       row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
       row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
-      # row[r] <- gsub("|", newline, row[r], fixed = TRUE)
     }
     # some cleaning: columns w/o coefficient are empty
     row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
