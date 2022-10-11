@@ -245,7 +245,7 @@ Note that you have to add parentheses manually, e.g. around confidence intervals
 compare_parameters(lm1, lm2, lm3, style = "{estimate}{stars} ({se})")
 
 # estimates, CI, p and stars
-compare_parameters(lm1, lm2, lm3, style = "{estimate} ({ci_low}, {ci_high}), p {p}{stars}")
+compare_parameters(lm1, lm2, lm3, style = "{estimate} ({ci_low}, {ci_high}), p={p}{stars}")
 ```
 
 ## Defining column names
