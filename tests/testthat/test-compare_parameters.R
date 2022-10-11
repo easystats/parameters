@@ -1,6 +1,6 @@
 if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
   # make sure we have the correct interaction mark for tests
-  option(parameters_interaction = "*")
+  options(parameters_interaction = "*")
 
   data(iris)
   m1 <- lm(Sepal.Length ~ Species, data = iris)
