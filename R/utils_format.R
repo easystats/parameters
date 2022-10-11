@@ -63,6 +63,8 @@
       row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
       # row[r] <- gsub("|", newline, row[r], fixed = TRUE)
     }
+    # some cleaning: columns w/o coefficient are empty
+    row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
     # final output
     x <- data.frame(row)
     colnames(x) <- modelname
