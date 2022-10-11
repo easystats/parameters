@@ -32,7 +32,7 @@ model_parameters.DirichletRegModel <- function(model,
   ))
 
   out$Response[is.na(out$Response)] <- ""
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 

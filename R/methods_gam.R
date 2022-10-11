@@ -61,7 +61,7 @@ simulate_model.gam <- function(model, iterations = 1000, ...) {
   out <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 

@@ -37,7 +37,7 @@ model_parameters.wbm <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
 

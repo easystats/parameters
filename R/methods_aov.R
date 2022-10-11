@@ -134,7 +134,7 @@ model_parameters.aov <- function(model,
 
   # save model object, for later checks
   original_model <- model
-  object_name <- deparse(substitute(model), width.cutoff = 500)
+  object_name <- insight::safe_deparse_substitute(model)
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (!requireNamespace("car", quietly = TRUE)) {
@@ -315,7 +315,7 @@ model_parameters.afex_aov <- function(model,
   }
 
   attr(out, "title") <- unique(out$Method)
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   class(out) <- unique(c("parameters_model", "see_parameters_model", class(out)))
 
   out

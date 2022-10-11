@@ -518,7 +518,7 @@ model_parameters.default <- function(model,
     )
   }
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }
 
@@ -687,6 +687,6 @@ model_parameters.glm <- function(model,
   args <- c(args, dots)
   out <- do.call(".model_parameters_generic", args)
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
   out
 }

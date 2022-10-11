@@ -86,7 +86,7 @@ model_parameters.brmsfit <- function(model,
     )
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
-    attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+    attr(params, "object_name") <- insight::safe_deparse_substitute(model)
     class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
   }
 
