@@ -14,66 +14,38 @@
   coef_column <- colnames(x)[1]
   ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
 
+  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
   if (style == "minimal") {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
     x <- x[c(coef_column, "p")]
+
+  # style: estimate, p-stars and CI
   } else if (style %in% c("ci_p", "ci")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, x[[ci_column]]))
     x <- x[coef_column]
+
+  # style: estimate, p-stars and SE
   } else if (style %in% c("se_p", "se")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[coef_column]
+
+  # style: estimate and CI, p-value in separate column
   } else if (style %in% c("ci_p2")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
     x <- x[c(coef_column, "p")]
+
+  # style: estimate and SE, p-value in separate column
   } else if (style %in% c("se_p2")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, "(", x$SE, ")"))
     x <- x[c(coef_column, "p")]
+
+  # style: only estimate
   } else if (style %in% c("est", "coef")) {
     x <- x[1]
+
   # glue styled column layout
   } else if (grepl("{", style, fixed = TRUE)) {
-    # separate CI columns, for custom layout
-    ci <- x[[ci_column[1]]]
-    ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
-    ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
-    # handle aliases
-    style <- tolower(style)
-    style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
-    style <- gsub("{coefficient}", "{estimate}", style, fixed = TRUE)
-    style <- gsub("{std.error}", "{se}", style, fixed = TRUE)
-    style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
-    style <- gsub("{pval}", "{p}", style, fixed = TRUE)
-    style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
-    # align column width for text format
-    .align_values <- function(i) {
-      non_empty <- !is.na(i) & nchar(i) > 0
-      i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
-      i
-    }
-    if (identical(format, "text") || is.null(format)) {
-      x[[coef_column]] <- .align_values(x[[coef_column]])
-      x$SE <- .align_values(x$SE)
-      x[["p"]] <- .align_values(x[["p"]])
-      x$p_stars <- .align_values(x$p_stars)
-      ci_low <- .align_values(ci_low)
-      ci_high <- .align_values(ci_high)
-    }
-    # create new string
-    row <- rep(style, times = nrow(x))
-    for (r in seq_along(row)) {
-      row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
-      row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
-      row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
-      row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
-      row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
-      row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
-    }
-    # some cleaning: columns w/o coefficient are empty
-    row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
-    # final output
-    x <- data.frame(row)
-    colnames(x) <- modelname
+    x <- .format_glue_output <- function(x, coef_column, ci_column, style, format, modelname)
   }
 
   # add modelname to column names; for single column layout per model, we just
@@ -94,6 +66,53 @@
   )
 
   x[[1]][x[[1]] == "()"] <- ""
+  x
+}
+
+
+
+.format_glue_output <- function(x, coef_column, ci_column, style, format, modelname) {
+  # separate CI columns, for custom layout
+  ci <- x[[ci_column[1]]]
+  ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
+  ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
+  # handle aliases
+  style <- tolower(style)
+  style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
+  style <- gsub("{coefficient}", "{estimate}", style, fixed = TRUE)
+  style <- gsub("{std.error}", "{se}", style, fixed = TRUE)
+  style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
+  style <- gsub("{pval}", "{p}", style, fixed = TRUE)
+  style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
+  # align column width for text format
+  .align_values <- function(i) {
+    non_empty <- !is.na(i) & nchar(i) > 0
+    i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+    i
+  }
+  if (identical(format, "text") || is.null(format)) {
+    x[[coef_column]] <- .align_values(x[[coef_column]])
+    x$SE <- .align_values(x$SE)
+    x[["p"]] <- .align_values(x[["p"]])
+    x$p_stars <- .align_values(x$p_stars)
+    ci_low <- .align_values(ci_low)
+    ci_high <- .align_values(ci_high)
+  }
+  # create new string
+  row <- rep(style, times = nrow(x))
+  for (r in seq_along(row)) {
+    row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
+    row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
+    row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
+    row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
+    row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
+    row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+  }
+  # some cleaning: columns w/o coefficient are empty
+  row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
+  # final output
+  x <- data.frame(row)
+  colnames(x) <- modelname
   x
 }
 
