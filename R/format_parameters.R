@@ -273,15 +273,15 @@ format_parameters.parameters_model <- function(model, ...) {
                                 type,
                                 is_nested = FALSE,
                                 is_simple = FALSE,
-                                interaction_sep = "*",
+                                interaction_mark = "*",
                                 ...) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
   # sep <- ifelse(is_nested, " / ", " * ")
   # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
-  if (is.null(interaction_sep)) {
+  if (is.null(interaction_mark)) {
     sep <- "*"
   } else {
-    sep <- interaction_sep
+    sep <- interaction_mark
   }
 
   # either use argument, or override with options
