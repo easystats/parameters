@@ -108,6 +108,7 @@ model_parameters.stanreg <- function(model,
     }
   }
 
+  ## TODO: can we use the regular pretty-name-formatting?
   params <- .add_pretty_names(params, model)
 
   # exponentiate coefficients and SE/CI, if requested
