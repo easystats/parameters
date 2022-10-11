@@ -112,8 +112,8 @@
   row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
   # fix some p-value stuff, e.g. if pattern is "p = {p]}",
   # we may have "p = < 0.001", which we want to be "p < 0.001"
-  row <- gsub("=<", "<" row, , fixed = TRUE)
-  row <- gsub("= <", "<" row, , fixed = TRUE)
+  row <- gsub("=<", "<", row, fixed = TRUE)
+  row <- gsub("= <", "<", row, fixed = TRUE)
   # final output
   x <- data.frame(row)
   colnames(x) <- modelname
