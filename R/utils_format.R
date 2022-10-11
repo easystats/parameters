@@ -11,29 +11,61 @@
   }
 
   # find columns
-  param_col <- colnames(x)[1]
-  ci_col <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
+  coef_column <- colnames(x)[1]
+  ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
 
   if (style == "minimal") {
-    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
-    x <- x[c(param_col, "p")]
+    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
+    x <- x[c(coef_column, "p")]
   } else if (style %in% c("ci_p", "ci")) {
-    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
-    x <- x[param_col]
+    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, x[[ci_column]]))
+    x <- x[coef_column]
   } else if (style %in% c("se_p", "se")) {
-    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
-    x <- x[param_col]
+    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, "(", x$SE, ")"))
+    x <- x[coef_column]
   } else if (style %in% c("ci_p2")) {
-    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
-    x <- x[c(param_col, "p")]
+    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
+    x <- x[c(coef_column, "p")]
   } else if (style %in% c("se_p2")) {
-    x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
-    x <- x[c(param_col, "p")]
+    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, "(", x$SE, ")"))
+    x <- x[c(coef_column, "p")]
   } else if (style %in% c("est", "coef")) {
     x <- x[1]
+  # glue styled column layout
   } else if (grepl("{", style, fixed = TRUE)) {
-    # glue styled column layout
-    
+    # separate CI columns, for custom layout
+    ci <- x[[ci_column[1]]]
+    ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
+    ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
+    # handle aliases
+    style <- tolower(style)
+    style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
+    style <- gsub("{coefficient}", "{estimate}", style, fixed = TRUE)
+    style <- gsub("{std.error}", "{se}", style, fixed = TRUE)
+    style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
+    style <- gsub("{pval}", "{p}", style, fixed = TRUE)
+    style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
+    ## TODO: new lines don't work right now...
+    # # new line character
+    # if (identical(format, "html")) {
+    #   newline <- "<br>"
+    # } else {
+    #   newline <- "\n"
+    # }
+    # create new string
+    row <- rep(style, times = nrow(x))
+    for (r in seq_along(row)) {
+      row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
+      row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
+      row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
+      row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
+      row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
+      row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+      row[r] <- gsub("|", newline, row[r], fixed = TRUE)
+    }
+    # final output
+    x <- data.frame(row)
+    colnames(x) <- modelname
   }
 
   # add modelname to column names; for single column layout per model, we just
