@@ -61,7 +61,7 @@
       row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
       row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
       row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
-      row[r] <- gsub("|", newline, row[r], fixed = TRUE)
+      # row[r] <- gsub("|", newline, row[r], fixed = TRUE)
     }
     # final output
     x <- data.frame(row)
