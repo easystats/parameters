@@ -227,7 +227,7 @@ encompassed in square brackets (else in parentheses).</p></dd>
 <code>print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="global-options-to-customize-messages-when-printing">Global Options to Customize Messages when Printing<a class="anchor" aria-label="anchor" href="#global-options-to-customize-messages-when-printing"></a></h2>
+    <h2 id="global-options-to-customize-messages-and-tables-when-printing">Global Options to Customize Messages and Tables when Printing<a class="anchor" aria-label="anchor" href="#global-options-to-customize-messages-and-tables-when-printing"></a></h2>
     
 
 <p>The <code>verbose</code> argument can be used to display or silence messages and
@@ -248,12 +248,12 @@ show the additional information on how to interpret coefficients of models
 with log-transformed response variables or with log-/logit-links when the
 <code>exponentiate</code> argument in <code><a href="model_parameters.html">model_parameters()</a></code> is not <code>TRUE</code>. Set this option
 to <code>FALSE</code> to hide this message when printing <code><a href="model_parameters.html">model_parameters()</a></code> objects.</p></li>
-<li><p><code>parameters_labels</code>: <code>options(parameters_labels = TRUE)</code> will use variable
+</ul><p>There are further options that can be used to modify the default behaviour
+for printed outputs:</p><ul><li><p><code>parameters_labels</code>: <code>options(parameters_labels = TRUE)</code> will use variable
 and value labels for pretty names, if data is labelled. If no labels
 available, default pretty names are used.</p></li>
-<li><p><code>parameters_interaction</code>: <code>options(parameters_interaction = "*")</code> will
-replace the separator for interactions (by default, <code>*</code>) with the related
-character.</p></li>
+<li><p><code>parameters_interaction</code>: <code>options(parameters_interaction = &lt;character&gt;)</code>
+will replace the interaction mark (by default, <code>*</code>) with the related character.</p></li>
 <li><p><code>parameters_select</code>: <code>options(parameters_select = &lt;value&gt;)</code> will set the
 default for the <code>select</code> argument. See argument's documentation for available
 options.</p></li>
