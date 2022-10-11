@@ -20,7 +20,7 @@ model_parameters.mediate <- function(model, ci = 0.95, exponentiate = FALSE, ver
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
 
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 

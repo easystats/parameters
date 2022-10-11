@@ -55,7 +55,7 @@ model_parameters.glht <- function(model,
   )
 
   attr(out, "p_adjust") <- p_adjust
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

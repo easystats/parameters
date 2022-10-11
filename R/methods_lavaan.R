@@ -88,7 +88,7 @@ model_parameters.blavaan <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params

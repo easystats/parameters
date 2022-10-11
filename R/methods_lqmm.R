@@ -35,7 +35,7 @@ model_parameters.lqmm <- function(model,
     ...
   )
 
-  attr(parameters, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(parameters, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters

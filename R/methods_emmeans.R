@@ -123,7 +123,7 @@ model_parameters.emmGrid <- function(model,
   }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(params, "parameter_names") <- parameter_names
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
@@ -163,7 +163,7 @@ model_parameters.emm_list <- function(model,
 
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
 
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

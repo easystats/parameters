@@ -193,7 +193,8 @@ format_parameters.parameters_model <- function(model, ...) {
         components,
         type = types[i, "Type"],
         is_nested = is_nested,
-        is_simple = is_simple
+        is_simple = is_simple,
+        ...
       )
     }
   }
@@ -268,17 +269,29 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 #' @keywords internal
-.format_interaction <- function(components, type, is_nested = FALSE, is_simple = FALSE) {
+.format_interaction <- function(components,
+                                type,
+                                is_nested = FALSE,
+                                is_simple = FALSE,
+                                interaction_sep = "*",
+                                ...) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
   # sep <- ifelse(is_nested, " / ", " * ")
   # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
-  sep <- " * "
+  if (is.null(interaction_sep)) {
+    sep <- "*"
+  } else {
+    sep <- interaction_sep
+  }
+
+  # either use argument, or override with options
+  sep <- paste0(" ", getOption("parameters_interaction", insight::trim_ws(sep)), " ")
 
   if (length(components) > 2) {
     if (type == "interaction") {
       components <- paste0(
         "(",
-        paste0(utils::head(components, -1), collapse = " * "),
+        paste0(utils::head(components, -1), collapse = sep),
         ")",
         sep,
         utils::tail(components, 1)

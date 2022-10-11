@@ -309,7 +309,9 @@ model_parameters <- function(model, ...) {
 # getOption("parameters_mixed_summary"): show model summary for mixed models
 # getOption("parameters_cimethod"): show message about CI approximation
 # getOption("parameters_exponentiate"): show warning about exp for log/logit links
-
+# getOption("parameters_labels"): use value/variable labels instead pretty names
+# getOption("parameters_interaction"): separator char for interactions
+# getOption("parameters_select"): default for the `select` argument
 
 
 #' @rdname model_parameters
@@ -518,7 +520,7 @@ model_parameters.default <- function(model,
     )
   }
 
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -687,6 +689,6 @@ model_parameters.glm <- function(model,
   args <- c(args, dots)
   out <- do.call(".model_parameters_generic", args)
 
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }

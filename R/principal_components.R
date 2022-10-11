@@ -253,7 +253,7 @@ principal_components.data.frame <- function(x,
                                             standardize = TRUE,
                                             ...) {
   # save name of data set
-  data_name <- insight::safe_deparse_substitute(x)
+  data_name <- insight::safe_deparse_symbol(substitute(x))
 
   # original data
   original_data <- x

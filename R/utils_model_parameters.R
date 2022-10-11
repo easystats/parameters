@@ -37,7 +37,7 @@
   if (isFALSE(dot.arguments$pretty_names)) {
     attr(params, "pretty_names") <- params$Parameter
   } else if (is.null(attr(params, "pretty_names", exact = TRUE))) {
-    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info))
+    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info, ...))
   }
 
   attr(params, "ci") <- ci

@@ -119,7 +119,7 @@ model_parameters.cgam <- function(model,
     params$CI[is.na(params$CI_low)] <- NA
   }
 
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
