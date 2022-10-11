@@ -1,4 +1,7 @@
 if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
+  # make sure we have the correct interaction mark for tests
+  option(parameters_interaction = "*")
+
   data(iris)
   set.seed(123)
   iris$cat <- sample(LETTERS[1:4], nrow(iris), replace = TRUE)

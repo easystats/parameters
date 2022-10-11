@@ -1,4 +1,7 @@
 if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
+  # make sure we have the correct interaction mark for tests
+  option(parameters_interaction = "*")
+
   data(mtcars)
 
   m <- lm(mpg ~ qsec:wt + wt:drat, data = mtcars)

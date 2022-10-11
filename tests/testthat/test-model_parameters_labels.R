@@ -1,4 +1,7 @@
 if (requiet("insight") && requiet("testthat") && requiet("parameters") && requiet("lme4")) {
+  # make sure we have the correct interaction mark for tests
+  option(parameters_interaction = "*")
+
   test_that("model_parameters_labels", {
     data(mtcars)
     mtcars$am <- as.factor(mtcars$am)
