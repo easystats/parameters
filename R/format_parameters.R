@@ -273,13 +273,17 @@ format_parameters.parameters_model <- function(model, ...) {
                                 type,
                                 is_nested = FALSE,
                                 is_simple = FALSE,
-                                interaction_mark = "*",
+                                interaction_mark = NULL,
                                 ...) {
   # sep <- ifelse(is_nested | is_simple, " : ", " * ")
   # sep <- ifelse(is_nested, " / ", " * ")
   # sep <- ifelse(is_simple, " : ", ifelse(is_nested, " / ", " * "))
   if (is.null(interaction_mark)) {
-    sep <- "*"
+    if (.unicode_symbols()) {
+      sep <- "\u00D7"
+    } else {
+      sep <- "*"
+    }
   } else {
     sep <- interaction_mark
   }
@@ -432,4 +436,25 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
   labels
+}
+
+
+# helper -------------------
+
+.unicode_symbols <- function() {
+  # symbols only work on windows from R 4.2 and higher
+  win_os <- tryCatch(
+    {
+      si <- Sys.info()
+      if (!is.null(si["sysname"])) {
+        si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+      } else {
+        FALSE
+      }
+    },
+    error = function(e) {
+      TRUE
+    }
+  )
+  (win_os && getRversion() >= "4.2") || (!win_os && getRversion() >= "4.0")
 }
