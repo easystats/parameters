@@ -45,7 +45,7 @@
 
   # glue styled column layout
   } else if (grepl("{", style, fixed = TRUE)) {
-    x <- .format_glue_output <- function(x, coef_column, ci_column, style, format, modelname)
+    x <- .format_glue_output(x, coef_column, ci_column, style, format, modelname)
   }
 
   # add modelname to column names; for single column layout per model, we just
