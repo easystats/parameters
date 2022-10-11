@@ -8,7 +8,7 @@ standardize_posteriors <- function(model,
                                    include_response = TRUE,
                                    verbose = TRUE,
                                    ...) {
-  object_name <- insight::safe_deparse_substitute(model)
+  object_name <- insight::safe_deparse_symbol(substitute(model))
 
   m_info <- .get_model_info(model, ...)
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)

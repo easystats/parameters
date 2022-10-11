@@ -59,7 +59,7 @@ model_parameters.mlm <- function(model,
     p_adjust = p_adjust,
     ...
   )
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -186,7 +186,7 @@ simulate_model.mlm <- function(model, iterations = 1000, ...) {
   colnames(out) <- cn
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -218,7 +218,7 @@ simulate_parameters.mlm <- function(model,
   }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "object_class") <- class(model)
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci

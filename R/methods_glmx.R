@@ -30,7 +30,7 @@ model_parameters.glmx <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -68,6 +68,6 @@ simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }

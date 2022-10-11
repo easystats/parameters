@@ -59,7 +59,7 @@ pool_parameters <- function(x,
   # check input, save original model -----
 
   original_model <- random_params <- NULL
-  obj_name <- insight::safe_deparse_substitute(x)
+  obj_name <- insight::safe_deparse_symbol(substitute(x))
 
   if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
     original_model <- x[[1]]

@@ -22,7 +22,7 @@ model_parameters.glmm <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

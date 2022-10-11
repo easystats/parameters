@@ -229,7 +229,7 @@ model_parameters.BFBayesFactor <- function(model,
 
 
   attr(out, "title") <- unique(out$Method)
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "pretty_names") <- pretty_names
   attr(out, "ci_test") <- ci
 

@@ -28,7 +28,7 @@ model_parameters.varest <- function(model,
   })
 
   params <- do.call(rbind, params)
-  attr(params, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   params
 }
 
@@ -79,7 +79,7 @@ simulate_model.varest <- function(model, iterations = 1000, ...) {
     simulate_model(model = model$varresult[[i]], iterations = iterations, ...)
   })
   names(out) <- paste0("Equation ", names(model$varresult))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -109,7 +109,7 @@ simulate_parameters.varest <- function(model,
 
   out <- do.call(rbind, out)
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method

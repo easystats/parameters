@@ -45,7 +45,7 @@ model_parameters.betareg <- function(model,
   args <- c(args, dot_args)
 
   out <- do.call(".model_parameters_generic", args)
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -148,6 +148,6 @@ simulate_model.betareg <- function(model,
   out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse_substitute(model)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
