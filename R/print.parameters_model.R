@@ -82,6 +82,10 @@
 #' and value labels for pretty names, if data is labelled. If no labels
 #' available, default pretty names are used.
 #'
+#' - `parameters_interaction`: `options(parameters_interaction = "*")` will
+#' replace the separator for interactions (by default, `*`) with the related
+#' character.
+#'
 #' - `parameters_select`: `options(parameters_select = <value>)` will set the
 #' default for the `select` argument. See argument's documentation for available
 #' options.
