@@ -230,7 +230,7 @@ By default, estimates and confidence intervals are shown. Using `style` allows u
 compare_parameters(lm1, lm2, lm3, style = "se_p")
 ```
 
-The `style` argument also has a basic support of glue-like syntax, which lets you layout model elements in a very flexible way. Following tokens are replaced by the related summary coefficients or statistics:
+The `style` argument also has a basic support for glue-like syntax, which lets you layout model elements in a very flexible way. Following tokens are replaced by the related summary coefficients or statistics:
 
 - `{estimate}` (or `{coefficient}` or `{coef}`): coefficient
 - `{se}` (or `{std.error}` or `{standard error}`): standard error
