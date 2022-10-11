@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.6</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -319,7 +319,18 @@ Further readings can be found in the references.</p></div>
 <span class="r-in"><span>  <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-plt img"><img src="equivalence_test.lm-1.png" alt="" width="700" height="433"></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Can't find object 'x'.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> # TOST-test for Practical Equivalence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-1.99 1.99]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI | % in ROPE |        H0 |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] |        0% |  Rejected | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] |    83.52% | Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] |      100% |  Accepted | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] |        0% |  Rejected | 0.999 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] |        0% |  Rejected | &gt; .999</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
