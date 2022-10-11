@@ -10,38 +10,49 @@
     x$p_stars <- ""
   }
 
+  # find columns
+  param_col <- colnames(x)[1]
+  ci_col <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
+
   if (style == "minimal") {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
-    param_col <- colnames(x)[1]
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
-    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("ci_p", "ci")) {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
-    param_col <- colnames(x)[1]
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, x[[ci_col]]))
     x <- x[param_col]
-    colnames(x) <- modelname
   } else if (style %in% c("se_p", "se")) {
-    param_col <- colnames(x)[1]
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[param_col]
-    colnames(x) <- modelname
   } else if (style %in% c("ci_p2")) {
-    ci_col <- colnames(x)[grepl(" CI$", colnames(x)) | colnames(x) == "CI"]
-    param_col <- colnames(x)[1]
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, x[[ci_col]]))
     x <- x[c(param_col, "p")]
-    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("se_p2")) {
-    param_col <- colnames(x)[1]
     x[[param_col]] <- insight::trim_ws(paste0(x[[param_col]], linesep, "(", x$SE, ")"))
     x <- x[c(param_col, "p")]
-    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
   } else if (style %in% c("est", "coef")) {
     x <- x[1]
-    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else if (grepl("{", style, fixed = TRUE)) {
+    # glue styled column layout
+    
   }
+
+  # add modelname to column names; for single column layout per model, we just
+  # need the column name. If the layout contains more than one column per model,
+  # add modelname in parenthesis.
+  colnames(x) <- switch(style,
+    "p" = ,
+    "ci_p" = ,
+    "ci" = ,
+    "se_p" = ,
+    "se" = modelname,
+    "minimal" = ,
+    "est" = ,
+    "coef" = ,
+    "se_p2" = ,
+    "ci_p2" = colnames(x) <- paste0(colnames(x), " (", modelname, ")"),
+    colnames(x)
+  )
+
   x[[1]][x[[1]] == "()"] <- ""
   x
 }
