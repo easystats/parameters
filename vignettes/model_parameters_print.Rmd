@@ -297,6 +297,8 @@ print(cp, column_width = "fixed")
 
 Grouping parameters works for `compare_parameters()` in the same way as shown above for `model_parameters()`.
 
+**Note:** By default, the interaction mark is `×`, not `*` (see also section on global options [in this vignette](https://easystats.github.io/parameters/reference/print.parameters_model.html)). Since parameter names in `compare_parameters()` are already formatted before printing, `as.data.frame(cp)$Parameter` will probably return special unicode characters that you need to take care of in the `groups` argument (unless you use numeric indices).
+
 ```{r}
 lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
@@ -305,7 +307,7 @@ lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
 cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept")
 
 # look at parameters names, to know their names for "groups" argument
-as.data.frame(cp)$Parameter
+as.data.frame(cp)$Parameter # note the unicode char as interaction mark
 
 # create groups. Interactions only present in 2nd model
 print(cp, groups = list(
@@ -314,8 +316,8 @@ print(cp, groups = list(
     "Species (virginica)"
   ),
   Interactions = c(
-    "Species (versicolor) * Petal Length",
-    "Species (virginica) * Petal Length"
+    "Species (versicolor) × Petal Length", # note the unicode char!
+    "Species (virginica) × Petal Length"
   ),
   Controls = "Petal Length"
 ))
