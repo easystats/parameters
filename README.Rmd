@@ -93,20 +93,22 @@ model_parameters(model)
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
+
+# heteroscedasticity-consitent SE and CI
+model_parameters(model, vcov = "HC3")
 ```
 
 ### Mixed Models
 
 ```{r}
 library(lme4)
-
 model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
-model_parameters(model, effects = "all")
+model_parameters(model)
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
-model_parameters(model, ci_method = "kenward")
+model_parameters(model, ci_method = "kenward", effects = "fixed")
 ```
 
 ### Structural Models

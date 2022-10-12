@@ -120,8 +120,8 @@ model_parameters(model)
 #> Species [versicolor]                |       -1.66 | 0.53 | [-2.71, -0.62] |  -3.14 | 0.002 
 #> Species [virginica]                 |       -1.92 | 0.59 | [-3.08, -0.76] |  -3.28 | 0.001 
 #> Petal Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |   4.41 | < .001
-#> Petal Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 
-#> Petal Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618
+#> Petal Length × Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 
+#> Petal Length × Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
@@ -132,19 +132,30 @@ model_parameters(model, standardize = "refit")
 #> Species [versicolor]                |       -4.62 | 1.31 | [-7.21, -2.03] |  -3.53 | < .001
 #> Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] |  -4.00 | < .001
 #> Petal Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |   4.41 | < .001
-#> Petal Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] |  -0.36 | 0.721 
-#> Petal Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] |  -0.50 | 0.618
+#> Petal Length × Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] |  -0.36 | 0.721 
+#> Petal Length × Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] |  -0.50 | 0.618
+
+# heteroscedasticity-consitent SE and CI
+model_parameters(model, vcov = "HC3")
+#> Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p
+#> -------------------------------------------------------------------------------------------
+#> (Intercept)                         |        2.89 | 0.43 | [ 2.03,  3.75] |   6.66 | < .001
+#> Petal Length                        |        0.26 | 0.29 | [-0.30,  0.83] |   0.92 | 0.357 
+#> Species [versicolor]                |       -1.66 | 0.53 | [-2.70, -0.62] |  -3.16 | 0.002 
+#> Species [virginica]                 |       -1.92 | 0.77 | [-3.43, -0.41] |  -2.51 | 0.013 
+#> Petal Width                         |        0.62 | 0.12 | [ 0.38,  0.85] |   5.23 | < .001
+#> Petal Length × Species [versicolor] |       -0.09 | 0.29 | [-0.67,  0.48] |  -0.32 | 0.748 
+#> Petal Length × Species [virginica]  |       -0.13 | 0.31 | [-0.73,  0.48] |  -0.42 | 0.675
 ```
 
 ### Mixed Models
 
 ``` r
 library(lme4)
-
 model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
-model_parameters(model, effects = "all")
+model_parameters(model)
 #> # Fixed Effects
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI | t(146) |      p
@@ -160,20 +171,13 @@ model_parameters(model, effects = "all")
 #> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
-model_parameters(model, ci_method = "kenward")
+model_parameters(model, ci_method = "kenward", effects = "fixed")
 #> # Fixed Effects
 #> 
 #> Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p
 #> -------------------------------------------------------------------------
 #> (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 
 #> Petal Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | < .001
-#> 
-#> # Random Effects
-#> 
-#> Parameter               | Coefficient |   SE |       95% CI
-#> -----------------------------------------------------------
-#> SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]
-#> SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]
 ```
 
 ### Structural Models
