@@ -745,6 +745,14 @@ model are aligned to a fixed width. You can do this using
 </h3>
 <p>Grouping parameters works for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> in
 the same way as shown above for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p>
+<p><strong>Note:</strong> By default, the interaction mark is
+<code>×</code>, not <code>*</code> (see also section on global options
+<a href="https://easystats.github.io/parameters/reference/print.parameters_model.html">in
+this vignette</a>). Since parameter names in
+<code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> are already formatted before printing,
+<code>as.data.frame(cp)$Parameter</code> will probably return special
+unicode characters that you need to take care of in the
+<code>groups</code> argument (unless you use numeric indices).</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -753,7 +761,7 @@ the same way as shown above for <code><a href="../reference/model_parameters.htm
 <span><span class="va">cp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, drop <span class="op">=</span> <span class="st">"^\\(Intercept"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># look at parameters names, to know their names for "groups" argument</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">cp</span><span class="op">)</span><span class="op">$</span><span class="va">Parameter</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">cp</span><span class="op">)</span><span class="op">$</span><span class="va">Parameter</span> <span class="co"># note the unicode char as interaction mark</span></span>
 <span><span class="co">#&gt; [1] "Species (versicolor)"                "Species (virginica)"                </span></span>
 <span><span class="co">#&gt; [3] "Petal Length"                        "Species (versicolor) × Petal Length"</span></span>
 <span><span class="co">#&gt; [5] "Species (virginica) × Petal Length"</span></span>
@@ -765,8 +773,8 @@ the same way as shown above for <code><a href="../reference/model_parameters.htm
 <span>    <span class="st">"Species (virginica)"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  Interactions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">"Species (versicolor) * Petal Length"</span>,</span>
-<span>    <span class="st">"Species (virginica) * Petal Length"</span></span>
+<span>    <span class="st">"Species (versicolor) × Petal Length"</span>, <span class="co"># note the unicode char!</span></span>
+<span>    <span class="st">"Species (virginica) × Petal Length"</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  Controls <span class="op">=</span> <span class="st">"Petal Length"</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
@@ -775,10 +783,11 @@ the same way as shown above for <code><a href="../reference/model_parameters.htm
 <span><span class="co">#&gt; Species                               |                      |                     </span></span>
 <span><span class="co">#&gt;   Species (versicolor)                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)</span></span>
 <span><span class="co">#&gt;   Species (virginica)                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)</span></span>
-<span><span class="co">#&gt; Controls                              |                      |                     </span></span>
-<span><span class="co">#&gt;   Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)</span></span>
+<span><span class="co">#&gt; Interactions                          |                      |                     </span></span>
 <span><span class="co">#&gt;   Species (versicolor) × Petal Length |                      | -0.01 (-0.56,  0.53)</span></span>
 <span><span class="co">#&gt;   Species (virginica) × Petal Length  |                      | -0.15 (-0.69,  0.39)</span></span>
+<span><span class="co">#&gt; Controls                              |                      |                     </span></span>
+<span><span class="co">#&gt;   Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)</span></span>
 <span><span class="co">#&gt; -----------------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt;   Observations                        |                  150 |                  150</span></span></code></pre></div>
 </div>
