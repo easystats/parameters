@@ -76,6 +76,9 @@
   ci <- x[[ci_column[1]]]
   ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
   ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
+  # fix p-layout
+  x[["p"]] <- insight::trim_ws(x[["p"]])
+  x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
   # handle aliases
   style <- tolower(style)
   style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
@@ -84,12 +87,16 @@
   style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
   style <- gsub("{pval}", "{p}", style, fixed = TRUE)
   style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
-  # align column width for text format
+  # align columns width for text format
   .align_values <- function(i) {
     non_empty <- !is.na(i) & nchar(i) > 0
     i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
     i
   }
+  # we put all elements (coefficient, SE, CI, p, ...) in one column.
+  # for text format, where columns are not center aligned, this can result in
+  # misaligned columns, which looks ugly. So we try to ensure that each element
+  # is formatted and justified to the same width
   if (identical(format, "text") || is.null(format)) {
     x[[coef_column]] <- .align_values(x[[coef_column]])
     x$SE <- .align_values(x$SE)
@@ -110,10 +117,11 @@
   }
   # some cleaning: columns w/o coefficient are empty
   row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
-  # fix some p-value stuff, e.g. if pattern is "p = {p]}",
-  # we may have "p = < 0.001", which we want to be "p < 0.001"
+  # fix some p-value stuff, e.g. if pattern is "p={p]}",
+  # we may have "p= <0.001", which we want to be "p<0.001"
   row <- gsub("=<", "<", row, fixed = TRUE)
   row <- gsub("= <", "<", row, fixed = TRUE)
+  row <- gsub("= ", "=", row, fixed = TRUE)
   # final output
   x <- data.frame(row)
   colnames(x) <- modelname
