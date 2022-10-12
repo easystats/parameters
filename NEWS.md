@@ -33,6 +33,9 @@
   models now pass the `...` to `insight::format_table()`, allowing extra
   arguments to be recognized.
 
+* Fixed footer message regarding the approximation method for CU and p-values
+  for mixed models.
+
 # parameters 0.19.0
 
 ## Breaking
