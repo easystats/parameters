@@ -226,8 +226,8 @@
 <span><span class="co">#&gt; Species [versicolor]                |       -1.66 | 0.53 | [-2.71, -0.62] |  -3.14 | 0.002 </span></span>
 <span><span class="co">#&gt; Species [virginica]                 |       -1.92 | 0.59 | [-3.08, -0.76] |  -3.28 | 0.001 </span></span>
 <span><span class="co">#&gt; Petal Width                         |        0.62 | 0.14 | [ 0.34,  0.89] |   4.41 | &lt; .001</span></span>
-<span><span class="co">#&gt; Petal Length * Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 </span></span>
-<span><span class="co">#&gt; Petal Length * Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618</span></span>
+<span><span class="co">#&gt; Petal Length × Species [versicolor] |       -0.09 | 0.26 | [-0.61,  0.42] |  -0.36 | 0.721 </span></span>
+<span><span class="co">#&gt; Petal Length × Species [virginica]  |       -0.13 | 0.26 | [-0.64,  0.38] |  -0.50 | 0.618</span></span>
 <span></span>
 <span><span class="co"># standardized parameters</span></span>
 <span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, standardize <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span>
@@ -238,19 +238,30 @@
 <span><span class="co">#&gt; Species [versicolor]                |       -4.62 | 1.31 | [-7.21, -2.03] |  -3.53 | &lt; .001</span></span>
 <span><span class="co">#&gt; Species [virginica]                 |       -5.51 | 1.38 | [-8.23, -2.79] |  -4.00 | &lt; .001</span></span>
 <span><span class="co">#&gt; Petal Width                         |        1.08 | 0.24 | [ 0.59,  1.56] |   4.41 | &lt; .001</span></span>
-<span><span class="co">#&gt; Petal Length * Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] |  -0.36 | 0.721 </span></span>
-<span><span class="co">#&gt; Petal Length * Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] |  -0.50 | 0.618</span></span></code></pre></div>
+<span><span class="co">#&gt; Petal Length × Species [versicolor] |       -0.38 | 1.06 | [-2.48,  1.72] |  -0.36 | 0.721 </span></span>
+<span><span class="co">#&gt; Petal Length × Species [virginica]  |       -0.52 | 1.04 | [-2.58,  1.54] |  -0.50 | 0.618</span></span>
+<span></span>
+<span><span class="co"># heteroscedasticity-consitent SE and CI</span></span>
+<span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, vcov <span class="op">=</span> <span class="st">"HC3"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(143) |      p</span></span>
+<span><span class="co">#&gt; -------------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)                         |        2.89 | 0.43 | [ 2.03,  3.75] |   6.66 | &lt; .001</span></span>
+<span><span class="co">#&gt; Petal Length                        |        0.26 | 0.29 | [-0.30,  0.83] |   0.92 | 0.357 </span></span>
+<span><span class="co">#&gt; Species [versicolor]                |       -1.66 | 0.53 | [-2.70, -0.62] |  -3.16 | 0.002 </span></span>
+<span><span class="co">#&gt; Species [virginica]                 |       -1.92 | 0.77 | [-3.43, -0.41] |  -2.51 | 0.013 </span></span>
+<span><span class="co">#&gt; Petal Width                         |        0.62 | 0.12 | [ 0.38,  0.85] |   5.23 | &lt; .001</span></span>
+<span><span class="co">#&gt; Petal Length × Species [versicolor] |       -0.09 | 0.29 | [-0.67,  0.48] |  -0.32 | 0.748 </span></span>
+<span><span class="co">#&gt; Petal Length × Species [virginica]  |       -0.13 | 0.31 | [-0.73,  0.48] |  -0.42 | 0.675</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mixed-models">Mixed Models<a class="anchor" aria-label="anchor" href="#mixed-models"></a>
 </h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># model parameters with CI, df and p-values based on Wald approximation</span></span>
-<span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, effects <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI | t(146) |      p</span></span>
@@ -266,20 +277,13 @@
 <span><span class="co">#&gt; SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]</span></span>
 <span></span>
 <span><span class="co"># model parameters with CI, df and p-values based on Kenward-Roger approximation</span></span>
-<span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, ci_method <span class="op">=</span> <span class="st">"kenward"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, ci_method <span class="op">=</span> <span class="st">"kenward"</span>, effects <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Parameter    | Coefficient |   SE |       95% CI |    t |     df |      p</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)  |        2.00 | 0.57 | [0.07, 3.93] | 3.53 |   2.67 | 0.046 </span></span>
-<span><span class="co">#&gt; Petal Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # Random Effects</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parameter               | Coefficient |   SE |       95% CI</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------</span></span>
-<span><span class="co">#&gt; SD (Intercept: Species) |        0.89 | 0.46 | [0.33, 2.43]</span></span>
-<span><span class="co">#&gt; SD (Residual)           |        0.32 | 0.02 | [0.28, 0.35]</span></span></code></pre></div>
+<span><span class="co">#&gt; Petal Length |        0.28 | 0.06 | [0.16, 0.40] | 4.58 | 140.98 | &lt; .001</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="structural-models">Structural Models<a class="anchor" aria-label="anchor" href="#structural-models"></a>
