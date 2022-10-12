@@ -841,8 +841,8 @@ format.parameters_sem <- function(x,
       # do we have random effect variances from lme4/glmmTMB?
       # must be glmmTMB
       show_re_msg <- (identical(model_class, "glmmTMB") &&
-        # and not Wald-CIs
-        (string_method != "Wald z-" || !ci_method %in% c("wald", "normal"))) ||
+        # and not Wald-/normalCIs
+        (!string_method %in% c("Wald z-", "Wald normal") || !ci_method %in% c("wald", "normal"))) ||
         # OR must be merMod
         ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
         # and not Wald CIs
