@@ -261,6 +261,9 @@ principal_components.data.frame <- function(x,
   # remove missing
   x <- stats::na.omit(x)
 
+  # Select numeric only
+  x <- x[sapply(x, is.numeric)]
+
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
 
