@@ -692,5 +692,6 @@ model_parameters.glm <- function(model,
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
+
 #' @export 
 model_parameters.zoo  <- model_parameters.default
