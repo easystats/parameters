@@ -102,7 +102,7 @@
 <div class="section level3">
 <h3 id="bug-fix-0-19-1">Bug fix<a class="anchor" aria-label="anchor" href="#bug-fix-0-19-1"></a></h3>
 <ul><li><p><code>model_parameters().BFBayesFactor</code> no longer drops the <code>BF</code> column if the Bayes factor is <code>NA</code>.</p></li>
-<li><p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> methods for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> from Bayesian models now pass the <code>...</code> to <code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">insight::format_table()</a></code>, allowing extra arguments to be recognized.</p></li>
+<li><p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">display()</a></code> methods for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> from Bayesian models now pass the <code>...</code> to <code><a href="https://rdrr.io/pkg/insight/man/format_table.html" class="external-link">insight::format_table()</a></code>, allowing extra arguments to be recognized.</p></li>
 <li><p>Fixed footer message regarding the approximation method for CU and p-values for mixed models.</p></li>
 </ul></div>
 </div>
@@ -115,7 +115,7 @@
 <li><p>The minimum needed R version has been bumped to <code>3.6</code>.</p></li>
 <li><p>Removed deprecated argument <code>parameters</code> from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 <li><p><code>standard_error_robust()</code>, <code>ci_robust()</code> and <code>p_value_robust()</code> are now deprecated and superseded by the <code>vcov</code> and <code>vcov_args</code> arguments in the related methods <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code>, respectively.</p></li>
-<li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_kmo.html" class="external-link">check_kmo()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
+<li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://rdrr.io/pkg/performance/man/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://rdrr.io/pkg/performance/man/check_kmo.html" class="external-link">check_kmo()</a></code>, <code><a href="https://rdrr.io/pkg/performance/man/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://rdrr.io/pkg/performance/man/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-0-19-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-19-0"></a></h3>
@@ -124,8 +124,8 @@
 <li><p><code><a href="../reference/bootstrap_model.html">bootstrap_model()</a></code> for models of class <code>glmmTMB</code> and <code>merMod</code> gains a <code>cluster</code> argument to specify optional clusters when the <code>parallel</code> option is set to <code>"snow"</code>.</p></li>
 <li><p>P-value adjustment (argument <code>p_adjust</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>) is now performed after potential parameters were removed (using <code>keep</code> or <code>drop</code>), so adjusted p-values is only applied to the parameters of interest.</p></li>
 <li><p>Robust standard errors are now supported for <code>fixest</code> models with the <code>vcov</code> argument.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>footer</code> argument, which can be used to suppress the footer in the output. Further more, if <code>footer = ""</code> or <code>footer = FALSE</code> in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>, no footer is printed.</p></li>
-<li><p><code><a href="../reference/simulate_model.html">simulate_model()</a></code> and <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> now pass <code>...</code> to <code><a href="https://easystats.github.io/insight/reference/get_varcov.html" class="external-link">insight::get_varcov()</a></code>, to allow simulated draws to be based on heteroscedasticity consistent variance covariance matrices.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>footer</code> argument, which can be used to suppress the footer in the output. Further more, if <code>footer = ""</code> or <code>footer = FALSE</code> in <code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">print_md()</a></code>, no footer is printed.</p></li>
+<li><p><code><a href="../reference/simulate_model.html">simulate_model()</a></code> and <code><a href="../reference/simulate_parameters.html">simulate_parameters()</a></code> now pass <code>...</code> to <code><a href="https://rdrr.io/pkg/insight/man/get_varcov.html" class="external-link">insight::get_varcov()</a></code>, to allow simulated draws to be based on heteroscedasticity consistent variance covariance matrices.</p></li>
 <li><p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> was improved for models with multiple components (e.g., mixed models with fixed and random effects, or models with count- and zero-inflation parts). For these models, <code>compare_parameters(effects = "all", component = "all")</code> prints more nicely.</p></li>
 </ul></div>
 <div class="section level3">
@@ -167,7 +167,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-18-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-18-1"></a></h3>
 <ul><li><p>Fixed issue with <em>glmmTMB</em> models when calculating confidence intervals for random effects failed due to singular fits.</p></li>
-<li><p><code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> now correctly includes custom text and additional information in the footer (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>).</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">display()</a></code> now correctly includes custom text and additional information in the footer (<a href="https://github.com/easystats/parameters/issues/722" class="external-link">#722</a>).</p></li>
 <li><p>Fixed issue with argument <code>column_names</code> in <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> when strings contained characters that needed to be escaped for regular expressions.</p></li>
 <li><p>Fixed issues with unknown arguments in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <em>lavaan</em> models when <code>standardize = TRUE</code>.</p></li>
 </ul></div>
@@ -225,7 +225,7 @@
 <div class="section level3">
 <h3 id="bug-fixes-0-17-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-17-0"></a></h3>
 <ul><li><p>Fixed minor issues and edge cases in <code><a href="../reference/n_clusters.html">n_clusters()</a></code> and related cluster functions.</p></li>
-<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> that returned wrong p-values for <code><a href="https://lrberge.github.io/fixest/reference/feols.html" class="external-link">fixest::feols()</a></code>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/p_value.html">p_value()</a></code> that returned wrong p-values for <code><a href="https://rdrr.io/pkg/fixest/man/feols.html" class="external-link">fixest::feols()</a></code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -265,17 +265,17 @@
 <ul><li><p><code>center()</code></p></li>
 <li><p><code>convert_data_to_numeric()</code></p></li>
 <li><p><code>data_partition()</code></p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/demean.html" class="external-link">demean()</a></code> (and its aliases <code>degroup()</code> and <code>detrend()</code>)</p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">kurtosis()</a></code></p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/rescale_weights.html" class="external-link">rescale_weights()</a></code></p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/skewness.html" class="external-link">skewness()</a></code></p></li>
+<li><p><code><a href="https://rdrr.io/pkg/datawizard/man/demean.html" class="external-link">demean()</a></code> (and its aliases <code>degroup()</code> and <code>detrend()</code>)</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/datawizard/man/skewness.html" class="external-link">kurtosis()</a></code></p></li>
+<li><p><code><a href="https://rdrr.io/pkg/datawizard/man/rescale_weights.html" class="external-link">rescale_weights()</a></code></p></li>
+<li><p><code><a href="https://rdrr.io/pkg/datawizard/man/skewness.html" class="external-link">skewness()</a></code></p></li>
 <li><p><code>smoothness()</code></p></li>
 </ul></li>
 </ul><p>Note that these functions will be removed in the next release of <em>parameters</em> package and they are currently being re-exported only as a convenience for the package developers. This release should provide them with time to make the necessary changes before this breaking change is implemented.</p>
 <ul><li>
 <p>Following functions were moved to the <em>performance</em> package:</p>
 <ul><li><p><code>check_heterogeneity()</code></p></li>
-<li><p><code><a href="https://easystats.github.io/performance/reference/check_multimodal.html" class="external-link">check_multimodal()</a></code></p></li>
+<li><p><code><a href="https://rdrr.io/pkg/performance/man/check_multimodal.html" class="external-link">check_multimodal()</a></code></p></li>
 </ul></li>
 </ul></div>
 <div class="section level3">
@@ -302,10 +302,10 @@
 <h4 id="other-functions-0-15-0">Other functions<a class="anchor" aria-label="anchor" href="#other-functions-0-15-0"></a></h4>
 <ul><li><p><code><a href="../reference/n_factors.html">n_factors()</a></code> the methods based on fit indices have been fixed and can be included separately (<code>package = "fit"</code>). Also added a <code>n_max</code> argument to crop the output.</p></li>
 <li><p><code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> now also accepts a list of model objects.</p></li>
-<li><p><code><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution()</a></code> gets <code>verbose</code> argument to toggle warnings and messages.</p></li>
+<li><p><code><a href="https://rdrr.io/pkg/datawizard/man/describe_distribution.html" class="external-link">describe_distribution()</a></code> gets <code>verbose</code> argument to toggle warnings and messages.</p></li>
 <li><p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> removes dots and underscores from parameter names, to make these more “human readable”.</p></li>
 <li><p>The experimental calculation of p-values in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> was replaced by a proper calculation p-values. The argument <code>p_value</code> was removed and p-values are now always included.</p></li>
-<li><p>Minor improvements to <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code> and <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code>.</p></li>
+<li><p>Minor improvements to <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">print_html()</a></code> and <code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">print_md()</a></code>.</p></li>
 </ul></div>
 </div>
 <div class="section level3">
@@ -324,7 +324,7 @@
 <h2 class="pkg-version" data-toc-text="0.14.0" id="parameters-0140">parameters 0.14.0<a class="anchor" aria-label="anchor" href="#parameters-0140"></a></h2><p class="text-muted">CRAN release: 2021-05-29</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-14-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-14-0"></a></h3>
-<ul><li><p><code><a href="https://easystats.github.io/performance/reference/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>.</p></li>
+<ul><li><p><code><a href="https://rdrr.io/pkg/performance/man/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="https://rdrr.io/pkg/performance/man/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>.</p></li>
 <li><p>Removed deprecated arguments.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for bootstrapped samples used in <em>emmeans</em> now treats the bootstrap samples as samples from posterior distributions (Bayesian models).</p></li>
 </ul></div>
@@ -381,7 +381,7 @@
 <h4 id="model_parameters-0-13-0"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-13-0"></a></h4>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>blavaan</code> models is now fully treated as Bayesian model and thus relies on the functions from <em>bayestestR</em> (i.e. ROPE, Rhat or ESS are reported) .</p></li>
 <li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://rdrr.io/pkg/insight/man/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
 <li><p>To be internally consistent, the degrees of freedom column for <code>lqm(m)</code> and <code>cgam(m)</code> objects (with <em>t</em>-statistic) is called <code>df_error</code>.</p></li>
@@ -392,12 +392,12 @@
 <div class="section level4">
 <h4 id="other-functions-0-13-0">Other functions<a class="anchor" aria-label="anchor" href="#other-functions-0-13-0"></a></h4>
 <ul><li>
-<code><a href="https://easystats.github.io/datawizard/reference/describe_distribution.html" class="external-link">describe_distribution()</a></code> gets a <code>quartiles</code> argument to include 25th and 75th quartiles of a variable.</li>
+<code><a href="https://rdrr.io/pkg/datawizard/man/describe_distribution.html" class="external-link">describe_distribution()</a></code> gets a <code>quartiles</code> argument to include 25th and 75th quartiles of a variable.</li>
 </ul></div>
 </div>
 <div class="section level3">
 <h3 id="bug-fixes-0-13-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-13-0"></a></h3>
-<ul><li><p>Fixed issue with non-initialized argument <code>style</code> in <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">display()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code>.</p></li>
+<ul><li><p>Fixed issue with non-initialized argument <code>style</code> in <code><a href="https://rdrr.io/pkg/insight/man/display.html" class="external-link">display()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code>.</p></li>
 <li><p>Make <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/compare_parameters.html">compare_parameters()</a></code> work with objects that have “simple” column names for confidence intervals with missing CI-level (i.e. when column is named <code>"CI"</code> instead of, say, <code>"95% CI"</code>).</p></li>
 <li><p>Fixed issue with <code>p_adjust</code> in <code><a href="../reference/model_parameters.html">model_parameters()</a></code>, which did not work for adjustment-methods <code>"BY"</code> and <code>"BH"</code>.</p></li>
 <li><p>Fixed issue with <code>show_sigma</code> in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>

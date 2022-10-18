@@ -194,7 +194,7 @@ and <em>Automatic</em> is of 1.20 standard deviation of <code>mpg</code>
 the <strong>Cohen’s <em>d</em></strong> between these two levels:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/effectsize/" class="external-link">effectsize</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">cohens_d</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/effectsize/man/cohens_d.html" class="external-link">cohens_d</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
 <p><strong><em>It is larger!</em></strong> Why? How? Both differences
 should be expressed in units of SD! But which SDs? Different SDs!</p>
 <p>When looking at the difference between groups as a
@@ -214,11 +214,11 @@ also estimate Cohen’s <em>d</em> as:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sigma.html" class="external-link">sigma</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 <p>And we can also get an approximation of Cohen’s <em>d</em> by
 converting the <span class="math inline">\(t\)</span>-statistic from the
-regression model via <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
+regression model via <code><a href="https://rdrr.io/pkg/effectsize/man/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d</a></span><span class="op">(</span><span class="fl">4.11</span>, df_error <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/effectsize/man/t_to_r.html" class="external-link">t_to_d</a></span><span class="op">(</span><span class="fl">4.11</span>, df_error <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <p>It is also interesting to note that using the <code>smart</code>
 method (explained in detail below) when standardizing parameters will
 give you indices equivalent to <strong>Glass’ <em>delta</em></strong>,
@@ -229,7 +229,7 @@ reference group.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/standardize_parameters.html">standardize_parameters</a></span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/cohens_d.html" class="external-link">glass_delta</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/effectsize/man/cohens_d.html" class="external-link">glass_delta</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">am</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></code></pre></div>
 <p><strong><em>… So note that some standardized differences are
 different than others! :)</em></strong></p>
 </div>
@@ -287,7 +287,7 @@ partial correlation coefficient <em>r</em>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_r</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">t</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, df_error <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">df_error</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/effectsize/man/t_to_r.html" class="external-link">t_to_r</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">t</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, df_error <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">df_error</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>Wow, the retrieved correlations coefficients from the regression
 model are <strong>exactly</strong> the same as the partial correlations
 we estimated above! So these “<em>r</em>” effect sizes can also be
@@ -346,7 +346,7 @@ MADs) of the predictors <span class="citation">(Gelman 2008)</span>.</p>
 the re-fit model, without summarizing it, which can then be used as the
 original model would:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mod_z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">standardize</a></span><span class="op">(</span><span class="va">mod</span>, two_sd <span class="op">=</span> <span class="cn">FALSE</span>, robust <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">mod_z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/datawizard/man/standardize.html" class="external-link">standardize</a></span><span class="op">(</span><span class="va">mod</span>, two_sd <span class="op">=</span> <span class="cn">FALSE</span>, robust <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">mod_z</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod_z</span><span class="op">)</span></span></code></pre></div>
@@ -454,7 +454,7 @@ rates and probabilities are changed by arbitrary linear
 transformations.</p>
 <p>But still, some standardization is sometimes needed, for the
 predictors. Luckily, <code><a href="../reference/standardize_parameters.html">standardize_parameters()</a></code> (and
-<code><a href="https://easystats.github.io/datawizard/reference/standardize.html" class="external-link">standardize()</a></code>) are smart enough to know when GLMs are
+<code><a href="https://rdrr.io/pkg/datawizard/man/standardize.html" class="external-link">standardize()</a></code>) are smart enough to know when GLMs are
 passed so as to only standardize according to the predictors:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod_b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="va">mpg</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>,</span>
