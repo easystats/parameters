@@ -36,6 +36,8 @@ standardize_posteriors(
 \code{"refit"} (default), \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{"pseudo"}. See
 'Details'.}
 
+\item{ci}{Confidence Interval (CI) level}
+
 \item{robust}{Logical, if \code{TRUE}, centering is done by subtracting the
 median from the variables and dividing it by the median absolute deviation
 (MAD). If \code{FALSE}, variables are standardized by subtracting the
