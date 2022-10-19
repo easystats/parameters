@@ -213,13 +213,13 @@ package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/" class="external-link">performance</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_normality.html" class="external-link">check_normality</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_normality.html" class="external-link">check_normality</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; OK: residuals appear as normally distributed (p = 0.612).</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_heteroscedasticity.html" class="external-link">check_heteroscedasticity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_heteroscedasticity.html" class="external-link">check_heteroscedasticity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; OK: Error variance appears to be homoscedastic (p = 0.118).</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_autocorrelation.html" class="external-link">check_autocorrelation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_autocorrelation.html" class="external-link">check_autocorrelation</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; OK: Residuals appear to be independent and not autocorrelated (p = 0.574).</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/check_collinearity.html" class="external-link">check_collinearity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://easystats.github.io/performance/reference/check_collinearity.html" class="external-link">check_collinearity</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Check for Multicollinearity</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; High Correlation</span></span>
@@ -261,8 +261,8 @@ the best variables and update the model accordingly. One way of using
 that is in a tidy pipeline (using <a href="https://cran.r-project.org/package=magrittr/" class="external-link"><code>%&gt;%</code></a>),
 using this output to update a new model.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Call:</span></span>
@@ -329,7 +329,7 @@ further.</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linear mixed model fit by REML ['lmerMod']</span></span>
 <span><span class="co">#&gt; Formula: QoL ~ time + phq4 + age + (1 + time | hospital/ID)</span></span>
@@ -343,17 +343,17 @@ further.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Random effects:</span></span>
 <span><span class="co">#&gt;  Groups      Name        Variance Std.Dev. Corr </span></span>
-<span><span class="co">#&gt;  ID:hospital (Intercept) 202.49   14.23         </span></span>
+<span><span class="co">#&gt;  ID:hospital (Intercept) 202.48   14.23         </span></span>
 <span><span class="co">#&gt;              time         12.54    3.54    -0.72</span></span>
-<span><span class="co">#&gt;  hospital    (Intercept)   8.49    2.91         </span></span>
-<span><span class="co">#&gt;              time          1.27    1.13    -1.00</span></span>
+<span><span class="co">#&gt;  hospital    (Intercept)   8.54    2.92         </span></span>
+<span><span class="co">#&gt;              time          1.28    1.13    -1.00</span></span>
 <span><span class="co">#&gt;  Residual                143.11   11.96         </span></span>
 <span><span class="co">#&gt; Number of obs: 564, groups:  ID:hospital, 188; hospital, 2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error t value</span></span>
-<span><span class="co">#&gt; (Intercept)  70.6498     3.1302   22.57</span></span>
-<span><span class="co">#&gt; time          1.4902     1.2203    1.22</span></span>
+<span><span class="co">#&gt; (Intercept)  70.6456     3.1363   22.52</span></span>
+<span><span class="co">#&gt; time          1.4920     1.2230    1.22</span></span>
 <span><span class="co">#&gt; phq4         -4.7687     0.3235  -14.74</span></span>
 <span><span class="co">#&gt; age          -0.0173     0.1889   -0.09</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -361,7 +361,7 @@ further.</p>
 <span><span class="co">#&gt;      (Intr) time   phq4  </span></span>
 <span><span class="co">#&gt; time -0.954              </span></span>
 <span><span class="co">#&gt; phq4  0.014 -0.010       </span></span>
-<span><span class="co">#&gt; age  -0.017  0.003  0.107</span></span>
+<span><span class="co">#&gt; age  -0.017  0.004  0.107</span></span>
 <span><span class="co">#&gt; optimizer (nloptwrap) convergence code: 0 (OK)</span></span>
 <span><span class="co">#&gt; boundary (singular) fit: see help('isSingular')</span></span></code></pre></div>
 <p>This is the model selected by <code><a href="../reference/select_parameters.html">select_parameters()</a></code>.
@@ -376,8 +376,8 @@ the initial and the selected models:</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
-<span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>

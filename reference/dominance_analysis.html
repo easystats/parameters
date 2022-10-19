@@ -106,7 +106,7 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
-<dd><p>A model object supported by <code><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">performance::r2()</a></code>. See 'Details'.</p></dd>
+<dd><p>A model object supported by <code><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">performance::r2()</a></code>. See 'Details'.</p></dd>
 
 
 <dt>sets</dt>
@@ -209,7 +209,7 @@ as an intercept. The "all" subset is apportioned a component of the fit
 statistic but is not considered a part of the dominance analysis and
 therefore does not receive a rank, conditional dominance statistics, or
 complete dominance designations.</p>
-<p>The input model is parsed using <code><a href="https://rdrr.io/pkg/insight/man/find_predictors.html" class="external-link">insight::find_predictors()</a></code>, does not
+<p>The input model is parsed using <code><a href="https://easystats.github.io/insight/reference/find_predictors.html" class="external-link">insight::find_predictors()</a></code>, does not
 yet support interactions, transformations, or offsets applied in the
 R formula, and will fail with an error if any such terms are detected.</p>
 <p>The model submitted must accept an formula object as a <code>formula</code>
@@ -218,11 +218,11 @@ the model is estimated as a <code>data</code> argument.  Formulas submitted
 using object references (i.e., <code>lm(mtcars$mpg ~ mtcars$vs)</code>) and
 functions that accept data as a non-<code>data</code> argument
 (e.g., <code><a href="https://rdrr.io/pkg/survey/man/svyglm.html" class="external-link">survey::svyglm()</a></code> uses <code>design</code>) will fail with an error.</p>
-<p>Models that return <code>TRUE</code> for the <code><a href="https://rdrr.io/pkg/insight/man/model_info.html" class="external-link">insight::model_info()</a></code>
+<p>Models that return <code>TRUE</code> for the <code><a href="https://easystats.github.io/insight/reference/model_info.html" class="external-link">insight::model_info()</a></code>
 function's values "is_bayesian", "is_mixed", "is_gam",
 is_multivariate", "is_zero_inflated",
 or "is_hurdle" are not supported at current.</p>
-<p>When <code><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">performance::r2()</a></code> returns multiple values, only the first is used
+<p>When <code><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">performance::r2()</a></code> returns multiple values, only the first is used
 by default.</p>
 <p>The underlying <code><a href="https://rdrr.io/pkg/domir/man/domin.html" class="external-link">domir::domin()</a></code> function that implements the dominance
 statistic and designation computations has only been tested to R version
@@ -259,7 +259,7 @@ regression based on variance decomposition. The American Statistician,
 <span class="r-in"><span>  <span class="co"># Dominance Analysis with Logit Regression</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">carb</span> <span class="op">+</span> <span class="va">mpg</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/performance/man/r2.html" class="external-link">r2</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">performance</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/performance/reference/r2.html" class="external-link">r2</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">dominance_analysis</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Dominance Analysis with Weighted Logit Regression</span></span></span>
