@@ -24,6 +24,8 @@
 
 * Minor speed improvements.
 
+* Fix issue #746.  Export S3 methods for `model_parameters()` generic.   @jimrothstein 
+
 ## Bug fix
 
 * `model_parameters().BFBayesFactor` no longer drops the `BF` column if the
