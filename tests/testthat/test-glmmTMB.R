@@ -3,7 +3,8 @@
 if (.runThisTest &&
   requiet("testthat") &&
   requiet("parameters") &&
-  requiet("glmmTMB")) {
+  requiet("glmmTMB") &&
+  getRversion() >= "4.0.0") {
   data("fish")
   data("Salamanders")
 
