@@ -200,7 +200,9 @@ library(parameters)
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 
 # Automated number of components
-principal_components(mtcars[, 1:4], n = "auto")
+if (require("nFactors")) {
+  principal_components(mtcars[, 1:4], n = "auto")
+}
 
 # Sparse PCA
 if (require("sparsepca")) {
@@ -223,7 +225,6 @@ if (require("psych")) {
 
   # which variables from the original data belong to which extracted component?
   closest_component(pca)
-  # rotated_data(pca)  # TODO: doesn't work
 }
 }
 
