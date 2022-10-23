@@ -792,7 +792,7 @@ format.parameters_sem <- function(x,
 
         # sampling method
         if (isTRUE(bootstrap)) {
-          sampling_method <- "na\u0131ve bootstrap"
+          sampling_method <- ifelse(isTRUE(.unicode_symbols()), "na\u0131ve bootstrap", "naive bootstrap")
         } else if (isTRUE(simulated)) {
           sampling_method <- "simulated multivariate normal"
         } else {
