@@ -36,6 +36,10 @@
 * Fixed footer message regarding the approximation method for CU and p-values
   for mixed models.
 
+* Fixed issues in the `print()` method for `compare_parameters()` with mixed
+  models, when some models contained within-between components (see
+  `wb_component`) and others did not.
+
 # parameters 0.19.0
 
 ## Breaking
