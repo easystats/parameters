@@ -192,7 +192,7 @@
 
   # pd?
   if (isTRUE(dot.arguments[["pd"]]) && !is.null(params[["p"]])) {
-    params$pd[!is.na(params[["p"]])] <- bayestestR::p_to_pd(params[["p"]][!is.na(params[["p"]])])
+    params$pd <- bayestestR::p_to_pd(params[["p"]])
   }
 
   # add CI, and reorder
