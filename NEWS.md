@@ -13,8 +13,8 @@
 
 * `model_parameters()` and `compare_parameters()` now use the unicode character
   for the multiplication-sign as interaction mark (i.e. `\u00d7`). Use
-  `options(parameters_select = <value>)` or the argument `interaction_mark` to
-  use a different character as interaction mark.
+  `options(parameters_interaction = <value>)` or the argument `interaction_mark`
+  to use a different character as interaction mark.
 
 * The `style` argument in `compare_parameters()`, which is used to control the
   table column elements, now supports an experimental glue-like syntax.
