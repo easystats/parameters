@@ -172,7 +172,7 @@ predict.parameters_efa <- function(object,
     } else if (inherits(attri$model, c("spca"))) {
       # https://github.com/erichson/spca/issues/7
       newdata <- newdata[names(attri$model$center)]
-      if(attri$standardize == TRUE) {
+      if (attri$standardize == TRUE) {
         newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
         newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
       }

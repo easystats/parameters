@@ -361,7 +361,8 @@ format.compare_parameters <- function(x,
       if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
       # format table captions for sub tables
       table_caption <- .format_model_component_header(
-        x, type = tab, split_column = tab, is_zero_inflated = FALSE,
+        x,
+        type = tab, split_column = tab, is_zero_inflated = FALSE,
         is_ordinal_model = FALSE, is_multivariate = FALSE, ran_pars = FALSE,
         formatted_table = i
       )
@@ -763,13 +764,12 @@ format.parameters_sem <- function(x,
 
     # prepare strings
     if (!is.null(ci_method)) {
-
       # only random effects? no message for fixed effects ci-approximation
       if (!is.null(x$Effects) && all(x$Effects == "random")) {
         msg <- "\n"
         string_method <- ""
 
-      # here we have fixed effects only, or fixed and random effects
+        # here we have fixed effects only, or fixed and random effects
       } else {
         # since `.format_ci_method_name()` changes the CI method names to have a
         # mix of cases, standardize them by converting to lower case
@@ -845,8 +845,8 @@ format.parameters_sem <- function(x,
         (!string_method %in% c("Wald z-", "Wald normal") || !ci_method %in% c("wald", "normal"))) ||
         # OR must be merMod
         ((identical(model_class, "lmerMod") || identical(model_class, "glmerMod")) &&
-        # and not Wald CIs
-        !ci_method %in% c("wald", "normal", "profile", "boot"))
+          # and not Wald CIs
+          !ci_method %in% c("wald", "normal", "profile", "boot"))
 
       if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
         msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")

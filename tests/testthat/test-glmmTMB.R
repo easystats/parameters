@@ -37,7 +37,7 @@ if (.runThisTest &&
 
   m3 <- suppressWarnings(glmmTMB(
     count ~ spp + mined + (1 | site),
-    ziformula =  ~ spp + mined,
+    ziformula = ~ spp + mined,
     family = nbinom2,
     data = Salamanders
   ))
