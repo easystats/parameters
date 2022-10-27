@@ -138,6 +138,9 @@ n_factors <- function(x,
     nobs <- nrow(x)
   }
 
+  # Get only numeric
+  x <- x[sapply(x, is.numeric)]
+
   # Correlation matrix
   if (is.null(cor)) {
     cor <- stats::cor(x, use = "pairwise.complete.obs", ...)
