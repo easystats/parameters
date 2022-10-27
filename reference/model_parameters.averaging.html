@@ -905,27 +905,27 @@ columns into a consistent, standardized naming scheme.</p></div>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Response level: definitely</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter       | Log-Odds |   SE |         95% CI |     z |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     |    -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> religion        |     0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female] |    -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 0.414 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Log-Odds |   SE |         95% CI |     z |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          |    -1.25 | 0.26 | [-1.76, -0.73] | -4.76 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as numeric(religion) |     0.44 | 0.10 | [ 0.23,  0.64] |  4.20 | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female]      |    -0.14 | 0.17 | [-0.47,  0.19] | -0.82 | 0.414 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Response level: probably</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter       | Log-Odds |   SE |        95% CI |    z |     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     |     0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 0.105</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> religion        |     0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 0.044</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female] |     0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 0.370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Log-Odds |   SE |        95% CI |    z |     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          |     0.47 | 0.29 | [-0.10, 1.04] | 1.62 | 0.105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as numeric(religion) |     0.26 | 0.13 | [ 0.01, 0.51] | 2.01 | 0.044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female]      |     0.19 | 0.21 | [-0.22, 0.60] | 0.90 | 0.370</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> # Response level: probably not</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter       | Log-Odds |   SE |        95% CI |     z |     p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     |     0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 0.268</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> religion        |     0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female] |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            | Log-Odds |   SE |        95% CI |     z |     p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          |     0.43 | 0.39 | [-0.33, 1.18] |  1.11 | 0.268</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as numeric(religion) |     0.01 | 0.17 | [-0.33, 0.35] |  0.07 | 0.945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gender [female]      |    -0.16 | 0.28 | [-0.71, 0.39] | -0.57 | 0.566</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald z-distribution approximation.</span>
