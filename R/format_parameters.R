@@ -314,7 +314,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_factor <- function(name, variable, brackets = c("[", "]")) {
-  level <- sub(variable, "", name)
+  level <- sub(variable, "", name, fixed = TRUE)
 
   # special handling for "cut()"
   pattern_cut_right <- "^\\((.*),(.*)\\]$"
