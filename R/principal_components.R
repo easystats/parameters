@@ -263,7 +263,7 @@ principal_components.data.frame <- function(x,
   x <- stats::na.omit(x)
 
   # Select numeric only
-  x <- x[sapply(x, is.numeric)]
+  x <- x[vapply(x, is.numeric, logical(1))]
 
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
@@ -456,9 +456,6 @@ principal_components.data.frame <- function(x,
 
   # rotate loadings
   insight::check_if_installed("psych", reason = sprintf("`%s`-rotation.", rotation))
-  if (!requireNamespace("psych", quietly = TRUE)) {
-    insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
-  }
 
   pca <- psych::principal(x, nfactors = n, rotate = rotation, ...)
   msa <- psych::KMO(x)
