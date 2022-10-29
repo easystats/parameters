@@ -13,8 +13,8 @@
 
 * `model_parameters()` and `compare_parameters()` now use the unicode character
   for the multiplication-sign as interaction mark (i.e. `\u00d7`). Use
-  `options(parameters_select = <value>)` or the argument `interaction_mark` to
-  use a different character as interaction mark.
+  `options(parameters_interaction = <value>)` or the argument `interaction_mark`
+  to use a different character as interaction mark.
 
 * The `style` argument in `compare_parameters()`, which is used to control the
   table column elements, now supports an experimental glue-like syntax.
@@ -37,6 +37,10 @@
 
 * Fixed footer message regarding the approximation method for CU and p-values
   for mixed models.
+
+* Fixed issues in the `print()` method for `compare_parameters()` with mixed
+  models, when some models contained within-between components (see
+  `wb_component`) and others did not.
 
 # parameters 0.19.0
 

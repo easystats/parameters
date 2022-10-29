@@ -50,7 +50,8 @@ format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   # check for valid input
   .is_model_valid(model)
 
-  tryCatch(.format_parameter_default(model, brackets = brackets, ...),
+  tryCatch(
+    .format_parameter_default(model, brackets = brackets, ...),
     error = function(e) NULL
   )
 }
@@ -314,7 +315,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 #' @keywords internal
 .format_factor <- function(name, variable, brackets = c("[", "]")) {
-  level <- sub(variable, "", name)
+  level <- sub(variable, "", name, fixed = TRUE)
 
   # special handling for "cut()"
   pattern_cut_right <- "^\\((.*),(.*)\\]$"

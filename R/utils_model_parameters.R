@@ -16,7 +16,7 @@
                                              wb_component = FALSE,
                                              ...) {
   # capture additional arguments
-  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  dot.arguments <- list(...)
 
   # model info
   info <- tryCatch(suppressWarnings(insight::model_info(model, verbose = FALSE)),
@@ -158,38 +158,42 @@
 
   # should coefficients be grouped?
   if ("groups" %in% names(dot.arguments)) {
-    attr(params, "coef_groups") <- eval(dot.arguments[["groups"]])
+    attr(params, "coef_groups") <- dot.arguments[["groups"]]
   }
 
   # now comes all the digits stuff...
   if ("digits" %in% names(dot.arguments)) {
-    attr(params, "digits") <- eval(dot.arguments[["digits"]])
+    attr(params, "digits") <- dot.arguments[["digits"]]
   } else {
     attr(params, "digits") <- 2
   }
 
   if ("ci_digits" %in% names(dot.arguments)) {
-    attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+    attr(params, "ci_digits") <- dot.arguments[["ci_digits"]]
   } else {
     attr(params, "ci_digits") <- 2
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
-    attr(params, "p_digits") <- eval(dot.arguments[["p_digits"]])
+    attr(params, "p_digits") <- dot.arguments[["p_digits"]]
   } else {
     attr(params, "p_digits") <- 3
   }
 
   if ("footer_digits" %in% names(dot.arguments)) {
-    attr(params, "footer_digits") <- eval(dot.arguments[["footer_digits"]])
+    attr(params, "footer_digits") <- dot.arguments[["footer_digits"]]
   } else {
     attr(params, "footer_digits") <- 3
   }
 
   if ("s_value" %in% names(dot.arguments)) {
-    attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
+    attr(params, "s_value") <- dot.arguments[["s_value"]]
   }
 
+  # pd?
+  if (isTRUE(dot.arguments[["pd"]]) && !is.null(params[["p"]])) {
+    params$pd <- bayestestR::p_to_pd(params[["p"]])
+  }
 
   # add CI, and reorder
   if (!"CI" %in% colnames(params) && length(ci) == 1) {

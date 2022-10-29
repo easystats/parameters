@@ -129,6 +129,7 @@ parameters_type <- function(model, ...) {
       }
     }
   }
+
   for (i in unique(out$Secondary_Parameter)) {
     if (!is.na(i) && i %in% out$Parameter) {
       .param_type <- out[!is.na(out$Parameter) & out$Parameter == i, "Type"]
@@ -152,8 +153,6 @@ parameters_type <- function(model, ...) {
   names(out) <- c("Type", "Link", "Term", "Variable", "Level", "Secondary_Parameter")
   out
 }
-
-
 
 
 
@@ -269,7 +268,7 @@ parameters_type <- function(model, ...) {
     return(c(type, "Association", name, var, NA, NA))
 
     # sqrt-transformation
-  } else if (grepl("sqrt\\(", name)) {
+  } else if (grepl("sqrt(", name, fixed = TRUE)) {
     type <- "squareroot"
     var <- gsub("sqrt\\((.*)\\)", "\\1", name)
     if (grepl(",", var, fixed = TRUE)) {
@@ -305,14 +304,8 @@ parameters_type <- function(model, ...) {
     subs <- "\\2"
   }
   p <- "(.*)poly\\((.*),\\s(.*)\\)(.*)"
-  tryCatch(
-    {
-      insight::trim_ws(sub(p, replacement = subs, x))
-    },
-    error = function(x) {
-      1
-    }
-  )
+  tryCatch(insight::trim_ws(sub(p, replacement = subs, x)),
+           error = function(x) 1)
 }
 
 
@@ -328,14 +321,7 @@ parameters_type <- function(model, ...) {
   out$numeric <- names(data[sapply(data, .check_for_numerics)])
 
   # get contrast coding
-  contrast_coding <- tryCatch(
-    {
-      model$contrasts
-    },
-    error = function(e) {
-      NULL
-    }
-  )
+  contrast_coding <- tryCatch(model$contrasts, error = function(e) NULL)
 
   # if contrasts are given as matrix, find related contrast name
   if (!is.null(contrast_coding)) {
@@ -364,10 +350,10 @@ parameters_type <- function(model, ...) {
   }
 
   # Ordered factors
-  out$ordered <- names(data[sapply(data, is.ordered)])
+  out$ordered <- names(data[vapply(data, is.ordered, logical(1))])
 
   # Factors
-  out$factor <- names(data[sapply(data, is.factor) | sapply(data, is.character)])
+  out$factor <- names(data[vapply(data, is.factor, logical(1)) | vapply(data, is.character, logical(1))])
 
   out$levels <- NA
   out$levels_parent <- NA

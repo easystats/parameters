@@ -27,8 +27,10 @@ if (requiet("testthat") &&
     params <- parameters::model_parameters(model)
     expect_equal(
       colnames(params),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Prior_Distribution",
-      "Prior_Location", "Prior_Scale", "BF", "Method")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Prior_Distribution",
+        "Prior_Location", "Prior_Scale", "BF", "Method"
+      )
     )
     expect_true(is.na(params$BF))
   })

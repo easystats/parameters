@@ -131,12 +131,16 @@ n_factors <- function(x,
       nobs <- x
       package <- package[!package %in% c("pcdimension", "PCDimension")]
     } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
-      stop("Please input the correlation matrix via the `cor = ...` argument and
-           the number of rows / observations via the first argument.")
+      insight::format_error(
+        "Please input the correlation matrix via the `cor = ...` argument and the number of rows / observations via the first argument."
+      )
     }
   } else {
     nobs <- nrow(x)
   }
+
+  # Get only numeric
+  x <- x[vapply(x, is.numeric, logical(1))]
 
   # Correlation matrix
   if (is.null(cor)) {

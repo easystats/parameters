@@ -693,5 +693,5 @@ model_parameters.glm <- function(model,
   out
 }
 
-#' @export 
-model_parameters.zoo  <- model_parameters.default
+#' @export
+model_parameters.zoo <- model_parameters.default

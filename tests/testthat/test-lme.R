@@ -12,7 +12,7 @@ m1 <- nlme::lme(Reaction ~ Days,
 data("Orthodont")
 m2 <- nlme::lme(
   distance ~ age + Sex,
-  random =  ~ 1 | Subject,
+  random = ~ 1 | Subject,
   data = Orthodont,
   method = "ML"
 )

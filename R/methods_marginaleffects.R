@@ -28,7 +28,11 @@ model_parameters.marginaleffects <- function(model,
   if (inherits(model, "marginalmeans")) {
     attr(out, "coefficient_name") <- "Marginal Means"
   } else if (inherits(model, "comparisons")) {
-    attr(out, "coefficient_name") <- "Contrast"
+    attr(out, "coefficient_name") <- "Estimate"
+    attr(out, "title") <- "Contrasts between Adjusted Predictions"
+    if ("Type" %in% colnames(out)) {
+      attr(out, "prediction_type") <- out$Type[1]
+    }
   } else if (inherits(model, "marginaleffects")) {
     attr(out, "coefficient_name") <- "Slope"
   } else if (inherits(model, "predictions")) {

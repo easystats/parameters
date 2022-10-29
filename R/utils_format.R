@@ -19,31 +19,31 @@
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
     x <- x[c(coef_column, "p")]
 
-  # style: estimate, p-stars and CI
+    # style: estimate, p-stars and CI
   } else if (style %in% c("ci_p", "ci")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, x[[ci_column]]))
     x <- x[coef_column]
 
-  # style: estimate, p-stars and SE
+    # style: estimate, p-stars and SE
   } else if (style %in% c("se_p", "se")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, "(", x$SE, ")"))
     x <- x[coef_column]
 
-  # style: estimate and CI, p-value in separate column
+    # style: estimate and CI, p-value in separate column
   } else if (style %in% c("ci_p2")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
     x <- x[c(coef_column, "p")]
 
-  # style: estimate and SE, p-value in separate column
+    # style: estimate and SE, p-value in separate column
   } else if (style %in% c("se_p2")) {
     x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, "(", x$SE, ")"))
     x <- x[c(coef_column, "p")]
 
-  # style: only estimate
+    # style: only estimate
   } else if (style %in% c("est", "coef")) {
     x <- x[1]
 
-  # glue styled column layout
+    # glue styled column layout
   } else if (grepl("{", style, fixed = TRUE)) {
     x <- .format_glue_output(x, coef_column, ci_column, style, format, modelname)
   }

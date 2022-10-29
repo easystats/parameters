@@ -143,7 +143,9 @@
 #' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'
 #' # Automated number of components
-#' principal_components(mtcars[, 1:4], n = "auto")
+#' if (require("nFactors")) {
+#'   principal_components(mtcars[, 1:4], n = "auto")
+#' }
 #'
 #' # Sparse PCA
 #' if (require("sparsepca")) {
@@ -166,7 +168,6 @@
 #'
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
-#'   # rotated_data(pca)  # TODO: doesn't work
 #' }
 #' }
 #'
@@ -260,6 +261,9 @@ principal_components.data.frame <- function(x,
 
   # remove missing
   x <- stats::na.omit(x)
+
+  # Select numeric only
+  x <- x[vapply(x, is.numeric, logical(1))]
 
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
@@ -452,9 +456,6 @@ principal_components.data.frame <- function(x,
 
   # rotate loadings
   insight::check_if_installed("psych", reason = sprintf("`%s`-rotation.", rotation))
-  if (!requireNamespace("psych", quietly = TRUE)) {
-    insight::format_error(sprintf("Package `psych` required for `%s`-rotation.", rotation))
-  }
 
   pca <- psych::principal(x, nfactors = n, rotate = rotation, ...)
   msa <- psych::KMO(x)

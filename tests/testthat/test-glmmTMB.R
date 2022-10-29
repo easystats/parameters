@@ -3,7 +3,8 @@
 if (.runThisTest &&
   requiet("testthat") &&
   requiet("parameters") &&
-  requiet("glmmTMB")) {
+  requiet("glmmTMB") &&
+  getRversion() >= "4.0.0") {
   data("fish")
   data("Salamanders")
 
@@ -36,7 +37,7 @@ if (.runThisTest &&
 
   m3 <- suppressWarnings(glmmTMB(
     count ~ spp + mined + (1 | site),
-    ziformula =  ~ spp + mined,
+    ziformula = ~ spp + mined,
     family = nbinom2,
     data = Salamanders
   ))
