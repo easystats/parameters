@@ -142,17 +142,28 @@ may be one of <code>"conditional"</code>, <code>"zi"</code>, <code>"zero-inflate
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><strong>Technical Details</strong></p>
+    
+<div class="section">
+<h3 id="technical-details">Technical Details<a class="anchor" aria-label="anchor" href="#technical-details"></a></h3>
+
+
 <p><code>simulate_model()</code> is a computationally faster alternative
 to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>. Simulated draws for coefficients are based
 on a multivariate normal distribution (<code><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">MASS::mvrnorm()</a></code>) with mean
 <code>mu = coef(model)</code> and variance <code>Sigma = vcov(model)</code>.</p>
-<p><strong>Models with Zero-Inflation Component</strong></p>
+</div>
+
+<div class="section">
+<h3 id="models-with-zero-inflation-component">Models with Zero-Inflation Component<a class="anchor" aria-label="anchor" href="#models-with-zero-inflation-component"></a></h3>
+
+
 <p>For models from packages <strong>glmmTMB</strong>, <strong>pscl</strong>, <strong>GLMMadaptive</strong> and
 <strong>countreg</strong>, the <code>component</code> argument can be used to specify
 which parameters should be simulated. For all other models, parameters
 from the conditional component (fixed effects) are simulated. This may
 include smooth terms, but not random effects.</p>
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
