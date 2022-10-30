@@ -57,8 +57,7 @@ fixed effects from restricted maximum likelihood. Biometrics, 983-997.
 \code{dof_kenward()} and \code{se_kenward()} are small helper-functions
 to calculate approximated degrees of freedom and standard errors for model
 parameters, based on the Kenward-Roger (1997) approach.
-\cr \cr
-\code{\link[=dof_satterthwaite]{dof_satterthwaite()}} and
-\code{\link[=dof_ml1]{dof_ml1()}} approximate degrees
-of freedom based on Satterthwaite's method or the "m-l-1" rule.
+
+\code{\link[=dof_satterthwaite]{dof_satterthwaite()}} and \code{\link[=dof_ml1]{dof_ml1()}} approximate degrees of freedom
+based on Satterthwaite's method or the "m-l-1" rule.
 }

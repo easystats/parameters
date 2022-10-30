@@ -15,32 +15,29 @@
 #'   including number of levels per random effect group, as well as complete
 #'   observations in the model.
 #'
-#' @details The variance components are obtained from [insight::get_variance()]
-#' and are denoted as following:
+#' @details
+#' The variance components are obtained from [`insight::get_variance()`] and
+#' are denoted as following:
 #'
-#' **Within-group (or residual) variance**
-#'
+#' ## Within-group (or residual) variance
 #' The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
 #' is the sum of the distribution-specific variance and the variance due to additive dispersion.
 #' It indicates the *within-group variance*.
 #'
-#' **Between-group random intercept variance**
-#'
+#' ## Between-group random intercept variance
 #' The random intercept variance, or *between-group* variance
 #' for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
 #' is obtained from `VarCorr()`. It indicates how much groups
 #' or subjects differ from each other.
 #'
-#' **Between-group random slope variance**
-#'
+#' ## Between-group random slope variance
 #' The random slope variance, or *between-group* variance
 #' for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
 #' is obtained from `VarCorr()`. This measure is only available
 #' for mixed models with random slopes. It indicates how much groups
 #' or subjects differ from each other according to their slopes.
 #'
-#' **Random slope-intercept correlation**
-#'
+#' ## Random slope-intercept correlation
 #' The random slope-intercept correlation
 #' (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
 #' is obtained from `VarCorr()`. This measure is only available

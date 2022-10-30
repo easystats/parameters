@@ -22,6 +22,7 @@
 #' [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #' for `lavaan` models implemented in the
 #' [**see**-package](https://easystats.github.io/see/).
+#'
 #' @details
 #'  For the structural models obtained with **psych**, the following indices
 #'  are present:
