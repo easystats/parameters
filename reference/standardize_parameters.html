@@ -173,8 +173,11 @@ the model type) and their CIs (<code>CI_low</code> and <code>CI_high</code>). Wh
 standard errors (SEs) are returned as an attribute (<code>attr(x, "standard_error")</code>).</p>
     </div>
     <div class="section level2">
-    <h2 id="standardization-methods">Standardization Methods<a class="anchor" aria-label="anchor" href="#standardization-methods"></a></h2>
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
+<div class="section">
+<h3 id="standardization-methods">Standardization Methods<a class="anchor" aria-label="anchor" href="#standardization-methods"></a></h3>
+
 <ul><li><p><strong>refit</strong>: This method is based on a complete model re-fit with a
 standardized version of the data. Hence, this method is equal to
 standardizing the variables before fitting the model. It is the "purest" and
@@ -225,9 +228,12 @@ is used for level 2 predictors, and <code>sqrt(residual-variance)</code> is used
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 within-group variable is found to have access between-group variance.</p></li>
 </ul></div>
-    <div class="section level2">
-    <h2 id="transformed-variables">Transformed Variables<a class="anchor" aria-label="anchor" href="#transformed-variables"></a></h2>
-    <p>When the model's formula contains transformations (e.g. <code>y ~ exp(X)</code>) <code>method = "refit"</code> will give different results compared to <code>method = "basic"</code>
+
+<div class="section">
+<h3 id="transformed-variables">Transformed Variables<a class="anchor" aria-label="anchor" href="#transformed-variables"></a></h3>
+
+
+<p>When the model's formula contains transformations (e.g. <code>y ~ exp(X)</code>) <code>method = "refit"</code> will give different results compared to <code>method = "basic"</code>
 (<code>"posthoc"</code> and <code>"smart"</code> do not support such transformations): While
 <code>"refit"</code> standardizes the data <em>prior</em> to the transformation (e.g.
 equivalent to <code>exp(scale(X))</code>), the <code>"basic"</code> method standardizes the
@@ -235,30 +241,41 @@ transformed data (e.g. equivalent to <code>scale(exp(X))</code>).
 <br><br>
 See the <em>Transformed Variables</em> section in <code>standardize.default()</code> for more
 details on how different transformations are dealt with when <code>method = "refit"</code>.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="confidence-intervals">Confidence Intervals<a class="anchor" aria-label="anchor" href="#confidence-intervals"></a></h2>
-    <p>The returned confidence intervals are re-scaled versions of the
+</div>
+
+<div class="section">
+<h3 id="confidence-intervals">Confidence Intervals<a class="anchor" aria-label="anchor" href="#confidence-intervals"></a></h3>
+
+
+<p>The returned confidence intervals are re-scaled versions of the
 unstandardized confidence intervals, and not "true" confidence intervals of
 the standardized coefficients (cf. Jones &amp; Waller, 2015).</p>
-    </div>
-    <div class="section level2">
-    <h2 id="generalized-linear-models">Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"></a></h2>
-    <p>Standardization for generalized linear models (GLM, GLMM, etc) is done only
+</div>
+
+<div class="section">
+<h3 id="generalized-linear-models">Generalized Linear Models<a class="anchor" aria-label="anchor" href="#generalized-linear-models"></a></h3>
+
+
+<p>Standardization for generalized linear models (GLM, GLMM, etc) is done only
 with respect to the predictors (while the outcome remains as-is,
 unstandardized) - maintaining the interpretability of the coefficients (e.g.,
 in a binomial model: the exponent of the standardized parameter is the OR of
 a change of 1 SD in the predictor, etc.)</p>
-    </div>
-    <div class="section level2">
-    <h2 id="dealing-with-factors">Dealing with Factors<a class="anchor" aria-label="anchor" href="#dealing-with-factors"></a></h2>
-    <p><code>standardize(model)</code> or <code>standardize_parameters(model, method = "refit")</code> do
+</div>
+
+<div class="section">
+<h3 id="dealing-with-factors">Dealing with Factors<a class="anchor" aria-label="anchor" href="#dealing-with-factors"></a></h3>
+
+
+<p><code>standardize(model)</code> or <code>standardize_parameters(model, method = "refit")</code> do
 <em>not</em> standardize categorical predictors (i.e. factors) / their
 dummy-variables, which may be a different behaviour compared to other R
 packages (such as <span class="pkg">lm.beta</span>) or other software packages (like SPSS). To
 mimic such behaviours, either use <code>standardize_parameters(model, method = "basic")</code> to obtain post-hoc standardized parameters, or standardize the data
 with <code>datawizard::standardize(data, force = TRUE)</code> <em>before</em> fitting the
 model.</p>
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
