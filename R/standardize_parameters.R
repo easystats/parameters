@@ -20,7 +20,7 @@
 #'
 #' @details
 #'
-#' # Standardization Methods
+#' ## Standardization Methods
 #' - **refit**: This method is based on a complete model re-fit with a
 #' standardized version of the data. Hence, this method is equal to
 #' standardizing the variables before fitting the model. It is the "purest" and
@@ -72,7 +72,7 @@
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 #' within-group variable is found to have access between-group variance.
 #'
-#' # Transformed Variables
+#' ## Transformed Variables
 #' When the model's formula contains transformations (e.g. `y ~ exp(X)`) `method
 #' = "refit"` will give different results compared to `method = "basic"`
 #' (`"posthoc"` and `"smart"` do not support such transformations): While
@@ -84,19 +84,19 @@
 #' details on how different transformations are dealt with when `method =
 #' "refit"`.
 #'
-#' # Confidence Intervals
+#' ## Confidence Intervals
 #' The returned confidence intervals are re-scaled versions of the
 #' unstandardized confidence intervals, and not "true" confidence intervals of
 #' the standardized coefficients (cf. Jones & Waller, 2015).
 #'
-#' # Generalized Linear Models
+#' ## Generalized Linear Models
 #' Standardization for generalized linear models (GLM, GLMM, etc) is done only
 #' with respect to the predictors (while the outcome remains as-is,
 #' unstandardized) - maintaining the interpretability of the coefficients (e.g.,
 #' in a binomial model: the exponent of the standardized parameter is the OR of
 #' a change of 1 SD in the predictor, etc.)
 #'
-#' # Dealing with Factors
+#' ## Dealing with Factors
 #' `standardize(model)` or `standardize_parameters(model, method = "refit")` do
 #' *not* standardize categorical predictors (i.e. factors) / their
 #' dummy-variables, which may be a different behaviour compared to other R
