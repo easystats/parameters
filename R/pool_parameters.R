@@ -13,17 +13,18 @@
 #' @inheritParams bootstrap_model
 #' @inheritParams model_parameters.merMod
 #'
-#' @note Models with multiple components, (for instance, models with zero-inflation,
-#'   where predictors appear in the count and zero-inflation part) may fail in
-#'   case of identical names for coefficients in the different model components,
-#'   since the coefficient table is grouped by coefficient names for pooling. In
-#'   such cases, coefficients of count and zero-inflation model parts would be
-#'   combined. Therefore, the `component` argument defaults to
-#'   `"conditional"` to avoid this.
+#' @note
+#' Models with multiple components, (for instance, models with zero-inflation,
+#' where predictors appear in the count and zero-inflation part) may fail in
+#' case of identical names for coefficients in the different model components,
+#' since the coefficient table is grouped by coefficient names for pooling. In
+#' such cases, coefficients of count and zero-inflation model parts would be
+#' combined. Therefore, the `component` argument defaults to
+#' `"conditional"` to avoid this.
 #'
-#'   Some model objects do not return standard errors (e.g. objects of class
-#'   `htest`). For these models, no pooled confidence intervals nor p-values
-#'   are returned.
+#' Some model objects do not return standard errors (e.g. objects of class
+#' `htest`). For these models, no pooled confidence intervals nor p-values
+#' are returned.
 #'
 #' @details Averaging of parameters follows Rubin's rules (_Rubin, 1987, p. 76_).
 #'   The pooled degrees of freedom is based on the Barnard-Rubin adjustment for

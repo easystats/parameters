@@ -21,34 +21,34 @@
 #'   `"manhattan"`, `"canberra"`, `"binary"` or `"minkowski"`. Any unambiguous
 #'   substring can be given.
 #'
-#' @details The different methods available are described below:
-#' \subsection{Supervised Methods}{
-#' \itemize{
-#' \item **PCA**: See [principal_components()].
+#' @details
+#' The different methods available are described below:
 #'
-#' \item **cMDS / PCoA**: Classical Multidimensional Scaling (cMDS) takes a
-#' set of dissimilarities (i.e., a distance matrix) and returns a set of points
-#' such that the distances between the points are approximately equal to the
-#' dissimilarities.
+#' ## Supervised Methods
+#' - **PCA**: See [`principal_components()`].
 #'
-#' \item **DRR**: Dimensionality Reduction via Regression (DRR) is a very
-#' recent technique extending PCA (*Laparra et al., 2015*). Starting from a
-#' rotated PCA, it predicts redundant information from the remaining components
-#' using non-linear regression. Some of the most notable advantages of
-#' performing DRR are avoidance of multicollinearity between predictors and
-#' overfitting mitigation. DRR tends to perform well when the first principal
-#' component is enough to explain most of the variation in the predictors.
-#' Requires the **DRR** package to be installed.
+#' - **cMDS / PCoA**: Classical Multidimensional Scaling (cMDS) takes a
+#'   set of dissimilarities (i.e., a distance matrix) and returns a set of points
+#'   such that the distances between the points are approximately equal to the
+#'   dissimilarities.
 #'
-#' \item **ICA**: Performs an Independent Component Analysis using the
-#' FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
-#' sources (through least squares minimization), ICA attempts to find
-#' independent sources, i.e., the source space that maximizes the
-#' "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
-#' source, which makes it a poor tool for dimensionality reduction. Requires the
-#' **fastICA** package to be installed.
-#' }
-#' }
+#' - **DRR**: Dimensionality Reduction via Regression (DRR) is a very
+#'   recent technique extending PCA (*Laparra et al., 2015*). Starting from a
+#'   rotated PCA, it predicts redundant information from the remaining components
+#'   using non-linear regression. Some of the most notable advantages of
+#'   performing DRR are avoidance of multicollinearity between predictors and
+#'   overfitting mitigation. DRR tends to perform well when the first principal
+#'   component is enough to explain most of the variation in the predictors.
+#'   Requires the **DRR** package to be installed.
+#'
+#' - **ICA**: Performs an Independent Component Analysis using the
+#'   FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
+#'   sources (through least squares minimization), ICA attempts to find
+#'   independent sources, i.e., the source space that maximizes the
+#'   "non-gaussianity" of all sources. Contrary to PCA, ICA does not rank each
+#'   source, which makes it a poor tool for dimensionality reduction. Requires the
+#'   **fastICA** package to be installed.
+#'
 #' See also [package vignette](https://easystats.github.io/parameters/articles/parameters_reduction.html).
 #'
 #' @references

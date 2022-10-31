@@ -254,9 +254,8 @@ model_parameters.BFBayesFactor <- function(model,
 #' @inheritParams p_value
 #'
 #' @details
-#'
 #' For Bayesian models, the p-values corresponds to the *probability of
-#' direction* ([bayestestR::p_direction()]), which is converted to a p-value
+#' direction* ([`bayestestR::p_direction()`]), which is converted to a p-value
 #' using `bayestestR::convert_pd_to_p()`.
 #'
 #' @return The p-values.

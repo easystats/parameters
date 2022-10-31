@@ -39,7 +39,7 @@
 #' are ...'.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details `n_components` is actually an alias for `n_factors`, with
+#' @details `n_components()` is actually an alias for `n_factors()`, with
 #'   different defaults for the function arguments.
 #'
 #' @note There is also a

@@ -109,7 +109,7 @@ functions are available to access / display other information (see the
 Details section).
 }
 \details{
-\strong{Methods and Utilities}
+\subsection{Methods and Utilities}{
 \itemize{
 \item \code{\link[=n_components]{n_components()}} and \code{\link[=n_factors]{n_factors()}} automatically estimates the optimal
 number of dimensions to retain.
@@ -132,16 +132,18 @@ values, so it matches the original data frame.
 visually displays the loadings (that requires the
 \href{https://easystats.github.io/see/}{\strong{see}-package} to work).
 }
+}
 
-\strong{Complexity}
+\subsection{Complexity}{
 
 Complexity represents the number of latent components needed to account
 for the observed variables. Whereas a perfect simple structure solution
 has a complexity of 1 in that each item would only load on one factor,
 a solution with evenly distributed items has a complexity greater than 1
 (\emph{Hofman, 1978; Pettersson and Turkheimer, 2010}).
+}
 
-\strong{Uniqueness}
+\subsection{Uniqueness}{
 
 Uniqueness represents the variance that is 'unique' to the variable and
 not shared with other variables. It is equal to \verb{1 – communality}
@@ -149,15 +151,17 @@ not shared with other variables. It is equal to \verb{1 – communality}
 suggests that \verb{20\%} or that variable's variance is not shared with other
 variables in the overall factor model. The greater 'uniqueness' the lower
 the relevance of the variable in the factor model.
+}
 
-\strong{MSA}
+\subsection{MSA}{
 
 MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
 (\emph{Kaiser and Rice, 1974}) for each item. It indicates whether there is
 enough data for each factor give reliable results for the PCA. The value
 should be > 0.6, and desirable values are > 0.8 (\emph{Tabachnick and Fidell, 2013}).
+}
 
-\strong{PCA or FA?}
+\subsection{PCA or FA?}{
 
 There is a simplified rule of thumb that may help do decide whether to run
 a factor analysis or a principal component analysis:
@@ -170,8 +174,9 @@ composite variables.
 }
 
 (Source: \href{https://stats.stackexchange.com/q/1576/54740}{CrossValidated})
+}
 
-\strong{Computing Item Scores}
+\subsection{Computing Item Scores}{
 
 Use \code{\link[=get_scores]{get_scores()}} to compute scores for the "subscales" represented by the
 extracted principal components. \code{get_scores()} takes the results from
@@ -182,8 +187,9 @@ This results in a sum score for each component from the PCA, which is on the
 same scale as the original, single items that were used to compute the PCA.
 One can also use \code{predict()} to back-predict scores for each component,
 to which one can provide \code{newdata} or a vector of \code{names} for the components.
+}
 
-\strong{Explained Variance and Eingenvalues}
+\subsection{Explained Variance and Eingenvalues}{
 
 Use \code{summary()} to get the Eigenvalues and the explained variance for each
 extracted component. The eigenvectors and eigenvalues represent the "core"
@@ -191,6 +197,7 @@ of a PCA: The eigenvectors (the principal components) determine the
 directions of the new feature space, and the eigenvalues determine their
 magnitude. In other words, the eigenvalues explain the variance of the
 data along the new feature axes.
+}
 }
 \examples{
 library(parameters)

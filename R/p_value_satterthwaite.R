@@ -20,9 +20,9 @@
 #' @seealso `dof_satterthwaite()` and `se_satterthwaite()` are small helper-functions
 #' to calculate approximated degrees of freedom and standard errors for model
 #' parameters, based on the Satterthwaite (1946) approach.
-#' \cr \cr
-#' [`dof_kenward()`][dof_kenward] and [`dof_ml1()`][dof_ml1]
-#' approximate degrees of freedom based on Kenward-Roger's method or the "m-l-1" rule.
+#'
+#' [`dof_kenward()`] and [`dof_ml1()`] approximate degrees of freedom based on
+#' Kenward-Roger's method or the "m-l-1" rule.
 #'
 #' @examples
 #' \donttest{
