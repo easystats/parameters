@@ -60,6 +60,7 @@ reference:
   contents:
   - equivalence_test
   - equivalence_test.lm
+  - p_function
 
 - title: "Parameter Sampling"
   contents:
