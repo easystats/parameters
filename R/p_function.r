@@ -73,6 +73,9 @@ p_function <- function(model,
   out <- x[!is.infinite(x$CI_low) & !is.infinite(x$CI_high), ]
   out$CI <- round(out$CI, 2)
 
+  # most plausible value (point estimate)
+  point_estimate <- out$CI_low[which.min(out$CI)]
+
   if (!is.null(keep) || !is.null(drop)) {
     out <- .filter_parameters(out,
       keep = keep,
@@ -103,6 +106,7 @@ p_function <- function(model,
     values_to = "x"
   )
   attr(out, "data") <- data_ribbon
+  attr(out, "point_estimate") <- point_estimate
 
   class(out) <- c("parameters_p_function", "see_p_function", "data.frame")
   out
