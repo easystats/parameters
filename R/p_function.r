@@ -108,6 +108,7 @@ p_function <- function(model,
 
   attr(out, "data") <- data_ribbon
   attr(out, "point_estimate") <- point_estimate
+  attr(out, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info, ...))
 
   class(out) <- c("parameters_p_function", "see_p_function", "data.frame")
   out
@@ -135,6 +136,7 @@ format.parameters_p_function <- function(x,
                                          format = NULL,
                                          ci_width = NULL,
                                          ci_brackets = TRUE,
+                                         pretty_names = TRUE,
                                         ...) {
   # print
   dat <- lapply(split(x, x$CI), function(i) {
@@ -154,7 +156,8 @@ format.parameters_p_function <- function(x,
     digits = digits,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
-    format = format
+    format = format,
+    pretty_names = pretty_names
   )
 }
 
@@ -163,7 +166,7 @@ format.parameters_p_function <- function(x,
 print.parameters_p_function <- function(x,
                                         digits = 2,
                                         format = NULL,
-                                        ci_width = NULL,
+                                        ci_width = "auto",
                                         ci_brackets = TRUE,
                                         ...) {
   formatted_table <- format(
