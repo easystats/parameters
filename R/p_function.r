@@ -165,23 +165,55 @@ format.parameters_p_function <- function(x,
 #' @export
 print.parameters_p_function <- function(x,
                                         digits = 2,
-                                        format = NULL,
                                         ci_width = "auto",
                                         ci_brackets = TRUE,
                                         ...) {
+  cat(.print_p_function(x, digits, ci_width, ci_brackets, format = "text", ...))
+}
+
+
+#' @export
+print_md.parameters_p_function <- function(x,
+                                           digits = 2,
+                                           ci_width = "auto",
+                                           ci_brackets = c("(", ")"),
+                                           ...) {
+  .print_p_function(x, digits, ci_width, ci_brackets, format = "markdown", ...)
+}
+
+
+#' @export
+print_html.parameters_p_function <- function(x,
+                                             digits = 2,
+                                             ci_width = "auto",
+                                             ci_brackets = c("(", ")"),
+                                             ...) {
+  .print_p_function(x, digits, ci_width, ci_brackets, format = "html", ...)
+}
+
+
+
+# helper ----------
+
+.print_p_function <- function(x,
+                              digits = 2,
+                              ci_width = "auto",
+                              ci_brackets = c("(", ")"),
+                              format = "html",
+                              ...) {
   formatted_table <- format(
     x,
     digits = digits,
-    format = "text",
+    format = format,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
     ...
   )
 
-  cat(insight::export_table(
+  insight::export_table(
     formatted_table,
-    format = "text",
+    format = format,
     caption = "Consonance Function",
     ...
-  ))
+  )
 }
