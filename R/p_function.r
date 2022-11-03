@@ -94,17 +94,18 @@ p_function <- function(model,
     out$CI_high <- exp(out$CI_high)
   }
 
-  # data for vertical CI level lines
-  out <- out[out$CI %in% ci_levels, ]
-  out$group <- 1
-  out$group[out$CI == 0.95] <- 2
-
   # data for p_function ribbon
   data_ribbon <- datawizard::data_to_long(
     out,
     select = c("CI_low", "CI_high"),
     values_to = "x"
   )
+
+  # data for vertical CI level lines
+  out <- out[out$CI %in% ci_levels, ]
+  out$group <- 1
+  out$group[out$CI == 0.95] <- 2
+
   attr(out, "data") <- data_ribbon
   attr(out, "point_estimate") <- point_estimate
 
