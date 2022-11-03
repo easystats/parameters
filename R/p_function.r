@@ -96,8 +96,8 @@ p_function <- function(model,
 
   # data for vertical CI level lines
   out <- out[out$CI %in% ci_levels, ]
-  out$group <- as.factor(1)
-  out$group[out$CI == 0.95] <- as.factor(2)
+  out$group <- 1
+  out$group[out$CI == 0.95] <- 2
 
   # data for p_function ribbon
   data_ribbon <- datawizard::data_to_long(
