@@ -114,7 +114,7 @@ p_function <- function(model,
 
   attr(out, "data") <- data_ribbon
   attr(out, "point_estimate") <- point_estimate
-  attr(out, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info, ...))
+  attr(out, "pretty_names") <- suppressWarnings(format_parameters(model, ...))
 
   class(out) <- c("parameters_p_function", "see_p_function", "data.frame")
   out
@@ -157,8 +157,11 @@ format.parameters_p_function <- function(x,
     out
   })
 
+  out <- do.call(datawizard::data_merge, list(dat, by = "Parameter"))
+  attr(out, "pretty_names") <- attributes(x)$pretty_names
+
   insight::format_table(
-    do.call(datawizard::data_merge, list(dat, by = "Parameter")),
+    out,
     digits = digits,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
@@ -173,8 +176,17 @@ print.parameters_p_function <- function(x,
                                         digits = 2,
                                         ci_width = "auto",
                                         ci_brackets = TRUE,
+                                        pretty_names = TRUE,
                                         ...) {
-  cat(.print_p_function(x, digits, ci_width, ci_brackets, format = "text", ...))
+  cat(.print_p_function(
+    x,
+    digits,
+    ci_width,
+    ci_brackets,
+    pretty_names = pretty_names,
+    format = "text",
+    ...
+  ))
 }
 
 
@@ -183,8 +195,9 @@ print_md.parameters_p_function <- function(x,
                                            digits = 2,
                                            ci_width = "auto",
                                            ci_brackets = c("(", ")"),
+                                           pretty_names = TRUE,
                                            ...) {
-  .print_p_function(x, digits, ci_width, ci_brackets, format = "markdown", ...)
+  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "markdown", ...)
 }
 
 
@@ -193,8 +206,9 @@ print_html.parameters_p_function <- function(x,
                                              digits = 2,
                                              ci_width = "auto",
                                              ci_brackets = c("(", ")"),
+                                             pretty_names = TRUE,
                                              ...) {
-  .print_p_function(x, digits, ci_width, ci_brackets, format = "html", ...)
+  .print_p_function(x, digits, ci_width, ci_brackets, pretty_names, format = "html", ...)
 }
 
 
@@ -205,6 +219,7 @@ print_html.parameters_p_function <- function(x,
                               digits = 2,
                               ci_width = "auto",
                               ci_brackets = c("(", ")"),
+                              pretty_names = TRUE,
                               format = "html",
                               ...) {
   formatted_table <- format(
@@ -213,6 +228,7 @@ print_html.parameters_p_function <- function(x,
     format = format,
     ci_width = ci_width,
     ci_brackets = ci_brackets,
+    pretty_names = pretty_names,
     ...
   )
 
