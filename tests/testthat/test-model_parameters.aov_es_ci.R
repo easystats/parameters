@@ -280,17 +280,17 @@ if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("par
       expect_equal(
         df_manova$Pillai,
         c(0.88, 0.61, 0.07, 0.39, 0.11, 0.17, 0, NA),
-        tolereance = 0.1
+        tolerance = 0.1
       )
       expect_equal(
         df_manova$Omega2_CI_low,
         c(0, 0, 0, 0, 0, 0, 0, NA),
-        tolereance = 0.1
+        tolerance = 0.1
       )
       expect_equal(
         df_manova$Omega2_partial,
         c(0.204, 0.518, 0, 0.262, 0, 0.022, 0, NA),
-        tolereance = 0.1
+        tolerance = 0.1
       )
     })
 
