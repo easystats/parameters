@@ -34,7 +34,7 @@
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species, data = iris)
-#' p_function(model, keep = "Speciesversicolor")
+#' p_function(model)
 #' @export
 p_function <- function(model,
                        ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),

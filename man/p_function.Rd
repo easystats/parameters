@@ -107,7 +107,7 @@ different levels.
 }
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)
-p_function(model, keep = "Speciesversicolor")
+p_function(model)
 }
 \references{
 \itemize{
