@@ -109,7 +109,7 @@ p_function <- function(model,
   # emphasize focal hypothesis line
   emphasize <- which(names(ci_levels) == "emph")
   if (length(emphasize)) {
-    out$group[out$CI == ci_levels(emphasize)] <- 2
+    out$group[out$CI == ci_levels[emphasize]] <- 2
   }
 
   attr(out, "data") <- data_ribbon
