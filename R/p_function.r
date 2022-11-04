@@ -9,7 +9,11 @@
 #' different levels.
 #'
 #' @param ci_levels Vector of scalars, indicating the different levels at which
-#' compatibility intervals should be printed or plotted.
+#' compatibility intervals should be printed or plotted. In plots, these levels
+#' are highlighted by vertical lines. It is possible to increase thickness for
+#' one or more of these lines by providing a names vector, where the to be
+#' highlighted values should be named `"emph"`, e.g
+#' `ci_levels = c(0.25, 0.5, emph = 0.95)`.
 #'
 #' @inheritParams model_parameters
 #' @inheritParams model_parameters.default
@@ -33,7 +37,7 @@
 #' p_function(model, keep = "Speciesversicolor")
 #' @export
 p_function <- function(model,
-                       ci_levels = c(.25, .5, .75, .95),
+                       ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),
                        exponentiate = FALSE,
                        effects = "fixed",
                        component = "all",
@@ -101,7 +105,12 @@ p_function <- function(model,
   # data for vertical CI level lines
   out <- out[out$CI %in% ci_levels, ]
   out$group <- 1
-  out$group[out$CI == 0.95] <- 2
+
+  # emphasize focal hypothesis line
+  emphasize <- which(names(ci_levels) == "emph")
+  if (length(emphasize)) {
+    out$group[out$CI == ci_levels(emphasize)] <- 2
+  }
 
   attr(out, "data") <- data_ribbon
   attr(out, "point_estimate") <- point_estimate

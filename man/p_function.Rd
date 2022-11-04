@@ -7,7 +7,7 @@
 \usage{
 p_function(
   model,
-  ci_levels = c(0.25, 0.5, 0.75, 0.95),
+  ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),
   exponentiate = FALSE,
   effects = "fixed",
   component = "all",
@@ -19,7 +19,7 @@ p_function(
 
 consonance_function(
   model,
-  ci_levels = c(0.25, 0.5, 0.75, 0.95),
+  ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),
   exponentiate = FALSE,
   effects = "fixed",
   component = "all",
@@ -33,7 +33,11 @@ consonance_function(
 \item{model}{Statistical Model.}
 
 \item{ci_levels}{Vector of scalars, indicating the different levels at which
-compatibility intervals should be printed or plotted.}
+compatibility intervals should be printed or plotted. In plots, these levels
+are highlighted by vertical lines. It is possible to increase thickness for
+one or more of these lines by providing a names vector, where the to be
+highlighted values should be named \code{"emph"}, e.g
+\code{ci_levels = c(0.25, 0.5, emph = 0.95)}.}
 
 \item{exponentiate}{Logical, indicating whether or not to exponentiate the
 coefficients (and related confidence intervals). This is typical for
