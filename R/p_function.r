@@ -34,6 +34,7 @@
 #' @export
 p_function <- function(model,
                        ci_levels = c(.25, .5, .75, .95),
+                       exponentiate = FALSE,
                        effects = "fixed",
                        component = "all",
                        keep = NULL,
@@ -85,11 +86,7 @@ p_function <- function(model,
   }
 
   # transform non-Gaussian
-  info <- insight::model_info(model)
-  if (info$is_linear) {
-    delta <- 0
-  } else {
-    delta <- 1
+  if (isTRUE(exponentiate)) {
     out$CI_low <- exp(out$CI_low)
     out$CI_high <- exp(out$CI_high)
   }

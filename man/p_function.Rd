@@ -8,6 +8,7 @@
 p_function(
   model,
   ci_levels = c(0.25, 0.5, 0.75, 0.95),
+  exponentiate = FALSE,
   effects = "fixed",
   component = "all",
   keep = NULL,
@@ -19,6 +20,7 @@ p_function(
 consonance_function(
   model,
   ci_levels = c(0.25, 0.5, 0.75, 0.95),
+  exponentiate = FALSE,
   effects = "fixed",
   component = "all",
   keep = NULL,
@@ -32,6 +34,19 @@ consonance_function(
 
 \item{ci_levels}{Vector of scalars, indicating the different levels at which
 compatibility intervals should be printed or plotted.}
+
+\item{exponentiate}{Logical, indicating whether or not to exponentiate the
+coefficients (and related confidence intervals). This is typical for
+logistic regression, or more generally speaking, for models with log or
+logit links. It is also recommended to use \code{exponentiate = TRUE} for models
+with log-transformed response values. \strong{Note:} Delta-method standard
+errors are also computed (by multiplying the standard errors by the
+transformed coefficients). This is to mimic behaviour of other software
+packages, such as Stata, but these standard errors poorly estimate
+uncertainty for the transformed coefficient. The transformed confidence
+interval more clearly captures this uncertainty. For \code{compare_parameters()},
+\code{exponentiate = "nongaussian"} will only exponentiate coefficients from
+non-Gaussian families.}
 
 \item{effects}{Should parameters for fixed effects (\code{"fixed"}), random
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
