@@ -267,31 +267,30 @@ if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("par
         ))
 
       expect_equal(
-        df_manova,
-        structure(
-          list(
-            Parameter = c("block", "N", "P", "K", "N:P", "N:K", "P:K", "Residuals"),
-            Pillai = c(0.88, 0.61, 0.07, 0.39, 0.11, 0.17, 0, NA),
-            df = c(5, 1, 1, 1, 1, 1, 1, 12),
-            F = c(1.9, 8.52, 0.39, 3.49, 0.65, 1.16, 0.02, NA),
-            p = c(0.1, 0.01, 0.69, 0.07, 0.54, 0.35, 0.98, NA),
-            Omega2_partial = c(0.2, 0.52, -0.1, 0.26, -0.05, 0.02, -0.16, NA),
-            Omega2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA),
-            Omega2_CI_high = c(1, 1, 1, 1, 1, 1, 1, NA),
-            Epsilon2_partial = c(0.21, 0.54, -0.1, 0.28, -0.06, 0.02, -0.18, NA),
-            Epsilon2_CI_low = c(0, 0, 0, 0, 0, 0, 0, NA),
-            Epsilon2_CI_high = c(1, 1, 1, 1, 1, 1, 1, NA)
-          ),
-          row.names = c(NA, 8L),
-          class = "data.frame",
-          ci = 0.99,
-          model_class = c("manova", "maov", "aov", "mlm", "lm"),
-          digits = 2,
-          ci_digits = 2,
-          p_digits = 3
-        ),
-        tolerance = 0.1,
-        ignore_attr = TRUE
+        df_manova$Parameter, c("block", "N", "P", "K", "N:P", "N:K", "P:K", "Residuals")
+      )
+      expect_equal(
+        colnames(df_manova),
+        c(
+          "Parameter", "Pillai", "df", "F", "p", "Epsilon2_partial",
+          "Epsilon2_CI_low", "Epsilon2_CI_high", "Omega2_partial", "Omega2_CI_low",
+          "Omega2_CI_high"
+        )
+      )
+      expect_equal(
+        df_manova$Pillai,
+        c(0.88, 0.61, 0.07, 0.39, 0.11, 0.17, 0, NA),
+        tolerance = 0.1
+      )
+      expect_equal(
+        df_manova$Omega2_CI_low,
+        c(0, 0, 0, 0, 0, 0, 0, NA),
+        tolerance = 0.1
+      )
+      expect_equal(
+        df_manova$Omega2_partial,
+        c(0.204, 0.518, 0, 0.262, 0, 0.022, 0, NA),
+        tolerance = 0.1
       )
     })
 
