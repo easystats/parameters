@@ -66,6 +66,8 @@ standardization**, described below
 
 ```{r}
 library(parameters)
+library(effectsize)
+
 m <- lm(rating ~ complaints, data = attitude)
 
 standardize_parameters(m)
