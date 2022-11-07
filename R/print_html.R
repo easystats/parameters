@@ -19,6 +19,8 @@ print_html.parameters_model <- function(x,
                                         show_formula = FALSE,
                                         zap_small = FALSE,
                                         groups = NULL,
+                                        font_size = "100%",
+                                        line_padding = 3,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -92,7 +94,7 @@ print_html.parameters_model <- function(x,
     footer <- paste(footer_stats, collapse = "<br/>")
   }
 
-  insight::export_table(
+  out <- insight::export_table(
     formatted_table,
     format = "html",
     caption = table_caption,
@@ -101,6 +103,8 @@ print_html.parameters_model <- function(x,
     align = align,
     ...
   )
+
+  .add_gt_options(out, font_size, line_padding)
 }
 
 #' @export
@@ -121,6 +125,8 @@ print_html.compare_parameters <- function(x,
                                           subtitle = NULL,
                                           footer = NULL,
                                           style = NULL,
+                                          font_size = "100%",
+                                          line_padding = 3,
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -152,12 +158,26 @@ print_html.compare_parameters <- function(x,
     format = "html"
   )
 
-  insight::export_table(
+  out <- insight::export_table(
     formatted_table,
     format = "html",
     caption = caption, # TODO: get rid of NOTE
     subtitle = subtitle,
     footer = footer,
     ...
+  )
+
+  .add_gt_options(out, font_size, line_padding)
+}
+
+
+
+# helper ------------------
+
+.add_gt_options <- function(out, font_size, line_padding) {
+  insight::check_if_installed("gt")
+  gt::tab_options(out,
+    table.font.size = font_size,
+    data_row.padding = gt::px(line_padding)
   )
 }

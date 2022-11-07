@@ -27,6 +27,9 @@
   table column elements, now supports an experimental glue-like syntax.
   See this vignette _Printing Model Parameters_.
 
+* `print_html()` gets a `font_size` and `line_padding` argument to tweak the
+  appearance of HTML tables.
+
 * Consolidation of vignettes on standardization of model parameters.
 
 * Minor speed improvements.

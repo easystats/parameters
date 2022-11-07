@@ -23,6 +23,8 @@
 #'   no title or subtitle is printed, unless it is stored as attributes (`table_title`,
 #'   or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
 #'   data frames, `caption` may be a list of table captions, one for each table.
+#' @param font_size For HTML tables, the font size.
+#' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
@@ -60,6 +62,8 @@ display.parameters_model <- function(object,
                                      show_sigma = FALSE,
                                      show_formula = FALSE,
                                      zap_small = FALSE,
+                                     font_size = "100%",
+                                     line_padding = 3,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
@@ -69,7 +73,7 @@ display.parameters_model <- function(object,
       footer = footer, ci_digits = ci_digits, p_digits = p_digits,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      verbose = verbose, ...
+      font_size = font_size, line_padding = line_padding, verbose = verbose, ...
     )
   } else {
     print_md(
@@ -106,9 +110,11 @@ display.compare_parameters <- function(object,
                                        ci_digits = 2,
                                        p_digits = 3,
                                        style = NULL,
+                                       font_size = "100%",
+                                       line_padding = 3,
                                        ...) {
   if (identical(format, "html")) {
-    print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
+    print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, font_size = font_size, line_padding = line_padding, ...)
   } else {
     print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
   }
