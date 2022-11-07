@@ -20,7 +20,7 @@ print_html.parameters_model <- function(x,
                                         zap_small = FALSE,
                                         groups = NULL,
                                         font_size = "100%",
-                                        line_padding = 3,
+                                        line_padding = 4,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -126,7 +126,7 @@ print_html.compare_parameters <- function(x,
                                           footer = NULL,
                                           style = NULL,
                                           font_size = "100%",
-                                          line_padding = 3,
+                                          line_padding = 4,
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {

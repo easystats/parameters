@@ -63,7 +63,7 @@ display.parameters_model <- function(object,
                                      show_formula = FALSE,
                                      zap_small = FALSE,
                                      font_size = "100%",
-                                     line_padding = 3,
+                                     line_padding = 4,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
@@ -111,7 +111,7 @@ display.compare_parameters <- function(object,
                                        p_digits = 3,
                                        style = NULL,
                                        font_size = "100%",
-                                       line_padding = 3,
+                                       line_padding = 4,
                                        ...) {
   if (identical(format, "html")) {
     print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, font_size = font_size, line_padding = line_padding, ...)
