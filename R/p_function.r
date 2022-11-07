@@ -143,7 +143,7 @@ format.parameters_p_function <- function(x,
                                          ci_width = NULL,
                                          ci_brackets = TRUE,
                                          pretty_names = TRUE,
-                                        ...) {
+                                         ...) {
   # print
   dat <- lapply(split(x, x$CI), function(i) {
     ci <- as.character(i$CI)[1]

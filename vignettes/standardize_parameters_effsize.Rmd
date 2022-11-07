@@ -74,7 +74,13 @@ standardize_parameters(m)
 ```
 
 Standardizing the coefficient of this *simple* linear regression gives a value
-of `r round(standardize_parameters(m)[2,2],2)`, but did you know that for a simple regression this is actually the
+of 
+
+```{r} 
+round(standardize_parameters(m)[2, 2], 2)
+```
+
+But did you know that for a simple regression this is actually the
 **same as a correlation**? Thus, you can eventually apply some (*in*)famous
 interpretation guidelines (e.g., Cohen's rules of thumb).
 
