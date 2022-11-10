@@ -1,4 +1,4 @@
-#' @title p or consonance function
+#' @title p-value or consonance function
 #' @name p_function
 #'
 #' @description Compute p-values and compatibility (confidence) intervals for
@@ -19,18 +19,72 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.glmmTMB
 #'
+#' @details
+#' ## Compatibility intervals and continuous _p_-values for different estimate values
+#'
+#' `p_function()` only returns the compatibility interval estimates, not the
+#' related _p_-values. The reasons for this is because the _p_-value for a
+#' given estimate value is just `1 - CI_level`. The values indicating the lower
+#' and upper limit of the intervals are the related estimates associated with
+#' the _p_-value. E.g., if a parameter `x` has a 75% compatibility interval
+#' of `(0.81, 1.05)`, then the _p_-value for the estimate value of `0.81`
+#' would be `0.25`. This is more intuitive and better to understand when looking
+#' at the plots (using `plot()`).
+#'
+#' ## Conditional versus unconditional interpretation of _p_-values and intervals
+#'
+#' `p_function()`, and in particular its `plot()` method, aims at re-interpreting
+#' _p_-values and confidence intervals (better named: _compatibility_ intervals)
+#' in unconditional terms. Instead of referring to the long-term property and
+#' repeated trials when interpreting interval estimates (so-called "aleatory
+#' probability", _Schweder 2018_), and assuming that all underlying assumptions
+#' are correct and met, `p_function()` interprets _p_-values in a Fisherian way
+#' as "_continuous_ measure of evidence against the very test hypothesis _and_
+#' entire model (all assumptions) used to compute it"
+#' ([P-Values Are Tough and S-Values Can Help](https://lesslikely.com/statistics/s-values/)).
+#'
+#' This interpretation as a continuous measure of evidence against the test
+#' hypothesis and the entire model used to compute it can be seen in the
+#' figure below. The "conditional" interpretation of _p_-values and interval
+#' estimates implicitly (A) assumes certain assumptions to be true, thus the
+#' interpretation is "conditioned" on these assumptions (i.e. assumptions are
+#' taken as given). The unconditional interpretation (B), however, questions all
+#' these assumptions.
+#'
+#' \if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
+#'
+#' "Emphasizing unconditional interpretations helps avoid overconfident and
+#' misleading inferences in light of uncertainties about the assumptions used
+#' to arrive at the statistical results." (_Greenland et al. 2022_).
+#'
+#' In other words, the term compatibility interval emphasizes "the dependence
+#' of the _p_-value on the assumptions as well as on the data, recognizing that
+#' _p_<0.05 can arise from assumption violations even if the effect under
+#' study is null" (_Gelman/Greenland 2019_).
+#'
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
+#' - Fraser DAS. The P-value function and statistical inference. The American
+#'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
+#'
+#' - Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
+#'   intervals"? BMJ (2019)l5381. \doi{10.1136/bmj.l5381}
+#'
+#' - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+#'   Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+#'   https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
 #' - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 #'   science: Replace confidence and significance by compatibility and surprise.
 #'   BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
 #'
-#' - Fraser DAS. The P-value function and statistical inference. The American
-#'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
-#'
 #' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 #'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
+#'
+#' - Schweder T. Confidence is epistemic probability for empirical science.
+#'   Journal of Statistical Planning and Inference (2018) 195:116–125.
+#'   \doi{10.1016/j.jspi.2017.09.016}
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species, data = iris)
@@ -143,7 +197,7 @@ format.parameters_p_function <- function(x,
                                          ci_width = NULL,
                                          ci_brackets = TRUE,
                                          pretty_names = TRUE,
-                                        ...) {
+                                         ...) {
   # print
   dat <- lapply(split(x, x$CI), function(i) {
     ci <- as.character(i$CI)[1]
@@ -239,3 +293,12 @@ print_html.parameters_p_function <- function(x,
     ...
   )
 }
+
+# model <- lm(Sepal.Length ~ Species, data = iris)
+# for later use: highlight p-value for secific parameter estimate values
+# stat <- insight::get_statistic(model)
+# se <- parameters::standard_error(model)
+# estimate to test against - compute p-value for specific estimate
+# null_estimate <- 1.5
+# p <- 2 * stats::pt(abs(stat$Statistic[3]) - (null_estimate / se$SE[3]), df = 147, lower.tail = FALSE)
+# bayestestR::p_to_pd(p)

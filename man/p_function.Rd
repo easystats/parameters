@@ -3,7 +3,7 @@
 \name{p_function}
 \alias{p_function}
 \alias{consonance_function}
-\title{p or consonance function}
+\title{p-value or consonance function}
 \usage{
 p_function(
   model,
@@ -105,18 +105,71 @@ the model at various compatibility levels. Use \code{plot()} to generate plots
 of the \emph{p} resp. \emph{consonance} function and compatibility intervals at
 different levels.
 }
+\details{
+\subsection{Compatibility intervals and continuous \emph{p}-values for different estimate values}{
+
+\code{p_function()} only returns the compatibility interval estimates, not the
+related \emph{p}-values. The reasons for this is because the \emph{p}-value for a
+given estimate value is just \code{1 - CI_level}. The values indicating the lower
+and upper limit of the intervals are the related estimates associated with
+the \emph{p}-value. E.g., if a parameter \code{x} has a 75\% compatibility interval
+of \verb{(0.81, 1.05)}, then the \emph{p}-value for the estimate value of \code{0.81}
+would be \code{0.25}. This is more intuitive and better to understand when looking
+at the plots (using \code{plot()}).
+}
+
+\subsection{Conditional versus unconditional interpretation of \emph{p}-values and intervals}{
+
+\code{p_function()}, and in particular its \code{plot()} method, aims at re-interpreting
+\emph{p}-values and confidence intervals (better named: \emph{compatibility} intervals)
+in unconditional terms. Instead of referring to the long-term property and
+repeated trials when interpreting interval estimates (so-called "aleatory
+probability", \emph{Schweder 2018}), and assuming that all underlying assumptions
+are correct and met, \code{p_function()} interprets \emph{p}-values in a Fisherian way
+as "\emph{continuous} measure of evidence against the very test hypothesis \emph{and}
+entire model (all assumptions) used to compute it"
+(\href{https://lesslikely.com/statistics/s-values/}{P-Values Are Tough and S-Values Can Help}).
+
+This interpretation as a continuous measure of evidence against the test
+hypothesis and the entire model used to compute it can be seen in the
+figure below. The "conditional" interpretation of \emph{p}-values and interval
+estimates implicitly (A) assumes certain assumptions to be true, thus the
+interpretation is "conditioned" on these assumptions (i.e. assumptions are
+taken as given). The unconditional interpretation (B), however, questions all
+these assumptions.
+
+\if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
+
+"Emphasizing unconditional interpretations helps avoid overconfident and
+misleading inferences in light of uncertainties about the assumptions used
+to arrive at the statistical results." (\emph{Greenland et al. 2022}).
+
+In other words, the term compatibility interval emphasizes "the dependence
+of the \emph{p}-value on the assumptions as well as on the data, recognizing that
+\emph{p}<0.05 can arise from assumption violations even if the effect under
+study is null" (\emph{Gelman/Greenland 2019}).
+}
+}
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)
 p_function(model)
 }
 \references{
 \itemize{
+\item Fraser DAS. The P-value function and statistical inference. The American
+Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
+\item Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
+intervals"? BMJ (2019)l5381. \doi{10.1136/bmj.l5381}
+\item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
-\item Fraser DAS. The P-value function and statistical inference. The American
-Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 \item Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
+\item Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+\doi{10.1016/j.jspi.2017.09.016}
 }
 }
