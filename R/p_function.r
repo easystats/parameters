@@ -51,7 +51,7 @@
 #' taken as given). The unconditional interpretation, however, questions all
 #' these assumptions.
 #'
-#' \if{html}{\cr \figure{unconditional_interpretation}{options: width="100\%" alt="Conditional versus unconditional interpretations of P-values"} \cr}
+#' \if{html}{\cr \figure{unconditional_interpretation.png}{options: width="100\%" alt="Conditional versus unconditional interpretations of P-values"} \cr}
 #'
 #' "Emphasizing unconditional interpretations helps avoid overconfident and
 #' misleading inferences in light of uncertainties about the assumptions used
@@ -69,7 +69,7 @@
 #'
 #' - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 #'   Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
-#'   https://arxiv.org/abs/1909.08583v7 [Accessed November 10, 2022]
+#'   https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
 #'
 #' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 #'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
