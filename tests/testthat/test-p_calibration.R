@@ -7,6 +7,8 @@ test_that("p_calibration model", {
   expect_equal(dim(out), c(5, 3))
   expect_equal(colnames(out), c("Parameter", "p", "p_calibrated"))
   expect_equal(out$p_calibrated, c(0, 5e-05, 0.48261, NA, NA), tolerance = 1e-4)
+  expect_warning(out <- p_calibration(model, type = "bayes"))
+  expect_equal(out$p_calibrated, c(0, 5e-05, 0.93276, NA, NA), tolerance = 1e-4)
 })
 
 
