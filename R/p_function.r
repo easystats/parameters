@@ -46,9 +46,9 @@
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
 #' figure below. The "conditional" interpretation of _p_-values and interval
-#' estimates implicitly assumes certain assumptions to be true, thus the
+#' estimates implicitly (A) assumes certain assumptions to be true, thus the
 #' interpretation is "conditioned" on these assumptions (i.e. assumptions are
-#' taken as given). The unconditional interpretation, however, questions all
+#' taken as given). The unconditional interpretation (B), however, questions all
 #' these assumptions.
 #'
 #' \if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
@@ -57,19 +57,27 @@
 #' misleading inferences in light of uncertainties about the assumptions used
 #' to arrive at the statistical results." (_Greenland et al. 2022_).
 #'
+#' In other words, the term compatibility interval emphasizes "the dependence
+#' of the _p_-value on the assumptions as well as on the data, recognizing that
+#' _p_<0.05 can arise from assumption violations even if the effect under
+#' study is null" (_Gelman/Greenland 2019_).
+#'
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
-#' - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
-#'   science: Replace confidence and significance by compatibility and surprise.
-#'   BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
-#'
 #' - Fraser DAS. The P-value function and statistical inference. The American
 #'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
+#'
+#' - Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
+#'   intervals"? BMJ (2019)l5381. \doi{10.1136/bmj.l5381}
 #'
 #' - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
 #'   Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
 #'   https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
+#' - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+#'   science: Replace confidence and significance by compatibility and surprise.
+#'   BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
 #'
 #' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 #'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
