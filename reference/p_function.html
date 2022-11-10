@@ -223,6 +223,50 @@ in <code><a href="print.parameters_model.html">print.parameters_model()</a></cod
 <p>A data frame with p-values and compatibility intervals.</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    
+<div class="section">
+<h3 id="compatibility-intervals-and-continuous-p-values-for-different-estimate-values">Compatibility intervals and continuous <em>p</em>-values for different estimate values<a class="anchor" aria-label="anchor" href="#compatibility-intervals-and-continuous-p-values-for-different-estimate-values"></a></h3>
+
+
+<p><code>p_function()</code> only returns the compatibility interval estimates, not the
+related <em>p</em>-values. The reasons for this is because the <em>p</em>-value for a
+given estimate value is just <code>1 - CI_level</code>. The values indicating the lower
+and upper limit of the intervals are the related estimates associated with
+the <em>p</em>-value. E.g., if a parameter <code>x</code> has a 75% compatibility interval
+of <code>(0.81, 1.05)</code>, then the <em>p</em>-value for the estimate value of <code>0.81</code>
+would be <code>0.25</code>. This is more intuitive and better to understand when looking
+at the plots (using <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>).</p>
+</div>
+
+<div class="section">
+<h3 id="conditional-versus-unconditional-interpretation-of-p-values-and-intervals">Conditional versus unconditional interpretation of <em>p</em>-values and intervals<a class="anchor" aria-label="anchor" href="#conditional-versus-unconditional-interpretation-of-p-values-and-intervals"></a></h3>
+
+
+<p><code>p_function()</code>, and in particular its <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method, aims at re-interpreting
+<em>p</em>-values and confidence intervals (better named: <em>compatibility</em> intervals)
+in unconditional terms. Instead of referring to the long-term property and
+repeated trials when interpreting interval estimates (so-called "aleatory
+probability", <em>Schweder 2018</em>), and assuming that all underlying assumptions
+are correct and met, <code>p_function()</code> interprets <em>p</em>-values in a Fisherian way
+as "<em>continuous</em> measure of evidence against the very test hypothesis <em>and</em>
+entire model (all assumptions) used to compute it"
+(<a href="https://lesslikely.com/statistics/s-values/" class="external-link">P-Values Are Tough and S-Values Can Help</a>).</p>
+<p>This interpretation as a continuous measure of evidence against the test
+hypothesis and the entire model used to compute it can be seen in the
+figure below. The "conditional" interpretation of <em>p</em>-values and interval
+estimates implicitly assumes certain assumptions to be true, thus the
+interpretation is "conditioned" on these assumptions (i.e. assumptions are
+taken as given). The unconditional interpretation, however, questions all
+these assumptions.</p>
+<p><br><img src="figures/unconditional_interpretation" width="100%" alt="Conditional versus unconditional interpretations of P-values"><br></p>
+<p>"Emphasizing unconditional interpretations helps avoid overconfident and
+misleading inferences in light of uncertainties about the assumptions used
+to arrive at the statistical results." (<em>Greenland et al. 2022</em>).</p>
+</div>
+
+    </div>
+    <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     
 <ul><li><p>Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
@@ -230,8 +274,14 @@ science: Replace confidence and significance by compatibility and surprise.
 BMC Medical Research Methodology. 2020;20(1):244. <a href="https://doi.org/10.1186/s12874-020-01105-9" class="external-link">doi:10.1186/s12874-020-01105-9</a></p></li>
 <li><p>Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. <a href="https://doi.org/10.1080/00031305.2018.1556735" class="external-link">doi:10.1080/00031305.2018.1556735</a></p></li>
+<li><p>Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 Accessed November 10, 2022</p></li>
 <li><p>Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 Statistics. 2002;29(2):309-332. <a href="https://doi.org/10.1111/1467-9469.00285" class="external-link">doi:10.1111/1467-9469.00285</a></p></li>
+<li><p>Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+<a href="https://doi.org/10.1016/j.jspi.2017.09.016" class="external-link">doi:10.1016/j.jspi.2017.09.016</a></p></li>
 </ul></div>
 
     <div class="section level2">
