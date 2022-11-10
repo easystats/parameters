@@ -16,7 +16,7 @@
   which estimates are most compatible with the model at various compatibility
   levels.
 
-* `p_calibration()`, to compute calibrated p-values.
+* `p_calibrate()`, to compute calibrated p-values.
 
 ## Changes
 
