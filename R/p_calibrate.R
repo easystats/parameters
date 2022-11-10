@@ -1,5 +1,5 @@
 #' @title Calculate calibrated p-values.
-#' @name p_calibration
+#' @name p_calibrate
 #'
 #' @description Compute calibrated p-values that can be interpreted
 #' probabilistically, i.e. as posterior probability of H0 (given that H0
@@ -29,14 +29,14 @@
 #'
 #' @examples
 #' model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
-#' p_calibration(model, verbose = FALSE)
+#' p_calibrate(model, verbose = FALSE)
 #' @export
-p_calibration <- function(x, ...) {
-  UseMethod("p_calibration")
+p_calibrate <- function(x, ...) {
+  UseMethod("p_calibrate")
 }
 
 #' @export
-p_calibration.numeric <- function(x, type = "frequentist", verbose = TRUE, ...) {
+p_calibrate.numeric <- function(x, type = "frequentist", verbose = TRUE, ...) {
   type <- match.arg(tolower(type), choices = c("frequentist", "bayesian"))
 
   # fill p-values larger than calibration cut-off with `NA`
@@ -59,12 +59,12 @@ p_calibration.numeric <- function(x, type = "frequentist", verbose = TRUE, ...) 
 }
 
 #' @export
-p_calibration.default <- function(x, type = "frequentist", verbose = TRUE, ...) {
+p_calibrate.default <- function(x, type = "frequentist", verbose = TRUE, ...) {
   if (!insight::is_model(x)) {
-    insight::format_error("`p_calibration()` requires a valid model object.")
+    insight::format_error("`p_calibrate()` requires a valid model object.")
   }
   out <- p_value(x)
-  out$p_calibrated <- p_calibration(out$p, type = type, verbose = FALSE, ...)
+  out$p_calibrated <- p_calibrate(out$p, type = type, verbose = FALSE, ...)
 
   if (verbose && anyNA(out$p_calibrated)) {
     insight::format_warning(
@@ -73,7 +73,7 @@ p_calibration.default <- function(x, type = "frequentist", verbose = TRUE, ...) 
     )
   }
 
-  class(out) <- c("p_calibration", "data.frame")
+  class(out) <- c("p_calibrate", "data.frame")
   attr(out, "type") <- type
   out
 }
@@ -82,12 +82,12 @@ p_calibration.default <- function(x, type = "frequentist", verbose = TRUE, ...) 
 # methods -----------------
 
 #' @export
-format.p_calibration <- function(x, ...) {
+format.p_calibrate <- function(x, ...) {
   insight::format_table(x, ...)
 }
 
 #' @export
-print.p_calibration <- function(x, ...) {
+print.p_calibrate <- function(x, ...) {
   formatted <- format(x, ...)
   footer <- switch(attributes(x)$type,
     "frequentist" = "Calibrated p-values indicate the posterior probability of H0.\n",
