@@ -2,9 +2,12 @@
 % Please edit documentation in R/p_calibrate.R
 \name{p_calibrate}
 \alias{p_calibrate}
+\alias{p_calibrate.default}
 \title{Calculate calibrated p-values.}
 \usage{
 p_calibrate(x, ...)
+
+\method{p_calibrate}{default}(x, type = "frequentist", verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A numeric vector of p-values, or a regression model object.}
@@ -13,6 +16,8 @@ p_calibrate(x, ...)
 
 \item{type}{Type of calibration. Can be \code{"frequentist"} or \code{"bayesian"}.
 See 'Details'.}
+
+\item{verbose}{Toggle warnings.}
 }
 \value{
 A data frame with p-values and calibrated p-values.

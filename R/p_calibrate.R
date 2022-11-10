@@ -8,6 +8,7 @@
 #' @param x A numeric vector of p-values, or a regression model object.
 #' @param type Type of calibration. Can be `"frequentist"` or `"bayesian"`.
 #' See 'Details'.
+#' @param verbose Toggle warnings.
 #' @param ... Currently not used.
 #'
 #' @return A data frame with p-values and calibrated p-values.
@@ -58,6 +59,7 @@ p_calibrate.numeric <- function(x, type = "frequentist", verbose = TRUE, ...) {
   calibrated
 }
 
+#' @rdname p_calibrate
 #' @export
 p_calibrate.default <- function(x, type = "frequentist", verbose = TRUE, ...) {
   if (!insight::is_model(x)) {
