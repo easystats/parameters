@@ -31,7 +31,7 @@
   show_formula = FALSE,
   zap_small = FALSE,
   font_size = "100\%",
-  line_padding = 3,
+  line_padding = 4,
   verbose = TRUE,
   ...
 )
@@ -95,7 +95,7 @@
   zap_small = FALSE,
   groups = NULL,
   font_size = "100\%",
-  line_padding = 3,
+  line_padding = 4,
   verbose = TRUE,
   ...
 )

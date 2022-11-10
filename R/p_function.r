@@ -1,4 +1,4 @@
-#' @title p or consonance function
+#' @title p-value or consonance function
 #' @name p_function
 #'
 #' @description Compute p-values and compatibility (confidence) intervals for
@@ -239,3 +239,12 @@ print_html.parameters_p_function <- function(x,
     ...
   )
 }
+
+# model <- lm(Sepal.Length ~ Species, data = iris)
+# for later use: highlight p-value for secific parameter estimate values
+# stat <- insight::get_statistic(model)
+# se <- parameters::standard_error(model)
+# estimate to test against - compute p-value for specific estimate
+# null_estimate <- 1.5
+# p <- 2 * stats::pt(abs(stat$Statistic[3]) - (null_estimate / se$SE[3]), df = 147, lower.tail = FALSE)
+# bayestestR::p_to_pd(p)

@@ -3,7 +3,7 @@
 \name{p_function}
 \alias{p_function}
 \alias{consonance_function}
-\title{p or consonance function}
+\title{p-value or consonance function}
 \usage{
 p_function(
   model,
