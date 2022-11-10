@@ -138,7 +138,7 @@ interpretation is "conditioned" on these assumptions (i.e. assumptions are
 taken as given). The unconditional interpretation, however, questions all
 these assumptions.
 
-\if{html}{\cr \figure{unconditional_interpretation.png}{options: width="100\%" alt="Conditional versus unconditional interpretations of P-values"} \cr}
+\if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
 
 "Emphasizing unconditional interpretations helps avoid overconfident and
 misleading inferences in light of uncertainties about the assumptions used
