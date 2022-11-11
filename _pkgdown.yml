@@ -37,7 +37,7 @@ reference:
   - standardize_parameters
   - standardize_info
 
-- title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
+- title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
   contents:
   - standard_error
   - ci.default
@@ -60,6 +60,7 @@ reference:
   contents:
   - equivalence_test
   - equivalence_test.lm
+  - p_calibrate
   - p_function
 
 - title: "Parameter Sampling"

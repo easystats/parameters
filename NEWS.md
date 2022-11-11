@@ -16,6 +16,8 @@
   which estimates are most compatible with the model at various compatibility
   levels.
 
+* `p_calibrate()`, to compute calibrated p-values.
+
 ## Changes
 
 * `model_parameters()` and `compare_parameters()` now use the unicode character
