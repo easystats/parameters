@@ -82,7 +82,9 @@
 #' to _compatibility_ intervals may help emphasizing this interpretation.
 #'
 #' "The realized confidence distribution is clearly an epistemic probability
-#' distribution" (_Schweder 2018_). In this regard, interpretation of _p_-values
+#' distribution" (_Schweder 2018_). In Bayesian word, compatibility intervals
+#' (or confidence distributons, or consonance curves) are "posteriors without
+#' priors" (_Schweder, Hjort, 2003_). In this regard, interpretation of _p_-values
 #' might be guided using [`bayestestR::p_to_pd()`].
 #'
 #' @return A data frame with p-values and compatibility intervals.
@@ -108,6 +110,11 @@
 #'
 #' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 #'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
+#'
+#' - Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+#'   In Stigum, B. (ed.),Econometrics and the Philosophy of Economics: Theory
+#'   Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+#'   Princeton, NJ, 2003
 #'
 #' - Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
 #'   inference with condidence distributions. Cambridge University Press, 2016.

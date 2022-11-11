@@ -178,7 +178,9 @@ for confidence curves. The shift in terminology from \emph{confidence} intervals
 to \emph{compatibility} intervals may help emphasizing this interpretation.
 
 "The realized confidence distribution is clearly an epistemic probability
-distribution" (\emph{Schweder 2018}). In this regard, interpretation of \emph{p}-values
+distribution" (\emph{Schweder 2018}). In Bayesian word, compatibility intervals
+(or confidence distributons, or consonance curves) are "posteriors without
+priors" (\emph{Schweder, Hjort, 2003}). In this regard, interpretation of \emph{p}-values
 might be guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
 }
 }
@@ -208,6 +210,10 @@ Journal of Statistical Planning and Inference (2018) 195:116–125.
 \doi{10.1016/j.jspi.2017.09.016}
 \item Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
+\item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.),Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003
 \item Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
 inference with condidence distributions. Cambridge University Press, 2016.
 }
