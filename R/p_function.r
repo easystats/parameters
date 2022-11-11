@@ -19,6 +19,11 @@
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.glmmTMB
 #'
+#' @note
+#' Curently, `p_function()` computes intervals based on Wald t- or z-statistic.
+#' For certain models (like mixed models), profiled intervals may be more
+#' accurate, however, this is currently not supported.
+#'
 #' @details
 #' ## Compatibility intervals and continuous _p_-values for different estimate values
 #'

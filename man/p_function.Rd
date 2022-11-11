@@ -182,6 +182,11 @@ distribution" (\emph{Schweder 2018}). In this regard, interpretation of \emph{p}
 might be guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
 }
 }
+\note{
+Curently, \code{p_function()} computes intervals based on Wald t- or z-statistic.
+For certain models (like mixed models), profiled intervals may be more
+accurate, however, this is currently not supported.
+}
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)
 p_function(model)
