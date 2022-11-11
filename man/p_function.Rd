@@ -246,10 +246,10 @@ Journal of Statistical Planning and Inference (2018) 195:116–125.
 \item Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
 Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
 \item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
-In Stigum, B. (ed.),Econometrics and the Philosophy of Economics: Theory
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
 Data Confrontation in Economics, pp. 285-217. Princeton University Press,
 Princeton, NJ, 2003
 \item Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
-inference with condidence distributions. Cambridge University Press, 2016.
+inference with confidence distributions. Cambridge University Press, 2016.
 }
 }

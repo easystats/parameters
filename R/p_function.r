@@ -135,12 +135,12 @@
 #'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
 #'
 #' - Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
-#'   In Stigum, B. (ed.),Econometrics and the Philosophy of Economics: Theory
+#'   In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
 #'   Data Confrontation in Economics, pp. 285-217. Princeton University Press,
 #'   Princeton, NJ, 2003
 #'
 #' - Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
-#'   inference with condidence distributions. Cambridge University Press, 2016.
+#'   inference with confidence distributions. Cambridge University Press, 2016.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species, data = iris)
