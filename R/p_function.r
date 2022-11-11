@@ -122,6 +122,17 @@
 #' @examples
 #' model <- lm(Sepal.Length ~ Species, data = iris)
 #' p_function(model)
+#'
+#' if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
+#'   model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
+#'   result <- p_function(model)
+#'
+#'   # single panels
+#'   plot(result, n_columns = 2)
+#'
+#'   # integrated plot, the default
+#'   plot(result)
+#' }
 #' @export
 p_function <- function(model,
                        ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),

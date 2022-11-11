@@ -192,6 +192,17 @@ accurate, however, this is currently not supported.
 \examples{
 model <- lm(Sepal.Length ~ Species, data = iris)
 p_function(model)
+
+if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
+  model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
+  result <- p_function(model)
+
+  # single panels
+  plot(result, n_columns = 2)
+
+  # integrated plot, the default
+  plot(result)
+}
 }
 \references{
 \itemize{
