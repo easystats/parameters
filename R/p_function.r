@@ -23,13 +23,13 @@
 #' ## Compatibility intervals and continuous _p_-values for different estimate values
 #'
 #' `p_function()` only returns the compatibility interval estimates, not the
-#' related _p_-values. The reasons for this is because the _p_-value for a
+#' related _p_-values. The reason for this is because the _p_-value for a
 #' given estimate value is just `1 - CI_level`. The values indicating the lower
-#' and upper limit of the intervals are the related estimates associated with
+#' and upper limits of the intervals are the related estimates associated with
 #' the _p_-value. E.g., if a parameter `x` has a 75% compatibility interval
 #' of `(0.81, 1.05)`, then the _p_-value for the estimate value of `0.81`
-#' would be `0.25`. This is more intuitive and better to understand when looking
-#' at the plots (using `plot()`).
+#' would be `1 - 0.75`, which is `0.25`. This relationship is more intuitive and
+#' better to understand when looking at the plots (using `plot()`).
 #'
 #' ## Conditional versus unconditional interpretation of _p_-values and intervals
 #'
@@ -45,8 +45,10 @@
 #'
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
-#' figure below. The "conditional" interpretation of _p_-values and interval
-#' estimates implicitly (A) assumes certain assumptions to be true, thus the
+#' figure below (taken from
+#' [P-Values Are Tough and S-Values Can Help](https://lesslikely.com/statistics/s-values/)).
+#' The "conditional" interpretation of _p_-values and interval
+#' estimates (A) implicitly assumes certain assumptions to be true, thus the
 #' interpretation is "conditioned" on these assumptions (i.e. assumptions are
 #' taken as given). The unconditional interpretation (B), however, questions all
 #' these assumptions.
@@ -61,6 +63,22 @@
 #' of the _p_-value on the assumptions as well as on the data, recognizing that
 #' _p_<0.05 can arise from assumption violations even if the effect under
 #' study is null" (_Gelman/Greenland 2019_).
+#'
+#' ## Probabilistic interpretation of compatibility intervals
+#'
+#' Schweder (2018) resp. Schweder and Hjort (2016) (and others) argue that
+#' confidence curves (as produced by `p_function()`) have a valid probabilistic
+#' interpretation. They distinguish between _aleatory probability_, which
+#' describes the aleatory stochastic element of a distribution _ex ante_, i.e.
+#' before the data are obtained. This is the classical interpretation of
+#' confidence intervals following the Neyman-Pearson school of statistics.
+#' However, there is also an _ex post_ probability, called _epistemic_ probability,
+#' for confidence curves. The shift in terminology from _confidence_ intervals
+#' to _compatibility_ intervals may help emphasizing this interpretation.
+#'
+#' "The realized confidence distribution is clearly an epistemic probability
+#' distribution" (_Schweder 2018_). In this regard, interpretation of _p_-values
+#' might be guided using [`bayestestR::p_to_pd()`].
 #'
 #' @return A data frame with p-values and compatibility intervals.
 #'
@@ -79,12 +97,15 @@
 #'   science: Replace confidence and significance by compatibility and surprise.
 #'   BMC Medical Research Methodology. 2020;20(1):244. \doi{10.1186/s12874-020-01105-9}
 #'
-#' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
-#'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
-#'
 #' - Schweder T. Confidence is epistemic probability for empirical science.
 #'   Journal of Statistical Planning and Inference (2018) 195:116–125.
 #'   \doi{10.1016/j.jspi.2017.09.016}
+#'
+#' - Schweder T, Hjort NL. Confidence and Likelihood. Scandinavian Journal of
+#'   Statistics. 2002;29(2):309-332. \doi{10.1111/1467-9469.00285}
+#'
+#' - Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
+#'   inference with condidence distributions. Cambridge University Press, 2016.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species, data = iris)
@@ -178,6 +199,9 @@ p_function <- function(model,
 #' @export
 consonance_function <- p_function
 
+#' @rdname p_function
+#' @export
+confidence_curve <- p_function
 
 
 # methods ----------------------
