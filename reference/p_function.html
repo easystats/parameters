@@ -257,7 +257,7 @@ better to understand when looking at the plots (using <code><a href="https://rdr
 
 <p><code>p_function()</code>, and in particular its <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> method, aims at re-interpreting
 <em>p</em>-values and confidence intervals (better named: <em>compatibility</em> intervals)
-in unconditional terms. Instead of referring to the long-term property and
+in <em>unconditional</em> terms. Instead of referring to the long-term property and
 repeated trials when interpreting interval estimates (so-called "aleatory
 probability", <em>Schweder 2018</em>), and assuming that all underlying assumptions
 are correct and met, <code>p_function()</code> interprets <em>p</em>-values in a Fisherian way
@@ -277,6 +277,10 @@ these assumptions.</p>
 <p>"Emphasizing unconditional interpretations helps avoid overconfident and
 misleading inferences in light of uncertainties about the assumptions used
 to arrive at the statistical results." (<em>Greenland et al. 2022</em>).</p>
+<p><strong>Note:</strong> The term "conditional" as used by Rafi and Greenland probably has
+a slightly different meaning than normally. "Conditional" in this notion
+means that all model assumptions are taken as given - it should not be
+confused with terms like "conditional probability".</p>
 <p>In other words, the term compatibility interval emphasizes "the dependence
 of the <em>p</em>-value on the assumptions as well as on the data, recognizing that
 <em>p</em>&lt;0.05 can arise from assumption violations even if the effect under
@@ -296,11 +300,31 @@ confidence intervals following the Neyman-Pearson school of statistics.
 However, there is also an <em>ex post</em> probability, called <em>epistemic</em> probability,
 for confidence curves. The shift in terminology from <em>confidence</em> intervals
 to <em>compatibility</em> intervals may help emphasizing this interpretation.</p>
+<p>In this sense, the probabilistic interpretation of <em>p</em>-values and
+compatibility intervals is "conditional" - on the data <em>and</em> model assumptions
+(which is in line with the "unconditional" interpretation in the sense of
+Rafi and Greenland).</p>
 <p>"The realized confidence distribution is clearly an epistemic probability
-distribution" (<em>Schweder 2018</em>). In Bayesian word, compatibility intervals
+distribution" (<em>Schweder 2018</em>). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
 priors" (<em>Schweder, Hjort, 2003</em>). In this regard, interpretation of <em>p</em>-values
 might be guided using <code><a href="https://easystats.github.io/bayestestR/reference/pd_to_p.html" class="external-link">bayestestR::p_to_pd()</a></code>.</p>
+</div>
+
+<div class="section">
+<h3 id="compatibility-intervals-is-their-interpretation-conditional-or-not-">Compatibility intervals - is their interpretation conditional or not?<a class="anchor" aria-label="anchor" href="#compatibility-intervals-is-their-interpretation-conditional-or-not-"></a></h3>
+
+
+<p>The fact that the term "conditional" is used in different meanings, is
+confusing and unfortunate. Thus, we would summarize the probabilistic
+interpretation of compatibility intervals as follows: The intervals are built
+from the data <em>and</em> our modeling assumptions. The accuracy of the intervals
+depends on our model assumptions. If a value is outside the interval, that
+might be because (1) that parameter value isn't supported by the data, or
+(2) the modeling assumptions are a poor fit for the situation. When we make
+bad assumptions, the compatibility interval might be too wide or (more
+commonly and seriously) too narrow, making us think we know more about the
+parameter than is warranted.</p>
 </div>
 
     </div>
