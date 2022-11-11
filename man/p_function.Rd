@@ -135,7 +135,7 @@ better to understand when looking at the plots (using \code{plot()}).
 
 \code{p_function()}, and in particular its \code{plot()} method, aims at re-interpreting
 \emph{p}-values and confidence intervals (better named: \emph{compatibility} intervals)
-in unconditional terms. Instead of referring to the long-term property and
+in \emph{unconditional} terms. Instead of referring to the long-term property and
 repeated trials when interpreting interval estimates (so-called "aleatory
 probability", \emph{Schweder 2018}), and assuming that all underlying assumptions
 are correct and met, \code{p_function()} interprets \emph{p}-values in a Fisherian way
@@ -159,6 +159,11 @@ these assumptions.
 misleading inferences in light of uncertainties about the assumptions used
 to arrive at the statistical results." (\emph{Greenland et al. 2022}).
 
+\strong{Note:} The term "conditional" as used by Rafi and Greenland probably has
+a slightly different meaning than normally. "Conditional" in this notion
+means that all model assumptions are taken as given - it should not be
+confused with terms like "conditional probability".
+
 In other words, the term compatibility interval emphasizes "the dependence
 of the \emph{p}-value on the assumptions as well as on the data, recognizing that
 \emph{p}<0.05 can arise from assumption violations even if the effect under
@@ -177,11 +182,30 @@ However, there is also an \emph{ex post} probability, called \emph{epistemic} pr
 for confidence curves. The shift in terminology from \emph{confidence} intervals
 to \emph{compatibility} intervals may help emphasizing this interpretation.
 
+In this sense, the probabilistic interpretation of \emph{p}-values and
+compatibility intervals is "conditional" - on the data \emph{and} model assumptions
+(which is in line with the "unconditional" interpretation in the sense of
+Rafi and Greenland).
+
 "The realized confidence distribution is clearly an epistemic probability
-distribution" (\emph{Schweder 2018}). In Bayesian word, compatibility intervals
+distribution" (\emph{Schweder 2018}). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
 priors" (\emph{Schweder, Hjort, 2003}). In this regard, interpretation of \emph{p}-values
 might be guided using \code{\link[bayestestR:pd_to_p]{bayestestR::p_to_pd()}}.
+}
+
+\subsection{Compatibility intervals - is their interpretation conditional or not?}{
+
+The fact that the term "conditional" is used in different meanings, is
+confusing and unfortunate. Thus, we would summarize the probabilistic
+interpretation of compatibility intervals as follows: The intervals are built
+from the data \emph{and} our modeling assumptions. The accuracy of the intervals
+depends on our model assumptions. If a value is outside the interval, that
+might be because (1) that parameter value isn't supported by the data, or
+(2) the modeling assumptions are a poor fit for the situation. When we make
+bad assumptions, the compatibility interval might be too wide or (more
+commonly and seriously) too narrow, making us think we know more about the
+parameter than is warranted.
 }
 }
 \note{
