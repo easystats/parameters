@@ -64,7 +64,8 @@ format_p_adjust <- function(method) {
       # save old values, to check if p-adjustment worked
       old_p_vals <- params$p
       # find statistic column
-      stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
+      stat_column <- match(c("F", "t", "Statistic"), colnames(params))
+      stat_column <- stat_column[!is.na(stat_column)]
 
       if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
         # base R adjustments
