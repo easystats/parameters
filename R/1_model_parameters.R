@@ -830,7 +830,8 @@ model_parameters.logical  <- model_parameters.default
 model_parameters.lsmobj  <- model_parameters.default
 
  #' @export
-model_parameters.manova  <- model_parameters.default
+ ##	TEMPORARY EXCEPTION:  model_parameters.default has ERRORS.
+model_parameters.manova  <- model_parameters.aov
 
  #' @export
 model_parameters.map  <- model_parameters.default
