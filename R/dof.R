@@ -13,25 +13,31 @@
 #'   by any of those methods, whichever succeeds. See 'Details'.
 #' @param ... Currently not used.
 #'
-#' @details Methods for calculating degrees of freedom:
-#' \itemize{
-#' \item `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated degrees of freedoms are calculated, for other models, `n-k` (number of observations minus number of parameters).
-#' \item `"residual"` tries to extract residual degrees of freedom, and returns `Inf` if residual degrees of freedom could not be extracted.
-#' \item `"any"` first tries to extract residual degrees of freedom, and if these are not available, extracts analytical degrees of freedom.
-#' \item `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation for models of class `lmerMod`. Instead, always uses `n-k` to calculate df for any model.
-#' \item `"normal"` returns `Inf`.
-#' \item `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
-#' \item `"kenward"` calls [`dof_kenward()`].
-#' \item `"satterthwaite"` calls [`dof_satterthwaite()`].
-#' \item `"ml1"` calls [`dof_ml1()`].
-#' \item `"betwithin"` calls [`dof_betwithin()`].
-#' }
+#' @details
+#' Methods for calculating degrees of freedom:
+#'
+#' - `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated
+#'   degrees of freedoms are calculated, for other models, `n-k` (number of
+#'   observations minus number of parameters).
+#' - `"residual"` tries to extract residual degrees of freedom, and returns
+#'   `Inf` if residual degrees of freedom could not be extracted.
+#' - `"any"` first tries to extract residual degrees of freedom, and if these
+#'   are not available, extracts analytical degrees of freedom.
+#' - `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation
+#'   for models of class `lmerMod`. Instead, always uses `n-k` to calculate df
+#'   for any model.
+#' - `"normal"` returns `Inf`.
+#' - `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
+#' - `"kenward"` calls [`dof_kenward()`].
+#' - `"satterthwaite"` calls [`dof_satterthwaite()`].
+#' - `"ml1"` calls [`dof_ml1()`].
+#' - `"betwithin"` calls [`dof_betwithin()`].
+#'
 #' For models with z-statistic, the returned degrees of freedom for model parameters
 #' is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is
 #' only one distribution for the related test statistic.
 #'
 #' @note
-#'
 #' In many cases, `degrees_of_freedom()` returns the same as `df.residuals()`,
 #' or `n-k` (number of observations minus number of parameters). However,
 #' `degrees_of_freedom()` refers to the model's *parameters* degrees of freedom

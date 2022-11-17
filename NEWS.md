@@ -9,6 +9,15 @@
   have been removed. These were superseded by the `vcov` argument in `ci()`,
   `p_value()`, and `standard_error()`, respectively.
 
+## New functions
+
+* `p_function()`, to print and plot p-values and compatibility (confidence)
+  intervals for statistical models, at different levels. This allows to see
+  which estimates are most compatible with the model at various compatibility
+  levels.
+
+* `p_calibrate()`, to compute calibrated p-values.
+
 ## Changes
 
 * `model_parameters()` and `compare_parameters()` now use the unicode character
@@ -19,6 +28,9 @@
 * The `style` argument in `compare_parameters()`, which is used to control the
   table column elements, now supports an experimental glue-like syntax.
   See this vignette _Printing Model Parameters_.
+
+* `print_html()` gets a `font_size` and `line_padding` argument to tweak the
+  appearance of HTML tables.
 
 * Consolidation of vignettes on standardization of model parameters.
 

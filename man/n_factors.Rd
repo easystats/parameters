@@ -81,7 +81,7 @@ In case of ties, it will keep the simplest model and select the solution
 with the fewer factors.
 }
 \details{
-\code{n_components} is actually an alias for \code{n_factors}, with
+\code{n_components()} is actually an alias for \code{n_factors()}, with
 different defaults for the function arguments.
 }
 \note{

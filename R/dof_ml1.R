@@ -76,5 +76,6 @@ dof_ml1 <- function(model) {
       p
     }
   }))
-  stats::na.omit(as.numeric(names(parms)[match(insight::clean_names(parameters), parms)]))
+  out <- as.numeric(names(parms)[match(insight::clean_names(parameters), parms)])
+  out[!is.na(out)]
 }

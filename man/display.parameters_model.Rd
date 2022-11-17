@@ -30,6 +30,8 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  font_size = "100\%",
+  line_padding = 4,
   verbose = TRUE,
   ...
 )
@@ -92,6 +94,8 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
+  font_size = "100\%",
+  line_padding = 4,
   verbose = TRUE,
   ...
 )
@@ -179,6 +183,10 @@ standard deviation.}
 \item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
+
+\item{font_size}{For HTML tables, the font size.}
+
+\item{line_padding}{For HTML tables, the distance (in pixel) between lines.}
 
 \item{verbose}{Toggle messages and warnings.}
 

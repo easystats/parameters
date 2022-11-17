@@ -468,7 +468,7 @@ model_parameters.default <- function(model,
     dots = list(...),
     not_allowed = c("include_sigma", "wb_component"),
     class(model)[1],
-    verbose = verbose
+    verbose = FALSE
   )
 
   # extract model parameters table, as data frame
