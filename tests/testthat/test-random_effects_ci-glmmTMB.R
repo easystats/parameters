@@ -29,7 +29,7 @@ if (.runThisTest && win_os &&
   requiet("parameters") &&
   requiet("glmmTMB") &&
   requiet("lme4") &&
-  packageVersion("glmmTMB") > "1.1.3") {
+  packageVersion("glmmTMB") >= "1.1.5") {
   data(sleepstudy)
   data(cake)
   set.seed(123)
@@ -300,11 +300,11 @@ if (.runThisTest && win_os &&
       expect_equal(
         mp1$CI_low,
         c(
-          28.9123, 5.03115, -1.87304, -2.42081, -3.2708, -2.57695, 0.21571,
-          4.17466, NaN, 0, 0.26247, 0.34089, 0.02477, 0.65731, 0.3902,
-          0.14685, 0.01322, 0.62182, 0.99915, NaN, NaN, NaN, -0.31609,
-          -0.48806, NaN, -0.8346, NaN, -0.60153, NA, NA, NA, NA, NA, NA,
-          NA, NA, NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12529
+          28.91277, 5.03129, -1.87302, -2.42033, -3.2702, -2.57721, 0.2157,
+          4.20738, NaN, NaN, 0.26244, 0.34083, 0.02479, 0.66487, 0.40589,
+          0.15295, 0.01405, 0.62939, -0.99996, -0.41209, NaN, NaN, NaN,
+          -0.40223, NaN, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA,
+          NA, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.12596
         ),
         tolerance = 1e-2,
         ignore_attr = TRUE
@@ -376,8 +376,8 @@ if (.runThisTest && win_os &&
         mp3$CI_low,
         c(
           31.20278, 4.35879, -2.63767, -2.80041, -3.54983, -3.16627,
-          0, NaN, NaN, 0, NaN, NaN, NaN, NaN, -0.49203, -0.41167, NaN,
-          NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 7.08478
+          0, 0, NaN, NaN, 0, 0, -1, NaN, NaN, NaN, NaN, NA, NA, NA, NA,
+          NA, NA, NA, NA, NA, NaN, 7.08478
         ),
         tolerance = 1e-2,
         ignore_attr = TRUE
@@ -416,10 +416,9 @@ if (.runThisTest && win_os &&
       expect_equal(
         mp4$CI_low,
         c(
-          29.01131, 5.01247, -1.89444, -1.96275, -2.66798, -2.50892,
-          4.23497, 0.62985, 0.36934, 0.1398, 0.01133, 0.60758, 0.56678,
-          0.26866, NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN,
-          4.23582
+          29.01091, 5.01247, -1.89432, -1.96276, -2.66797, -2.50892,
+          4.23785, 0.63016, 0.36947, 0.1399, 0.01132, 0.60891, NaN, NaN,
+          NaN, NaN, NaN, NA, NA, NA, NA, NA, NA, NA, NA, NA, NaN, 4.23591
         ),
         tolerance = 1e-2,
         ignore_attr = TRUE
@@ -506,7 +505,8 @@ if (.runThisTest && win_os &&
     test_that("random effects CIs, simple slope", {
       expect_equal(
         mp5$CI_low,
-        c(237.03695, 9.04139, NaN, 8.95755, NaN, 30.67054),
+        # c(237.03695, 9.04139, NaN, 8.95755, NaN, 30.67054),
+        c(NaN, NaN, NaN, NaN, NaN, NaN),
         tolerance = 1e-2,
         ignore_attr = TRUE
       )
