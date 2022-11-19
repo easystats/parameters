@@ -105,7 +105,7 @@ data <- na.omit(data) # remove missing values
 
 Next, we check test if the dataset is suitable for carrying out factor analysis.
 
-```{r eval=utils::packageVersion("performance") >= "0.10.0"}
+```{r eval=requireNamespace("performance", quietly = TRUE) && utils::packageVersion("performance") >= "0.10.0"}
 library(performance)
 # Check factor structure
 performance::check_factorstructure(data)
