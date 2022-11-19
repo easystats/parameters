@@ -302,7 +302,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">supp</span> <span class="op">*</span> <span class="va">dose</span>, data <span class="op">=</span> <span class="va">ToothGrowth</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: refit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -312,7 +312,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: posthoc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: posthoc</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -321,7 +321,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: smart</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: smart</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -330,7 +330,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.55 | [ 0.07,  1.02]</span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: basic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: basic</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -341,7 +341,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Robust and 2 SD</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: refit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -350,9 +350,9 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.44,  0.84]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by one MAD from the median.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Scaled by one MAD from the median.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: refit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -361,11 +361,11 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       1.28 | [ 0.89,  1.68]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.64 | [ 0.09,  1.20]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Scaled by two SDs from the mean.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Scaled by two SDs from the mean.</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">am</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">*</span> <span class="va">mpg</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: refit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |        95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
@@ -374,9 +374,9 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |       2.10 | [-0.19, 5.28]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |      -0.36 | [-2.57, 1.54]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Response is unstandardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: posthoc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: posthoc</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
@@ -385,9 +385,9 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |       3.36 | [-2.31, 12.59]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |      -0.20 | [-1.44,  0.86]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Response is unstandardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"basic"</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: basic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: basic</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std_Odds_Ratio |           95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------</span>
@@ -396,7 +396,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |          28.80 | [0.10, 2.92e+05]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |           0.54 | [0.01,    13.94]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> - Response is unstandardized.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -412,7 +412,7 @@ deviations. Statistics in medicine, 27(15), 2865-2873.</p></li>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   these terms.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   See `help("demean", package = "datawizard")` for modeling between- and</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   within-subject effects.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Standardization method: pseudo</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: pseudo</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
