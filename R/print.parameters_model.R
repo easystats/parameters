@@ -228,6 +228,7 @@ print.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
+    style = style,
     ...
   )
 
