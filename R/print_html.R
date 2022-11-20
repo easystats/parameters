@@ -165,9 +165,6 @@ print_html.compare_parameters <- function(x,
     groups = groups
   )
 
-  # we assume that model names are at the end of each column name, in parenthesis
-  model_columns <- gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]
-
   out <- insight::export_table(
     formatted_table,
     format = "html",
@@ -177,14 +174,22 @@ print_html.compare_parameters <- function(x,
     ...
   )
 
-  .add_gt_options(out, font_size, line_padding, model_columns, style)
+  .add_gt_options(
+    out,
+    font_size,
+    line_padding,
+    # we assume that model names are at the end of each column name, in parenthesis
+    labels = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
+    style,
+    column_names = colnames(formatted_table)
+  )
 }
 
 
 
 # helper ------------------
 
-.add_gt_options <- function(out, font_size, line_padding, model_columns, style) {
+.add_gt_options <- function(out, font_size, line_padding, labels, style, column_names) {
   insight::check_if_installed("gt")
   out <- gt::tab_options(out,
     table.font.size = font_size,
@@ -196,14 +201,18 @@ print_html.compare_parameters <- function(x,
     out <- gt::fmt_markdown(out, columns = tidyselect::everything())
   }
   # add a column span?
-  if (any(duplicated(model_columns))) {
-    duplicates <- model_columns[duplicated(model_columns)]
+  if (any(duplicated(labels))) {
+    duplicates <- labels[duplicated(labels)]
     for (d in duplicates) {
       # we need +1 here, because first column is parameter column
-      span <- which(model_columns == d) + 1
+      span <- which(labels == d) + 1
       # add column spanner
       out <- gt::tab_spanner(out, label = d, columns = span)
     }
+    # relabel columns
+    new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
+    names(new_labels) <- column_names
+    out <- gt::cols_label(out, .list = new_labels)
   }
   out
 }
