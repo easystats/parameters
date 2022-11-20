@@ -47,7 +47,9 @@ print_html.parameters_model <- function(x,
   }
 
   # we need glue-like syntax right now...
-  style <- .convert_to_glue_syntax(style, "<br>")
+  if (!is.null(style)) {
+    style <- .convert_to_glue_syntax(style, "<br>")
+  }
 
   # check options ---------------
 
