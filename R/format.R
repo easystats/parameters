@@ -120,6 +120,11 @@ format.parameters_model <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
+  # add p-stars, if we need this for style-argument
+  if (!is.null(style) && grepl("{stars}", style, fixed = TRUE)) {
+    x$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+  }
+
   # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
@@ -176,7 +181,6 @@ format.parameters_model <- function(x,
   # without the parameters-column.
   if (!is.null(style)) {
     .style_formatted_table <- function(formtab) {
-      formtab$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
       additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
       if (length(additional_columns)) {
         additional_columns <- formtab[additional_columns]

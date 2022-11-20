@@ -52,6 +52,8 @@
     i <- gsub("<br>()", "", i, fixed = TRUE)
     i <- gsub(" ()", "", i, fixed = TRUE)
     i[i == "()"] <- ""
+    # remove other non-matched patterns
+    i <- gsub("{stars}", "", i, fixed = TRUE)
     i
   })
   out
@@ -100,8 +102,10 @@
   ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
   ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
   # fix p-layout
-  x[["p"]] <- insight::trim_ws(x[["p"]])
-  x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
+  if ("p" %in% colnames(x)) {
+    x[["p"]] <- insight::trim_ws(x[["p"]])
+    x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
+  }
   # handle aliases
   style <- tolower(style)
   style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
@@ -136,10 +140,14 @@
   row <- rep(style, times = nrow(x))
   for (r in seq_along(row)) {
     row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
-    row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
-    row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+    if ("SE" %in% colnames(x)) {
+      row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
+    }
+    if ("p" %in% colnames(x)) {
+      row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+    }
     if ("p_stars" %in% colnames(x)) {
       row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
     }
