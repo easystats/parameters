@@ -15,6 +15,7 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     groups = NULL,
+                                    style = NULL,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -169,6 +170,23 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    formatted_table$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+    formatted_table <- cbind(
+      formatted_table[1],
+      .format_output_style(
+        formatted_table[2:ncol(formatted_table)],
+        style = style,
+        format = format,
+        modelname = .style_pattern_to_name(style)
+      )
+    )
+  }
+
   if (!is.null(indent_rows)) {
     attr(formatted_table, "indent_rows") <- indent_rows
     attr(formatted_table, "indent_groups") <- NULL
@@ -207,7 +225,6 @@ format.parameters_brms_meta <- format.parameters_model
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
-                                      style = NULL,
                                       split_components = TRUE,
                                       digits = 2,
                                       ci_digits = 2,
@@ -217,6 +234,7 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
+                                      style = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL

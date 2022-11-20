@@ -28,13 +28,7 @@
   if (length(style) == 1) {
     column_names <- modelname
   } else {
-    column_names <- tolower(style)
-    column_names <- gsub("{", "", column_names, fixed = TRUE)
-    column_names <- gsub("}", "", column_names, fixed = TRUE)
-    # manual renaming
-    column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
-    column_names <- gsub("\\Qse\\E", "SE", column_names)
-    column_names <- gsub("<br>", "", column_names, fixed = TRUE)
+    column_names <- .style_pattern_to_name(style)
   }
 
   # paste glue together
@@ -119,8 +113,10 @@
   style <- gsub("{ci}", "{ci_low}, {ci_high}", style, fixed = TRUE)
   # align columns width for text format
   .align_values <- function(i) {
-    non_empty <- !is.na(i) & nchar(i) > 0
-    i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+    if (!is.null(i)) {
+      non_empty <- !is.na(i) & nchar(i) > 0
+      i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+    }
     i
   }
   # we put all elements (coefficient, SE, CI, p, ...) in one column.
@@ -143,9 +139,13 @@
     row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
-    row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
     row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
-    row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
+    if ("p_stars" %in% colnames(x)) {
+      row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
+    }
+    if ("pd" %in% colnames(x)) {
+      row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
+    }
   }
   # some cleaning: columns w/o coefficient are empty
   row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
@@ -160,6 +160,20 @@
   x
 }
 
+
+.style_pattern_to_name <- function(style) {
+  column_names <- tolower(style)
+  # completely remove these patterns
+  column_names <- gsub("{stars}", "", column_names, fixed = TRUE)
+  # remove curlys
+  column_names <- gsub("{", "", column_names, fixed = TRUE)
+  column_names <- gsub("}", "", column_names, fixed = TRUE)
+  # manual renaming
+  column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
+  column_names <- gsub("\\Qse\\E", "SE", column_names)
+  column_names <- gsub("<br>", "", column_names, fixed = TRUE)
+  column_names
+}
 
 
 .add_obs_row <- function(x, att, style) {

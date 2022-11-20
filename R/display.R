@@ -28,6 +28,7 @@
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
+#' @inheritParams compare_parameters
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #'   vector in markdown-table format. If `format = "html"`, an object of
@@ -64,6 +65,7 @@ display.parameters_model <- function(object,
                                      zap_small = FALSE,
                                      font_size = "100%",
                                      line_padding = 4,
+                                     style = NULL,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
@@ -73,7 +75,8 @@ display.parameters_model <- function(object,
       footer = footer, ci_digits = ci_digits, p_digits = p_digits,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      font_size = font_size, line_padding = line_padding, verbose = verbose, ...
+      font_size = font_size, line_padding = line_padding, style = style,
+      verbose = verbose, ...
     )
   } else {
     print_md(

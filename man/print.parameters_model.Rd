@@ -22,6 +22,7 @@
   groups = NULL,
   column_width = NULL,
   ci_brackets = c("[", "]"),
+  style = NULL,
   ...
 )
 
@@ -44,7 +45,9 @@ in a single table and a \code{Component} column is added to the output.}
 \item{select}{Character vector (or numeric index) of column names that should
 be printed. If \code{NULL} (default), all columns are printed. The shortcut
 \code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-while \code{select = "short"} prints coefficient, standard errors and p-values.}
+while \code{select = "short"} prints coefficient, standard errors and p-values.
+For more custmized selection of columns and table layout, see \code{style}
+argument.}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}
@@ -91,6 +94,22 @@ columns across all table components are adjusted to have the same width.}
 
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
+
+\item{style}{String, indicating which style of output is requested. Following
+templates are possible:
+\itemize{
+\item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
+\item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
+\item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
+\item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
+\item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+\item glue-like syntax: Following tokens are replaced by the related coefficients
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} or \code{{ci_low}} and \code{{ci_high}},
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
+a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
+}}
 
 \item{...}{Arguments passed to or from other methods.}
 }

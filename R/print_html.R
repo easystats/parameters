@@ -133,15 +133,16 @@ print_html.parameters_sem <- print_html.parameters_model
 
 #' @export
 print_html.compare_parameters <- function(x,
-                                          digits = 2,
-                                          ci_digits = 2,
-                                          p_digits = 3,
                                           caption = NULL,
                                           subtitle = NULL,
                                           footer = NULL,
-                                          style = NULL,
-                                          groups = NULL,
+                                          digits = 2,
+                                          ci_digits = 2,
+                                          p_digits = 3,
                                           zap_small = FALSE,
+                                          groups = NULL,
+                                          style = NULL,
+                                          ci_brackets = c("(", ")"),
                                           font_size = "100%",
                                           line_padding = 4,
                                           ...) {
@@ -168,13 +169,13 @@ print_html.compare_parameters <- function(x,
 
   formatted_table <- format(
     x,
-    style,
+    style = style,
     split_components = TRUE,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_width = NULL,
-    ci_brackets = c("(", ")"),
+    ci_brackets = ci_brackets,
     format = "html",
     zap_small = zap_small,
     groups = groups
