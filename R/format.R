@@ -190,7 +190,7 @@ format.parameters_model <- function(x,
           modelname = .style_pattern_to_name(style)
         )
       )
-      if (!is.null(additional_columns)) {
+      if (!insight::is_empty_object(additional_columns)) {
         formtab <- cbind(formtab, additional_columns)
       }
       formtab
