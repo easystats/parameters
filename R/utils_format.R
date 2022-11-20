@@ -37,8 +37,22 @@
 
   # "|" indicates cell split
   style <- unlist(strsplit(style, split = "|", fixed = TRUE))
-  formatted_columns <- lapply(style, function(column_style) {
-    .format_glue_output(x, coef_column, ci_column, style, format, modelname)
+
+  # define column names
+  if (length(style) == 1) {
+    column_names <- modelname
+  } else {
+    column_names <- style
+    column_names <- gsub("{", "", column_names, fixed = TRUE)
+    column_names <- gsub("}", "", column_names, fixed = TRUE)
+    # manual renaming
+    column_names <- gsub("estimate", "Coefficient", column_names, fixed = TRUE)
+    column_names <- gsub("\\Qse\\E", "SE", column_names)
+  }
+
+  # paste glue together
+  formatted_columns <- lapply(seq_along(style), function(i) {
+    .format_glue_output(x, coef_column, ci_column, style[i], format, column_names[i])
   })
   out <- do.call(cbind, formatted_columns)
 
@@ -57,7 +71,7 @@
 
 
 
-.format_glue_output <- function(x, coef_column, ci_column, style, format, modelname) {
+.format_glue_output <- function(x, coef_column, ci_column, style, format, column_names) {
   # separate CI columns, for custom layout
   ci <- x[[ci_column[1]]]
   ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
@@ -111,7 +125,7 @@
   row <- gsub("= ", "=", row, fixed = TRUE)
   # final output
   x <- data.frame(row)
-  colnames(x) <- modelname
+  colnames(x) <- column_names
   x
 }
 
