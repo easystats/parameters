@@ -146,6 +146,9 @@ print_html.compare_parameters <- function(x,
     style <- attributes(x)$output_style
   }
 
+  # we need glue-like syntax right now...
+  style <- .convert_to_glue_syntax(style, "<br>")
+
   formatted_table <- format(
     x,
     style,

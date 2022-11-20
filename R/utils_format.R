@@ -5,7 +5,11 @@
 # different pre-sets of "print-layouts"
 
 .format_output_style <- function(x, style, format, modelname) {
-  linesep <- " "
+  if (identical(format, "html")) {
+    linesep <- "<br>"
+  } else {
+    linesep <- " "
+  }
   if (style %in% c("se", "ci")) {
     x$p_stars <- ""
   }
@@ -14,26 +18,8 @@
   coef_column <- colnames(x)[1]
   ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
 
-  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
-  if (style %in% c("minimal", "ci_p2")) {
-    style <- c("{estimate} ({ci})|{p}")
-
-  # style: estimate, p-stars and CI
-  } else if (style %in% c("ci_p", "ci")) {
-    style <- c("{estimate}{stars} ({ci})")
-
-  # style: estimate, p-stars and SE
-  } else if (style %in% c("se_p", "se")) {
-    style <- c("{estimate}{stars} ({se})")
-
-  # style: estimate and SE, p-value in separate column
-  } else if (style %in% c("se_p2")) {
-    style <- c("{estimate} ({se})|{p}")
-
-  # style: only estimate
-  } else if (style %in% c("est", "coef")) {
-    style <- "{estimate}"
-  }
+  # make sure we have a glue-like syntax
+  style <- .convert_to_glue_syntax(style, linesep)
 
   # "|" indicates cell split
   style <- unlist(strsplit(style, split = "|", fixed = TRUE))
@@ -70,6 +56,39 @@
   out
 }
 
+
+.convert_to_glue_syntax <- function(style, linesep = NULL) {
+  # set default
+  if (is.null(linesep)) {
+    linesep <- " "
+  }
+
+  # default
+  if (is.null(style)) {
+    style <- paste0("{estimate}", linesep, "({ci})|{p}")
+
+  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
+  } else if (style %in% c("minimal", "ci_p2")) {
+    style <- paste0("{estimate}", linesep, "({ci})|{p}")
+
+    # style: estimate, p-stars and CI
+  } else if (style %in% c("ci_p", "ci")) {
+    style <- paste0("{estimate}{stars}", linesep, "({ci})")
+
+    # style: estimate, p-stars and SE
+  } else if (style %in% c("se_p", "se")) {
+    style <- paste0("{estimate}{stars}", linesep, "({se})")
+
+    # style: estimate and SE, p-value in separate column
+  } else if (style %in% c("se_p2")) {
+    style <- paste0("{estimate}", linesep, "({se})|{p}")
+
+    # style: only estimate
+  } else if (style %in% c("est", "coef")) {
+    style <- "{estimate}"
+  }
+  style
+}
 
 
 .format_glue_output <- function(x, coef_column, ci_column, style, format, column_names) {
