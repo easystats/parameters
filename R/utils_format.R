@@ -15,55 +15,41 @@
   ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
 
   # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
-  if (style == "minimal") {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
-    x <- x[c(coef_column, "p")]
+  if (style %in% c("minimal", "ci_p2")) {
+    style <- c("{estimate} ({ci})|{p}")
 
-    # style: estimate, p-stars and CI
+  # style: estimate, p-stars and CI
   } else if (style %in% c("ci_p", "ci")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, x[[ci_column]]))
-    x <- x[coef_column]
+    style <- c("{estimate}{stars} ({ci})")
 
-    # style: estimate, p-stars and SE
+  # style: estimate, p-stars and SE
   } else if (style %in% c("se_p", "se")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, "(", x$SE, ")"))
-    x <- x[coef_column]
+    style <- c("{estimate}{stars} ({se})")
 
-    # style: estimate and CI, p-value in separate column
-  } else if (style %in% c("ci_p2")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
-    x <- x[c(coef_column, "p")]
-
-    # style: estimate and SE, p-value in separate column
+  # style: estimate and SE, p-value in separate column
   } else if (style %in% c("se_p2")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, "(", x$SE, ")"))
-    x <- x[c(coef_column, "p")]
+    style <- c("{estimate} ({se})|{p}")
 
-    # style: only estimate
+  # style: only estimate
   } else if (style %in% c("est", "coef")) {
-    x <- x[1]
-
-    # glue styled column layout
-  } else if (grepl("{", style, fixed = TRUE)) {
-    x <- .format_glue_output(x, coef_column, ci_column, style, format, modelname)
+    style <- "{estimate}"
   }
+
+  # "|" indicates cell split
+  style <- strsplit(style, split = "|", fixed = TRUE)
+  formatted_columns <- lapply(style, function(column_style) {
+    format_glue_output(x, coef_column, ci_column, style, format, modelname)
+  })
+  out <- do.call(cbind, formatted_columns)
 
   # add modelname to column names; for single column layout per model, we just
   # need the column name. If the layout contains more than one column per model,
   # add modelname in parenthesis.
-  colnames(x) <- switch(style,
-    "p" = ,
-    "ci_p" = ,
-    "ci" = ,
-    "se_p" = ,
-    "se" = modelname,
-    "minimal" = ,
-    "est" = ,
-    "coef" = ,
-    "se_p2" = ,
-    "ci_p2" = colnames(x) <- paste0(colnames(x), " (", modelname, ")"),
-    colnames(x)
-  )
+  if (ncol(x) > 1) {
+    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  } else {
+    colnames(x) <- modelname
+  }
 
   x[[1]][x[[1]] == "()"] <- ""
   x
