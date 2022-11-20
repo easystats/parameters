@@ -16,8 +16,8 @@
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
-#' @param style String, indicating which style of output is requested. Following
-#'   templates are possible:
+#' @param style String, indicating which style of output is requested. For
+#'   `compare_parameters()`, following templates are possible:
 #'
 #'  - `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
 #'  - `"se"`: Estimate and standard errors, no asterisks for p-values.
@@ -30,6 +30,11 @@
 #'    `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
 #'    Furthermore, a `|` separates values into new cells. If `format = "html"`,
 #'    a `<br>` inserts a line break inside a cell. See 'Examples'.
+#'
+#'   For `model_parameters()`, only limited support for glue-like syntax is
+#'   provided. `style` does not fully work for more complex models (like mixed
+#'   models). In such cases, it is recommended to use the `select` argument and
+#'   its shortcuts, or `summary()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model

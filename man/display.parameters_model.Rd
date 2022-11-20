@@ -193,8 +193,8 @@ places than \code{digits} are printed in scientific notation.}
 
 \item{line_padding}{For HTML tables, the distance (in pixel) between lines.}
 
-\item{style}{String, indicating which style of output is requested. Following
-templates are possible:
+\item{style}{String, indicating which style of output is requested. For
+\code{compare_parameters()}, following templates are possible:
 \itemize{
 \item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
 \item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
@@ -207,7 +207,12 @@ or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} or \code{{ci_low}} an
 \code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
 Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
 a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
-}}
+}
+
+For \code{model_parameters()}, only limited support for glue-like syntax is
+provided. \code{style} does not fully work for more complex models (like mixed
+models). In such cases, it is recommended to use the \code{select} argument and
+its shortcuts, or \code{summary()}.}
 
 \item{verbose}{Toggle messages and warnings.}
 
