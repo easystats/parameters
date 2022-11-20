@@ -334,6 +334,7 @@ summary.parameters_stan <- function(object, ...) {
                         ci_brackets = TRUE,
                         format = "text",
                         group = NULL,
+                        style = NULL,
                         ...) {
   format(
     x,
@@ -348,6 +349,7 @@ summary.parameters_stan <- function(object, ...) {
     zap_small = zap_small,
     format = format,
     group = group,
+    style = style,
     ...
   )
 }

@@ -94,6 +94,7 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
+  style = NULL,
   font_size = "100\%",
   line_padding = 4,
   verbose = TRUE,

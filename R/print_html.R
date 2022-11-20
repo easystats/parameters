@@ -19,6 +19,7 @@ print_html.parameters_model <- function(x,
                                         show_formula = FALSE,
                                         zap_small = FALSE,
                                         groups = NULL,
+                                        style = NULL,
                                         font_size = "100%",
                                         line_padding = 4,
                                         verbose = TRUE,
@@ -39,6 +40,14 @@ print_html.parameters_model <- function(x,
   if (missing(footer_digits)) {
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
   }
+
+  # get attributes
+  if (missing(style) || is.null(style)) {
+    style <- attributes(x)$output_style
+  }
+
+  # we need glue-like syntax right now...
+  style <- .convert_to_glue_syntax(style, "<br>")
 
   # check options ---------------
 
@@ -71,6 +80,7 @@ print_html.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "html",
     groups = groups,
+    style = style,
     ...
   )
 
@@ -104,7 +114,12 @@ print_html.parameters_model <- function(x,
     ...
   )
 
-  .add_gt_options(out, font_size, line_padding)
+  .add_gt_options(
+    out,
+    font_size,
+    line_padding,
+    style
+  )
 }
 
 #' @export
@@ -189,7 +204,12 @@ print_html.compare_parameters <- function(x,
 
 # helper ------------------
 
-.add_gt_options <- function(out, font_size, line_padding, labels, style, column_names) {
+.add_gt_options <- function(out,
+                            font_size = "100%",
+                            line_padding = 4,
+                            labels = NULL,
+                            style,
+                            column_names = NULL) {
   insight::check_if_installed("gt")
   out <- gt::tab_options(out,
     table.font.size = font_size,
@@ -201,7 +221,7 @@ print_html.compare_parameters <- function(x,
     out <- gt::fmt_markdown(out, columns = tidyselect::everything())
   }
   # add a column span?
-  if (any(duplicated(labels))) {
+  if (!is.null(labels) && any(duplicated(labels))) {
     duplicates <- labels[duplicated(labels)]
     for (d in duplicates) {
       # we need +1 here, because first column is parameter column
@@ -210,9 +230,11 @@ print_html.compare_parameters <- function(x,
       out <- gt::tab_spanner(out, label = d, columns = span)
     }
     # relabel columns
-    new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
-    names(new_labels) <- column_names
-    out <- gt::cols_label(out, .list = new_labels)
+    if (!is.null(column_names)) {
+      new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
+      names(new_labels) <- column_names
+      out <- gt::cols_label(out, .list = new_labels)
+    }
   }
   out
 }
