@@ -134,6 +134,7 @@
     x$p_stars <- .align_values(x$p_stars)
     ci_low <- .align_values(ci_low)
     ci_high <- .align_values(ci_high)
+    x$pd <- .align_values(x$pd)
   }
   # create new string
   row <- rep(style, times = nrow(x))
@@ -144,6 +145,7 @@
     row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
     row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
     row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+    row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
   }
   # some cleaning: columns w/o coefficient are empty
   row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""

@@ -116,9 +116,9 @@ print_html.parameters_model <- function(x,
 
   .add_gt_options(
     out,
-    font_size,
-    line_padding,
-    style
+    font_size = font_size,
+    line_padding = line_padding,
+    style = style
   )
 }
 
