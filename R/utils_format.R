@@ -28,11 +28,11 @@
   if (length(style) == 1) {
     column_names <- modelname
   } else {
-    column_names <- style
+    column_names <- tolower(style)
     column_names <- gsub("{", "", column_names, fixed = TRUE)
     column_names <- gsub("}", "", column_names, fixed = TRUE)
     # manual renaming
-    column_names <- gsub("estimate", "Coefficient", column_names, fixed = TRUE)
+    column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
     column_names <- gsub("\\Qse\\E", "SE", column_names)
     column_names <- gsub("<br>", "", column_names, fixed = TRUE)
   }
@@ -87,7 +87,9 @@
   } else if (style %in% c("est", "coef")) {
     style <- "{estimate}"
   }
-  style
+
+  # replace \n for now with default line-separators
+  gsub("\n", linesep, style)
 }
 
 
