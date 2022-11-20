@@ -126,6 +126,7 @@ print_html.compare_parameters <- function(x,
                                           footer = NULL,
                                           style = NULL,
                                           groups = NULL,
+                                          zap_small = FALSE,
                                           font_size = "100%",
                                           line_padding = 4,
                                           ...) {
@@ -160,6 +161,7 @@ print_html.compare_parameters <- function(x,
     ci_width = NULL,
     ci_brackets = c("(", ")"),
     format = "html",
+    zap_small = zap_small,
     groups = groups
   )
 
