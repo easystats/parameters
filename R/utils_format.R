@@ -52,7 +52,14 @@
     colnames(out) <- modelname
   }
 
-  out[[1]][out[[1]] == "()"] <- ""
+  # remove empty parenthesis
+  out[] <- lapply(out, function(i) {
+    # here we either have "<br>" or " " as line breaks, followed by empty "()"
+    i <- gsub("<br>()", "", i, fixed = TRUE)
+    i <- gsub(" ()", "", i, fixed = TRUE)
+    i[i == "()"] <- ""
+    i
+  })
   out
 }
 
