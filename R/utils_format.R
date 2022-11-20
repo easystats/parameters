@@ -36,23 +36,23 @@
   }
 
   # "|" indicates cell split
-  style <- strsplit(style, split = "|", fixed = TRUE)
+  style <- unlist(strsplit(style, split = "|", fixed = TRUE))
   formatted_columns <- lapply(style, function(column_style) {
-    format_glue_output(x, coef_column, ci_column, style, format, modelname)
+    .format_glue_output(x, coef_column, ci_column, style, format, modelname)
   })
   out <- do.call(cbind, formatted_columns)
 
   # add modelname to column names; for single column layout per model, we just
   # need the column name. If the layout contains more than one column per model,
   # add modelname in parenthesis.
-  if (ncol(x) > 1) {
-    colnames(x) <- paste0(colnames(x), " (", modelname, ")")
+  if (ncol(out) > 1) {
+    colnames(out) <- paste0(colnames(out), " (", modelname, ")")
   } else {
-    colnames(x) <- modelname
+    colnames(out) <- modelname
   }
 
-  x[[1]][x[[1]] == "()"] <- ""
-  x
+  out[[1]][out[[1]] == "()"] <- ""
+  out
 }
 
 
@@ -73,6 +73,7 @@
   style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
   style <- gsub("{pval}", "{p}", style, fixed = TRUE)
   style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
+  style <- gsub("{ci}", "{ci_low}, {ci_high}", style, fixed = TRUE)
   # align columns width for text format
   .align_values <- function(i) {
     non_empty <- !is.na(i) & nchar(i) > 0
