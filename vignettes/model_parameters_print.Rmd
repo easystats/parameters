@@ -87,7 +87,7 @@ print(mp, pretty_names = "labels")
 
 Using `summary`, or the `select` argument via the `print()` method allows for a more compact table, in case not all information is required. `summary()` will return the coefficient, confidence intervals and p-values. `select` allows to select specific columns only.
 
-```{r eval=successfully_loaded["datawizard"]}
+```{r}
 data(iris)
 model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 
