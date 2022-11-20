@@ -108,8 +108,10 @@ templates are possible:
 \item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
 \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 \item glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: \code{{estimate}}, \code{{se}}, \code{{ci_low}} and \code{{ci_high}}, \code{{p}}
-and \code{{stars}} See 'Examples'.
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} or \code{{ci_low}} and \code{{ci_high}},
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
+a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
 }}
 
 \item{column_names}{Character vector with strings that should be used as
@@ -171,6 +173,12 @@ compare_parameters(lm1, lm2)
 
 # custom style
 compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+
+\dontrun{
+# custom style, in HTML
+result <- compare_parameters(lm1, lm2, style = "{estimate}<br>({se})|{p}")
+print_html(result)
+}
 
 data(mtcars)
 m1 <- lm(mpg ~ wt, data = mtcars)

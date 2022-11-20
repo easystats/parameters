@@ -26,8 +26,10 @@
 #'  - `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
 #'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
 #'  - glue-like syntax: Following tokens are replaced by the related coefficients
-#'    or statistics: `{estimate}`, `{se}`, `{ci_low}` and `{ci_high}`, `{p}`
-#'    and `{stars}` See 'Examples'.
+#'    or statistics: `{estimate}`, `{se}`, `{ci}` or `{ci_low}` and `{ci_high}`,
+#'    `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
+#'    Furthermore, a `|` separates values into new cells. If `format = "html"`,
+#'    a `<br>` inserts a line break inside a cell. See 'Examples'.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
@@ -52,6 +54,12 @@
 #'
 #' # custom style
 #' compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+#'
+#' \dontrun{
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, style = "{estimate}<br>({se})|{p}")
+#' print_html(result)
+#' }
 #'
 #' data(mtcars)
 #' m1 <- lm(mpg ~ wt, data = mtcars)
