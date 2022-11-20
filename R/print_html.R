@@ -125,6 +125,7 @@ print_html.compare_parameters <- function(x,
                                           subtitle = NULL,
                                           footer = NULL,
                                           style = NULL,
+                                          groups = NULL,
                                           font_size = "100%",
                                           line_padding = 4,
                                           ...) {
@@ -158,7 +159,8 @@ print_html.compare_parameters <- function(x,
     p_digits = p_digits,
     ci_width = NULL,
     ci_brackets = c("(", ")"),
-    format = "html"
+    format = "html",
+    groups = groups
   )
 
   # we assume that model names are at the end of each column name, in parenthesis
