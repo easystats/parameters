@@ -175,16 +175,31 @@ format.parameters_model <- function(x,
   # to "split" the formatted table, because the glue-function needs the columns
   # without the parameters-column.
   if (!is.null(style)) {
-    formatted_table$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
-    formatted_table <- cbind(
-      formatted_table[1],
-      .format_output_style(
-        formatted_table[2:ncol(formatted_table)],
-        style = style,
-        format = format,
-        modelname = .style_pattern_to_name(style)
+    .style_formatted_table <- function(formtab) {
+      formtab$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+      additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
+      if (length(additional_columns)) {
+        additional_columns <- formtab[additional_columns]
+      }
+      formtab <- cbind(
+        formtab[1],
+        .format_output_style(
+          formtab[2:ncol(formtab)],
+          style = style,
+          format = format,
+          modelname = .style_pattern_to_name(style)
+        )
       )
-    )
+      if (!is.null(additional_columns)) {
+        formtab <- cbind(formtab, additional_columns)
+      }
+      formtab
+    }
+    if (!is.data.frame(formatted_table)) {
+      formatted_table[] <- lapply(formatted_table, .style_formatted_table)
+    } else {
+      formatted_table <- .style_formatted_table(formatted_table)
+    }
   }
 
   if (!is.null(indent_rows)) {
