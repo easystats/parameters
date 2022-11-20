@@ -158,6 +158,9 @@ print_html.compare_parameters <- function(x,
     format = "html"
   )
 
+  # we assume that model names are at the end of each column name, in parenthesis
+  model_columns <- gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1]
+
   out <- insight::export_table(
     formatted_table,
     format = "html",
@@ -167,17 +170,23 @@ print_html.compare_parameters <- function(x,
     ...
   )
 
-  .add_gt_options(out, font_size, line_padding)
+  .add_gt_options(out, font_size, line_padding, model_columns, style)
 }
 
 
 
 # helper ------------------
 
-.add_gt_options <- function(out, font_size, line_padding) {
+.add_gt_options <- function(out, font_size, line_padding, model_columns, style) {
   insight::check_if_installed("gt")
-  gt::tab_options(out,
+  out <- gt::tab_options(out,
     table.font.size = font_size,
     data_row.padding = gt::px(line_padding)
   )
+  # insert newlines
+  if (!is.null(style) && grepl("<br>", style, fixed = TRUE)) {
+    insight::check_if_installed("tidyselect")
+    out <- gt::fmt_markdown(out, columns = tidyselect::everything())
+  }
+  out
 }

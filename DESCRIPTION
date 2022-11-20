@@ -190,6 +190,7 @@ Suggests:
     survey,
     survival,
     testthat,
+    tidyselect,
     TMB,
     truncreg,
     VGAM,

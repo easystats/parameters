@@ -48,6 +48,7 @@
     # manual renaming
     column_names <- gsub("estimate", "Coefficient", column_names, fixed = TRUE)
     column_names <- gsub("\\Qse\\E", "SE", column_names)
+    column_names <- gsub("<br>", "", column_names, fixed = TRUE)
   }
 
   # paste glue together
