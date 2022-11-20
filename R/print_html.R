@@ -191,5 +191,15 @@ print_html.compare_parameters <- function(x,
     insight::check_if_installed("tidyselect")
     out <- gt::fmt_markdown(out, columns = tidyselect::everything())
   }
+  # add a column span?
+  if (any(duplicated(model_columns))) {
+    duplicates <- model_columns[duplicated(model_columns)]
+    for (d in duplicates) {
+      # we need +1 here, because first column is parameter column
+      span <- which(model_columns == d) + 1
+      # add column spanner
+      out <- gt::tab_spanner(out, label = d, columns = span)
+    }
+  }
   out
 }
