@@ -26,7 +26,7 @@
 #' @param font_size For HTML tables, the font size.
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
-#'   column names are generated.
+#'   column names are generated. See 'Examples'.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
@@ -47,6 +47,20 @@
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' mp <- model_parameters(model)
 #' display(mp)
+#'
+#' \dontrun{
+#' data(iris)
+#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#' lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' out <- compare_parameters(lm1, lm2, lm3)
+#'
+#' print_html(
+#'   out,
+#'   style = "{coef}{stars}|({ci})",
+#'   column_labels = c("Estimate", "95% CI")
+#' )
+#' }
 #' @export
 display.parameters_model <- function(object,
                                      format = "markdown",

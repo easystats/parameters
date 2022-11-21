@@ -217,7 +217,7 @@ models). In such cases, it is recommended to use the \code{select} argument and
 its shortcuts, or \code{summary()}.}
 
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
-column names are generated.}
+column names are generated. See 'Examples'.}
 
 \item{verbose}{Toggle messages and warnings.}
 
@@ -272,4 +272,18 @@ for examples.
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)
 display(mp)
+
+\dontrun{
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+out <- compare_parameters(lm1, lm2, lm3)
+
+print_html(
+  out,
+  style = "{coef}{stars}|({ci})",
+  column_labels = c("Estimate", "95\% CI")
+)
+}
 }
