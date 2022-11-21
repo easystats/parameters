@@ -19,21 +19,27 @@
 #' @param style String, indicating which style of output is requested. For
 #'   `compare_parameters()`, following templates are possible:
 #'
-#'  - `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
-#'  - `"se"`: Estimate and standard errors, no asterisks for p-values.
-#'  - `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
-#'  - `"se_p"`: Estimate, standard errors and asterisks for p-values.
-#'  - `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
-#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
 #'  - glue-like syntax: Following tokens are replaced by the related coefficients
-#'    or statistics: `{estimate}`, `{se}`, `{ci}` or `{ci_low}` and `{ci_high}`,
+#'    or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and `{ci_high}`),
 #'    `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
 #'    Furthermore, a `|` separates values into new cells. If `format = "html"`,
 #'    a `<br>` inserts a line break inside a cell. See 'Examples'.
+#'  - `"ci"`: Estimates and confidence intervals, no asterisks for p-values. This
+#'    is equivalent to `style = "{estimate} ({ci})"`.
+#'  - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
+#'    equivalent to `style = "{estimate} ({se})"`.
+#'  - `"ci_p"`: Estimates, confidence intervals and asterisks for p-values. This
+#'    is equivalent to `style = "{estimate}{stars} ({ci})"`.
+#'  - `"se_p"`: Estimates, standard errors and asterisks for p-values. This is
+#'    equivalent to `style = "{estimate}{stars} ({se})"`.
+#'  - `"ci_p2"`: Estimates, confidence intervals and numeric p-values, in two
+#'    columns. This is equivalent to `style = "{estimate} ({ci})|{p}"`.
+#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
+#'    This is equivalent to `style = "{estimate} ({se})|{p}"`.
 #'
-#'   For `model_parameters()`, only limited support for glue-like syntax is
-#'   provided. `style` does not fully work for more complex models (like mixed
-#'   models). In such cases, it is recommended to use the `select` argument and
+#'   For `model_parameters()`, glue-like syntax is still experimental in the
+#'   case of more complex models (like mixed models). If `style` does not return
+#'   the expected results, it is recommended to use the `select` argument and
 #'   its shortcuts, or `summary()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm

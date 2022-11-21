@@ -98,22 +98,28 @@ encompassed in square brackets (else in parentheses).}
 \item{style}{String, indicating which style of output is requested. For
 \code{compare_parameters()}, following templates are possible:
 \itemize{
-\item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
-\item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
-\item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
-\item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
-\item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
-\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 \item glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} or \code{{ci_low}} and \code{{ci_high}},
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
 \code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
 Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
 a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values. This
+is equivalent to \code{style = "{estimate} ({ci})"}.
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to \code{style = "{estimate} ({se})"}.
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to \code{style = "{estimate}{stars} ({ci})"}.
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+equivalent to \code{style = "{estimate}{stars} ({se})"}.
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to \code{style = "{estimate} ({ci})|{p}"}.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to \code{style = "{estimate} ({se})|{p}"}.
 }
 
-For \code{model_parameters()}, only limited support for glue-like syntax is
-provided. \code{style} does not fully work for more complex models (like mixed
-models). In such cases, it is recommended to use the \code{select} argument and
+For \code{model_parameters()}, glue-like syntax is still experimental in the
+case of more complex models (like mixed models). If \code{style} does not return
+the expected results, it is recommended to use the \code{select} argument and
 its shortcuts, or \code{summary()}.}
 
 \item{...}{Arguments passed to or from other methods.}

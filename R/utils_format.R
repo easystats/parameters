@@ -76,12 +76,20 @@
   } else if (style %in% c("minimal", "ci_p2")) {
     style <- paste0("{estimate}", linesep, "({ci})|{p}")
 
+    # style: estimate and CI, no p
+  } else if (style == "ci") {
+    style <- paste0("{estimate}", linesep, "({ci})")
+
     # style: estimate, p-stars and CI
-  } else if (style %in% c("ci_p", "ci")) {
+  } else if (style == "ci_p") {
     style <- paste0("{estimate}{stars}", linesep, "({ci})")
 
+    # style: estimate and SE, no p
+  } else if (style == "se") {
+    style <- paste0("{estimate}", linesep, "({se})")
+
     # style: estimate, p-stars and SE
-  } else if (style %in% c("se_p", "se")) {
+  } else if (style == "se_p") {
     style <- paste0("{estimate}{stars}", linesep, "({se})")
 
     # style: estimate and SE, p-value in separate column
