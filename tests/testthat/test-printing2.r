@@ -17,23 +17,23 @@ test_that("multiple model", {
 
 # templates --------------
 
-out <- compare_parameters(lm1, lm2, lm3, style = "se_p")
+out <- compare_parameters(lm1, lm2, lm3, select = "se_p")
 test_that("templates", {
   expect_snapshot(print(out))
 })
 
-out <- compare_parameters(lm1, lm2, lm3, style = "{estimate}{stars} ({se})")
+out <- compare_parameters(lm1, lm2, lm3, select = "{estimate}{stars} ({se})")
 test_that("templates, glue-1", {
   expect_snapshot(print(out))
 })
 
-out <- compare_parameters(lm1, lm2, lm3, style = "{estimate} ({ci_low}, {ci_high}), p={p}{stars}")
+out <- compare_parameters(lm1, lm2, lm3, select = "{estimate} ({ci_low}, {ci_high}), p={p}{stars}")
 test_that("templates, glue-2", {
   expect_snapshot(print(out))
 })
 
-out <- compare_parameters(lm1, lm2, lm3, style = "{estimate} ({se})|{p}")
-test_that("templates, glue-3, separate columnns", {  
+out <- compare_parameters(lm1, lm2, lm3, select = "{estimate} ({se})|{p}")
+test_that("templates, glue-3, separate columnns", {
   expect_snapshot(print(out))
 })
 
@@ -66,11 +66,11 @@ test_that("templates, glue-3, separate columnns", {
         "Species (virginica)"
       ),
       Interactions = c(
-        "Species (versicolor) × Petal Length", # note the unicode char!
-        "Species (virginica) × Petal Length"
+        "Species (versicolor) * Petal Length", # note the unicode char!
+        "Species (virginica) * Petal Length"
       ),
       Controls = "Petal Length"
-    ), style = "{estimate}{stars}")
+    ), select = "{estimate}{stars}")
   )
   expect_snapshot(
     print(out, groups = list(
@@ -79,11 +79,11 @@ test_that("templates, glue-3, separate columnns", {
         "Species (virginica)"
       ),
       Interactions = c(
-        "Species (versicolor) × Petal Length", # note the unicode char!
-        "Species (virginica) × Petal Length"
+        "Species (versicolor) * Petal Length", # note the unicode char!
+        "Species (virginica) * Petal Length"
       ),
       Controls = "Petal Length"
-    ), style = "{estimate}|{p}")
+    ), select = "{estimate}|{p}")
   )
 })
 

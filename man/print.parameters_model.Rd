@@ -22,7 +22,6 @@
   groups = NULL,
   column_width = NULL,
   ci_brackets = c("[", "]"),
-  style = NULL,
   ...
 )
 
@@ -42,12 +41,49 @@ multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
 
-\item{select}{Character vector (or numeric index) of column names that should
-be printed. If \code{NULL} (default), all columns are printed. The shortcut
-\code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-while \code{select = "short"} prints coefficient, standard errors and p-values.
-For more custmized selection of columns and table layout, see \code{style}
-argument.}
+\item{select}{Determines which columns and and which layout columns are
+printed. There are three options for this argument:
+\enumerate{
+\item Selecting columns by name or index
+\cr
+\code{select} can be a character vector (or numeric index) of column names that
+should be printed. There are two pre-defined options for selecting columns:
+\code{select = "minimal"} prints coefficients, confidence intervals and p-values,
+while \code{select = "short"} prints coefficients, standard errors and p-values.
+\item A string expression with layout pattern
+\cr
+\code{select} is a string with "tokens" enclosed in braces. These tokens will
+be replaced by their associated columns, where the selected columns will
+be collapsed into one column. However, it is possible to create multiple
+columns as well. Following tokens are replaced by the related coefficients
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells/columns. If
+\code{format = "html"}, a \verb{<br>} inserts a line break inside a cell. See
+'Examples'.
+\item A string indicating a pre-defined layout
+\cr
+\code{select} can be one of the following string values, to create one of the
+following pre-defined column layouts:
+\itemize{
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
+This is equivalent to \code{select = "{estimate} ({ci})"}.
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to \code{select = "{estimate} ({se})"}.
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to \code{select = "{estimate}{stars} ({ci})"}.
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+equivalent to \code{select = "{estimate}{stars} ({se})"}..
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
+}
+
+For \code{model_parameters()}, glue-like syntax is still experimental in the
+case of more complex models (like mixed models) and may not return expected
+results.}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}
@@ -94,33 +130,6 @@ columns across all table components are adjusted to have the same width.}
 
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
-
-\item{style}{String, indicating which style of output is requested. For
-\code{compare_parameters()}, following templates are possible:
-\itemize{
-\item glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
-\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
-Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
-a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
-\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values. This
-is equivalent to \code{style = "{estimate} ({ci})"}.
-\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
-equivalent to \code{style = "{estimate} ({se})"}.
-\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
-is equivalent to \code{style = "{estimate}{stars} ({ci})"}.
-\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
-equivalent to \code{style = "{estimate}{stars} ({se})"}.
-\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
-columns. This is equivalent to \code{style = "{estimate} ({ci})|{p}"}.
-\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
-This is equivalent to \code{style = "{estimate} ({se})|{p}"}.
-}
-
-For \code{model_parameters()}, glue-like syntax is still experimental in the
-case of more complex models (like mixed models). If \code{style} does not return
-the expected results, it is recommended to use the \code{select} argument and
-its shortcuts, or \code{summary()}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -259,8 +268,26 @@ print(mp, groups = list(
   "Interactions" = c("gear4:vs", "gear5:vs")
 ))
 }
+
+
+# custom column layouts ------
+
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+
+# custom style
+result <- compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
+print(result)
+
+\dontrun{
+# custom style, in HTML
+result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
+print_html(result)
+}
 }
 \seealso{
 There is a dedicated method to use inside rmarkdown files,
-\code{\link[=print_md.parameters_model]{print_md()}}.
+\code{\link[=print_md.parameters_model]{print_md()}}. See also
+\code{\link[=display.parameters_model]{display()}}.
 }
