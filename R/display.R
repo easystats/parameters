@@ -43,6 +43,8 @@
 #'   [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #'   for examples.
 #'
+#' @seealso [print.parameters_model()]
+#'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' mp <- model_parameters(model)

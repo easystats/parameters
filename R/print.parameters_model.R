@@ -14,26 +14,27 @@
 #' 1. Selecting columns by name or index
 #' \cr
 #'   `select` can be a character vector (or numeric index) of column names that
-#'   should be printed.
+#'   should be printed. There are two pre-defined options for selecting columns:
+#'   `select = "minimal"` prints coefficients, confidence intervals and p-values,
+#'   while `select = "short"` prints coefficients, standard errors and p-values.
 #'
 #' 2. A string expression with layout pattern
 #' \cr
 #'   `select` is a string with "tokens" enclosed in braces. These tokens will
-#'   be replaced by their associated columns, resulting in a string value
-#'   collapsed into one column. However, it is possible to create multiple
+#'   be replaced by their associated columns, where the selected columns will
+#'   be collapsed into one column. However, it is possible to create multiple
 #'   columns as well. Following tokens are replaced by the related coefficients
 #'   or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and `{ci_high}`),
 #'   `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
-#'   Furthermore, a `|` separates values into new cells. If `format = "html"`,
-#'   a `<br>` inserts a line break inside a cell. See 'Examples'.
+#'   Furthermore, a `|` separates values into new cells/columns. If
+#'   `format = "html"`, a `<br>` inserts a line break inside a cell. See
+#'   'Examples'.
 #'
-#' 3. A string indicating a pre-set layout
+#' 3. A string indicating a pre-defined layout
 #' \cr
 #'   `select` can be one of the following string values, to create one of the
 #'   following pre-defined column layouts:
 #'
-#'     - `"minimal"` prints coefficient, confidence intervals and p-values.
-#'     - `"short"` prints coefficient, standard errors and p-values.
 #'     - `"ci"`: Estimates and confidence intervals, no asterisks for p-values.
 #'       This is equivalent to `select = "{estimate} ({ci})"`.
 #'     - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
@@ -137,7 +138,8 @@
 #' @return Invisibly returns the original input object.
 #'
 #' @seealso There is a dedicated method to use inside rmarkdown files,
-#'   [`print_md()`][print_md.parameters_model].
+#'   [`print_md()`][print_md.parameters_model]. See also
+#'   [`display()`][display.parameters_model].
 #'
 #' @examples
 #' \donttest{
@@ -196,6 +198,23 @@
 #'   "Engine" = c("cyl6", "cyl8", "vs", "hp"),
 #'   "Interactions" = c("gear4:vs", "gear5:vs")
 #' ))
+#' }
+#'
+#'
+#' # custom column layouts ------
+#'
+#' data(iris)
+#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#'
+#' # custom style
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
+#' print(result)
+#'
+#' \dontrun{
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
+#' print_html(result)
 #' }
 #' @export
 print.parameters_model <- function(x,
