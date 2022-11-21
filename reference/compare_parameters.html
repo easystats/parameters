@@ -12,7 +12,7 @@ models. See model_parameters() for further details."><meta property="og:image" c
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.18</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.19.0.19</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -205,17 +205,28 @@ possible adjustment methods are <code>"tukey"</code>, <code>"scheffe"</code>,
 
 
 <dt>style</dt>
-<dd><p>String, indicating which style of output is requested. Following
-templates are possible:</p><ul><li><p><code>"ci"</code>: Estimate and confidence intervals, no asterisks for p-values.</p></li>
-<li><p><code>"se"</code>: Estimate and standard errors, no asterisks for p-values.</p></li>
-<li><p><code>"ci_p"</code>: Estimate, confidence intervals and asterisks for p-values.</p></li>
-<li><p><code>"se_p"</code>: Estimate, standard errors and asterisks for p-values.</p></li>
-<li><p><code>"ci_p2"</code>: Estimate, confidence intervals and numeric p-values, in two columns.</p></li>
-<li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.</p></li>
-<li><p>glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{ci_low}</code> and <code>{ci_high}</code>, <code>{p}</code>
-and <code>{stars}</code> See 'Examples'.</p></li>
-</ul></dd>
+<dd><p>String, indicating which style of output is requested. For
+<code>compare_parameters()</code>, following templates are possible:</p><ul><li><p>glue-like syntax: Following tokens are replaced by the related coefficients
+or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{ci}</code> (or <code>{ci_low}</code> and <code>{ci_high}</code>),
+<code>{p}</code> and <code>{stars}</code>. The token <code>{ci}</code> will be replaced by <code>{ci_low}, {ci_high}</code>.
+Furthermore, a <code>|</code> separates values into new cells. If <code>format = "html"</code>,
+a <code>&lt;br&gt;</code> inserts a line break inside a cell. See 'Examples'.</p></li>
+<li><p><code>"ci"</code>: Estimates and confidence intervals, no asterisks for p-values. This
+is equivalent to <code>style = "{estimate} ({ci})"</code>.</p></li>
+<li><p><code>"se"</code>: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to <code>style = "{estimate} ({se})"</code>.</p></li>
+<li><p><code>"ci_p"</code>: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to <code>style = "{estimate}{stars} ({ci})"</code>.</p></li>
+<li><p><code>"se_p"</code>: Estimates, standard errors and asterisks for p-values. This is
+equivalent to <code>style = "{estimate}{stars} ({se})"</code>.</p></li>
+<li><p><code>"ci_p2"</code>: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to <code>style = "{estimate} ({ci})|{p}"</code>.</p></li>
+<li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to <code>style = "{estimate} ({se})|{p}"</code>.</p></li>
+</ul><p>For <code><a href="model_parameters.html">model_parameters()</a></code>, glue-like syntax is still experimental in the
+case of more complex models (like mixed models). If <code>style</code> does not return
+the expected results, it is recommended to use the <code>select</code> argument and
+its shortcuts, or <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p></dd>
 
 
 <dt>column_names</dt>
@@ -307,6 +318,12 @@ interaction terms with models without interaction terms.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal Length         |                |  0.90*** (0.06)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Observations         |            150 |             150</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># custom style, in HTML</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">compare_parameters</span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, style <span class="op">=</span> <span class="st">"{estimate}&lt;br&gt;({se})|{p}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
