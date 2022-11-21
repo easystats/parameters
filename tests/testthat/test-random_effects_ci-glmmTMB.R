@@ -46,7 +46,7 @@ if (.runThisTest && win_os &&
   expect_message(mp1 <- model_parameters(m1, ci_random = TRUE), "singularity")
   mp2 <- model_parameters(m2, ci_random = TRUE) # works
   expect_message(mp3 <- model_parameters(m3, ci_random = TRUE), "singularity") # no SE/CI
-  expect_message(mp4 <- model_parameters(m4, ci_random = TRUE), "singularity") # no SE/CI
+  mp4 <- model_parameters(m4, ci_random = TRUE)
   expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
 
   test_that("random effects CIs, two slopes, categorical", {
