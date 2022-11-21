@@ -22,6 +22,7 @@ print_html.parameters_model <- function(x,
                                         style = NULL,
                                         font_size = "100%",
                                         line_padding = 4,
+                                        column_labels = NULL,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -118,9 +119,10 @@ print_html.parameters_model <- function(x,
 
   .add_gt_options(
     out,
+    style = style,
     font_size = font_size,
     line_padding = line_padding,
-    style = style
+    user_labels = column_labels
   )
 }
 
@@ -147,6 +149,7 @@ print_html.compare_parameters <- function(x,
                                           ci_brackets = c("(", ")"),
                                           font_size = "100%",
                                           line_padding = 4,
+                                          column_labels = NULL,
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -194,12 +197,13 @@ print_html.compare_parameters <- function(x,
 
   .add_gt_options(
     out,
-    font_size,
-    line_padding,
+    style = style,
+    font_size = font_size,
+    line_padding = line_padding,
     # we assume that model names are at the end of each column name, in parenthesis
-    labels = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
-    style,
-    column_names = colnames(formatted_table)
+    original_colnames = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
+    column_names = colnames(formatted_table),
+    user_labels = column_labels
   )
 }
 
@@ -208,11 +212,12 @@ print_html.compare_parameters <- function(x,
 # helper ------------------
 
 .add_gt_options <- function(out,
+                            style,
                             font_size = "100%",
                             line_padding = 4,
-                            labels = NULL,
-                            style,
-                            column_names = NULL) {
+                            original_colnames = NULL,
+                            column_names = NULL,
+                            user_labels = NULL) {
   insight::check_if_installed("gt")
   out <- gt::tab_options(out,
     table.font.size = font_size,
@@ -223,21 +228,55 @@ print_html.compare_parameters <- function(x,
     insight::check_if_installed("tidyselect")
     out <- gt::fmt_markdown(out, columns = tidyselect::everything())
   }
+  # user defined column labels
+  new_labels <- NULL
+  if (!is.null(user_labels)) {
+    new_labels <- c(
+      colnames(out[["_data"]])[1],
+      rep(user_labels, length.out = ncol(out[["_data"]]) - 1)
+    )
+    new_labels <- as.list(new_labels)
+  }
   # add a column span?
-  if (!is.null(labels) && any(duplicated(labels))) {
-    duplicates <- labels[duplicated(labels)]
+  if (!is.null(original_colnames) && any(duplicated(original_colnames))) {
+    duplicates <- original_colnames[duplicated(original_colnames)]
     for (d in duplicates) {
       # we need +1 here, because first column is parameter column
-      span <- which(labels == d) + 1
+      span <- which(original_colnames == d) + 1
       # add column spanner
       out <- gt::tab_spanner(out, label = d, columns = span)
     }
     # relabel columns
     if (!is.null(column_names)) {
-      new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
+      if (is.null(new_labels)) {
+        new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
+      }
       names(new_labels) <- column_names
       out <- gt::cols_label(out, .list = new_labels)
     }
+    # default column label
+  } else if (!is.null(new_labels)) {
+    names(new_labels) <- colnames(out[["_data"]])
+    out <- gt::cols_label(out, .list = new_labels)
   }
+  # add a border to the first column (Parameters)
+  last_col <- which(out[["_data"]]$Parameter == "")[1]
+  if (is.na(last_col)) {
+    last_col <- nrow(out[["_data"]])
+  } else {
+    last_col <- last_col - 1
+  }
+  out <- gt::tab_style(
+    out,
+    style = gt::cell_borders(
+      sides = "right",
+      style = "solid",
+      color = "#d3d3d3"
+    ),
+    locations = gt::cells_body(
+      columns = "Parameter",
+      rows = 1:last_col
+    )
+  )
   out
 }

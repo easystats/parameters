@@ -33,6 +33,7 @@
   font_size = "100\%",
   line_padding = 4,
   style = NULL,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -99,6 +100,7 @@
   style = NULL,
   font_size = "100\%",
   line_padding = 4,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -213,6 +215,9 @@ For \code{model_parameters()}, only limited support for glue-like syntax is
 provided. \code{style} does not fully work for more complex models (like mixed
 models). In such cases, it is recommended to use the \code{select} argument and
 its shortcuts, or \code{summary()}.}
+
+\item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
+column names are generated.}
 
 \item{verbose}{Toggle messages and warnings.}
 

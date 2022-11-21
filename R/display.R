@@ -25,6 +25,8 @@
 #'   data frames, `caption` may be a list of table captions, one for each table.
 #' @param font_size For HTML tables, the font size.
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
+#' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
+#'   column names are generated.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
@@ -66,6 +68,7 @@ display.parameters_model <- function(object,
                                      font_size = "100%",
                                      line_padding = 4,
                                      style = NULL,
+                                     column_labels = NULL,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
@@ -76,7 +79,7 @@ display.parameters_model <- function(object,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
       font_size = font_size, line_padding = line_padding, style = style,
-      verbose = verbose, ...
+      column_labels = column_labels, verbose = verbose, ...
     )
   } else {
     print_md(
@@ -113,11 +116,19 @@ display.compare_parameters <- function(object,
                                        ci_digits = 2,
                                        p_digits = 3,
                                        style = NULL,
+                                       column_labels = NULL,
+                                       ci_brackets = c("(", ")"),
                                        font_size = "100%",
                                        line_padding = 4,
+                                       zap_small = FALSE,
                                        ...) {
   if (identical(format, "html")) {
-    print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, font_size = font_size, line_padding = line_padding, ...)
+    print_html(
+      x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits,
+      style = style, column_labels = column_labels, font_size = font_size,
+      line_padding = line_padding, ci_brackets = ci_brackets,
+      zap_small = zap_small, ...
+    )
   } else {
     print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
   }
