@@ -1,5 +1,3 @@
-skip_on_cran()
-
 requiet("glmmTMB")
 requiet("parameters")
 
@@ -11,7 +9,7 @@ model <- glmmTMB(count ~ spp + mined + (1 | site),
   family = nbinom2(),
   data = Salamanders
 )
-out <- model_parameters(model)
+out <- model_parameters(model, exponentiate = TRUE)
 
 test_that("print model with multiple components", {
   expect_snapshot(print(out))

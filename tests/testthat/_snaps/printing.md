@@ -5,29 +5,29 @@
     Output
       # Fixed Effects (Count Model)
       
-      Parameter   | Log-Mean |   SE |        95% CI |     z |      p
-      --------------------------------------------------------------
-      (Intercept) |    -0.61 | 0.41 | [-1.40, 0.18] | -1.51 | 0.132 
-      spp [PR]    |    -0.96 | 0.64 | [-2.23, 0.30] | -1.50 | 0.134 
-      spp [DM]    |     0.17 | 0.24 | [-0.29, 0.63] |  0.73 | 0.468 
-      spp [EC-A]  |    -0.39 | 0.34 | [-1.06, 0.28] | -1.13 | 0.258 
-      spp [EC-L]  |     0.49 | 0.24 | [ 0.02, 0.96] |  2.05 | 0.041 
-      spp [DES-L] |     0.59 | 0.23 | [ 0.14, 1.04] |  2.59 | 0.010 
-      spp [DF]    |    -0.11 | 0.24 | [-0.59, 0.36] | -0.46 | 0.642 
-      mined [no]  |     1.43 | 0.37 | [ 0.71, 2.15] |  3.90 | < .001
+      Parameter   |  IRR |   SE |       95% CI |     z |      p
+      ---------------------------------------------------------
+      (Intercept) | 0.54 | 0.22 | [0.25, 1.20] | -1.51 | 0.132 
+      spp [PR]    | 0.38 | 0.25 | [0.11, 1.35] | -1.50 | 0.134 
+      spp [DM]    | 1.19 | 0.28 | [0.75, 1.88] |  0.73 | 0.468 
+      spp [EC-A]  | 0.68 | 0.23 | [0.35, 1.33] | -1.13 | 0.258 
+      spp [EC-L]  | 1.63 | 0.39 | [1.02, 2.60] |  2.05 | 0.041 
+      spp [DES-L] | 1.80 | 0.41 | [1.15, 2.82] |  2.59 | 0.010 
+      spp [DF]    | 0.89 | 0.22 | [0.55, 1.44] | -0.46 | 0.642 
+      mined [no]  | 4.18 | 1.53 | [2.04, 8.57] |  3.90 | < .001
       
       # Fixed Effects (Zero-Inflation Component)
       
-      Parameter   | Log-Odds |   SE |         95% CI |     z |      p
-      ---------------------------------------------------------------
-      (Intercept) |     0.91 | 0.63 | [-0.32,  2.14] |  1.45 | 0.147 
-      spp [PR]    |     1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384 
-      spp [DM]    |    -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241 
-      spp [EC-A]  |     1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144 
-      spp [EC-L]  |    -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439 
-      spp [DES-L] |    -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236 
-      spp [DF]    |    -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244 
-      mined [no]  |    -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | < .001
+      Parameter   | Odds Ratio |   SE |        95% CI |     z |      p
+      ----------------------------------------------------------------
+      (Intercept) |       2.48 | 1.56 | [0.73,  8.51] |  1.45 | 0.147 
+      spp [PR]    |       3.19 | 4.26 | [0.23, 43.70] |  0.87 | 0.384 
+      spp [DM]    |       0.39 | 0.31 | [0.08,  1.88] | -1.17 | 0.241 
+      spp [EC-A]  |       2.84 | 2.02 | [0.70, 11.49] |  1.46 | 0.144 
+      spp [EC-L]  |       0.57 | 0.41 | [0.14,  2.37] | -0.77 | 0.439 
+      spp [DES-L] |       0.41 | 0.31 | [0.09,  1.79] | -1.19 | 0.236 
+      spp [DF]    |       0.08 | 0.17 | [0.00,  5.68] | -1.16 | 0.244 
+      mined [no]  |       0.08 | 0.05 | [0.02,  0.25] | -4.24 | < .001
       
       # Dispersion
       
@@ -44,9 +44,6 @@
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
-      
-      The model has a log- or logit-link. Consider using `exponentiate = TRUE`
-        to interpret coefficients as ratios.
 
 ---
 
@@ -55,26 +52,26 @@
     Output
       # Fixed Effects
       
-      Parameter            | Coefficient |   SE |         95% CI |     z |      p | Effects |     Component
-      -----------------------------------------------------------------------------------------------------
-      (Intercept)          |       -0.61 | 0.41 | [-1.40,  0.18] | -1.51 | 0.132  |   fixed |   conditional
-      spp [PR]             |       -0.96 | 0.64 | [-2.23,  0.30] | -1.50 | 0.134  |   fixed |   conditional
-      spp [DM]             |        0.17 | 0.24 | [-0.29,  0.63] |  0.73 | 0.468  |   fixed |   conditional
-      spp [EC-A]           |       -0.39 | 0.34 | [-1.06,  0.28] | -1.13 | 0.258  |   fixed |   conditional
-      spp [EC-L]           |        0.49 | 0.24 | [ 0.02,  0.96] |  2.05 | 0.041  |   fixed |   conditional
-      spp [DES-L]          |        0.59 | 0.23 | [ 0.14,  1.04] |  2.59 | 0.010  |   fixed |   conditional
-      spp [DF]             |       -0.11 | 0.24 | [-0.59,  0.36] | -0.46 | 0.642  |   fixed |   conditional
-      mined [no]           |        1.43 | 0.37 | [ 0.71,  2.15] |  3.90 | < .001 |   fixed |   conditional
-      (Intercept)          |        0.91 | 0.63 | [-0.32,  2.14] |  1.45 | 0.147  |   fixed | zero_inflated
-      sppPR                |        1.16 | 1.33 | [-1.45,  3.78] |  0.87 | 0.384  |   fixed | zero_inflated
-      sppDM                |       -0.94 | 0.80 | [-2.51,  0.63] | -1.17 | 0.241  |   fixed | zero_inflated
-      sppEC-A              |        1.04 | 0.71 | [-0.36,  2.44] |  1.46 | 0.144  |   fixed | zero_inflated
-      sppEC-L              |       -0.56 | 0.73 | [-1.99,  0.86] | -0.77 | 0.439  |   fixed | zero_inflated
-      sppDES-L             |       -0.89 | 0.75 | [-2.37,  0.58] | -1.19 | 0.236  |   fixed | zero_inflated
-      sppDF                |       -2.54 | 2.18 | [-6.82,  1.74] | -1.16 | 0.244  |   fixed | zero_inflated
-      minedno              |       -2.56 | 0.60 | [-3.75, -1.38] | -4.24 | < .001 |   fixed | zero_inflated
-      (Intercept)          |        1.51 |      | [ 0.93,  2.46] |       |        |   fixed |    dispersion
-      SD (Intercept: site) |        0.38 |      | [ 0.17,  0.87] |       |        |  random |   conditional
+      Parameter            | Coefficient |   SE |        95% CI |     z |      p | Effects |     Component
+      ----------------------------------------------------------------------------------------------------
+      (Intercept)          |        0.54 | 0.22 | [0.25,  1.20] | -1.51 | 0.132  |   fixed |   conditional
+      spp [PR]             |        0.38 | 0.25 | [0.11,  1.35] | -1.50 | 0.134  |   fixed |   conditional
+      spp [DM]             |        1.19 | 0.28 | [0.75,  1.88] |  0.73 | 0.468  |   fixed |   conditional
+      spp [EC-A]           |        0.68 | 0.23 | [0.35,  1.33] | -1.13 | 0.258  |   fixed |   conditional
+      spp [EC-L]           |        1.63 | 0.39 | [1.02,  2.60] |  2.05 | 0.041  |   fixed |   conditional
+      spp [DES-L]          |        1.80 | 0.41 | [1.15,  2.82] |  2.59 | 0.010  |   fixed |   conditional
+      spp [DF]             |        0.89 | 0.22 | [0.55,  1.44] | -0.46 | 0.642  |   fixed |   conditional
+      mined [no]           |        4.18 | 1.53 | [2.04,  8.57] |  3.90 | < .001 |   fixed |   conditional
+      (Intercept)          |        2.48 | 1.56 | [0.73,  8.51] |  1.45 | 0.147  |   fixed | zero_inflated
+      sppPR                |        3.19 | 4.26 | [0.23, 43.70] |  0.87 | 0.384  |   fixed | zero_inflated
+      sppDM                |        0.39 | 0.31 | [0.08,  1.88] | -1.17 | 0.241  |   fixed | zero_inflated
+      sppEC-A              |        2.84 | 2.02 | [0.70, 11.49] |  1.46 | 0.144  |   fixed | zero_inflated
+      sppEC-L              |        0.57 | 0.41 | [0.14,  2.37] | -0.77 | 0.439  |   fixed | zero_inflated
+      sppDES-L             |        0.41 | 0.31 | [0.09,  1.79] | -1.19 | 0.236  |   fixed | zero_inflated
+      sppDF                |        0.08 | 0.17 | [0.00,  5.68] | -1.16 | 0.244  |   fixed | zero_inflated
+      minedno              |        0.08 | 0.05 | [0.02,  0.25] | -4.24 | < .001 |   fixed | zero_inflated
+      (Intercept)          |        1.51 |      | [0.93,  2.46] |       |        |   fixed |    dispersion
+      SD (Intercept: site) |        0.38 |      | [0.17,  0.87] |       |        |  random |   conditional
     Message <simpleMessage>
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
