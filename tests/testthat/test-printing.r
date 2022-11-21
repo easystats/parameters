@@ -60,15 +60,15 @@ test_that("grouped parameters", {
 
 # Table templates ------
 
-test_that("style pattern", {
-  expect_snapshot(print(out, style = "{coef} ({se})"))
-  expect_snapshot(print(out, style = "{coef}{stars}|[{ci}]"))
+test_that("select pattern", {
+  expect_snapshot(print(out, select = "{coef} ({se})"))
+  expect_snapshot(print(out, select = "{coef}{stars}|[{ci}]"))
   expect_snapshot(
     print(out, groups = list(
       "Engine" = c("cyl6", "cyl8", "vs", "hp"),
       "Interactions" = c("gear4:vs", "gear5:vs"),
       "Controls" = c(2, 3, 7)
-    ), style = "{coef}{stars}|[{ci}]")
+    ), select = "{coef}{stars}|[{ci}]")
   )
   expect_snapshot(
     print(out,
@@ -78,7 +78,7 @@ test_that("style pattern", {
         "Interactions" = c("gear4:vs", "gear5:vs"),
         "Controls" = c(2, 3, 7)
       ),
-      style = "{coef}{stars}|[{ci}]"
+      select = "{coef}{stars}|[{ci}]"
     )
   )
 })

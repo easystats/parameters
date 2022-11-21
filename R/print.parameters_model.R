@@ -8,12 +8,46 @@
 #'   multiple components (zero-inflation, smooth terms, ...), each component is
 #'   printed in a separate table. If `FALSE`, model parameters are printed
 #'   in a single table and a `Component` column is added to the output.
-#' @param select Character vector (or numeric index) of column names that should
-#'   be printed. If `NULL` (default), all columns are printed. The shortcut
-#'   `select = "minimal"` prints coefficient, confidence intervals and p-values,
-#'   while `select = "short"` prints coefficient, standard errors and p-values.
-#'   For more custmized selection of columns and table layout, see `style`
-#'   argument.
+#' @param select Determines which columns and and which layout columns are
+#'   printed. There are three options for this argument:
+#'
+#'   1. Selecting columns by name or index
+#'
+#'   `select` can be a character vector (or numeric index) of column names that
+#'   should be printed.
+#'
+#'   2. A string expression with layout pattern
+#'
+#'   `select` is a string with "tokens" enclosed in braces. These tokens will
+#'   be replaced by their associated columns, resulting in a string value
+#'   collapsed into one column. However, it is possible to create multiple
+#'   columns as well. Following tokens are replaced by the related coefficients
+#'   or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and `{ci_high}`),
+#'   `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
+#'   Furthermore, a `|` separates values into new cells. If `format = "html"`,
+#'   a `<br>` inserts a line break inside a cell. See 'Examples'.
+#'
+#'   3. A string indicating a pre-set layout
+#'
+#'   `select` can be one of the following string values, to create one of the
+#'   following pre-defined column layouts:
+#'     - `"minimal"` prints coefficient, confidence intervals and p-values.
+#'     - `"short"` prints coefficient, standard errors and p-values.
+#'     - `"ci"`: Estimates and confidence intervals, no asterisks for p-values.
+#'       This is equivalent to `select = "{estimate} ({ci})"`.
+#'     - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
+#'       equivalent to `select = "{estimate} ({se})"`.
+#'     - `"ci_p"`: Estimates, confidence intervals and asterisks for p-values. This
+#'       is equivalent to `select = "{estimate}{stars} ({ci})"`.
+#'     - `"se_p"`: Estimates, standard errors and asterisks for p-values. This is
+#'       equivalent to `select = "{estimate}{stars} ({se})"`..
+#'     - `"ci_p2"`: Estimates, confidence intervals and numeric p-values, in two
+#'       columns. This is equivalent to `select = "{estimate} ({ci})|{p}"`.
+#'     - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
+#'       This is equivalent to `select = "{estimate} ({se})|{p}"`.
+#'
+#'   For `model_parameters()`, glue-like syntax is still experimental in the
+#'   case of more complex models (like mixed models).
 #' @param show_sigma Logical, if `TRUE`, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
@@ -178,7 +212,6 @@ print.parameters_model <- function(x,
                                    groups = NULL,
                                    column_width = NULL,
                                    ci_brackets = c("[", "]"),
-                                   style = NULL,
                                    ...) {
   # save original input
   orig_x <- x
@@ -228,7 +261,6 @@ print.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
-    style = style,
     ...
   )
 
@@ -339,7 +371,6 @@ summary.parameters_stan <- function(object, ...) {
                         ci_brackets = TRUE,
                         format = "text",
                         group = NULL,
-                        style = NULL,
                         ...) {
   format(
     x,
@@ -354,7 +385,6 @@ summary.parameters_stan <- function(object, ...) {
     zap_small = zap_small,
     format = format,
     group = group,
-    style = style,
     ...
   )
 }

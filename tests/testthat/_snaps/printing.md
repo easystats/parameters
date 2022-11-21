@@ -149,10 +149,10 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
 
-# style pattern
+# select pattern
 
     Code
-      print(out, style = "{coef} ({se})")
+      print(out, select = "{coef} ({se})")
     Output
       Parameter     | Estimate (SE)
       -----------------------------
@@ -173,7 +173,7 @@
 ---
 
     Code
-      print(out, style = "{coef}{stars}|[{ci}]")
+      print(out, select = "{coef}{stars}|[{ci}]")
     Output
       Parameter     | Estimate |            [ci]
       ------------------------------------------
@@ -195,7 +195,7 @@
 
     Code
       print(out, groups = list(Engine = c("cyl6", "cyl8", "vs", "hp"), Interactions = c(
-        "gear4:vs", "gear5:vs"), Controls = c(2, 3, 7)), style = "{coef}{stars}|[{ci}]")
+        "gear4:vs", "gear5:vs"), Controls = c(2, 3, 7)), select = "{coef}{stars}|[{ci}]")
     Output
       Parameter        | Estimate |            [ci]
       ---------------------------------------------
@@ -220,7 +220,7 @@
 
     Code
       print(out, sep = "  ", groups = list(Engine = c("cyl6", "cyl8", "vs", "hp"),
-      Interactions = c("gear4:vs", "gear5:vs"), Controls = c(2, 3, 7)), style = "{coef}{stars}|[{ci}]")
+      Interactions = c("gear4:vs", "gear5:vs"), Controls = c(2, 3, 7)), select = "{coef}{stars}|[{ci}]")
     Output
       Parameter         Estimate             [ci]
       -------------------------------------------

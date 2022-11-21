@@ -194,6 +194,11 @@
 }
 
 
+# global definition of valid "style" shortcuts
+.style_shortcuts <- c("ci_p2", "ci", "ci_p", "se", "se_p", "se_p2", "est", "coef")
+.select_shortcuts <- c("minimal", "short")
+
+
 .add_obs_row <- function(x, att, style) {
   observations <- unlist(lapply(att, function(i) {
     if (is.null(i$n_obs)) {

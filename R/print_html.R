@@ -19,7 +19,6 @@ print_html.parameters_model <- function(x,
                                         show_formula = FALSE,
                                         zap_small = FALSE,
                                         groups = NULL,
-                                        style = NULL,
                                         font_size = "100%",
                                         line_padding = 4,
                                         column_labels = NULL,
@@ -43,13 +42,13 @@ print_html.parameters_model <- function(x,
   }
 
   # get attributes
-  if (missing(style) || is.null(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select) || is.null(select)) {
+    select <- attributes(x)$output_style
   }
 
   # we need glue-like syntax right now...
-  if (!is.null(style)) {
-    style <- .convert_to_glue_syntax(style, "<br>")
+  if (!is.null(select)) {
+    select <- .convert_to_glue_syntax(style = select, "<br>")
   }
 
   # check options ---------------
@@ -83,7 +82,6 @@ print_html.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "html",
     groups = groups,
-    style = style,
     ...
   )
 
@@ -119,7 +117,7 @@ print_html.parameters_model <- function(x,
 
   .add_gt_options(
     out,
-    style = style,
+    style = select,
     font_size = font_size,
     line_padding = line_padding,
     user_labels = column_labels
@@ -145,7 +143,7 @@ print_html.compare_parameters <- function(x,
                                           p_digits = 3,
                                           zap_small = FALSE,
                                           groups = NULL,
-                                          style = NULL,
+                                          select = NULL,
                                           ci_brackets = c("(", ")"),
                                           font_size = "100%",
                                           line_padding = 4,
@@ -165,16 +163,16 @@ print_html.compare_parameters <- function(x,
   }
 
   # get attributes
-  if (missing(style) || is.null(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select) || is.null(select)) {
+    select <- attributes(x)$output_style
   }
 
   # we need glue-like syntax right now...
-  style <- .convert_to_glue_syntax(style, "<br>")
+  select <- .convert_to_glue_syntax(style = select, "<br>")
 
   formatted_table <- format(
     x,
-    style = style,
+    select = select,
     split_components = TRUE,
     digits = digits,
     ci_digits = ci_digits,
@@ -197,7 +195,7 @@ print_html.compare_parameters <- function(x,
 
   .add_gt_options(
     out,
-    style = style,
+    style = select,
     font_size = font_size,
     line_padding = line_padding,
     # we assume that model names are at the end of each column name, in parenthesis
