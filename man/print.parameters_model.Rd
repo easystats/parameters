@@ -45,14 +45,11 @@ in a single table and a \code{Component} column is added to the output.}
 printed. There are three options for this argument:
 \enumerate{
 \item Selecting columns by name or index
-}
-
+\cr
 \code{select} can be a character vector (or numeric index) of column names that
 should be printed.
-\enumerate{
 \item A string expression with layout pattern
-}
-
+\cr
 \code{select} is a string with "tokens" enclosed in braces. These tokens will
 be replaced by their associated columns, resulting in a string value
 collapsed into one column. However, it is possible to create multiple
@@ -61,29 +58,31 @@ or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} a
 \code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
 Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
 a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
-\enumerate{
 \item A string indicating a pre-set layout
-}
-
+\cr
 \code{select} can be one of the following string values, to create one of the
 following pre-defined column layouts:
-- \code{"minimal"} prints coefficient, confidence intervals and p-values.
-- \code{"short"} prints coefficient, standard errors and p-values.
-- \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
+\itemize{
+\item \code{"minimal"} prints coefficient, confidence intervals and p-values.
+\item \code{"short"} prints coefficient, standard errors and p-values.
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
 This is equivalent to \code{select = "{estimate} ({ci})"}.
-- \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
 equivalent to \code{select = "{estimate} ({se})"}.
-- \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
 is equivalent to \code{select = "{estimate}{stars} ({ci})"}.
-- \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
 equivalent to \code{select = "{estimate}{stars} ({se})"}..
-- \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
 columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
-- \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
+}
 
 For \code{model_parameters()}, glue-like syntax is still experimental in the
-case of more complex models (like mixed models).}
+case of more complex models (like mixed models) and may not return expected
+results.}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}

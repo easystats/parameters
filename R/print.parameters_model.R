@@ -9,15 +9,15 @@
 #'   printed in a separate table. If `FALSE`, model parameters are printed
 #'   in a single table and a `Component` column is added to the output.
 #' @param select Determines which columns and and which layout columns are
-#'   printed. There are three options for this argument:
+#' printed. There are three options for this argument:
 #'
-#'   1. Selecting columns by name or index
-#'
+#' 1. Selecting columns by name or index
+#' \cr
 #'   `select` can be a character vector (or numeric index) of column names that
 #'   should be printed.
 #'
-#'   2. A string expression with layout pattern
-#'
+#' 2. A string expression with layout pattern
+#' \cr
 #'   `select` is a string with "tokens" enclosed in braces. These tokens will
 #'   be replaced by their associated columns, resulting in a string value
 #'   collapsed into one column. However, it is possible to create multiple
@@ -27,10 +27,11 @@
 #'   Furthermore, a `|` separates values into new cells. If `format = "html"`,
 #'   a `<br>` inserts a line break inside a cell. See 'Examples'.
 #'
-#'   3. A string indicating a pre-set layout
-#'
+#' 3. A string indicating a pre-set layout
+#' \cr
 #'   `select` can be one of the following string values, to create one of the
 #'   following pre-defined column layouts:
+#'
 #'     - `"minimal"` prints coefficient, confidence intervals and p-values.
 #'     - `"short"` prints coefficient, standard errors and p-values.
 #'     - `"ci"`: Estimates and confidence intervals, no asterisks for p-values.
@@ -46,8 +47,9 @@
 #'     - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
 #'       This is equivalent to `select = "{estimate} ({se})|{p}"`.
 #'
-#'   For `model_parameters()`, glue-like syntax is still experimental in the
-#'   case of more complex models (like mixed models).
+#' For `model_parameters()`, glue-like syntax is still experimental in the
+#' case of more complex models (like mixed models) and may not return expected
+#' results.
 #' @param show_sigma Logical, if `TRUE`, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
