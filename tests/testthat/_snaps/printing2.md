@@ -9,8 +9,8 @@
       Species (versicolor)                | 0.93 (0.73, 1.13) | -1.60 (-1.98, -1.22) | -1.81 (-2.99, -0.62)
       Species (virginica)                 | 1.58 (1.38, 1.79) | -2.12 (-2.66, -1.58) | -3.15 (-4.41, -1.90)
       Petal Length                        |                   |  0.90 ( 0.78,  1.03) |  0.54 ( 0.00,  1.09)
-      Species (versicolor) × Petal Length |                   |                      |  0.29 (-0.30,  0.87)
-      Species (virginica) × Petal Length  |                   |                      |  0.45 (-0.12,  1.03)
+      Species (versicolor) * Petal Length |                   |                      |  0.29 (-0.30,  0.87)
+      Species (virginica) * Petal Length  |                   |                      |  0.45 (-0.12,  1.03)
       -----------------------------------------------------------------------------------------------------
       Observations                        |               150 |                  150 |                  150
 
@@ -25,8 +25,8 @@
       Species (versicolor)                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)
       Species (virginica)                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)
       Petal Length                        |                |  0.90*** (0.06) |     0.54 (0.28)
-      Species (versicolor) × Petal Length |                |                 |     0.29 (0.30)
-      Species (virginica) × Petal Length  |                |                 |     0.45 (0.29)
+      Species (versicolor) * Petal Length |                |                 |     0.29 (0.30)
+      Species (virginica) * Petal Length  |                |                 |     0.45 (0.29)
       ----------------------------------------------------------------------------------------
       Observations                        |            150 |             150 |             150
 
@@ -41,8 +41,8 @@
       Species (versicolor)                | 0.93*** (0.10) | -1.60*** (0.19) | -1.81 ** (0.60)
       Species (virginica)                 | 1.58*** (0.10) | -2.12*** (0.27) | -3.15*** (0.63)
       Petal Length                        |                |  0.90*** (0.06) |     0.54 (0.28)
-      Species (versicolor) × Petal Length |                |                 |     0.29 (0.30)
-      Species (virginica) × Petal Length  |                |                 |     0.45 (0.29)
+      Species (versicolor) * Petal Length |                |                 |     0.29 (0.30)
+      Species (virginica) * Petal Length  |                |                 |     0.45 (0.29)
       ----------------------------------------------------------------------------------------
       Observations                        |            150 |             150 |             150
 
@@ -57,8 +57,8 @@
       Species (versicolor)                | 0.93 (0.73, 1.13), p<0.001*** | -1.60 (-1.98, -1.22), p<0.001*** | -1.81 (-2.99, -0.62), p=0.003 **
       Species (virginica)                 | 1.58 (1.38, 1.79), p<0.001*** | -2.12 (-2.66, -1.58), p<0.001*** | -3.15 (-4.41, -1.90), p<0.001***
       Petal Length                        |                               |  0.90 ( 0.78,  1.03), p<0.001*** |     0.54 ( 0.00,  1.09), p=0.052
-      Species (versicolor) × Petal Length |                               |                                  |     0.29 (-0.30,  0.87), p=0.334
-      Species (virginica) × Petal Length  |                               |                                  |     0.45 (-0.12,  1.03), p=0.120
+      Species (versicolor) * Petal Length |                               |                                  |     0.29 (-0.30,  0.87), p=0.334
+      Species (virginica) * Petal Length  |                               |                                  |     0.45 (-0.12,  1.03), p=0.120
       -----------------------------------------------------------------------------------------------------------------------------------------
       Observations                        |                           150 |                              150 |                              150
 
@@ -73,8 +73,8 @@
       Species (versicolor)                |         0.93 (0.10) |  <0.001 |        -1.60 (0.19) |  <0.001 |        -1.81 (0.60) |   0.003
       Species (virginica)                 |         1.58 (0.10) |  <0.001 |        -2.12 (0.27) |  <0.001 |        -3.15 (0.63) |  <0.001
       Petal Length                        |                     |         |         0.90 (0.06) |  <0.001 |         0.54 (0.28) |   0.052
-      Species (versicolor) × Petal Length |                     |         |                     |         |         0.29 (0.30) |   0.334
-      Species (virginica) × Petal Length  |                     |         |                     |         |         0.45 (0.29) |   0.120
+      Species (versicolor) * Petal Length |                     |         |                     |         |         0.29 (0.30) |   0.334
+      Species (virginica) * Petal Length  |                     |         |                     |         |         0.45 (0.29) |   0.120
       -----------------------------------------------------------------------------------------------------------------------------------
       Observations                        |                 150 |         |                 150 |         |                 150 |        
 
@@ -85,17 +85,20 @@
         "Species (virginica)"), Interactions = c(
         "Species (versicolor) × Petal Length", "Species (virginica) × Petal Length"),
       Controls = "Petal Length"))
+    Warning <simpleWarning>
+      Couldn't find one or more parameters specified in following groups:
+        Interactions
+        Maybe you misspelled parameter names?
     Output
       Parameter                             |                  lm1 |                  lm2
       -----------------------------------------------------------------------------------
       Species                               |                      |                     
         Species (versicolor)                | -1.60 (-1.98, -1.22) | -1.69 (-2.80, -0.57)
         Species (virginica)                 | -2.12 (-2.66, -1.58) | -1.19 (-2.37, -0.01)
-      Interactions                          |                      |                     
-        Species (versicolor) × Petal Length |                      | -0.01 (-0.56,  0.53)
-        Species (virginica) × Petal Length  |                      | -0.15 (-0.69,  0.39)
       Controls                              |                      |                     
         Petal Length                        |  0.90 ( 0.78,  1.03) |  0.39 (-0.13,  0.90)
+        Species (versicolor) * Petal Length |                      | -0.01 (-0.56,  0.53)
+        Species (virginica) * Petal Length  |                      | -0.15 (-0.69,  0.39)
       -----------------------------------------------------------------------------------
         Observations                        |                  150 |                  150
 
@@ -106,17 +109,20 @@
         "Species (virginica)"), Interactions = c(
         "Species (versicolor) × Petal Length", "Species (virginica) × Petal Length"),
       Controls = "Petal Length"), style = "{estimate}{stars}")
+    Warning <simpleWarning>
+      Couldn't find one or more parameters specified in following groups:
+        Interactions
+        Maybe you misspelled parameter names?
     Output
       Parameter                             |      lm1 |     lm2
       ----------------------------------------------------------
       Species                               |          |        
         Species (versicolor)                | -1.60*** | -1.69**
         Species (virginica)                 | -2.12*** | -1.19 *
-      Interactions                          |          |        
-        Species (versicolor) × Petal Length |          |   -0.01
-        Species (virginica) × Petal Length  |          |   -0.15
       Controls                              |          |        
         Petal Length                        |  0.90*** |    0.39
+        Species (versicolor) * Petal Length |          |   -0.01
+        Species (virginica) * Petal Length  |          |   -0.15
       ----------------------------------------------------------
         Observations                        |      150 |     150
 
@@ -127,17 +133,20 @@
         "Species (virginica)"), Interactions = c(
         "Species (versicolor) × Petal Length", "Species (virginica) × Petal Length"),
       Controls = "Petal Length"), style = "{estimate}|{p}")
+    Warning <simpleWarning>
+      Couldn't find one or more parameters specified in following groups:
+        Interactions
+        Maybe you misspelled parameter names?
     Output
       Parameter                             | Estimate (lm1) | p (lm1) | Estimate (lm2) | p (lm2)
       -------------------------------------------------------------------------------------------
       Species                               |                |         |                |        
         Species (versicolor)                |          -1.60 |  <0.001 |          -1.69 |   0.003
         Species (virginica)                 |          -2.12 |  <0.001 |          -1.19 |   0.048
-      Interactions                          |                |         |                |        
-        Species (versicolor) × Petal Length |                |         |          -0.01 |   0.961
-        Species (virginica) × Petal Length  |                |         |          -0.15 |   0.574
       Controls                              |                |         |                |        
         Petal Length                        |           0.90 |  <0.001 |           0.39 |   0.138
+        Species (versicolor) * Petal Length |                |         |          -0.01 |   0.961
+        Species (virginica) * Petal Length  |                |         |          -0.15 |   0.574
       -------------------------------------------------------------------------------------------
         Observations                        |            150 |         |            150 |        
 

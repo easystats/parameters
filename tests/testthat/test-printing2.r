@@ -1,5 +1,7 @@
 requiet("parameters")
 
+options("parameters_interaction" = "*")
+
 data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -84,3 +86,5 @@ test_that("templates, glue-3, separate columnns", {
     ), style = "{estimate}|{p}")
   )
 })
+
+options("parameters_interaction" = NULL)

@@ -1,6 +1,8 @@
 requiet("glmmTMB")
 requiet("parameters")
 
+options("parameters_interaction" = "*")
+
 # Splitting model components ----
 
 data("Salamanders")
@@ -80,3 +82,5 @@ test_that("style pattern", {
     )
   )
 })
+
+options("parameters_interaction" = NULL)
