@@ -1,4 +1,4 @@
-# parameters 0.19.1
+# parameters 0.20.0
 
 ## Breaking
 
@@ -8,6 +8,8 @@
 * The deprecated functions `ci_robust()`, `p_robust()` and `standard_error_robust`
   have been removed. These were superseded by the `vcov` argument in `ci()`,
   `p_value()`, and `standard_error()`, respectively.
+
+* The `style` argument in `compare_parameters()` was renamed into `select`.
 
 ## New functions
 
@@ -25,12 +27,14 @@
   `options(parameters_interaction = <value>)` or the argument `interaction_mark`
   to use a different character as interaction mark.
 
-* The `style` argument in `compare_parameters()`, which is used to control the
+* The `select` argument in `compare_parameters()`, which is used to control the
   table column elements, now supports an experimental glue-like syntax.
-  See this vignette _Printing Model Parameters_.
+  See this vignette _Printing Model Parameters_. Furthermore, the `select`
+  argument can also be used in the `print()` method for `model_parameters()`.
 
 * `print_html()` gets a `font_size` and `line_padding` argument to tweak the
-  appearance of HTML tables.
+  appearance of HTML tables. Furthermore, arguments `select` and `column_labels`
+  are new, to customize the column layout of tables. See examples in `?display`.
 
 * Consolidation of vignettes on standardization of model parameters.
 

@@ -26,6 +26,18 @@ format.parameters_model <- function(x,
   random_variances <- isTRUE(attributes(x)$ran_pars)
   mean_group_values <- attributes(x)$mean_group_values
 
+  # process selection of columns
+  style <- NULL
+  if (!is.null(select)) {
+    # glue-like syntax, so we switch to "style" argument here
+    if (length(select) == 1 &&
+        is.character(select) &&
+        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+      style <- select
+      select <- NULL
+    }
+  }
+
   # is information about grouped parameters stored as attribute?
   if (is.null(groups) && !is.null(attributes(x)$coef_groups)) {
     groups <- attributes(x)$coef_groups
@@ -119,6 +131,11 @@ format.parameters_model <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
+  # add p-stars, if we need this for style-argument
+  if (!is.null(style) && grepl("{stars}", style, fixed = TRUE)) {
+    x$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+  }
+
   # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
@@ -169,6 +186,43 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    .style_formatted_table <- function(formtab) {
+      additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
+      if (length(additional_columns)) {
+        additional_columns <- formtab[additional_columns]
+      }
+      # define column names in case the glue-pattern has multiple columns.
+      if (grepl("|", style, fixed = TRUE)) {
+        cn <- NULL
+      } else {
+        cn <- .style_pattern_to_name(style)
+      }
+      formtab <- cbind(
+        formtab[1],
+        .format_output_style(
+          formtab[2:ncol(formtab)],
+          style = style,
+          format = format,
+          modelname = cn
+        )
+      )
+      if (!insight::is_empty_object(additional_columns)) {
+        formtab <- cbind(formtab, additional_columns)
+      }
+      formtab
+    }
+    if (!is.data.frame(formatted_table)) {
+      formatted_table[] <- lapply(formatted_table, .style_formatted_table)
+    } else {
+      formatted_table <- .style_formatted_table(formatted_table)
+    }
+  }
+
   if (!is.null(indent_rows)) {
     attr(formatted_table, "indent_rows") <- indent_rows
     attr(formatted_table, "indent_groups") <- NULL
@@ -207,8 +261,8 @@ format.parameters_brms_meta <- format.parameters_model
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
-                                      style = NULL,
                                       split_components = TRUE,
+                                      select = NULL,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
@@ -327,7 +381,7 @@ format.compare_parameters <- function(x,
       zap_small = zap_small,
       ...
     )
-    out <- cbind(out, .format_output_style(cols, style, format, i))
+    out <- cbind(out, .format_output_style(cols, style = select, format, i))
   }
 
   # sort by effects and component
@@ -393,7 +447,7 @@ format.compare_parameters <- function(x,
     if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
-    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
 
   formatted_table

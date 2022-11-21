@@ -1,15 +1,17 @@
 #' @export
 print.compare_parameters <- function(x,
-                                     digits = 2,
-                                     ci_digits = 2,
-                                     p_digits = 3,
+                                     split_components = TRUE,
                                      caption = NULL,
                                      subtitle = NULL,
                                      footer = NULL,
-                                     style = NULL,
+                                     digits = 2,
+                                     ci_digits = 2,
+                                     p_digits = 3,
+                                     zap_small = FALSE,
                                      groups = NULL,
-                                     split_components = TRUE,
                                      column_width = NULL,
+                                     ci_brackets = c("(", ")"),
+                                     select = NULL,
                                      ...) {
   # save original input
   orig_x <- x
@@ -26,21 +28,22 @@ print.compare_parameters <- function(x,
   }
 
   # get attributes
-  if (missing(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select)) {
+    select <- attributes(x)$output_style
   }
 
   formatted_table <- format(
     x,
-    style,
+    select = select,
     split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_width = "auto",
-    ci_brackets = c("(", ")"),
+    ci_brackets = ci_brackets,
     format = "text",
-    groups = groups
+    groups = groups,
+    zap_small = zap_small
   )
 
   # if we have multiple components, we can align colum width across components here
