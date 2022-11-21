@@ -259,13 +259,16 @@ print_html.compare_parameters <- function(x,
     names(new_labels) <- colnames(out[["_data"]])
     out <- gt::cols_label(out, .list = new_labels)
   }
-  # add a border to the first column (Parameters)
-  last_col <- which(out[["_data"]]$Parameter == "")[1]
-  if (is.na(last_col)) {
-    last_col <- nrow(out[["_data"]])
+  # check where last parameter row ends. For "compare_models()", the
+  # first Parameter value after data rows is "". If this is not found,
+  # simply use number of rows as last row
+  last_row <- which(out[["_data"]]$Parameter == "")[1]
+  if (is.na(last_row)) {
+    last_row <- nrow(out[["_data"]])
   } else {
-    last_col <- last_col - 1
+    last_row <- last_row - 1
   }
+  # add a border to the first column (Parameters)
   out <- gt::tab_style(
     out,
     style = gt::cell_borders(
@@ -275,7 +278,7 @@ print_html.compare_parameters <- function(x,
     ),
     locations = gt::cells_body(
       columns = "Parameter",
-      rows = 1:last_col
+      rows = 1:last_row
     )
   )
   out
