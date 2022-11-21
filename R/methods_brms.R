@@ -4,9 +4,9 @@
 model_parameters.brmsfit <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      bf_prior = NULL,
@@ -86,7 +86,7 @@ model_parameters.brmsfit <- function(model,
     )
 
     attr(params, "parameter_info") <- insight::clean_parameters(model)
-    attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+    attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
     class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
   }
 
@@ -99,9 +99,9 @@ model_parameters.brmsfit <- function(model,
 .model_parameters_brms_meta <- function(model,
                                         centrality = "median",
                                         dispersion = FALSE,
-                                        ci = .95,
+                                        ci = 0.95,
                                         ci_method = "eti",
-                                        test = c("pd", "rope"),
+                                        test = "pd",
                                         rope_range = "default",
                                         rope_ci = 0.95,
                                         diagnostic = c("ESS", "Rhat"),

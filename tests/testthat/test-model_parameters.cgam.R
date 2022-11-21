@@ -1,7 +1,8 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest && requiet("testthat") && requiet("cgam") &&
-  utils::packageVersion("insight") > "0.18.0") {
+  utils::packageVersion("insight") > "0.18.0" &&
+  getRversion() >= "4.0.0") {
   test_that("model_parameters - cgam", {
     # cgam -----------------------
 
@@ -45,6 +46,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
         ran_pars = TRUE,
         show_summary = FALSE,
         log_link = FALSE,
+        pretty_labels = c(`(Intercept)` = "(Intercept)"),
         test_statistic = "t-statistic",
         log_response = FALSE,
         log_predictors = FALSE,

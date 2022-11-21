@@ -8,7 +8,7 @@
 #' @rdname model_parameters.mlm
 #' @export
 model_parameters.bracl <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    bootstrap = FALSE,
                                    iterations = 1000,
                                    standardize = NULL,
@@ -56,13 +56,13 @@ model_parameters.bracl <- function(model,
   args <- c(args, dot_args)
 
   out <- do.call(".model_parameters_generic", args)
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
 
 #' @export
-ci.bracl <- function(x, ci = .95, method = NULL, verbose = TRUE, ...) {
+ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
   # sanity check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
@@ -221,7 +221,7 @@ p_value.multinom <- function(model, method = "residual", ...) {
 simulate_parameters.multinom <- function(model,
                                          iterations = 1000,
                                          centrality = "median",
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {
@@ -242,7 +242,7 @@ simulate_parameters.multinom <- function(model,
   }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method

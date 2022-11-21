@@ -1,4 +1,7 @@
 if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
+  # make sure we have the correct interaction mark for tests
+  options(parameters_interaction = "*")
+
   data(iris)
   m1 <- lm(Sepal.Length ~ Species, data = iris)
   m2 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
@@ -12,7 +15,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     expect_equal(
       colnames(x),
       c(
-        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+        "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",
@@ -21,7 +24,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     )
     out <- capture.output(x)
     expect_equal(length(out), 14)
-    out <- format(x, style = "ci")
+    out <- format(x, select = "ci")
     expect_equal(colnames(out), c("Parameter", "m1", "m2", "m3"))
     expect_equal(
       out$Parameter,
@@ -35,12 +38,12 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
   })
 
 
-  x <- compare_parameters(m1, m2, m3, style = "se_p2")
+  x <- compare_parameters(m1, m2, m3, select = "se_p2")
   test_that("compare_parameters, se_p2", {
     expect_equal(
       colnames(x),
       c(
-        "Parameter", "Component", "Coefficient.m1", "SE.m1", "CI.m1",
+        "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
         "CI_low.m1", "CI_high.m1", "t.m1", "df_error.m1", "p.m1", "Coefficient.m2",
         "SE.m2", "CI.m2", "CI_low.m2", "CI_high.m2", "t.m2", "df_error.m2",
         "p.m2", "Log-Mean.m3", "SE.m3", "CI.m3", "CI_low.m3", "CI_high.m3",
@@ -49,12 +52,12 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     )
     out <- capture.output(x)
     expect_equal(length(out), 14)
-    out <- format(x, style = "se_p2")
+    out <- format(x, select = "se_p2")
     expect_equal(
       colnames(out),
       c(
-        "Parameter", "Coefficient (m1)", "p (m1)", "Coefficient (m2)",
-        "p (m2)", "Log-Mean (m3)", "p (m3)"
+        "Parameter", "Estimate (SE) (m1)", "p (m1)", "Estimate (SE) (m2)",
+        "p (m2)", "Estimate (SE) (m3)", "p (m3)"
       )
     )
     expect_equal(

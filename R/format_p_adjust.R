@@ -64,7 +64,8 @@ format_p_adjust <- function(method) {
       # save old values, to check if p-adjustment worked
       old_p_vals <- params$p
       # find statistic column
-      stat_column <- stats::na.omit(match(c("F", "t", "Statistic"), colnames(params)))
+      stat_column <- match(c("F", "t", "Statistic"), colnames(params))
+      stat_column <- stat_column[!is.na(stat_column)]
 
       if (tolower(p_adjust) %in% tolower(stats::p.adjust.methods)) {
         # base R adjustments
@@ -113,11 +114,11 @@ format_p_adjust <- function(method) {
 
       if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none")) {
         if (verbose) {
-          warning(insight::format_message(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large.")), call. = FALSE)
+          insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."))
         }
       }
     } else if (verbose) {
-      warning(paste0("'p_adjust' must be one of ", paste0(all_methods, collapse = ", ")), call. = FALSE)
+      insight::format_warning(paste0("`p_adjust` must be one of ", paste0(all_methods, collapse = ", ")))
     }
   }
   params

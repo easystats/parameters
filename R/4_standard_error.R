@@ -1,7 +1,7 @@
 #' Standard Errors
 #'
 #' `standard_error()` attempts to return standard errors of model
-#' parameters
+#' parameters.
 #'
 #' @param model A model.
 #' @param force Logical, if `TRUE`, factors are converted to numerical

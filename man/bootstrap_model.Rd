@@ -72,7 +72,7 @@ The output can be passed directly to the various functions from the
 slopes, etc. and their confidence intervals. These can then be passed to
 \code{model_parameter()} to obtain standard errors, p-values, etc. (see
 example).
-\cr\cr
+
 Note that that p-values returned here are estimated under the assumption of
 \emph{translation equivariance}: that shape of the sampling distribution is
 unaffected by the null being true or not. If this assumption does not hold,

@@ -9,13 +9,13 @@
 #'   score. If `NULL`, the value is chosen to match half of the number of
 #'   columns in a data frame.
 #'
-#' @details `get_scores()` takes the results from
-#'   [principal_components()] and extracts the variables for each
-#'   component found by the PCA. Then, for each of these "subscales", row means
-#'   are calculated (which equals adding up the single items and dividing by the
-#'   number of items). This results in a sum score for each component from the
-#'   PCA, which is on the same scale as the original, single items that were
-#'   used to compute the PCA.
+#' @details
+#' `get_scores()` takes the results from [`principal_components()`] and
+#' extracts the variables for each component found by the PCA. Then, for each
+#' of these "subscales", row means are calculated (which equals adding up the
+#' single items and dividing by the number of items). This results in a sum
+#' score for each component from the PCA, which is on the same scale as the
+#' original, single items that were used to compute the PCA.
 #'
 #' @examples
 #' if (require("psych")) {
@@ -39,11 +39,11 @@
 #' @export
 get_scores <- function(x, n_items = NULL) {
   subscales <- closest_component(x)
-  data_set <- attributes(x)$data_set
+  dataset <- attributes(x)$dataset
 
   out <- lapply(sort(unique(subscales)), function(.subscale) {
     columns <- names(subscales)[subscales == .subscale]
-    items <- data_set[columns]
+    items <- dataset[columns]
 
     if (is.null(n_items)) {
       .n_items <- round(ncol(items) / 2)
@@ -51,7 +51,13 @@ get_scores <- function(x, n_items = NULL) {
       .n_items <- n_items
     }
 
-    apply(items, 1, function(i) ifelse(sum(!is.na(i)) >= .n_items, mean(i, na.rm = TRUE), NA))
+    apply(items, 1, function(i) {
+      if (sum(!is.na(i)) >= .n_items) {
+        mean(i, na.rm = TRUE)
+      } else {
+        NA
+      }
+    })
   })
 
   out <- as.data.frame(do.call(cbind, out))
@@ -149,18 +155,29 @@ predict.parameters_efa <- function(object,
         out <- .merge_na(object, out)
       }
     } else {
-      if ("data_set" %in% names(attri)) {
-        out <- as.data.frame(stats::predict(attri$model, data = attri$data_set))
+      if ("dataset" %in% names(attri)) {
+        out <- as.data.frame(stats::predict(attri$model, data = attri$dataset))
       } else {
-        stop(insight::format_message(
+        insight::format_error(
           "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}."
-        ), call. = FALSE)
+        )
       }
     }
   } else {
     if (inherits(attri$model, c("psych", "fa"))) {
+      # Clean-up newdata (keep only the variables used in the model)
+      newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
       # psych:::predict.fa(object, data)
       out <- as.data.frame(stats::predict(attri$model, data = newdata))
+    } else if (inherits(attri$model, c("spca"))) {
+      # https://github.com/erichson/spca/issues/7
+      newdata <- newdata[names(attri$model$center)]
+      if (attri$standardize == TRUE) {
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+      }
+      out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
+      out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
     } else {
       out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
     }
@@ -181,9 +198,9 @@ predict.parameters_pca <- predict.parameters_efa
 .merge_na <- function(object, out) {
   compl_cases <- attributes(object)$complete_cases
   if (is.null(compl_cases)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "Could not retrieve information about missing data. Returning only complete cases."
-    ), call. = FALSE)
+    )
   } else {
     original_data <- data.frame(.parameters_merge_id = seq_along(compl_cases))
     out$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]

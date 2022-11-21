@@ -1,8 +1,7 @@
 if (requiet("testthat") &&
   requiet("insight") &&
   requiet("parameters") &&
-  requiet("metaBMA") &&
-  getRversion() >= "3.6.0") {
+  requiet("metaBMA")) {
   data(towels)
 
   # default

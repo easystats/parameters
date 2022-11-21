@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.SemiParBIV <- function(model,
-                                        ci = .95,
+                                        ci = 0.95,
                                         bootstrap = FALSE,
                                         iterations = 1000,
                                         standardize = NULL,
@@ -22,7 +22,7 @@ model_parameters.SemiParBIV <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -30,7 +30,7 @@ model_parameters.SemiParBIV <- function(model,
 #' @export
 p_value.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
+  s <- datawizard::compact_list(s[startsWith(names(s), "tableP")])
   params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)
@@ -46,7 +46,7 @@ p_value.SemiParBIV <- function(model, ...) {
 #' @export
 standard_error.SemiParBIV <- function(model, ...) {
   s <- summary(model)
-  s <- datawizard::compact_list(s[grepl("^tableP", names(s))])
+  s <- datawizard::compact_list(s[startsWith(names(s), "tableP")])
   params <- do.call(rbind, lapply(seq_along(s), function(i) {
     out <- as.data.frame(s[[i]])
     out$Parameter <- rownames(out)

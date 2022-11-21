@@ -1,8 +1,8 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.18.2.5
-Authors@R: 
+Version: 0.19.0.19
+Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
              role = c("aut", "cre"),
@@ -58,7 +58,7 @@ Authors@R:
              family = "Morrison",
              role = "ctb",
              email = "dmorrison01@ucla.edu",
-             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")),  
+             comment = c(ORCID = "0000-0002-7195-830X", Twitter = "@demstats1")),
       person(given = "Joseph",
              family = "Luchman",
              role = "ctb",
@@ -73,16 +73,16 @@ Description: Utilities for processing the parameters of various
     feature reduction (feature extraction and variable selection) as well
     as functions to describe data and variable characteristics (e.g.
     skewness, kurtosis, smoothness or distribution).
+    References: Lüdecke et al. (2020) <doi:10.21105/joss.02445>.
 License: GPL-3
 URL: https://easystats.github.io/parameters/
 BugReports: https://github.com/easystats/parameters/issues
-Remotes: easystats/insight
 Depends:
-    R (>= 3.5)
+    R (>= 3.6)
 Imports:
-    bayestestR (>= 0.12.1),
-    datawizard (>= 0.5.0),
-    insight (>= 0.18.0),
+    bayestestR (>= 0.13.0),
+    datawizard (>= 0.6.3),
+    insight (>= 0.18.6),
     graphics,
     methods,
     stats,
@@ -112,7 +112,7 @@ Suggests:
     domir (>= 0.2.0),
     drc,
     DRR,
-    effectsize (>= 0.6.0),
+    effectsize (>= 0.8.0),
     EGAnet (>= 0.7),
     emmeans (>= 1.7.0),
     factoextra,
@@ -129,6 +129,7 @@ Suggests:
     glmmTMB,
     GPArotation,
     gt,
+    haven,
     httr,
     Hmisc,
     ivprobit,
@@ -168,7 +169,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.8.0),
+    performance (>= 0.10.0),
     plm,
     PMCMRplus,
     poorman,
@@ -182,21 +183,23 @@ Suggests:
     rmarkdown,
     rms,
     rstanarm,
+    rsvd,
     sandwich,
     see (>= 0.6.9),
-    sjstats,
+    sparsepca,
     survey,
     survival,
     testthat,
+    tidyselect,
     TMB,
     truncreg,
     VGAM,
     WRS2
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/Needs/website:

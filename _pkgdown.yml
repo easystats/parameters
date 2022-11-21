@@ -37,7 +37,7 @@ reference:
   - standardize_parameters
   - standardize_info
 
-- title: "Standard Errors, Confidence Intervals, Degrees of Freesom and p-values"
+- title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
   contents:
   - standard_error
   - ci.default
@@ -49,9 +49,6 @@ reference:
   - p_value.DirichletRegModel
   - degrees_of_freedom
   - n_parameters
-- subtitle: "Robust Estimation Methods"
-  contents:
-  - standard_error_robust
 - subtitle: "Approximation Methods"
   contents:
   - p_value_kenward
@@ -63,6 +60,8 @@ reference:
   contents:
   - equivalence_test
   - equivalence_test.lm
+  - p_calibrate
+  - p_function
 
 - title: "Parameter Sampling"
   contents:
@@ -79,7 +78,6 @@ reference:
 - title: "Data Reduction"
 - subtitle: "Cluster Analysis"
   contents:
-  - check_clusterstructure
   - cluster_analysis
   - cluster_centers
   - cluster_discrimination
@@ -89,9 +87,6 @@ reference:
   - predict.parameters_clusters
 - subtitle: "Factors and Principal Components"
   contents:
-  - check_factorstructure
-  - check_kmo
-  - check_sphericity_bartlett
   - convert_efa_to_cfa
   - factor_analysis
   - get_scores
@@ -115,11 +110,6 @@ reference:
   - qol_cancer
   - fish
 
-- title: "Deprecated"
-  contents:
-  - check_heterogeneity
-
-
 articles:
 
   - title: Overview of vignettes
@@ -131,7 +121,6 @@ articles:
     navbar: ~
     contents:
     - model_parameters
-    - model_parameters_standardized
     - standardize_parameters_effsize
     - model_parameters_robust
     - model_parameters_mice

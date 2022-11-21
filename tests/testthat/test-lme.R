@@ -1,7 +1,7 @@
 requiet("nlme")
 requiet("lme4")
 requiet("lavaSearch2")
-skip_if_not(getRversion() >= "3.6.0")
+
 
 data("sleepstudy")
 m1 <- nlme::lme(Reaction ~ Days,
@@ -12,7 +12,7 @@ m1 <- nlme::lme(Reaction ~ Days,
 data("Orthodont")
 m2 <- nlme::lme(
   distance ~ age + Sex,
-  random =  ~ 1 | Subject,
+  random = ~ 1 | Subject,
   data = Orthodont,
   method = "ML"
 )

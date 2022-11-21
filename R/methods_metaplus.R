@@ -7,7 +7,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.metaplus <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       bootstrap = FALSE,
                                       iterations = 1000,
                                       standardize = NULL,
@@ -86,7 +86,7 @@ model_parameters.metaplus <- function(model,
 
   # no df
   out$df_error <- NULL
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "measure") <- "Estimate"
 
   if (!"Method" %in% names(out)) {
@@ -147,7 +147,7 @@ ci.metaplus <- function(x, ...) {
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_random <- function(model,
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "eti",
                                          exponentiate = FALSE,
                                          include_studies = TRUE,
@@ -233,7 +233,7 @@ model_parameters.meta_random <- function(model,
 
   # final atributes
   attr(out, "measure") <- "Estimate"
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   if (!"Method" %in% names(out)) {
@@ -271,7 +271,7 @@ ci.meta_random <- function(x, method = "eti", ...) {
 
   out <- data.frame(
     Parameter = rownames(params),
-    CI = .95,
+    ci = 0.95,
     CI_low = params[[ci_cols[1]]],
     CI_high = params[[ci_cols[2]]],
     stringsAsFactors = FALSE
@@ -307,7 +307,7 @@ ci.meta_fixed <- ci.meta_random
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_bma <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       ci_method = "eti",
                                       exponentiate = FALSE,
                                       include_studies = TRUE,
@@ -379,7 +379,7 @@ model_parameters.meta_bma <- function(model,
 
   # final attributes
   attr(out, "measure") <- "Estimate"
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(out) <- c("parameters_model", "see_parameters_model", class(params))
 
   if (!"Method" %in% names(out)) {

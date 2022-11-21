@@ -6,7 +6,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.model_fit <- function(model,
-                                       ci = .95,
+                                       ci = 0.95,
                                        effects = "fixed",
                                        component = "conditional",
                                        ci_method = "profile",
@@ -39,7 +39,7 @@ model_parameters.model_fit <- function(model,
 
 
 #' @export
-ci.model_fit <- function(x, ci = .95, method = NULL, ...) {
+ci.model_fit <- function(x, ci = 0.95, method = NULL, ...) {
   ci(x$fit, ci = ci, method = method, ...)
 }
 

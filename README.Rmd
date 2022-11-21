@@ -32,26 +32,19 @@ Another important goal of the **parameters** package is to facilitate and stream
 
 ## Installation
 
-[![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
+[![CRAN](https://www.r-pkg.org/badges/version/parameters)](https://cran.r-project.org/package=parameters) [![parameters status badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
-Run the following to install the stable release of **parameters** from CRAN:
+Type | Source | Command
+---|---|---
+Release | CRAN | `install.packages("parameters")`
+Development | r - universe | `install.packages("parameters", repos = "https://easystats.r-universe.dev")`
+Development | GitHub | `remotes::install_github("easystats/parameters")`
 
-```{r,  eval=FALSE}
-install.packages("parameters")
-```
-
-Or this one to install the latest development version from R-universe...
-
-```{r,  eval=FALSE}
-install.packages("parameters", repos = "https://easystats.r-universe.dev")
-```
-
-...or from GitHub:
-
-```{r,  eval=FALSE}
-install.packages("remotes")
-remotes::install_github("easystats/parameters")
-```
+> **Tip**
+>
+> Instead of `library(parameters)`, use `library(easystats)`. This will make all features of the  easystats-ecosystem available.
+>
+> To stay updated, use `easystats::install_latest()`.
 
 ## Documentation
 
@@ -62,7 +55,7 @@ remotes::install_github("easystats/parameters")
 Click on the buttons above to access the package [documentation](https://easystats.github.io/parameters/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 - [Summary of Model Parameters](https://easystats.github.io/parameters/articles/model_parameters.html)
-- [Standardized Model Parameters](https://easystats.github.io/parameters/articles/model_parameters_standardized.html)
+- [Parameter and Model Standardization](https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html)
 - [Robust Estimation of Standard Errors, Confidence Intervals and p-values](https://easystats.github.io/parameters/articles/model_parameters_robust.html)
 - [Model Parameters and Missing Data](https://easystats.github.io/parameters/articles/model_parameters_mice.html)
 - [Feature reduction (PCA, cMDS, ICA...)](https://easystats.github.io/parameters/articles/parameters_reduction.html)
@@ -72,7 +65,7 @@ Click on the buttons above to access the package [documentation](https://easysta
 
 ## Contributing and Support
 
-In case you want to file an issue or contribute in another way to the package, please follow [this guide](https://github.com/easystats/parameters/blob/master/.github/CONTRIBUTING.md). For questions about the functionality, you may either contact us via email or also file an issue.
+In case you want to file an issue or contribute in another way to the package, please follow [this guide](https://github.com/easystats/parameters/blob/main/.github/CONTRIBUTING.md). For questions about the functionality, you may either contact us via email or also file an issue.
 
 
 # Features
@@ -100,20 +93,22 @@ model_parameters(model)
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
+
+# heteroscedasticity-consitent SE and CI
+model_parameters(model, vcov = "HC3")
 ```
 
 ### Mixed Models
 
 ```{r}
 library(lme4)
-
 model <- lmer(Sepal.Width ~ Petal.Length + (1 | Species), data = iris)
 
 # model parameters with CI, df and p-values based on Wald approximation
-model_parameters(model, effects = "all")
+model_parameters(model)
 
 # model parameters with CI, df and p-values based on Kenward-Roger approximation
-model_parameters(model, ci_method = "kenward")
+model_parameters(model, ci_method = "kenward", effects = "fixed")
 ```
 
 ### Structural Models

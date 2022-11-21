@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.bfsl <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   ci_method = "residual",
                                   p_adjust = NULL,
                                   verbose = TRUE,
@@ -15,7 +15,7 @@ model_parameters.bfsl <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

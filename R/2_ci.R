@@ -1,7 +1,7 @@
 #' @title Confidence Intervals (CI)
 #' @name ci.default
 #'
-#' @description Compute confidence intervals (CI) for frequentist models.
+#' @description `ci()` attempts to return confidence intervals of model parameters.
 #'
 #' @param x A statistical model.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
@@ -47,7 +47,7 @@
 #' }
 #' }
 #' @export
-ci.default <- function(x, ci = .95, dof = NULL, method = NULL, ...) {
+ci.default <- function(x, ci = 0.95, dof = NULL, method = NULL, ...) {
   # check for valid input
   .is_model_valid(x)
   .ci_generic(model = x, ci = ci, dof = dof, method = method, ...)
@@ -56,7 +56,7 @@ ci.default <- function(x, ci = .95, dof = NULL, method = NULL, ...) {
 
 #' @export
 ci.glm <- function(x,
-                   ci = .95,
+                   ci = 0.95,
                    dof = NULL,
                    method = "profile",
                    vcov = NULL,
@@ -68,9 +68,9 @@ ci.glm <- function(x,
   # No robust vcov for profile method
   if (method == "profile") {
     if (!is.null(vcov) || !is.null(vcov_args) && isTRUE(verbose)) {
-      warning(insight::format_message(
+      insight::format_warning(
         "The `vcov` and `vcov_args` are not available with `method = \"profile\"`"
-      ), call. = FALSE)
+      )
     }
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
     out <- do.call(rbind, out)

@@ -1,7 +1,7 @@
 requiet("effectsize")
 requiet("lme4")
 skip_on_cran()
-skip_if_not(getRversion() >= "3.6.0")
+
 
 data(iris)
 set.seed(1234)

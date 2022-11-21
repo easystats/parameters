@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("WRS2") && packageVersion("WRS2") >= "1.1.3" && getRversion() >= "3.6.0") {
+if (requiet("testthat") && requiet("WRS2")) {
   # model_parameters.t1way ---------------------------------------------------
 
   test_that("model_parameters.t1way", {

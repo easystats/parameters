@@ -14,29 +14,24 @@
   pattern <- if (full) {
     c(
       "as.factor", "as.numeric", "factor", "offset", "lag", "diff", "catg",
-      "asis", "matrx", "pol", "strata", "strat", "scale", "scored",
-      "interaction", "lsp", "pb", "lo", "t2", "te", "ti", "tt",
-      "mi", "mo", "gp"
+      "matrx", "pol", "strata", "strat", "scale", "scored", "interaction",
+      "lsp", "pb", "lo", "t2", "te", "ti", "tt", "mi", "mo", "gp"
     )
   } else {
-    c("as.factor", "as.numeric", "factor", "catg", "asis", "interaction")
+    c("as.factor", "as.numeric", "factor", "catg", "interaction")
   }
 
   for (j in seq_along(pattern)) {
     # remove possible  namespace
-    x <- sub("(.*)::(.*)", "\\2", x)
-    if (pattern[j] == "offset") {
+    if (any(grepl("::", x, fixed = TRUE))) {
+      x <- sub("(.*)::(.*)", "\\2", x)
+    }
+    if (pattern[j] == "offset" && any(grepl("offset(", x, fixed = TRUE))) {
       x <- insight::trim_ws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
-    } else if (pattern[j] == "I") {
-      if (full) {
-        x <- insight::trim_ws(sub("I\\(((\\w|\\.)*).*", "\\1", x))
-      } else {
-        x <- insight::trim_ws(sub("I\\((.*)\\)(.*)", "\\1", x))
-      }
       # some exceptions here...
     } else if (full && pattern[j] == "scale" && any(grepl("scale(", x, fixed = TRUE))) {
       x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(x[grepl("scale(", x, fixed = TRUE)])
-    } else {
+    } else if (any(grepl(pattern[j], x, fixed = TRUE))) {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- insight::trim_ws(sub(p, "\\1\\3", x))
     }
@@ -61,6 +56,7 @@
   c(
     "(intercept)_zi",
     "intercept (zero-inflated)",
+    "intercept (zero-inflation)",
     "intercept",
     "zi_intercept",
     "(intercept)",
@@ -71,5 +67,5 @@
 
 #' @keywords internal
 .in_intercepts <- function(x) {
-  tolower(x) %in% .intercepts() | grepl("^intercept", tolower(x))
+  tolower(x) %in% .intercepts() | startsWith(tolower(x), "intercept")
 }

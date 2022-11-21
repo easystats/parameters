@@ -15,7 +15,7 @@ model_parameters.fitdistr <- function(model,
   out <- .exponentiate_parameters(out, model, exponentiate)
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

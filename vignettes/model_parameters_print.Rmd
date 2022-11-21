@@ -30,15 +30,18 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 100)
 )
 
-if (!requireNamespace("gt", quietly = TRUE) ||
-  !requireNamespace("magrittr", quietly = TRUE) ||
-  !requireNamespace("glmmTMB", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-} else {
+pkgs <- c(
+  "gt", "magrittr", "datawizard", "glmmTMB", "parameters"
+)
+
+successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
+
+if (all(successfully_loaded)) {
   library(parameters)
   library(gt)
   library(magrittr)
-  library(insight)
+  library(datawizard)
+  library(glmmTMB)
 }
 
 set.seed(333)
@@ -66,11 +69,44 @@ mp <- model_parameters(model)
 print(mp, pretty_names = FALSE)
 ```
 
+If data is [labelled](https://strengejacke.github.io/sjlabelled/articles/intro_sjlabelled.html), `pretty_names = "labels"` will use variable and value labels as pretty names. If data is not labelled, default pretty names will be used.
+
+```{r eval=successfully_loaded["datawizard"]}
+data(efc, package = "datawizard")
+model <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
+
+# default printing
+model_parameters(model)
+
+# using value and variable labels
+mp <- model_parameters(model)
+print(mp, pretty_names = "labels")
+```
+
+## More compact output
+
+Using `summary`, or the `select` argument via the `print()` method allows for a more compact table, in case not all information is required. `summary()` will return the coefficient, confidence intervals and p-values. `select` allows to select specific columns only.
+
+```{r}
+data(iris)
+model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+
+result <- model_parameters(model)
+
+# Coefficients, CI and p
+summary(result)
+
+# Parameter name, SE and p
+print(result, select = c("Parameter", "SE", "p"))
+```
+
+The `select` argument can also be used for a more customized output. See examples below for `compare_parameters()`.
+
 ## Splitting model components
 
 Again by default, the argument `split_components` is `TRUE`, which means that models with multiple components like fixed and random effects, count and zero-inflated part etc. are split into separate tables in the output.
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 library(glmmTMB)
 data("Salamanders")
 model <- glmmTMB(count ~ spp + mined + (1 | site),
@@ -83,7 +119,7 @@ model_parameters(model)
 
 Redundant columns are removed. The related model component is shown as table header. However, you can also return a single table:
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 mp <- model_parameters(model)
 print(mp, split_component = FALSE)
 ```
@@ -116,7 +152,7 @@ model_parameters(model, p_digits = "scientific")
 
 By default, the width of table columns is set to the minimum required width. This works well for models that produce just one table. However, for models with multiple components, where each component is shown as separate table, columns are possibly no longer aligned across tables. See the following example from a zero-inflated mixed model that has three components (fixed count, fixed zero-inflated, random effects):
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 data("Salamanders")
 # we create very long parameter names for this predictor here
 levels(Salamanders$spp) <- paste("long", levels(Salamanders$spp))
@@ -134,14 +170,14 @@ model_parameters(model)
 
 The `column_width` argument can be used to either define the width of specific columns, or to fix column widths of the same columns across tables to have the same width. In the latter case, use `column_width = "fixed"` in the `print()` method.
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 mp <- model_parameters(model)
 print(mp, column_width = "fixed")
 ```
 
 If `column_width` is a named vector, names are matched against column names, and those columns gain the specified minimum width.
 
-```{r}
+```{r eval=successfully_loaded["glmmTMB"]}
 print(mp, column_width = c(SE = 8, `95% CI` = 12, p = 7))
 ```
 
@@ -207,11 +243,38 @@ compare_parameters(lm1, lm2, lm3)
 
 ## Changing style of column output
 
-By default, estimates and confidence intervals are shown. Using `style` allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.
+By default, estimates and confidence intervals are shown. Using `select` allows us to create different output, e.g. standard errors instead of confidence intervals, or including p-values.
 
 ```{r}
-compare_parameters(lm1, lm2, lm3, style = "se_p")
+compare_parameters(lm1, lm2, lm3, select = "se_p")
 ```
+
+The `select` argument also has a basic support for glue-like syntax, which lets you layout model elements in a very flexible way. Following tokens are replaced by the related summary coefficients or statistics:
+
+- `{estimate}` (or `{coefficient}` or `{coef}`): coefficient
+- `{se}` (or `{std.error}` or `{standard error}`): standard error
+- `{ci_low}` and `{ci_high}`: lower/upper confidence interval limits
+- `{p}` (or `{pval}` or `{p.value}`): p-values
+- `{stars}`: significant stars for p-values
+
+Note that you have to add parentheses manually, e.g. around confidence intervals.
+
+```{r}
+# estimates, p-stars and standard error in parentheses
+compare_parameters(lm1, lm2, lm3, select = "{estimate}{stars} ({se})")
+
+# estimates, CI, p and stars
+compare_parameters(lm1, lm2, lm3, select = "{estimate} ({ci_low}, {ci_high}), p={p}{stars}")
+```
+
+`select` also works for `model_parameters()`, however, it's necessary to call this argument via the `print()` method:
+
+```{r}
+# estimates, p-stars and CI in parentheses
+result <- model_parameters(lm3)
+print(result, select = "{estimate}{stars} ({ci})")
+```
+
 
 ## Defining column names
 
@@ -224,9 +287,45 @@ compare_parameters(
 )
 ```
 
+## Models with multiple components
+
+For models with multiple components, like mixed models with fixed and random effects, or models with count- and zero-inflation parts, using arguments `effects = "all"` and/or `component = "all"` prints separate tables for each model component.
+
+```{r eval=successfully_loaded["glmmTMB"]}
+library(glmmTMB)
+data("fish")
+
+m0 <- glm(count ~ child + camper, data = fish, family = poisson())
+
+m1 <- glmmTMB(
+  count ~ child + camper + (1 | persons) + (1 | ID),
+  data = fish,
+  family = poisson()
+)
+
+m2 <- glmmTMB(
+  count ~ child + camper + zg + (1 | ID),
+  ziformula = ~ child + (1 | persons),
+  data = fish,
+  family = truncated_poisson()
+)
+
+compare_parameters(m0, m1, m2, effects = "all", component = "all")
+```
+
+For such tables, they usually become clearer when the columns per model are aligned to a fixed width. You can do this using `column_width = "fixed"`.
+
+```{r eval=successfully_loaded["glmmTMB"]}
+cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
+print(cp, column_width = "fixed")
+```
+
+
 ## Group parameters of multiple model tables
 
-Grouping parameters works for `compare_models()` in the same way as shown above for `model_parameters()`.
+Grouping parameters works for `compare_parameters()` in the same way as shown above for `model_parameters()`.
+
+**Note:** By default, the interaction mark is `×`, not `*` (see also section on global options [in this vignette](https://easystats.github.io/parameters/reference/print.parameters_model.html)). Since parameter names in `compare_parameters()` are already formatted before printing, `as.data.frame(cp)$Parameter` will probably return special unicode characters that you need to take care of in the `groups` argument (unless you use numeric indices).
 
 ```{r}
 lm1 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -236,7 +335,7 @@ lm2 <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
 cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept")
 
 # look at parameters names, to know their names for "groups" argument
-as.data.frame(cp)$Parameter
+as.data.frame(cp)$Parameter # note the unicode char as interaction mark
 
 # create groups. Interactions only present in 2nd model
 print(cp, groups = list(
@@ -245,8 +344,8 @@ print(cp, groups = list(
     "Species (virginica)"
   ),
   Interactions = c(
-    "Species (versicolor) * Petal Length",
-    "Species (virginica) * Petal Length"
+    "Species (versicolor) × Petal Length", # note the unicode char!
+    "Species (virginica) × Petal Length"
   ),
   Controls = "Petal Length"
 ))

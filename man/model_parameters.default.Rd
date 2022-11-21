@@ -225,8 +225,7 @@ or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+passed down to \code{bootstrap_model()}.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 }
@@ -328,7 +327,7 @@ to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 
 \code{"profile"}
 \itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr}, \code{merMod} or \code{glmmTMB}.
 CIs computed by \emph{profiling the likelihood curve for a parameter}, using
 linear interpolation to find where likelihood ratio equals a critical value;
 p-values computed using the Wald method with a \emph{normal-distribution} (note:

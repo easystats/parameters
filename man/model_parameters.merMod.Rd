@@ -331,11 +331,13 @@ due to the longer computation time.}
 
 \item{df_method}{Deprecated. Please use \code{ci_method}.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. \code{component}
+for the zero-inflation part of the model, or the dispersion model be returned?
+Applies to models with zero-inflation and/or dispersion component. \code{component}
 may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
 \code{"all"} (default). May be abbreviated.}
 
@@ -344,7 +346,7 @@ between-effects (see \code{datawizard::demean()}), the \code{Component} column
 will indicate which variables belong to the within-effects,
 between-effects, and cross-level interactions. By default, the
 \code{Component} column indicates, which parameters belong to the
-conditional or zero-inflated component of the model.}
+conditional or zero-inflation component of the model.}
 
 \item{summary}{Logical, if \code{TRUE}, prints summary information about the
 model (model formula, number of observations, residual standard deviation
@@ -535,7 +537,7 @@ to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 
 \code{"profile"}
 \itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr}, \code{merMod} or \code{glmmTMB}.
 CIs computed by \emph{profiling the likelihood curve for a parameter}, using
 linear interpolation to find where likelihood ratio equals a critical value;
 p-values computed using the Wald method with a \emph{normal-distribution} (note:

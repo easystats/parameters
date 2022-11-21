@@ -8,7 +8,7 @@ standardize_posteriors <- function(model,
                                    include_response = TRUE,
                                    verbose = TRUE,
                                    ...) {
-  object_name <- insight::safe_deparse(substitute(model))
+  object_name <- insight::safe_deparse_symbol(substitute(model))
 
   m_info <- .get_model_info(model, ...)
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
@@ -87,7 +87,7 @@ standardise_posteriors <- standardize_posteriors
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop(insight::format_message("`method` must be one of `basic`, `posthoc`, `smart` or `pseudo`."), call. = FALSE)
+    insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\" or \"pseudo\".")
   }
 
   .dev_pred <- deviations[[col_dev_pred]]

@@ -3,9 +3,9 @@
 model_parameters.bayesQR <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      bf_prior = NULL,
@@ -35,7 +35,7 @@ model_parameters.bayesQR <- function(model,
   )
 
   attr(params, "ci") <- ci
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

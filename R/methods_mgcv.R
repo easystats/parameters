@@ -1,7 +1,7 @@
 #' @rdname model_parameters.cgam
 #' @export
 model_parameters.gamm <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
                                   verbose = TRUE,

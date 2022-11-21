@@ -16,7 +16,7 @@
 #'   will indicate which variables belong to the within-effects,
 #'   between-effects, and cross-level interactions. By default, the
 #'   `Component` column indicates, which parameters belong to the
-#'   conditional or zero-inflated component of the model.
+#'   conditional or zero-inflation component of the model.
 #' @param include_sigma Logical, if `TRUE`, includes the residual standard
 #'   deviation. For mixed models, this is defined as the sum of the distribution-specific
 #'   variance and the variance for the additive overdispersion term (see
@@ -32,6 +32,9 @@
 #'   computed by default, for simpler models or fewer observations, confidence
 #'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
 #'   or omit calculation of confidence intervals.
+#' @param ... Arguments passed to or from other methods. For instance, when
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
+#'   passed down to `bootstrap_model()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'
@@ -106,7 +109,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.merMod <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = NULL,
                                     ci_random = NULL,
                                     bootstrap = FALSE,
@@ -130,10 +133,7 @@ model_parameters.merMod <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message(
-      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
-    ), call. = FALSE)
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # set default
@@ -281,7 +281,7 @@ model_parameters.merMod <- function(model,
   )
 
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

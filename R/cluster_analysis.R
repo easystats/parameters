@@ -9,9 +9,9 @@
 #'
 #' @param x A data frame.
 #' @param n Number of clusters used for supervised cluster methods. If `NULL`,
-#' the number of clusters to extract is determined by calling [n_clusters()]. Note
-#' that this argument does not apply for unsupervised clustering methods like
-#' `dbscan`, `hdbscan`, `mixture`, `pvclust`, or `pamk`.
+#' the number of clusters to extract is determined by calling [`n_clusters()`].
+#' Note that this argument does not apply for unsupervised clustering methods
+#' like `dbscan`, `hdbscan`, `mixture`, `pvclust`, or `pamk`.
 #' @param method Method for computing the cluster analysis. Can be `"kmeans"`
 #'   (default; k-means using `kmeans()`), `"hkmeans"` (hierarchical k-means
 #'   using `factoextra::hkmeans()`), `pam` (K-Medoids using `cluster::pam()`),
@@ -25,19 +25,19 @@
 #'   distances (e.g., when `method = "hclust"` for hierarchical clustering. For
 #'   other methods, such as `"kmeans"`, this argument will be ignored). Must be
 #'   one of `"euclidean"`, `"maximum"`, `"manhattan"`, `"canberra"`, `"binary"`
-#'   or `"minkowski"`. See [dist()] and `pvclust::pvclust()` for more
+#'   or `"minkowski"`. See [`dist()`] and `pvclust::pvclust()` for more
 #'   information.
 #' @param hclust_method Agglomeration method to be used when `method = "hclust"`
 #'   or `method = "hkmeans"` (for hierarchical clustering). This should be one
 #'   of `"ward"`, `"ward.D2"`, `"single"`, `"complete"`, `"average"`,
 #'   `"mcquitty"`, `"median"` or `"centroid"`. Default is `"complete"` (see
-#'   [hclust()]).
+#'   [`hclust()`]).
 #' @param kmeans_method Algorithm used for calculating kmeans cluster. Only applies,
 #'   if `method = "kmeans"`. May be one of `"Hartigan-Wong"` (default),
-#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [kmeans()] for details on
+#'   `"Lloyd"` (used by SPSS), or `"MacQueen"`. See [`kmeans()`] for details on
 #'   this argument.
 #' @param iterations The number of replications.
-#' @param dbscan_eps The 'eps' argument for DBSCAN method. See [n_clusters_dbscan()].
+#' @param dbscan_eps The `eps` argument for DBSCAN method. See [`n_clusters_dbscan()`].
 #'
 #' @inheritParams equivalence_test.lm
 #' @inheritParams n_clusters
@@ -59,11 +59,11 @@
 #' Clusters classification can be obtained via `print(x, newdata = NULL, ...)`.
 #'
 #' @seealso
-#' - [n_clusters()] to determine the number of clusters to extract.
-#' - [cluster_discrimination()] to determine the accuracy of cluster group
-#' classification via linear discriminant analysis (LDA).
-#' - [check_clusterstructure()] to check suitability of data
-#' for clustering.
+#' - [`n_clusters()`] to determine the number of clusters to extract.
+#' - [`cluster_discrimination()`] to determine the accuracy of cluster group
+#'   classification via linear discriminant analysis (LDA).
+#' - [`performance::check_clusterstructure()`] to check suitability of data
+#'   for clustering.
 #' - https://www.datanovia.com/en/lessons/
 #'
 #' @examples
@@ -145,9 +145,9 @@ cluster_analysis <- function(x,
   # check if we have a correlation/covariance or distance matrix?
   if (nrow(x) == ncol(x) && identical(round(x[lower.tri(x)], 10), round(x[upper.tri(x)], 10))) {
     ## TODO: special handling
-    warning(insight::format_message(
+    insight::format_warning(
       "Input data seems to be a correlation, covariance or similar matrix."
-    ), call. = FALSE)
+    )
   }
 
   # Preprocess data
@@ -171,9 +171,9 @@ cluster_analysis <- function(x,
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          stop(insight::format_message(
+          insight::format_error(
             "Could not extract number of clusters. Please provide argument `n`."
-          ), call. = FALSE)
+          )
         }
         2
       }
@@ -210,7 +210,7 @@ cluster_analysis <- function(x,
   } else if (any(method %in% c("mixture", "mclust"))) {
     rez <- .cluster_analysis_mixture(data, n = n, ...)
   } else {
-    stop("Did not find `method` argument. Could be misspecified.", call. = FALSE)
+    insight::format_error("Did not find `method` argument. Could be misspecified.")
   }
 
   # Assign clusters to observations
@@ -300,9 +300,9 @@ cluster_analysis <- function(x,
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
     if (distance_method %in% c("correlation", "uncentered", "abscor")) {
-      warning(insight::format_message(paste0(
+      insight::format_warning(paste0(
         "Method `", distance_method, "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
-      )), call. = FALSE)
+      ))
     }
     dist <- dist(data, method = distance_method, ...)
     model <- stats::hclust(dist, method = hclust_method, ...)

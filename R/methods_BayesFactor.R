@@ -6,35 +6,28 @@
 #' Parameters from `BFBayesFactor` objects from `{BayesFactor}` package.
 #'
 #' @param model Object of class `BFBayesFactor`.
-#' @param cohens_d If `TRUE`, compute Cohens' *d* as index of effect size. Only
-#'   applies to objects from `ttestBF()`. See `effectsize::cohens_d()` for
-#'   details.
 #' @param include_proportions Logical that decides whether to include posterior
 #'   cell proportions/counts for Bayesian contingency table analysis (from
 #'   `BayesFactor::contingencyTableBF()`). Defaults to `FALSE`, as this
 #'   information is often redundant.
-#' @param cramers_v Compute Cramer's V or phi as index of effect size.
-#'   Can be `"raw"` or `"adjusted"` (effect size will be bias-corrected).
-#'   Only applies to objects from `chisq.test()`.
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest
+#' @param cohens_d,cramers_v Deprecated. Please use `effectsize_type`.
 #'
 #' @details
 #' The meaning of the extracted parameters:
-#' \itemize{
-#'   \item For [BayesFactor::ttestBF()]: `Difference` is the raw
-#'   difference between the means. \item For
-#'   [BayesFactor::correlationBF()]: `rho` is the linear
-#'   correlation estimate (equivalent to Pearson's *r*). \item For
-#'   [BayesFactor::lmBF()] / [BayesFactor::generalTestBF()]
-#'   / [BayesFactor::regressionBF()] /
-#'   [BayesFactor::anovaBF()]: in addition to parameters of the fixed
-#'   and random effects, there are: `mu` is the (mean-centered) intercept;
-#'   `sig2` is the model's sigma; `g` / `g_*` are the *g*
-#'   parameters; See the *Bayes Factors for ANOVAs* paper
+#'
+#' - For [BayesFactor::ttestBF()]: `Difference` is the raw difference between
+#'   the means.
+#' - For [BayesFactor::correlationBF()]: `rho` is the linear correlation
+#'   estimate (equivalent to Pearson's *r*).
+#' - For [BayesFactor::lmBF()] / [BayesFactor::generalTestBF()]
+#'   / [BayesFactor::regressionBF()] / [BayesFactor::anovaBF()]: in addition to
+#'   parameters of the fixed and random effects, there are: `mu` is the
+#'   (mean-centered) intercept; `sig2` is the model's sigma; `g` / `g_*` are
+#'   the *g* parameters; See the *Bayes Factors for ANOVAs* paper
 #'   (\doi{10.1016/j.jmp.2012.08.001}).
-#' }
 #'
 #' @examples
 #' \donttest{
@@ -51,7 +44,7 @@
 #'     centrality = "mean",
 #'     dispersion = TRUE,
 #'     verbose = FALSE,
-#'     cramers_v = TRUE
+#'     effectsize_type = "cramers_v"
 #'   )
 #' }
 #' }
@@ -62,18 +55,24 @@ model_parameters.BFBayesFactor <- function(model,
                                            dispersion = FALSE,
                                            ci = 0.95,
                                            ci_method = "eti",
-                                           test = c("pd", "rope"),
+                                           test = "pd",
                                            rope_range = "default",
                                            rope_ci = 0.95,
                                            priors = TRUE,
-                                           cohens_d = NULL,
-                                           cramers_v = NULL,
+                                           effectsize_type = NULL,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
+                                           cohens_d = NULL,
+                                           cramers_v = NULL,
                                            ...) {
   insight::check_if_installed("BayesFactor")
 
-  if (any(grepl("^Null", names(model@numerator)))) {
+  ## TODO: remove in a later update
+  # handle deprected arguments ------
+  if (!is.null(cramers_v)) effectsize_type <- "cramers_v"
+  if (!is.null(cohens_d)) effectsize_type <- "cohens_d"
+
+  if (any(startsWith(names(model@numerator), "Null"))) {
     if (isTRUE(verbose)) {
       insight::print_color("Nothing to compute for point-null models.\nSee github.com/easystats/parameters/issues/226\n", "red")
     }
@@ -82,7 +81,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   if (is.null(insight::get_parameters(model, verbose = verbose))) {
     if (isTRUE(verbose)) {
-      warning("Can't extract model parameters.", call. = FALSE)
+      insight::format_warning("Can't extract model parameters.")
     }
     return(NULL)
   }
@@ -105,13 +104,13 @@ model_parameters.BFBayesFactor <- function(model,
 
   # Add components and effects columns
   cleaned_params <- NULL
-  tryCatch(
+  out <- tryCatch(
     {
       cleaned_params <- insight::clean_parameters(model)
-      out <- merge(out, cleaned_params[, c("Parameter", "Effects", "Component")], sort = FALSE)
+      merge(out, cleaned_params[, c("Parameter", "Effects", "Component")], sort = FALSE)
     },
     error = function(e) {
-      NULL
+      out
     }
   )
 
@@ -132,23 +131,24 @@ model_parameters.BFBayesFactor <- function(model,
 
   # leave out redundant posterior cell proportions/counts
   if (bf_type == "xtable" && isFALSE(include_proportions)) {
-    out <- out[which(!grepl("^cell\\[", out$Parameter)), , drop = FALSE]
+    out <- out[which(!startsWith(out$Parameter, "cell[")), , drop = FALSE]
   }
 
   # Effect size?
-  if (bf_type %in% c("ttest1", "ttest2") && !is.null(cohens_d) ||
-    bf_type == "xtable" && !is.null(cramers_v)) {
+  if (!is.null(effectsize_type)) {
     # needs {effectsize} to be installed
     insight::check_if_installed("effectsize")
 
+    ## TODO: add back ci-argument, once effectsize >= 0.7.1 is on CRAN.
     tryCatch(
       {
         effsize <- effectsize::effectsize(model,
           centrality = centrality,
           dispersion = dispersion,
-          ci = ci,
           ci_method = ci_method,
-          rope_ci = rope_ci
+          rope_ci = rope_ci,
+          type = effectsize_type,
+          ...
         )
 
         if (bf_type == "xtable" && isTRUE(include_proportions)) {
@@ -159,7 +159,7 @@ model_parameters.BFBayesFactor <- function(model,
           } else {
             prefix <- "d_"
           }
-          ci_cols <- grepl("^CI_", colnames(effsize))
+          ci_cols <- startsWith(colnames(effsize), "CI_")
           colnames(effsize)[ci_cols] <- paste0(prefix, colnames(effsize)[ci_cols])
           out$CI <- NULL
           out <- cbind(out, effsize)
@@ -189,6 +189,17 @@ model_parameters.BFBayesFactor <- function(model,
   if (!is.null(out$Effects) && insight::n_unique(out$Effects) == 1) out$Effects <- NULL
 
 
+  # ==== remove rows and columns with complete `NA`s
+
+  out <- datawizard::remove_empty(out)
+
+  # sanity check: make sure BF column still exists,
+  # see https://github.com/easystats/correlation/issues/269
+  if (is.null(out$BF)) {
+    out$BF <- NA
+  }
+
+
   # ==== pretty parameter names
 
   cp <- out$Parameter
@@ -210,7 +221,7 @@ model_parameters.BFBayesFactor <- function(model,
   # reorder
   col_order <- c(
     "Parameter", "Mean", "Median", "MAD",
-    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "d_CI_low", "d_CI_high",
+    "CI", "CI_low", "CI_high", "SD", "Cohens_d", "Cramers_v", "Cramers_v_adjusted", "d_CI_low", "d_CI_high",
     "Cramers_CI_low", "Cramers_CI_high", "pd", "ROPE_Percentage", "Prior_Distribution",
     "Prior_Location", "Prior_Scale", "Effects", "Component", "BF", "Method"
   )
@@ -218,7 +229,7 @@ model_parameters.BFBayesFactor <- function(model,
 
 
   attr(out, "title") <- unique(out$Method)
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "pretty_names") <- pretty_names
   attr(out, "ci_test") <- ci
 
@@ -243,9 +254,8 @@ model_parameters.BFBayesFactor <- function(model,
 #' @inheritParams p_value
 #'
 #' @details
-#'
 #' For Bayesian models, the p-values corresponds to the *probability of
-#' direction* ([bayestestR::p_direction()]), which is converted to a p-value
+#' direction* ([`bayestestR::p_direction()`]), which is converted to a p-value
 #' using `bayestestR::convert_pd_to_p()`.
 #'
 #' @return The p-values.
@@ -270,9 +280,7 @@ p_value.BFBayesFactor <- function(model, ...) {
 
 
 .classify_BFBayesFactor <- function(x) {
-  if (!requireNamespace("BayesFactor", quietly = TRUE)) {
-    stop("This function needs `BayesFactor` to be installed.", call. = FALSE)
-  }
+  insight::check_if_installed("BayesFactor")
 
   if (any(class(x@denominator) %in% c("BFcorrelation"))) {
     "correlation"

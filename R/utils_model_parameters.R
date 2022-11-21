@@ -16,7 +16,7 @@
                                              wb_component = FALSE,
                                              ...) {
   # capture additional arguments
-  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  dot.arguments <- list(...)
 
   # model info
   info <- tryCatch(suppressWarnings(insight::model_info(model, verbose = FALSE)),
@@ -37,7 +37,7 @@
   if (isFALSE(dot.arguments$pretty_names)) {
     attr(params, "pretty_names") <- params$Parameter
   } else if (is.null(attr(params, "pretty_names", exact = TRUE))) {
-    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info))
+    attr(params, "pretty_names") <- suppressWarnings(format_parameters(model, model_info = info, ...))
   }
 
   attr(params, "ci") <- ci
@@ -58,6 +58,9 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
+
+  # add parameters with value and variable
+  attr(params, "pretty_labels") <- .format_value_labels(params, model)
 
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- tryCatch(insight::find_statistic(model), error = function(e) NULL)
@@ -124,7 +127,11 @@
   } else {
     coef_col <- .find_coefficient_type(info, exponentiate, model)
     attr(params, "coefficient_name") <- coef_col
-    attr(params, "zi_coefficient_name") <- ifelse(isTRUE(exponentiate), "Odds Ratio", "Log-Odds")
+    attr(params, "zi_coefficient_name") <- if (isTRUE(exponentiate)) {
+      "Odds Ratio"
+    } else {
+      "Log-Odds"
+    }
   }
 
 
@@ -151,38 +158,42 @@
 
   # should coefficients be grouped?
   if ("groups" %in% names(dot.arguments)) {
-    attr(params, "coef_groups") <- eval(dot.arguments[["groups"]])
+    attr(params, "coef_groups") <- dot.arguments[["groups"]]
   }
 
   # now comes all the digits stuff...
   if ("digits" %in% names(dot.arguments)) {
-    attr(params, "digits") <- eval(dot.arguments[["digits"]])
+    attr(params, "digits") <- dot.arguments[["digits"]]
   } else {
     attr(params, "digits") <- 2
   }
 
   if ("ci_digits" %in% names(dot.arguments)) {
-    attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
+    attr(params, "ci_digits") <- dot.arguments[["ci_digits"]]
   } else {
     attr(params, "ci_digits") <- 2
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
-    attr(params, "p_digits") <- eval(dot.arguments[["p_digits"]])
+    attr(params, "p_digits") <- dot.arguments[["p_digits"]]
   } else {
     attr(params, "p_digits") <- 3
   }
 
   if ("footer_digits" %in% names(dot.arguments)) {
-    attr(params, "footer_digits") <- eval(dot.arguments[["footer_digits"]])
+    attr(params, "footer_digits") <- dot.arguments[["footer_digits"]]
   } else {
     attr(params, "footer_digits") <- 3
   }
 
   if ("s_value" %in% names(dot.arguments)) {
-    attr(params, "s_value") <- eval(dot.arguments[["s_value"]])
+    attr(params, "s_value") <- dot.arguments[["s_value"]]
   }
 
+  # pd?
+  if (isTRUE(dot.arguments[["pd"]]) && !is.null(params[["p"]])) {
+    params$pd <- bayestestR::p_to_pd(params[["p"]])
+  }
 
   # add CI, and reorder
   if (!"CI" %in% colnames(params) && length(ci) == 1) {
@@ -250,7 +261,8 @@
       if (isTRUE(exponentiate)) {
         if (info$is_exponential && identical(info$link_function, "log")) {
           coef_col <- "Prevalence Ratio"
-        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal ||
+          info$is_multinomial || info$is_categorical) {
           coef_col <- "Odds Ratio"
         } else if (info$is_binomial && !info$is_logit) {
           coef_col <- "Risk Ratio"
@@ -260,7 +272,8 @@
       } else {
         if (info$is_exponential && identical(info$link_function, "log")) {
           coef_col <- "Log-Prevalence"
-        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal ||
+          info$is_multinomial || info$is_categorical) {
           coef_col <- "Log-Odds"
         } else if (info$is_binomial && !info$is_logit) {
           coef_col <- "Log-Risk"
@@ -322,14 +335,13 @@
   attr(params, "model_class") <- class(model)
   cp <- insight::clean_parameters(model)
   clean_params <- cp[cp$Parameter %in% params$Parameter, ]
-  attr(params, "cleaned_parameters") <- stats::setNames(
+
+  named_clean_params <- stats::setNames(
     clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)],
     params$Parameter
   )
-  attr(params, "pretty_names") <- stats::setNames(
-    clean_params$Cleaned_Parameter[match(params$Parameter, clean_params$Parameter)],
-    params$Parameter
-  )
+  attr(params, "cleaned_parameters") <- named_clean_params
+  attr(params, "pretty_names") <- named_clean_params
 
   params
 }
@@ -416,10 +428,10 @@
   if (length(not_allowed)) {
     if (verbose) {
       not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
-      warning(insight::format_message(
+      insight::format_warning(
         sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string),
         sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name)
-      ), call. = FALSE)
+      )
     }
     dots[not_allowed] <- NULL
     if (!length(dots)) {
@@ -435,8 +447,8 @@
 
 .is_model_valid <- function(model) {
   if (missing(model) || is.null(model)) {
-    stop(insight::format_message(
+    insight::format_error(
       "You must provide a model-object. Argument `model` cannot be missing or `NULL`."
-    ), call. = FALSE)
+    )
   }
 }

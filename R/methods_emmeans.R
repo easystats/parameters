@@ -6,11 +6,11 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.emmGrid <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      centrality = "median",
                                      dispersion = FALSE,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      exponentiate = FALSE,
@@ -70,17 +70,17 @@ model_parameters.emmGrid <- function(model,
   if (!is.null(statistic)) {
     names(params) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(params))
   }
-  names(params) <- gsub("Std. Error", "SE", names(params))
-  names(params) <- gsub(estName <- attr(s, "estName"), "Estimate", names(params))
-  names(params) <- gsub("lower.CL", "CI_low", names(params))
-  names(params) <- gsub("upper.CL", "CI_high", names(params))
-  names(params) <- gsub("asymp.LCL", "CI_low", names(params))
-  names(params) <- gsub("asymp.UCL", "CI_high", names(params))
-  names(params) <- gsub("lower.HPD", "CI_low", names(params))
-  names(params) <- gsub("upper.HPD", "CI_high", names(params))
+  names(params) <- gsub("Std. Error", "SE", names(params), fixed = TRUE)
+  names(params) <- gsub(estName <- attr(s, "estName"), "Estimate", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.CL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.CL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.LCL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.UCL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.HPD", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.HPD", "CI_high", names(params), fixed = TRUE)
 
   # check if we have CIs
-  if (!any(grepl("^CI_", colnames(params)))) {
+  if (!any(startsWith(colnames(params), "CI_"))) {
     df_column <- grep("(df|df_error)", colnames(params))
     if (length(df_column) > 0) {
       df <- params[[df_column[1]]]
@@ -108,7 +108,7 @@ model_parameters.emmGrid <- function(model,
   params <- params[order[order %in% names(params)]]
 
   # rename
-  names(params) <- gsub("Estimate", "Coefficient", names(params))
+  names(params) <- gsub("Estimate", "Coefficient", names(params), fixed = TRUE)
 
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
@@ -123,7 +123,7 @@ model_parameters.emmGrid <- function(model,
   }
 
   params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(params, "parameter_names") <- parameter_names
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
@@ -134,7 +134,7 @@ model_parameters.emmGrid <- function(model,
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.emm_list <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       exponentiate = FALSE,
                                       p_adjust = NULL,
                                       verbose = TRUE,
@@ -163,7 +163,7 @@ model_parameters.emm_list <- function(model,
 
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, p_adjust = p_adjust, verbose = verbose, ...)
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -280,7 +280,7 @@ boot_em_df <- function(model) {
 
 #' @rdname p_value
 #' @export
-p_value.emmGrid <- function(model, ci = .95, adjust = "none", ...) {
+p_value.emmGrid <- function(model, ci = 0.95, adjust = "none", ...) {
   if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
     return(boot_em_pval(model, adjust))
   }

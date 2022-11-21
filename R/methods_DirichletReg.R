@@ -2,7 +2,7 @@
 #' @rdname model_parameters.mlm
 #' @export
 model_parameters.DirichletRegModel <- function(model,
-                                               ci = .95,
+                                               ci = 0.95,
                                                bootstrap = FALSE,
                                                iterations = 1000,
                                                component = c("all", "conditional", "precision"),
@@ -32,14 +32,14 @@ model_parameters.DirichletRegModel <- function(model,
   ))
 
   out$Response[is.na(out$Response)] <- ""
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
 
 #' @export
 ci.DirichletRegModel <- function(x,
-                                 ci = .95,
+                                 ci = 0.95,
                                  component = c("all", "conditional", "precision"),
                                  ...) {
   component <- match.arg(component)

@@ -1,5 +1,5 @@
 #' @export
-ci.parameters_standardized <- function(x, ci = .95, verbose = TRUE, ...) {
+ci.parameters_standardized <- function(x, ci = 0.95, verbose = TRUE, ...) {
   se <- attr(x, "standard_error")
 
   if (is.null(se)) {

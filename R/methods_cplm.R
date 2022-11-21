@@ -29,7 +29,7 @@
 #' @inheritParams simulate_model
 #' @export
 model_parameters.zcpglm <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     bootstrap = FALSE,
                                     iterations = 1000,
                                     component = c("all", "conditional", "zi", "zero_inflated"),
@@ -79,7 +79,7 @@ model_parameters.zcpglm <- function(model,
     verbose = verbose,
     ...
   )
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -216,7 +216,7 @@ standard_error.cpglm <- function(model, ...) {
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.cpglmm <- function(model,
-                                    ci = .95,
+                                    ci = 0.95,
                                     ci_method = NULL,
                                     ci_random = NULL,
                                     bootstrap = FALSE,
@@ -232,8 +232,7 @@ model_parameters.cpglmm <- function(model,
                                     ...) {
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message("Argument 'df_method' is deprecated. Please use 'ci_method' instead."), call. = FALSE)
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # p-values, CI and se might be based on different df-methods
@@ -243,7 +242,7 @@ model_parameters.cpglmm <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message("Standardizing coefficients only works for fixed effects of the mixed model."), call. = FALSE)
+      insight::format_warning("Standardizing coefficients only works for fixed effects of the mixed model.")
     }
     effects <- "fixed"
   }
@@ -266,7 +265,7 @@ model_parameters.cpglmm <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
   params

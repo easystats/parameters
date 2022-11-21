@@ -8,6 +8,11 @@
 \usage{
 \method{model_parameters}{htest}(
   model,
+  ci = 0.95,
+  alternative = NULL,
+  bootstrap = FALSE,
+  effectsize_type = NULL,
+  verbose = TRUE,
   cramers_v = NULL,
   phi = NULL,
   standardized_d = NULL,
@@ -19,10 +24,6 @@
   rank_biserial = NULL,
   rank_epsilon_squared = NULL,
   kendalls_w = NULL,
-  ci = 0.95,
-  alternative = NULL,
-  bootstrap = FALSE,
-  verbose = TRUE,
   ...
 )
 
@@ -32,35 +33,6 @@
 }
 \arguments{
 \item{model}{Object of class \code{htest} or \code{pairwise.htest}.}
-
-\item{cramers_v, phi}{Compute Cramer's V or phi as index of effect size.
-Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
-Only applies to objects from \code{chisq.test()}.}
-
-\item{standardized_d}{If \code{TRUE}, compute standardized d as index of
-effect size. Only applies to objects from \code{t.test()}. Calculation of
-\code{d} is based on the t-value (see \code{\link[effectsize:t_to_r]{effectsize::t_to_d()}})
-for details.}
-
-\item{hedges_g}{If \code{TRUE}, compute Hedge's g as index of effect size.
-Only applies to objects from \code{t.test()}.}
-
-\item{omega_squared, eta_squared, epsilon_squared}{Logical, if \code{TRUE},
-returns the non-partial effect size Omega, Eta or Epsilon squared. Only
-applies to objects from \code{oneway.test()}.}
-
-\item{cohens_g}{If \code{TRUE}, compute Cohen's g as index of effect size.
-Only applies to objects from \code{mcnemar.test()}.}
-
-\item{rank_biserial}{If \code{TRUE}, compute the rank-biserial correlation as
-effect size measure. Only applies to objects from \code{wilcox.test()}.}
-
-\item{rank_epsilon_squared}{If \code{TRUE}, compute the rank epsilon squared
-as effect size measure. Only applies to objects from \code{kruskal.test()}.}
-
-\item{kendalls_w}{If \code{TRUE}, compute the Kendall's coefficient of
-concordance as effect size measure. Only applies to objects from
-\code{friedman.test()}.}
 
 \item{ci}{Level of confidence intervals for effect size statistic. Currently
 only applies to objects from \code{chisq.test()} or \code{oneway.test()}.}
@@ -73,9 +45,17 @@ the \href{https://easystats.github.io/effectsize/}{effectsize_CIs vignette}.}
 
 \item{bootstrap}{Should estimates be bootstrapped?}
 
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
+
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w}{Deprecated. Please use \code{effectsize_type}.}
+
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}.}
 
 \item{ci_method}{Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
@@ -93,19 +73,47 @@ A data frame of indices related to the model's parameters.
 \description{
 Parameters of h-tests (correlations, t-tests, chi-squared, ...).
 }
+\details{
+\itemize{
+\item For an object of class \code{htest}, data is extracted via \code{\link[insight:get_data]{insight::get_data()}}, and passed to the relevant function according to:
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default), \code{"hedges_g"}, or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{Chi-squared tests of goodness-of-fit}, depending on \code{type}: \code{"fei"} (default) \code{"cohens_w"}, \code{"pearsons_c"}
+\item A \strong{One-way ANOVA test}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item A \strong{McNemar test} returns \emph{Cohen's g}.
+\item A \strong{Wilcoxon test} depending on \code{type}: returns "\code{rank_biserial}" correlation (default) or one of \code{"p_superiority"}, \code{"vda"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Kruskal-Wallis test} depending on \code{type}: \code{"epsilon"} (default) or \code{"eta"}.
+\item A \strong{Friedman test} returns \emph{Kendall's W}.
+(Where applicable, \code{ci} and \code{alternative} are taken from the \code{htest} if not otherwise provided.)
+}
+\item For an object of class \code{BFBayesFactor}, using \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}},
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default) or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{correlation test} returns \emph{r}.
+\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{proportion test} returns \emph{p}.
+}
+\item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
+}
+
+\strong{For statistical models it is recommended to directly use the listed
+functions, for the full range of options they provide.}
+}
 \examples{
 
 model <- cor.test(mtcars$mpg, mtcars$cyl, method = "pearson")
 model_parameters(model)
 
 model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-model_parameters(model, hedges_g = TRUE)
+model_parameters(model, effectsize_type = "hedges_g")
 
 model <- t.test(mtcars$mpg ~ mtcars$vs)
-model_parameters(model, hedges_g = TRUE)
+model_parameters(model, effectsize_type = "hedges_g")
 
 model <- t.test(iris$Sepal.Width, mu = 1)
-model_parameters(model, standardized_d = TRUE)
+model_parameters(model, effectsize_type = "cohens_d")
 
 data(airquality)
 airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -118,6 +126,6 @@ model <- pairwise.prop.test(smokers, patients)
 model_parameters(model)
 
 model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
-model_parameters(model, cramers_v = "adjusted")
+model_parameters(model, effectsize_type = "cramers_v")
 
 }

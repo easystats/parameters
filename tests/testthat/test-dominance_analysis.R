@@ -1,5 +1,4 @@
-if (requiet("testthat") && requiet("performance") && requiet("domir") &&
-  (R.version$major > 3 | (R.version$major == 3 && R.version$minor >= 5))) {
+if (requiet("testthat") && requiet("performance") && requiet("domir") && getRversion() >= "3.6.0") {
   data(mtcars)
 
   DA_test_model <- lm(mpg ~ vs + cyl + carb, data = mtcars)

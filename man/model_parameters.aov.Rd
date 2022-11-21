@@ -12,63 +12,64 @@
 \usage{
 \method{model_parameters}{aov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{anova}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{aovlist}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{afex_aov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   keep = NULL,
@@ -79,55 +80,58 @@
 
 \method{model_parameters}{anova.rms}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{Anova.mlm}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 
 \method{model_parameters}{maov}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  df_error = NULL,
   type = NULL,
+  df_error = NULL,
   ci = NULL,
   alternative = NULL,
   test = NULL,
   power = FALSE,
+  effectsize_type = NULL,
   keep = NULL,
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  omega_squared = NULL,
+  eta_squared = NULL,
+  epsilon_squared = NULL,
   ...
 )
 }
@@ -136,25 +140,13 @@
 \code{aovlist}, \code{Gam}, \code{\link[=manova]{manova()}}, \code{Anova.mlm},
 \code{afex_aov} or \code{maov}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
-
-\item{eta_squared}{Compute eta squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or
-\code{"adjusted"} (the latter option only for ANOVA-tables from mixed
-models).}
-
-\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can
-be \code{"partial"} (the default, adjusted for effect size) or
-\code{"raw"}.}
+\item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
+ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
+\code{afex_aov}.)}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
-\code{afex_aov}.)}
-
-\item{type}{Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
-ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
 \code{afex_aov}.)}
 
 \item{ci}{Confidence Interval (CI) level for effect sizes
@@ -175,6 +167,10 @@ the multivariate test (that is also given by the \code{print}-method). If
 
 \item{power}{Logical, if \code{TRUE}, adds a column with power for each
 parameter.}
+
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -204,13 +200,53 @@ be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
+
+\item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
+to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. For objects
+of class \code{htest} or \code{BFBayesFactor}, \code{adjust = TRUE} can be used to return
+bias-corrected effect sizes, which is advisable for small samples and large
+tables. See also
+\href{https://easystats.github.io/effectsize/reference/eta_squared.html}{\code{?effectsize::eta_squared}}
+for arguments \code{partial} and \code{generalized};
+\href{https://easystats.github.io/effectsize/reference/phi.html}{\code{?effectsize::phi}}
+for \code{adjust}; and
+\href{https://easystats.github.io/effectsize/reference/oddsratio.html}{\code{?effectsize::oddratio}}
+for \code{log}.}
 }
 \value{
 A data frame of indices related to the model's parameters.
 }
 \description{
 Parameters from ANOVAs
+}
+\details{
+\itemize{
+\item For an object of class \code{htest}, data is extracted via \code{\link[insight:get_data]{insight::get_data()}}, and passed to the relevant function according to:
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default), \code{"hedges_g"}, or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Chi-squared tests of independence} or \strong{Fisher's Exact Test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"tschuprows_t"}, \code{"phi"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{Chi-squared tests of goodness-of-fit}, depending on \code{type}: \code{"fei"} (default) \code{"cohens_w"}, \code{"pearsons_c"}
+\item A \strong{One-way ANOVA test}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item A \strong{McNemar test} returns \emph{Cohen's g}.
+\item A \strong{Wilcoxon test} depending on \code{type}: returns "\code{rank_biserial}" correlation (default) or one of \code{"p_superiority"}, \code{"vda"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{Kruskal-Wallis test} depending on \code{type}: \code{"epsilon"} (default) or \code{"eta"}.
+\item A \strong{Friedman test} returns \emph{Kendall's W}.
+(Where applicable, \code{ci} and \code{alternative} are taken from the \code{htest} if not otherwise provided.)
+}
+\item For an object of class \code{BFBayesFactor}, using \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}},
+\itemize{
+\item A \strong{t-test} depending on \code{type}: \code{"cohens_d"} (default) or one of \code{"p_superiority"}, \code{"u1"}, \code{"u2"}, \code{"u3"}, \code{"overlap"}.
+\item A \strong{correlation test} returns \emph{r}.
+\item A \strong{contingency table test}, depending on \code{type}: \code{"cramers_v"} (default), \code{"phi"}, \code{"tschuprows_t"}, \code{"cohens_w"}, \code{"pearsons_c"}, \code{"cohens_h"}, \code{"oddsratio"}, or \code{"riskratio"}.
+\item A \strong{proportion test} returns \emph{p}.
+}
+\item Objects of class \code{anova}, \code{aov}, \code{aovlist} or \code{afex_aov}, depending on \code{type}: \code{"eta"} (default), \code{"omega"} or \code{"epsilon"} -squared, \code{"f"}, or \code{"f2"}.
+\item Other objects are passed to \code{\link[parameters:standardize_parameters]{parameters::standardize_parameters()}}.
+}
+
+\strong{For statistical models it is recommended to directly use the listed
+functions, for the full range of options they provide.}
 }
 \note{
 For ANOVA-tables from mixed models (i.e. \code{anova(lmer())}), only
@@ -235,8 +271,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
 
   model_parameters(
     model,
-    omega_squared = "partial",
-    eta_squared = "partial",
+    effectsize_type = c("omega", "eta"),
     ci = .9
   )
 
@@ -244,9 +279,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
   model_parameters(model)
   model_parameters(
     model,
-    omega_squared = "partial",
-    eta_squared = "partial",
-    epsilon_squared = "partial"
+    effectsize_type = c("omega", "eta", "epsilon")
   )
 
   model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -265,7 +298,7 @@ if (requireNamespace("effectsize", quietly = TRUE)) {
       # parameters table including effect sizes
       model_parameters(
         model,
-        eta_squared = "partial",
+        effectsize_type = "eta",
         ci = .9,
         df_error = dof_satterthwaite(mm)[2:3]
       )

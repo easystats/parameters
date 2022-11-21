@@ -24,7 +24,7 @@ model_parameters.befa <- function(model,
                                   sort = FALSE,
                                   centrality = "median",
                                   dispersion = FALSE,
-                                  ci = .95,
+                                  ci = 0.95,
                                   ci_method = "eti",
                                   test = NULL,
                                   verbose = TRUE,
@@ -36,7 +36,7 @@ model_parameters.befa <- function(model,
   }
 
   loadings <- as.data.frame(model$alpha)
-  names(loadings) <- gsub("alpha:", "", names(loadings))
+  names(loadings) <- gsub("alpha:", "", names(loadings), fixed = TRUE)
   loadings <- stats::reshape(
     loadings,
     direction = "long",
@@ -49,7 +49,7 @@ model_parameters.befa <- function(model,
   )
 
   components <- as.data.frame(model$dedic)
-  names(components) <- gsub("dedic:", "", names(components))
+  names(components) <- gsub("dedic:", "", names(components), fixed = TRUE)
   components <- stats::reshape(
     components,
     direction = "long",

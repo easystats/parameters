@@ -9,9 +9,10 @@
 #'   be retrieved from the [cluster_analysis()] function.
 #' @param ... Other arguments to be passed to or from.
 #'
-#' @seealso [n_clusters()] to determine the number of clusters to extract,
-#' [cluster_analysis()] to compute a cluster analysis and [check_clusterstructure()]
-#' to check suitability of data for clustering.
+#' @seealso [`n_clusters()`] to determine the number of clusters to extract,
+#' [`cluster_analysis()`] to compute a cluster analysis and
+#' [`performance::check_clusterstructure()`] to check suitability of data for
+#' clustering.
 #'
 #' @examples
 #' if (requireNamespace("MASS", quietly = TRUE)) {
@@ -39,7 +40,7 @@ cluster_discrimination.cluster_analysis <- function(x, cluster_groups = NULL, ..
 #' @export
 cluster_discrimination.default <- function(x, cluster_groups = NULL, ...) {
   if (is.null(cluster_groups)) {
-    stop("Please provide cluster assignments via 'cluster_groups'.", call. = FALSE)
+    insight::format_error("Please provide cluster assignments via `cluster_groups`.")
   }
 
   x <- stats::na.omit(x)

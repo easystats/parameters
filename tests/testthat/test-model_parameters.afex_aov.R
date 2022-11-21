@@ -5,8 +5,8 @@ if (requiet("testthat") &&
   m_between <- suppressWarnings(aov_car(value ~ treatment * gender + Error(id), data = obk.long))
   m_within <- suppressWarnings(aov_car(value ~ Error(id / (phase * hour)), data = obk.long))
 
-  mp1 <- model_parameters(m_between)
-  mp2 <- model_parameters(m_within)
+  mp1 <- model_parameters(m_between, verbose = FALSE)
+  mp2 <- model_parameters(m_within, verbose = FALSE)
 
   test_that("afex_aov", {
     expect_equal(c(nrow(mp1), ncol(mp1)), c(5, 7))

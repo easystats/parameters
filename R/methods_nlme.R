@@ -9,7 +9,7 @@ model_parameters.lme <- model_parameters.merMod
 
 #' @export
 ci.lme <- function(x,
-                   ci = .95,
+                   ci = 0.95,
                    vcov = NULL,
                    vcov_args = NULL,
                    method = "wald",

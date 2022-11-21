@@ -179,3 +179,187 @@ similar to a Glass' delta.
 ```{r}
 model_parameters(model, standardize = "smart")
 ```
+
+## Methods Comparison
+
+We will use the "refit" method as the baseline. We will then compute the
+differences between these standardized parameters and the ones provided by the
+other functions. The **bigger the (absolute) number, the worse it is**.
+
+> **SPOILER ALERT: the standardization implemented in `effectsize` is the
+most accurate and the most flexible.**
+
+### Convenience function
+
+```{r message=FALSE, warning=FALSE}
+library(effectsize)
+library(lm.beta)
+library(MuMIn)
+
+comparison <- function(model, robust = FALSE) {
+  out <- standardize_parameters(model, method = "refit", robust=robust)[1:2]
+  out$posthoc <- tryCatch(
+    out[, 2] - standardize_parameters(model, method="posthoc", robust=robust)[, 2],
+    error = function(error_condition) "Error" 
+  ) 
+ 
+  out$basic <- tryCatch(
+    out[, 2] - standardize_parameters(model, method="basic", robust=robust)[, 2] ,
+    error = function(error_condition) "Error" 
+  )
+
+  out$lm.beta <- tryCatch( 
+    out[, 2] - lm.beta::lm.beta(model)$standardized.coefficients,
+    error = function(error_condition) "Error",
+    warning = function(warning_condition) "Error"
+  )
+
+  out$MuMIn <- tryCatch(
+    out[, 2] - MuMIn::std.coef(model, partial.sd = FALSE)[, 1],
+    error = function(error_condition) "Error"
+  )
+```
+
+### Data
+
+```{r message=FALSE, warning=FALSE} 
+  data <- iris 
+  data$Group_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, "High", "Low"))
+  data$Binary_Sepal.Width <- as.factor(ifelse(data$Sepal.Width > 3, 1,
+0))
+
+summary(data) 
+```
+
+### Models with only numeric predictors 
+
+#### Linear Model
+
+```{r message=FALSE, warning=FALSE} 
+  model <- lm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data) 
+  comparison(model) 
+```
+
+#### Linear Mixed Model
+
+```{r message=FALSE, warning=FALSE} 
+  library(lme4)
+  model <- lme4::lmer(Sepal.Length ~ Petal.Width + Sepal.Width + (1|Species),
+                      data=data) 
+  comparison(model) 
+```
+
+#### Bayesian Models
+
+```{r message=FALSE, warning=FALSE} 
+library(rstanarm)
+
+model <- stan_glm(Sepal.Length ~ Petal.Width + Sepal.Width, data=data)
+comparison(model) 
+```
+
+For these simple models, **all methods return results equal to the "refit"
+method** (although the other packages fail).
+
+#### Transformation
+
+```{r message=FALSE, warning=FALSE} 
+model <- lm(Sepal.Length ~ poly(Petal.Width, 2) + poly(Sepal.Width, 2), data=data) 
+comparison(model) 
+```
+
+When transformation are involved (e.g., polynomial transformations), **the
+basic method becomes very unreliable**.
+
+```{r message=FALSE, warning=FALSE} 
+model <- lm(Sepal.Length ~ Petal.Width + Group_Sepal.Width, data=data) 
+comparison(model) 
+
+```
+
+#### Logistic Model
+
+```{r message=FALSE, warning=FALSE} 
+model <- glm(Binary_Sepal.Width ~ Petal.Width + Species, data=data, family="binomial")
+comparison(model) 
+```
+
+#### Linear Mixed Model
+
+```{r message=FALSE, warning=FALSE} 
+library(lme4)
+
+model <- lme4::lmer(Sepal.Length ~ Petal.Length + Group_Sepal.Width + (1|Species),
+                    data=data) 
+comparison(model) 
+```
+
+#### Bayesian Models
+
+```{r message=FALSE, warning=FALSE} 
+library(rstanarm)
+
+model <- stan_lmer(Sepal.Length ~ Petal.Width + Group_Sepal.Width +
+(1|Species), 
+data=data) 
+comparison(model) 
+```
+
+When factors are involved, the basic method (that standardizes the numeric
+transformation of factors) give again different results. 
+
+### Models with interactions
+
+Long story short, coeffcient obtained via **posthoc** standardization
+(without refitting the model) go berserk when interactions are involved.
+However, **this is "normal"**: a regression model estimates coefficient between
+two variables when the other predictors are at 0 (are *fixed* at 0, that people
+interpret as *"adjusted for"*). When a standardized data is passed (in the
+*refit* method), the effects and interactions are estimated at the **means** of
+the other predictors (because 0 is the mean for a standardized variable).
+Whereas in posthoc standardization, this coefficient correspond to something
+different (because the 0 corresponds to something different in standardzed and
+non-standardized data). In other words, when it comes to interaction, passing
+standardized data results in a different model, which coefficient have an
+intrinsically different meaning from unstandardized data. And as [for
+now](https://github.com/easystats/parameters/issues/708), we are unable to
+retrieve one from another.
+
+#### Between continuous
+
+```{r message=FALSE, warning=FALSE} 
+ model <- lm(Sepal.Length ~
+Petal.Width * Sepal.Width, data=data) 
+ comparison(model) 
+ ```
+-->
+
+#### Between factors
+
+```{r message=FALSE, warning=FALSE} 
+ model <- lm(Sepal.Length ~
+Species * Group_Sepal.Width, data=data) 
+ comparison(model) 
+ ```
+-->
+
+#### Between factors and continuous
+
+```{r message=FALSE, warning=FALSE} 
+ model <- lm(Sepal.Length ~
+Petal.Width * Group_Sepal.Width, data=data) 
+ comparison(model) 
+
+```
+
+```{r message=FALSE, warning=FALSE} 
+ model <- lm(Sepal.Length ~
+Group_Sepal.Width * Petal.Width, data=data) 
+ comparison(model) 
+
+```
+
+## Conclusion
+
+Use `refit` if possible, but if no interactions, can use `posthoc` or
+`smart`.

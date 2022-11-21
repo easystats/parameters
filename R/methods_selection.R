@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.selection <- function(model,
-                                       ci = .95,
+                                       ci = 0.95,
                                        component = c("all", "selection", "outcome", "auxiliary"),
                                        bootstrap = FALSE,
                                        iterations = 1000,
@@ -24,7 +24,7 @@ model_parameters.selection <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -81,10 +81,10 @@ standard_error.selection <- function(model, component = c("all", "selection", "o
 #' @export
 simulate_model.selection <- function(model, iterations = 1000, component = c("all", "selection", "outcome", "auxiliary"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component, effects = "fixed")
+  out <- .simulate_model(model, iterations, component = component, effects = "fixed", ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

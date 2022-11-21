@@ -39,7 +39,7 @@
 #' are ...'.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details `n_components` is actually an alias for `n_factors`, with
+#' @details `n_components()` is actually an alias for `n_factors()`, with
 #'   different defaults for the function arguments.
 #'
 #' @note There is also a
@@ -131,12 +131,16 @@ n_factors <- function(x,
       nobs <- x
       package <- package[!package %in% c("pcdimension", "PCDimension")]
     } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
-      stop("Please input the correlation matrix via the `cor = ...` argument and
-           the number of rows / observations via the first argument.")
+      insight::format_error(
+        "Please input the correlation matrix via the `cor = ...` argument and the number of rows / observations via the first argument."
+      )
     }
   } else {
     nobs <- nrow(x)
   }
+
+  # Get only numeric
+  x <- x[vapply(x, is.numeric, logical(1))]
 
   # Correlation matrix
   if (is.null(cor)) {
@@ -335,7 +339,9 @@ n_factors <- function(x,
   )
 
   attr(out, "summary") <- by_factors
-  attr(out, "n") <- min(as.numeric(as.character(by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")])))
+  attr(out, "n") <- min(as.numeric(as.character(
+    by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")]
+  )))
 
   class(out) <- c("n_factors", "see_n_factors", class(out))
   out
@@ -545,8 +551,12 @@ print.n_clusters <- print.n_factors
 
 
   # Replace with own correlation matrix
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim)))
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim)))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(
+    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim
+  )))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(
+    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim
+  )))
 
   data.frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
@@ -754,8 +764,11 @@ print.n_clusters <- print.n_factors
 
   data.frame(
     n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
-    Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)", "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)", "Auer-Gervini (T)", "AuerGervini (CPT)"),
-    Family = "PCDimension"
+    Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
+               "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
+               "Auer-Gervini (T)", "AuerGervini (CPT)"),
+    Family = "PCDimension",
+    stringsAsFactors = FALSE
   )
 }
 
@@ -774,11 +787,13 @@ print.n_clusters <- print.n_factors
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
   if (length(which(lambda < 0)) > 0) {
-    stop("These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted.", call. = FALSE)
+    insight::format_error(
+      "These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted."
+    )
   }
 
   minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
-  maxPar <- c(max(lambda), stats::lm(lambda ~ I(length(lambda):1))$coef[2])
+  maxPar <- c(max(lambda), stats::lm(lambda ~ I(rev(seq_along(lambda))))$coef[2])
 
 
   n <- N

@@ -49,12 +49,10 @@ The different methods available are described below:
 \subsection{Supervised Methods}{
 \itemize{
 \item \strong{PCA}: See \code{\link[=principal_components]{principal_components()}}.
-
 \item \strong{cMDS / PCoA}: Classical Multidimensional Scaling (cMDS) takes a
 set of dissimilarities (i.e., a distance matrix) and returns a set of points
 such that the distances between the points are approximately equal to the
 dissimilarities.
-
 \item \strong{DRR}: Dimensionality Reduction via Regression (DRR) is a very
 recent technique extending PCA (\emph{Laparra et al., 2015}). Starting from a
 rotated PCA, it predicts redundant information from the remaining components
@@ -63,7 +61,6 @@ performing DRR are avoidance of multicollinearity between predictors and
 overfitting mitigation. DRR tends to perform well when the first principal
 component is enough to explain most of the variation in the predictors.
 Requires the \strong{DRR} package to be installed.
-
 \item \strong{ICA}: Performs an Independent Component Analysis using the
 FastICA algorithm. Contrary to PCA, which attempts to find uncorrelated
 sources (through least squares minimization), ICA attempts to find
@@ -72,8 +69,9 @@ independent sources, i.e., the source space that maximizes the
 source, which makes it a poor tool for dimensionality reduction. Requires the
 \strong{fastICA} package to be installed.
 }
-}
+
 See also \href{https://easystats.github.io/parameters/articles/parameters_reduction.html}{package vignette}.
+}
 }
 \examples{
 data(iris)

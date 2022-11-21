@@ -17,7 +17,8 @@ format_parameters(model, ...)
 \item{brackets}{A character vector of length two, indicating the opening and closing brackets.}
 }
 \value{
-A (names) character vector with formatted parameter names. The value names refer to the original names of the coefficients.
+A (names) character vector with formatted parameter names. The value
+names refer to the original names of the coefficients.
 }
 \description{
 This functions formats the names of model parameters (coefficients)

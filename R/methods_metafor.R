@@ -48,7 +48,7 @@
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters.rma <- function(model,
-                                 ci = .95,
+                                 ci = 0.95,
                                  bootstrap = FALSE,
                                  iterations = 1000,
                                  standardize = NULL,
@@ -147,7 +147,7 @@ model_parameters.rma <- function(model,
 
   # no df
   out$df_error <- NULL
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "measure") <- model$measure
 
   if (!"Method" %in% names(out)) {
@@ -171,7 +171,7 @@ p_value.rma <- function(model, ...) {
 
 
 #' @export
-ci.rma <- function(x, ci = .95, ...) {
+ci.rma <- function(x, ci = 0.95, ...) {
   params <- insight::get_parameters(x)
   out <- tryCatch(
     {

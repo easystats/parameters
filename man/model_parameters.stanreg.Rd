@@ -23,7 +23,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -41,7 +41,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   component = "all",
@@ -61,7 +61,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -79,7 +79,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -104,7 +104,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -122,7 +122,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -140,7 +140,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   keep = NULL,
@@ -155,7 +155,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   diagnostic = c("ESS", "Rhat"),
@@ -175,7 +175,7 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   bf_prior = NULL,
@@ -264,9 +264,9 @@ names.}
 \item{...}{Currently not used.}
 
 \item{component}{Which type of parameters to return, such as parameters for the
-conditional model, the zero-inflated part of the model, the dispersion
+conditional model, the zero-inflation part of the model, the dispersion
 term, or other auxiliary parameters be returned? Applies to models with
-zero-inflated and/or dispersion formula, or if parameters such as \code{sigma}
+zero-inflation and/or dispersion formula, or if parameters such as \code{sigma}
 should be included. May be abbreviated. Note that the \emph{conditional}
 component is also called \emph{count} or \emph{mean} component, depending on the
 model. There are three convenient shortcuts: \code{component = "all"} returns
@@ -427,7 +427,7 @@ to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 
 \code{"profile"}
 \itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr}, \code{merMod} or \code{glmmTMB}.
 CIs computed by \emph{profiling the likelihood curve for a parameter}, using
 linear interpolation to find where likelihood ratio equals a critical value;
 p-values computed using the Wald method with a \emph{normal-distribution} (note:

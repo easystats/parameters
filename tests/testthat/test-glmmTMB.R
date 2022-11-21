@@ -1,10 +1,11 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+options(parameters_exponentiate = FALSE)
 
 if (.runThisTest &&
-  getRversion() >= "3.6.0" &&
   requiet("testthat") &&
   requiet("parameters") &&
-  requiet("glmmTMB")) {
+  requiet("glmmTMB") &&
+  getRversion() >= "4.0.0") {
   data("fish")
   data("Salamanders")
 
@@ -37,7 +38,7 @@ if (.runThisTest &&
 
   m3 <- suppressWarnings(glmmTMB(
     count ~ spp + mined + (1 | site),
-    ziformula =  ~ spp + mined,
+    ziformula = ~ spp + mined,
     family = nbinom2,
     data = Salamanders
   ))
@@ -409,144 +410,33 @@ if (.runThisTest &&
 
   # proper printing ---------------------
 
-  if (win_os && getRversion() <= "4.2.0") {
+  if (win_os && getRversion() < "4.3.0") {
     test_that("print-model_parameters glmmTMB", {
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-5],
-        c(
-          "# Fixed Effects",
-          "",
-          "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
-          "----------------------------------------------------------------",
-          "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001",
-          "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 "
-        )
-      )
+      expect_snapshot(out[-5])
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional")
-      out <- utils::capture.output(print(mp))
-      expect_equal(
-        out,
-        c(
-          "# Random Effects",
-          "",
-          "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
-          "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
-        )
-      )
+      expect_snapshot(print(mp))
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "fixed", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-6],
-        c(
-          "# Fixed Effects (Zero-Inflated Model)",
-          "",
-          "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
-          "-------------------------------------------------------------",
-          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
-          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663"
-        )
-      )
+      expect_snapshot(out[-6])
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated")
-      out <- utils::capture.output(print(mp))
-      expect_equal(
-        out,
-        c(
-          "# Random Effects (Zero-Inflated Model)",
-          "",
-          "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
-          "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
-        )
-      )
+      expect_snapshot(print(mp))
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional")
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-5],
-        c(
-          "# Fixed Effects",
-          "",
-          "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
-          "----------------------------------------------------------------",
-          "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001",
-          "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 ",
-          "",
-          "# Random Effects",
-          "",
-          "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
-          "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
-        )
-      )
+      expect_snapshot(out[-5])
 
       mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated")
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-6],
-        c(
-          "# Fixed Effects (Zero-Inflated Model)",
-          "",
-          "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
-          "-------------------------------------------------------------",
-          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
-          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663",
-          "",
-          "# Random Effects (Zero-Inflated Model)",
-          "",
-          "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
-          "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
-        )
-      )
+      expect_snapshot(out[-6])
 
       mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE)
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-c(5, 14)],
-        c(
-          "# Fixed Effects (Count Model)",
-          "",
-          "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
-          "----------------------------------------------------------------",
-          "child       |    -1.09 | 0.10 | [-1.28, -0.90] | -11.09 | < .001",
-          "camper [1]  |     0.27 | 0.10 | [ 0.07,  0.47] |   2.70 | 0.007 ",
-          "",
-          "# Fixed Effects (Zero-Inflated Model)",
-          "",
-          "Parameter   | Log-Odds |   SE |        95% CI |     z |     p",
-          "-------------------------------------------------------------",
-          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
-          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663",
-          "",
-          "# Random Effects Variances",
-          "",
-          "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
-          "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
-          "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]",
-          "",
-          "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |        95% CI",
-          "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
-          "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
-        )
-      )
+      expect_snapshot(out[-c(5, 14)])
     })
 
 
@@ -555,75 +445,11 @@ if (.runThisTest &&
     test_that("print-model_parameters glmmTMB digits", {
       mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
-      expect_equal(
-        out[-c(5, 14)],
-        c(
-          "# Fixed Effects (Count Model)",
-          "",
-          "Parameter   | Log-Mean |     SE |               95% CI |        z |      p",
-          "--------------------------------------------------------------------------",
-          "child       |  -1.0875 | 0.0981 | [-1.27966, -0.89529] | -11.0903 | < .001",
-          "camper [1]  |   0.2723 | 0.1009 | [ 0.07460,  0.46999] |   2.6996 | 0.007 ",
-          "",
-          "# Fixed Effects (Zero-Inflated Model)",
-          "",
-          "Parameter   | Log-Odds |     SE |              95% CI |       z |     p",
-          "-----------------------------------------------------------------------",
-          "(Intercept) |   1.8896 | 0.6646 | [ 0.58714, 3.19213] |  2.8435 | 0.004",
-          "camper [1]  |  -0.1701 | 0.3898 | [-0.93409, 0.59395] | -0.4363 | 0.663",
-          "",
-          "# Random Effects Variances",
-          "",
-          "Parameter                   | Coefficient |              95% CI",
-          "---------------------------------------------------------------",
-          "SD (Intercept: persons)     |      3.4056 | [ 1.67398, 6.92858]",
-          "SD (xb: persons)            |      1.2132 | [ 0.60210, 2.44440]",
-          "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]",
-          "",
-          "# Random Effects (Zero-Inflated Model)",
-          "",
-          "Parameter                   | Coefficient |              95% CI",
-          "---------------------------------------------------------------",
-          "SD (Intercept: persons)     |      2.7358 | [ 1.16473, 6.42622]",
-          "SD (zg: persons)            |      1.5683 | [ 0.64351, 3.82225]",
-          "Cor (Intercept~zg: persons) |      1.0000 | [-1.00000, 1.00000]"
-        )
-      )
+      expect_snapshot(out[-c(5, 14)])
 
       mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE, digits = 4, ci_digits = 5)
       out <- utils::capture.output(print(mp))
-      expect_equal(
-        out[-c(5, 14)],
-        c(
-          "# Fixed Effects (Count Model)",
-          "",
-          "Parameter   | Log-Mean |     SE |               95% CI |        z |      p",
-          "--------------------------------------------------------------------------",
-          "child       |  -1.0875 | 0.0981 | [-1.27966, -0.89529] | -11.0903 | < .001",
-          "camper [1]  |   0.2723 | 0.1009 | [ 0.07460,  0.46999] |   2.6996 | 0.007 ",
-          "",
-          "# Fixed Effects (Zero-Inflated Model)",
-          "",
-          "Parameter   | Log-Odds |     SE |              95% CI |       z |     p",
-          "-----------------------------------------------------------------------",
-          "(Intercept) |   1.8896 | 0.6646 | [ 0.58714, 3.19213] |  2.8435 | 0.004",
-          "camper [1]  |  -0.1701 | 0.3898 | [-0.93409, 0.59395] | -0.4363 | 0.663",
-          "",
-          "# Random Effects Variances",
-          "",
-          "Parameter                   | Coefficient |              95% CI",
-          "---------------------------------------------------------------",
-          "SD (Intercept: persons)     |      3.4056 | [ 1.67398, 6.92858]",
-          "SD (xb: persons)            |      1.2132 | [ 0.60210, 2.44440]",
-          "Cor (Intercept~xb: persons) |     -1.0000 | [-1.00000, 1.00000]",
-          "",
-          "# Random Effects (Zero-Inflated Model)", "", "Parameter                   | Coefficient |              95% CI",
-          "---------------------------------------------------------------",
-          "SD (Intercept: persons)     |      2.7358 | [ 1.16473, 6.42622]",
-          "SD (zg: persons)            |      1.5683 | [ 0.64351, 3.82225]",
-          "Cor (Intercept~zg: persons) |      1.0000 | [-1.00000, 1.00000]"
-        )
-      )
+      expect_snapshot(out[-c(5, 14)])
     })
 
 
@@ -648,59 +474,10 @@ if (.runThisTest &&
     if (!is.null(model_pr)) {
       test_that("print-model_parameters glmmTMB CI alignment", {
         mp <- model_parameters(model_pr, effects = "random", component = "all", ci_random = TRUE)
-        out <- utils::capture.output(print(mp))
-        expect_equal(
-          out,
-          c(
-            "# Random Effects: conditional",
-            "",
-            "Parameter                           | Coefficient |       95% CI",
-            "----------------------------------------------------------------",
-            "SD (Intercept: Session:Participant) |        0.27 | [0.08, 0.87]",
-            "SD (Intercept: Participant)         |        0.38 | [0.16, 0.92]",
-            "",
-            "# Random Effects: zero_inflated",
-            "",
-            "Parameter                           | Coefficient |       95% CI",
-            "----------------------------------------------------------------",
-            "SD (Intercept: Session:Participant) |        0.69 | [0.40, 1.19]",
-            "SD (Intercept: Participant)         |        2.39 | [1.25, 4.57]"
-          )
-        )
+        expect_snapshot(print(mp))
+
         mp <- model_parameters(model_pr, effects = "fixed", component = "all")
-        out <- utils::capture.output(print(mp))
-        expect_equal(
-          out,
-          c(
-            "# Fixed Effects",
-            "",
-            "Parameter          | Log-Mean |   SE |        95% CI |     z |      p",
-            "---------------------------------------------------------------------",
-            "(Intercept)        |     2.12 | 0.30 | [ 1.53, 2.71] |  7.05 | < .001",
-            "Surface [Lingual]  |     0.01 | 0.29 | [-0.56, 0.58] |  0.04 | 0.971 ",
-            "Surface [Occlusal] |     0.54 | 0.22 | [ 0.10, 0.98] |  2.43 | 0.015 ",
-            "Side [Anterior]    |     0.04 | 0.32 | [-0.58, 0.66] |  0.14 | 0.889 ",
-            "Side [Left]        |    -0.04 | 0.20 | [-0.44, 0.37] | -0.17 | 0.862 ",
-            "Jaw [Maxillar]     |    -0.10 | 0.21 | [-0.51, 0.30] | -0.51 | 0.612 ",
-            "",
-            "# Zero-Inflated",
-            "",
-            "Parameter          | Log-Odds |   SE |         95% CI |     z |      p",
-            "----------------------------------------------------------------------",
-            "(Intercept)        |     4.87 | 0.93 | [ 3.04,  6.69] |  5.23 | < .001",
-            "Surface [Lingual]  |     0.93 | 0.34 | [ 0.27,  1.60] |  2.75 | 0.006 ",
-            "Surface [Occlusal] |    -1.01 | 0.29 | [-1.59, -0.44] | -3.45 | < .001",
-            "Side [Anterior]    |    -0.20 | 0.37 | [-0.93,  0.52] | -0.55 | 0.583 ",
-            "Side [Left]        |    -0.38 | 0.27 | [-0.91,  0.14] | -1.44 | 0.151 ",
-            "Jaw [Maxillar]     |     0.59 | 0.24 | [ 0.11,  1.07] |  2.42 | 0.016 ",
-            "",
-            "# Dispersion",
-            "",
-            "Parameter   | Coefficient |       95% CI",
-            "----------------------------------------",
-            "(Intercept) |        2.06 | [1.30, 3.27]"
-          )
-        )
+        expect_snapshot(print(mp))
       })
     }
   }
@@ -744,82 +521,15 @@ if (.runThisTest &&
   })
 
   test_that("print-model_parameters", {
-    out <- utils::capture.output(print(model_parameters(m1, effects = "fixed")))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
-        "----------------------------------------------------------------",
-        "(Intercept) |     1.26 | 0.48 | [ 0.33,  2.19] |   2.66 | 0.008 ",
-        "child       |    -1.14 | 0.09 | [-1.32, -0.96] | -12.27 | < .001",
-        "camper [1]  |     0.73 | 0.09 | [ 0.55,  0.92] |   7.85 | < .001",
-        "",
-        "# Zero-Inflated",
-        "",
-        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
-        "---------------------------------------------------------------",
-        "(Intercept) |    -0.39 | 0.65 | [-1.67,  0.89] | -0.60 | 0.551 ",
-        "child       |     2.05 | 0.31 | [ 1.45,  2.66] |  6.63 | < .001",
-        "camper [1]  |    -1.01 | 0.32 | [-1.64, -0.37] | -3.12 | 0.002 "
-      )
-    )
+    mp <- model_parameters(m1, effects = "fixed")
+    expect_snapshot(print(mp))
 
-    out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", exponentiate = TRUE)))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   |  IRR |   SE |       95% CI |      z |      p",
-        "----------------------------------------------------------",
-        "(Intercept) | 3.54 | 1.68 | [1.39, 8.98] |   2.66 | 0.008 ",
-        "child       | 0.32 | 0.03 | [0.27, 0.38] | -12.27 | < .001",
-        "camper [1]  | 2.08 | 0.19 | [1.73, 2.50] |   7.85 | < .001",
-        "",
-        "# Zero-Inflated",
-        "",
-        "Parameter   | Odds Ratio |   SE |        95% CI |     z |      p",
-        "----------------------------------------------------------------",
-        "(Intercept) |       0.68 | 0.44 | [0.19,  2.43] | -0.60 | 0.551 ",
-        "child       |       7.80 | 2.42 | [4.25, 14.32] |  6.63 | < .001",
-        "camper [1]  |       0.36 | 0.12 | [0.19,  0.69] | -3.12 | 0.002 "
-      )
-    )
+    mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE)
+    expect_snapshot(print(mp))
 
-    out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects (Count Model)",
-        "",
-        "Parameter   | Log-Mean |   SE |         95% CI |      z |      p",
-        "----------------------------------------------------------------",
-        "(Intercept) |     1.26 | 0.48 | [ 0.33,  2.19] |   2.66 | 0.008 ",
-        "child       |    -1.14 | 0.09 | [-1.32, -0.96] | -12.27 | < .001",
-        "camper [1]  |     0.73 | 0.09 | [ 0.55,  0.92] |   7.85 | < .001",
-        "",
-        "# Fixed Effects (Zero-Inflated Model)",
-        "",
-        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
-        "---------------------------------------------------------------",
-        "(Intercept) |    -0.39 | 0.65 | [-1.67,  0.89] | -0.60 | 0.551 ",
-        "child       |     2.05 | 0.31 | [ 1.45,  2.66] |  6.63 | < .001",
-        "camper [1]  |    -1.01 | 0.32 | [-1.64, -0.37] | -3.12 | 0.002 ",
-        "",
-        "# Random Effects Variances",
-        "",
-        "Parameter               | Coefficient |       95% CI",
-        "----------------------------------------------------",
-        "SD (Intercept: persons) |        0.93 | [0.46, 1.89]",
-        "",
-        "# Random Effects (Zero-Inflated Model)",
-        "",
-        "Parameter               | Coefficient |       95% CI",
-        "----------------------------------------------------",
-        "SD (Intercept: persons) |        1.17 | [0.54, 2.57]"
-      )
-    )
+    mp <- model_parameters(m1, effects = "all")
+    expect_snapshot(print(mp))
   })
 }
+
+options(parameters_exponentiate = NULL)

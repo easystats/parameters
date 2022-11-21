@@ -26,18 +26,18 @@
 
   if (isTRUE(standardize)) {
     if (verbose) {
-      warning(insight::format_message(
-        "'standardize' must be on of 'refit', 'posthoc', 'basic', 'smart' or 'pseudo'."
-      ), call. = FALSE)
+      insight::format_warning(
+        "`standardize` must be on of \"refit\", \"posthoc\", \"basic\", \"smart\" or \"pseudo\"."
+      )
     }
     standardize <- NULL
   }
 
   if (!is.null(standardize) && !requireNamespace("datawizard", quietly = TRUE)) {
     if (verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Package 'datawizard' required to calculate standardized coefficients. Please install it."
-      ), call. = FALSE)
+      )
     }
     standardize <- NULL
   }
@@ -221,12 +221,12 @@
   if ("Statistic" %in% names(parameters)) {
     stat_type <- attr(statistic, "statistic", exact = TRUE)
     if (!is.null(stat_type)) {
-      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters))
-      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters))
+      names(parameters) <- gsub("Statistic", gsub("(-|\\s)statistic", "", stat_type), names(parameters), fixed = TRUE)
+      names(parameters) <- gsub("chi-squared", "Chi2", names(parameters), fixed = TRUE)
     }
   }
   names(parameters) <- gsub("(c|C)hisq", "Chi2", names(parameters))
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
 
 
   # ==== add intercept groups for ordinal models
@@ -371,9 +371,9 @@
   if (!is.null(keep) && length(keep) > 1) {
     keep <- paste0("(", paste0(keep, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(
-        sprintf("The 'keep' argument has more than 1 element. Merging into following regular expression: '%s'.", keep)
-      ))
+      insight::format_alert(
+        sprintf("The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.", keep)
+      )
     }
   }
 
@@ -381,9 +381,9 @@
   if (!is.null(drop) && length(drop) > 1) {
     drop <- paste0("(", paste0(drop, collapse = "|"), ")")
     if (verbose) {
-      message(insight::format_message(
-        sprintf("The 'drop' argument has more than 1 element. Merging into following regular expression: '%s'.", drop)
-      ))
+      insight::format_alert(
+        sprintf("The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.", drop)
+      )
     }
   }
 
@@ -413,7 +413,9 @@
 
   if (nrow(out) == 0) {
     if (verbose) {
-      warning(insight::format_message("The pattern defined in the 'keep' (and 'drop') arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."), call. = FALSE)
+      insight::format_warning(
+        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."
+      )
     }
     return(params)
   }
@@ -427,7 +429,7 @@
 
 #' @keywords internal
 .extract_parameters_mixed <- function(model,
-                                      ci = .95,
+                                      ci = 0.95,
                                       ci_method = "wald",
                                       standardize = NULL,
                                       p_adjust = NULL,
@@ -594,11 +596,11 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters))
-  names(parameters) <- gsub("Std. Error", "SE", names(parameters))
-  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters))
-  names(parameters) <- gsub("t value", "t", names(parameters))
-  names(parameters) <- gsub("z value", "z", names(parameters))
+  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Std. Error", "SE", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("t value", "t", names(parameters), fixed = TRUE)
+  names(parameters) <- gsub("z value", "z", names(parameters), fixed = TRUE)
 
   # filter parameters, if requested
   if (!is.null(keep_parameters) || !is.null(drop_parameters)) {
@@ -726,9 +728,9 @@
 .extract_parameters_bayesian <- function(model,
                                          centrality = "median",
                                          dispersion = FALSE,
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "eti",
-                                         test = c("pd", "rope"),
+                                         test = "pd",
                                          rope_range = "default",
                                          rope_ci = 0.95,
                                          bf_prior = NULL,
@@ -742,11 +744,8 @@
   # no ROPE for multi-response models
   if (insight::is_multivariate(model)) {
     test <- setdiff(test, c("rope", "p_rope"))
-    warning(
-      insight::format_message(
-        "Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."
-      ),
-      call. = FALSE
+    insight::format_warning(
+      "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
     )
   }
 
@@ -885,10 +884,10 @@
   if (!is.logical(standardize)) {
     if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
       if (verbose) {
-        warning(insight::format_message(
-          "'standardize' should be one of TRUE, 'all', 'std.all', 'latent', 'std.lv', 'no_exogenous' or 'std.nox'.",
+        insight::format_warning(
+          "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
           "Returning unstandardized solution."
-        ), call. = FALSE)
+        )
       }
       standardize <- FALSE
     }
@@ -898,9 +897,9 @@
   if (length(ci) > 1) {
     ci <- ci[1]
     if (verbose) {
-      warning(insight::format_message(
-        paste0("lavaan models only accept one level of CI :( Keeping the first one: `ci = ", ci, "`.")
-      ), call. = FALSE)
+      insight::format_warning(
+        paste0("lavaan models only accept one level of CI. Keeping the first one: `ci = ", ci, "`.")
+      )
     }
   }
 
@@ -979,19 +978,17 @@
     params$Label <- label
   }
 
-  params$Component <- ifelse(params$Operator == "=~", "Loading",
-    ifelse(params$Operator == "~", "Regression",
-      ifelse(params$Operator == "~~", "Correlation",
-        ifelse(params$Operator == ":=", "Defined",
-          ifelse(params$Operator == "~1", "Mean", NA)
-        )
-      )
-    )
-  )
-  params$Component <- ifelse(as.character(params$From) == as.character(params$To), "Variance", params$Component)
+  params$Component <- NA_character_
+  params$Component[params$Operator == "=~"] <- "Loading"
+  params$Component[params$Operator == "~"] <- "Regression"
+  params$Component[params$Operator == "~~"] <- "Correlation"
+  params$Component[params$Operator == ":="] <- "Defined"
+  params$Component[params$Operator == "~1"] <- "Mean"
+
+  params$Component[as.character(params$From) == as.character(params$To)] <- "Variance"
 
   if ("p" %in% colnames(params)) {
-    params$p <- ifelse(is.na(params$p), 0, params$p)
+    params$p[is.na(params$p)] <- 0
   }
 
   if ("group" %in% names(data)) {
@@ -1018,12 +1015,12 @@
 .check_rank_deficiency <- function(p, verbose = TRUE) {
   if (anyNA(p$Estimate)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message(
+      insight::format_warning(
         sprintf(
-          "Model matrix is rank deficient. Parameters %s were not estimable.",
+          "Model matrix is rank deficient. Parameters `%s` were not estimable.",
           paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")
         )
-      ), call. = FALSE)
+      )
     }
     p <- p[!is.na(p$Estimate), ]
   }

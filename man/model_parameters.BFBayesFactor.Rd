@@ -10,14 +10,15 @@
   dispersion = FALSE,
   ci = 0.95,
   ci_method = "eti",
-  test = c("pd", "rope"),
+  test = "pd",
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
-  cohens_d = NULL,
-  cramers_v = NULL,
+  effectsize_type = NULL,
   include_proportions = FALSE,
   verbose = TRUE,
+  cohens_d = NULL,
+  cramers_v = NULL,
   ...
 )
 }
@@ -54,13 +55,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{cohens_d}{If \code{TRUE}, compute Cohens' \emph{d} as index of effect size. Only
-applies to objects from \code{ttestBF()}. See \code{effectsize::cohens_d()} for
-details.}
-
-\item{cramers_v}{Compute Cramer's V or phi as index of effect size.
-Can be \code{"raw"} or \code{"adjusted"} (effect size will be bias-corrected).
-Only applies to objects from \code{chisq.test()}.}
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{include_proportions}{Logical that decides whether to include posterior
 cell proportions/counts for Bayesian contingency table analysis (from
@@ -68,6 +65,8 @@ cell proportions/counts for Bayesian contingency table analysis (from
 information is often redundant.}
 
 \item{verbose}{Toggle warnings and messages.}
+
+\item{cohens_d, cramers_v}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
@@ -80,16 +79,15 @@ Parameters from \code{BFBayesFactor} objects from \code{{BayesFactor}} package.
 \details{
 The meaning of the extracted parameters:
 \itemize{
-\item For \code{\link[BayesFactor:ttestBF]{BayesFactor::ttestBF()}}: \code{Difference} is the raw
-difference between the means. \item For
-\code{\link[BayesFactor:correlationBF]{BayesFactor::correlationBF()}}: \code{rho} is the linear
-correlation estimate (equivalent to Pearson's \emph{r}). \item For
-\code{\link[BayesFactor:lmBF]{BayesFactor::lmBF()}} / \code{\link[BayesFactor:generalTestBF]{BayesFactor::generalTestBF()}}
-/ \code{\link[BayesFactor:regressionBF]{BayesFactor::regressionBF()}} /
-\code{\link[BayesFactor:anovaBF]{BayesFactor::anovaBF()}}: in addition to parameters of the fixed
-and random effects, there are: \code{mu} is the (mean-centered) intercept;
-\code{sig2} is the model's sigma; \code{g} / \verb{g_*} are the \emph{g}
-parameters; See the \emph{Bayes Factors for ANOVAs} paper
+\item For \code{\link[BayesFactor:ttestBF]{BayesFactor::ttestBF()}}: \code{Difference} is the raw difference between
+the means.
+\item For \code{\link[BayesFactor:correlationBF]{BayesFactor::correlationBF()}}: \code{rho} is the linear correlation
+estimate (equivalent to Pearson's \emph{r}).
+\item For \code{\link[BayesFactor:lmBF]{BayesFactor::lmBF()}} / \code{\link[BayesFactor:generalTestBF]{BayesFactor::generalTestBF()}}
+/ \code{\link[BayesFactor:regressionBF]{BayesFactor::regressionBF()}} / \code{\link[BayesFactor:anovaBF]{BayesFactor::anovaBF()}}: in addition to
+parameters of the fixed and random effects, there are: \code{mu} is the
+(mean-centered) intercept; \code{sig2} is the model's sigma; \code{g} / \verb{g_*} are
+the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper
 (\doi{10.1016/j.jmp.2012.08.001}).
 }
 }
@@ -108,7 +106,7 @@ if (require("BayesFactor")) {
     centrality = "mean",
     dispersion = TRUE,
     verbose = FALSE,
-    cramers_v = TRUE
+    effectsize_type = "cramers_v"
   )
 }
 }

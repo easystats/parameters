@@ -10,14 +10,18 @@
 #' @param n Number of components to extract. If `n="all"`, then `n` is
 #'   set as the number of variables minus 1 (`ncol(x)-1`). If
 #'   `n="auto"` (default) or `n=NULL`, the number of components is
-#'   selected through [n_factors()] resp. [n_components()].
-#'   In [reduce_parameters()], can also be `"max"`, in which case
+#'   selected through [`n_factors()`] resp. [`n_components()`].
+#'   In [`reduce_parameters()`], can also be `"max"`, in which case
 #'   it will select all the components that are maximally pseudo-loaded (i.e.,
 #'   correlated) by at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   or `"cluster"` (and more). See [psych::fa()] for details.
+#'   or `"cluster"` (and more). See [`psych::fa()`] for details.
+#' @param sparse Whether to compute sparse PCA (SPCA, using [`sparsepca::spca()`]).
+#'   SPCA attempts to find sparse loadings (with few nonzero values), which improves
+#'   interpretability and avoids overfitting. Can be `TRUE` or `"robust"` (see
+#'   [`sparsepca::robspca()`]).
 #' @param sort Sort the loadings.
 #' @param threshold A value between 0 and 1 indicates which (absolute) values
 #'   from the loadings should be removed. An integer higher than 1 indicates the
@@ -41,110 +45,109 @@
 #' @inheritParams n_factors
 #'
 #' @details
-#'  \subsection{Methods and Utilities}{
-#'  \itemize{
-#'    \item [n_components()] and [n_factors()] automatically
-#'    estimates the optimal number of dimensions to retain.
 #'
-#'    \item [check_factorstructure()] checks the suitability of the
-#'    data for factor analysis using the
-#'    [`sphericity()`][check_sphericity_bartlett] and the
-#'    [`sphericity()`][check_kmo] KMO measure.
+#' ## Methods and Utilities
+#' - [`n_components()`] and [`n_factors()`] automatically estimates the optimal
+#'   number of dimensions to retain.
 #'
-#'    \item{[performance::check_itemscale()] computes various measures
-#'    of internal consistencies applied to the (sub)scales (i.e., components)
-#'    extracted from the PCA.}
+#' - [`performance::check_factorstructure()`] checks the suitability of the
+#'   data for factor analysis using the sphericity (see
+#'   [`performance::check_sphericity_bartlett()`]) and the KMO (see
+#'   [`performance::check_kmo()`]) measure.
 #'
-#'    \item{Running `summary` returns information related to each
-#'    component/factor, such as the explained variance and the Eivenvalues.}
+#' - [`performance::check_itemscale()`] computes various measures of internal
+#'   consistencies applied to the (sub)scales (i.e., components) extracted from
+#'   the PCA.
 #'
-#'    \item{Running [get_scores()] computes scores for each subscale.}
+#' - Running `summary()` returns information related to each component/factor,
+#'   such as the explained variance and the Eivenvalues.
 #'
-#'   \item{Running [closest_component()] will return a numeric vector
-#'   with the assigned component index for each column from the original data
-#'   frame.}
+#' - Running [`get_scores()`] computes scores for each subscale.
 #'
-#'   \item{Running [rotated_data()] will return the rotated data,
-#'   including missing values, so it matches the original data frame.}
+#' - Running [`closest_component()`] will return a numeric vector with the
+#'   assigned component index for each column from the original data frame.
 #'
-#'    \item{Running
-#'    [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
-#'    visually displays the loadings (that requires the
-#'    [**see**-package](https://easystats.github.io/see/) to work).}
-#' }
-#' }
+#' - Running [`rotated_data()`] will return the rotated data, including missing
+#'   values, so it matches the original data frame.
 #'
-#'  \subsection{Complexity}{
-#'    Complexity represents the number of latent components needed to account
-#'    for the observed variables. Whereas a perfect simple structure solution
-#'    has a complexity of 1 in that each item would only load on one factor,
-#'    a solution with evenly distributed items has a complexity greater than 1
-#'    (\cite{Hofman, 1978; Pettersson and Turkheimer, 2010}) .
-#'  }
+#' - Running
+#'   [`plot()`](https://easystats.github.io/see/articles/parameters.html#principal-component-analysis)
+#'   visually displays the loadings (that requires the
+#'   [**see**-package](https://easystats.github.io/see/) to work).
 #'
-#'  \subsection{Uniqueness}{
-#'    Uniqueness represents the variance that is 'unique' to the variable and
-#'    not shared with other variables. It is equal to `1 – communality`
-#'    (variance that is shared with other variables). A uniqueness of `0.20`
-#'    suggests that `20%` or that variable's variance is not shared with other
-#'    variables in the overall factor model. The greater 'uniqueness' the lower
-#'    the relevance of the variable in the factor model.
-#'  }
+#' ## Complexity
+#' Complexity represents the number of latent components needed to account
+#' for the observed variables. Whereas a perfect simple structure solution
+#' has a complexity of 1 in that each item would only load on one factor,
+#' a solution with evenly distributed items has a complexity greater than 1
+#' (_Hofman, 1978; Pettersson and Turkheimer, 2010_).
 #'
-#'  \subsection{MSA}{
-#'    MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
-#'    (\cite{Kaiser and Rice, 1974}) for each item. It indicates whether there
-#'    is enough data for each factor give reliable results for the PCA. The
-#'    value should be > 0.6, and desirable values are > 0.8
-#'    (\cite{Tabachnick and Fidell, 2013}).
-#'  }
+#' ## Uniqueness
+#' Uniqueness represents the variance that is 'unique' to the variable and
+#'  not shared with other variables. It is equal to `1 – communality`
+#'  (variance that is shared with other variables). A uniqueness of `0.20`
+#'  suggests that `20%` or that variable's variance is not shared with other
+#'  variables in the overall factor model. The greater 'uniqueness' the lower
+#'  the relevance of the variable in the factor model.
 #'
-#'  \subsection{PCA or FA?}{
-#'  There is a simplified rule of thumb that may help do decide whether to run
-#'  a factor analysis or a principal component analysis:
-#'  \itemize{
-#'    \item Run *factor analysis* if you assume or wish to test a
-#'    theoretical model of *latent factors* causing observed variables.
+#' ## MSA
+#' MSA represents the Kaiser-Meyer-Olkin Measure of Sampling Adequacy
+#' (_Kaiser and Rice, 1974_) for each item. It indicates whether there is
+#' enough data for each factor give reliable results for the PCA. The value
+#' should be > 0.6, and desirable values are > 0.8 (_Tabachnick and Fidell, 2013_).
 #'
-#'    \item Run *principal component analysis* If you want to simply
-#'    *reduce* your correlated observed variables to a smaller set of
-#'    important independent composite variables.
-#'  }
+#' ## PCA or FA?
+#' There is a simplified rule of thumb that may help do decide whether to run
+#' a factor analysis or a principal component analysis:
+#'
+#' - Run *factor analysis* if you assume or wish to test a theoretical model of
+#'   *latent factors* causing observed variables.
+#'
+#' - Run *principal component analysis* If you want to simply *reduce* your
+#'   correlated observed variables to a smaller set of important independent
+#'   composite variables.
+#'
 #'  (Source: [CrossValidated](https://stats.stackexchange.com/q/1576/54740))
-#'  }
 #'
-#'  \subsection{Computing Item Scores}{
-#'    Use [get_scores()] to compute scores for the "subscales"
-#'    represented by the extracted principal components. `get_scores()`
-#'    takes the results from `principal_components()` and extracts the
-#'    variables for each component found by the PCA. Then, for each of these
-#'    "subscales", raw means are calculated (which equals adding up the single
-#'    items and dividing by the number of items). This results in a sum score
-#'    for each component from the PCA, which is on the same scale as the
-#'    original, single items that were used to compute the PCA.
-#'    One can also use `predict()` to back-predict scores for each component,
-#'    to which one can provide `newdata` or a vector of `names` for the
-#'    components.
-#'  }
+#' ## Computing Item Scores
+#' Use [`get_scores()`] to compute scores for the "subscales" represented by the
+#' extracted principal components. `get_scores()` takes the results from
+#' `principal_components()` and extracts the variables for each component found
+#' by the PCA. Then, for each of these "subscales", raw means are calculated
+#' (which equals adding up the single items and dividing by the number of items).
+#' This results in a sum score for each component from the PCA, which is on the
+#' same scale as the original, single items that were used to compute the PCA.
+#' One can also use `predict()` to back-predict scores for each component,
+#' to which one can provide `newdata` or a vector of `names` for the components.
 #'
-#'  \subsection{Explained Variance and Eingenvalues}{
-#'     Use `summary()` to get the Eigenvalues and the explained variance
-#'     for each extracted component. The eigenvectors and eigenvalues represent
-#'     the "core" of a PCA: The eigenvectors (the principal components)
-#'     determine the directions of the new feature space, and the eigenvalues
-#'     determine their magnitude. In other words, the eigenvalues explain the
-#'     variance of the data along the new feature axes.
-#'  }
-#'
+#' ## Explained Variance and Eingenvalues
+#' Use `summary()` to get the Eigenvalues and the explained variance for each
+#' extracted component. The eigenvectors and eigenvalues represent the "core"
+#' of a PCA: The eigenvectors (the principal components) determine the
+#' directions of the new feature space, and the eigenvalues determine their
+#' magnitude. In other words, the eigenvalues explain the variance of the
+#' data along the new feature axes.
 #'
 #' @examples
-#'
 #' library(parameters)
 #'
 #' \donttest{
 #' # Principal Component Analysis (PCA) -------------------
+#' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
+#'
+#' # Automated number of components
+#' if (require("nFactors")) {
+#'   principal_components(mtcars[, 1:4], n = "auto")
+#' }
+#'
+#' # Sparse PCA
+#' if (require("sparsepca")) {
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+#'   principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
+#' }
+#'
+#' # Rotated PCA
 #' if (require("psych")) {
-#'   principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'   principal_components(mtcars[, 1:7],
 #'     n = 2, rotation = "oblimin",
 #'     threshold = "max", sort = TRUE
@@ -158,10 +161,6 @@
 #'
 #'   # which variables from the original data belong to which extracted component?
 #'   closest_component(pca)
-#'   # rotated_data(pca)  # TODO: doesn't work
-#'
-#'   # Automated number of components
-#'   principal_components(mtcars[, 1:4], n = "auto")
 #' }
 #' }
 #'
@@ -182,25 +181,25 @@
 #' }
 #' }
 #' @return A data frame of loadings.
-#' @references \itemize{
-#'   \item Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
+#' @references
+#' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 #'   and Psychological Measurement, 34(1):111–117
 #'
-#'   \item Hofmann, R. (1978). Complexity and simplicity as objective indices
+#' - Hofmann, R. (1978). Complexity and simplicity as objective indices
 #'   descriptive of factor solutions. Multivariate Behavioral Research, 13:2,
 #'   247-250, \doi{10.1207/s15327906mbr1302_9}
 #'
-#'   \item Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
+#' - Pettersson, E., & Turkheimer, E. (2010). Item selection, evaluation,
 #'   and simple structure in personality data. Journal of research in
 #'   personality, 44(4), 407-420, \doi{10.1016/j.jrp.2010.03.002}
 #'
-#'   \item Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
+#' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 #'   statistics (6th ed.). Boston: Pearson Education.
-#' }
 #' @export
 principal_components <- function(x,
                                  n = "auto",
                                  rotation = "none",
+                                 sparse = FALSE,
                                  sort = FALSE,
                                  threshold = NULL,
                                  standardize = TRUE,
@@ -215,14 +214,14 @@ principal_components <- function(x,
 #' @rdname principal_components
 #' @export
 rotated_data <- function(pca_results) {
-  original_data <- attributes(pca_results)$data_set
+  original_data <- attributes(pca_results)$dataset
   rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
 
   if (!is.null(original_data) && !is.null(rotated_matrix)) {
     compl_cases <- attributes(pca_results)$complete_cases
     if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
-      warning("Could not retrieve information about missing data.", call. = FALSE)
+      insight::format_warning("Could not retrieve information about missing data.")
       return(NULL)
     }
     original_data$.parameters_merge_id <- seq_len(nrow(original_data))
@@ -230,7 +229,7 @@ rotated_data <- function(pca_results) {
     out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
     out$.parameters_merge_id <- NULL
   } else {
-    warning(insight::format_message("Either the original or the rotated data could not be retrieved."), call. = FALSE)
+    insight::format_warning("Either the original or the rotated data could not be retrieved.")
     return(NULL)
   }
   out
@@ -242,32 +241,32 @@ rotated_data <- function(pca_results) {
 principal_components.data.frame <- function(x,
                                             n = "auto",
                                             rotation = "none",
+                                            sparse = FALSE,
                                             sort = FALSE,
                                             threshold = NULL,
                                             standardize = TRUE,
                                             ...) {
   # save name of data set
-  data_name <- deparse(substitute(x))
+  data_name <- insight::safe_deparse_symbol(substitute(x))
 
   # original data
   original_data <- x
 
-  # remove missings
+  # remove missing
   x <- stats::na.omit(x)
 
-  # PCA
-  model <- stats::prcomp(x,
-                  retx = TRUE,
-                  center = standardize,
-                  scale. = standardize,
-                  ...)
-
+  # Select numeric only
+  x <- x[vapply(x, is.numeric, logical(1))]
 
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)
 
-  # Rotation
+  # Catch and compute Rotated PCA
   if (rotation != "none") {
+    if (sparse) {
+      insight::format_error("Sparse PCA is currently incompatible with rotation. Use either `sparse=TRUE` or `rotation`.")
+    }
+
     loadings <- .pca_rotate(
       x,
       n,
@@ -279,9 +278,49 @@ principal_components.data.frame <- function(x,
     )
 
     attr(loadings, "data") <- data_name
-
     return(loadings)
   }
+
+  # Compute PCA
+  if (is.character(sparse) && sparse == "robust") {
+    # Robust sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::robspca(
+      x,
+      center = standardize,
+      scale = standardize,
+      verbose = FALSE,
+      ...
+    )
+    model$rotation <- model$loadings
+    row.names(model$rotation) <- names(x)
+    model$x <- model$scores
+
+  } else if (isTRUE(sparse)) {
+    # Sparse PCA
+    insight::check_if_installed("sparsepca")
+
+    model <- sparsepca::spca(
+      x,
+      center = standardize,
+      scale = standardize,
+      verbose = FALSE,
+      ...
+    )
+    model$rotation <- stats::setNames(model$loadings, names(x))
+    row.names(model$rotation) <- names(x)
+    model$x <- model$scores
+
+  } else {
+    # Normal PCA
+    model <- stats::prcomp(x,
+                           retx = TRUE,
+                           center = standardize,
+                           scale. = standardize,
+                           ...)
+  }
+
 
   # Re-add centers and scales
   # if (standardize) {
@@ -360,7 +399,7 @@ principal_components.data.frame <- function(x,
     .closest_component(loadings, loadings_columns = loading_cols, variable_names = colnames(x))
   attr(loadings, "data") <- data_name
 
-  attr(loadings, "data_set") <- original_data
+  attr(loadings, "dataset") <- original_data
 
   # add class-attribute for printing
   class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
@@ -397,22 +436,19 @@ principal_components.data.frame <- function(x,
                         original_data = NULL,
                         ...) {
   if (!(rotation %in% c("varimax", "quartimax", "promax", "oblimin", "simplimax", "cluster", "none"))) {
-    stop("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".", call. = FALSE)
+    insight::format_error("`rotation` must be one of \"varimax\", \"quartimax\", \"promax\", \"oblimin\", \"simplimax\", \"cluster\" or \"none\".")
   }
 
   if (!inherits(x, c("prcomp", "data.frame"))) {
-    stop("`x` must be of class `prcomp` or a data frame.", call. = FALSE)
+    insight::format_error("`x` must be of class `prcomp` or a data frame.")
   }
 
   if (!inherits(x, "data.frame") && rotation != "varimax") {
-    stop(sprintf("`x` must be a data frame for `%s`-rotation.", rotation), call. = FALSE)
+    insight::format_error(sprintf("`x` must be a data frame for `%s`-rotation.", rotation))
   }
 
   # rotate loadings
   insight::check_if_installed("psych", reason = sprintf("`%s`-rotation.", rotation))
-  if (!requireNamespace("psych", quietly = TRUE)) {
-    stop(sprintf("Package `psych` required for `%s`-rotation.", rotation), call. = FALSE)
-  }
 
   pca <- psych::principal(x, nfactors = n, rotate = rotation, ...)
   msa <- psych::KMO(x)
@@ -420,7 +456,7 @@ principal_components.data.frame <- function(x,
   attr(pca, "MSA") <- msa$MSAi
   out <- model_parameters(pca, sort = sort, threshold = threshold)
 
-  attr(out, "data_set") <- original_data
+  attr(out, "dataset") <- original_data
   attr(out, "complete_cases") <- stats::complete.cases(original_data)
   out
 }

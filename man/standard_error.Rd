@@ -102,7 +102,7 @@ components etc.
 }
 \description{
 \code{standard_error()} attempts to return standard errors of model
-parameters
+parameters.
 }
 \note{
 For Bayesian models (from \strong{rstanarm} or \strong{brms}), the standard

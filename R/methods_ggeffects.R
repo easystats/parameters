@@ -60,7 +60,7 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
   attr(model, "footer_text") <- .generate_ggeffects_footer(constant_values)
   attr(model, "title") <- c(title, "blue")
 
-  attr(model, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(model, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(model) <- c("parameters_model", "data.frame")
   model
 }

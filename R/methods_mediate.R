@@ -1,6 +1,6 @@
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verbose = TRUE, ...) {
+model_parameters.mediate <- function(model, ci = 0.95, exponentiate = FALSE, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
   params <- insight::get_parameters(model)
 
@@ -20,7 +20,7 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verb
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   params <- .add_model_parameters_attributes(params, model, ci, exponentiate, verbose = verbose, ...)
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
@@ -29,7 +29,7 @@ model_parameters.mediate <- function(model, ci = .95, exponentiate = FALSE, verb
 
 
 #' @export
-ci.mediate <- function(x, ci = .95, ...) {
+ci.mediate <- function(x, ci = 0.95, ...) {
   info <- insight::model_info(x$model.y, verbose = FALSE)
   alpha <- (1 + ci) / 2
   if (info$is_linear && !x$INT) {

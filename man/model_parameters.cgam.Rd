@@ -192,20 +192,9 @@ names.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}, and arguments like \code{ci_method}
-are passed down to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}.}
+passed down to \code{bootstrap_model()}.}
 
-\item{omega_squared}{Compute omega squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size) or \code{"raw"}.}
-
-\item{eta_squared}{Compute eta squared as index of effect size. Can be
-\code{"partial"} (the default, adjusted for effect size), \code{"raw"}  or
-\code{"adjusted"} (the latter option only for ANOVA-tables from mixed
-models).}
-
-\item{epsilon_squared}{Compute epsilon squared as index of effect size. Can
-be \code{"partial"} (the default, adjusted for effect size) or
-\code{"raw"}.}
+\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes

@@ -3,7 +3,12 @@
 #' Compute bootstrapped parameters and their related indices such as Confidence Intervals (CI) and p-values.
 #'
 #'
-#' @param test The indices to compute. Character (vector) with one or more of these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests. For each "test", the corresponding **bayestestR** function is called (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results included in the summary output.
+#' @param test The indices to compute. Character (vector) with one or more of
+#' these options: `"p-value"` (or `"p"`), `"p_direction"` (or `"pd"`), `"rope"`,
+#' `"p_map"`, `"equivalence_test"` (or `"equitest"`), `"bayesfactor"` (or `"bf"`)
+#' or `"all"` to compute all tests. For each "test", the corresponding
+#' **bayestestR** function is called (e.g. [bayestestR::rope()] or
+#' [bayestestR::p_direction()]) and its results included in the summary output.
 #' @inheritParams bootstrap_model
 #' @inheritParams bayestestR::describe_posterior
 #'
@@ -11,15 +16,17 @@
 #'
 #' @inheritSection bootstrap_model Using with **emmeans**
 #'
-#' @references Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
+#' @references
+#' Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their
+#' application (Vol. 1). Cambridge university press.
 #'
-#' @seealso [bootstrap_model()], [simulate_parameters()], [simulate_model()]
+#' @seealso [`bootstrap_model()`], [`simulate_parameters()`], [`simulate_model()`]
 #'
-#' @details This function first calls [bootstrap_model()] to generate
+#' @details This function first calls [`bootstrap_model()`] to generate
 #'   bootstrapped coefficients. The resulting replicated for each coefficient
-#'   are treated as "distribution", and is passed to [bayestestR::describe_posterior()]
+#'   are treated as "distribution", and is passed to [`bayestestR::describe_posterior()`]
 #'   to calculate the related indices defined in the `"test"` argument.
-#'   \cr\cr
+#'
 #'   Note that that p-values returned here are estimated under the assumption of
 #'   *translation equivariance*: that shape of the sampling distribution is
 #'   unaffected by the null being true or not. If this assumption does not hold,
@@ -44,7 +51,7 @@
 bootstrap_parameters <- function(model,
                                  iterations = 1000,
                                  centrality = "median",
-                                 ci = .95,
+                                 ci = 0.95,
                                  ci_method = "quantile",
                                  test = "p-value",
                                  ...) {
@@ -100,7 +107,7 @@ bootstrap_parameters <- function(model,
 
   # p-value
   if (p_value) {
-    parameters$.row_order <- 1:nrow(parameters)
+    parameters$.row_order <- seq_len(nrow(parameters))
     # calculate probability of direction, then convert to p.
     p <- bayestestR::p_direction(data, null = 0, ...)
     p$p <- bayestestR::pd_to_p(p$pd)

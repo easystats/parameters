@@ -1,10 +1,94 @@
-# parameters 0.18.3
+# parameters 0.20.0
 
 ## Breaking
 
-* Removed depricated argument `parameters` from `model_parameters()`.
+* The deprecated argument `df_method` in `model_parameters()` is now defunct
+  and throws an error when used.
 
+* The deprecated functions `ci_robust()`, `p_robust()` and `standard_error_robust`
+  have been removed. These were superseded by the `vcov` argument in `ci()`,
+  `p_value()`, and `standard_error()`, respectively.
+
+* The `style` argument in `compare_parameters()` was renamed into `select`.
+
+## New functions
+
+* `p_function()`, to print and plot p-values and compatibility (confidence)
+  intervals for statistical models, at different levels. This allows to see
+  which estimates are most compatible with the model at various compatibility
+  levels.
+
+* `p_calibrate()`, to compute calibrated p-values.
+
+## Changes
+
+* `model_parameters()` and `compare_parameters()` now use the unicode character
+  for the multiplication-sign as interaction mark (i.e. `\u00d7`). Use
+  `options(parameters_interaction = <value>)` or the argument `interaction_mark`
+  to use a different character as interaction mark.
+
+* The `select` argument in `compare_parameters()`, which is used to control the
+  table column elements, now supports an experimental glue-like syntax.
+  See this vignette _Printing Model Parameters_. Furthermore, the `select`
+  argument can also be used in the `print()` method for `model_parameters()`.
+
+* `print_html()` gets a `font_size` and `line_padding` argument to tweak the
+  appearance of HTML tables. Furthermore, arguments `select` and `column_labels`
+  are new, to customize the column layout of tables. See examples in `?display`.
+
+* Consolidation of vignettes on standardization of model parameters.
+
+* Minor speed improvements.
+
+## Bug fix
+
+* `model_parameters().BFBayesFactor` no longer drops the `BF` column if the
+  Bayes factor is `NA`.
+
+* The `print()` and `display()` methods for `model_parameters()` from Bayesian
+  models now pass the `...` to `insight::format_table()`, allowing extra
+  arguments to be recognized.
+
+* Fixed footer message regarding the approximation method for CU and p-values
+  for mixed models.
+
+* Fixed issues in the `print()` method for `compare_parameters()` with mixed
+  models, when some models contained within-between components (see
+  `wb_component`) and others did not.
+
+# parameters 0.19.0
+
+## Breaking
+
+* Arguments that calculate effectsize in `model_parameters()` for `htest`,
+  Anova objects and objects of class `BFBayesFactor` were revised. Instead of
+  single arguments for the different effectsizes, there is now one argument,
+  `effectsize_type`. The reason behind this change is that meanwhile many
+  new type of effectsizes have been added to the _effectsize_ package, and
+  the generic argument allows to make use of those effect sizes.
+
+* The attribute name in PCA / EFA has been changed from `data_set` to `dataset`.
+
+* The minimum needed R version has been bumped to `3.6`.
+
+* Removed deprecated argument `parameters` from `model_parameters()`.
+
+* `standard_error_robust()`, `ci_robust()` and `p_value_robust()` are now
+  deprecated and superseded by the `vcov` and `vcov_args` arguments in the
+  related methods `standard_error()`, `ci()` and `p_value()`, respectively.
+
+* Following functions were moved from package *parameters* to *performance*:
+  `check_sphericity_bartlett()`, `check_kmo()`, `check_factorstructure()` and
+  `check_clusterstructure()`.
+  
 ## Changes to functions
+
+* Added `sparse` option to `principal_components()` for sparse PCA.
+
+* The `pretty_names` argument from the `print()` method can now also be
+  `"labels"`, which will then use variable and value labels (if data is
+  labelled) as pretty names. If no labels were found, default pretty names
+  are used.
 
 * `bootstrap_model()` for models of class `glmmTMB` and `merMod` gains a
   `cluster` argument to specify optional clusters when the `parallel`
@@ -17,16 +101,29 @@
 * Robust standard errors are now supported for `fixest` models with the `vcov`
   argument.
 
+* `print()` for `model_parameters()` gains a `footer` argument, which can be
+  used to suppress the footer in the output. Further more, if `footer = ""`
+  or `footer = FALSE` in `print_md()`, no footer is printed.
+
+* `simulate_model()` and `simulate_parameters()` now pass `...` to
+  `insight::get_varcov()`, to allow simulated draws to be based on
+  heteroscedasticity consistent variance covariance matrices.
+
+* The `print()` method for `compare_parameters()` was improved for models with
+  multiple components (e.g., mixed models with fixed and random effects, or
+  models with count- and zero-inflation parts). For these models,
+  `compare_parameters(effects = "all", component = "all")` prints more nicely.
+
 ## Bug fixes
 
-* Fix erroneous warning for p-value adjustments when the differences between
-  original and adjusted p-values were very small.
+* Fix erroneous warning for *p*-value adjustments when the differences between
+  original and adjusted *p*-values were very small.
 
 # parameters 0.18.2
 
 ## New functions
 
-* New function `dominance_analysis()`, to compute dominance analysis 
+* New function `dominance_analysis()`, to compute dominance analysis
   statistics and designations.
 
 ## Changes to functions
@@ -68,20 +165,20 @@
 
 * `model_parameters()` for mixed models gains a `ci_random` argument, to toggle
   whether confidence intervals for random effects parameters should also be
-  computed. Set to `FALSE` if calculation of confidence intervals for random 
+  computed. Set to `FALSE` if calculation of confidence intervals for random
   effects parameters takes too long.
 
 * `ci()` for *glmmTMB* models with `method = "profile"` is now more robust.
 
 ## Bug fixes
 
-* Fixed issue with *glmmTMB* models when calculating confidence 
+* Fixed issue with *glmmTMB* models when calculating confidence
   intervals for random effects failed due to singular fits.
-  
+
 * `display()` now correctly includes custom text and additional information
   in the footer (#722).
 
-* Fixed issue with argument `column_names` in `compare_parameters()` when 
+* Fixed issue with argument `column_names` in `compare_parameters()` when
   strings contained characters that needed to be escaped for regular expressions.
 
 * Fixed issues with unknown arguments in `model_parameters()` for *lavaan* models
@@ -108,10 +205,10 @@
 
 * `model_parameters()` for mixed models from package *lme4* now also reports
   confidence intervals for random effect variances by default. Formerly, CIs
-  were only included when `ci_method` was `"profile"` or `"boot"`. The 
+  were only included when `ci_method` was `"profile"` or `"boot"`. The
   *merDeriv* package is required for this feature.
 
-* `model_parameters()` for `htest` objects now also supports models from 
+* `model_parameters()` for `htest` objects now also supports models from
   `var.test()`.
 
 * Improved support for `anova.rms` models in `model_parameters()`.
@@ -120,12 +217,12 @@
   and `deltaMethods` objects from package *car*.
 
 * `model_parameters()` now checks arguments and informs the user if specific
-  given arguments are not supported for that model class (e.g., `"vcov"` is 
+  given arguments are not supported for that model class (e.g., `"vcov"` is
   currently not supported for models of class *glmmTMB*).
 
 ## Bug fixes
 
-* The `vcov` argument, used for computing robust standard errors, did not 
+* The `vcov` argument, used for computing robust standard errors, did not
   calculate the correct p-values and confidence intervals for models of class
   `lme`.
 
@@ -143,7 +240,7 @@
 * Added options to set defaults for different arguments. Currently supported:
   - `options("parameters_summary" = TRUE/FALSE)`, which sets the default value
     for the `summary` argument in `model_parameters()` for non-mixed models.
-  - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default 
+  - `options("parameters_mixed_summary" = TRUE/FALSE)`, which sets the default
     value for the `summary` argument in `model_parameters()` for mixed models.
 
 * Minor improvements for `print()` methods.
@@ -181,8 +278,8 @@
 
 * `model_parameters()` for mixed models gains an `include_sigma` argument. If
   `TRUE`, adds the residual variance, computed from the random effects variances,
-  as an attribute to the returned data frame. Including sigma was the default 
-  behaviour, but now defaults to `FALSE` and is only included when 
+  as an attribute to the returned data frame. Including sigma was the default
+  behaviour, but now defaults to `FALSE` and is only included when
   `include_sigma = TRUE`, because the calculation was very time consuming.
 
 * `model_parameters()` for `merMod` models now also computes CIs for the random
@@ -202,14 +299,14 @@
 * `model_prameters()` for `MixMod` objects (package *GLMMadaptive*) gains a
   `robust` argument, to compute robust standard errors.
 
-## Bug fixes 
+## Bug fixes
 
 * Fixed bug with `ci()` for class `merMod` when `method="boot"`.
 
-* Fixed issue with correct association of components for ordinal models of 
+* Fixed issue with correct association of components for ordinal models of
   classes `clm` and `clm2`.
 
-* Fixed issues in `random_parameters()` and  `model_parameters()` for mixed 
+* Fixed issues in `random_parameters()` and  `model_parameters()` for mixed
   models without random intercept.
 
 * Confidence intervals for random parameters in `model_parameters()` failed for

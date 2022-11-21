@@ -6,7 +6,7 @@ model_parameters.MixMod <- model_parameters.glmmTMB
 
 #' @export
 ci.MixMod <- function(x,
-                      ci = .95,
+                      ci = 0.95,
                       component = c("all", "conditional", "zi", "zero_inflated"),
                       verbose = TRUE,
                       ...) {
@@ -68,7 +68,7 @@ standard_error.MixMod <- function(model,
       Component = "conditional"
     )
 
-    zi_parms <- grepl("^zi_", x$Parameter)
+    zi_parms <- startsWith(x$Parameter, "zi_")
     if (any(zi_parms)) {
       x$Component[zi_parms] <- "zero_inflated"
       x$Parameter[zi_parms] <- gsub("^zi_(.*)", "\\1", x$Parameter[zi_parms])

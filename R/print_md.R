@@ -35,6 +35,20 @@ print_md.parameters_model <- function(x,
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
   }
 
+  # check options ---------------
+
+  # check if pretty names should be replaced by value labels
+  # (if we have labelled data)
+  if (isTRUE(getOption("parameters_labels", FALSE)) || identical(pretty_names, "labels")) {
+    attr(x, "pretty_names") <- attr(x, "pretty_labels", exact = TRUE)
+    pretty_names <- TRUE
+  }
+
+  # select which columns to print
+  if (is.null(select)) {
+    select <- getOption("parameters_select")
+  }
+
   # table caption
   table_caption <- .print_caption(x, caption, format = "markdown")
 
@@ -69,10 +83,17 @@ print_md.parameters_model <- function(x,
     show_formula = show_formula,
     format = "markdown"
   )
-  if (!is.null(footer)) {
-    footer <- paste0("\n", footer, "\n", footer_stats)
-  } else {
-    footer <- footer_stats
+
+  # check if footer should be printed at all. can be FALSE, or "" to suppress footer
+  if (isFALSE(footer)) {
+    footer <- ""
+  }
+  if (!identical(footer, "")) {
+    if (!is.null(footer)) {
+      footer <- paste0("\n", footer, "\n", footer_stats)
+    } else {
+      footer <- footer_stats
+    }
   }
 
 
@@ -111,7 +132,8 @@ print_md.compare_parameters <- function(x,
                                         caption = NULL,
                                         subtitle = NULL,
                                         footer = NULL,
-                                        style = NULL,
+                                        select = NULL,
+                                        split_components = TRUE,
                                         ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -125,14 +147,14 @@ print_md.compare_parameters <- function(x,
   }
 
   # get attributes
-  if (missing(style) || is.null(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select) || is.null(select)) {
+    select <- attributes(x)$output_style
   }
 
   formatted_table <- format(
     x,
-    style,
-    split_components = TRUE,
+    select = select,
+    split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
@@ -175,7 +197,17 @@ print_md.parameters_sem <- function(x,
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
   }
 
-  formatted_table <- format(x = x, digits = digits, ci_digits, p_digits = p_digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
+  formatted_table <- format(
+    x = x,
+    digits = digits,
+    ci_digits,
+    p_digits = p_digits,
+    format = "markdown",
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    ...
+  )
+
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 
@@ -201,7 +233,15 @@ print_md.parameters_pca_summary <- print_md.parameters_efa_summary
 
 #' @export
 print_md.parameters_efa <- function(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...) {
-  .print_parameters_cfa_efa(x, threshold = threshold, sort = sort, format = "markdown", digits = digits, labels = labels, ...)
+  .print_parameters_cfa_efa(
+    x,
+    threshold = threshold,
+    sort = sort,
+    format = "markdown",
+    digits = digits,
+    labels = labels,
+    ...
+  )
 }
 
 #' @export
@@ -234,7 +274,15 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
     x <- x[x$Component %in% c("conditional", "count"), ]
   }
 
-  formatted_table <- insight::format_table(x, pretty_names = TRUE, digits = digits, ci_width = NULL, ci_brackets = ci_brackets, zap_small = zap_small, ...)
+  formatted_table <- insight::format_table(
+    x,
+    pretty_names = TRUE,
+    digits = digits,
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    zap_small = zap_small,
+    ...
+  )
 
   colnames(formatted_table)[which(colnames(formatted_table) == "Equivalence (ROPE)")] <- "H0"
   formatted_table$ROPE <- NULL
@@ -264,7 +312,15 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
 
 #' @export
 print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(", ")"), ...) {
-  formatted_table <- format(x = x, digits = digits, format = "markdown", ci_width = NULL, ci_brackets = ci_brackets, ...)
+  formatted_table <- format(
+    x = x,
+    digits = digits,
+    format = "markdown",
+    ci_width = NULL,
+    ci_brackets = ci_brackets,
+    ...
+  )
+
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
 

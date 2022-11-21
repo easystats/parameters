@@ -8,7 +8,7 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.glmmTMB <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "wald",
                                      ci_random = NULL,
                                      bootstrap = FALSE,
@@ -31,10 +31,7 @@ model_parameters.glmmTMB <- function(model,
 
   ## TODO remove later
   if (!missing(df_method) && !identical(ci_method, df_method)) {
-    warning(insight::format_message(
-      "Argument 'df_method' is deprecated. Please use 'ci_method' instead."
-    ), call. = FALSE)
-    ci_method <- df_method
+    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # sanity check, warn if unsupported argument is used.
@@ -167,7 +164,9 @@ model_parameters.glmmTMB <- function(model,
     if (isTRUE(group_level)) {
       params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
       if (length(random_effects) > 1) {
-        warning(insight::format_message("Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."), call. = FALSE)
+        insight::format_warning(
+          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."
+        )
       }
     } else {
       params_variance <- .extract_random_variances(
@@ -203,7 +202,11 @@ model_parameters.glmmTMB <- function(model,
     params$Group <- ""
     # add component column
     if (!"Component" %in% colnames(params)) {
-      params$Component <- ifelse(component %in% c("zi", "zero_inflated"), "zero_inflated", "conditional")
+      if (component %in% c("zi", "zero_inflated")) {
+        params$Component <- "zero_inflated"
+      } else {
+        params$Component <- "conditional"
+      }
     }
 
     # reorder
@@ -246,7 +249,7 @@ model_parameters.glmmTMB <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
@@ -259,7 +262,7 @@ model_parameters.glmmTMB <- function(model,
 #' @rdname ci.default
 #' @export
 ci.glmmTMB <- function(x,
-                       ci = .95,
+                       ci = 0.95,
                        dof = NULL,
                        method = "wald",
                        component = "all",
@@ -418,41 +421,41 @@ simulate_model.glmmTMB <- function(model,
       component <- c("conditional", "zero_inflated")
     }
   } else if (component %in% c("zi", "zero_inflated") && !has_zeroinflated) {
-    stop("No zero-inflation model found.", call. = FALSE)
+    insight::format_error("No zero-inflation model found.")
   } else if (component == "dispersion" && !has_dispersion) {
-    stop("No dispersion model found.", call. = FALSE)
+    insight::format_error("No dispersion model found.")
   }
 
 
   if (is.null(iterations)) iterations <- 1000
 
   if (all(component == c("conditional", "zero_inflated"))) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated", ...)
     colnames(d2) <- paste0(colnames(d2), "_zi")
     d <- cbind(d1, d2)
   } else if (all(component == c("conditional", "dispersion"))) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "dispersion")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "dispersion", ...)
     colnames(d2) <- paste0(colnames(d2), "_disp")
     d <- cbind(d1, d2)
   } else if (all(component == "all")) {
-    d1 <- .simulate_model(model, iterations, component = "conditional")
-    d2 <- .simulate_model(model, iterations, component = "zero_inflated")
-    d3 <- .simulate_model(model, iterations, component = "dispersion")
+    d1 <- .simulate_model(model, iterations, component = "conditional", ...)
+    d2 <- .simulate_model(model, iterations, component = "zero_inflated", ...)
+    d3 <- .simulate_model(model, iterations, component = "dispersion", ...)
     colnames(d2) <- paste0(colnames(d2), "_zi")
     colnames(d3) <- paste0(colnames(d3), "_disp")
     d <- cbind(d1, d2, d3)
   } else if (all(component == "conditional")) {
-    d <- .simulate_model(model, iterations, component = "conditional")
+    d <- .simulate_model(model, iterations, component = "conditional", ...)
   } else if (all(component %in% c("zi", "zero_inflated"))) {
-    d <- .simulate_model(model, iterations, component = "zero_inflated")
+    d <- .simulate_model(model, iterations, component = "zero_inflated", ...)
   } else {
-    d <- .simulate_model(model, iterations, component = "dispersion")
+    d <- .simulate_model(model, iterations, component = "dispersion", ...)
   }
 
   class(d) <- c("parameters_simulate_model", class(d))
-  attr(d, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(d, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   d
 }
 
@@ -467,7 +470,7 @@ simulate_model.glmmTMB <- function(model,
 simulate_parameters.glmmTMB <- function(model,
                                         iterations = 1000,
                                         centrality = "median",
-                                        ci = .95,
+                                        ci = 0.95,
                                         ci_method = "quantile",
                                         test = "p-value",
                                         ...) {
@@ -492,7 +495,7 @@ simulate_parameters.glmmTMB <- function(model,
   }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method

@@ -56,7 +56,7 @@ of class \code{merMod} when \code{method=boot}.}
 A data frame containing the CI bounds.
 }
 \description{
-Compute confidence intervals (CI) for frequentist models.
+\code{ci()} attempts to return confidence intervals of model parameters.
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
@@ -149,7 +149,7 @@ to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 
 \code{"profile"}
 \itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr}, \code{merMod} or \code{glmmTMB}.
 CIs computed by \emph{profiling the likelihood curve for a parameter}, using
 linear interpolation to find where likelihood ratio equals a critical value;
 p-values computed using the Wald method with a \emph{normal-distribution} (note:

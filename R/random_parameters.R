@@ -6,8 +6,8 @@
 #'
 #' @param model A mixed effects model (including `stanreg` models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   for the zero-inflated part of the model, or the dispersion model be returned?
-#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   for the zero-inflation part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflation and/or dispersion component. `component`
 #'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
 #'    `"all"` (default). May be abbreviated.
 #'
@@ -15,35 +15,37 @@
 #'   including number of levels per random effect group, as well as complete
 #'   observations in the model.
 #'
-#' @details The variance components are obtained from
-#'   [insight::get_variance()] and are denoted as following:
-#'   \subsection{Within-group (or residual) variance}{
-#'     The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
-#'     is the sum of the distribution-specific variance and the variance due to additive dispersion.
-#'     It indicates the *within-group variance*.
-#'   }
-#'   \subsection{Between-group random intercept variance}{
-#'     The random intercept variance, or *between-group* variance
-#'     for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
-#'     is obtained from `VarCorr()`. It indicates how much groups
-#'     or subjects differ from each other.
-#'   }
-#'   \subsection{Between-group random slope variance}{
-#'     The random slope variance, or *between-group* variance
-#'     for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
-#'     is obtained from `VarCorr()`. This measure is only available
-#'     for mixed models with random slopes. It indicates how much groups
-#'     or subjects differ from each other according to their slopes.
-#'   }
-#'   \subsection{Random slope-intercept correlation}{
-#'     The random slope-intercept correlation
-#'     (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
-#'     is obtained from `VarCorr()`. This measure is only available
-#'     for mixed models with random intercepts and slopes.
-#'   }
-#'   **Note:** For the within-group and between-group variance, variance
-#'   and standard deviations (which are simply the square root of the variance)
-#'   are shown.
+#' @details
+#' The variance components are obtained from [`insight::get_variance()`] and
+#' are denoted as following:
+#'
+#' ## Within-group (or residual) variance
+#' The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
+#' is the sum of the distribution-specific variance and the variance due to additive dispersion.
+#' It indicates the *within-group variance*.
+#'
+#' ## Between-group random intercept variance
+#' The random intercept variance, or *between-group* variance
+#' for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
+#' is obtained from `VarCorr()`. It indicates how much groups
+#' or subjects differ from each other.
+#'
+#' ## Between-group random slope variance
+#' The random slope variance, or *between-group* variance
+#' for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
+#' is obtained from `VarCorr()`. This measure is only available
+#' for mixed models with random slopes. It indicates how much groups
+#' or subjects differ from each other according to their slopes.
+#'
+#' ## Random slope-intercept correlation
+#' The random slope-intercept correlation
+#' (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
+#' is obtained from `VarCorr()`. This measure is only available
+#' for mixed models with random intercepts and slopes.
+#'
+#' **Note:** For the within-group and between-group variance, variance
+#' and standard deviations (which are simply the square root of the variance)
+#' are shown.
 #'
 #' @examples
 #' if (require("lme4")) {
@@ -64,7 +66,10 @@ random_parameters <- function(model, component = "conditional") {
 # helper -----------------------------------
 
 .n_randomeffects <- function(model) {
-  sapply(insight::get_data(model, verbose = FALSE)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)], function(i) insight::n_unique(i))
+  sapply(
+    insight::get_data(model, verbose = FALSE)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)],
+    function(i) insight::n_unique(i)
+  )
 }
 
 
@@ -132,10 +137,10 @@ random_parameters <- function(model, component = "conditional") {
   # Additional information
   out$Component <- ""
   out$Component[out$Description == "Sigma2"] <- "sigma2"
-  out$Component[grepl("^tau00_", out$Description)] <- "tau00"
-  out$Component[grepl("^tau11_", out$Description)] <- "tau11"
-  out$Component[grepl("^rho01_", out$Description)] <- "rho01"
-  out$Component[grepl("^rho00_", out$Description)] <- "rho00"
+  out$Component[startsWith(out$Description, "tau00_")] <- "tau00"
+  out$Component[startsWith(out$Description, "tau11_")] <- "tau11"
+  out$Component[startsWith(out$Description, "rho01_")] <- "rho01"
+  out$Component[startsWith(out$Description, "rho00_")] <- "rho00"
 
   # Additional information
   out$Term <- ""
@@ -152,23 +157,23 @@ random_parameters <- function(model, component = "conditional") {
   out$Description[out$Description == "Sigma2"] <- "Within-Group Variance"
 
   # Between-Group Variance
-  out$Type[grepl("^tau00_", out$Description)] <- "Random Intercept"
+  out$Type[startsWith(out$Description, "tau00_")] <- "Random Intercept"
   out$Description <- gsub("^tau00_(.*)", "Between-Group Variance", out$Description)
-  out$Type[grepl("^tau11_", out$Description)] <- "Random Slope"
+  out$Type[startsWith(out$Description, "tau11_")] <- "Random Slope"
   out$Description <- gsub("^tau11_(.*)", "Between-Group Variance", out$Description)
 
   # correlations
-  out$Type[grepl("^rho01_", out$Description)] <- ""
+  out$Type[startsWith(out$Description, "rho01_")] <- ""
   out$Description <- gsub("^rho01_(.*)", "Correlations", out$Description)
-  out$Type[grepl("^rho00_", out$Description)] <- ""
+  out$Type[startsWith(out$Description, "rho00_")] <- ""
   out$Description <- gsub("^rho00_(.*)", "Correlations", out$Description)
 
   out$Type[grepl("N_(.*)", out$Description)] <- ""
   out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
   out$Description <- gsub("_(.*)", "", out$Description)
 
-  out$Type[grepl("^X", out$Description)] <- ""
-  out$Description[grepl("^X", out$Description)] <- NA
+  out$Type[startsWith(out$Description, "X")] <- ""
+  out$Description[startsWith(out$Description, "X")] <- NA
   out$Component[out$Component == ""] <- NA
   out$Term[out$Term == ""] <- NA
 

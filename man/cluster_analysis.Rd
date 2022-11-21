@@ -23,9 +23,9 @@ cluster_analysis(
 \item{x}{A data frame.}
 
 \item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
-the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}. Note
-that this argument does not apply for unsupervised clustering methods like
-\code{dbscan}, \code{hdbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
+the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}.
+Note that this argument does not apply for unsupervised clustering methods
+like \code{dbscan}, \code{hdbscan}, \code{mixture}, \code{pvclust}, or \code{pamk}.}
 
 \item{method}{Method for computing the cluster analysis. Can be \code{"kmeans"}
 (default; k-means using \code{kmeans()}), \code{"hkmeans"} (hierarchical k-means
@@ -64,7 +64,7 @@ if \code{method = "kmeans"}. May be one of \code{"Hartigan-Wong"} (default),
 \code{"Lloyd"} (used by SPSS), or \code{"MacQueen"}. See \code{\link[=kmeans]{kmeans()}} for details on
 this argument.}
 
-\item{dbscan_eps}{The 'eps' argument for DBSCAN method. See \code{\link[=n_clusters_dbscan]{n_clusters_dbscan()}}.}
+\item{dbscan_eps}{The \code{eps} argument for DBSCAN method. See \code{\link[=n_clusters_dbscan]{n_clusters_dbscan()}}.}
 
 \item{iterations}{The number of replications.}
 
@@ -156,7 +156,7 @@ Analysis Basics and Extensions. R package.
 \item \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract.
 \item \code{\link[=cluster_discrimination]{cluster_discrimination()}} to determine the accuracy of cluster group
 classification via linear discriminant analysis (LDA).
-\item \code{\link[=check_clusterstructure]{check_clusterstructure()}} to check suitability of data
+\item \code{\link[performance:check_clusterstructure]{performance::check_clusterstructure()}} to check suitability of data
 for clustering.
 \item https://www.datanovia.com/en/lessons/
 }

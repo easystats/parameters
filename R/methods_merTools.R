@@ -1,7 +1,7 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.merModList <- function(model,
-                                        ci = .95,
+                                        ci = 0.95,
                                         exponentiate = FALSE,
                                         p_adjust = NULL,
                                         verbose = TRUE,
@@ -18,13 +18,13 @@ model_parameters.merModList <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
 
 #' @export
-ci.merModList <- function(x, ci = .95, ...) {
+ci.merModList <- function(x, ci = 0.95, ...) {
   .ci_generic(model = x, ci = ci, dof = NULL, component = "conditional", ...)
 }
 

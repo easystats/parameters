@@ -7,7 +7,7 @@
 # default method -------------------
 
 .extract_random_variances.default <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
@@ -30,7 +30,7 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
     }
   }
 
@@ -41,7 +41,7 @@
 # glmmTMB -------------------
 
 .extract_random_variances.glmmTMB <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
@@ -66,7 +66,7 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      warning(insight::format_message("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."), call. = FALSE)
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
     }
     return(NULL)
   }
@@ -117,7 +117,7 @@
 # workhorse ------------------------
 
 .extract_random_variances_helper <- function(model,
-                                             ci = .95,
+                                             ci = 0.95,
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
@@ -213,7 +213,7 @@
   out[ci_cols] <- NA
 
   # variances to SD (sqrt), except correlations and Sigma
-  corr_param <- grepl("^Cor (.*)", out$Parameter)
+  corr_param <- startsWith(out$Parameter, "Cor ")
   sigma_param <- out$Parameter == "SD (Observations)"
 
   # add confidence intervals?
@@ -305,7 +305,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 .random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
-  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+  if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
   }
 
@@ -352,7 +352,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           rn <- gsub("[\\(\\)]", "", rn)
           rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
 
-          var_ci_corr_param <- grepl("^cor ", rn)
+          var_ci_corr_param <- startsWith(rn, "cor ")
           var_ci_sigma_param <- rn == "sigma"
 
           out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
@@ -461,7 +461,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out$.sort_id <- NULL
 
             # ensure correlation CI are within -1/1 bounds
-            var_ci_corr_param <- grepl("^Cor (.*)", out$Parameter)
+            var_ci_corr_param <- startsWith(out$Parameter, "Cor ")
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
@@ -480,28 +480,28 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
-              message(insight::format_message(
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              insight::format_alert(
+                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).",
                 "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
-              ))
+              )
             }
             out
           },
           error = function(e) {
             if (isTRUE(verbose)) {
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-                message(insight::format_message("Argument 'nAGQ' needs to be larger than 0 to compute confidence intervals for random effect parameters."))
+                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.")
               }
               if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
-                message(insight::format_message("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables."))
+                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.")
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                 grepl("computationally singular", e$message, fixed = TRUE) ||
                 grepl("Exact singular", e$message, fixed = TRUE)) {
-                message(insight::format_message(
+                insight::format_alert(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                  "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-                ))
+                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`)."
+                )
               }
             }
             out
@@ -532,7 +532,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         var_ci$Parameter <- row.names(var_ci)
 
         if (utils::packageVersion("glmmTMB") > "1.1.3") {
-          var_ci$Component[grepl("^zi\\.", var_ci$Parameter)] <- "zi"
+          var_ci$Component[startsWith(var_ci$Parameter, "zi.")] <- "zi"
           # remove cond/zi prefix
           var_ci$Parameter <- gsub("^(cond\\.|zi\\.)(.*)", "\\2", var_ci$Parameter)
           # copy RE group
@@ -597,15 +597,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model))
 
           if (singular_fit) {
-            message(insight::format_message(
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+            insight::format_alert(
+              "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
               "Some of the confidence intervals of the random effects parameters are probably not meaningful!"
-            ))
+            )
           } else if (missing_ci) {
-            message(insight::format_message(
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+            insight::format_alert(
+              "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
               "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!"
-            ))
+            )
           }
         }
 
@@ -618,10 +618,10 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       },
       error = function(e) {
         if (isTRUE(verbose)) {
-          message(insight::format_message(
+          insight::format_alert(
             "Cannot compute confidence intervals for random effects parameters.",
-            "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-          ))
+            "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`)."
+          )
         }
         out
       }
@@ -677,14 +677,14 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     vc1 <- vc2 <- NULL
     re_names <- insight::find_random(model)
 
-    vc_cond <- !grepl("^zi_", colnames(model$D))
+    vc_cond <- !startsWith(colnames(model$D), "zi_")
     if (any(vc_cond)) {
       vc1 <- model$D[vc_cond, vc_cond, drop = FALSE]
       attr(vc1, "stddev") <- sqrt(diag(vc1))
       attr(vc1, "correlation") <- stats::cov2cor(model$D[vc_cond, vc_cond, drop = FALSE])
     }
 
-    vc_zi <- grepl("^zi_", colnames(model$D))
+    vc_zi <- startsWith(colnames(model$D), "zi_")
     if (any(vc_zi)) {
       colnames(model$D) <- gsub("^zi_(.*)", "\\1", colnames(model$D))
       rownames(model$D) <- colnames(model$D)
@@ -790,7 +790,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 
 # glmmTMB returns a list of model information, one for conditional
-# and one for zero-inflated part, so here we "unlist" it, returning
+# and one for zero-inflation part, so here we "unlist" it, returning
 # only the conditional part.
 .collapse_cond <- function(x) {
   if (is.list(x) && "cond" %in% names(x)) {

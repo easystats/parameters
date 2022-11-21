@@ -42,9 +42,9 @@ model_parameters.lavaan <- function(model,
 model_parameters.blavaan <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      diagnostic = c("ESS", "Rhat"),
@@ -88,7 +88,7 @@ model_parameters.blavaan <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_sem", "see_parameters_sem", class(params))
 
   params
@@ -101,7 +101,7 @@ model_parameters.blavaan <- function(model,
 
 
 #' @export
-ci.lavaan <- function(x, ci = .95, ...) {
+ci.lavaan <- function(x, ci = 0.95, ...) {
   out <- .extract_parameters_lavaan(model = x, ci = ci, ...)
   out$CI <- ci
   out[out$Operator != "~1", c("To", "Operator", "From", "CI", "CI_low", "CI_high")]

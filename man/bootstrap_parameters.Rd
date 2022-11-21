@@ -30,7 +30,12 @@ to be estimated. Default to \code{.95} (\verb{95\%}).}
 \code{\link[bayestestR:bci]{bci()}}), \code{"SPI"} (see \code{\link[bayestestR:spi]{spi()}}), or
 \code{"SI"} (see \code{\link[bayestestR:si]{si()}}).}
 
-\item{test}{The indices to compute. Character (vector) with one or more of these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests. For each "test", the corresponding \strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{bayestestR::rope()}} or \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}) and its results included in the summary output.}
+\item{test}{The indices to compute. Character (vector) with one or more of
+these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{"pd"}), \code{"rope"},
+\code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}), \code{"bayesfactor"} (or \code{"bf"})
+or \code{"all"} to compute all tests. For each "test", the corresponding
+\strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{bayestestR::rope()}} or
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}) and its results included in the summary output.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -45,7 +50,7 @@ This function first calls \code{\link[=bootstrap_model]{bootstrap_model()}} to g
 bootstrapped coefficients. The resulting replicated for each coefficient
 are treated as "distribution", and is passed to \code{\link[bayestestR:describe_posterior]{bayestestR::describe_posterior()}}
 to calculate the related indices defined in the \code{"test"} argument.
-\cr\cr
+
 Note that that p-values returned here are estimated under the assumption of
 \emph{translation equivariance}: that shape of the sampling distribution is
 unaffected by the null being true or not. If this assumption does not hold,
@@ -59,7 +64,7 @@ The output can be passed directly to the various functions from the
 slopes, etc. and their confidence intervals. These can then be passed to
 \code{model_parameter()} to obtain standard errors, p-values, etc. (see
 example).
-\cr\cr
+
 Note that that p-values returned here are estimated under the assumption of
 \emph{translation equivariance}: that shape of the sampling distribution is
 unaffected by the null being true or not. If this assumption does not hold,
@@ -83,7 +88,8 @@ if (require("boot", quietly = TRUE)) {
 }
 }
 \references{
-Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their application (Vol. 1). Cambridge university press.
+Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their
+application (Vol. 1). Cambridge university press.
 }
 \seealso{
 \code{\link[=bootstrap_model]{bootstrap_model()}}, \code{\link[=simulate_parameters]{simulate_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}

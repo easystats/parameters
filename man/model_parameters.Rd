@@ -134,6 +134,8 @@ is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 within-group variable is found to have access between-group variance.
 }
+
+See also \href{https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html}{package vignette}.
 }
 
 \section{Labeling the Degrees of Freedom}{
@@ -238,7 +240,7 @@ to a \eqn{\chi}-squared distribution to compute CIs and p-values.
 
 \code{"profile"}
 \itemize{
-\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr} or \code{glmmTMB}.
+\item Applies to \emph{non-Bayesian models} of class \code{glm}, \code{polr}, \code{merMod} or \code{glmmTMB}.
 CIs computed by \emph{profiling the likelihood curve for a parameter}, using
 linear interpolation to find where likelihood ratio equals a critical value;
 p-values computed using the Wald method with a \emph{normal-distribution} (note:
@@ -331,7 +333,7 @@ that calculate estimated marginal means or marginal effects, such as
 of the \code{\link[=print.parameters_model]{print()}} method for \code{model_parameters()}.
 }
 
-\section{Global Options to Customize Messages when Printing}{
+\section{Global Options to Customize Messages and Tables when Printing}{
 
 The \code{verbose} argument can be used to display or silence messages and
 warnings for the different functions in the \strong{parameters} package. However,
@@ -353,6 +355,19 @@ show the additional information on how to interpret coefficients of models
 with log-transformed response variables or with log-/logit-links when the
 \code{exponentiate} argument in \code{model_parameters()} is not \code{TRUE}. Set this option
 to \code{FALSE} to hide this message when printing \code{model_parameters()} objects.
+}
+
+There are further options that can be used to modify the default behaviour
+for printed outputs:
+\itemize{
+\item \code{parameters_labels}: \code{options(parameters_labels = TRUE)} will use variable
+and value labels for pretty names, if data is labelled. If no labels
+available, default pretty names are used.
+\item \code{parameters_interaction}: \verb{options(parameters_interaction = <character>)}
+will replace the interaction mark (by default, \code{*}) with the related character.
+\item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
+default for the \code{select} argument. See argument's documentation for available
+options.
 }
 }
 

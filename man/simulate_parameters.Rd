@@ -52,22 +52,28 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to \code{\link[insight:get_varcov]{insight::get_varcov()}}, e.g. to allow simulated
+draws to be based on heteroscedasticity consistent variance covariance matrices.}
 }
 \value{
 A data frame with simulated parameters.
 }
 \description{
-Compute simulated draws of parameters and their related indices such as Confidence Intervals (CI) and p-values. Simulating parameter draws can be seen as a (computationally faster) alternative to bootstrapping.
+Compute simulated draws of parameters and their related indices
+such as Confidence Intervals (CI) and p-values. Simulating parameter draws
+can be seen as a (computationally faster) alternative to bootstrapping.
 }
 \details{
 \subsection{Technical Details}{
+
 \code{simulate_parameters()} is a computationally faster alternative
 to \code{bootstrap_parameters()}. Simulated draws for coefficients are based
 on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
 }
+
 \subsection{Models with Zero-Inflation Component}{
+
 For models from packages \strong{glmmTMB}, \strong{pscl}, \strong{GLMMadaptive} and
 \strong{countreg}, the \code{component} argument can be used to specify
 which parameters should be simulated. For all other models, parameters
@@ -96,7 +102,9 @@ if (require("glmmTMB", quietly = TRUE)) {
 }
 }
 \references{
-Gelman A, Hill J. Data analysis using regression and multilevel/hierarchical models. Cambridge; New York: Cambridge University Press 2007: 140-143
+Gelman A, Hill J. Data analysis using regression and
+multilevel/hierarchical models. Cambridge; New York: Cambridge University
+Press 2007: 140-143
 }
 \seealso{
 \code{\link[=bootstrap_model]{bootstrap_model()}}, \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}

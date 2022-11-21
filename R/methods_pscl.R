@@ -22,7 +22,7 @@ model_parameters.zerocount <- model_parameters.zcpglm
 
 #' @export
 ci.zeroinfl <- function(x,
-                        ci = .95,
+                        ci = 0.95,
                         dof = NULL,
                         method = "wald",
                         component = "all",
@@ -72,7 +72,11 @@ standard_error.zeroinfl <- function(model,
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
+    if (i == "count") {
+      comp <- "conditional"
+    } else {
+      comp <- "zi"
+    }
 
     stats <- cs[[i]]
 
@@ -129,7 +133,11 @@ p_value.zeroinfl <- function(model,
 
   cs <- datawizard::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
-    comp <- ifelse(i == "count", "conditional", "zi")
+    if (i == "count") {
+      comp <- "conditional"
+    } else {
+      comp <- "zi"
+    }
     stats <- cs[[i]]
 
     # remove log(theta)
@@ -184,7 +192,7 @@ simulate_model.zerocount <- simulate_model.zeroinfl
 simulate_parameters.zeroinfl <- function(model,
                                          iterations = 1000,
                                          centrality = "median",
-                                         ci = .95,
+                                         ci = 0.95,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {
@@ -213,7 +221,7 @@ simulate_parameters.zeroinfl <- function(model,
   }
 
   class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "iterations") <- iterations
   attr(out, "ci") <- ci
   attr(out, "ci_method") <- ci_method

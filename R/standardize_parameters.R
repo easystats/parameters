@@ -20,7 +20,7 @@
 #'
 #' @details
 #'
-#' # Standardization Methods
+#' ## Standardization Methods
 #' - **refit**: This method is based on a complete model re-fit with a
 #' standardized version of the data. Hence, this method is equal to
 #' standardizing the variables before fitting the model. It is the "purest" and
@@ -72,7 +72,7 @@
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 #' within-group variable is found to have access between-group variance.
 #'
-#' # Transformed Variables
+#' ## Transformed Variables
 #' When the model's formula contains transformations (e.g. `y ~ exp(X)`) `method
 #' = "refit"` will give different results compared to `method = "basic"`
 #' (`"posthoc"` and `"smart"` do not support such transformations): While
@@ -84,19 +84,19 @@
 #' details on how different transformations are dealt with when `method =
 #' "refit"`.
 #'
-#' # Confidence Intervals
+#' ## Confidence Intervals
 #' The returned confidence intervals are re-scaled versions of the
 #' unstandardized confidence intervals, and not "true" confidence intervals of
 #' the standardized coefficients (cf. Jones & Waller, 2015).
 #'
-#' # Generalized Linear Models
+#' ## Generalized Linear Models
 #' Standardization for generalized linear models (GLM, GLMM, etc) is done only
 #' with respect to the predictors (while the outcome remains as-is,
 #' unstandardized) - maintaining the interpretability of the coefficients (e.g.,
 #' in a binomial model: the exponent of the standardized parameter is the OR of
 #' a change of 1 SD in the predictor, etc.)
 #'
-#' # Dealing with Factors
+#' ## Dealing with Factors
 #' `standardize(model)` or `standardize_parameters(model, method = "refit")` do
 #' *not* standardize categorical predictors (i.e. factors) / their
 #' dummy-variables, which may be a different behaviour compared to other R
@@ -113,6 +113,8 @@
 #'
 #' @family standardize
 #' @family effect size indices
+#'
+#' @seealso See also [package vignette](https://easystats.github.io/parameters/articles/standardize_parameters_effsize.html).
 #'
 #' @examples
 #' model <- lm(len ~ supp * dose, data = ToothGrowth)
@@ -188,7 +190,7 @@ standardize_parameters.default <- function(model,
   # check for valid input
   .is_model_valid(model)
 
-  object_name <- insight::safe_deparse(substitute(model))
+  object_name <- insight::safe_deparse_symbol(substitute(model))
   method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
 
   m_info <- .get_model_info(model, ...)
@@ -210,9 +212,9 @@ standardize_parameters.default <- function(model,
 
   if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo")) {
     if (m_info$is_multivariate) {
-      stop(insight::format_message(
+      insight::format_error(
         "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
-      ), call. = FALSE)
+      )
     }
 
     pars <- .standardize_parameters_posthoc(pars, method, model, m_info, robust, two_sd, exponentiate,
@@ -228,7 +230,7 @@ standardize_parameters.default <- function(model,
   pars <- pars[, colnm[colnm %in% colnames(pars)]]
 
   if (!is.null(coefficient_name) && coefficient_name %in% c("Odds Ratio", "Risk Ratio", "IRR", "Prevalence Ratio")) {
-    colnames(pars)[colnames(pars) == "Coefficient"] <- gsub(" ", "_", coefficient_name)
+    colnames(pars)[colnames(pars) == "Coefficient"] <- gsub(" ", "_", coefficient_name, fixed = TRUE)
   }
 
   i <- colnames(pars) %in% c("Coefficient", "Median", "Mean", "MAP", "Odds_Ratio", "Risk_Ratio", "IRR", "Prevalence_Ratio")
@@ -281,16 +283,15 @@ standardize_parameters.parameters_model <- function(model,
                                                     verbose = TRUE,
                                                     ...) {
   if (method == "refit") {
-    stop(
+    insight::format_error(
       "Argument `refit` not supported for standardizing results from `model_parameters()`.",
-      call. = FALSE
     )
   }
 
   if (!is.null(ci)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "Argument `ci` not supported for standardizing results from `model_parameters()`. It is ignored."
-    ), call. = FALSE)
+    )
   }
 
   pars <- model
@@ -342,7 +343,7 @@ standardize_parameters.bootstrap_model <- function(model,
                                                    include_response = TRUE,
                                                    verbose = TRUE,
                                                    ...) {
-  object_name <- insight::safe_deparse(substitute(model))
+  object_name <- insight::safe_deparse_symbol(substitute(model))
   method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
 
   pars <- model
@@ -352,7 +353,7 @@ standardize_parameters.bootstrap_model <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    stop("The `refit` method is not supported for bootstrapped models.", call. = FALSE)
+    insight::format_error("The `refit` method is not supported for bootstrapped models.")
     ## But it would look something like this:
     # model <- standardize(model, robust = robust, two_sd = two_sd, verbose = verbose, m_info = m_info)
     # model <- parameters::bootstrap_model(model, iterations = 1000, verbose = verbose)
@@ -520,7 +521,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    warning("`robust` standardization not available for `pseudo` method.", call. = FALSE)
+    insight::format_warning("`robust` standardization not available for `pseudo` method.")
     robust <- FALSE
   }
 
@@ -552,7 +553,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
   } else {
-    stop(insight::format_message("`method` must be one of `basic`, `posthoc`, `smart` or `pseudo`."), call. = FALSE)
+    insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\" or \"pseudo\".")
   }
 
 

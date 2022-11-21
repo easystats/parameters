@@ -79,7 +79,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 
   # Sanity check
   if (length(unique(sapply(x, length))) != 1) {
-    stop("The clustering solutions are not of equal lengths.", call. = FALSE)
+    insight::format_error("The clustering solutions are not of equal lengths.")
   }
 
   # Convert to dataframe
@@ -103,7 +103,11 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
     if (any(is.na(x))) {
       NA
     } else {
-      ifelse(length(unique(x[!is.na(x)])) == 1, 0, 1)
+      if (length(unique(x[!is.na(x)])) == 1) {
+        0
+      } else {
+        1
+      }
     }
   }
 
@@ -134,7 +138,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 #' @inheritParams stats::predict
 predict.cluster_meta <- function(object, n = NULL, ...) {
   if (is.null(n)) {
-    stop("The number of clusters to extract `n` must be entered.", call. = FALSE)
+    insight::format_error("The number of clusters to extract `n` must be entered.")
   }
   d <- stats::as.dist(abs(object - 1))
   model <- stats::hclust(d)

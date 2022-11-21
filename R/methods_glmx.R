@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.glmx <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
                                   component = c("all", "conditional", "extra"),
@@ -30,7 +30,7 @@ model_parameters.glmx <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -65,9 +65,9 @@ p_value.glmx <- function(model, ...) {
 #' @export
 simulate_model.glmx <- function(model, iterations = 1000, component = c("all", "conditional", "extra"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }

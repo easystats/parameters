@@ -2,7 +2,7 @@
 #' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    effects = "all",
                                    bootstrap = FALSE,
                                    iterations = 1000,
@@ -36,14 +36,14 @@ model_parameters.mixor <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
   out
 }
 
 
 #' @export
-ci.mixor <- function(x, ci = .95, effects = "all", ...) {
+ci.mixor <- function(x, ci = 0.95, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
   .ci_generic(model = x, ci = ci, dof = Inf, effects = effects, ...)
 }
@@ -80,9 +80,9 @@ p_value.mixor <- function(model, effects = "all", ...) {
 #' @export
 simulate_model.mixor <- function(model, iterations = 1000, effects = "all", ...) {
   effects <- match.arg(effects, choices = c("all", "fixed", "random"))
-  out <- .simulate_model(model, iterations, component = "conditional", effects = effects)
+  out <- .simulate_model(model, iterations, component = "conditional", effects = effects, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }

@@ -93,14 +93,15 @@ as \code{method}).}
 
 \item{n_max}{Maximal number of clusters to test.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}.}
 
 \item{clustering_function, gap_method}{Other arguments passed to other
-functions. \code{clustering_function} is used by \code{fviz_nbclust} and
-can be \code{kmeans}, code{cluster::pam}, code{cluster::clara},
-code{cluster::fanny}, and more. \code{gap_method} is used by
-\code{cluster::maxSE} to extract the optimal numbers of clusters (see its
-\code{method} argument).}
+functions. \code{clustering_function} is used by \code{fviz_nbclust()} and
+can be \code{kmeans}, \code{cluster::pam}, \code{cluster::clara}, \code{cluster::fanny}, and
+more. \code{gap_method} is used by \code{cluster::maxSE} to extract the optimal
+numbers of clusters (see its \code{method} argument).}
 
 \item{method, min_size, eps_n, eps_range}{Arguments for DBSCAN algorithm.}
 
@@ -116,16 +117,16 @@ case of bootstrapped frequentist models.}
 }
 \description{
 Similarly to \code{\link[=n_factors]{n_factors()}} for factor / principal component analysis,
-\code{n_clusters} is the main function to find out the optimal numbers of clusters
+\code{n_clusters()} is the main function to find out the optimal numbers of clusters
 present in the data based on the maximum consensus of a large number of
 methods.
-\cr
+
 Essentially, there exist many methods to determine the optimal number of
 clusters, each with pros and cons, benefits and limitations. The main
 \code{n_clusters} function proposes to run all of them, and find out the number of
 clusters that is suggested by the majority of methods (in case of ties, it
 will select the most parsimonious solution with fewer clusters).
-\cr
+
 Note that we also implement some specific, commonly used methods, like the
 Elbow or the Gap method, with their own visualization functionalities. See
 the examples below for more details.
@@ -206,8 +207,7 @@ if (require("dbscan", quietly = TRUE)) {
 \donttest{
 #
 # hclust method -------------------------------
-if (require("pvclust", quietly = TRUE) &&
-  getRversion() >= "3.6.0") {
+if (require("pvclust", quietly = TRUE)) {
   # iterations should be higher for real analyses
   x <- n_clusters_hclust(iris[1:4], iterations = 50, ci = 0.90)
   x

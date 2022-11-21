@@ -20,11 +20,12 @@ simulate_model(model, iterations = 1000, ...)
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed to \code{\link[insight:get_varcov]{insight::get_varcov()}}, e.g. to allow simulated
+draws to be based on heteroscedasticity consistent variance covariance matrices.}
 
 \item{component}{Should all parameters, parameters for the conditional model,
-for the zero-inflated part of the model, or the dispersion model be returned?
-Applies to models with zero-inflated and/or dispersion component. \code{component}
+for the zero-inflation part of the model, or the dispersion model be returned?
+Applies to models with zero-inflation and/or dispersion component. \code{component}
 may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"dispersion"} or
 \code{"all"} (default). May be abbreviated.}
 
@@ -34,16 +35,20 @@ may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"
 A data frame.
 }
 \description{
-Simulate draws from a statistical model to return a data frame of estimates.
+Simulate draws from a statistical model to return a data frame
+of estimates.
 }
 \details{
 \subsection{Technical Details}{
+
 \code{simulate_model()} is a computationally faster alternative
 to \code{bootstrap_model()}. Simulated draws for coefficients are based
 on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
 }
+
 \subsection{Models with Zero-Inflation Component}{
+
 For models from packages \strong{glmmTMB}, \strong{pscl}, \strong{GLMMadaptive} and
 \strong{countreg}, the \code{component} argument can be used to specify
 which parameters should be simulated. For all other models, parameters
@@ -68,7 +73,5 @@ if (require("glmmTMB", quietly = TRUE)) {
 }
 }
 \seealso{
-\code{\link[=simulate_parameters]{simulate_parameters()}},
-\code{\link[=bootstrap_model]{bootstrap_model()}},
-\code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
+\code{\link[=simulate_parameters]{simulate_parameters()}}, \code{\link[=bootstrap_model]{bootstrap_model()}}, \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}
 }

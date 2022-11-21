@@ -81,7 +81,7 @@ standard_error.vglm <- function(model, ...) {
 
 
 
-# ci.vgam <- function(x, ci = .95, component = c("all", "conditional", "smooth"), ...) {
+# ci.vgam <- function(x, ci = 0.95, component = c("all", "conditional", "smooth"), ...) {
 #   component <- match.arg(component)
 #
 #   # dof and SE

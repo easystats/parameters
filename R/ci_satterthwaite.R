@@ -1,6 +1,6 @@
 #' @rdname p_value_satterthwaite
 #' @export
-ci_satterthwaite <- function(model, ci = .95, ...) {
+ci_satterthwaite <- function(model, ci = 0.95, ...) {
   df_satter <- dof_satterthwaite(model)
   out <- lapply(ci, function(i) {
     .ci_dof(

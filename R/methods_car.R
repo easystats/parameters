@@ -55,7 +55,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   params <- do.call(".add_model_parameters_attributes", args)
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(params, "no_caption") <- TRUE
   params
 }

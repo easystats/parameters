@@ -30,6 +30,9 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  font_size = "100\%",
+  line_padding = 4,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -92,6 +95,9 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
+  font_size = "100\%",
+  line_padding = 4,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -127,30 +133,73 @@
 \item{format}{String, indicating the output format. Can be \code{"markdown"}
 or \code{"html"}.}
 
-\item{pretty_names}{Return "pretty" (i.e. more human readable) parameter
-names.}
+\item{pretty_names}{Can be \code{TRUE}, which will return "pretty" (i.e. more human
+readable) parameter names. Or \code{"labels"}, in which case value and variable
+labels will be used as parameters names. The latter only works for "labelled"
+data, i.e. if the data used to fit the model had \code{"label"} and \code{"labels"}
+attributes. See also section \emph{Global Options to Customize Messages when Printing}.}
 
 \item{split_components}{Logical, if \code{TRUE} (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
 
-\item{select}{Character vector (or numeric index) of column names that should
-be printed. If \code{NULL} (default), all columns are printed. The shortcut
-\code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-while \code{select = "short"} prints coefficient, standard errors and p-values.}
+\item{select}{Determines which columns and and which layout columns are
+printed. There are three options for this argument:
+\enumerate{
+\item Selecting columns by name or index
+\cr
+\code{select} can be a character vector (or numeric index) of column names that
+should be printed. There are two pre-defined options for selecting columns:
+\code{select = "minimal"} prints coefficients, confidence intervals and p-values,
+while \code{select = "short"} prints coefficients, standard errors and p-values.
+\item A string expression with layout pattern
+\cr
+\code{select} is a string with "tokens" enclosed in braces. These tokens will
+be replaced by their associated columns, where the selected columns will
+be collapsed into one column. However, it is possible to create multiple
+columns as well. Following tokens are replaced by the related coefficients
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells/columns. If
+\code{format = "html"}, a \verb{<br>} inserts a line break inside a cell. See
+'Examples'.
+\item A string indicating a pre-defined layout
+\cr
+\code{select} can be one of the following string values, to create one of the
+following pre-defined column layouts:
+\itemize{
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
+This is equivalent to \code{select = "{estimate} ({ci})"}.
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to \code{select = "{estimate} ({se})"}.
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to \code{select = "{estimate}{stars} ({ci})"}.
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+equivalent to \code{select = "{estimate}{stars} ({se})"}..
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
+}
 
-\item{caption}{Table caption as string. If \code{NULL}, no table caption is printed.}
+For \code{model_parameters()}, glue-like syntax is still experimental in the
+case of more complex models (like mixed models) and may not return expected
+results.}
+
+\item{caption}{Table caption as string. If \code{NULL}, depending on the model,
+either a default caption or no table caption is printed. Use \code{caption = ""}
+to suppress the table caption.}
 
 \item{subtitle}{Table title (same as caption) and subtitle, as strings. If \code{NULL},
 no title or subtitle is printed, unless it is stored as attributes (\code{table_title},
 or its alias \code{table_caption}, and \code{table_subtitle}). If \code{x} is a list of
 data frames, \code{caption} may be a list of table captions, one for each table.}
 
-\item{footer}{Table footer, as string. For markdown-formatted tables, table
-footers, due to the limitation in markdown rendering, are actually just a
-new text line under the table. If \code{x} is a list of data frames, \code{footer}
-may be a list of table captions, one for each table.}
+\item{footer}{Can either be \code{FALSE} or an empty string (i.e. \code{""}) to
+suppress the footer, \code{NULL} to print the default footer, or a string. The
+latter will combine the string value with the default footer.}
 
 \item{align}{Only applies to HTML tables. May be one of \code{"left"},
 \code{"right"} or \code{"center"}.}
@@ -175,6 +224,13 @@ standard deviation.}
 \item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
+
+\item{font_size}{For HTML tables, the font size.}
+
+\item{line_padding}{For HTML tables, the distance (in pixel) between lines.}
+
+\item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
+column names are generated. See 'Examples'.}
 
 \item{verbose}{Toggle messages and warnings.}
 
@@ -229,4 +285,21 @@ for examples.
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)
 display(mp)
+
+\dontrun{
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+out <- compare_parameters(lm1, lm2, lm3)
+
+print_html(
+  out,
+  select = "{coef}{stars}|({ci})",
+  column_labels = c("Estimate", "95\% CI")
+)
+}
+}
+\seealso{
+\code{\link[=print.parameters_model]{print.parameters_model()}}
 }

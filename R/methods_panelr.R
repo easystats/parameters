@@ -6,7 +6,7 @@
 #' @inheritParams model_parameters.merMod
 #' @export
 model_parameters.wbm <- function(model,
-                                 ci = .95,
+                                 ci = 0.95,
                                  ci_random = NULL,
                                  bootstrap = FALSE,
                                  iterations = 1000,
@@ -37,7 +37,7 @@ model_parameters.wbm <- function(model,
     ...
   )
 
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", "data.frame")
 
 

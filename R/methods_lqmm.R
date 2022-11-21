@@ -1,7 +1,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.lqmm <- function(model,
-                                  ci = .95,
+                                  ci = 0.95,
                                   bootstrap = FALSE,
                                   iterations = 1000,
                                   p_adjust = NULL,
@@ -35,7 +35,7 @@ model_parameters.lqmm <- function(model,
     ...
   )
 
-  attr(parameters, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(parameters, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(parameters) <- c("parameters_model", "see_parameters_model", class(parameters))
 
   parameters

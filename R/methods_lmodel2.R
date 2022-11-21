@@ -4,7 +4,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.lmodel2 <- function(model,
-                                     ci = .95,
+                                     ci = 0.95,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
                                      verbose = TRUE,
@@ -29,7 +29,7 @@ model_parameters.lmodel2 <- function(model,
     ...
   )
 
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 

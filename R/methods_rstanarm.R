@@ -13,9 +13,9 @@
 #'   `group_level = FALSE` (the default), only information on SD and COR
 #'   are shown.
 #' @param component Which type of parameters to return, such as parameters for the
-#'   conditional model, the zero-inflated part of the model, the dispersion
+#'   conditional model, the zero-inflation part of the model, the dispersion
 #'   term, or other auxiliary parameters be returned? Applies to models with
-#'   zero-inflated and/or dispersion formula, or if parameters such as `sigma`
+#'   zero-inflation and/or dispersion formula, or if parameters such as `sigma`
 #'   should be included. May be abbreviated. Note that the *conditional*
 #'   component is also called *count* or *mean* component, depending on the
 #'   model. There are three convenient shortcuts: `component = "all"` returns
@@ -62,9 +62,9 @@
 model_parameters.stanreg <- function(model,
                                      centrality = "median",
                                      dispersion = FALSE,
-                                     ci = .95,
+                                     ci = 0.95,
                                      ci_method = "eti",
-                                     test = c("pd", "rope"),
+                                     test = "pd",
                                      rope_range = "default",
                                      rope_ci = 0.95,
                                      bf_prior = NULL,
@@ -101,12 +101,14 @@ model_parameters.stanreg <- function(model,
 
   if (effects != "fixed") {
     random_effect_levels <- which(
-      params$Effects %in% "random" &
-        grepl("^(?!Sigma\\[)(.*)", params$Parameter, perl = TRUE)
+      params$Effects %in% "random" & !startsWith(params$Parameter, "Sigma[")
     )
-    if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
+    if (length(random_effect_levels) && isFALSE(group_level)) {
+      params <- params[-random_effect_levels, , drop = FALSE]
+    }
   }
 
+  ## TODO: can we use the regular pretty-name-formatting?
   params <- .add_pretty_names(params, model)
 
   # exponentiate coefficients and SE/CI, if requested
@@ -123,7 +125,7 @@ model_parameters.stanreg <- function(model,
   )
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
 
   params
@@ -134,7 +136,7 @@ model_parameters.stanreg <- function(model,
 model_parameters.stanmvreg <- function(model,
                                        centrality = "median",
                                        dispersion = FALSE,
-                                       ci = .95,
+                                       ci = 0.95,
                                        ci_method = "eti",
                                        test = "pd",
                                        rope_range = "default",
@@ -173,7 +175,7 @@ model_parameters.stanmvreg <- function(model,
   params <- .add_pretty_names(params, model)
 
   attr(params, "ci") <- ci
-  attr(params, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params

@@ -1,36 +1,37 @@
-#' Simulated draws from model coefficients
+#' @title Simulated draws from model coefficients
+#' @name simulate_model
 #'
-#' Simulate draws from a statistical model to return a data frame of estimates.
+#' @description Simulate draws from a statistical model to return a data frame
+#' of estimates.
 #'
 #' @param model Statistical model (no Bayesian models).
 #' @param component Should all parameters, parameters for the conditional model,
-#'   for the zero-inflated part of the model, or the dispersion model be returned?
-#'   Applies to models with zero-inflated and/or dispersion component. `component`
+#'   for the zero-inflation part of the model, or the dispersion model be returned?
+#'   Applies to models with zero-inflation and/or dispersion component. `component`
 #'   may be one of `"conditional"`, `"zi"`, `"zero-inflated"`, `"dispersion"` or
 #'    `"all"` (default). May be abbreviated.
+#' @param ... Arguments passed to [`insight::get_varcov()`], e.g. to allow simulated
+#' draws to be based on heteroscedasticity consistent variance covariance matrices.
 #' @inheritParams bootstrap_model
 #' @inheritParams p_value
 #'
 #' @return A data frame.
 #'
-#' @seealso [`simulate_parameters()`][simulate_parameters],
-#' [`bootstrap_model()`][bootstrap_model],
-#' [`bootstrap_parameters()`][bootstrap_parameters]
+#' @seealso [`simulate_parameters()`], [`bootstrap_model()`], [`bootstrap_parameters()`]
 #'
 #' @details
-#'   \subsection{Technical Details}{
-#'     `simulate_model()` is a computationally faster alternative
-#'     to `bootstrap_model()`. Simulated draws for coefficients are based
-#'     on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
-#'     `mu = coef(model)` and variance `Sigma = vcov(model)`.
-#'   }
-#'   \subsection{Models with Zero-Inflation Component}{
-#'     For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
-#'     **countreg**, the `component` argument can be used to specify
-#'     which parameters should be simulated. For all other models, parameters
-#'     from the conditional component (fixed effects) are simulated. This may
-#'     include smooth terms, but not random effects.
-#'   }
+#' ## Technical Details
+#' `simulate_model()` is a computationally faster alternative
+#' to `bootstrap_model()`. Simulated draws for coefficients are based
+#' on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
+#' `mu = coef(model)` and variance `Sigma = vcov(model)`.
+#'
+#' ## Models with Zero-Inflation Component
+#' For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
+#' **countreg**, the `component` argument can be used to specify
+#' which parameters should be simulated. For all other models, parameters
+#' from the conditional component (fixed effects) are simulated. This may
+#' include smooth terms, but not random effects.
 #'
 #' @examples
 #' model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
@@ -62,10 +63,10 @@ simulate_model.default <- function(model, iterations = 1000, ...) {
   # check for valid input
   .is_model_valid(model)
 
-  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed")
+  out <- .simulate_model(model, iterations, component = "conditional", effects = "fixed", ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -222,13 +223,14 @@ simulate_model.bracl <- simulate_model.default
 # helper -----------------------------------------
 
 
-.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed") {
+.simulate_model <- function(model, iterations, component = "conditional", effects = "fixed", ...) {
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
   beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
-  varcov <- insight::get_varcov(model, component = component, effects = effects)
+  # "..." allow specification of vcov-args (#784)
+  varcov <- insight::get_varcov(model, component = component, effects = effects, ...)
   as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()
@@ -247,16 +249,16 @@ simulate_model.bracl <- simulate_model.default
 .mvrnorm <- function(n = 1, mu, Sigma, tol = 1e-06) {
   p <- length(mu)
   if (!all(dim(Sigma) == c(p, p))) {
-    stop(insight::format_message(
+    insight::format_error(
       "Incompatible arguments to calculate multivariate normal distribution."
-    ), call. = FALSE)
+    )
   }
 
   eS <- eigen(Sigma, symmetric = TRUE)
   ev <- eS$values
 
   if (!all(ev >= -tol * abs(ev[1L]))) {
-    stop("'Sigma' is not positive definite.", call. = FALSE)
+    insight::format_error("`Sigma` is not positive definite.")
   }
 
   X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))

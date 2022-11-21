@@ -140,77 +140,77 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   insight::check_if_installed("performance")
 
   if (!insight::is_regression_model(model)) {
-    stop(insight::format_message(
-      paste(deparse(substitute(model)), "is not a supported insight model."),
-      "You may be able to dominance analyze this model using the domir package."
-    ), call. = FALSE)
+    insight::format_error(
+      paste(deparse(substitute(model)), "is not a supported {.pkg insight} model."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
+    )
   }
 
   if (!any(utils::.S3methods("r2", class = class(model)[[1]], envir = getNamespace("performance")) ==
     paste0("r2.", class(model)[[1]]))) {
-    stop(insight::format_message(
-      paste(deparse(substitute(model)), "does not have a perfomance-supported r2 method."),
-      "You may be able to dominance analyze this model using the domir package."
-    ), call. = FALSE)
+    insight::format_error(
+      paste(deparse(substitute(model)), "does not have a {.pkg perfomance}-supported `r2()` method."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
+    )
   }
 
   model_info <- insight::model_info(model)
   if (any(unlist(model_info[c("is_bayesian", "is_mixed", "is_gam", "is_multivariate", "is_zero_inflated", "is_hurdle")]))) {
-    stop(insight::format_message(
-      paste0("`dominance_analysis()` does not yet support models of class ", class(model), "."),
-      "You may be able to dominance analyze this model using the domir package."
-    ), call. = FALSE)
+    insight::format_error(
+      paste0("`dominance_analysis()` does not yet support models of class `", class(model), "`."),
+      "You may be able to dominance analyze this model using the {.pkg domir} package."
+    )
   }
 
   if (!is.null(insight::find_interactions(model))) {
-    stop("Interactions in the model formula are not allowed.", call. = FALSE)
+    insight::format_error("Interactions in the model formula are not allowed.")
   }
 
   if (!all(insight::find_predictors(model)$conditional %in% attr(stats::terms(insight::find_formula(model)$conditional), "term.labels"))) {
-    stop(insight::format_message(
+    insight::format_error(
       "Predictors do not match terms.",
-      "This usually occurs when there are in-formula predictor transformations such as log(x) or I(x+z)."
-    ), call. = FALSE)
+      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z).`"
+    )
   }
 
   if (!is.null(insight::find_offset(model))) {
-    stop("Offsets in the model formula are not allowed.", call. = FALSE)
+    insight::format_error("Offsets in the model formula are not allowed.")
   }
 
   if (getRversion() < "3.5") {
-    stop("R versions < 3.5 not supported.", call. = FALSE)
+    insight::format_error("R versions < 3.5 not supported.")
   }
 
   if (!is.null(sets)) {
     if (!is.list(sets)) {
-      stop("sets argument must be submitted as list.", call. = FALSE)
+      insight::format_error("`sets` argument must be submitted as list.")
     }
 
     if (length(sets) != length(unlist(sets))) {
-      stop("Nested lists are not allowed in sets.", call. = FALSE)
+      insight::format_error("Nested lists are not allowed in `sets`.")
     }
 
-    if (!all(sapply(sets, isa, "formula"))) {
-      stop("Each element of list in sets must be a formula.", call. = FALSE)
+    if (!all(sapply(sets, inherits, "formula"))) {
+      insight::format_error("Each element of list in `sets` must be a formula.")
     }
 
     if (any(sapply(sets, function(x) attr(stats::terms(x), "response") == 1))) {
-      stop("Formulas in sets argument must not have responses/left hand sides.", call. = FALSE)
+      insight::format_error("Formulas in `sets` argument must not have responses/left hand sides.")
     }
   }
 
   if (!is.null(all)) {
-    if (!isa(all, "formula")) {
-      stop("all argument must be submitted as a formula.", call. = FALSE)
+    if (!inherits(all, "formula")) {
+      insight::format_error("`all` argument must be submitted as a formula.")
     }
 
     if (attr(stats::terms(all), "response") == 1) {
-      stop("Formula in all argument must not have a response/left hand side.", call. = FALSE)
+      insight::format_error("Formula in `all` argument must not have a response/left hand side.")
     }
   }
 
   if (!is.null(quote_args) && !all(is.character(quote_args))) {
-    stop("All arguments in quote_args must be characters.", call. = FALSE)
+    insight::format_error("All arguments in `quote_args` must be characters.")
   }
 
   # Collect components for arguments ----
@@ -231,13 +231,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     if (length(set_remove_loc) != length(unlist(sets_processed))) {
       wrong_set_terms <- unlist(sets_processed)[which(!(unlist(sets_processed) %in% ivs))]
 
-      stop(
-        insight::format_message(
-          "Terms",
-          paste(wrong_set_terms, sep = " "),
-          "in sets argument do not match any predictors in model."
-        ),
-        call. = FALSE
+      insight::format_error(
+        "Terms",
+        paste(wrong_set_terms, sep = " "),
+        "in `sets` argument do not match any predictors in model."
       )
     }
 
@@ -253,23 +250,20 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     }
 
     if (any(set_names %in% c("all", "constant"))) {
-      stop(
-        insight::format_message(
-          "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
-          "Please rename any sets currently named 'all' or 'constant.'"
-        ),
-        call. = FALSE
+      insight::format_error(
+        "Names \"all\" and \"constant\" are reserved for subset names in the `dominance_analysis()` function.",
+        "Please rename any sets currently named \"all\" or \"constant\"."
       )
     }
 
     if (any(set_names %in% ivs)) {
       repeat_names <- set_names[which(set_names %in% ivs)]
 
-      stop(insight::format_message(
+      insight::format_error(
         "Set names",
         paste(repeat_names, sep = " "), "are also the names of invidiual predictors.",
         "Please rename these sets."
-      ), call. = FALSE)
+      )
     }
   } else {
     sets_processed <- NULL
@@ -286,21 +280,21 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     if (any(all_processed %in% unlist(sets_processed))) {
       reused_terms <- all_processed[which(all_processed %in% unlist(sets_processed))]
 
-      stop(insight::format_message(
+      insight::format_error(
         "Terms",
         paste(reused_terms, sep = " "),
-        "in all argument are also used in sets argument."
-      ), call. = FALSE)
+        "in all argument are also used in `sets` argument."
+      )
     }
 
     if (length(all_remove_loc) != length(unlist(all_processed))) {
       wrong_all_terms <- all_processed[which(!(all_processed) %in% ivs)]
 
-      stop(insight::format_message(
+      insight::format_error(
         "Terms",
         paste(wrong_all_terms, sep = " "),
-        "in all argument do not match any predictors in model."
-      ), call. = FALSE)
+        "in `all` argument do not match any predictors in model."
+      )
     }
 
     ivs <- ivs[-all_remove_loc] # update IVs
@@ -310,24 +304,18 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   # name collisions across subsets - exit
   if (any(ivs %in% c("all", "constant"))) {
-    stop(
-      insight::format_message(
-        "Names 'all' and 'constant' are reserved for subset names in the dominance_analysis function.",
-        "Please rename any predictors currently named 'all' or 'constant.'",
-        "Alternatively, put the predictor in a set by itself."
-      ),
-      call. = FALSE
+    insight::format_error(
+      "Names 'all' and 'constant' are reserved for subset names in the `dominance_analysis()` function.",
+      "Please rename any predictors currently named 'all' or 'constant.'",
+      "Alternatively, put the predictor in a set by itself."
     )
   }
 
   # big DA warning
   if (length(c(ivs, unlist(sets_processed))) > 15) {
-    warning(
-      cat(paste(
-        "Total of", 2^length(ivs) - 1, "models to be estimated.\n",
-        "Process may take some time."
-      )),
-      call. = FALSE
+    insight::format_warning(
+      paste0("Total of ", 2^length(ivs) - 1, " models to be estimated."),
+      "Process may take some time."
     )
   }
 
@@ -342,7 +330,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (length(which(names(args) %in% c("formula", "data"))) != 2) {
     # exit if formula and data arguments missing
-    stop("Model submitted does not have a formula and data argument.", call. = FALSE)
+    insight::format_error("Model submitted does not have a formula and `data` argument.")
   }
 
   args <- args[loc] # remove formula and data arguments
@@ -351,7 +339,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   # quote arguments for domin
   for (arg in quote_args) {
     if (!(arg %in% names(args))) {
-      stop(arg, " in quote_args not among arguments in model.", call. = FALSE)
+      insight::format_error(arg, " in `quote_args` not among arguments in model.")
     } else {
       args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
     }
@@ -402,9 +390,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   if (!is.null(sets)) {
     for (set in seq_along(sets)) {
-      set_name <- ifelse(!is.null(names(sets)[[set]]), names(sets)[[set]],
+      set_name <- if (!is.null(names(sets)[[set]])) {
+        names(sets)[[set]]
+      } else {
         paste0("set", set)
-      )
+      }
 
       da_df_cat$subset <-
         replace(

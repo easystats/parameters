@@ -6,7 +6,7 @@
 #' @rdname model_parameters.averaging
 #' @export
 model_parameters.mvord <- function(model,
-                                   ci = .95,
+                                   ci = 0.95,
                                    component = c("all", "conditional", "thresholds", "correlation"),
                                    standardize = NULL,
                                    exponentiate = FALSE,
@@ -26,7 +26,7 @@ model_parameters.mvord <- function(model,
     p_adjust = p_adjust,
     ...
   )
-  attr(out, "object_name") <- deparse(substitute(model), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
 
@@ -86,9 +86,9 @@ p_value.mvord <- function(model, component = c("all", "conditional", "thresholds
 #' @export
 simulate_model.mvord <- function(model, iterations = 1000, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
-  out <- .simulate_model(model, iterations, component = component)
+  out <- .simulate_model(model, iterations, component = component, ...)
 
   class(out) <- c("parameters_simulate_model", class(out))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(model))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
