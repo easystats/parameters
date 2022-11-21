@@ -40,10 +40,12 @@
   # add modelname to column names; for single column layout per model, we just
   # need the column name. If the layout contains more than one column per model,
   # add modelname in parenthesis.
-  if (ncol(out) > 1) {
-    colnames(out) <- paste0(colnames(out), " (", modelname, ")")
-  } else {
-    colnames(out) <- modelname
+  if (!is.null(modelname) && nchar(modelname) > 0) {
+    if (ncol(out) > 1) {
+      colnames(out) <- paste0(colnames(out), " (", modelname, ")")
+    } else {
+      colnames(out) <- modelname
+    }
   }
 
   # remove empty parenthesis

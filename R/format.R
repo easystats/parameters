@@ -185,13 +185,19 @@ format.parameters_model <- function(x,
       if (length(additional_columns)) {
         additional_columns <- formtab[additional_columns]
       }
+      # define column names in case the glue-pattern has multiple columns.
+      if (grepl("|", style, fixed = TRUE)) {
+        cn <- NULL
+      } else {
+        cn <- .style_pattern_to_name(style)
+      }
       formtab <- cbind(
         formtab[1],
         .format_output_style(
           formtab[2:ncol(formtab)],
           style = style,
           format = format,
-          modelname = .style_pattern_to_name(style)
+          modelname = cn
         )
       )
       if (!insight::is_empty_object(additional_columns)) {
