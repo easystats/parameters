@@ -110,7 +110,6 @@
 <span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ci_brackets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"["</span>, <span class="st">"]"</span><span class="op">)</span>,</span>
-<span>  style <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -140,12 +139,40 @@ in a single table and a <code>Component</code> column is added to the output.</p
 
 
 <dt>select</dt>
-<dd><p>Character vector (or numeric index) of column names that should
-be printed. If <code>NULL</code> (default), all columns are printed. The shortcut
-<code>select = "minimal"</code> prints coefficient, confidence intervals and p-values,
-while <code>select = "short"</code> prints coefficient, standard errors and p-values.
-For more custmized selection of columns and table layout, see <code>style</code>
-argument.</p></dd>
+<dd><p>Determines which columns and and which layout columns are
+printed. There are three options for this argument:</p><ol><li><p>Selecting columns by name or index
+<br><code>select</code> can be a character vector (or numeric index) of column names that
+should be printed. There are two pre-defined options for selecting columns:
+<code>select = "minimal"</code> prints coefficients, confidence intervals and p-values,
+while <code>select = "short"</code> prints coefficients, standard errors and p-values.</p></li>
+<li><p>A string expression with layout pattern
+<br><code>select</code> is a string with "tokens" enclosed in braces. These tokens will
+be replaced by their associated columns, where the selected columns will
+be collapsed into one column. However, it is possible to create multiple
+columns as well. Following tokens are replaced by the related coefficients
+or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{ci}</code> (or <code>{ci_low}</code> and <code>{ci_high}</code>),
+<code>{p}</code> and <code>{stars}</code>. The token <code>{ci}</code> will be replaced by <code>{ci_low}, {ci_high}</code>.
+Furthermore, a <code>|</code> separates values into new cells/columns. If
+<code>format = "html"</code>, a <code>&lt;br&gt;</code> inserts a line break inside a cell. See
+'Examples'.</p></li>
+<li><p>A string indicating a pre-defined layout
+<br><code>select</code> can be one of the following string values, to create one of the
+following pre-defined column layouts:</p><ul><li><p><code>"ci"</code>: Estimates and confidence intervals, no asterisks for p-values.
+This is equivalent to <code>select = "{estimate} ({ci})"</code>.</p></li>
+<li><p><code>"se"</code>: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to <code>select = "{estimate} ({se})"</code>.</p></li>
+<li><p><code>"ci_p"</code>: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to <code>select = "{estimate}{stars} ({ci})"</code>.</p></li>
+<li><p><code>"se_p"</code>: Estimates, standard errors and asterisks for p-values. This is
+equivalent to <code>select = "{estimate}{stars} ({se})"</code>..</p></li>
+<li><p><code>"ci_p2"</code>: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to <code>select = "{estimate} ({ci})|{p}"</code>.</p></li>
+<li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to <code>select = "{estimate} ({se})|{p}"</code>.</p></li>
+</ul></li>
+</ol><p>For <code><a href="model_parameters.html">model_parameters()</a></code>, glue-like syntax is still experimental in the
+case of more complex models (like mixed models) and may not return expected
+results.</p></dd>
 
 
 <dt>caption</dt>
@@ -212,31 +239,6 @@ columns across all table components are adjusted to have the same width.</p></dd
 <dt>ci_brackets</dt>
 <dd><p>Logical, if <code>TRUE</code> (default), CI-values are
 encompassed in square brackets (else in parentheses).</p></dd>
-
-
-<dt>style</dt>
-<dd><p>String, indicating which style of output is requested. For
-<code><a href="compare_parameters.html">compare_parameters()</a></code>, following templates are possible:</p><ul><li><p>glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: <code>{estimate}</code>, <code>{se}</code>, <code>{ci}</code> (or <code>{ci_low}</code> and <code>{ci_high}</code>),
-<code>{p}</code> and <code>{stars}</code>. The token <code>{ci}</code> will be replaced by <code>{ci_low}, {ci_high}</code>.
-Furthermore, a <code>|</code> separates values into new cells. If <code>format = "html"</code>,
-a <code>&lt;br&gt;</code> inserts a line break inside a cell. See 'Examples'.</p></li>
-<li><p><code>"ci"</code>: Estimates and confidence intervals, no asterisks for p-values. This
-is equivalent to <code>style = "{estimate} ({ci})"</code>.</p></li>
-<li><p><code>"se"</code>: Estimates and standard errors, no asterisks for p-values. This is
-equivalent to <code>style = "{estimate} ({se})"</code>.</p></li>
-<li><p><code>"ci_p"</code>: Estimates, confidence intervals and asterisks for p-values. This
-is equivalent to <code>style = "{estimate}{stars} ({ci})"</code>.</p></li>
-<li><p><code>"se_p"</code>: Estimates, standard errors and asterisks for p-values. This is
-equivalent to <code>style = "{estimate}{stars} ({se})"</code>.</p></li>
-<li><p><code>"ci_p2"</code>: Estimates, confidence intervals and numeric p-values, in two
-columns. This is equivalent to <code>style = "{estimate} ({ci})|{p}"</code>.</p></li>
-<li><p><code>"se_p2"</code>: Estimate, standard errors and numeric p-values, in two columns.
-This is equivalent to <code>style = "{estimate} ({se})|{p}"</code>.</p></li>
-</ul><p>For <code><a href="model_parameters.html">model_parameters()</a></code>, glue-like syntax is still experimental in the
-case of more complex models (like mixed models). If <code>style</code> does not return
-the expected results, it is recommended to use the <code>select</code> argument and
-its shortcuts, or <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -320,7 +322,8 @@ freedom.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>There is a dedicated method to use inside rmarkdown files,
-<code><a href="display.parameters_model.html">print_md()</a></code>.</p></div>
+<code><a href="display.parameters_model.html">print_md()</a></code>. See also
+<code><a href="display.parameters_model.html">display()</a></code>.</p></div>
     </div>
 
     <div class="section level2">
@@ -525,6 +528,31 @@ freedom.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   using a Wald t-distribution approximation.</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># custom column layouts ------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># custom style</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, select <span class="op">=</span> <span class="st">"{estimate}{stars} ({se})"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter            |            lm1 |             lm2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          | 5.01*** (0.07) |  3.68*** (0.11)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Species (versicolor) | 0.93*** (0.10) | -1.60*** (0.19)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Species (virginica)  | 1.58*** (0.10) | -2.12*** (0.27)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal Length         |                |  0.90*** (0.06)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observations         |            150 |             150</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># custom style, in HTML</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, select <span class="op">=</span> <span class="st">"{estimate}&lt;br&gt;({se})|{p}"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
