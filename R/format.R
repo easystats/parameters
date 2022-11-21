@@ -15,7 +15,6 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     groups = NULL,
-                                    style = NULL,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -26,6 +25,18 @@ format.parameters_model <- function(x,
   mixed_model <- attributes(x)$mixed_model
   random_variances <- isTRUE(attributes(x)$ran_pars)
   mean_group_values <- attributes(x)$mean_group_values
+
+  # process selection of columns
+  style <- NULL
+  if (!is.null(select)) {
+    # glue-like syntax, so we switch to "style" argument here
+    if (length(select) == 1 &&
+        is.character(select) &&
+        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+      style <- select
+      select <- NULL
+    }
+  }
 
   # is information about grouped parameters stored as attribute?
   if (is.null(groups) && !is.null(attributes(x)$coef_groups)) {
@@ -251,6 +262,7 @@ format.parameters_brms_meta <- format.parameters_model
 #' @export
 format.compare_parameters <- function(x,
                                       split_components = TRUE,
+                                      select = NULL,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
@@ -259,7 +271,6 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
-                                      style = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL
@@ -370,7 +381,7 @@ format.compare_parameters <- function(x,
       zap_small = zap_small,
       ...
     )
-    out <- cbind(out, .format_output_style(cols, style, format, i))
+    out <- cbind(out, .format_output_style(cols, style = select, format, i))
   }
 
   # sort by effects and component
@@ -436,7 +447,7 @@ format.compare_parameters <- function(x,
     if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
-    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
 
   formatted_table

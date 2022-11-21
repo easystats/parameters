@@ -14,7 +14,7 @@ compare_parameters(
   exponentiate = FALSE,
   ci_method = "wald",
   p_adjust = NULL,
-  style = NULL,
+  select = NULL,
   column_names = NULL,
   pretty_names = TRUE,
   keep = NULL,
@@ -32,7 +32,7 @@ compare_models(
   exponentiate = FALSE,
   ci_method = "wald",
   p_adjust = NULL,
-  style = NULL,
+  select = NULL,
   column_names = NULL,
   pretty_names = TRUE,
   keep = NULL,
@@ -98,32 +98,49 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
-\item{style}{String, indicating which style of output is requested. For
-\code{compare_parameters()}, following templates are possible:
-\itemize{
-\item glue-like syntax: Following tokens are replaced by the related coefficients
+\item{select}{Determines which columns and and which layout columns are
+printed. There are three options for this argument:
+\enumerate{
+\item Selecting columns by name or index
+\cr
+\code{select} can be a character vector (or numeric index) of column names that
+should be printed. There are two pre-defined options for selecting columns:
+\code{select = "minimal"} prints coefficients, confidence intervals and p-values,
+while \code{select = "short"} prints coefficients, standard errors and p-values.
+\item A string expression with layout pattern
+\cr
+\code{select} is a string with "tokens" enclosed in braces. These tokens will
+be replaced by their associated columns, where the selected columns will
+be collapsed into one column. However, it is possible to create multiple
+columns as well. Following tokens are replaced by the related coefficients
 or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
 \code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
-Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
-a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
-\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values. This
-is equivalent to \code{style = "{estimate} ({ci})"}.
+Furthermore, a \code{|} separates values into new cells/columns. If
+\code{format = "html"}, a \verb{<br>} inserts a line break inside a cell. See
+'Examples'.
+\item A string indicating a pre-defined layout
+\cr
+\code{select} can be one of the following string values, to create one of the
+following pre-defined column layouts:
+\itemize{
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
+This is equivalent to \code{select = "{estimate} ({ci})"}.
 \item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
-equivalent to \code{style = "{estimate} ({se})"}.
+equivalent to \code{select = "{estimate} ({se})"}.
 \item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
-is equivalent to \code{style = "{estimate}{stars} ({ci})"}.
+is equivalent to \code{select = "{estimate}{stars} ({ci})"}.
 \item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
-equivalent to \code{style = "{estimate}{stars} ({se})"}.
+equivalent to \code{select = "{estimate}{stars} ({se})"}..
 \item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
-columns. This is equivalent to \code{style = "{estimate} ({ci})|{p}"}.
+columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
 \item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
-This is equivalent to \code{style = "{estimate} ({se})|{p}"}.
+This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
 }
 
 For \code{model_parameters()}, glue-like syntax is still experimental in the
-case of more complex models (like mixed models). If \code{style} does not return
-the expected results, it is recommended to use the \code{select} argument and
-its shortcuts, or \code{summary()}.}
+case of more complex models (like mixed models) and may not return expected
+results.}
 
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
@@ -183,11 +200,11 @@ lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 compare_parameters(lm1, lm2)
 
 # custom style
-compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
 
 \dontrun{
 # custom style, in HTML
-result <- compare_parameters(lm1, lm2, style = "{estimate}<br>({se})|{p}")
+result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
 print_html(result)
 }
 

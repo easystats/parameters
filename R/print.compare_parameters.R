@@ -11,7 +11,7 @@ print.compare_parameters <- function(x,
                                      groups = NULL,
                                      column_width = NULL,
                                      ci_brackets = c("(", ")"),
-                                     style = NULL,
+                                     select = NULL,
                                      ...) {
   # save original input
   orig_x <- x
@@ -28,13 +28,13 @@ print.compare_parameters <- function(x,
   }
 
   # get attributes
-  if (missing(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select)) {
+    select <- attributes(x)$output_style
   }
 
   formatted_table <- format(
     x,
-    style = style,
+    select = select,
     split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,

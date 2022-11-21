@@ -93,7 +93,7 @@
     style <- paste0("{estimate}{stars}", linesep, "({se})")
 
     # style: estimate and SE, p-value in separate column
-  } else if (style %in% c("se_p2")) {
+  } else if (style %in% c("short", "se_p2")) {
     style <- paste0("{estimate}", linesep, "({se})|{p}")
 
     # style: only estimate
@@ -192,6 +192,11 @@
   column_names <- gsub("<br>", "", column_names, fixed = TRUE)
   column_names
 }
+
+
+# global definition of valid "style" shortcuts
+.style_shortcuts <- c("ci_p2", "ci", "ci_p", "se", "se_p", "se_p2", "est", "coef")
+.select_shortcuts <- c("minimal", "short")
 
 
 .add_obs_row <- function(x, att, style) {

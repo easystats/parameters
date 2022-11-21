@@ -43,6 +43,8 @@
 #'   [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #'   for examples.
 #'
+#' @seealso [print.parameters_model()]
+#'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' mp <- model_parameters(model)
@@ -57,7 +59,7 @@
 #'
 #' print_html(
 #'   out,
-#'   style = "{coef}{stars}|({ci})",
+#'   select = "{coef}{stars}|({ci})",
 #'   column_labels = c("Estimate", "95% CI")
 #' )
 #' }
@@ -81,7 +83,6 @@ display.parameters_model <- function(object,
                                      zap_small = FALSE,
                                      font_size = "100%",
                                      line_padding = 4,
-                                     style = NULL,
                                      column_labels = NULL,
                                      verbose = TRUE,
                                      ...) {
@@ -92,7 +93,7 @@ display.parameters_model <- function(object,
       footer = footer, ci_digits = ci_digits, p_digits = p_digits,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      font_size = font_size, line_padding = line_padding, style = style,
+      font_size = font_size, line_padding = line_padding,
       column_labels = column_labels, verbose = verbose, ...
     )
   } else {
@@ -129,7 +130,7 @@ display.compare_parameters <- function(object,
                                        digits = 2,
                                        ci_digits = 2,
                                        p_digits = 3,
-                                       style = NULL,
+                                       select = NULL,
                                        column_labels = NULL,
                                        ci_brackets = c("(", ")"),
                                        font_size = "100%",
@@ -139,12 +140,12 @@ display.compare_parameters <- function(object,
   if (identical(format, "html")) {
     print_html(
       x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits,
-      style = style, column_labels = column_labels, font_size = font_size,
+      select = select, column_labels = column_labels, font_size = font_size,
       line_padding = line_padding, ci_brackets = ci_brackets,
       zap_small = zap_small, ...
     )
   } else {
-    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
+    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, select = select, ...)
   }
 }
 
