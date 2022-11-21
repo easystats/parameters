@@ -56,6 +56,10 @@
     i[i == "()"] <- ""
     # remove other non-matched patterns
     i <- gsub("{stars}", "", i, fixed = TRUE)
+    i <- gsub("{rhat}", "", i, fixed = TRUE)
+    i <- gsub("{ess}", "", i, fixed = TRUE)
+    i <- gsub("{pd}", "", i, fixed = TRUE)
+    i <- gsub("{rope}", "", i, fixed = TRUE)
     i
   })
   out
@@ -145,6 +149,9 @@
     ci_low <- .align_values(ci_low)
     ci_high <- .align_values(ci_high)
     x$pd <- .align_values(x$pd)
+    x$Rhat <- .align_values(x$Rhat)
+    x$ESS <- .align_values(x$ESS)
+    x$ROPE_Percentage <- .align_values(x$ROPE_Percentage)
   }
   # create new string
   row <- rep(style, times = nrow(x))
@@ -163,6 +170,15 @@
     }
     if ("pd" %in% colnames(x)) {
       row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
+    }
+    if ("Rhat" %in% colnames(x)) {
+      row[r] <- gsub("{rhat}", x[["Rhat"]][r], row[r], fixed = TRUE)
+    }
+    if ("ESS" %in% colnames(x)) {
+      row[r] <- gsub("{ess}", x[["ESS"]][r], row[r], fixed = TRUE)
+    }
+    if ("ROPE_Percentage" %in% colnames(x)) {
+      row[r] <- gsub("{rope}", x[["ROPE_Percentage"]][r], row[r], fixed = TRUE)
     }
   }
   # some cleaning: columns w/o coefficient are empty
@@ -187,6 +203,7 @@
   column_names <- gsub("{", "", column_names, fixed = TRUE)
   column_names <- gsub("}", "", column_names, fixed = TRUE)
   # manual renaming
+  column_names <- gsub("\\Qrope\\E", "% in ROPE", column_names)
   column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
   column_names <- gsub("\\Qse\\E", "SE", column_names)
   column_names <- gsub("<br>", "", column_names, fixed = TRUE)

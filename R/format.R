@@ -191,35 +191,19 @@ format.parameters_model <- function(x,
   # to "split" the formatted table, because the glue-function needs the columns
   # without the parameters-column.
   if (!is.null(style)) {
-    .style_formatted_table <- function(formtab) {
-      additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
-      if (length(additional_columns)) {
-        additional_columns <- formtab[additional_columns]
-      }
-      # define column names in case the glue-pattern has multiple columns.
-      if (grepl("|", style, fixed = TRUE)) {
-        cn <- NULL
-      } else {
-        cn <- .style_pattern_to_name(style)
-      }
-      formtab <- cbind(
-        formtab[1],
-        .format_output_style(
-          formtab[2:ncol(formtab)],
-          style = style,
-          format = format,
-          modelname = cn
-        )
-      )
-      if (!insight::is_empty_object(additional_columns)) {
-        formtab <- cbind(formtab, additional_columns)
-      }
-      formtab
-    }
     if (!is.data.frame(formatted_table)) {
-      formatted_table[] <- lapply(formatted_table, .style_formatted_table)
+      formatted_table[] <- lapply(
+        formatted_table,
+        .style_formatted_table,
+        style = style,
+        format = format
+      )
     } else {
-      formatted_table <- .style_formatted_table(formatted_table)
+      formatted_table <- .style_formatted_table(
+        formatted_table,
+        style = style,
+        format = format
+      )
     }
   }
 
@@ -477,6 +461,18 @@ format.parameters_stan <- function(x,
   if (!split_components || is.null(cp)) {
     NextMethod()
   } else {
+    # process selection of columns
+    style <- NULL
+    if (!is.null(select)) {
+      # glue-like syntax, so we switch to "style" argument here
+      if (length(select) == 1 &&
+        is.character(select) &&
+        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+        style <- select
+        select <- NULL
+      }
+    }
+
     if (!is.null(select)) {
       if (all(select == "minimal")) {
         select <- c("Parameter", "Coefficient", "Median", "Mean", "CI", "CI_low", "CI_high", "pd")
@@ -516,6 +512,22 @@ format.parameters_stan <- function(x,
   }
 
   final_table <- datawizard::compact_list(final_table)
+
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    for (i in seq_along(final_table)) {
+      att <- attributes(final_table[[i]])
+      final_table[[i]] <- .style_formatted_table(
+        final_table[[i]],
+        style = style,
+        format = format
+      )
+      attributes(final_table[[i]]) <- utils::modifyList(att, attributes(final_table[[i]]))
+    }
+  }
 
   # modify table title, if requested
   if (length(final_table) == 1 && !is.null(table_caption)) {
@@ -559,6 +571,34 @@ format.parameters_sem <- function(x,
   )
 }
 
+
+# helper ---------------------
+
+.style_formatted_table <- function(formtab, style, format) {
+  additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
+  if (length(additional_columns)) {
+    additional_columns <- formtab[additional_columns]
+  }
+  # define column names in case the glue-pattern has multiple columns.
+  if (grepl("|", style, fixed = TRUE)) {
+    cn <- NULL
+  } else {
+    cn <- .style_pattern_to_name(style)
+  }
+  formtab <- cbind(
+    formtab[1],
+    .format_output_style(
+      formtab[2:ncol(formtab)],
+      style = style,
+      format = format,
+      modelname = cn
+    )
+  )
+  if (!insight::is_empty_object(additional_columns)) {
+    formtab <- cbind(formtab, additional_columns)
+  }
+  formtab
+}
 
 
 # footer functions ------------------
