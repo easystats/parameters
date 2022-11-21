@@ -83,6 +83,25 @@ mp <- model_parameters(model)
 print(mp, pretty_names = "labels")
 ```
 
+## More compact output
+
+Using `summary`, or the `select` argument via the `print()` method allows for a more compact table, in case not all information is required. `summary()` will return the coefficient, confidence intervals and p-values. `select` allows to select specific columns only.
+
+```{r}
+data(iris)
+model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+
+result <- model_parameters(model)
+
+# Coefficients, CI and p
+summary(result)
+
+# Parameter name, SE and p
+print(result, select = c("Parameter", "SE", "p"))
+```
+
+The `style` argument can be used for a more customized output. See examples below for `compare_parameters()`.
+
 ## Splitting model components
 
 Again by default, the argument `split_components` is `TRUE`, which means that models with multiple components like fixed and random effects, count and zero-inflated part etc. are split into separate tables in the output.
@@ -247,6 +266,15 @@ compare_parameters(lm1, lm2, lm3, style = "{estimate}{stars} ({se})")
 # estimates, CI, p and stars
 compare_parameters(lm1, lm2, lm3, style = "{estimate} ({ci_low}, {ci_high}), p={p}{stars}")
 ```
+
+`style` also works for `model_parameters()`, however, it's necessary to call this argument via the `print()` method:
+
+```{r}
+# estimates, p-stars and CI in parentheses
+result <- model_parameters(lm3)
+print(result, style = "{estimate}{stars} ({ci})")
+```
+
 
 ## Defining column names
 

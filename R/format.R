@@ -15,6 +15,7 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     groups = NULL,
+                                    style = NULL,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -119,6 +120,11 @@ format.parameters_model <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
+  # add p-stars, if we need this for style-argument
+  if (!is.null(style) && grepl("{stars}", style, fixed = TRUE)) {
+    x$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+  }
+
   # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
@@ -169,6 +175,43 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    .style_formatted_table <- function(formtab) {
+      additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
+      if (length(additional_columns)) {
+        additional_columns <- formtab[additional_columns]
+      }
+      # define column names in case the glue-pattern has multiple columns.
+      if (grepl("|", style, fixed = TRUE)) {
+        cn <- NULL
+      } else {
+        cn <- .style_pattern_to_name(style)
+      }
+      formtab <- cbind(
+        formtab[1],
+        .format_output_style(
+          formtab[2:ncol(formtab)],
+          style = style,
+          format = format,
+          modelname = cn
+        )
+      )
+      if (!insight::is_empty_object(additional_columns)) {
+        formtab <- cbind(formtab, additional_columns)
+      }
+      formtab
+    }
+    if (!is.data.frame(formatted_table)) {
+      formatted_table[] <- lapply(formatted_table, .style_formatted_table)
+    } else {
+      formatted_table <- .style_formatted_table(formatted_table)
+    }
+  }
+
   if (!is.null(indent_rows)) {
     attr(formatted_table, "indent_rows") <- indent_rows
     attr(formatted_table, "indent_groups") <- NULL
@@ -207,7 +250,6 @@ format.parameters_brms_meta <- format.parameters_model
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
-                                      style = NULL,
                                       split_components = TRUE,
                                       digits = 2,
                                       ci_digits = 2,
@@ -217,6 +259,7 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
+                                      style = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL

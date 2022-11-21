@@ -56,8 +56,8 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
     expect_equal(
       colnames(out),
       c(
-        "Parameter", "Coefficient (m1)", "p (m1)", "Coefficient (m2)",
-        "p (m2)", "Log-Mean (m3)", "p (m3)"
+        "Parameter", "Estimate (SE) (m1)", "p (m1)", "Estimate (SE) (m2)",
+        "p (m2)", "Estimate (SE) (m3)", "p (m3)"
       )
     )
     expect_equal(

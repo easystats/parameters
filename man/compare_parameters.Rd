@@ -98,19 +98,32 @@ possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
 
-\item{style}{String, indicating which style of output is requested. Following
-templates are possible:
+\item{style}{String, indicating which style of output is requested. For
+\code{compare_parameters()}, following templates are possible:
 \itemize{
-\item \code{"ci"}: Estimate and confidence intervals, no asterisks for p-values.
-\item \code{"se"}: Estimate and standard errors, no asterisks for p-values.
-\item \code{"ci_p"}: Estimate, confidence intervals and asterisks for p-values.
-\item \code{"se_p"}: Estimate, standard errors and asterisks for p-values.
-\item \code{"ci_p2"}: Estimate, confidence intervals and numeric p-values, in two columns.
-\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
 \item glue-like syntax: Following tokens are replaced by the related coefficients
-or statistics: \code{{estimate}}, \code{{se}}, \code{{ci_low}} and \code{{ci_high}}, \code{{p}}
-and \code{{stars}} See 'Examples'.
-}}
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells. If \code{format = "html"},
+a \verb{<br>} inserts a line break inside a cell. See 'Examples'.
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values. This
+is equivalent to \code{style = "{estimate} ({ci})"}.
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to \code{style = "{estimate} ({se})"}.
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to \code{style = "{estimate}{stars} ({ci})"}.
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+equivalent to \code{style = "{estimate}{stars} ({se})"}.
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to \code{style = "{estimate} ({ci})|{p}"}.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to \code{style = "{estimate} ({se})|{p}"}.
+}
+
+For \code{model_parameters()}, glue-like syntax is still experimental in the
+case of more complex models (like mixed models). If \code{style} does not return
+the expected results, it is recommended to use the \code{select} argument and
+its shortcuts, or \code{summary()}.}
 
 \item{column_names}{Character vector with strings that should be used as
 column headers. Must be of same length as number of models in \code{...}.}
@@ -171,6 +184,12 @@ compare_parameters(lm1, lm2)
 
 # custom style
 compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+
+\dontrun{
+# custom style, in HTML
+result <- compare_parameters(lm1, lm2, style = "{estimate}<br>({se})|{p}")
+print_html(result)
+}
 
 data(mtcars)
 m1 <- lm(mpg ~ wt, data = mtcars)

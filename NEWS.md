@@ -1,4 +1,4 @@
-# parameters 0.19.1
+# parameters 0.20.0
 
 ## Breaking
 
@@ -27,10 +27,12 @@
 
 * The `style` argument in `compare_parameters()`, which is used to control the
   table column elements, now supports an experimental glue-like syntax.
-  See this vignette _Printing Model Parameters_.
+  See this vignette _Printing Model Parameters_. Furthermore, the `style`
+  argument can also be used in the `print()` method for `model_parameters()`.
 
 * `print_html()` gets a `font_size` and `line_padding` argument to tweak the
-  appearance of HTML tables.
+  appearance of HTML tables. Furthermore, arguments `style` and `column_labels`
+  are new, to customize the column layout of tables. See examples in `?display`.
 
 * Consolidation of vignettes on standardization of model parameters.
 

@@ -16,18 +16,31 @@
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
-#' @param style String, indicating which style of output is requested. Following
-#'   templates are possible:
+#' @param style String, indicating which style of output is requested. For
+#'   `compare_parameters()`, following templates are possible:
 #'
-#'  - `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
-#'  - `"se"`: Estimate and standard errors, no asterisks for p-values.
-#'  - `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
-#'  - `"se_p"`: Estimate, standard errors and asterisks for p-values.
-#'  - `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
-#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
 #'  - glue-like syntax: Following tokens are replaced by the related coefficients
-#'    or statistics: `{estimate}`, `{se}`, `{ci_low}` and `{ci_high}`, `{p}`
-#'    and `{stars}` See 'Examples'.
+#'    or statistics: `{estimate}`, `{se}`, `{ci}` (or `{ci_low}` and `{ci_high}`),
+#'    `{p}` and `{stars}`. The token `{ci}` will be replaced by `{ci_low}, {ci_high}`.
+#'    Furthermore, a `|` separates values into new cells. If `format = "html"`,
+#'    a `<br>` inserts a line break inside a cell. See 'Examples'.
+#'  - `"ci"`: Estimates and confidence intervals, no asterisks for p-values. This
+#'    is equivalent to `style = "{estimate} ({ci})"`.
+#'  - `"se"`: Estimates and standard errors, no asterisks for p-values. This is
+#'    equivalent to `style = "{estimate} ({se})"`.
+#'  - `"ci_p"`: Estimates, confidence intervals and asterisks for p-values. This
+#'    is equivalent to `style = "{estimate}{stars} ({ci})"`.
+#'  - `"se_p"`: Estimates, standard errors and asterisks for p-values. This is
+#'    equivalent to `style = "{estimate}{stars} ({se})"`.
+#'  - `"ci_p2"`: Estimates, confidence intervals and numeric p-values, in two
+#'    columns. This is equivalent to `style = "{estimate} ({ci})|{p}"`.
+#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
+#'    This is equivalent to `style = "{estimate} ({se})|{p}"`.
+#'
+#'   For `model_parameters()`, glue-like syntax is still experimental in the
+#'   case of more complex models (like mixed models). If `style` does not return
+#'   the expected results, it is recommended to use the `select` argument and
+#'   its shortcuts, or `summary()`.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
@@ -52,6 +65,12 @@
 #'
 #' # custom style
 #' compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+#'
+#' \dontrun{
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, style = "{estimate}<br>({se})|{p}")
+#' print_html(result)
+#' }
 #'
 #' data(mtcars)
 #' m1 <- lm(mpg ~ wt, data = mtcars)

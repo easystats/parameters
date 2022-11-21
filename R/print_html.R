@@ -19,8 +19,10 @@ print_html.parameters_model <- function(x,
                                         show_formula = FALSE,
                                         zap_small = FALSE,
                                         groups = NULL,
+                                        style = NULL,
                                         font_size = "100%",
                                         line_padding = 4,
+                                        column_labels = NULL,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -38,6 +40,16 @@ print_html.parameters_model <- function(x,
 
   if (missing(footer_digits)) {
     footer_digits <- .additional_arguments(x, "footer_digits", footer_digits)
+  }
+
+  # get attributes
+  if (missing(style) || is.null(style)) {
+    style <- attributes(x)$output_style
+  }
+
+  # we need glue-like syntax right now...
+  if (!is.null(style)) {
+    style <- .convert_to_glue_syntax(style, "<br>")
   }
 
   # check options ---------------
@@ -71,6 +83,7 @@ print_html.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "html",
     groups = groups,
+    style = style,
     ...
   )
 
@@ -104,7 +117,13 @@ print_html.parameters_model <- function(x,
     ...
   )
 
-  .add_gt_options(out, font_size, line_padding)
+  .add_gt_options(
+    out,
+    style = style,
+    font_size = font_size,
+    line_padding = line_padding,
+    user_labels = column_labels
+  )
 }
 
 #' @export
@@ -118,15 +137,19 @@ print_html.parameters_sem <- print_html.parameters_model
 
 #' @export
 print_html.compare_parameters <- function(x,
-                                          digits = 2,
-                                          ci_digits = 2,
-                                          p_digits = 3,
                                           caption = NULL,
                                           subtitle = NULL,
                                           footer = NULL,
+                                          digits = 2,
+                                          ci_digits = 2,
+                                          p_digits = 3,
+                                          zap_small = FALSE,
+                                          groups = NULL,
                                           style = NULL,
+                                          ci_brackets = c("(", ")"),
                                           font_size = "100%",
                                           line_padding = 4,
+                                          column_labels = NULL,
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -146,16 +169,21 @@ print_html.compare_parameters <- function(x,
     style <- attributes(x)$output_style
   }
 
+  # we need glue-like syntax right now...
+  style <- .convert_to_glue_syntax(style, "<br>")
+
   formatted_table <- format(
     x,
-    style,
+    style = style,
     split_components = TRUE,
     digits = digits,
     ci_digits = ci_digits,
     p_digits = p_digits,
     ci_width = NULL,
-    ci_brackets = c("(", ")"),
-    format = "html"
+    ci_brackets = ci_brackets,
+    format = "html",
+    zap_small = zap_small,
+    groups = groups
   )
 
   out <- insight::export_table(
@@ -167,17 +195,91 @@ print_html.compare_parameters <- function(x,
     ...
   )
 
-  .add_gt_options(out, font_size, line_padding)
+  .add_gt_options(
+    out,
+    style = style,
+    font_size = font_size,
+    line_padding = line_padding,
+    # we assume that model names are at the end of each column name, in parenthesis
+    original_colnames = gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))[-1],
+    column_names = colnames(formatted_table),
+    user_labels = column_labels
+  )
 }
 
 
 
 # helper ------------------
 
-.add_gt_options <- function(out, font_size, line_padding) {
+.add_gt_options <- function(out,
+                            style,
+                            font_size = "100%",
+                            line_padding = 4,
+                            original_colnames = NULL,
+                            column_names = NULL,
+                            user_labels = NULL) {
   insight::check_if_installed("gt")
-  gt::tab_options(out,
+  out <- gt::tab_options(out,
     table.font.size = font_size,
     data_row.padding = gt::px(line_padding)
   )
+  # insert newlines
+  if (!is.null(style) && grepl("<br>", style, fixed = TRUE)) {
+    insight::check_if_installed("tidyselect")
+    out <- gt::fmt_markdown(out, columns = tidyselect::everything())
+  }
+  # user defined column labels
+  new_labels <- NULL
+  if (!is.null(user_labels)) {
+    new_labels <- c(
+      colnames(out[["_data"]])[1],
+      rep(user_labels, length.out = ncol(out[["_data"]]) - 1)
+    )
+    new_labels <- as.list(new_labels)
+  }
+  # add a column span?
+  if (!is.null(original_colnames) && any(duplicated(original_colnames))) {
+    duplicates <- original_colnames[duplicated(original_colnames)]
+    for (d in duplicates) {
+      # we need +1 here, because first column is parameter column
+      span <- which(original_colnames == d) + 1
+      # add column spanner
+      out <- gt::tab_spanner(out, label = d, columns = span)
+    }
+    # relabel columns
+    if (!is.null(column_names)) {
+      if (is.null(new_labels)) {
+        new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
+      }
+      names(new_labels) <- column_names
+      out <- gt::cols_label(out, .list = new_labels)
+    }
+    # default column label
+  } else if (!is.null(new_labels)) {
+    names(new_labels) <- colnames(out[["_data"]])
+    out <- gt::cols_label(out, .list = new_labels)
+  }
+  # check where last parameter row ends. For "compare_models()", the
+  # first Parameter value after data rows is "". If this is not found,
+  # simply use number of rows as last row
+  last_row <- which(out[["_data"]]$Parameter == "")[1]
+  if (is.na(last_row)) {
+    last_row <- nrow(out[["_data"]])
+  } else {
+    last_row <- last_row - 1
+  }
+  # add a border to the first column (Parameters)
+  out <- gt::tab_style(
+    out,
+    style = gt::cell_borders(
+      sides = "right",
+      style = "solid",
+      color = "#d3d3d3"
+    ),
+    locations = gt::cells_body(
+      columns = "Parameter",
+      rows = 1:last_row
+    )
+  )
+  out
 }

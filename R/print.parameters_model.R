@@ -12,6 +12,8 @@
 #'   be printed. If `NULL` (default), all columns are printed. The shortcut
 #'   `select = "minimal"` prints coefficient, confidence intervals and p-values,
 #'   while `select = "short"` prints coefficient, standard errors and p-values.
+#'   For more custmized selection of columns and table layout, see `style`
+#'   argument.
 #' @param show_sigma Logical, if `TRUE`, adds information about the residual
 #'   standard deviation.
 #' @param show_formula Logical, if `TRUE`, adds the model formula to the output.
@@ -49,6 +51,7 @@
 #'   data, i.e. if the data used to fit the model had `"label"` and `"labels"`
 #'   attributes. See also section _Global Options to Customize Messages when Printing_.
 #' @inheritParams insight::format_table
+#' @inheritParams compare_parameters
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom
@@ -175,6 +178,7 @@ print.parameters_model <- function(x,
                                    groups = NULL,
                                    column_width = NULL,
                                    ci_brackets = c("[", "]"),
+                                   style = NULL,
                                    ...) {
   # save original input
   orig_x <- x
@@ -224,6 +228,7 @@ print.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
+    style = style,
     ...
   )
 
@@ -334,6 +339,7 @@ summary.parameters_stan <- function(object, ...) {
                         ci_brackets = TRUE,
                         format = "text",
                         group = NULL,
+                        style = NULL,
                         ...) {
   format(
     x,
@@ -348,6 +354,7 @@ summary.parameters_stan <- function(object, ...) {
     zap_small = zap_small,
     format = format,
     group = group,
+    style = style,
     ...
   )
 }
