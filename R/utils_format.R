@@ -93,7 +93,7 @@
     style <- paste0("{estimate}{stars}", linesep, "({se})")
 
     # style: estimate and SE, p-value in separate column
-  } else if (style %in% c("se_p2")) {
+  } else if (style %in% c("short", "se_p2")) {
     style <- paste0("{estimate}", linesep, "({se})|{p}")
 
     # style: only estimate
