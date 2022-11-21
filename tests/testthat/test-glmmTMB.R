@@ -434,7 +434,7 @@ if (.runThisTest &&
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
+          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.92]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
           "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
@@ -449,8 +449,8 @@ if (.runThisTest &&
           "",
           "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
           "-------------------------------------------------------------",
-          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
-          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663"
+          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
+          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660"
         )
       )
 
@@ -463,9 +463,9 @@ if (.runThisTest &&
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
-          "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
+          "SD (Intercept: persons)     |        2.74 | [ 1.17, 6.40]",
+          "SD (zg: persons)            |        1.57 | [ 0.65, 3.81]",
+          "Cor (Intercept~zg: persons) |        1.00 |              "
         )
       )
 
@@ -485,7 +485,7 @@ if (.runThisTest &&
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        3.41 | [ 1.67, 6.93]",
+          "SD (Intercept: persons)     |        3.41 | [ 1.68, 6.92]",
           "SD (xb: persons)            |        1.21 | [ 0.60, 2.44]",
           "Cor (Intercept~xb: persons) |       -1.00 | [-1.00, 1.00]"
         )
@@ -500,16 +500,16 @@ if (.runThisTest &&
           "",
           "Parameter   | Log-Mean |   SE |        95% CI |     z |     p",
           "-------------------------------------------------------------",
-          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.84 | 0.004",
-          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.663",
+          "(Intercept) |     1.89 | 0.66 | [ 0.59, 3.19] |  2.85 | 0.004",
+          "camper [1]  |    -0.17 | 0.39 | [-0.93, 0.59] | -0.44 | 0.660",
           "",
           "# Random Effects (Zero-Inflation Component)",
           "",
           "Parameter                   | Coefficient |        95% CI",
           "---------------------------------------------------------",
-          "SD (Intercept: persons)     |        2.74 | [ 1.16, 6.43]",
-          "SD (zg: persons)            |        1.57 | [ 0.64, 3.82]",
-          "Cor (Intercept~zg: persons) |        1.00 | [-1.00, 1.00]"
+          "SD (Intercept: persons)     |        2.74 | [ 1.17, 6.40]",
+          "SD (zg: persons)            |        1.57 | [ 0.65, 3.81]",
+          "Cor (Intercept~zg: persons) |        1.00 |              "
         )
       )
 
