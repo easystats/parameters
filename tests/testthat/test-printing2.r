@@ -53,8 +53,8 @@ test_that("templates, glue-3, separate columnns", {
         "Species (virginica)"
       ),
       Interactions = c(
-        "Species (versicolor) × Petal Length", # note the unicode char!
-        "Species (virginica) × Petal Length"
+        "Species (versicolor) * Petal Length",
+        "Species (virginica) * Petal Length"
       ),
       Controls = "Petal Length"
     ))
