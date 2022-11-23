@@ -5,137 +5,136 @@ template:
   package: easystatstemplate
 
 reference:
-- title: "Comprehensive Model Parameters"
-  contents:
-  - compare_parameters
-  - dominance_analysis
-  - model_parameters
-  - model_parameters.aov
-  - model_parameters.befa
-  - model_parameters.default
-  - model_parameters.zcpglm
-  - model_parameters.gam
-  - model_parameters.mlm
-  - model_parameters.merMod
-  - model_parameters.lavaan
-  - model_parameters.kmeans
-  - model_parameters.Mclust
-  - model_parameters.mira
-  - model_parameters.PCA
-  - model_parameters.principal
-  - model_parameters.stanreg
-  - model_parameters.BFBayesFactor
-  - model_parameters.rma
-  - model_parameters.htest
-  - model_parameters.glht
-  - model_parameters.averaging
-  - model_parameters.t1way
-  - pool_parameters
-  - random_parameters
-  - print.parameters_model
-  - sort_parameters
-  - standardize_parameters
-  - standardize_info
+  - title: "Comprehensive Model Parameters"
+    contents:
+      - compare_parameters
+      - dominance_analysis
+      - model_parameters
+      - model_parameters.aov
+      - model_parameters.befa
+      - model_parameters.default
+      - model_parameters.zcpglm
+      - model_parameters.gam
+      - model_parameters.mlm
+      - model_parameters.merMod
+      - model_parameters.lavaan
+      - model_parameters.kmeans
+      - model_parameters.Mclust
+      - model_parameters.mira
+      - model_parameters.PCA
+      - model_parameters.principal
+      - model_parameters.stanreg
+      - model_parameters.BFBayesFactor
+      - model_parameters.rma
+      - model_parameters.htest
+      - model_parameters.glht
+      - model_parameters.averaging
+      - model_parameters.t1way
+      - pool_parameters
+      - random_parameters
+      - print.parameters_model
+      - sort_parameters
+      - standardize_parameters
+      - standardize_info
 
-- title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
-  contents:
-  - standard_error
-  - ci.default
-  - ci.glmmTMB
-  - p_value
-  - p_value.BFBayesFactor
-  - p_value.zeroinfl
-  - p_value.poissonmfx
-  - p_value.DirichletRegModel
-  - degrees_of_freedom
-  - n_parameters
-- subtitle: "Approximation Methods"
-  contents:
-  - p_value_kenward
-  - p_value_satterthwaite
-  - p_value_betwithin
-  - p_value_ml1
+  - title: "Standard Errors, Confidence Intervals, Degrees of Freedom and p-values"
+    contents:
+      - standard_error
+      - ci.default
+      - ci.glmmTMB
+      - p_value
+      - p_value.BFBayesFactor
+      - p_value.zeroinfl
+      - p_value.poissonmfx
+      - p_value.DirichletRegModel
+      - degrees_of_freedom
+      - n_parameters
+  - subtitle: "Approximation Methods"
+    contents:
+      - p_value_kenward
+      - p_value_satterthwaite
+      - p_value_betwithin
+      - p_value_ml1
 
-- title: "Effect Existence and Significance"
-  contents:
-  - equivalence_test
-  - equivalence_test.lm
-  - p_calibrate
-  - p_function
+  - title: "Effect Existence and Significance"
+    contents:
+      - equivalence_test
+      - equivalence_test.lm
+      - p_calibrate
+      - p_function
 
-- title: "Parameter Sampling"
-  contents:
-  - bootstrap_model
-  - bootstrap_parameters
-  - simulate_model
-  - simulate_parameters
+  - title: "Parameter Sampling"
+    contents:
+      - bootstrap_model
+      - bootstrap_parameters
+      - simulate_model
+      - simulate_parameters
 
-- title: "Feature Reduction"
-  contents:
-  - reduce_parameters
-  - select_parameters
+  - title: "Feature Reduction"
+    contents:
+      - reduce_parameters
+      - select_parameters
 
-- title: "Data Reduction"
-- subtitle: "Cluster Analysis"
-  contents:
-  - cluster_analysis
-  - cluster_centers
-  - cluster_discrimination
-  - cluster_meta
-  - cluster_performance
-  - n_clusters
-  - predict.parameters_clusters
-- subtitle: "Factors and Principal Components"
-  contents:
-  - convert_efa_to_cfa
-  - factor_analysis
-  - get_scores
-  - n_factors
-  - principal_components
-  - reduce_data
-  - reshape_loadings
+  - title: "Data Reduction"
+  - subtitle: "Cluster Analysis"
+    contents:
+      - cluster_analysis
+      - cluster_centers
+      - cluster_discrimination
+      - cluster_meta
+      - cluster_performance
+      - n_clusters
+      - predict.parameters_clusters
+  - subtitle: "Factors and Principal Components"
+    contents:
+      - convert_efa_to_cfa
+      - factor_analysis
+      - get_scores
+      - n_factors
+      - principal_components
+      - reduce_data
+      - reshape_loadings
 
-- title: "Table and Value Formatting"
-  contents:
-  - display.parameters_model
-  - format_order
-  - format_parameters
-  - format_p_adjust
-  - format_df_adjust
-  - parameters_type
-  - print_md
+  - title: "Table and Value Formatting"
+    contents:
+      - display.parameters_model
+      - format_order
+      - format_parameters
+      - format_p_adjust
+      - format_df_adjust
+      - parameters_type
+      - print_md
 
-- title: "Example Data Sets"
-  contents:
-  - qol_cancer
-  - fish
+  - title: "Example Data Sets"
+    contents:
+      - qol_cancer
+      - fish
 
 articles:
-
   - title: Overview of vignettes
     navbar: ~
     contents:
-    - overview_of_vignettes
+      - overview_of_vignettes
 
   - title: Parameters Description
     navbar: ~
     contents:
-    - model_parameters
-    - standardize_parameters_effsize
-    - model_parameters_robust
-    - model_parameters_mice
-    - demean
+      - model_parameters
+      - standardize_parameters_effsize
+      - model_parameters_robust
+      - model_parameters_mice
+      - demean
 
   - title: Formatting and Printing
     navbar: ~
     contents:
-    - model_parameters_formatting
-    - model_parameters_print
+      - model_parameters_formatting
+      - model_parameters_print
 
   - title: Dimension Reduction and Clustering
     navbar: ~
     contents:
-    - parameters_reduction
-    - efa_cfa
-    - parameters_selection
-    - clustering
+      - parameters_reduction
+      - efa_cfa
+      - parameters_selection
+      - clustering
