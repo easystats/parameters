@@ -1,6 +1,6 @@
 pandoc: 2.19.2
 pkgdown: 2.0.6.9000
-pkgdown_sha: d94fb41b1a1cd92b5b4e2d253aa4301e252702d6
+pkgdown_sha: 4d7f0f8620fc6b9c80932cac0c7ec7946678bbd3
 articles:
   clustering: clustering.html
   demean: demean.html
@@ -14,7 +14,7 @@ articles:
   parameters_reduction: parameters_reduction.html
   parameters_selection: parameters_selection.html
   standardize_parameters_effsize: standardize_parameters_effsize.html
-last_built: 2022-11-22T14:41Z
+last_built: 2022-11-23T07:27Z
 urls:
   reference: https://easystats.github.io/parameters/reference
   article: https://easystats.github.io/parameters/articles
