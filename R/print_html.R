@@ -100,9 +100,9 @@ print_html.parameters_model <- function(x,
     format = "html"
   )
   if (!is.null(footer)) {
-    footer <- paste0(footer, "<br/>", paste(footer_stats, collapse = "<br/>"))
-  } else {
-    footer <- paste(footer_stats, collapse = "<br/>")
+    footer <- paste0(footer, "<br>", paste(footer_stats, collapse = "<br>"))
+  } else if (!is.null(footer_stats)) {
+    footer <- paste(footer_stats, collapse = "<br>")
   }
 
   out <- insight::export_table(
