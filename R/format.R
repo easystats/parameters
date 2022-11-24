@@ -294,8 +294,10 @@ format.compare_parameters <- function(x,
   # find all random effect groups
   if (!is.null(x$Group)) {
     ran_groups <- unique(insight::compact_character(x$Group))
+    ran_group_rows <- which(nchar(x$Group) > 0)
   } else {
     ran_groups <- NULL
+    ran_group_rows <- NULL
   }
 
   for (i in models) {
@@ -314,11 +316,14 @@ format.compare_parameters <- function(x,
     ## FIXME: we no longer have the "Group" column here. Need to find
     ## out how to check if model has random effects group or not.
 
+    ## TODO: "col" needs to be checked if it's a RE model. Maybe by
+    ## column name (Effects/Component). Then need to intersect ran_pars
+    ## values with current Effects/Component from "col"
 
-    if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
+    if (length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
       # ran_pars has row indices for *all* models in this function -
       # make sure we have only valid rows for this particular model
-      ran_pars_rows <- ran_pars[ran_pars %in% which(nchar(cols$Group) > 0)]
+      ran_pars_rows <- ran_pars[ran_pars %in% ran_group_rows]
       # find SD random parameters
       stddevs <- startsWith(out$Parameter[ran_pars_rows], "SD (")
       # check if we already fixed that name in a previous loop
@@ -356,7 +361,6 @@ format.compare_parameters <- function(x,
         )
       }
       out$Parameter[out$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
-      cols$Group <- NULL
     }
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
