@@ -309,6 +309,12 @@ format.compare_parameters <- function(x,
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
+
+
+    ## FIXME: we no longer have the "Group" column here. Need to find
+    ## out how to check if model has random effects group or not.
+
+
     if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
       # ran_pars has row indices for *all* models in this function -
       # make sure we have only valid rows for this particular model
