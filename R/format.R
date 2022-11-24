@@ -308,22 +308,22 @@ format.compare_parameters <- function(x,
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function
     colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # find coefficient column, check which rows have non-NA values
+    # since we merged all models together, and we only have model-specific
+    # columns for estimates, CI etc. but not for Effects and Component, we
+    # extract "valid" rows via non-NA values in the coefficient column
+    coef_column <- which(colnames(cols) %in% .all_coefficient_types())
+    valid_rows <- which(!is.na(cols[[coef_column]]))
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
-
-
-    ## FIXME: we no longer have the "Group" column here. Need to find
-    ## out how to check if model has random effects group or not.
-
-    ## TODO: "col" needs to be checked if it's a RE model. Maybe by
-    ## column name (Effects/Component). Then need to intersect ran_pars
-    ## values with current Effects/Component from "col"
-
-    if (length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
+    ran_pars_rows <- NULL
+    if (length(ran_pars) && length(ran_group_rows) && any(ran_group_rows %in% valid_rows)) {
       # ran_pars has row indices for *all* models in this function -
       # make sure we have only valid rows for this particular model
-      ran_pars_rows <- ran_pars[ran_pars %in% ran_group_rows]
+      ran_pars_rows <- intersect(valid_rows, intersect(ran_pars, ran_group_rows))
+    }
+    if (!is.null(ran_pars_rows) && length(ran_pars_rows)) {
       # find SD random parameters
       stddevs <- startsWith(out$Parameter[ran_pars_rows], "SD (")
       # check if we already fixed that name in a previous loop
@@ -338,7 +338,7 @@ format.compare_parameters <- function(x,
         out$Parameter[ran_pars_rows[stddevs]] <- paste0(
           gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[stddevs]]),
           ": ",
-          cols$Group[ran_pars_rows[stddevs]],
+          x$Group[ran_pars_rows[stddevs]],
           ")"
         )
       }
@@ -356,7 +356,7 @@ format.compare_parameters <- function(x,
         out$Parameter[ran_pars_rows[corrs]] <- paste0(
           gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[corrs]]),
           ": ",
-          cols$Group[ran_pars_rows[corrs]],
+          x$Group[ran_pars_rows[corrs]],
           ")"
         )
       }
@@ -376,6 +376,10 @@ format.compare_parameters <- function(x,
     )
     out <- cbind(out, .format_output_style(cols, style = select, format, i))
   }
+
+  # remove group column
+  out$Group <- NULL
+  x$Group <- NULL
 
   # sort by effects and component
   if (isFALSE(split_components)) {
