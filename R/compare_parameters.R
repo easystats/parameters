@@ -230,6 +230,11 @@ compare_parameters <- function(...,
   all_models <- all_models[order(params_order), ]
   all_models[model_cols] <- NULL
 
+  # remove empty group-column
+  if (all(nchar(all_models$Group) == 0)) {
+    all_models$Group <- NULL
+  }
+
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- select
   attr(all_models, "all_attributes") <- object_attributes
