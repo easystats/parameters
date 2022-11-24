@@ -235,7 +235,9 @@ print_html.compare_parameters <- function(x,
     )
     new_labels <- as.list(new_labels)
   }
-  # add a column span?
+  # add a column span? here we have multiple columns (like estimate, CI, p, ...)
+  # for each model. In this case, we want to add a column spanner, i.e. a
+  # separate heading for all columns of each model.
   if (!is.null(original_colnames) && any(duplicated(original_colnames))) {
     duplicates <- original_colnames[duplicated(original_colnames)]
     for (d in duplicates) {
@@ -244,7 +246,11 @@ print_html.compare_parameters <- function(x,
       # add column spanner
       out <- gt::tab_spanner(out, label = d, columns = span)
     }
-    # relabel columns
+    # relabel columns. The single columns still have their old labels
+    # (like "Estimate (model1)", "p (model1)"), and we extracted the "model names"
+    # and used them for the column spanner. Now we no longer need this suffix,
+    # and remove it. In case user-defined column labels are provided, "new_labels"
+    # is not NULL, so we use user labels, else we extract labels from columns.
     if (!is.null(column_names)) {
       if (is.null(new_labels)) {
         new_labels <- as.list(gsub("(.*) \\((.*)\\)$", "\\1", column_names))
@@ -252,7 +258,7 @@ print_html.compare_parameters <- function(x,
       names(new_labels) <- column_names
       out <- gt::cols_label(out, .list = new_labels)
     }
-    # default column label
+    # default column label, if we have user labels
   } else if (!is.null(new_labels)) {
     names(new_labels) <- colnames(out[["_data"]])
     out <- gt::cols_label(out, .list = new_labels)
