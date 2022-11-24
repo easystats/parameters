@@ -298,6 +298,13 @@ print_html(
   select = "{coef}{stars}|({ci})",
   column_labels = c("Estimate", "95\% CI")
 )
+
+# line break, unicode minus-sign
+print_html(
+  out,
+  select = "{estimate}{stars}<br>({ci_low} \u2212 {ci_high})",
+  column_labels = c("Est. (95\% CI)")
+)
 }
 }
 \seealso{
