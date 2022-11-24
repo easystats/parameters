@@ -312,7 +312,7 @@ format.compare_parameters <- function(x,
     # since we merged all models together, and we only have model-specific
     # columns for estimates, CI etc. but not for Effects and Component, we
     # extract "valid" rows via non-NA values in the coefficient column
-    coef_column <- which(colnames(cols) %in% .all_coefficient_types())
+    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types(), "Coefficient"))
     valid_rows <- which(!is.na(cols[[coef_column]]))
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
