@@ -1,3 +1,10 @@
+# parameters 0.20.1
+
+## Bug fix
+
+* Fixed issue with the `print()` method for `compare_parameters()`, which
+  duplicated random effects parameters rows in some edge cases.
+
 # parameters 0.20.0
 
 ## Breaking
