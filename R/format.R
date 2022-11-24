@@ -292,9 +292,8 @@ format.compare_parameters <- function(x,
   ran_pars <- which(x$Effects == "random")
 
   # find all random effect groups
-  group_cols <- startsWith(colnames(x), "Group.")
-  if (any(group_cols)) {
-    ran_groups <- unique(unlist(lapply(x[group_cols], insight::compact_character)))
+  if (!is.null(x$Group)) {
+    ran_groups <- unique(insight::compact_character(x$Group))
   } else {
     ran_groups <- NULL
   }
