@@ -1,5 +1,10 @@
 # parameters 0.20.1
 
+## Changes
+
+* `model_parameters()` now includes a `Group` column `stanreg` or `brmsfit`
+  models with random effects.
+
 ## Bug fix
 
 * Fixed issue with the `print()` method for `compare_parameters()`, which
