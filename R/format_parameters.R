@@ -373,7 +373,9 @@ format_parameters.parameters_model <- function(model, ...) {
 
   if (!is.null(model)) {
     # get data, but exclude response - we have no need for that label
-    mf <- insight::get_data(model)[, -1, drop = FALSE]
+    mf <- insight::get_data(model)
+    resp <- insight::find_response(model, combine = FALSE)
+    mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
     # return variable labels, and for factors, add labels for each level
     lbs <- lapply(colnames(mf), function(i) {
