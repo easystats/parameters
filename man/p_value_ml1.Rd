@@ -30,22 +30,27 @@ as suggested by Elff et al. (2019).
 }
 \details{
 \subsection{Small Sample Cluster corrected Degrees of Freedom}{
+
 Inferential statistics (like p-values, confidence intervals and
 standard errors) may be biased in mixed models when the number of clusters
 is small (even if the sample size of level-1 units is high). In such cases
 it is recommended to approximate a more accurate number of degrees of freedom
-for such inferential statistics (see \cite{Li and Redden 2015}). The
+for such inferential statistics (see \emph{Li and Redden 2015}). The
 \emph{m-l-1} heuristic is such an approach that uses a t-distribution with
 fewer degrees of freedom (\code{dof_ml1()}) to calculate p-values
 (\code{p_value_ml1()}) and confidence intervals (\code{ci(method = "ml1")}).
 }
+
 \subsection{Degrees of Freedom for Longitudinal Designs (Repeated Measures)}{
+
 In particular for repeated measure designs (longitudinal data analysis),
 the \emph{m-l-1} heuristic is likely to be more accurate than simply using the
 residual or infinite degrees of freedom, because \code{dof_ml1()} returns
 different degrees of freedom for within-cluster and between-cluster effects.
 }
+
 \subsection{Limitations of the "m-l-1" Heuristic}{
+
 Note that the "m-l-1" heuristic is not applicable (or at least less accurate)
 for complex multilevel designs, e.g. with cross-classified clusters. In such cases,
 more accurate approaches like the Kenward-Roger approximation (\code{dof_kenward()})
@@ -75,6 +80,6 @@ Methodology, 15(1), 38. \doi{10.1186/s12874-015-0026-x}
 }
 }
 \seealso{
-\code{dof_ml1()} is a small helper-function to calculate approximated
+\code{\link[=dof_ml1]{dof_ml1()}} is a small helper-function to calculate approximated
 degrees of freedom of model parameters, based on the "m-l-1" heuristic.
 }

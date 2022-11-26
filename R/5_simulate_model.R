@@ -20,15 +20,13 @@
 #' @seealso [`simulate_parameters()`], [`bootstrap_model()`], [`bootstrap_parameters()`]
 #'
 #' @details
-#' **Technical Details**
-#'
+#' ## Technical Details
 #' `simulate_model()` is a computationally faster alternative
 #' to `bootstrap_model()`. Simulated draws for coefficients are based
 #' on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
 #' `mu = coef(model)` and variance `Sigma = vcov(model)`.
 #'
-#' **Models with Zero-Inflation Component**
-#'
+#' ## Models with Zero-Inflation Component
 #' For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
 #' **countreg**, the `component` argument can be used to specify
 #' which parameters should be simulated. For all other models, parameters

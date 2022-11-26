@@ -5,7 +5,11 @@
 # different pre-sets of "print-layouts"
 
 .format_output_style <- function(x, style, format, modelname) {
-  linesep <- " "
+  if (identical(format, "html")) {
+    linesep <- "<br>"
+  } else {
+    linesep <- " "
+  }
   if (style %in% c("se", "ci")) {
     x$p_stars <- ""
   }
@@ -14,71 +18,108 @@
   coef_column <- colnames(x)[1]
   ci_column <- colnames(x)[endsWith(colnames(x), " CI") | colnames(x) == "CI"]
 
-  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
-  if (style == "minimal") {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
-    x <- x[c(coef_column, "p")]
+  # make sure we have a glue-like syntax
+  style <- .convert_to_glue_syntax(style, linesep)
 
-    # style: estimate, p-stars and CI
-  } else if (style %in% c("ci_p", "ci")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, x[[ci_column]]))
-    x <- x[coef_column]
+  # "|" indicates cell split
+  style <- unlist(strsplit(style, split = "|", fixed = TRUE))
 
-    # style: estimate, p-stars and SE
-  } else if (style %in% c("se_p", "se")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], x$p_stars, linesep, "(", x$SE, ")"))
-    x <- x[coef_column]
-
-    # style: estimate and CI, p-value in separate column
-  } else if (style %in% c("ci_p2")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, x[[ci_column]]))
-    x <- x[c(coef_column, "p")]
-
-    # style: estimate and SE, p-value in separate column
-  } else if (style %in% c("se_p2")) {
-    x[[coef_column]] <- insight::trim_ws(paste0(x[[coef_column]], linesep, "(", x$SE, ")"))
-    x <- x[c(coef_column, "p")]
-
-    # style: only estimate
-  } else if (style %in% c("est", "coef")) {
-    x <- x[1]
-
-    # glue styled column layout
-  } else if (grepl("{", style, fixed = TRUE)) {
-    x <- .format_glue_output(x, coef_column, ci_column, style, format, modelname)
+  # define column names
+  if (length(style) == 1) {
+    column_names <- modelname
+  } else {
+    column_names <- .style_pattern_to_name(style)
   }
+
+  # paste glue together
+  formatted_columns <- lapply(seq_along(style), function(i) {
+    .format_glue_output(x, coef_column, ci_column, style[i], format, column_names[i])
+  })
+  out <- do.call(cbind, formatted_columns)
 
   # add modelname to column names; for single column layout per model, we just
   # need the column name. If the layout contains more than one column per model,
   # add modelname in parenthesis.
-  colnames(x) <- switch(style,
-    "p" = ,
-    "ci_p" = ,
-    "ci" = ,
-    "se_p" = ,
-    "se" = modelname,
-    "minimal" = ,
-    "est" = ,
-    "coef" = ,
-    "se_p2" = ,
-    "ci_p2" = colnames(x) <- paste0(colnames(x), " (", modelname, ")"),
-    colnames(x)
-  )
+  if (!is.null(modelname) && nchar(modelname) > 0) {
+    if (ncol(out) > 1) {
+      colnames(out) <- paste0(colnames(out), " (", modelname, ")")
+    } else {
+      colnames(out) <- modelname
+    }
+  }
 
-  x[[1]][x[[1]] == "()"] <- ""
-  x
+  # remove empty parenthesis
+  out[] <- lapply(out, function(i) {
+    # here we either have "<br>" or " " as line breaks, followed by empty "()"
+    i <- gsub("<br>()", "", i, fixed = TRUE)
+    i <- gsub(" ()", "", i, fixed = TRUE)
+    i[i == "()"] <- ""
+    # remove other non-matched patterns
+    i <- gsub("{stars}", "", i, fixed = TRUE)
+    i <- gsub("{rhat}", "", i, fixed = TRUE)
+    i <- gsub("{ess}", "", i, fixed = TRUE)
+    i <- gsub("{pd}", "", i, fixed = TRUE)
+    i <- gsub("{rope}", "", i, fixed = TRUE)
+    i
+  })
+  out
 }
 
 
+.convert_to_glue_syntax <- function(style, linesep = NULL) {
+  # set default
+  if (is.null(linesep)) {
+    linesep <- " "
+  }
 
-.format_glue_output <- function(x, coef_column, ci_column, style, format, modelname) {
+  # default
+  if (is.null(style)) {
+    style <- paste0("{estimate}", linesep, "({ci})|{p}")
+
+  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
+  } else if (style %in% c("minimal", "ci_p2")) {
+    style <- paste0("{estimate}", linesep, "({ci})|{p}")
+
+    # style: estimate and CI, no p
+  } else if (style == "ci") {
+    style <- paste0("{estimate}", linesep, "({ci})")
+
+    # style: estimate, p-stars and CI
+  } else if (style == "ci_p") {
+    style <- paste0("{estimate}{stars}", linesep, "({ci})")
+
+    # style: estimate and SE, no p
+  } else if (style == "se") {
+    style <- paste0("{estimate}", linesep, "({se})")
+
+    # style: estimate, p-stars and SE
+  } else if (style == "se_p") {
+    style <- paste0("{estimate}{stars}", linesep, "({se})")
+
+    # style: estimate and SE, p-value in separate column
+  } else if (style %in% c("short", "se_p2")) {
+    style <- paste0("{estimate}", linesep, "({se})|{p}")
+
+    # style: only estimate
+  } else if (style %in% c("est", "coef")) {
+    style <- "{estimate}"
+  }
+
+  # replace \n for now with default line-separators
+  gsub("\n", linesep, style)
+}
+
+
+.format_glue_output <- function(x, coef_column, ci_column, style, format, column_names) {
   # separate CI columns, for custom layout
   ci <- x[[ci_column[1]]]
   ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
   ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
   # fix p-layout
-  x[["p"]] <- insight::trim_ws(x[["p"]])
-  x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
+  if ("p" %in% colnames(x)) {
+    x[["p"]] <- insight::trim_ws(x[["p"]])
+    x[["p"]] <- gsub("< .", "<0.", x[["p"]], fixed = TRUE)
+  }
   # handle aliases
   style <- tolower(style)
   style <- gsub("{coef}", "{estimate}", style, fixed = TRUE)
@@ -87,10 +128,13 @@
   style <- gsub("{standard error}", "{se}", style, fixed = TRUE)
   style <- gsub("{pval}", "{p}", style, fixed = TRUE)
   style <- gsub("{p.value}", "{p}", style, fixed = TRUE)
+  style <- gsub("{ci}", "{ci_low}, {ci_high}", style, fixed = TRUE)
   # align columns width for text format
   .align_values <- function(i) {
-    non_empty <- !is.na(i) & nchar(i) > 0
-    i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+    if (!is.null(i)) {
+      non_empty <- !is.na(i) & nchar(i) > 0
+      i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
+    }
     i
   }
   # we put all elements (coefficient, SE, CI, p, ...) in one column.
@@ -104,16 +148,38 @@
     x$p_stars <- .align_values(x$p_stars)
     ci_low <- .align_values(ci_low)
     ci_high <- .align_values(ci_high)
+    x$pd <- .align_values(x$pd)
+    x$Rhat <- .align_values(x$Rhat)
+    x$ESS <- .align_values(x$ESS)
+    x$ROPE_Percentage <- .align_values(x$ROPE_Percentage)
   }
   # create new string
   row <- rep(style, times = nrow(x))
   for (r in seq_along(row)) {
     row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
-    row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
     row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
-    row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
-    row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+    if ("SE" %in% colnames(x)) {
+      row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
+    }
+    if ("p" %in% colnames(x)) {
+      row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+    }
+    if ("p_stars" %in% colnames(x)) {
+      row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
+    }
+    if ("pd" %in% colnames(x)) {
+      row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
+    }
+    if ("Rhat" %in% colnames(x)) {
+      row[r] <- gsub("{rhat}", x[["Rhat"]][r], row[r], fixed = TRUE)
+    }
+    if ("ESS" %in% colnames(x)) {
+      row[r] <- gsub("{ess}", x[["ESS"]][r], row[r], fixed = TRUE)
+    }
+    if ("ROPE_Percentage" %in% colnames(x)) {
+      row[r] <- gsub("{rope}", x[["ROPE_Percentage"]][r], row[r], fixed = TRUE)
+    }
   }
   # some cleaning: columns w/o coefficient are empty
   row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
@@ -124,10 +190,30 @@
   row <- gsub("= ", "=", row, fixed = TRUE)
   # final output
   x <- data.frame(row)
-  colnames(x) <- modelname
+  colnames(x) <- column_names
   x
 }
 
+
+.style_pattern_to_name <- function(style) {
+  column_names <- tolower(style)
+  # completely remove these patterns
+  column_names <- gsub("{stars}", "", column_names, fixed = TRUE)
+  # remove curlys
+  column_names <- gsub("{", "", column_names, fixed = TRUE)
+  column_names <- gsub("}", "", column_names, fixed = TRUE)
+  # manual renaming
+  column_names <- gsub("\\Qrope\\E", "% in ROPE", column_names)
+  column_names <- gsub("(estimate|coefficient|coef)", "Estimate", column_names)
+  column_names <- gsub("\\Qse\\E", "SE", column_names)
+  column_names <- gsub("<br>", "", column_names, fixed = TRUE)
+  column_names
+}
+
+
+# global definition of valid "style" shortcuts
+.style_shortcuts <- c("ci_p2", "ci", "ci_p", "se", "se_p", "se_p2", "est", "coef")
+.select_shortcuts <- c("minimal", "short")
 
 
 .add_obs_row <- function(x, att, style) {

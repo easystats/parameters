@@ -23,9 +23,14 @@
 #'   no title or subtitle is printed, unless it is stored as attributes (`table_title`,
 #'   or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
 #'   data frames, `caption` may be a list of table captions, one for each table.
+#' @param font_size For HTML tables, the font size.
+#' @param line_padding For HTML tables, the distance (in pixel) between lines.
+#' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
+#'   column names are generated. See 'Examples'.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
+#' @inheritParams compare_parameters
 #'
 #' @return If `format = "markdown"`, the return value will be a character
 #'   vector in markdown-table format. If `format = "html"`, an object of
@@ -38,10 +43,33 @@
 #'   [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
 #'   for examples.
 #'
+#' @seealso [print.parameters_model()]
+#'
 #' @examples
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' mp <- model_parameters(model)
 #' display(mp)
+#'
+#' \dontrun{
+#' data(iris)
+#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#' lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' out <- compare_parameters(lm1, lm2, lm3)
+#'
+#' print_html(
+#'   out,
+#'   select = "{coef}{stars}|({ci})",
+#'   column_labels = c("Estimate", "95% CI")
+#' )
+#'
+#' # line break, unicode minus-sign
+#' print_html(
+#'   out,
+#'   select = "{estimate}{stars}<br>({ci_low} \u2212 {ci_high})",
+#'   column_labels = c("Est. (95% CI)")
+#' )
+#' }
 #' @export
 display.parameters_model <- function(object,
                                      format = "markdown",
@@ -60,6 +88,9 @@ display.parameters_model <- function(object,
                                      show_sigma = FALSE,
                                      show_formula = FALSE,
                                      zap_small = FALSE,
+                                     font_size = "100%",
+                                     line_padding = 4,
+                                     column_labels = NULL,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
@@ -69,7 +100,8 @@ display.parameters_model <- function(object,
       footer = footer, ci_digits = ci_digits, p_digits = p_digits,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      verbose = verbose, ...
+      font_size = font_size, line_padding = line_padding,
+      column_labels = column_labels, verbose = verbose, ...
     )
   } else {
     print_md(
@@ -105,12 +137,22 @@ display.compare_parameters <- function(object,
                                        digits = 2,
                                        ci_digits = 2,
                                        p_digits = 3,
-                                       style = NULL,
+                                       select = NULL,
+                                       column_labels = NULL,
+                                       ci_brackets = c("(", ")"),
+                                       font_size = "100%",
+                                       line_padding = 4,
+                                       zap_small = FALSE,
                                        ...) {
   if (identical(format, "html")) {
-    print_html(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
+    print_html(
+      x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits,
+      select = select, column_labels = column_labels, font_size = font_size,
+      line_padding = line_padding, ci_brackets = ci_brackets,
+      zap_small = zap_small, ...
+    )
   } else {
-    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, style = style, ...)
+    print_md(x = object, digits = digits, ci_digits = ci_digits, p_digits = p_digits, select = select, ...)
   }
 }
 

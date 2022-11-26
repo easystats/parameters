@@ -26,6 +26,18 @@ format.parameters_model <- function(x,
   random_variances <- isTRUE(attributes(x)$ran_pars)
   mean_group_values <- attributes(x)$mean_group_values
 
+  # process selection of columns
+  style <- NULL
+  if (!is.null(select)) {
+    # glue-like syntax, so we switch to "style" argument here
+    if (length(select) == 1 &&
+        is.character(select) &&
+        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+      style <- select
+      select <- NULL
+    }
+  }
+
   # is information about grouped parameters stored as attribute?
   if (is.null(groups) && !is.null(attributes(x)$coef_groups)) {
     groups <- attributes(x)$coef_groups
@@ -119,6 +131,11 @@ format.parameters_model <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- .prepare_splitby_for_print(x)
 
+  # add p-stars, if we need this for style-argument
+  if (!is.null(style) && grepl("{stars}", style, fixed = TRUE)) {
+    x$p_stars <- insight::format_p(x[["p"]], stars = TRUE, stars_only = TRUE)
+  }
+
   # format everything now...
   if (split_components && !is.null(split_by) && length(split_by)) {
     # this function mainly sets the appropriate column names for each
@@ -169,6 +186,27 @@ format.parameters_model <- function(x,
     formatted_table$CI <- NULL
   }
 
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    if (!is.data.frame(formatted_table)) {
+      formatted_table[] <- lapply(
+        formatted_table,
+        .style_formatted_table,
+        style = style,
+        format = format
+      )
+    } else {
+      formatted_table <- .style_formatted_table(
+        formatted_table,
+        style = style,
+        format = format
+      )
+    }
+  }
+
   if (!is.null(indent_rows)) {
     attr(formatted_table, "indent_rows") <- indent_rows
     attr(formatted_table, "indent_groups") <- NULL
@@ -207,8 +245,8 @@ format.parameters_brms_meta <- format.parameters_model
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
-                                      style = NULL,
                                       split_components = TRUE,
+                                      select = NULL,
                                       digits = 2,
                                       ci_digits = 2,
                                       p_digits = 3,
@@ -254,11 +292,12 @@ format.compare_parameters <- function(x,
   ran_pars <- which(x$Effects == "random")
 
   # find all random effect groups
-  group_cols <- startsWith(colnames(x), "Group.")
-  if (any(group_cols)) {
-    ran_groups <- unique(unlist(lapply(x[group_cols], insight::compact_character)))
+  if (!is.null(x$Group)) {
+    ran_groups <- unique(insight::compact_character(x$Group))
+    ran_group_rows <- which(nchar(x$Group) > 0)
   } else {
     ran_groups <- NULL
+    ran_group_rows <- NULL
   }
 
   for (i in models) {
@@ -269,13 +308,22 @@ format.compare_parameters <- function(x,
     # since we now have the columns for a single model, we clean the
     # column names (i.e. remove suffix), so we can use "format_table" function
     colnames(cols) <- gsub(pattern, "", colnames(cols))
+    # find coefficient column, check which rows have non-NA values
+    # since we merged all models together, and we only have model-specific
+    # columns for estimates, CI etc. but not for Effects and Component, we
+    # extract "valid" rows via non-NA values in the coefficient column
+    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types(), "Coefficient"))
+    valid_rows <- which(!is.na(cols[[coef_column]]))
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
     # merge it with the parameter column
-    if (!is.null(cols$Group) && length(ran_pars) && !is.null(ran_groups) && length(ran_groups)) {
+    ran_pars_rows <- NULL
+    if (length(ran_pars) && length(ran_group_rows) && any(ran_group_rows %in% valid_rows)) {
       # ran_pars has row indices for *all* models in this function -
       # make sure we have only valid rows for this particular model
-      ran_pars_rows <- ran_pars[ran_pars %in% which(nchar(cols$Group) > 0)]
+      ran_pars_rows <- intersect(valid_rows, intersect(ran_pars, ran_group_rows))
+    }
+    if (!is.null(ran_pars_rows) && length(ran_pars_rows)) {
       # find SD random parameters
       stddevs <- startsWith(out$Parameter[ran_pars_rows], "SD (")
       # check if we already fixed that name in a previous loop
@@ -290,7 +338,7 @@ format.compare_parameters <- function(x,
         out$Parameter[ran_pars_rows[stddevs]] <- paste0(
           gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[stddevs]]),
           ": ",
-          cols$Group[ran_pars_rows[stddevs]],
+          x$Group[ran_pars_rows[stddevs]],
           ")"
         )
       }
@@ -308,12 +356,11 @@ format.compare_parameters <- function(x,
         out$Parameter[ran_pars_rows[corrs]] <- paste0(
           gsub("(.*)\\)", "\\1", out$Parameter[ran_pars_rows[corrs]]),
           ": ",
-          cols$Group[ran_pars_rows[corrs]],
+          x$Group[ran_pars_rows[corrs]],
           ")"
         )
       }
       out$Parameter[out$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
-      cols$Group <- NULL
     }
     # save p-stars in extra column
     cols$p_stars <- insight::format_p(cols$p, stars = TRUE, stars_only = TRUE)
@@ -327,8 +374,12 @@ format.compare_parameters <- function(x,
       zap_small = zap_small,
       ...
     )
-    out <- cbind(out, .format_output_style(cols, style, format, i))
+    out <- cbind(out, .format_output_style(cols, style = select, format, i))
   }
+
+  # remove group column
+  out$Group <- NULL
+  x$Group <- NULL
 
   # sort by effects and component
   if (isFALSE(split_components)) {
@@ -393,7 +444,7 @@ format.compare_parameters <- function(x,
     if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
     if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
     # add line with info about observations
-    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style)
+    formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
 
   formatted_table
@@ -423,6 +474,18 @@ format.parameters_stan <- function(x,
   if (!split_components || is.null(cp)) {
     NextMethod()
   } else {
+    # process selection of columns
+    style <- NULL
+    if (!is.null(select)) {
+      # glue-like syntax, so we switch to "style" argument here
+      if (length(select) == 1 &&
+        is.character(select) &&
+        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+        style <- select
+        select <- NULL
+      }
+    }
+
     if (!is.null(select)) {
       if (all(select == "minimal")) {
         select <- c("Parameter", "Coefficient", "Median", "Mean", "CI", "CI_low", "CI_high", "pd")
@@ -462,6 +525,22 @@ format.parameters_stan <- function(x,
   }
 
   final_table <- datawizard::compact_list(final_table)
+
+  # we also allow style-argument for model parameters. In this case, we need
+  # some small preparation, namely, we need the p_stars column, and we need
+  # to "split" the formatted table, because the glue-function needs the columns
+  # without the parameters-column.
+  if (!is.null(style)) {
+    for (i in seq_along(final_table)) {
+      att <- attributes(final_table[[i]])
+      final_table[[i]] <- .style_formatted_table(
+        final_table[[i]],
+        style = style,
+        format = format
+      )
+      attributes(final_table[[i]]) <- utils::modifyList(att, attributes(final_table[[i]]))
+    }
+  }
 
   # modify table title, if requested
   if (length(final_table) == 1 && !is.null(table_caption)) {
@@ -505,6 +584,34 @@ format.parameters_sem <- function(x,
   )
 }
 
+
+# helper ---------------------
+
+.style_formatted_table <- function(formtab, style, format) {
+  additional_columns <- intersect(c("Effects", "Group", "Component"), colnames(formtab))
+  if (length(additional_columns)) {
+    additional_columns <- formtab[additional_columns]
+  }
+  # define column names in case the glue-pattern has multiple columns.
+  if (grepl("|", style, fixed = TRUE)) {
+    cn <- NULL
+  } else {
+    cn <- .style_pattern_to_name(style)
+  }
+  formtab <- cbind(
+    formtab[1],
+    .format_output_style(
+      formtab[2:ncol(formtab)],
+      style = style,
+      format = format,
+      modelname = cn
+    )
+  )
+  if (!insight::is_empty_object(additional_columns)) {
+    formtab <- cbind(formtab, additional_columns)
+  }
+  formtab
+}
 
 
 # footer functions ------------------

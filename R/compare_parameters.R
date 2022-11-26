@@ -16,18 +16,6 @@
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
-#' @param style String, indicating which style of output is requested. Following
-#'   templates are possible:
-#'
-#'  - `"ci"`: Estimate and confidence intervals, no asterisks for p-values.
-#'  - `"se"`: Estimate and standard errors, no asterisks for p-values.
-#'  - `"ci_p"`: Estimate, confidence intervals and asterisks for p-values.
-#'  - `"se_p"`: Estimate, standard errors and asterisks for p-values.
-#'  - `"ci_p2"`: Estimate, confidence intervals and numeric p-values, in two columns.
-#'  - `"se_p2"`: Estimate, standard errors and numeric p-values, in two columns.
-#'  - glue-like syntax: Following tokens are replaced by the related coefficients
-#'    or statistics: `{estimate}`, `{se}`, `{ci_low}` and `{ci_high}`, `{p}`
-#'    and `{stars}` See 'Examples'.
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
@@ -51,7 +39,13 @@
 #' compare_parameters(lm1, lm2)
 #'
 #' # custom style
-#' compare_parameters(lm1, lm2, style = "{estimate}{stars} ({se})")
+#' compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
+#'
+#' \dontrun{
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
+#' print_html(result)
+#' }
 #'
 #' data(mtcars)
 #' m1 <- lm(mpg ~ wt, data = mtcars)
@@ -78,7 +72,7 @@ compare_parameters <- function(...,
                                exponentiate = FALSE,
                                ci_method = "wald",
                                p_adjust = NULL,
-                               style = NULL,
+                               select = NULL,
                                column_names = NULL,
                                pretty_names = TRUE,
                                keep = NULL,
@@ -135,8 +129,8 @@ compare_parameters <- function(...,
   }
 
   # set default
-  if (is.null(style)) {
-    style <- "ci"
+  if (is.null(select)) {
+    select <- "ci"
   }
 
   # provide own names
@@ -199,6 +193,9 @@ compare_parameters <- function(...,
     if (!"Effects" %in% colnames(dat)) {
       dat$Effects <- "fixed"
     }
+    if (!"Group" %in% colnames(dat)) {
+      dat$Group <- ""
+    }
 
     # add zi-suffix to parameter names
     if (any(dat$Component == "zero_inflated")) {
@@ -206,7 +203,7 @@ compare_parameters <- function(...,
     }
 
     # add suffix
-    ignore <- colnames(dat) %in% c("Parameter", "Component", "Effects")
+    ignore <- colnames(dat) %in% c("Parameter", "Component", "Effects", "Group")
     colnames(dat)[!ignore] <- paste0(colnames(dat)[!ignore], ".", model_name)
 
     # save model number, for sorting
@@ -220,7 +217,9 @@ compare_parameters <- function(...,
   names(object_attributes) <- model_names
 
   # merge all data frames
-  all_models <- suppressWarnings(Reduce(function(x, y) merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects")), m))
+  all_models <- suppressWarnings(Reduce(function(x, y) {
+    merge(x, y, all = TRUE, sort = FALSE, by = c("Parameter", "Component", "Effects", "Group"))
+  }, m))
 
   # find columns with model numbers and create new variable "params_order",
   # which is pasted together of all model-column indices. Take lowest index of
@@ -231,8 +230,13 @@ compare_parameters <- function(...,
   all_models <- all_models[order(params_order), ]
   all_models[model_cols] <- NULL
 
+  # remove empty group-column
+  if (all(nchar(all_models$Group) == 0)) {
+    all_models$Group <- NULL
+  }
+
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
-  attr(all_models, "output_style") <- style
+  attr(all_models, "output_style") <- select
   attr(all_models, "all_attributes") <- object_attributes
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
 
@@ -262,7 +266,8 @@ compare_models <- compare_parameters
     # remove strings with NA names
     att$pretty_names <- att$pretty_names[!is.na(names(att$pretty_names))]
     if (length(att$pretty_names) != length(x$Parameter)) {
-      match_pretty_names <- stats::na.omit(match(names(att$pretty_names), x$Parameter))
+      match_pretty_names <- match(names(att$pretty_names), x$Parameter)
+      match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
       if (length(match_pretty_names)) {
         x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
       }
@@ -271,7 +276,8 @@ compare_models <- compare_parameters
       if (!anyNA(match_pretty_names)) {
         x$Parameter <- att$pretty_names[x$Parameter]
       } else {
-        match_pretty_names <- stats::na.omit(match(names(att$pretty_names), x$Parameter))
+        match_pretty_names <- match(names(att$pretty_names), x$Parameter)
+        match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
         if (length(match_pretty_names)) {
           x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
         }

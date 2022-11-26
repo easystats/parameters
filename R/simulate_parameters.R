@@ -19,15 +19,13 @@
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @details
-#' **Technical Details**
-#'
+#' ## Technical Details
 #' `simulate_parameters()` is a computationally faster alternative
 #' to `bootstrap_parameters()`. Simulated draws for coefficients are based
 #' on a multivariate normal distribution (`MASS::mvrnorm()`) with mean
 #' `mu = coef(model)` and variance `Sigma = vcov(model)`.
 #'
-#' **Models with Zero-Inflation Component**
-#'
+#' ## Models with Zero-Inflation Component
 #' For models from packages **glmmTMB**, **pscl**, **GLMMadaptive** and
 #' **countreg**, the `component` argument can be used to specify
 #' which parameters should be simulated. For all other models, parameters

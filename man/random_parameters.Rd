@@ -25,31 +25,33 @@ This function extracts the different variance components of a
 mixed model and returns the result as a data frame.
 }
 \details{
-The variance components are obtained from \code{\link[insight:get_variance]{insight::get_variance()}}
-and are denoted as following:
-
-\strong{Within-group (or residual) variance}
+The variance components are obtained from \code{\link[insight:get_variance]{insight::get_variance()}} and
+are denoted as following:
+\subsection{Within-group (or residual) variance}{
 
 The residual variance, \ifelse{html}{\out{&sigma;<sup>2</sup><sub>&epsilon;</sub>}}{\eqn{\sigma^2_\epsilon}},
 is the sum of the distribution-specific variance and the variance due to additive dispersion.
 It indicates the \emph{within-group variance}.
+}
 
-\strong{Between-group random intercept variance}
+\subsection{Between-group random intercept variance}{
 
 The random intercept variance, or \emph{between-group} variance
 for the intercept (\ifelse{html}{\out{&tau;<sub>00</sub>}}{\eqn{\tau_{00}}}),
 is obtained from \code{VarCorr()}. It indicates how much groups
 or subjects differ from each other.
+}
 
-\strong{Between-group random slope variance}
+\subsection{Between-group random slope variance}{
 
 The random slope variance, or \emph{between-group} variance
 for the slopes (\ifelse{html}{\out{&tau;<sub>11</sub>}}{\eqn{\tau_{11}}})
 is obtained from \code{VarCorr()}. This measure is only available
 for mixed models with random slopes. It indicates how much groups
 or subjects differ from each other according to their slopes.
+}
 
-\strong{Random slope-intercept correlation}
+\subsection{Random slope-intercept correlation}{
 
 The random slope-intercept correlation
 (\ifelse{html}{\out{&rho;<sub>01</sub>}}{\eqn{\rho_{01}}})
@@ -59,6 +61,7 @@ for mixed models with random intercepts and slopes.
 \strong{Note:} For the within-group and between-group variance, variance
 and standard deviations (which are simply the square root of the variance)
 are shown.
+}
 }
 \examples{
 if (require("lme4")) {

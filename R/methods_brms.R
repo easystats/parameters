@@ -71,6 +71,7 @@ model_parameters.brmsfit <- function(model,
       if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
     }
 
+    # add prettified names as attribute. Furthermore, group column is added
     params <- .add_pretty_names(params, model)
 
     # exponentiate coefficients and SE/CI, if requested

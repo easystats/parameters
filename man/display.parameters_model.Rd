@@ -30,6 +30,9 @@
   show_sigma = FALSE,
   show_formula = FALSE,
   zap_small = FALSE,
+  font_size = "100\%",
+  line_padding = 4,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -92,6 +95,9 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
+  font_size = "100\%",
+  line_padding = 4,
+  column_labels = NULL,
   verbose = TRUE,
   ...
 )
@@ -138,10 +144,49 @@ multiple components (zero-inflation, smooth terms, ...), each component is
 printed in a separate table. If \code{FALSE}, model parameters are printed
 in a single table and a \code{Component} column is added to the output.}
 
-\item{select}{Character vector (or numeric index) of column names that should
-be printed. If \code{NULL} (default), all columns are printed. The shortcut
-\code{select = "minimal"} prints coefficient, confidence intervals and p-values,
-while \code{select = "short"} prints coefficient, standard errors and p-values.}
+\item{select}{Determines which columns and and which layout columns are
+printed. There are three options for this argument:
+\enumerate{
+\item Selecting columns by name or index
+\cr
+\code{select} can be a character vector (or numeric index) of column names that
+should be printed. There are two pre-defined options for selecting columns:
+\code{select = "minimal"} prints coefficients, confidence intervals and p-values,
+while \code{select = "short"} prints coefficients, standard errors and p-values.
+\item A string expression with layout pattern
+\cr
+\code{select} is a string with "tokens" enclosed in braces. These tokens will
+be replaced by their associated columns, where the selected columns will
+be collapsed into one column. However, it is possible to create multiple
+columns as well. Following tokens are replaced by the related coefficients
+or statistics: \code{{estimate}}, \code{{se}}, \code{{ci}} (or \code{{ci_low}} and \code{{ci_high}}),
+\code{{p}} and \code{{stars}}. The token \code{{ci}} will be replaced by \verb{\{ci_low\}, \{ci_high\}}.
+Furthermore, a \code{|} separates values into new cells/columns. If
+\code{format = "html"}, a \verb{<br>} inserts a line break inside a cell. See
+'Examples'.
+\item A string indicating a pre-defined layout
+\cr
+\code{select} can be one of the following string values, to create one of the
+following pre-defined column layouts:
+\itemize{
+\item \code{"ci"}: Estimates and confidence intervals, no asterisks for p-values.
+This is equivalent to \code{select = "{estimate} ({ci})"}.
+\item \code{"se"}: Estimates and standard errors, no asterisks for p-values. This is
+equivalent to \code{select = "{estimate} ({se})"}.
+\item \code{"ci_p"}: Estimates, confidence intervals and asterisks for p-values. This
+is equivalent to \code{select = "{estimate}{stars} ({ci})"}.
+\item \code{"se_p"}: Estimates, standard errors and asterisks for p-values. This is
+equivalent to \code{select = "{estimate}{stars} ({se})"}..
+\item \code{"ci_p2"}: Estimates, confidence intervals and numeric p-values, in two
+columns. This is equivalent to \code{select = "{estimate} ({ci})|{p}"}.
+\item \code{"se_p2"}: Estimate, standard errors and numeric p-values, in two columns.
+This is equivalent to \code{select = "{estimate} ({se})|{p}"}.
+}
+}
+
+For \code{model_parameters()}, glue-like syntax is still experimental in the
+case of more complex models (like mixed models) and may not return expected
+results.}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}
@@ -179,6 +224,13 @@ standard deviation.}
 \item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
+
+\item{font_size}{For HTML tables, the font size.}
+
+\item{line_padding}{For HTML tables, the distance (in pixel) between lines.}
+
+\item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
+column names are generated. See 'Examples'.}
 
 \item{verbose}{Toggle messages and warnings.}
 
@@ -233,4 +285,28 @@ for examples.
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)
 display(mp)
+
+\dontrun{
+data(iris)
+lm1 <- lm(Sepal.Length ~ Species, data = iris)
+lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+lm3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+out <- compare_parameters(lm1, lm2, lm3)
+
+print_html(
+  out,
+  select = "{coef}{stars}|({ci})",
+  column_labels = c("Estimate", "95\% CI")
+)
+
+# line break, unicode minus-sign
+print_html(
+  out,
+  select = "{estimate}{stars}<br>({ci_low} \u2212 {ci_high})",
+  column_labels = c("Est. (95\% CI)")
+)
+}
+}
+\seealso{
+\code{\link[=print.parameters_model]{print.parameters_model()}}
 }

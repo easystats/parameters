@@ -64,20 +64,22 @@ such as Confidence Intervals (CI) and p-values. Simulating parameter draws
 can be seen as a (computationally faster) alternative to bootstrapping.
 }
 \details{
-\strong{Technical Details}
+\subsection{Technical Details}{
 
 \code{simulate_parameters()} is a computationally faster alternative
 to \code{bootstrap_parameters()}. Simulated draws for coefficients are based
 on a multivariate normal distribution (\code{MASS::mvrnorm()}) with mean
 \code{mu = coef(model)} and variance \code{Sigma = vcov(model)}.
+}
 
-\strong{Models with Zero-Inflation Component}
+\subsection{Models with Zero-Inflation Component}{
 
 For models from packages \strong{glmmTMB}, \strong{pscl}, \strong{GLMMadaptive} and
 \strong{countreg}, the \code{component} argument can be used to specify
 which parameters should be simulated. For all other models, parameters
 from the conditional component (fixed effects) are simulated. This may
 include smooth terms, but not random effects.
+}
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.

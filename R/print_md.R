@@ -132,7 +132,7 @@ print_md.compare_parameters <- function(x,
                                         caption = NULL,
                                         subtitle = NULL,
                                         footer = NULL,
-                                        style = NULL,
+                                        select = NULL,
                                         split_components = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -147,13 +147,13 @@ print_md.compare_parameters <- function(x,
   }
 
   # get attributes
-  if (missing(style) || is.null(style)) {
-    style <- attributes(x)$output_style
+  if (missing(select) || is.null(select)) {
+    select <- attributes(x)$output_style
   }
 
   formatted_table <- format(
     x,
-    style,
+    select = select,
     split_components = split_components,
     digits = digits,
     ci_digits = ci_digits,
