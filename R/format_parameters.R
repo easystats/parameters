@@ -436,7 +436,12 @@ format_parameters.parameters_model <- function(model, ...) {
     labels <- pn
   }
 
-  labels
+  # missing labels return original parameter name (e.g., variance components in mixed models)
+  out <- stats::setNames(params$Parameter, params$Parameter)
+  labels <- labels[names(labels) %in% params$Parameter]
+  out[match(names(labels), params$Parameter)] <- labels
+
+  out
 }
 
 
