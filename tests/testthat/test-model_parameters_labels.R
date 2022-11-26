@@ -99,3 +99,12 @@ test_that("Issue #785: partial and factor labels", {
   known <- c("(Intercept)", "Horsepower", "drat", "Cylinders [6]", "Cylinders [8]")
   expect_equal(attr(mp, "pretty_labels"), known, ignore_attr = TRUE)
 })
+
+
+
+test_that("Issue #806: Missing label for variance component in lme4", {
+  requiet("lme4")
+  mod <- lmer(mpg ~ hp + (1 | gear), data = mtcars)
+  p <- parameters::parameters(mod, pretty_names = "labels")
+  expect_true("SD (Intercept)" %in% attr(p, "pretty_labels"))
+})
