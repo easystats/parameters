@@ -693,5 +693,277 @@ model_parameters.glm <- function(model,
   out
 }
 
+
 #' @export
-model_parameters.zoo <- model_parameters.default
+model_parameters.aareg  <- model_parameters.default
+
+ #' @export
+model_parameters.acf  <- model_parameters.default
+
+ #' @export
+model_parameters.Arima  <- model_parameters.default
+
+ #' @export
+model_parameters.biglm  <- model_parameters.default
+
+ #' @export
+model_parameters.binDesign  <- model_parameters.default
+
+ #' @export
+model_parameters.binWidth  <- model_parameters.default
+
+ #' @export
+model_parameters.boot  <- model_parameters.default
+
+ #' @export
+model_parameters.btergm  <- model_parameters.default
+
+ #' @export
+model_parameters.cch  <- model_parameters.default
+
+ #' @export
+model_parameters.character  <- model_parameters.default
+
+ #' @export
+model_parameters.cld  <- model_parameters.default
+
+ #' @export
+model_parameters.clm  <- model_parameters.default
+
+ #' @export
+model_parameters.confint.glht  <- model_parameters.default
+
+ #' @export
+model_parameters.confusionMatrix  <- model_parameters.default
+
+ #' @export
+model_parameters.coxph  <- model_parameters.default
+
+ #' @export
+model_parameters.crr  <- model_parameters.default
+
+ #' @export
+model_parameters.cv.glmnet  <- model_parameters.default
+
+ #' @export
+model_parameters.density  <- model_parameters.default
+
+ #' @export
+model_parameters.dist  <- model_parameters.default
+
+ #' @export
+model_parameters.drc  <- model_parameters.default
+
+ #' @export
+model_parameters.durbinWatsonTest  <- model_parameters.default
+
+ #' @export
+model_parameters.ergm  <- model_parameters.default
+
+ #' @export
+model_parameters.factanal  <- model_parameters.default
+
+ #' @export
+model_parameters.felm  <- model_parameters.default
+
+ #' @export
+model_parameters.fixest  <- model_parameters.default
+
+ #' @export
+model_parameters.ftable  <- model_parameters.default
+
+ #' @export
+model_parameters.garch  <- model_parameters.default
+
+ #' @export
+model_parameters.geeglm  <- model_parameters.default
+
+ #' @export
+model_parameters.glmnet  <- model_parameters.default
+
+ #' @export
+model_parameters.glmrob  <- model_parameters.default
+
+ #' @export
+model_parameters.glmRob  <- model_parameters.default
+
+ #' @export
+model_parameters.gmm  <- model_parameters.default
+
+ #' @export
+model_parameters.ivreg  <- model_parameters.default
+
+ #' @export
+model_parameters.kappa  <- model_parameters.default
+
+ #' @export
+model_parameters.kde  <- model_parameters.default
+
+ #' @export
+model_parameters.Kendall  <- model_parameters.default
+
+ #' @export
+model_parameters.leveneTest  <- model_parameters.default
+
+ #' @export
+model_parameters.Line  <- model_parameters.default
+
+ #' @export
+model_parameters.Lines  <- model_parameters.default
+
+ #' @export
+model_parameters.lm  <- model_parameters.default
+
+ #' @export
+model_parameters.lm.beta  <- model_parameters.default
+
+ #' @export
+model_parameters.lmrob  <- model_parameters.default
+
+ #' @export
+model_parameters.lmRob  <- model_parameters.default
+
+ #' @export
+model_parameters.logical  <- model_parameters.default
+
+ #' @export
+model_parameters.lsmobj  <- model_parameters.default
+
+ #' @export
+ ##	TEMPORARY EXCEPTION:  model_parameters.default has ERRORS.
+model_parameters.manova  <- model_parameters.aov
+
+ #' @export
+model_parameters.map  <- model_parameters.default
+
+ #' @export
+model_parameters.mfx  <- model_parameters.default
+
+ #' @export
+model_parameters.mlogit  <- model_parameters.default
+
+ #' @export
+model_parameters.muhaz  <- model_parameters.default
+
+ #' @export
+model_parameters.nlrq  <- model_parameters.default
+
+ #' @export
+model_parameters.nls  <- model_parameters.default
+
+ #' @export
+model_parameters.NULL  <- model_parameters.default
+
+ #' @export
+model_parameters.numeric  <- model_parameters.default
+
+ #' @export
+model_parameters.orcutt  <- model_parameters.default
+
+ #' @export
+model_parameters.plm  <- model_parameters.default
+
+ #' @export
+model_parameters.poLCA  <- model_parameters.default
+
+ #' @export
+model_parameters.Polygon  <- model_parameters.default
+
+ #' @export
+model_parameters.Polygons  <- model_parameters.default
+
+ #' @export
+model_parameters.power.htest  <- model_parameters.default
+
+ #' @export
+model_parameters.prcomp  <- model_parameters.default
+
+ #' @export
+model_parameters.pyears  <- model_parameters.default
+
+ #' @export
+model_parameters.rcorr  <- model_parameters.default
+
+ #' @export
+model_parameters.ref.grid  <- model_parameters.default
+
+ #' @export
+model_parameters.regsubsets  <- model_parameters.default
+
+ #' @export
+model_parameters.rlm  <- model_parameters.default
+
+ #' @export
+model_parameters.roc  <- model_parameters.default
+
+ #' @export
+model_parameters.rq  <- model_parameters.default
+
+ #' @export
+model_parameters.sarlm  <- model_parameters.default
+
+ #' @export
+model_parameters.Sarlm  <- model_parameters.default
+
+ #' @export
+model_parameters.SpatialLinesDataFrame  <- model_parameters.default
+
+ #' @export
+model_parameters.SpatialPolygons  <- model_parameters.default
+
+ #' @export
+model_parameters.SpatialPolygonsDataFrame  <- model_parameters.default
+
+ #' @export
+model_parameters.spec  <- model_parameters.default
+
+ #' @export
+model_parameters.speedglm  <- model_parameters.default
+
+ #' @export
+model_parameters.speedlm  <- model_parameters.default
+
+ #' @export
+model_parameters.summary_emm  <- model_parameters.default
+
+ #' @export
+model_parameters.summary.glht  <- model_parameters.default
+
+ #' @export
+model_parameters.summary.lm  <- model_parameters.default
+
+ #' @export
+model_parameters.summary.plm  <- model_parameters.default
+
+ #' @export
+model_parameters.summaryDefault  <- model_parameters.default
+
+ #' @export
+model_parameters.survdiff  <- model_parameters.default
+
+ #' @export
+model_parameters.survexp  <- model_parameters.default
+
+ #' @export
+model_parameters.survfit  <- model_parameters.default
+
+ #' @export
+model_parameters.survreg  <- model_parameters.default
+
+ #' @export
+model_parameters.svyolr  <- model_parameters.default
+
+ #' @export
+model_parameters.table  <- model_parameters.default
+
+ #' @export
+model_parameters.tobit  <- model_parameters.default
+
+ #' @export
+model_parameters.ts  <- model_parameters.default
+
+ #' @export
+model_parameters.TukeyHSD  <- model_parameters.default
+
+ #' @export
+model_parameters.zoo  <- model_parameters.default
