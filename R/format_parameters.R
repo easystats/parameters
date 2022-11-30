@@ -371,9 +371,10 @@ format_parameters.parameters_model <- function(model, ...) {
     model <- .get_object(params)
   }
 
-  if (!is.null(model)) {
+  # sanity check
+  if (!is.null(model) && insight::is_regression_model(model)) {
     # get data, but exclude response - we have no need for that label
-    mf <- insight::get_data(model)
+    mf <- insight::get_data(model, verbose = FALSE)
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
