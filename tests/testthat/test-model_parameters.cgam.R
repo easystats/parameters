@@ -140,7 +140,7 @@ if (.runThisTest && requiet("testthat") && requiet("cgam") &&
         pretty_labels = c(
           `(Intercept)` = "(Intercept)",
           `s.incr(x)` = "s.incr(x)"
-        )
+        ),
         test_statistic = "t-statistic",
         log_response = FALSE,
         log_predictors = FALSE,
