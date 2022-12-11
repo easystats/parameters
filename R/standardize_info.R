@@ -50,7 +50,7 @@ standardize_info.default <- function(model,
   types <- parameters_type(model)
   # model_matrix <- as.data.frame(stats::model.matrix(model))
   model_matrix <- as.data.frame(insight::get_modelmatrix(model))
-  data <- insight::get_data(model, source = "mf")
+  data <- insight::get_data(model, source = "mf", verbose = FALSE)
   wgts <- insight::get_weights(model, na_rm = TRUE)
 
   # Sanity Check for ZI

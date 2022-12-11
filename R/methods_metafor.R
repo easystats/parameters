@@ -79,7 +79,7 @@ model_parameters.rma <- function(model,
   # subgroup analyses?
   if (!is.null(model$formula.mods)) {
     group_variable <- deparse(model$formula.mods[[2]])[1]
-    model_data <- insight::get_data(model)
+    model_data <- insight::get_data(model, verbose = FALSE)
     if (group_variable %in% colnames(model_data)) {
       subgroups <- sort(unique(model_data[[group_variable]]))
     }
