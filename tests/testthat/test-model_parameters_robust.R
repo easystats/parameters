@@ -92,7 +92,8 @@ if (requiet("testthat") &&
       expect_equal(params$p, c(0, 0.00695, 0.00322, 0.00435, 0.94471, 0.00176), tolerance = 1e-3)
     })
 
-    model2 <- lm(mpg ~ wt * am + cyl + gear, data = datawizard::standardize(mtcars))
+    d <<- datawizard::standardize(mtcars)
+    model2 <- lm(mpg ~ wt * am + cyl + gear, data = d)
 
     test_that("model_parameters, robust", {
       params <- model_parameters(model, standardize = "refit", vcov = "HC3")

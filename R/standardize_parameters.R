@@ -626,13 +626,10 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
 #' @keywords internal
 .should_pseudo <- function(method, model, mi) {
-  if (method == "pseudo" &&
-      !(mi$is_mixed &&
-        length(insight::find_random(model)$random) == 1)) {
-    warning(insight::format_message(
+  if (method == "pseudo" && !(mi$is_mixed && length(insight::find_random(model)$random) == 1)) {
+    insight::format_warning(
       "`pseudo` method only available for 2-level (G)LMMs.",
-      "Setting method to `basic`."),
-      call. = FALSE
+      "Setting method to `basic`."
     )
     method <- "basic"
   }
@@ -646,8 +643,8 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     if (verbose) {
       warning(insight::format_message(
         "Unable to verify if response should not be standardized.",
-        "Response will be standardized."),
-        immediate. = TRUE, call. = FALSE)
+        "Response will be standardized."
+      ), immediate. = TRUE, call. = FALSE)
     }
     return(TRUE)
   }
