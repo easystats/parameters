@@ -1,12 +1,12 @@
 if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
   data("iris")
-  df <- iris
+  dat <<- iris
 
   # simple ------------------------------------------------------------------
   test_that("standardize_parameters (simple)", {
-    r <- as.numeric(cor.test(df$Sepal.Length, df$Petal.Length)$estimate)
+    r <- as.numeric(cor.test(dat$Sepal.Length, dat$Petal.Length)$estimate)
 
-    model <- lm(Sepal.Length ~ Petal.Length, data = df)
+    model <- lm(Sepal.Length ~ Petal.Length, data = dat)
     es <- standardize_parameters(model)
     expect_equal(es[2, 2], r, tolerance = 0.01)
 
@@ -150,12 +150,12 @@ if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
 
   # aov ---------------------------------------------------------------------
   test_that("standardize_parameters (aov)", {
-    data <- iris
+    dat2 <- iris
+    dat2$Cat1 <- rep(c("A", "B"), length.out = nrow(dat2))
+    dat3 <<- dat2
 
-    data$Cat1 <- rep(c("A", "B"), length.out = nrow(data))
-
-    m_aov <- aov(Sepal.Length ~ Species * Cat1, data = data)
-    m_lm <- lm(Sepal.Length ~ Species * Cat1, data = data)
+    m_aov <- aov(Sepal.Length ~ Species * Cat1, data = dat3)
+    m_lm <- lm(Sepal.Length ~ Species * Cat1, data = dat3)
 
     expect_equal(standardize_parameters(m_aov),
       standardize_parameters(m_lm),
