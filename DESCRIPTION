@@ -205,4 +205,4 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
-Remotes: easystats/insight@revise_get_data, easystats/datawizard, easystats/performance
+Remotes: easystats/datawizard, easystats/performance
