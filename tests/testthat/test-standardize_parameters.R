@@ -194,9 +194,8 @@ if (requiet("testthat") && requiet("parameters") && requiet("datawizard")) {
     # transformed resp or pred should not affect
     mtcars$cyl_exp <- exp(mtcars$cyl)
     mtcars$mpg_sqrt <- sqrt(mtcars$mpg)
-    d <<- mtcars
-    m1 <- lm(exp(cyl) ~ am + sqrt(mpg), d)
-    m2 <- lm(cyl_exp ~ am + mpg_sqrt, d)
+    m1 <- lm(exp(cyl) ~ am + sqrt(mpg), mtcars)
+    m2 <- lm(cyl_exp ~ am + mpg_sqrt, mtcars)
 
     expect_message(stdX <- standardize_parameters(m1, method = "refit"))
     expect_false(isTRUE(all.equal(
