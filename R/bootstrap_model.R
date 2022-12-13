@@ -82,7 +82,7 @@ bootstrap_model.default <- function(model,
   type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
-  model_data <- data <- insight::get_data(model)
+  model_data <- data <- insight::get_data(model, verbose = FALSE)
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {

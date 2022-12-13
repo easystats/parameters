@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.20.0.3
+Version: 0.20.0.5
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -81,7 +81,7 @@ Depends:
 Imports:
     bayestestR (>= 0.13.0),
     datawizard (>= 0.6.3),
-    insight (>= 0.18.6),
+    insight (>= 0.18.8.2),
     graphics,
     methods,
     stats,
@@ -205,3 +205,4 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
+Remotes: easystats/insight@revise_get_data, easystats/datawizard, easystats/performance

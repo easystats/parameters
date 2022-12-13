@@ -322,7 +322,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   # Build non-formula model arguments to `domin` ----
   fml <- stats::reformulate(ivs, response = dv, intercept = insight::has_intercept(model))
 
-  data <- insight::get_data(model)
+  data <- insight::get_data(model, verbose = FALSE)
 
   args <- as.list(insight::get_call(model), collapse = "") # extract all arguments from call
 
