@@ -7,7 +7,8 @@ if (.runThisTest) {
     requiet("insight")) {
     data(mtcars)
     mtcars$am <- as.factor(mtcars$am)
-    model <- lm(mpg ~ wt * am, data = mtcars)
+    d <- mtcars
+    model <- lm(mpg ~ wt * am, data = d)
 
     test_that("model_parameters, standardize-refit", {
       params <- model_parameters(model, standardize = "refit")

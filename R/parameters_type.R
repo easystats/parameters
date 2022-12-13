@@ -92,7 +92,7 @@ parameters_type <- function(model, ...) {
   }
 
 
-  data <- insight::get_data(model, verbose = FALSE)
+  data <- insight::get_data(model, source = "mf", verbose = FALSE)
   if (is.null(data) || inherits(data, "ts") || nrow(data) == 0) {
     return(NULL)
   }
