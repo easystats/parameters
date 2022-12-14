@@ -85,7 +85,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("insight")) {
 
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("testthat") && requiet("glmmTMB") && requiet("parameters") && requiet("insight")) {
+if (.runThisTest && requiet("testthat") && requiet("glmmTMB") && requiet("parameters") && requiet("insight") && getRversion() >= "4.0.0") {
   data("fish")
   m0 <- glm(count ~ child + camper, data = fish, family = poisson())
 
