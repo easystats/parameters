@@ -1,8 +1,8 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("lme4")) {
   data(mtcars)
   m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)

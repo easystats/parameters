@@ -1,7 +1,7 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
+if (
+
   requiet("utils") &&
-  requiet("brglm2")) {
+    requiet("brglm2")) {
   data("stemcell")
   levels(stemcell$research) <- c("definitly", "alterly", "probably not", "definitely not")
   m1 <- bracl(research ~ as.numeric(religion) + gender, weights = frequency, data = stemcell, type = "ML")

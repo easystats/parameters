@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("testthat") && requiet("parameters")) {
+if (.runThisTest) {
   test_that("emmeans | lm", {
     skip_if_not_installed("emmeans")
     skip_if_not_installed("boot")

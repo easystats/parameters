@@ -1,4 +1,4 @@
-if (requiet("lme4") && requiet("testthat") && requiet("parameters")) {
+if (requiet("lme4")) {
   set.seed(1)
   dat <- data.frame(
     TST.diff = runif(100, 0, 100),

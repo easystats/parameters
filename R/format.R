@@ -31,8 +31,8 @@ format.parameters_model <- function(x,
   if (!is.null(select)) {
     # glue-like syntax, so we switch to "style" argument here
     if (length(select) == 1 &&
-        is.character(select) &&
-        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+      is.character(select) &&
+      (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
       style <- select
       select <- NULL
     }

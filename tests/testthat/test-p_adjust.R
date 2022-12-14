@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("testthat") && requiet("parameters")) {
+if (.runThisTest) {
   data(mtcars)
   model <- lm(mpg ~ wt * cyl + am + log(hp), data = mtcars)
 

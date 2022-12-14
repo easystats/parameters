@@ -1,8 +1,8 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
+if (
+
   requiet("stats") &&
-  requiet("plm") &&
-  getRversion() > "3.5") {
+    requiet("plm") &&
+    getRversion() > "3.5") {
   data(Crime)
   data("Produc", package = "plm")
   set.seed(123)

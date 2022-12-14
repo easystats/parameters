@@ -8,12 +8,12 @@ linux <- tryCatch({
 })
 
 
-if (requiet("testthat") &&
-  requiet("parameters") &&
+if (
+
   requiet("psych") &&
-  requiet("lavaan") &&
-  requiet("BayesFM") &&
-  requiet("FactoMineR")) {
+    requiet("lavaan") &&
+    requiet("BayesFM") &&
+    requiet("FactoMineR")) {
   test_that("principal_components", {
     set.seed(333)
 

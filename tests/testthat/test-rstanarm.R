@@ -15,8 +15,8 @@ osx <- tryCatch(
 )
 
 if (.runThisTest && !osx &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("rstanarm")) {
   data(mtcars)
   set.seed(123)

@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {
-  if (requiet("testthat") && requiet("parameters") && requiet("psych")) {
+  if (requiet("psych")) {
     data(mtcars)
     pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")
     scores <- get_scores(pca)

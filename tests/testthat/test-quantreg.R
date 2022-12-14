@@ -1,9 +1,9 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("insight") &&
+
+
+
   requiet("quantreg")) {
   # rqss ---------
 

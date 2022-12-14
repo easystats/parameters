@@ -1,6 +1,6 @@
-if (requiet("testthat") &&
-  requiet("insight") &&
-  requiet("parameters") &&
+if (
+
+
   requiet("metaBMA")) {
   data(towels)
 

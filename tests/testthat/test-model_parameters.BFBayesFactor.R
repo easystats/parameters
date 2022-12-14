@@ -1,7 +1,7 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
+if (
+
   requiet("BayesFactor") &&
-  requiet("logspline")) {
+    requiet("logspline")) {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
   # if (.runThisTest) {
@@ -71,7 +71,7 @@ if (requiet("testthat") &&
     )
   })
 
-  if (.runThisTest && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
+  if (.runThisTest && requiet("effectsize")) {
     data(raceDolls)
     bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
     mp <- suppressWarnings(model_parameters(bf,
@@ -148,7 +148,7 @@ if (requiet("testthat") &&
 
   expect_equal(dim(df_t), c(1L, 11L))
 
-  if (requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
+  if (requiet("effectsize")) {
     # with effectsize
     set.seed(123)
     df_t_es <- as.data.frame(parameters(ttestBF(mtcars$wt, mu = 3), effectsize_type = "cohens_d"))

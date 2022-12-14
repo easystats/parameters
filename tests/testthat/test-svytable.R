@@ -1,7 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("survey")) {
-  library(survey)
+if (requiet("survey")) {
   data(api, package = "survey")
   dclus1 <<- svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
   m <- svytable(~ sch.wide + stype, dclus1)

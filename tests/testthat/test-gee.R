@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("gee")) {
+if (requiet("gee")) {
   data(warpbreaks)
   void <- capture.output(
     m1 <- suppressMessages(gee(breaks ~ tension, id = wool, data = warpbreaks))

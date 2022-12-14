@@ -76,7 +76,7 @@
   if (is.null(style)) {
     style <- paste0("{estimate}", linesep, "({ci})|{p}")
 
-  # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
+    # style: estimate and CI, p-value in separate column (currently identical to "ci_p2")
   } else if (style %in% c("minimal", "ci_p2")) {
     style <- paste0("{estimate}", linesep, "({ci})|{p}")
 

@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("pscl") && requiet("parameters")) {
+if (requiet("pscl")) {
   set.seed(123)
   data("bioChemists", package = "pscl")
   model <- hurdle(formula = art ~ ., data = bioChemists, zero = "geometric")

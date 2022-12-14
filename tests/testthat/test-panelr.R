@@ -1,8 +1,8 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("panelr")) {
   data("WageData")
   wages <- panel_data(WageData, id = id, wave = t)

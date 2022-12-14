@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("insight") && requiet("effectsize") && requiet("lme4")) {
+if (requiet("effectsize") && requiet("lme4")) {
   test_that("parameters_table 1", {
     x <- model_parameters(lm(Sepal.Length ~ Species, data = iris), standardize = "refit")
     tab <- format_table(x)

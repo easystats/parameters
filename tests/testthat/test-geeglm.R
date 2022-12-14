@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("geepack")) {
+if (requiet("geepack")) {
   data(warpbreaks)
   m1 <-
     geeglm(
