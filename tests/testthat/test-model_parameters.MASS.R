@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("MASS")) {
+if (requiet("MASS")) {
   model <- MASS::rlm(formula = mpg ~ am * cyl, data = mtcars)
   s <- summary(model)
 

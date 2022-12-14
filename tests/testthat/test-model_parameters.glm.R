@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("boot")) {
+if (requiet("boot")) {
   data(mtcars)
   test_that("model_parameters.lm", {
     model <- lm(mpg ~ wt, data = mtcars)

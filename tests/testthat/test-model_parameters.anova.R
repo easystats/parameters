@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("insight") && requiet("testthat") && requiet("parameters")) {
+if (.runThisTest) {
   data(mtcars)
   m <- glm(am ~ mpg + hp + factor(cyl),
     data = mtcars, family = binomial()
@@ -136,7 +136,7 @@ if (.runThisTest && requiet("insight") && requiet("testthat") && requiet("parame
 
 # XXX -----
 
-if (.runThisTest && requiet("parameters") && requiet("testthat")) {
+if (.runThisTest && requiet("testthat")) {
   test_that("anova type | lm", {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
@@ -238,7 +238,7 @@ if (.runThisTest && requiet("parameters") && requiet("testthat")) {
 
 
 
-if (.runThisTest && requiet("parameters") && requiet("rms") && requiet("testthat")) {
+if (.runThisTest && requiet("rms") && requiet("testthat")) {
   m <- rms::ols(mpg ~ cyl + disp + hp + drat, data = mtcars)
   a <- anova(m)
   mp <- model_parameters(a)

@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("cplm")) {
+if (requiet("cplm")) {
   data("FineRoot")
   model <- cpglmm(RLD ~ Stock + Spacing + (1 | Plant), data = FineRoot)
 

@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("pscl")) {
+if (requiet("pscl")) {
   data("bioChemists")
   m1 <- zeroinfl(art ~ fem + mar + kid5 + ment | kid5 + phd, data = bioChemists)
 

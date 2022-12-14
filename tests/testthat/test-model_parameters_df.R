@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("testthat") && requiet("parameters")) {
+if (.runThisTest) {
   # glm ---------------------------
 
   set.seed(123)

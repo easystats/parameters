@@ -15,8 +15,8 @@ osx <- tryCatch(
 )
 
 if (.runThisTest && !osx &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("lme4")) {
   data(sleepstudy)
   data(cake)

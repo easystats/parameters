@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("lavaan")) {
+if (requiet("lavaan")) {
   model <- "
     # measurement model
       ind60 =~ x1 + x2 + x3

@@ -1,8 +1,8 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("nFactors") &&
   requiet("EGAnet") &&
   requiet("psych")) {

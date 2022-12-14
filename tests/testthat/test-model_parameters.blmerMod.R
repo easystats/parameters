@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("blme")) {
+if (requiet("blme")) {
   data(sleepstudy)
   set.seed(123)
   model <- blmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy, cov.prior = NULL)

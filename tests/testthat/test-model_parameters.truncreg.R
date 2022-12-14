@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("truncreg") && requiet("survival") && requiet("parameters")) {
+if (requiet("truncreg") && requiet("survival")) {
   set.seed(123)
   data("tobin", package = "survival")
 

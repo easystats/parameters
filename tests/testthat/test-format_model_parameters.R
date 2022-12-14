@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("splines")) {
+if (requiet("splines")) {
   # make sure we have the correct interaction mark for tests
   options(parameters_interaction = "*")
 

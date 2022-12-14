@@ -1,6 +1,6 @@
 ## TODO: add more tests for different htest objects and effectsize types
 
-if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
+if (requiet("effectsize")) {
   test_that("model_parameters.htest", {
     params <- model_parameters(cor.test(mtcars$mpg, mtcars$cyl, method = "pearson"))
     expect_equal(
@@ -50,9 +50,7 @@ if (requiet("testthat") && requiet("parameters") && requiet("effectsize") && uti
   })
 
   test_that("model_parameters-chisq-test works with `svychisq` objects", {
-    skip_if_not_installed("survey")
-
-    library(survey)
+    requiet("survey")
     data(api)
 
     set.seed(123)

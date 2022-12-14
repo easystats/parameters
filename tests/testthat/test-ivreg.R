@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("AER")) {
+if (requiet("AER")) {
   data(CigarettesSW)
   CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
   CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)

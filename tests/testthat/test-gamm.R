@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("mgcv")) {
+if (requiet("mgcv")) {
   set.seed(123)
   void <- capture.output(
     dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")

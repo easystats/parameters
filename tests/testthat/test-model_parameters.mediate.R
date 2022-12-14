@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (requiet("testthat") && requiet("parameters") && requiet("mediation") && requiet("MASS")) {
+if (requiet("mediation") && requiet("MASS")) {
   data(jobs)
   b <- lm(job_seek ~ treat + econ_hard + sex + age, data = jobs)
   c <- lm(depress2 ~ treat + job_seek + econ_hard + sex + age, data = jobs)

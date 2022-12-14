@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("mgcv")) {
+if (requiet("mgcv")) {
   set.seed(123)
   dat <- gamSim(1, n = 400, dist = "normal", scale = 2)
   m1 <- mgcv::gam(y ~ s(x0) + s(x1) + s(x2) + s(x3), data = dat)

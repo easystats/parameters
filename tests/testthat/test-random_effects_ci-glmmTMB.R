@@ -25,8 +25,8 @@ win_os <- tryCatch(
 ## TODO also check messages for profiled CI
 
 if (.runThisTest && win_os &&
-  requiet("testthat") &&
-  requiet("parameters") &&
+
+
   requiet("glmmTMB") &&
   requiet("lme4") &&
   packageVersion("glmmTMB") >= "1.1.5") {

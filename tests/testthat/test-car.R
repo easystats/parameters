@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("car")) {
+if (requiet("car")) {
   data(mtcars)
   mod <- lm(mpg ~ disp + hp, mtcars)
   x <- deltaMethod(mod, "disp + hp", rhs = 0)

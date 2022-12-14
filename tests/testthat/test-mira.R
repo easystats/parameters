@@ -1,6 +1,4 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("mice")) {
+if (requiet("mice")) {
   data("nhanes2")
   imp <- mice(nhanes2, printFlag = FALSE)
   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))

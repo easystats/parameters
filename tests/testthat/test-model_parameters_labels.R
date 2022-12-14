@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("testthat") && requiet("parameters") && requiet("lme4")) {
+if (requiet("lme4")) {
   # make sure we have the correct interaction mark for tests
   options(parameters_interaction = "*")
 

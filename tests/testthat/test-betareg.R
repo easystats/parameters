@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("betareg")) {
+if (requiet("betareg")) {
   data("GasolineYield")
   data("FoodExpenditure")
 

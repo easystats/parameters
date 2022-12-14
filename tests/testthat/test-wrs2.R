@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("WRS2")) {
+if (requiet("WRS2")) {
   # model_parameters.t1way ---------------------------------------------------
 
   test_that("model_parameters.t1way", {

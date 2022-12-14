@@ -1,8 +1,7 @@
-if (requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("MCMCglmm")) {
+if (requiet("MCMCglmm")) {
   data(PlodiaPO)
   set.seed(123)
+
   m1 <- MCMCglmm(
     PO ~ plate,
     random = ~FSfamily,

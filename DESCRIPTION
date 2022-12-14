@@ -80,7 +80,7 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.13.0),
-    datawizard (>= 0.6.3),
+    datawizard (>= 0.6.4),
     insight (>= 0.18.8),
     graphics,
     methods,
@@ -111,7 +111,7 @@ Suggests:
     domir (>= 0.2.0),
     drc,
     DRR,
-    effectsize (>= 0.8.0),
+    effectsize (>= 0.8.2),
     EGAnet (>= 0.7),
     emmeans (>= 1.7.0),
     factoextra,
@@ -168,7 +168,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.10.0),
+    performance (>= 0.10.1),
     plm,
     PMCMRplus,
     poorman,
@@ -184,7 +184,7 @@ Suggests:
     rstanarm,
     rsvd,
     sandwich,
-    see (>= 0.6.9),
+    see (>= 0.7.4),
     sparsepca,
     survey,
     survival,
@@ -198,7 +198,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/Needs/website:

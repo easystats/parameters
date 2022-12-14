@@ -1,10 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest &&
-  requiet("testthat") &&
-  requiet("parameters") &&
-  requiet("emmeans") &&
-  requiet("lme4")) {
+if (.runThisTest && requiet("emmeans") && requiet("lme4")) {
   data(sleep)
   data(fiber)
 

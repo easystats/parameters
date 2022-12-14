@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("nlme") && requiet("lme4")) {
+if (requiet("nlme") && requiet("lme4")) {
   data("mtcars")
   fm1 <- lme(mpg ~ cyl, mtcars, random = ~ 1 | gear)
   fm2 <- gls(mpg ~ cyl, mtcars)

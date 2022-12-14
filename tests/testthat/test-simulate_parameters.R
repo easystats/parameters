@@ -14,7 +14,7 @@ win_os <- tryCatch(
   }
 )
 
-if (win_os && getRversion() >= "4.0.0" && requiet("testthat") && requiet("parameters") && requiet("sandwich")) {
+if (win_os && getRversion() >= "4.0.0" && requiet("sandwich")) {
   mod <- lm(mpg ~ wt + cyl, data = mtcars)
 
   test_that("simulate_parameters, lm", {

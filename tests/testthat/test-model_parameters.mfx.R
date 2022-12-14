@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("mfx")) {
+if (requiet("mfx")) {
   set.seed(12345)
   n <- 1000
   x <- rnorm(n)

@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("insight") && requiet("parameters") && requiet("multcomp")) {
+if (requiet("multcomp")) {
   set.seed(123)
   lmod <- lm(Fertility ~ ., data = swiss)
   model <- glht(

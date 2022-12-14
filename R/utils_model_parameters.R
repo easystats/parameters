@@ -344,7 +344,8 @@
   # add Group variable
   if (!is.null(clean_params$Group) && any(nchar(clean_params$Group) > 0)) {
     params$Group <- tryCatch(gsub("(.*): (.*)", "\\2", clean_params$Group),
-                             error = function(e) NULL)
+      error = function(e) NULL
+    )
   }
 
   attr(params, "cleaned_parameters") <- named_clean_params

@@ -1,4 +1,4 @@
-if (requiet("insight") && requiet("testthat") && requiet("lme4") && requiet("parameters") && requiet("effectsize") && utils::packageVersion("effectsize") >= "0.7.1") {
+if (requiet("lme4") && requiet("effectsize")) {
   unloadNamespace("afex")
   unloadNamespace("lmerTest")
   data(iris)
