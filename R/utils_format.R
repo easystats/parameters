@@ -10,7 +10,7 @@
   } else {
     linesep <- " "
   }
-  if (style %in% c("se", "ci")) {
+  if (!is.null(style) && style %in% c("se", "ci")) {
     x$p_stars <- ""
   }
 
@@ -112,9 +112,12 @@
 
 .format_glue_output <- function(x, coef_column, ci_column, style, format, column_names) {
   # separate CI columns, for custom layout
-  ci <- x[[ci_column[1]]]
-  ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
-  ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
+  ci <- ci_low <- ci_high <- NULL
+  if (!insight::is_empty_object(ci_column)) {
+    ci <- x[[ci_column[1]]]
+    ci_low <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\2", ci))
+    ci_high <- insight::trim_ws(gsub("(\\(|\\[)(.*),(.*)(\\)|\\])", "\\3", ci))
+  }
   # fix p-layout
   if ("p" %in% colnames(x)) {
     x[["p"]] <- insight::trim_ws(x[["p"]])
@@ -157,8 +160,10 @@
   row <- rep(style, times = nrow(x))
   for (r in seq_along(row)) {
     row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
-    row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
-    row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
+    if (!is.null(ci_low) && !is.null(ci_high)) {
+      row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
+      row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
+    }
     if ("SE" %in% colnames(x)) {
       row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
     }

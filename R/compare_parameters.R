@@ -130,7 +130,13 @@ compare_parameters <- function(...,
 
   # set default
   if (is.null(select)) {
-    select <- "ci"
+    if (is.null(ci) || is.na(ci)) {
+      # if user set CI to NULL, show only estimates by default
+      select <- "{estimate}"
+    } else {
+      # if we have CI, include them
+      select <- "ci"
+    }
   }
 
   # provide own names
