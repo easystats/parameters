@@ -1,9 +1,8 @@
 requiet("glmmTMB")
 requiet("parameters")
 
-options("parameters_interaction" = "*")
-
 skip_if(getRversion() < "4.0.0")
+options("parameters_interaction" = "*")
 
 # Splitting model components ----
 
