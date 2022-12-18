@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.20.0.5
+Version: 0.20.0.6
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -205,4 +205,4 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
-Remotes: easystats/datawizard, easystats/performance
+Remotes: easystats/performance

@@ -82,6 +82,24 @@ test_that("compare_parameters, column name with escaping regex characters", {
 })
 
 
+data(mtcars)
+m1 <- lm(mpg ~ hp, mtcars)
+m2 <- lm(mpg ~ hp, mtcars)
+test_that("compare_parameters, proper printing for CI=NULL #820", {
+  out <- utils::capture.output(compare_parameters(m1, m2, ci = NULL))
+  expect_equal(
+    out,
+    c(
+      "Parameter    |    m1 |    m2",
+      "----------------------------",
+      "(Intercept)  | 30.10 | 30.10",
+      "hp           | -0.07 | -0.07",
+      "----------------------------",
+      "Observations |    32 |    32"
+    )
+  )
+})
+
 
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
