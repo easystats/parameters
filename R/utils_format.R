@@ -339,6 +339,7 @@
 
 .format_stan_parameters <- function(out) {
   has_component <- !is.null(out$Component)
+  # brms random intercepts or random slope variances
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
   if (any(ran_sd)) {
     out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd], perl = TRUE)
@@ -349,6 +350,7 @@
       }
     }
   }
+  # brms random slope-intercepts correlation
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
   if (any(ran_cor)) {
     out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor], perl = TRUE)
@@ -359,6 +361,23 @@
       }
     }
   }
+  # stanreg random effects variances
+  ran_sd_cor <- startsWith(out$Parameter, "Sigma[")
+  if (any(ran_sd_cor)) {
+    out$Parameter[ran_sd_cor] <- gsub("(Intercept)", "Intercept", out$Parameter[ran_sd_cor], fixed = TRUE)
+    parm1 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\2", out$Parameter[ran_sd_cor])
+    parm2 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\3", out$Parameter[ran_sd_cor])
+    # for random intercept or slopes, parm1 and parm2 are identical
+    ran_sd <- parm1 == parm2
+    ran_cor <- parm1 != parm2
+    if (any(ran_sd)) {
+      out$Parameter[which(ran_sd_cor)[ran_sd]] <- paste0("SD (", parm1[ran_sd], ")")
+    }
+    if (any(ran_cor)) {
+      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0("Cor (", parm1[ran_cor], "~", parm2[ran_cor], ")")
+    }
+  }
+
   out$Parameter
 }
 
