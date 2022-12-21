@@ -690,7 +690,7 @@ format.parameters_sem <- function(x,
   }
 
   # if we have two trailing newlines, remove one
-  if (identical(type, "text") && !is.null(footer) && grepl("\n\n$", footer[1])) {
+  if (identical(type, "text") && !is.null(footer) && endsWith(footer[1], "\n\n")) {
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
   }
 
@@ -709,7 +709,7 @@ format.parameters_sem <- function(x,
       }
       footer <- paste0(footer, sprintf("%s%s\n", fill, text))
     } else if (type == "html") {
-      footer <- c(footer, gsub("\n", "", text))
+      footer <- c(footer, gsub("\n", "", text, fixed = TRUE))
     }
   }
   footer
@@ -1000,17 +1000,13 @@ format.parameters_sem <- function(x,
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
-        msg <- insight::format_message(
-          "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
-        )
+        msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- insight::format_message(
-          "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
-        )
+        msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       }
     } else if (.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- insight::format_message(
+        msg <- c(
           "This model has a log-transformed response variable, and exponentiated parameters are reported.",
           "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
         )
@@ -1018,7 +1014,7 @@ format.parameters_sem <- function(x,
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
-      message(paste0("\n", msg))
+      insight::format_alert(paste0("\n", msg))
       # set flag, so message only displayed once per session
       options("parameters_warning_exponentiate" = FALSE)
     }
