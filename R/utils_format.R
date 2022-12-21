@@ -658,7 +658,7 @@
   mc <- attributes(x)$model_class
   cp <- attributes(x)$cleaned_parameters
   if (!is.null(mc) && !is.null(cp) && mc %in% c("stanreg", "stanmvreg", "brmsfit")) {
-    match_params <- which(names(cp) %in% x$Parameter)
+    match_params <- stats::na.omit(match(names(cp), x$Parameter))
     if (any(match_params)) {
       x$Parameter[names(cp[match_params]) == x$Parameter] <- cp[match_params]
     }
