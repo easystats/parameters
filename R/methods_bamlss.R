@@ -47,7 +47,7 @@ model_parameters.bamlss <- function(model,
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
-  class(params) <- unique(c("parameters_stan", "see_parameters_model", "parameters_model", class(params)))
+  class(params) <- unique(c("parameters_model", "see_parameters_model", class(params)))
 
   params
 }

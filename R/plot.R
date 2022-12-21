@@ -20,13 +20,6 @@ plot.compare_parameters <- function(x, ...) {
 
 
 #' @export
-plot.parameters_stan <- function(x, ...) {
-  insight::check_if_installed("see")
-  NextMethod()
-}
-
-
-#' @export
 plot.parameters_simulate <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()

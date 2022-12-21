@@ -109,9 +109,6 @@ print_md.parameters_model <- function(x,
 }
 
 #' @export
-print_md.parameters_stan <- print_md.parameters_model
-
-#' @export
 print_md.parameters_brms_meta <- print_md.parameters_model
 
 #' @export
