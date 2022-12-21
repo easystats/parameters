@@ -25,7 +25,7 @@ if (requiet("sandwich") &&
   test_that("ci, robust", {
     params <- ci(model, robust = TRUE, verbose = FALSE)
     robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
-    upper_ci <- as.vector(coef(model) + qt(.975, df.residual(model)) * robust_se)
+    upper_ci <- as.vector(coef(model) + qt(0.975, df.residual(model)) * robust_se)
     expect_equal(params$CI_high, upper_ci, tolerance = 1e-3, ignore_attr = TRUE)
   })
 
@@ -79,7 +79,7 @@ if (requiet("sandwich") &&
     test_that("ci, robust", {
       params <- ci(model, vcov = "HC3")
       robust_se <- unname(sqrt(diag(sandwich::vcovHC(model))))
-      upper_ci <- as.vector(coef(model) + qt(.975, df.residual(model)) * robust_se)
+      upper_ci <- as.vector(coef(model) + qt(0.975, df.residual(model)) * robust_se)
       expect_equal(params$CI_high, upper_ci, tolerance = 1e-3, ignore_attr = TRUE)
     })
 
@@ -128,7 +128,7 @@ if (requiet("sandwich") &&
       test_that("ci_ml1, robust", {
         params <- ci_ml1(model, robust = TRUE, vcov_estimation = "CR", vcov_args = list(cluster = iris$Species))
         robust_se <- unname(sqrt(diag(clubSandwich::vcovCR(model, type = "CR1", cluster = iris$Species))))
-        upper_ci <- fixef(model) + qt(.975, dof_ml1(model)) * robust_se
+        upper_ci <- fixef(model) + qt(0.975, dof_ml1(model)) * robust_se
       })
     } else {
 
