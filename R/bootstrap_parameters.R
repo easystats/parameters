@@ -101,7 +101,7 @@ bootstrap_parameters <- function(model,
   }
 
   # Coef
-  if (length(c(centrality)) == 1) {
+  if (length(centrality) == 1) {
     names(parameters)[names(parameters) == insight::format_capitalize(centrality)] <- "Coefficient"
   }
 
