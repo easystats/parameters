@@ -8,7 +8,7 @@ if (.runThisTest && requiet("effectsize") && requiet("insight")) {
 
   test_that("model_parameters, standardize-refit", {
     params <- model_parameters(model, standardize = "refit")
-    expect_identical(c(nrow(params), ncol(params)), c(4, 9))
+    expect_identical(c(nrow(params), ncol(params)), c(4L, 9L))
     expect_equal(params$Coefficient, c(-0.14183, -0.61463, -0.35967, -0.86017), tolerance = 1e-3)
     expect_equal(params$SE, c(0.12207, 0.12755, 0.23542, 0.23454), tolerance = 1e-3)
     expect_equal(params$CI_high, c(0.10821, -0.35336, 0.12257, -0.37973), tolerance = 1e-3)
