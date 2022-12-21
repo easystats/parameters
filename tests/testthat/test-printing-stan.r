@@ -2,7 +2,9 @@ requiet("brms")
 requiet("parameters")
 requiet("insight")
 
-.runThisTest <- length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3
+options("parameters_exponentiate" = FALSE)
+
+.runThisTest <- length(strsplit(packageDescription("parameters")$Version, ".", fixed = TRUE)[[1]]) > 3
 
 if (.runThisTest) {
   test_that("print brms", {
@@ -59,3 +61,5 @@ if (.runThisTest) {
     expect_snapshot(print(mp))
   })
 }
+
+options("parameters_exponentiate" = NULL)
