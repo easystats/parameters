@@ -1,6 +1,6 @@
 #' @rdname p_value_kenward
 #' @export
-ci_kenward <- function(model, ci = .95) {
+ci_kenward <- function(model, ci = 0.95) {
   .check_REML_fit(model)
   df_kr <- dof_kenward(model)
   out <- lapply(ci, function(i) {
