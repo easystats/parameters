@@ -1,6 +1,4 @@
-if (
-
-  requiet("sandwich") &&
+if (requiet("sandwich") &&
     requiet("clubSandwich") &&
     requiet("datawizard")) {
   data(mtcars)
