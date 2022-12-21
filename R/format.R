@@ -44,7 +44,7 @@ format.parameters_model <- function(x,
   }
 
   # rename random effect parameters names for stan models
-  if (isTRUE(random_variances) && any(c("brmsfit", "stanreg") %in% m_class)) {
+  if (isTRUE(random_variances) && any(c("brmsfit", "stanreg", "stanmvreg") %in% m_class)) {
     x$Parameter <- .format_stan_parameters(x)
   }
 
