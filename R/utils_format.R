@@ -106,7 +106,7 @@
   }
 
   # replace \n for now with default line-separators
-  gsub("\n", linesep, style)
+  gsub("\n", linesep, style, fixed = TRUE)
 }
 
 
@@ -539,18 +539,18 @@
     # sanity check - check if all parameter names in the
     # group list are spelled correctly
     misspelled <- sapply(group_rows, function(i) {
-      any(is.na(i))
+      anyNA(i)
     })
 
     if (any(misspelled)) {
       # remove invalid groups
       group_rows[misspelled] <- NULL
       # tell user
-      warning(insight::format_message(
+      insight::format_warning(
         "Couldn't find one or more parameters specified in following groups:",
-        paste0(names(misspelled[misspelled]), collapse = ", "),
+        toString(names(misspelled[misspelled])),
         "Maybe you misspelled parameter names?"
-      ), call. = FALSE)
+      )
     }
 
 
