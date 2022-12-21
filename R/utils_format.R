@@ -376,9 +376,14 @@
     if (any(ran_cor)) {
       out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0("Cor (", parm1[ran_cor], "~", parm2[ran_cor], ")")
     }
+    # sigma to SD -> sqrt()
+    coef_column <- which(tolower(colnames(out)) %in% c("coefficient", "median", "mean", "map", "estimate"))
+    for (i in coef_column) {
+      out[[i]][ran_sd_cor] <- sqrt(out[[i]][ran_sd_cor])
+    }
   }
 
-  out$Parameter
+  out
 }
 
 
