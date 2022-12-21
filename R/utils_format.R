@@ -338,13 +338,26 @@
 
 
 .format_stan_parameters <- function(out) {
+  has_component <- !is.null(out$Component)
   ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
   if (any(ran_sd)) {
     out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd], perl = TRUE)
+    if (has_component) {
+      ran_zi_sd <- ran_sd & out$Component == "zero_inflated"
+      if (any(ran_zi_sd)) {
+        out$Parameter[ran_zi_sd] <- gsub("zi_", "", out$Parameter[ran_zi_sd], fixed = TRUE)
+      }
+    }
   }
   ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
   if (any(ran_cor)) {
     out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor], perl = TRUE)
+    if (has_component) {
+      ran_zi_cor <- ran_cor & out$Component == "zero_inflated"
+      if (any(ran_zi_cor)) {
+        out$Parameter[ran_zi_cor] <- gsub("zi_", "", out$Parameter[ran_zi_cor], fixed = TRUE)
+      }
+    }
   }
   out$Parameter
 }
@@ -660,9 +673,10 @@
   if (!is.null(mc) && !is.null(cp) && mc %in% c("stanreg", "stanmvreg", "brmsfit")) {
     match_params <- stats::na.omit(match(names(cp), x$Parameter))
     if (any(match_params)) {
-      x$Parameter[names(cp[match_params]) == x$Parameter] <- cp[match_params]
+      x$Parameter[match_params] <- cp[x$Parameter[match_params]]
     }
-    pretty_names <- FALSE
+    attr(x, "pretty_names") <- FALSE
+    attr(x, "cleaned_parameters") <- NULL
   }
 
   # for bayesian meta, remove ROPE_CI
