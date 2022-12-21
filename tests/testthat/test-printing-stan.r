@@ -3,7 +3,6 @@ requiet("parameters")
 requiet("insight")
 
 .runThisTest <- length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3
-.runThisTest <- TRUE
 
 if (.runThisTest) {
   test_that("print brms", {
