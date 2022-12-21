@@ -12,7 +12,7 @@ m3 <- glm(counts ~ outcome + treatment, family = poisson())
 
 x <- compare_parameters(m1, m2, m3)
 test_that("compare_parameters, default", {
-  expect_equal(
+  expect_identical(
     colnames(x),
     c(
       "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
@@ -23,10 +23,10 @@ test_that("compare_parameters, default", {
     )
   )
   out <- capture.output(x)
-  expect_equal(length(out), 14)
+  expect_length(out, 14)
   out <- format(x, select = "ci")
-  expect_equal(colnames(out), c("Parameter", "m1", "m2", "m3"))
-  expect_equal(
+  expect_identical(colnames(out), c("Parameter", "m1", "m2", "m3"))
+  expect_identical(
     out$Parameter,
     c(
       "(Intercept)", "Species (versicolor)", "Species (virginica)",
@@ -40,7 +40,7 @@ test_that("compare_parameters, default", {
 
 x <- compare_parameters(m1, m2, m3, select = "se_p2")
 test_that("compare_parameters, se_p2", {
-  expect_equal(
+  expect_identical(
     colnames(x),
     c(
       "Parameter", "Component", "Effects", "Coefficient.m1", "SE.m1", "CI.m1",
@@ -51,16 +51,16 @@ test_that("compare_parameters, se_p2", {
     )
   )
   out <- capture.output(x)
-  expect_equal(length(out), 14)
+  expect_length(out, 14)
   out <- format(x, select = "se_p2")
-  expect_equal(
+  expect_identical(
     colnames(out),
     c(
       "Parameter", "Estimate (SE) (m1)", "p (m1)", "Estimate (SE) (m2)",
       "p (m2)", "Estimate (SE) (m3)", "p (m3)"
     )
   )
-  expect_equal(
+  expect_identical(
     out$Parameter,
     c(
       "(Intercept)", "Species (versicolor)", "Species (virginica)",
@@ -78,7 +78,7 @@ m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 
 test_that("compare_parameters, column name with escaping regex characters", {
   out <- utils::capture.output(compare_parameters(m1, m2, column_names = c("linear model (m1)", "logistic reg. (m2)")))
-  expect_equal(out[1], "Parameter    |    linear model (m1) |   logistic reg. (m2)")
+  expect_identical(out[1], "Parameter    |    linear model (m1) |   logistic reg. (m2)")
 })
 
 
@@ -87,7 +87,7 @@ m1 <- lm(mpg ~ hp, mtcars)
 m2 <- lm(mpg ~ hp, mtcars)
 test_that("compare_parameters, proper printing for CI=NULL #820", {
   out <- utils::capture.output(compare_parameters(m1, m2, ci = NULL))
-  expect_equal(
+  expect_identical(
     out,
     c(
       "Parameter    |    m1 |    m2",
@@ -136,7 +136,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
       c(0.6835, -1.67334, 0.94341, 0.26717, 1.20775, NA, NA, NA, NA),
       tolerance = 1e-3
     )
-    expect_equal(
+    expect_identical(
       cp$Component,
       c(
         "conditional", "conditional", "conditional", "conditional",
@@ -144,14 +144,14 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
         "zero_inflated"
       )
     )
-    expect_equal(
+    expect_identical(
       cp$Effects,
       c(
         "fixed", "fixed", "fixed", "random", "random", "fixed", "fixed",
         "fixed", "random"
       )
     )
-    expect_equal(
+    expect_identical(
       out[22],
       "SD (Intercept: persons) |    |  1.21 ( 0.60,  2.43) |                     "
     )
