@@ -340,7 +340,7 @@ n_factors <- function(x,
 
   attr(out, "summary") <- by_factors
   attr(out, "n") <- min(as.numeric(as.character(
-    by_factors[by_factors$n_Methods == max(by_factors$n_Methods), c("n_Factors")]
+    by_factors[by_factors$n_Methods == max(by_factors$n_Methods), "n_Factors"]
   )))
 
   class(out) <- c("n_factors", "see_n_factors", class(out))
@@ -384,10 +384,10 @@ print.n_factors <- function(x, ...) {
   # Extract methods
   if ("n_Factors" %in% names(x)) {
     type <- "factor"
-    methods_text <- paste0(as.character(x[x$n_Factors == best_n, "Method"]), collapse = ", ")
+    methods_text <- toString(as.character(x[x$n_Factors == best_n, "Method"]))
   } else {
     type <- "cluster"
-    methods_text <- paste0(as.character(x[x$n_Clusters == best_n, "Method"]), collapse = ", ")
+    methods_text <- toString(as.character(x[x$n_Clusters == best_n, "Method"]))
   }
 
 
@@ -453,7 +453,7 @@ print.n_clusters <- print.n_factors
     details = FALSE
   )$nFactors
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = insight::format_capitalize(names(nfac)),
     Family = "Barlett"
@@ -472,7 +472,7 @@ print.n_clusters <- print.n_factors
     details = FALSE
   )$nFactors
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = "Bentler",
     Family = "Bentler"
@@ -489,7 +489,7 @@ print.n_clusters <- print.n_factors
     nfac <- nFactors::nCng(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = "CNG",
     Family = "CNG"
@@ -506,7 +506,7 @@ print.n_clusters <- print.n_factors
     nfac <- nFactors::nMreg(x = eigen_values, cor = TRUE, model = model)$nFactors
   }
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("beta", "t", "p"),
     Family = "Multiple_regression"
@@ -519,7 +519,7 @@ print.n_clusters <- print.n_factors
 .n_factors_scree <- function(eigen_values = NULL, model = "factors") {
   nfac <- unlist(nFactors::nScree(x = eigen_values, cor = TRUE, model = model)$Components)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("Optimal coordinates", "Acceleration factor", "Parallel analysis", "Kaiser criterion"),
     Family = "Scree"
@@ -531,7 +531,7 @@ print.n_clusters <- print.n_factors
 #' @keywords internal
 .n_factors_sescree <- function(eigen_values = NULL, model = "factors") {
   nfac <- nFactors::nSeScree(x = eigen_values, cor = TRUE, model = model)$nFactors
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(nfac),
     Method = c("Scree (SE)", "Scree (R2)"),
     Family = "Scree_SE"
@@ -558,7 +558,7 @@ print.n_clusters <- print.n_factors
     nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim
   )))
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
     Method = c("EGA (glasso)", "EGA (TMFG)"),
     Family = "EGA"
@@ -609,7 +609,7 @@ print.n_clusters <- print.n_factors
   BIC_reg <- ifelse(length(BIC_reg) == 0, NA, BIC_reg)
   BIC_adj <- ifelse(length(BIC_adj) == 0, NA, BIC_adj)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(vss_1, vss_2, velicer_MAP, BIC_reg, BIC_adj)),
     Method = c("VSS complexity 1", "VSS complexity 2", "Velicer's MAP", "BIC", "BIC (adjusted)"),
     Family = c("VSS", "VSS", "Velicers_MAP", "BIC", "BIC")
@@ -668,7 +668,7 @@ print.n_clusters <- print.n_factors
 
     rez <- rbind(
       rez,
-      data.frame(
+      .data_frame(
         n = n,
         Fit = factors$fit.off,
         TLI = tli,
@@ -721,7 +721,7 @@ print.n_clusters <- print.n_factors
   # BIC (this is a penalized method so we can just take the one that minimizes it)
   BIC <- ifelse(all(is.na(rez$BIC)), NA, rez[!is.na(rez$BIC) & rez$BIC == min(rez$BIC, na.rm = TRUE), "n"])
 
-  data.frame(
+  .data_frame(
     n_Factors = c(fit_off, TLI, RMSEA, RMSR, CRMS, BIC),
     Method = c("Fit_off", "TLI", "RMSEA", "RMSR", "CRMS", "BIC"),
     Family = c("Fit", "Fit", "Fit", "Fit", "Fit", "Fit")
@@ -762,13 +762,12 @@ print.n_clusters <- print.n_factors
   )
   rez_ag <- PCDimension::compareAgDimMethods(ag, agfuns)
 
-  data.frame(
+  .data_frame(
     n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
     Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
                "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
                "Auer-Gervini (T)", "AuerGervini (CPT)"),
-    Family = "PCDimension",
-    stringsAsFactors = FALSE
+    Family = "PCDimension"
   )
 }
 
@@ -792,14 +791,14 @@ print.n_clusters <- print.n_factors
     )
   }
 
-  minPar <- c(min(lambda) - abs(min(lambda)) + .001, 0.001)
+  minPar <- c(min(lambda) - abs(min(lambda)) + 0.001, 0.001)
   maxPar <- c(max(lambda), stats::lm(lambda ~ I(rev(seq_along(lambda))))$coef[2])
 
 
   n <- N
   significance <- alpha
   min.k <- 3
-  LRT <- data.frame(
+  LRT <- .data_frame(
     q = numeric(length(lambda) - min.k), k = numeric(length(lambda) - min.k),
     LRT = numeric(length(lambda) - min.k), a = numeric(length(lambda) - min.k),
     b = numeric(length(lambda) - min.k),

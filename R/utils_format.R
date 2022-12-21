@@ -241,7 +241,7 @@
   # observations differs from "raw" observations
   if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
     if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
-      message(insight::format_message("Number of weighted observations differs from number of unweighted observations."))
+      insight::format_alert("Number of weighted observations differs from number of unweighted observations.")
     }
     observations <- weighted_observations
   }

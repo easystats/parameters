@@ -76,8 +76,8 @@ standardize_info.default <- function(model,
 
   # Type of effect size
   out$EffectSize_Type <- ifelse(types$Type == "interaction", "interaction",
-    ifelse(types$Link == "Association", "r",
-      ifelse(types$Link == "Difference", "d", NA)
+    ifelse(types$Link == "Association", "r", # nolint
+      ifelse(types$Link == "Difference", "d", NA) # nolint
     )
   )
 
@@ -141,7 +141,7 @@ standardize_info.default <- function(model,
   row.names(out) <- NULL
 
   # Remove all means for now (because it's not used)
-  out <- out[!grepl("Mean_", names(out))]
+  out <- out[!grepl("Mean_", names(out), fixed = TRUE)]
 
   # Select only desired columns
   # if(method == "all") method <- c("smart", "basic")
@@ -436,7 +436,7 @@ standardize_info.default <- function(model,
     if (length(also_between)) {
       insight::format_warning(
         "The following within-group terms have between-group variance:",
-        paste0(also_between, collapse = ", "),
+        toString(also_between),
         "This can inflate standardized within-group parameters associated with these terms.",
         "See `help(\"demean\", package = \"datawizard\")` for modeling between- and within-subject effects."
       )

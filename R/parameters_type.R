@@ -319,7 +319,7 @@ parameters_type <- function(model, ...) {
   .check_for_numerics <- function(x) {
     is.numeric(x) && !isTRUE(attributes(x)$factor)
   }
-  out$numeric <- names(data[sapply(data, .check_for_numerics)])
+  out$numeric <- names(data[vapply(data, .check_for_numerics, logical(1))])
 
   # get contrast coding
   contrast_coding <- tryCatch(model$contrasts, error = function(e) NULL)

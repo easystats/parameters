@@ -62,7 +62,7 @@ pool_parameters <- function(x,
   original_model <- random_params <- NULL
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (all(sapply(x, insight::is_model)) && all(sapply(x, insight::is_model_supported))) {
+  if (all(vapply(x, insight::is_model, logical(1))) && all(vapply(x, insight::is_model_supported, logical(1)))) {
     original_model <- x[[1]]
 
     # Add exceptions for models with uncommon components here ---------------
@@ -77,7 +77,7 @@ pool_parameters <- function(x,
     x <- lapply(x, model_parameters, effects = effects, component = component, ...)
   }
 
-  if (!all(sapply(x, inherits, "parameters_model"))) {
+  if (!all(vapply(x, inherits, FUN.VALUE = logical(1), "parameters_model"))) {
     insight::format_error(
       "First argument `x` must be a list of `parameters_model` objects, as returned by the `model_parameters()` function."
     )
@@ -115,7 +115,7 @@ pool_parameters <- function(x,
 
   len <- length(x)
   ci <- attributes(original_x[[1]])$ci
-  if (is.null(ci)) ci <- .95
+  if (is.null(ci)) ci <- 0.95
   parameter_values <- x[[1]]$Parameter
 
   # exceptions ----
@@ -183,7 +183,7 @@ pool_parameters <- function(x,
       pooled_se <- sqrt(tmp)
 
       # pooled degrees of freedom, Barnard-Rubin adjustment for small samples
-      df_column <- colnames(i)[grepl("(\\bdf\\b|\\bdf_error\\b)", colnames(i))][1]
+      df_column <- grep("(\\bdf\\b|\\bdf_error\\b)", colnames(i), value = TRUE)[1]
       if (length(df_column)) {
         pooled_df <- .barnad_rubin(m = nrow(i), b = stats::var(i$Coefficient), t = tmp, dfcom = unique(i[[df_column]]))
         # sanity check length

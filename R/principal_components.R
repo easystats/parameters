@@ -340,7 +340,7 @@ principal_components.data.frame <- function(x,
 
   # Sometimes if too large n is requested the returned number is lower, so we
   # have to adjust n to the new number
-  n <- ifelse(sum(!is.na(model$sdev)) < n, sum(!is.na(model$sdev)), n)
+  n <- pmin(sum(is.na(model$sdev)), n)
 
   model$sdev <- model$sdev[1:n]
   model$rotation <- model$rotation[, 1:n, drop = FALSE]
