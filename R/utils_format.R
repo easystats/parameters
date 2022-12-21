@@ -337,6 +337,18 @@
 }
 
 
+.format_stan_parameters <- function(out) {
+  ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
+  if (any(ran_sd)) {
+    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd], perl = TRUE)
+  }
+  ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
+  if (any(ran_cor)) {
+    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor], perl = TRUE)
+  }
+  out$Parameter
+}
+
 
 
 # helper to format the header / subheader of different model components --------------
@@ -637,17 +649,18 @@
   }
 
   # remove columns that have only NA or Inf
-  to_remove <- sapply(colnames(x), function(col) {
+  to_remove <- vapply(colnames(x), function(col) {
     all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
-  })
+  }, FUN.VALUE = logical(1))
   if (any(to_remove)) x[to_remove] <- NULL
 
   # For Bayesian models, we need to prettify parameter names here...
   mc <- attributes(x)$model_class
   cp <- attributes(x)$cleaned_parameters
   if (!is.null(mc) && !is.null(cp) && mc %in% c("stanreg", "stanmvreg", "brmsfit")) {
-    if (length(cp) == length(x$Parameter)) {
-      x$Parameter <- cp
+    match_params <- which(names(cp) %in% x$Parameter)
+    if (any(match_params)) {
+      x$Parameter[names(cp[match_params]) == x$Parameter] <- cp[match_params]
     }
     pretty_names <- FALSE
   }

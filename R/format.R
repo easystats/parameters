@@ -43,6 +43,11 @@ format.parameters_model <- function(x,
     groups <- attributes(x)$coef_groups
   }
 
+  # rename random effect parameters names for stan models
+  if (isTRUE(random_variances) && any(c("brmsfit", "stanreg") %in% m_class)) {
+    x$Parameter <- .format_stan_parameters(x)
+  }
+
   # for the current HTML backend we use (package "gt"), we cannot change
   # the column header for subtables, so we need to remove the attributes
   # for the "Coefficient" column here, which else allows us to use different
