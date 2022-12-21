@@ -1,14 +1,14 @@
 # Test Setup --------------------------------
 
 # only run for dev-version, not on CRAN
-.runThisTest <- length(strsplit(packageDescription("parameters")$Version, "\\.")[[1]]) > 3
+.runThisTest <- length(strsplit(packageDescription("parameters")$Version, ".", fixed = TRUE)[[1]]) > 3
 
 # only run on windows - there are some minor rounding issues on other OS
 win_os <- tryCatch(
   {
     si <- Sys.info()
     if (!is.null(si["sysname"])) {
-      si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+      si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
     } else {
       FALSE
     }
@@ -64,7 +64,7 @@ if (.runThisTest && win_os &&
     #   ignore_attr = TRUE
     # )
 
-    expect_equal(
+    expect_identical(
       mp1$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -91,7 +91,7 @@ if (.runThisTest && win_os &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp1$Group,
       c(
         "", "", "", "", "", "", "recipe", "replicate", "recipe", "recipe",
@@ -115,7 +115,7 @@ if (.runThisTest && win_os &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp2$Parameter,
       c(
         "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
@@ -138,7 +138,7 @@ if (.runThisTest && win_os &&
     #   ignore_attr = TRUE
     # )
 
-    expect_equal(
+    expect_identical(
       mp3$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -155,7 +155,7 @@ if (.runThisTest && win_os &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp3$Group,
       c(
         "", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
@@ -182,7 +182,7 @@ if (.runThisTest && win_os &&
     #   ignore_attr = TRUE
     # )
 
-    expect_equal(
+    expect_identical(
       mp4$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -199,7 +199,7 @@ if (.runThisTest && win_os &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp4$Group,
       c(
         "", "", "", "", "", "", "replicate", "replicate", "replicate",
@@ -223,7 +223,7 @@ if (.runThisTest && win_os &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp5$Parameter,
       c(
         "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
@@ -254,7 +254,7 @@ if (.runThisTest && win_os &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp2$Parameter,
       c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
     )
@@ -269,7 +269,7 @@ if (.runThisTest && win_os &&
     #   ignore_attr = TRUE
     # )
 
-    expect_equal(
+    expect_identical(
       mp5$Parameter,
       c(
         "(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
