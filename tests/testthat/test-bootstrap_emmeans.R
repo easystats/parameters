@@ -26,7 +26,7 @@ if (.runThisTest) {
       colnames(mp),
       c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Component")
     )
-    expect_identical(nrow(mp), 5)
+    expect_identical(nrow(mp), 5L)
   })
 
 
@@ -56,6 +56,6 @@ if (.runThisTest) {
       colnames(mp),
       c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Component")
     )
-    expect_identical(nrow(mp), 5)
+    expect_identical(nrow(mp), 5L)
   })
 }
