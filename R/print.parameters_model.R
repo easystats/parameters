@@ -364,20 +364,6 @@ print.parameters_random <- function(x, digits = 2, ...) {
 
 
 
-# Stan models ------------------
-
-#' @export
-print.parameters_stan <- print.parameters_model
-
-#' @export
-summary.parameters_stan <- function(object, ...) {
-  print(x = object, select = "minimal", show_formula = TRUE, ...)
-}
-
-
-
-
-
 # helper --------------------
 
 .print_core <- function(x,

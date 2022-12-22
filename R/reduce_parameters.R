@@ -101,9 +101,9 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
     features <- as.data.frame(attributes(features)$scores)
   } else if (tolower(method) %in% c("cmds", "pcoa")) {
     features <- .cmds(x, n = nfac, distance = distance, ...)
-  } else if (tolower(method) %in% c("drr")) {
+  } else if (tolower(method) == "drr") {
     features <- .drr(x, n = nfac, ...)
-  } else if (tolower(method) %in% c("ica")) {
+  } else if (tolower(method) =="ica") {
     features <- .ica(x, n = nfac, ...)
   } else {
     insight::format_error("`method` must be one of \"PCA\", \"cMDS\", \"DRR\" or \"ICA\".")
@@ -116,7 +116,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 
   if (n == "max") {
     weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
-    non_empty <- sapply(weights[2:ncol(weights)], function(x) !all(is.na(x)))
+    non_empty <- vapply(weights[2:ncol(weights)], function(x) !all(is.na(x)), logical(1))
     weights <- weights[c(TRUE, non_empty)]
     features <- features[, non_empty]
     weights[is.na(weights)] <- 0
@@ -124,11 +124,11 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
   }
 
   # Create varnames
-  varnames <- sapply(weights[2:ncol(weights)], function(x) {
+  varnames <- vapply(weights[2:ncol(weights)], function(x) {
     name <- weights$Variable[!is.na(x)]
     weight <- insight::format_value(x[!is.na(x)])
     paste0(paste(name, weight, sep = "_"), collapse = "/")
-  })
+  }, character(1))
   names(features) <- as.character(varnames)
 
   # Attributes

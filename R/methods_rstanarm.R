@@ -120,13 +120,14 @@ model_parameters.stanreg <- function(model,
     ci,
     exponentiate,
     ci_method = ci_method,
+    group_level = group_level,
     verbose = verbose,
     ...
   )
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
-  class(params) <- c("parameters_stan", "parameters_model", "see_parameters_model", class(params))
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
 
   params
 }

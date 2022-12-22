@@ -121,7 +121,7 @@ compare_parameters <- function(...,
 
   if (!all(supported_models)) {
     insight::format_warning(
-      sprintf("Following objects are not supported: %s", paste0(model_names[!supported_models], collapse = ", ")),
+      sprintf("Following objects are not supported: %s", toString(model_names[!supported_models])),
       "Dropping unsupported models now."
     )
     models <- models[supported_models]

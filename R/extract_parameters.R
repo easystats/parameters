@@ -1018,7 +1018,7 @@
       insight::format_warning(
         sprintf(
           "Model matrix is rank deficient. Parameters `%s` were not estimable.",
-          paste(p$Parameter[is.na(p$Estimate)], collapse = ", ")
+          toString(p$Parameter[is.na(p$Estimate)])
         )
       )
     }

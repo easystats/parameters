@@ -238,7 +238,7 @@ print_html.compare_parameters <- function(x,
   # add a column span? here we have multiple columns (like estimate, CI, p, ...)
   # for each model. In this case, we want to add a column spanner, i.e. a
   # separate heading for all columns of each model.
-  if (!is.null(original_colnames) && any(duplicated(original_colnames))) {
+  if (!is.null(original_colnames) && anyDuplicated(original_colnames) > 0) {
     duplicates <- original_colnames[duplicated(original_colnames)]
     for (d in duplicates) {
       # we need +1 here, because first column is parameter column

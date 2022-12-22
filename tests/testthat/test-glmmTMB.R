@@ -9,7 +9,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
     {
       si <- Sys.info()
       if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || grepl("^mingw", R.version$os)
+        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
       } else {
         FALSE
       }

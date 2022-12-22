@@ -30,7 +30,7 @@
       x <- insight::trim_ws(sub("offset\\(([^-+ )]*)\\)(.*)", "\\1\\2", x))
       # some exceptions here...
     } else if (full && pattern[j] == "scale" && any(grepl("scale(", x, fixed = TRUE))) {
-      x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(x[grepl("scale(", x, fixed = TRUE)])
+      x[grepl("scale(", x, fixed = TRUE)] <- insight::clean_names(grep("scale(", x, fixed = TRUE, value = TRUE))
     } else if (any(grepl(pattern[j], x, fixed = TRUE))) {
       p <- paste0(pattern[j], "\\(((\\w|\\.)*)\\)(.*)")
       x <- insight::trim_ws(sub(p, "\\1\\3", x))

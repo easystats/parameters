@@ -106,7 +106,7 @@
   }
 
   # replace \n for now with default line-separators
-  gsub("\n", linesep, style)
+  gsub("\n", linesep, style, fixed = TRUE)
 }
 
 
@@ -241,7 +241,7 @@
   # observations differs from "raw" observations
   if (!all(is.na(weighted_observations)) && !all(is.na(observations))) {
     if (!isTRUE(all.equal(as.vector(weighted_observations), as.vector(observations)))) {
-      message(insight::format_message("Number of weighted observations differs from number of unweighted observations."))
+      insight::format_alert("Number of weighted observations differs from number of unweighted observations.")
     }
     observations <- weighted_observations
   }
@@ -336,6 +336,50 @@
   )
 }
 
+
+.format_stan_parameters <- function(out) {
+  has_component <- !is.null(out$Component)
+  # brms random intercepts or random slope variances
+  ran_sd <- startsWith(out$Parameter, "sd_") & out$Effects == "random"
+  if (any(ran_sd)) {
+    out$Parameter[ran_sd] <- gsub("^sd_(.*?)__(.*)", "SD \\(\\2\\)", out$Parameter[ran_sd], perl = TRUE)
+    if (has_component) {
+      ran_zi_sd <- ran_sd & out$Component == "zero_inflated"
+      if (any(ran_zi_sd)) {
+        out$Parameter[ran_zi_sd] <- gsub("zi_", "", out$Parameter[ran_zi_sd], fixed = TRUE)
+      }
+    }
+  }
+  # brms random slope-intercepts correlation
+  ran_cor <- startsWith(out$Parameter, "cor_") & out$Effects == "random"
+  if (any(ran_cor)) {
+    out$Parameter[ran_cor] <- gsub("^cor_(.*?)__(.*)__(.*)", "Cor \\(\\2~\\3\\)", out$Parameter[ran_cor], perl = TRUE)
+    if (has_component) {
+      ran_zi_cor <- ran_cor & out$Component == "zero_inflated"
+      if (any(ran_zi_cor)) {
+        out$Parameter[ran_zi_cor] <- gsub("zi_", "", out$Parameter[ran_zi_cor], fixed = TRUE)
+      }
+    }
+  }
+  # stanreg random effects variances
+  ran_sd_cor <- startsWith(out$Parameter, "Sigma[")
+  if (any(ran_sd_cor)) {
+    out$Parameter[ran_sd_cor] <- gsub("(Intercept)", "Intercept", out$Parameter[ran_sd_cor], fixed = TRUE)
+    parm1 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\2", out$Parameter[ran_sd_cor])
+    parm2 <- gsub("^Sigma\\[(.*):(.*),(.*)\\]", "\\3", out$Parameter[ran_sd_cor])
+    # for random intercept or slopes, parm1 and parm2 are identical
+    ran_sd <- parm1 == parm2
+    ran_cor <- parm1 != parm2
+    if (any(ran_sd)) {
+      out$Parameter[which(ran_sd_cor)[ran_sd]] <- paste0("Sigma (", parm1[ran_sd], ")")
+    }
+    if (any(ran_cor)) {
+      out$Parameter[which(ran_sd_cor)[ran_cor]] <- paste0("Sigma (", parm1[ran_cor], "~", parm2[ran_cor], ")")
+    }
+  }
+
+  out
+}
 
 
 
@@ -539,18 +583,18 @@
     # sanity check - check if all parameter names in the
     # group list are spelled correctly
     misspelled <- sapply(group_rows, function(i) {
-      any(is.na(i))
+      anyNA(i)
     })
 
     if (any(misspelled)) {
       # remove invalid groups
       group_rows[misspelled] <- NULL
       # tell user
-      warning(insight::format_message(
+      insight::format_warning(
         "Couldn't find one or more parameters specified in following groups:",
-        paste0(names(misspelled[misspelled]), collapse = ", "),
+        toString(names(misspelled[misspelled])),
         "Maybe you misspelled parameter names?"
-      ), call. = FALSE)
+      )
     }
 
 
@@ -637,19 +681,21 @@
   }
 
   # remove columns that have only NA or Inf
-  to_remove <- sapply(colnames(x), function(col) {
+  to_remove <- vapply(colnames(x), function(col) {
     all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
-  })
+  }, FUN.VALUE = logical(1))
   if (any(to_remove)) x[to_remove] <- NULL
 
   # For Bayesian models, we need to prettify parameter names here...
   mc <- attributes(x)$model_class
   cp <- attributes(x)$cleaned_parameters
-  if (!is.null(mc) && !is.null(cp) && mc %in% c("stanreg", "stanmvreg", "brmsfit")) {
-    if (length(cp) == length(x$Parameter)) {
-      x$Parameter <- cp
+  if (!is.null(mc) && !is.null(cp) && any(mc %in% c("stanreg", "stanmvreg", "brmsfit"))) {
+    match_params <- stats::na.omit(match(names(cp), x$Parameter))
+    if (any(match_params)) {
+      x$Parameter[match_params] <- cp[x$Parameter[match_params]]
     }
-    pretty_names <- FALSE
+    attr(x, "pretty_names") <- FALSE
+    attr(x, "cleaned_parameters") <- NULL
   }
 
   # for bayesian meta, remove ROPE_CI

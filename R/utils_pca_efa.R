@@ -76,7 +76,7 @@ get_scores <- function(x, n_items = NULL) {
 model_parameters.parameters_efa <- function(model, ...) {
   x <- attributes(model)$summary
 
-  if ("parameters_efa" %in% class(model)) {
+  if (inherits(model, "parameters_efa")) {
     class(x) <- c("parameters_efa_summary", class(model))
   } else {
     class(x) <- c("parameters_pca_summary", class(model))
@@ -111,7 +111,7 @@ summary.parameters_efa <- function(object, ...) {
   names(x) <- c("Parameter", attributes(object)$summary$Component)
   row.names(x) <- NULL
 
-  if ("parameters_efa" %in% class(object)) {
+  if (inherits(object, "parameters_efa")) {
     class(x) <- c("parameters_efa_summary", class(object))
   } else {
     class(x) <- c("parameters_pca_summary", class(object))
@@ -169,7 +169,7 @@ predict.parameters_efa <- function(object,
       newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
       # psych:::predict.fa(object, data)
       out <- as.data.frame(stats::predict(attri$model, data = newdata))
-    } else if (inherits(attri$model, c("spca"))) {
+    } else if (inherits(attri$model, "spca")) {
       # https://github.com/erichson/spca/issues/7
       newdata <- newdata[names(attri$model$center)]
       if (attri$standardize == TRUE) {
@@ -369,7 +369,7 @@ print.parameters_omega_summary <- function(x, ...) {
   type <- attributes(x)$type
   if (type %in% c("prcomp", "principal", "pca")) {
     type <- "principal component"
-  } else if (type %in% c("fa")) {
+  } else if (type == "fa") {
     type <- "latent factor"
   } else if (type %in% c("kmeans", "hclust", "pvclust", "dbscan", "mixture", "pam")) {
     type <- "cluster"

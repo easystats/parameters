@@ -570,7 +570,8 @@ print.parameters_da <- function(x, digits = 3, ...) {
 
     cpt_names_rep <- gsub(
       "dmn_", "< ",
-      cpt_names
+      cpt_names,
+      fixed = TRUE
     )
 
     printed_x$Complete <-

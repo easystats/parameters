@@ -5,6 +5,9 @@
 * `model_parameters()` now includes a `Group` column `stanreg` or `brmsfit`
   models with random effects.
 
+* The `print()` method for `model_parameters()` now uses the same pattern to
+  print random effect variances for Bayesian models as for frequentist models.
+
 ## Bug fix
 
 * Fixed issue with the `print()` method for `compare_parameters()`, which
