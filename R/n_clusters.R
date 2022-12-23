@@ -111,7 +111,7 @@ n_clusters <- function(x,
   out$Method <- as.character(out$Method)
 
   # Remove duplicate methods starting with the smallest
-  dupli <- c()
+  dupli <- NULL
   for (i in seq_len(nrow(out))) {
     if (i > 1 && out[i, "Method"] %in% out$Method[1:i - 1]) {
       dupli <- c(dupli, i)
@@ -130,7 +130,7 @@ n_clusters <- function(x,
 
   attr(out, "summary") <- by_clusters
   attr(out, "n") <- min(as.numeric(as.character(
-    by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), c("n_Clusters")]
+    by_clusters[by_clusters$n_Methods == max(by_clusters$n_Methods), "n_Clusters"]
   )))
 
   class(out) <- c("n_clusters", "see_n_clusters", class(out))
@@ -152,7 +152,7 @@ n_clusters <- function(x,
   models <- as.character(sapply(out, function(x) x[[1]]))
   n <- as.numeric(sapply(out, function(x) x[[2]]))
 
-  data.frame(
+  .data_frame(
     n_Clusters = n,
     Method = paste0("Mixture (", models, ")"),
     Package = "mclust",
@@ -173,7 +173,7 @@ n_clusters <- function(x,
   gap1 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "firstSEmax", n_max = n_max, ...)
   gap2 <- n_clusters_gap(x, preprocess = FALSE, gap_method = "globalSEmax", n_max = n_max, ...)
 
-  data.frame(
+  .data_frame(
     n_Clusters = c(
       attributes(elb)$n,
       attributes(sil)$n,
@@ -235,12 +235,12 @@ n_clusters <- function(x,
       w <- ""
       if (!is.null(n$warnings)) {
         w <- paste0("\n  - ", unlist(n$warnings), collapse = "")
-        warning(paste0("For ", idx, " index (NbClust):", w), call. = FALSE)
+        insight::format_warning(paste0("For ", idx, " index (NbClust):", w))
       }
 
       # Don't merge results if convergence issue
-      if (grepl("did not converge in", w) == FALSE) {
-        out <- rbind(out, data.frame(
+      if (!grepl("did not converge in", w, fixed = TRUE)) {
+        out <- rbind(out, .data_frame(
           n_Clusters = n$out$Best.nc[["Number_clusters"]],
           Method = idx,
           Package = "NbClust",
@@ -255,7 +255,7 @@ n_clusters <- function(x,
 
 #' @keywords internal
 .n_clusters_M3C <- function(x, n_max = 10, fast = TRUE, ...) {
-  if (!requireNamespace("M3C", quietly = TRUE)) {
+  if (!requireNamespace("M3C", quietly = TRUE)) { # nolint
     insight::format_error(
       "Package `M3C` required for this function to work. Please install it by first running `remotes::install_github('https://github.com/crj32/M3C')` (the package is not on CRAN)."
     ) # Not on CRAN (but on github and bioconductor)
@@ -267,7 +267,7 @@ n_clusters <- function(x,
   t0 <- Sys.time()
   out <- M3C::M3C(data, method = 2, maxK = n_max, removeplots = TRUE, silent = TRUE)
 
-  out <- data.frame(
+  out <- .data_frame(
     n_Clusters = out$scores[which.min(out$scores$PCSI), "K"],
     Method = "Consensus clustering algorithm (penalty term)",
     Package = "M3C",
@@ -280,7 +280,7 @@ n_clusters <- function(x,
     out2 <- M3C::M3C(data, method = 1, maxK = n_max, removeplots = TRUE, silent = TRUE)
     out <- rbind(
       out,
-      data.frame(
+      .data_frame(
         n_Clusters = out2$scores[which.max(out2$scores$RCSI), "K"],
         Method = "Consensus clustering algorithm (Monte Carlo)",
         Package = "M3C",

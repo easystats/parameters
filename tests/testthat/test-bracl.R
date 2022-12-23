@@ -1,18 +1,15 @@
-if (
-
-  requiet("utils") &&
-    requiet("brglm2")) {
+if (requiet("utils") && requiet("brglm2")) {
   data("stemcell")
   levels(stemcell$research) <- c("definitly", "alterly", "probably not", "definitely not")
   m1 <- bracl(research ~ as.numeric(religion) + gender, weights = frequency, data = stemcell, type = "ML")
 
   test_that("model_parameters", {
     params <- model_parameters(m1, verbose = FALSE)
-    expect_equal(
+    expect_identical(
       params$Response,
       c("definitly", "alterly", "probably not", "definitly", "alterly", "probably not", "definitly", "alterly", "probably not")
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c(
         "definitly:(Intercept)", "alterly:(Intercept)", "probably not:(Intercept)",
@@ -37,8 +34,8 @@ if (
   # check order of response levels
   test_that("print model_parameters", {
     out <- utils::capture.output(print(model_parameters(m1, verbose = FALSE)))
-    expect_equal(out[1], "# Response level: definitly")
-    expect_equal(out[9], "# Response level: alterly")
-    expect_equal(out[17], "# Response level: probably not")
+    expect_identical(out[1], "# Response level: definitly")
+    expect_identical(out[9], "# Response level: alterly")
+    expect_identical(out[17], "# Response level: probably not")
   })
 }

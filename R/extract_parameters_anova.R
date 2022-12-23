@@ -1,19 +1,19 @@
 #' @keywords internal
 .extract_parameters_anova <- function(model, test = "multivariate") {
   # Processing
-  if ("manova" %in% class(model)) {
+  if (inherits(model, "manova")) {
     parameters <- .extract_anova_manova(model)
-  } else if ("maov" %in% class(model)) {
+  } else if (inherits(model, "maov")) {
     parameters <- .extract_anova_maov(model)
-  } else if ("aov" %in% class(model)) {
+  } else if (inherits(model, "aov")) {
     parameters <- .extract_anova_aov(model)
-  } else if ("anova" %in% class(model)) {
+  } else if (inherits(model, "anova")) {
     parameters <- .extract_anova_anova(model)
-  } else if ("Anova.mlm" %in% class(model)) {
+  } else if (inherits(model, "Anova.mlm")) {
     parameters <- .extract_anova_mlm(model, test)
-  } else if ("aovlist" %in% class(model)) {
+  } else if (inherits(model, "aovlist")) {
     parameters <- .extract_anova_aovlist(model)
-  } else if ("anova.rms" %in% class(model)) {
+  } else if (inherits(model, "anova.rms")) {
     parameters <- .extract_anova_aov_rms(model)
   }
 
@@ -184,8 +184,12 @@
   if (!is.null(m_attr$value) && isTRUE(startsWith(m_attr$heading[[1]], "Linear hypothesis"))) {
     # Drop unrestricted model (not interesting in linear hypothesis tests)
     # Use formula to subset if available (e.g. with car::linearHypothesis)
-    if (length(grep("Model", m_attr$heading)) != 0) {
-      idx <- sub(".*: ", "", strsplit(m_attr$heading[grep("Model", m_attr$heading, fixed = TRUE)], "\n")[[1]])
+    if (length(grep("Model", m_attr$heading, fixed = TRUE)) != 0) {
+      idx <- sub(".*: ", "", strsplit(
+        grep("Model", m_attr$heading, fixed = TRUE, value = TRUE),
+        "\n",
+        fixed = TRUE)[[1]]
+      )
       idx <- idx != "restricted model"
       parameters <- parameters[idx, , drop = FALSE]
     }

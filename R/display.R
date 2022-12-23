@@ -116,9 +116,6 @@ display.parameters_model <- function(object,
 }
 
 #' @export
-display.parameters_stan <- display.parameters_model
-
-#' @export
 display.parameters_simulate <- display.parameters_model
 
 #' @export

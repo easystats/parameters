@@ -22,11 +22,11 @@ if (.runThisTest) {
     )
 
     mp <- model_parameters(emmeans::emmeans(b, consec ~ cyl), verbose = FALSE)
-    expect_equal(
+    expect_identical(
       colnames(mp),
       c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Component")
     )
-    expect_equal(nrow(mp), 5)
+    expect_identical(nrow(mp), 5L)
   })
 
 
@@ -52,10 +52,10 @@ if (.runThisTest) {
     )
 
     mp <- suppressWarnings(model_parameters(emmeans::emmeans(b, consec ~ cyl)))
-    expect_equal(
+    expect_identical(
       colnames(mp),
       c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "Component")
     )
-    expect_equal(nrow(mp), 5)
+    expect_identical(nrow(mp), 5L)
   })
 }

@@ -177,7 +177,7 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
   } else {
     insight::check_if_installed("dbscan")
     if (min_size < 1) min_size <- round(min_size * nrow(x))
-    out <- data.frame(n_Obs = 1:nrow(x), eps = sort(dbscan::kNNdist(x, k = min_size)))
+    out <- data.frame(n_Obs = seq_len(nrow(x)), eps = sort(dbscan::kNNdist(x, k = min_size)))
     row.names(out) <- NULL
 
     gradient <- c(0, diff(out$eps))

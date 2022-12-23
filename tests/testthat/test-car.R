@@ -22,7 +22,7 @@ if (requiet("car")) {
   })
 
 
-  x <- deltaMethod(mod, "disp + hp", rhs = 0, level = .8)
+  x <- deltaMethod(mod, "disp + hp", rhs = 0, level = 0.8)
 
   test_that("ci", {
     expect_equal(ci(x)$CI_low, x$`10 %`, tolerance = 1e-3)

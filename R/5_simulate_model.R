@@ -264,7 +264,8 @@ simulate_model.bracl <- simulate_model.default
   X <- drop(mu) + eS$vectors %*% diag(sqrt(pmax(ev, 0)), p) %*% t(matrix(stats::rnorm(p * n), n))
   nm <- names(mu)
 
-  if (is.null(nm) && !is.null(dn <- dimnames(Sigma))) {
+  dn <- dimnames(Sigma)
+  if (is.null(nm) && !is.null(dn)) {
     nm <- dn[[1L]]
   }
 

@@ -57,7 +57,7 @@
 # Find log-terms inside model formula, and return "clean" term names
 .log_terms <- function(model) {
   x <- insight::find_terms(model, flatten = TRUE)
-  gsub("^log\\((.*)\\)", "\\1", x[grepl("^log\\((.*)\\)", x)])
+  gsub("^log\\((.*)\\)", "\\1", grep("^log\\((.*)\\)", x, value = TRUE))
 }
 
 

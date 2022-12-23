@@ -100,7 +100,7 @@ cluster_meta <- function(list_of_clusters, rownames = NULL, ...) {
 .cluster_meta_matrix <- function(data) {
   # Internal function
   .get_prob <- function(x) {
-    if (any(is.na(x))) {
+    if (anyNA(x)) {
       NA
     } else {
       if (length(unique(x[!is.na(x)])) == 1) {

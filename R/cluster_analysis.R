@@ -133,7 +133,11 @@ cluster_analysis <- function(x,
                              iterations = 100,
                              ...) {
   # match arguments
-  method <- match.arg(method, choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"), several.ok = TRUE)
+  method <- match.arg(
+    method,
+    choices = c("kmeans", "hkmeans", "pam", "pamk", "hclust", "dbscan", "hdbscan", "mixture"),
+    several.ok = TRUE
+  )
 
   # Preparation -------------------------------------------------------------
 
@@ -187,17 +191,17 @@ cluster_analysis <- function(x,
 
   if (any(method == "kmeans")) {
     rez <- .cluster_analysis_kmeans(data, n = n, kmeans_method = kmeans_method, iterations = iterations, ...)
-  } else if (any(method %in% c("hkmeans"))) {
+  } else if (any(method == "hkmeans")) {
     rez <- .cluster_analysis_hkmeans(
       data,
       n = n, kmeans_method = kmeans_method, hclust_method = hclust_method,
       iterations = iterations, ...
     )
-  } else if (any(method %in% c("pam"))) {
+  } else if (any(method == "pam")) {
     rez <- .cluster_analysis_pam(data, n = n, distance_method = distance_method, ...)
-  } else if (any(method %in% c("pamk"))) {
+  } else if (any(method == "pamk")) {
     rez <- .cluster_analysis_pamk(data, distance_method = distance_method, ...)
-  } else if (any(method %in% c("hclust"))) {
+  } else if (any(method == "hclust")) {
     rez <- .cluster_analysis_hclust(
       data,
       n = n, distance_method = distance_method, hclust_method = hclust_method,

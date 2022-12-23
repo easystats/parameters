@@ -43,6 +43,11 @@ format.parameters_model <- function(x,
     groups <- attributes(x)$coef_groups
   }
 
+  # rename random effect parameters names for stan models
+  if (isTRUE(random_variances) && any(c("brmsfit", "stanreg", "stanmvreg") %in% m_class)) {
+    x <- .format_stan_parameters(x)
+  }
+
   # for the current HTML backend we use (package "gt"), we cannot change
   # the column header for subtables, so we need to remove the attributes
   # for the "Coefficient" column here, which else allows us to use different
@@ -452,109 +457,6 @@ format.compare_parameters <- function(x,
 
 
 
-# stan models ----------------------------
-
-#' @export
-format.parameters_stan <- function(x,
-                                   split_components = TRUE,
-                                   select = NULL,
-                                   digits = 2,
-                                   ci_digits = 2,
-                                   p_digits = 3,
-                                   ci_width = NULL,
-                                   ci_brackets = NULL,
-                                   zap_small = FALSE,
-                                   format = NULL,
-                                   table_caption = NULL,
-                                   ...) {
-  cp <- attributes(x)$parameter_info
-  att <- attributes(x)
-  final_table <- list()
-
-  if (!split_components || is.null(cp)) {
-    NextMethod()
-  } else {
-    # process selection of columns
-    style <- NULL
-    if (!is.null(select)) {
-      # glue-like syntax, so we switch to "style" argument here
-      if (length(select) == 1 &&
-        is.character(select) &&
-        (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
-        style <- select
-        select <- NULL
-      }
-    }
-
-    if (!is.null(select)) {
-      if (all(select == "minimal")) {
-        select <- c("Parameter", "Coefficient", "Median", "Mean", "CI", "CI_low", "CI_high", "pd")
-      } else if (all(select == "short")) {
-        select <- c("Parameter", "Coefficient", "Median", "Mean", "MAD", "SD", "pd")
-      } else {
-        if (is.numeric(select)) select <- colnames(x)[select]
-      }
-      select <- union(select, c("Parameter", "Component", "Effects", "Response", "Subgroup"))
-      to_remove <- setdiff(colnames(x), select)
-      x[to_remove] <- NULL
-    }
-
-    out <- insight::print_parameters(cp, x, keep_parameter_column = FALSE, format = format)
-
-    final_table <- lapply(out, function(i) {
-      if (identical(format, "markdown")) {
-        attr(i, "table_caption") <- attributes(i)$main_title
-      }
-      attributes(i) <- utils::modifyList(att, attributes(i))
-      param_table <- insight::format_table(
-        i,
-        ci_width = ci_width,
-        ci_brackets = ci_brackets,
-        zap_small = zap_small,
-        digits = digits,
-        ci_digits = ci_digits,
-        p_digits = p_digits,
-        preserve_attributes = TRUE,
-        ...
-      )
-      param_table$Group <- NULL
-      param_table$Response <- NULL
-      param_table$Function <- NULL
-      param_table
-    })
-  }
-
-  final_table <- datawizard::compact_list(final_table)
-
-  # we also allow style-argument for model parameters. In this case, we need
-  # some small preparation, namely, we need the p_stars column, and we need
-  # to "split" the formatted table, because the glue-function needs the columns
-  # without the parameters-column.
-  if (!is.null(style)) {
-    for (i in seq_along(final_table)) {
-      att <- attributes(final_table[[i]])
-      final_table[[i]] <- .style_formatted_table(
-        final_table[[i]],
-        style = style,
-        format = format
-      )
-      attributes(final_table[[i]]) <- utils::modifyList(att, attributes(final_table[[i]]))
-    }
-  }
-
-  # modify table title, if requested
-  if (length(final_table) == 1 && !is.null(table_caption)) {
-    attr(final_table[[1]], "table_caption") <- table_caption
-  } else if (length(final_table) == 1 && attr(final_table[[1]], "table_caption")[1] == "# Fixed effects") {
-    attr(final_table[[1]], "table_caption") <- ""
-  }
-
-  final_table
-}
-
-
-
-
 # sem-models ---------------------------------
 
 #' @export
@@ -690,7 +592,7 @@ format.parameters_sem <- function(x,
   }
 
   # if we have two trailing newlines, remove one
-  if (identical(type, "text") && !is.null(footer) && grepl("\n\n$", footer[1])) {
+  if (identical(type, "text") && !is.null(footer) && endsWith(footer[1], "\n\n")) {
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
   }
 
@@ -709,7 +611,7 @@ format.parameters_sem <- function(x,
       }
       footer <- paste0(footer, sprintf("%s%s\n", fill, text))
     } else if (type == "html") {
-      footer <- c(footer, gsub("\n", "", text))
+      footer <- c(footer, gsub("\n", "", text, fixed = TRUE))
     }
   }
   footer
@@ -1000,17 +902,13 @@ format.parameters_sem <- function(x,
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
-        msg <- insight::format_message(
-          "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
-        )
+        msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- insight::format_message(
-          "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
-        )
+        msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       }
     } else if (.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- insight::format_message(
+        msg <- c(
           "This model has a log-transformed response variable, and exponentiated parameters are reported.",
           "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
         )
@@ -1018,7 +916,7 @@ format.parameters_sem <- function(x,
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
-      message(paste0("\n", msg))
+      insight::format_alert(paste0("\n", msg))
       # set flag, so message only displayed once per session
       options("parameters_warning_exponentiate" = FALSE)
     }

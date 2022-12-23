@@ -242,7 +242,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
   } else {
     corrs <- NULL
   }
-  grps <- grepl(" =$", names(stddevs))
+  grps <- endsWith(names(stddevs), " =")
 
   # for multiple grouping factors, split at each group
   if (any(grps)) {
@@ -465,8 +465,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
-              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
-              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(0.975) * delta_se)
+              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(0.975) * delta_se)
             }
 
             # Wald CI, based on delta-method.
@@ -475,8 +475,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             # Also, if the SD is small, then the CI might go negative
             coefs <- out$Coefficient[!var_ci_corr_param]
             delta_se <- out$SE[!var_ci_corr_param] / coefs
-            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
-            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(0.975) * delta_se)
+            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(0.975) * delta_se)
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {

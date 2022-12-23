@@ -421,7 +421,7 @@ format_parameters.parameters_model <- function(model, ...) {
       # check if we have any interactions, and if so, create combined labels
       interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
       if (length(interactions)) {
-        labs <- c()
+        labs <- NULL
         for (i in names(interactions)) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))

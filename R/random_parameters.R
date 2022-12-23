@@ -66,9 +66,10 @@ random_parameters <- function(model, component = "conditional") {
 # helper -----------------------------------
 
 .n_randomeffects <- function(model) {
-  sapply(
+  vapply(
     insight::get_data(model, verbose = FALSE)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)],
-    function(i) insight::n_unique(i)
+    function(i) insight::n_unique(i),
+    numeric(1)
   )
 }
 
@@ -119,7 +120,7 @@ random_parameters <- function(model, component = "conditional") {
   # Number of levels per random-effect groups
   n_re <- as.list(.n_randomeffects(model))
   if (datawizard::is_empty_object(n_re)) {
-    n_re <- stats::setNames(as.numeric(NA), "N")
+    n_re <- stats::setNames(NA_real_, "N")
   } else {
     names(n_re) <- paste0("N_", names(n_re))
     out <- c(out, n_re)
@@ -169,7 +170,7 @@ random_parameters <- function(model, component = "conditional") {
   out$Description <- gsub("^rho00_(.*)", "Correlations", out$Description)
 
   out$Type[grepl("N_(.*)", out$Description)] <- ""
-  out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", out$Description[grepl("N_(.*)", out$Description)])
+  out$Term[grepl("N_(.*)", out$Description)] <- gsub("N_(.*)", "\\1", grep("N_(.*)", out$Description, value = TRUE))
   out$Description <- gsub("_(.*)", "", out$Description)
 
   out$Type[startsWith(out$Description, "X")] <- ""

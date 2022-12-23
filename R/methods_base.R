@@ -136,7 +136,7 @@ p_value.numeric <- function(model, null = 0, ...) {
 
 #' @export
 p_value.data.frame <- function(model, ...) {
-  data <- model[sapply(model, is.numeric)]
+  data <- model[vapply(model, is.numeric, logical(1))]
   .data_frame(
     Parameter = names(data),
     p = sapply(data, p_value)

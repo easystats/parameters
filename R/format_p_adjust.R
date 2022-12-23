@@ -118,7 +118,7 @@ format_p_adjust <- function(method) {
         }
       }
     } else if (verbose) {
-      insight::format_warning(paste0("`p_adjust` must be one of ", paste0(all_methods, collapse = ", ")))
+      insight::format_warning(paste0("`p_adjust` must be one of ", toString(all_methods)))
     }
   }
   params
