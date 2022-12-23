@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("effectsize") && requiet("insight")) {
+if (.runThisTest && requiet("effectsize") ) {
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   d <- mtcars

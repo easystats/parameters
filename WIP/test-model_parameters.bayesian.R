@@ -1,5 +1,4 @@
-context("model_parameters.bayesian")
-
+skip_if_offline()
 
 # RSTANARM --------------------------------------------------------------------
 
@@ -7,7 +6,6 @@ test_that("model_parameters.stanreg", {
   set.seed(333)
   library(rstanarm)
   library(logspline)
-
 
   # P value
   expect_equal(ncol(p_value(insight::download_model("stanreg_lm_1"))), 2)

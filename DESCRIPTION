@@ -80,7 +80,7 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.13.0),
-    datawizard (>= 0.6.4),
+    datawizard (>= 0.6.5),
     insight (>= 0.18.8),
     graphics,
     methods,
