@@ -372,9 +372,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Automated number of components</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"nFactors"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
@@ -388,11 +386,22 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sparse PCA</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/erichson/spca" class="external-link">"sparsepca"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="st">"robust"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: sparsepca</span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  |  PC2  |  PC3  |  PC4  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.92 | 0.03  | -0.11 | -0.31 |    1.27   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 1.00  | 0.07  | -0.07 | -0.05 |    1.03   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.96  | -0.06 | 0.08  | -0.23 |    1.14   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.74  | 0.32  | 0.07  | 0.00  |    1.38   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.68 | 0.46  | 0.47  | -0.03 |    2.62   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       | 1.03  | -0.32 | 0.24  | -0.03 |    1.31   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     | -0.49 | -0.85 | 0.17  | 0.00  |    1.69   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 4 principal components accounted for 96.42% of the total variance of the original data (PC1 = 72.75%, PC2 = 16.53%, PC3 = 4.91%, PC4 = 2.24%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">4</span>, sparse <span class="op">=</span> <span class="st">"robust"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  |  PC2  |  PC3  |  PC4  | Complexity</span>
@@ -409,43 +418,202 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Rotated PCA</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>    n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>,</span></span>
-<span class="r-in"><span>    threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>,</span></span>
+<span class="r-in"><span>  threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Principal Component Analysis (oblimin-rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  TC1  |  TC2  | Complexity | Uniqueness | MSA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       | 0.98  |       |    1.03    |    0.10    | 0.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.95 |       |    1.19    |    0.21    | 0.85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.89  |       |    1.07    |    0.08    | 0.85</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.87 |       |    1.07    |    0.13    | 0.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.78  |       |    1.38    |    0.08    | 0.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |       | -0.98 |    1.00    |    0.06    | 0.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |       | 0.61  |    1.97    |    0.10    | 0.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (oblimin rotation) accounted for 89.18% of the total variance of the original data (TC1 = 63.90%, TC2 = 25.28%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable | PC1  |  PC2  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96 |       |    1.02   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95 |       |    1.02   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      |      |       |    1.02   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       |      |       |    1.30   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |      |       |    1.33   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     |      | 0.48  |    1.71   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |      | -0.81 |    1.75   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components accounted for 89.18% of the total variance of the original data (PC1 = 72.66%, PC2 = 16.52%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">pca</span> <span class="co"># Print loadings</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Component1"</span>, <span class="st">"Component2"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Back-predict scores</span></span></span>
+<span class="r-in"><span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"varimax"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pca</span> <span class="co"># Print loadings</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Principal Component Analysis (varimax-rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  RC1  |  RC2  | Complexity | Uniqueness | MSA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.77 | 0.53  |    1.77    |    0.14    | 0.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.81  | -0.52 |    1.70    |    0.08    | 0.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.77  | -0.56 |    1.82    |    0.10    | 0.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.95  | -0.16 |    1.05    |    0.06    | 0.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.27 | 0.95  |    1.16    |    0.03    | 0.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components (varimax rotation) accounted for 92.00% of the total variance of the original data (RC1 = 56.46%, RC2 = 35.54%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span> <span class="co"># Print information about the factors</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># (Explained) Variance of Components</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                       |   RC1 |   RC2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Eigenvalues                     | 4.038 | 0.562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained              | 0.565 | 0.355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Cumulative) | 0.565 | 0.920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Proportion) | 0.614 | 0.386</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">pca</span>, names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Component1"</span>, <span class="st">"Component2"</span><span class="op">)</span><span class="op">)</span> <span class="co"># Back-predict scores</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Component1  Component2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.23906186  0.38058456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.23906186  0.38058456</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.87523403  0.30496365</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.83256507 -1.21853890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.37716377 -0.82007976</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -1.10127278 -1.86114104</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   1.23453249 -0.26702364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -1.30024506 -0.23007562</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.74129623  0.41446358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.02461777  0.47612740</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.02534454  0.45386195</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.29853804 -0.88051969</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.26641941 -0.86620618</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  0.34136287 -0.89960437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  0.93247714 -1.25088059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  1.06844670 -1.03682781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1.22799380 -0.41588998</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -1.30762202  0.71198099</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -0.60701035  2.14073148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.25685030  0.99325379</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -0.90720118  0.02588588</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22 -0.15711335 -1.72688554</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  0.18137850 -1.00150788</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  1.72116683  0.68171810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  0.36060813 -0.98161661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.12513535  0.63056351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -0.46730967  1.39310467</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.05428733  0.43877634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  2.24906373  1.75900256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30  0.13210722  0.33766027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  2.24244855  1.06973229</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 -0.42316749  0.86380202</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co"># which variables from the original data belong to which extracted component?</span></span></span>
-<span class="r-in"><span>  <span class="fu">closest_component</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># which variables from the original data belong to which extracted component?</span></span></span>
+<span class="r-in"><span><span class="fu">closest_component</span><span class="op">(</span><span class="va">pca</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  mpg  cyl disp   hp drat </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1    1    1    1    2 </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Factor Analysis (FA) ------------------------</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://personality-project.org/r/psych/" class="external-link">"psych"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>, threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span>  <span class="co"># Automated number of components</span></span></span>
-<span class="r-in"><span>  <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"all"</span>, threshold <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Factor Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  |  MR2  | MR3  | MR4  | MR5 | MR6 | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.92 |       |      | 0.22 |     |     |    1.16    |    0.08   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |       |      |      |     |     |    1.14    |    0.01   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |       |      | 0.20 |     |     |    1.13    |    0.03   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.86  | -0.35 |      |      |     |     |    1.38    |    0.12   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.72 | -0.40 | 0.29 |      |     |     |    1.96    |    0.24   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       | 0.89  | 0.38  | 0.24 |      |     |     |    1.53    |  5.00e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     | -0.53 | 0.76  |      |      |     |     |    1.81    |    0.14   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 6 latent factors accounted for 90.99% of the total variance of the original data (MR1 = 71.60%, MR2 = 14.55%, MR3 = 2.91%, MR4 = 1.35%, MR5 = 0.45%, MR6 = 0.12%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, rotation <span class="op">=</span> <span class="st">"oblimin"</span>, threshold <span class="op">=</span> <span class="st">"max"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Rotated loadings from Factor Analysis (oblimin-rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  | MR2  | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       | 1.00  |      |    1.07    |    0.10   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.92  |      |    1.02    |    0.09   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.88 |      |    1.02    |    0.15   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     | -0.84 |      |    1.14    |    0.39   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.82  |      |    1.23    |    0.08   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.60  |      |    1.94    |    0.18   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |       | 1.00 |    1.00    |  4.75e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 latent factors (oblimin rotation) accounted for 85.83% of the total variance of the original data (MR1 = 63.85%, MR2 = 21.99%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span>, threshold <span class="op">=</span> <span class="fl">2</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Factor Analysis (no rotation)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable | MR1  | MR2  | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96 |      |    1.01    |    0.08   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95 |      |    1.03    |    0.09   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      |      |      |    1.03    |    0.15   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt       |      | 0.36 |    1.33    |    0.10   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       |      |      |    1.23    |    0.18   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> drat     |      |      |    1.49    |    0.39   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> qsec     |      | 0.83 |    1.74    |  4.75e-03 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 latent factors accounted for 85.83% of the total variance of the original data (MR1 = 70.67%, MR2 = 15.16%).</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># (Explained) Variance of Components</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                       |   MR1 |   MR2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Eigenvalues                     | 3.908 | 0.398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained              | 0.782 | 0.080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Cumulative) | 0.782 | 0.861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Proportion) | 0.908 | 0.092</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not retrieve information about missing data. Returning only</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   complete cases.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            MR1         MR2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.41953471 -0.35544083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.41953471 -0.35544083</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.93451791  0.05188420</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.02247401 -1.06704187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.80423811 -0.57723722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.05132529 -1.40382795</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   1.17796287  0.82565287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -0.97981546 -0.77961043</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.87835186  0.02703875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.31368972 -0.16476124</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.28032337 -0.23570818</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.73053450 -0.34851886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.70908470 -0.30291012</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14  0.75913424 -0.40933052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15  1.40523363 -0.78714835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16  1.40381792 -0.48501471</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1.26324243  0.25588537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18 -1.39062136  0.13411535</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19 -1.62307787  0.15402661</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20 -1.48149201  0.28280884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21 -0.82463188 -0.03789222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22  0.79425443 -1.37121293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23  0.67357950 -1.14361360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24  1.04878537  1.07073183</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  0.89062471 -0.71650907</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26 -1.26846941 -0.12530276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 27 -1.14242028  0.42262235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 28 -1.03993655  0.89398689</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  0.94311149  1.87551864</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30 -0.08324543  0.96674422</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31  1.32372015  3.27012728</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32 -0.87651282  0.43537850</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Automated number of components</span></span></span>
+<span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Factor Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  | Complexity | Uniqueness</span>
@@ -457,6 +625,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique latent factor accounted for 83.55% of the total variance of the original data.</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
