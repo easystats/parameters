@@ -1,4 +1,3 @@
-
 #' @export
 ci.gamm4 <- function(x, ci = 0.95, ...) {
   x <- x$gam

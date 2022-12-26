@@ -1,4 +1,3 @@
-
 .extract_random_variances <- function(model, ...) {
   UseMethod(".extract_random_variances")
 }

@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.coxme <- function(model, ...) {
   beta <- model$coefficients

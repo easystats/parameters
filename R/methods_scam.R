@@ -1,4 +1,3 @@
-
 #' @export
 ci.scam <- ci.gam
 

@@ -1,4 +1,3 @@
-
 # easystats convention ------------------------
 
 mod <- parameters(stats::lm(wt ~ am * cyl, data = mtcars))

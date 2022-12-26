@@ -1,4 +1,3 @@
-
 #' @export
 ci.mle <- ci.glm
 

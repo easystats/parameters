@@ -1,4 +1,3 @@
-
 test_that("model_parameters.pairwise.htest", {
   data(airquality)
   airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])

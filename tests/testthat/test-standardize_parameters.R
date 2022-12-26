@@ -1,4 +1,3 @@
-
 data("iris")
 dat <<- iris
 

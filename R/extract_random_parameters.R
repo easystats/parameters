@@ -1,4 +1,3 @@
-
 .extract_random_parameters <- function(model, ...) {
   UseMethod(".extract_random_parameters")
 }

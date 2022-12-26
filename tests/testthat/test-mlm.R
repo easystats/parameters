@@ -1,4 +1,3 @@
-
 set.seed(123)
 mod <- lm(formula = cbind(mpg, disp) ~ wt, data = mtcars)
 mp <- model_parameters(mod)
