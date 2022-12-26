@@ -128,7 +128,7 @@
 #' magnitude. In other words, the eigenvalues explain the variance of the
 #' data along the new feature axes.
 #'
-#' @examples
+#' @examplesIf require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
 #'
 #' \donttest{
@@ -136,51 +136,44 @@
 #' principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 #'
 #' # Automated number of components
-#' if (require("nFactors")) {
-#'   principal_components(mtcars[, 1:4], n = "auto")
-#' }
+#' principal_components(mtcars[, 1:4], n = "auto")
 #'
 #' # Sparse PCA
-#' if (require("sparsepca")) {
-#'   principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
-#'   principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
-#' }
+#' principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+#' principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
 #'
 #' # Rotated PCA
-#' if (require("psych")) {
-#'   principal_components(mtcars[, 1:7],
-#'     n = 2, rotation = "oblimin",
-#'     threshold = "max", sort = TRUE
-#'   )
-#'   principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#' principal_components(mtcars[, 1:7],
+#'   n = 2, rotation = "oblimin",
+#'   threshold = "max", sort = TRUE
+#' )
+#' principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
-#'   pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-#'   pca # Print loadings
-#'   summary(pca) # Print information about the factors
-#'   predict(pca, names = c("Component1", "Component2")) # Back-predict scores
+#' pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
+#' pca # Print loadings
+#' summary(pca) # Print information about the factors
+#' predict(pca, names = c("Component1", "Component2")) # Back-predict scores
 #'
-#'   # which variables from the original data belong to which extracted component?
-#'   closest_component(pca)
+#' # which variables from the original data belong to which extracted component?
+#' closest_component(pca)
 #' }
-#' }
-#'
-#'
 #'
 #' # Factor Analysis (FA) ------------------------
-#' if (require("psych")) {
-#'   factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-#'   factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-#'   factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 #'
-#'   efa <- factor_analysis(mtcars[, 1:5], n = 2)
-#'   summary(efa)
-#'   predict(efa)
+#' factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
+#' factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+#' factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+#'
+#' efa <- factor_analysis(mtcars[, 1:5], n = 2)
+#' summary(efa)
+#' predict(efa)
+#'
 #' \donttest{
-#'   # Automated number of components
-#'   factor_analysis(mtcars[, 1:4], n = "auto")
-#' }
+#' # Automated number of components
+#' factor_analysis(mtcars[, 1:4], n = "auto")
 #' }
 #' @return A data frame of loadings.
+#'
 #' @references
 #' - Kaiser, H.F. and Rice. J. (1974). Little jiffy, mark iv. Educational
 #'   and Psychological Measurement, 34(1):111–117
@@ -195,6 +188,7 @@
 #'
 #' - Tabachnick, B. G., and Fidell, L. S. (2013). Using multivariate
 #'   statistics (6th ed.). Boston: Pearson Education.
+#'
 #' @export
 principal_components <- function(x,
                                  n = "auto",
@@ -296,7 +290,6 @@ principal_components.data.frame <- function(x,
     model$rotation <- model$loadings
     row.names(model$rotation) <- names(x)
     model$x <- model$scores
-
   } else if (isTRUE(sparse)) {
     # Sparse PCA
     insight::check_if_installed("sparsepca")
@@ -311,14 +304,14 @@ principal_components.data.frame <- function(x,
     model$rotation <- stats::setNames(model$loadings, names(x))
     row.names(model$rotation) <- names(x)
     model$x <- model$scores
-
   } else {
     # Normal PCA
     model <- stats::prcomp(x,
-                           retx = TRUE,
-                           center = standardize,
-                           scale. = standardize,
-                           ...)
+      retx = TRUE,
+      center = standardize,
+      scale. = standardize,
+      ...
+    )
   }
 
 
@@ -365,7 +358,7 @@ principal_components.data.frame <- function(x,
   # Add information
   loading_cols <- 2:(n + 1)
   loadings$Complexity <- (apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^2)))^2 /
-                         apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
+    apply(loadings[, loading_cols, drop = FALSE], 1, function(x) sum(x^4))
 
   # Add attributes
   attr(loadings, "summary") <- data_summary

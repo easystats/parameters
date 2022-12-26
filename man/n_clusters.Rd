@@ -151,19 +151,14 @@ if (require("mclust", quietly = TRUE) && require("NbClust", quietly = TRUE) &&
   # n_clusters(iris[1:4], standardize = FALSE, package = "all", fast = FALSE)
 }
 }
+\dontshow{if (require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-#
-# Specific Methods =========================
-# Elbow method --------------------
-if (require("openxlsx", quietly = TRUE) &&
-  require("see", quietly = TRUE) &&
-  require("factoextra", quietly = TRUE)) {
-  x <- n_clusters_elbow(iris[1:4])
-  x
-  as.data.frame(x)
-  plot(x)
+x <- n_clusters_elbow(iris[1:4])
+x
+as.data.frame(x)
+plot(x)
 }
-}
+\dontshow{\}) # examplesIf}
 \donttest{
 #
 # Gap method --------------------

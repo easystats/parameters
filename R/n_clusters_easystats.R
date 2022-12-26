@@ -1,17 +1,10 @@
 #' @rdname n_clusters
-#' @examples
+#' @examplesIf require("see", quietly = TRUE) && require("factoextra", quietly = TRUE)
 #' \donttest{
-#' #
-#' # Specific Methods =========================
-#' # Elbow method --------------------
-#' if (require("openxlsx", quietly = TRUE) &&
-#'   require("see", quietly = TRUE) &&
-#'   require("factoextra", quietly = TRUE)) {
-#'   x <- n_clusters_elbow(iris[1:4])
-#'   x
-#'   as.data.frame(x)
-#'   plot(x)
-#' }
+#' x <- n_clusters_elbow(iris[1:4])
+#' x
+#' as.data.frame(x)
+#' plot(x)
 #' }
 #' @export
 n_clusters_elbow <- function(x,
