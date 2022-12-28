@@ -165,26 +165,20 @@ if (require("see", quietly = TRUE)) {
 (2018). Second-generation p-values: Improved rigor, reproducibility, &
 transparency in statistical analyses. PLOS ONE, 13(3), e0188299.
 https://doi.org/10.1371/journal.pone.0188299
-
 \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence
 testing: An alternative remedy for publication bias. PLOS ONE, 13(4),
 e0195145. doi: 10.1371/journal.pone.0195145
-
 \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with
 R, JAGS, and Stan. Academic Press
-
 \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in
 Bayesian estimation. Advances in Methods and Practices in Psychological
 Science, 1(2), 270-280. doi: 10.1177/2515245918771304
-
 \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests,
 Correlations, and Meta-Analyses. Social Psychological and Personality
 Science, 8(4), 355–362. doi: 10.1177/1948550617697177
-
 \item Lakens, D., & Delacre, M. (2020). Equivalence Testing and the Second
 Generation P-Value. Meta-Psychology, 4.
 https://doi.org/10.15626/MP.2018.933
-
 \item Pernet, C. (2017). Null hypothesis significance testing: A guide to
 commonly misunderstood concepts and recommendations for good practice.
 F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5
