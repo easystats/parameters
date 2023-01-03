@@ -170,7 +170,6 @@ differences in the random effects structure between the initial and the selected
 models:
 
 ```{r, eval=FALSE}
-
 ## TODO: this is currently broken due to an issue in package cAIC4
 
 # multiple models are checked, however, initial models

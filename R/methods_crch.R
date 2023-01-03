@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.crch <- function(model, ...) {
   cs <- do.call(rbind, stats::coef(summary(model), model = "full"))

@@ -1,4 +1,3 @@
-
 fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
 m <- aov(fit)
 mp <- model_parameters(m)

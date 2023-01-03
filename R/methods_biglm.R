@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.biglm <- function(model, ...) {
   cs <- summary(model)$mat

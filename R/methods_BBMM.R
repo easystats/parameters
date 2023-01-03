@@ -1,4 +1,3 @@
-
 #' @export
 ci.BBmm <- ci.default
 

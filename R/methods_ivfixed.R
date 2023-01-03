@@ -1,4 +1,3 @@
-
 #' @export
 ci.ivFixed <- ci.default
 

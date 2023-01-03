@@ -103,7 +103,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
     features <- .cmds(x, n = nfac, distance = distance, ...)
   } else if (tolower(method) == "drr") {
     features <- .drr(x, n = nfac, ...)
-  } else if (tolower(method) =="ica") {
+  } else if (tolower(method) == "ica") {
     features <- .ica(x, n = nfac, ...)
   } else {
     insight::format_error("`method` must be one of \"PCA\", \"cMDS\", \"DRR\" or \"ICA\".")

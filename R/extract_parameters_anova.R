@@ -188,8 +188,8 @@
       idx <- sub(".*: ", "", strsplit(
         grep("Model", m_attr$heading, fixed = TRUE, value = TRUE),
         "\n",
-        fixed = TRUE)[[1]]
-      )
+        fixed = TRUE
+      )[[1]])
       idx <- idx != "restricted model"
       parameters <- parameters[idx, , drop = FALSE]
     }

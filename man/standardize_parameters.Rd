@@ -186,22 +186,21 @@ standardize_parameters(model, method = "posthoc")
 standardize_parameters(model, method = "basic", exponentiate = TRUE)
 }
 
-if (require("lme4")) {
+\dontshow{if (require("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-  m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
-  standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
+m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
+standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
+model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
+standardize_posteriors(model, method = "refit")
+standardize_posteriors(model, method = "posthoc")
+standardize_posteriors(model, method = "smart")
+head(standardize_posteriors(model, method = "basic"))
 }
-
-\dontrun{
-if (require("rstanarm")) {
-  model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-  standardize_posteriors(model, method = "refit")
-  standardize_posteriors(model, method = "posthoc")
-  standardize_posteriors(model, method = "smart")
-  head(standardize_posteriors(model, method = "basic"))
-}
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

@@ -80,7 +80,7 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.13.0),
-    datawizard (>= 0.6.4),
+    datawizard (>= 0.6.5),
     insight (>= 0.18.8),
     graphics,
     methods,
@@ -144,7 +144,6 @@ Suggests:
     logspline,
     lqmm,
     M3C,
-    magrittr,
     marginaleffects,
     MASS,
     Matrix,
@@ -182,7 +181,6 @@ Suggests:
     rmarkdown,
     rms,
     rstanarm,
-    rsvd,
     sandwich,
     see (>= 0.7.4),
     sparsepca,
@@ -198,7 +196,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.3
+RoxygenNote: 7.2.3.9000
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/Needs/website:

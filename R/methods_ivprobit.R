@@ -1,4 +1,3 @@
-
 #' @export
 ci.ivprobit <- ci.default
 

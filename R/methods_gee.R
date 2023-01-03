@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.geeglm <- standard_error.default
 

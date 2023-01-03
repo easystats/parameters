@@ -1,6 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest && requiet("posterior") && requiet("brms")) {
+  skip_if_offline()
   model <- insight::download_model("brms_1")
 
   test_that("mp-posterior-draws", {

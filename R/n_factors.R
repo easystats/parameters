@@ -49,68 +49,66 @@
 #'   `n_components()` is a convenient short for `n_factors(type =
 #'   "PCA")`.
 #'
-#' @examples
+#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)
 #' library(parameters)
-#' if (require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)) {
-#'   n_factors(mtcars, type = "PCA")
+#' n_factors(mtcars, type = "PCA")
 #'
-#'   result <- n_factors(mtcars[1:5], type = "FA")
-#'   as.data.frame(result)
-#'   summary(result)
-#'   \dontrun{
-#'   if (require("PCDimension", quietly = TRUE)) {
-#'     # Setting package = 'all' will increase the number of methods (but is slow)
-#'     n_factors(mtcars, type = "PCA", package = "all")
-#'     n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
-#'   }
-#'   }
+#' result <- n_factors(mtcars[1:5], type = "FA")
+#' as.data.frame(result)
+#' summary(result)
+#' \dontrun{
+#' # Setting package = 'all' will increase the number of methods (but is slow)
+#' n_factors(mtcars, type = "PCA", package = "all")
+#' n_factors(mtcars, type = "FA", algorithm = "mle", package = "all")
 #' }
+#'
 #' @return A data frame.
 #'
-#' @references \itemize{
-#'   \item Bartlett, M. S. (1950). Tests of significance in factor analysis.
+#' @references
+#'
+#' - Bartlett, M. S. (1950). Tests of significance in factor analysis.
 #'   British Journal of statistical psychology, 3(2), 77-85.
 #'
-#'   \item Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in
+#' - Bentler, P. M., & Yuan, K. H. (1996). Test of linear trend in
 #'   eigenvalues of a covariance matrix with application to data analysis.
 #'   British Journal of Mathematical and Statistical Psychology, 49(2), 299-312.
 #'
-#'   \item Cattell, R. B. (1966). The scree test for the number of factors.
+#' - Cattell, R. B. (1966). The scree test for the number of factors.
 #'   Multivariate behavioral research, 1(2), 245-276.
 #'
-#'   \item Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
+#' - Finch, W. H. (2019). Using Fit Statistic Differences to Determine the
 #'   Optimal Number of Factors to Retain in an Exploratory Factor Analysis.
 #'   Educational and Psychological Measurement.
 #'
-#'   \item Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the
+#' - Zoski, K. W., & Jurs, S. (1996). An objective counterpart to the
 #'   visual scree test for factor analysis: The standard error scree.
 #'   Educational and Psychological Measurement, 56(3), 443-451.
 #'
-#'   \item Zoski, K., & Jurs, S. (1993). Using multiple regression to determine
+#' - Zoski, K., & Jurs, S. (1993). Using multiple regression to determine
 #'   the number of factors to retain in factor analysis. Multiple Linear
 #'   Regression Viewpoints, 20(1), 5-9.
 #'
-#'   \item Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of
+#' - Nasser, F., Benson, J., & Wisenbaker, J. (2002). The performance of
 #'   regression-based variations of the visual scree for determining the number
 #'   of common factors. Educational and psychological measurement, 62(3),
 #'   397-419.
 #'
-#'   \item Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
+#' - Golino, H., Shi, D., Garrido, L. E., Christensen, A. P., Nieto, M.
 #'   D., Sadana, R., & Thiyagarajan, J. A. (2018). Investigating the performance
 #'   of Exploratory Graph Analysis and traditional techniques to identify the
 #'   number of latent factors: A simulation and tutorial.
 #'
-#'   \item Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
+#' - Golino, H. F., & Epskamp, S. (2017). Exploratory graph analysis: A
 #'   new approach for estimating the number of dimensions in psychological
 #'   research. PloS one, 12(6), e0174035.
 #'
-#'   \item Revelle, W., & Rocklin, T. (1979). Very simple structure: An
+#' - Revelle, W., & Rocklin, T. (1979). Very simple structure: An
 #'   alternative procedure for estimating the optimal number of interpretable
 #'   factors. Multivariate Behavioral Research, 14(4), 403-414.
 #'
-#'   \item Velicer, W. F. (1976). Determining the number of components from the
+#' - Velicer, W. F. (1976). Determining the number of components from the
 #'   matrix of partial correlations. Psychometrika, 41(3), 321-327.
-#' }
+#'
 #' @export
 n_factors <- function(x,
                       type = "FA",
@@ -310,8 +308,8 @@ n_factors <- function(x,
       out <- rbind(
         out,
         tryCatch(.n_factors_PCDimension(x, type),
-                 warning = function(w) data.frame(),
-                 error = function(e) data.frame()
+          warning = function(w) data.frame(),
+          error = function(e) data.frame()
         )
       )
     } else {
@@ -329,7 +327,7 @@ n_factors <- function(x,
   row.names(out) <- NULL # Reset row index
 
   if (!is.null(n_max)) {
-    out <-  out[out$n_Factors <= n_max, ]
+    out <- out[out$n_Factors <= n_max, ]
   }
 
   # Add summary
@@ -548,8 +546,6 @@ print.n_clusters <- print.n_factors
                            nobs = NULL,
                            eigen_values = NULL,
                            type = "FA") {
-
-
   # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
     nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim
@@ -638,21 +634,23 @@ print.n_clusters <- print.n_factors
   rez <- data.frame()
   for (n in 1:(ncol(cor) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
-      factors <- tryCatch(suppressWarnings(psych::fa(cor,
-        nfactors = n,
-        n.obs = nobs,
-        rotate = rotation,
-        fm = algorithm
-      )),
-      error = function(e) NA
+      factors <- tryCatch(
+        suppressWarnings(psych::fa(cor,
+          nfactors = n,
+          n.obs = nobs,
+          rotate = rotation,
+          fm = algorithm
+        )),
+        error = function(e) NA
       )
     } else {
-      factors <- tryCatch(suppressWarnings(psych::pca(cor,
-        nfactors = n,
-        n.obs = nobs,
-        rotate = rotation
-      )),
-      error = function(e) NA
+      factors <- tryCatch(
+        suppressWarnings(psych::pca(cor,
+          nfactors = n,
+          n.obs = nobs,
+          rotate = rotation
+        )),
+        error = function(e) NA
       )
     }
 
@@ -764,9 +762,11 @@ print.n_clusters <- print.n_factors
 
   .data_frame(
     n_Factors = as.numeric(c(rez_rnd, rez_bokenstick, rez_ag)),
-    Method = c("Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
-               "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
-               "Auer-Gervini (T)", "AuerGervini (CPT)"),
+    Method = c(
+      "Random (lambda)", "Random (F)", "Broken-Stick", "Auer-Gervini (twice)",
+      "Auer-Gervini (spectral)", "Auer-Gervini (kmeans-2)", "AuerGervini (kmeans-3)",
+      "Auer-Gervini (T)", "AuerGervini (CPT)"
+    ),
     Family = "PCDimension"
   )
 }

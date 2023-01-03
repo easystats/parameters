@@ -200,6 +200,7 @@ data along the new feature axes.
 }
 }
 \examples{
+\dontshow{if (require("nFactors", quietly = TRUE) && require("sparsepca", quietly = TRUE) && require("psych", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parameters)
 
 \donttest{
@@ -207,50 +208,43 @@ library(parameters)
 principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
 
 # Automated number of components
-if (require("nFactors")) {
-  principal_components(mtcars[, 1:4], n = "auto")
-}
+principal_components(mtcars[, 1:4], n = "auto")
 
 # Sparse PCA
-if (require("sparsepca")) {
-  principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
-  principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
-}
+principal_components(mtcars[, 1:7], n = 4, sparse = TRUE)
+principal_components(mtcars[, 1:7], n = 4, sparse = "robust")
 
 # Rotated PCA
-if (require("psych")) {
-  principal_components(mtcars[, 1:7],
-    n = 2, rotation = "oblimin",
-    threshold = "max", sort = TRUE
-  )
-  principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+principal_components(mtcars[, 1:7],
+  n = 2, rotation = "oblimin",
+  threshold = "max", sort = TRUE
+)
+principal_components(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
-  pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
-  pca # Print loadings
-  summary(pca) # Print information about the factors
-  predict(pca, names = c("Component1", "Component2")) # Back-predict scores
+pca <- principal_components(mtcars[, 1:5], n = 2, rotation = "varimax")
+pca # Print loadings
+summary(pca) # Print information about the factors
+predict(pca, names = c("Component1", "Component2")) # Back-predict scores
 
-  # which variables from the original data belong to which extracted component?
-  closest_component(pca)
+# which variables from the original data belong to which extracted component?
+closest_component(pca)
 }
-}
-
-
 
 # Factor Analysis (FA) ------------------------
-if (require("psych")) {
-  factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
-  factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
-  factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
-  efa <- factor_analysis(mtcars[, 1:5], n = 2)
-  summary(efa)
-  predict(efa)
+factor_analysis(mtcars[, 1:7], n = "all", threshold = 0.2)
+factor_analysis(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
+
+efa <- factor_analysis(mtcars[, 1:5], n = 2)
+summary(efa)
+predict(efa)
+
 \donttest{
-  # Automated number of components
-  factor_analysis(mtcars[, 1:4], n = "auto")
+# Automated number of components
+factor_analysis(mtcars[, 1:4], n = "auto")
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

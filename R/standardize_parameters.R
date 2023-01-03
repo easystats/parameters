@@ -134,31 +134,33 @@
 #' standardize_parameters(model, method = "basic", exponentiate = TRUE)
 #' }
 #'
-#' if (require("lme4")) {
+#' @examplesIf require("lme4", quietly = TRUE)
 #' \donttest{
-#'   m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
-#'   standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
-#' }
+#' m <- lme4::lmer(mpg ~ cyl + am + vs + (1 | cyl), mtcars)
+#' standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 #' }
 #'
-#' \dontrun{
-#' if (require("rstanarm")) {
-#'   model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-#'   standardize_posteriors(model, method = "refit")
-#'   standardize_posteriors(model, method = "posthoc")
-#'   standardize_posteriors(model, method = "smart")
-#'   head(standardize_posteriors(model, method = "basic"))
+#' @examplesIf require("rstanarm", quietly = TRUE)
+#' \donttest{
+#' model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
+#' standardize_posteriors(model, method = "refit")
+#' standardize_posteriors(model, method = "posthoc")
+#' standardize_posteriors(model, method = "smart")
+#' head(standardize_posteriors(model, method = "basic"))
 #' }
-#' }
+#'
 #' @references
 #' - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person fluctuation
 #'   and change. Routledge.
+#'
 #' - Jones, J. A., & Waller, N. G. (2015). The normal-theory and asymptotic
 #'   distribution-free (ADF) covariance matrix of standardized regression
 #'   coefficients: theoretical extensions and finite sample behavior.
 #'   Psychometrika, 80(2), 365-378.
+#'
 #' - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
 #'   regression models.
+#'
 #' - Gelman, A. (2008). Scaling regression inputs by dividing by two standard
 #'   deviations. Statistics in medicine, 27(15), 2865-2873.
 #'
@@ -197,9 +199,11 @@ standardize_parameters.default <- function(model,
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
   if (method == "refit") {
-    model <- datawizard::standardize(model, robust = robust, two_sd = two_sd,
-                                     include_response = include_response,
-                                     verbose = verbose, m_info = m_info)
+    model <- datawizard::standardize(model,
+      robust = robust, two_sd = two_sd,
+      include_response = include_response,
+      verbose = verbose, m_info = m_info
+    )
   }
 
   # need model_parameters to return the parameters, not the terms
@@ -217,8 +221,10 @@ standardize_parameters.default <- function(model,
       )
     }
 
-    pars <- .standardize_parameters_posthoc(pars, method, model, m_info, robust, two_sd, exponentiate,
-                                            include_response, verbose)
+    pars <- .standardize_parameters_posthoc(
+      pars, method, model, m_info, robust, two_sd, exponentiate,
+      include_response, verbose
+    )
 
     method <- attr(pars, "std_method")
     robust <- attr(pars, "robust")
@@ -268,8 +274,10 @@ standardize_parameters.mediate <- function(model,
     warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE, call. = FALSE)
   }
 
-  NextMethod("standardize_parameters", method = "refit", ci = ci, robust = robust,
-             two_sd = two_sd, include_response = include_response, verbose = verbose)
+  NextMethod("standardize_parameters",
+    method = "refit", ci = ci, robust = robust,
+    two_sd = two_sd, include_response = include_response, verbose = verbose
+  )
 }
 
 
@@ -371,9 +379,11 @@ standardize_parameters.bootstrap_model <- function(model,
     robust <- attr(pars, "robust")
   }
 
-  pars <- bayestestR::describe_posterior(pars, centrality = "median",
-                                         ci = ci, ci_method = "quantile",
-                                         test = NULL)
+  pars <- bayestestR::describe_posterior(pars,
+    centrality = "median",
+    ci = ci, ci_method = "quantile",
+    test = NULL
+  )
   names(pars)[names(pars) == "Median"] <- "Std_Coefficient"
 
 
@@ -399,13 +409,14 @@ standardize_parameters.bootstrap_parameters <- function(model,
                                                         verbose = TRUE,
                                                         ...) {
   standardize_parameters(attr(model, "boot_samples"),
-                         method = method,
-                         ci = ci,
-                         robust = robust,
-                         two_sd = two_sd,
-                         include_response = include_response,
-                         verbose = verbose,
-                         ...)
+    method = method,
+    ci = ci,
+    robust = robust,
+    two_sd = two_sd,
+    include_response = include_response,
+    verbose = verbose,
+    ...
+  )
 }
 
 
@@ -447,11 +458,13 @@ format.parameters_standardized <- function(x,
 
   # robust / two_sd
   if (attr(x, "two_sd") || attr(x, "robust")) {
-    footer <- sprintf("Scaled by %s %s%s from the %s.",
-                      ifelse(attr(x, "two_sd"), "two", "one"),
-                      ifelse(attr(x, "robust"), "MAD", "SD"),
-                      ifelse(attr(x, "two_sd"), "s", ""),
-                      ifelse(attr(x, "robust"), "median", "mean"))
+    footer <- sprintf(
+      "Scaled by %s %s%s from the %s.",
+      ifelse(attr(x, "two_sd"), "two", "one"),
+      ifelse(attr(x, "robust"), "MAD", "SD"),
+      ifelse(attr(x, "two_sd"), "s", ""),
+      ifelse(attr(x, "robust"), "median", "mean")
+    )
   }
 
   # include_response
@@ -567,7 +580,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     pars[, colnames(pars) %in% .col_2_scale, drop = FALSE],
     function(x) {
       if (exponentiate) {
-        x ^ .dev_factor
+        x^.dev_factor
       } else {
         x * .dev_factor
       }
@@ -607,8 +620,8 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
     # factors are allowed
     if (!cant_posthocsmart &&
-        !all(params == insight::clean_names(params) |
-             grepl("(as.factor|factor)\\(", params))) {
+      !all(params == insight::clean_names(params) |
+        grepl("(as.factor|factor)\\(", params))) {
       cant_posthocsmart <- TRUE
     }
 

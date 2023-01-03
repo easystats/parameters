@@ -1,4 +1,3 @@
-
 #' @rdname model_parameters.default
 #' @export
 model_parameters.censReg <- model_parameters.default

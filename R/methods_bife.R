@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.bife <- function(model, ...) {
   cs <- summary(model)

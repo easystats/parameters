@@ -257,52 +257,49 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 \code{contr.helmert}, but \emph{not} by the default \code{contr.treatment}).
 }
 \examples{
-if (requireNamespace("effectsize", quietly = TRUE)) {
-  df <- iris
-  df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+\dontshow{if (requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+df <- iris
+df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
-  model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-  model_parameters(
-    model,
-    omega_squared = "partial",
-    eta_squared = "partial",
-    epsilon_squared = "partial"
-  )
+model <- aov(Sepal.Length ~ Sepal.Big, data = df)
+model_parameters(
+  model,
+  omega_squared = "partial",
+  eta_squared = "partial",
+  epsilon_squared = "partial"
+)
 
-  model_parameters(
-    model,
-    effectsize_type = c("omega", "eta"),
-    ci = .9
-  )
+model_parameters(
+  model,
+  effectsize_type = c("omega", "eta"),
+  ci = .9
+)
 
-  model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
-  model_parameters(model)
-  model_parameters(
-    model,
-    effectsize_type = c("omega", "eta", "epsilon")
-  )
+model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
+model_parameters(model)
+model_parameters(
+  model,
+  effectsize_type = c("omega", "eta", "epsilon")
+)
 
-  model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
-  model_parameters(model)
+model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
+model_parameters(model)
+\dontshow{\}) # examplesIf}
+\dontshow{if (requireNamespace("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
+mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
+model <- anova(mm)
 
-  \dontrun{
-    if (require("lme4")) {
-      mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species),
-        data = df
-      )
-      model <- anova(mm)
+# simple parameters table
+model_parameters(model)
 
-      # simple parameters table
-      model_parameters(model)
-
-      # parameters table including effect sizes
-      model_parameters(
-        model,
-        effectsize_type = "eta",
-        ci = .9,
-        df_error = dof_satterthwaite(mm)[2:3]
-      )
-    }
-  }
+# parameters table including effect sizes
+model_parameters(
+  model,
+  effectsize_type = "eta",
+  ci = .9,
+  df_error = dof_satterthwaite(mm)[2:3]
+)
 }
+\dontshow{\}) # examplesIf}
 }

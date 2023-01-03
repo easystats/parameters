@@ -1,6 +1,7 @@
 requiet("brms")
 requiet("parameters")
 requiet("insight")
+skip_if_offline()
 
 options("parameters_exponentiate" = FALSE)
 

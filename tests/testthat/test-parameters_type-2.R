@@ -1,5 +1,3 @@
-
-
 dat <- iris
 m <- lm(Sepal.Length ~ Species, data = dat)
 test_that("parameters_type default contrasts", {

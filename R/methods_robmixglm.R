@@ -1,4 +1,3 @@
-
 #' @export
 standard_error.robmixglm <- function(model, ...) {
   se <- stats::na.omit(.get_se_from_summary(model))

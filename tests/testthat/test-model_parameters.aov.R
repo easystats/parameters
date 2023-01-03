@@ -1,3 +1,4 @@
+skip_if_offline()
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 if (.runThisTest) {

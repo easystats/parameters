@@ -1,4 +1,3 @@
-
 test_that("select_parameters", {
   model <- lm(mpg ~ ., data = mtcars)
   x <- select_parameters(model)

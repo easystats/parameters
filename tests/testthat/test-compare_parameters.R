@@ -1,4 +1,3 @@
-
 # make sure we have the correct interaction mark for tests
 options(parameters_interaction = "*")
 

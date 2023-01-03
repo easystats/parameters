@@ -1,4 +1,3 @@
-
 set.seed(123)
 data(mtcars)
 model <-

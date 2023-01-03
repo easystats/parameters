@@ -1,4 +1,3 @@
-
 #' @rdname model_parameters.mlm
 #' @export
 model_parameters.DirichletRegModel <- function(model,
