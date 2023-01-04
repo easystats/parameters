@@ -250,7 +250,7 @@ principal_components.data.frame <- function(x,
   x <- stats::na.omit(x)
 
   # Select numeric only
-  x <- x[vapply(x, is.numeric, logical(1))]
+  x <- x[vapply(x, is.numeric, TRUE)]
 
   # N factors
   n <- .get_n_factors(x, n = n, type = "PCA", rotation = rotation)

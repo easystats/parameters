@@ -683,7 +683,7 @@
   # remove columns that have only NA or Inf
   to_remove <- vapply(colnames(x), function(col) {
     all(is.na(x[[col]]) | is.infinite(x[[col]])) & !grepl("CI_", col, fixed = TRUE)
-  }, FUN.VALUE = logical(1))
+  }, TRUE)
   if (any(to_remove)) x[to_remove] <- NULL
 
   # For Bayesian models, we need to prettify parameter names here...

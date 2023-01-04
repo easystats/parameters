@@ -62,7 +62,7 @@ pool_parameters <- function(x,
   original_model <- random_params <- NULL
   obj_name <- insight::safe_deparse_symbol(substitute(x))
 
-  if (all(vapply(x, insight::is_model, logical(1))) && all(vapply(x, insight::is_model_supported, logical(1)))) {
+  if (all(vapply(x, insight::is_model, TRUE)) && all(vapply(x, insight::is_model_supported, TRUE))) {
     original_model <- x[[1]]
 
     # Add exceptions for models with uncommon components here ---------------
@@ -77,7 +77,7 @@ pool_parameters <- function(x,
     x <- lapply(x, model_parameters, effects = effects, component = component, ...)
   }
 
-  if (!all(vapply(x, inherits, FUN.VALUE = logical(1), "parameters_model"))) {
+  if (!all(vapply(x, inherits, TRUE, "parameters_model"))) {
     insight::format_error(
       "First argument `x` must be a list of `parameters_model` objects, as returned by the `model_parameters()` function."
     )

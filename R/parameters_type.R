@@ -319,7 +319,7 @@ parameters_type <- function(model, ...) {
   .check_for_numerics <- function(x) {
     is.numeric(x) && !isTRUE(attributes(x)$factor)
   }
-  out$numeric <- names(data[vapply(data, .check_for_numerics, logical(1))])
+  out$numeric <- names(data[vapply(data, .check_for_numerics, TRUE)])
 
   # get contrast coding
   contrast_coding <- tryCatch(model$contrasts, error = function(e) NULL)
@@ -351,10 +351,10 @@ parameters_type <- function(model, ...) {
   }
 
   # Ordered factors
-  out$ordered <- names(data[vapply(data, is.ordered, logical(1))])
+  out$ordered <- names(data[vapply(data, is.ordered, TRUE)])
 
   # Factors
-  out$factor <- names(data[vapply(data, is.factor, logical(1)) | vapply(data, is.character, logical(1))])
+  out$factor <- names(data[vapply(data, is.factor, TRUE) | vapply(data, is.character, TRUE)])
 
   out$levels <- NA
   out$levels_parent <- NA

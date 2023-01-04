@@ -138,7 +138,7 @@ n_factors <- function(x,
   }
 
   # Get only numeric
-  x <- x[vapply(x, is.numeric, logical(1))]
+  x <- x[vapply(x, is.numeric, TRUE)]
 
   # Correlation matrix
   if (is.null(cor)) {

@@ -13,7 +13,7 @@
   # include factors?
   if (include_factors) {
     # ordered factors to numeric
-    factors <- vapply(x, is.ordered, logical(1))
+    factors <- vapply(x, is.ordered, TRUE)
     if (any(factors)) {
       x[factors] <- sapply(
         x[factors],
@@ -32,7 +32,7 @@
     }
   } else {
     # remove factors
-    x <- x[vapply(x, is.numeric, logical(1))]
+    x <- x[vapply(x, is.numeric, TRUE)]
   }
 
   # Remove all missing values from data, only use numerics

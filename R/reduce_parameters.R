@@ -116,7 +116,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 
   if (n == "max") {
     weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
-    non_empty <- vapply(weights[2:ncol(weights)], function(x) !all(is.na(x)), logical(1))
+    non_empty <- vapply(weights[2:ncol(weights)], function(x) !all(is.na(x)), TRUE)
     weights <- weights[c(TRUE, non_empty)]
     features <- features[, non_empty]
     weights[is.na(weights)] <- 0

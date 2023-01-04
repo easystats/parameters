@@ -94,12 +94,12 @@
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(
       c("intercept", "location", "scale"),
-      vapply(model[c("alpha", "beta", "zeta")], length, numeric(1))
+      vapply(model[c("alpha", "beta", "zeta")], length, 1L)
     )
   } else if (inherits(model, "clm2") && !is.null(model$Alpha)) {
     intercept_groups <- rep(
       c("intercept", "location", "scale"),
-      vapply(model[c("Alpha", "beta", "zeta")], length, numeric(1))
+      vapply(model[c("Alpha", "beta", "zeta")], length, 1L)
     )
   } else {
     intercept_groups <- NULL
