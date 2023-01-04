@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (requiet("lme4") && requiet("GLMMadaptive")) {
+if (requiet("lme4") && requiet("GLMMadaptive") && requiet("glmmTMB")) {
   data("fish")
   data("cbpp")
 
