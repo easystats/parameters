@@ -79,7 +79,10 @@ standard_error.selection <- function(model, component = c("all", "selection", "o
 
 
 #' @export
-simulate_model.selection <- function(model, iterations = 1000, component = c("all", "selection", "outcome", "auxiliary"), ...) {
+simulate_model.selection <- function(model,
+                                     iterations = 1000,
+                                     component = c("all", "selection", "outcome", "auxiliary"),
+                                     ...) {
   component <- match.arg(component)
   out <- .simulate_model(model, iterations, component = component, effects = "fixed", ...)
 

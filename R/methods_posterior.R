@@ -49,7 +49,7 @@ standard_error.draws <- function(model, verbose = TRUE, ...) {
   params <- .posterior_draws_to_df(model)
   .data_frame(
     Parameter = colnames(params),
-    SE = unname(sapply(params, stats::sd, na.rm = TRUE))
+    SE = unname(vapply(params, stats::sd, numeric(1), na.rm = TRUE))
   )
 }
 
@@ -63,7 +63,7 @@ p_value.draws <- function(model, ...) {
   p <- bayestestR::p_direction(params)
   .data_frame(
     Parameter = .remove_backticks_from_string(p$Parameter),
-    p = sapply(p$pd, bayestestR::convert_pd_to_p, simplify = TRUE)
+    p = vapply(p$pd, bayestestR::convert_pd_to_p, numeric(1))
   )
 }
 

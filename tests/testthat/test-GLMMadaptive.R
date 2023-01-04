@@ -1,9 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (
-
-  requiet("lme4") &&
-    requiet("GLMMadaptive")) {
+if (requiet("lme4") && requiet("GLMMadaptive")) {
   data("fish")
   data("cbpp")
 
@@ -159,19 +156,19 @@ if (
 
     test_that("model_parameters.mixed-ran_pars", {
       params <- model_parameters(model, effects = "random")
-      expect_equal(c(nrow(params), ncol(params)), c(7, 9))
-      expect_equal(
+      expect_identical(c(nrow(params), ncol(params)), c(7L, 9L))
+      expect_identical(
         colnames(params),
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
-      expect_equal(
+      expect_identical(
         params$Parameter,
         c(
           "SD (Intercept)", "SD (DOY)", "Cor (Intercept~DOY)", "SD (Observations)",
           "SD (Intercept)", "SD (DOP)", "Cor (Intercept~DOP)"
         )
       )
-      expect_equal(
+      expect_identical(
         params$Component,
         c(
           "conditional", "conditional", "conditional", "conditional",

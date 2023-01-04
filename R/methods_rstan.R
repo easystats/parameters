@@ -42,7 +42,9 @@ model_parameters.stanfit <- function(model,
     random_effect_levels <- which(
       params$Effects %in% "random" & !startsWith(params$Parameter, "Sigma[")
     )
-    if (length(random_effect_levels) && isFALSE(group_level)) params <- params[-random_effect_levels, ]
+    if (length(random_effect_levels) && isFALSE(group_level)) {
+      params <- params[-random_effect_levels, ]
+    }
   }
 
   # exponentiate coefficients and SE/CI, if requested
