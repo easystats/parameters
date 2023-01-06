@@ -34,6 +34,7 @@
   }
 
   if (!is.null(standardize)) {
+    requireNamespace("datawizard", quietly = TRUE)
     standardize <- NULL
   }
 
