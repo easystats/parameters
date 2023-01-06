@@ -404,9 +404,9 @@ format.compare_parameters <- function(x,
   # check whether to split table by certain factors/columns (like component, response...)
   split_by <- split_column <- .prepare_splitby_for_print(x)
 
-  if (length(split_by) > 0 && isTRUE(split_components)) {
+  if (length(split_by) > 0L && isTRUE(split_components)) {
     # set up split-factor
-    if (length(split_column) > 1) {
+    if (length(split_column) > 1L) {
       split_by <- lapply(split_column, function(i) x[[i]])
     } else {
       split_by <- list(x[[split_column]])
@@ -418,8 +418,8 @@ format.compare_parameters <- function(x,
     formatted_table <- lapply(names(formatted_table), function(tab) {
       i <- formatted_table[[tab]]
       # remove unique columns
-      if (insight::n_unique(i$Component) == 1) i$Component <- NULL
-      if (insight::n_unique(i$Effects) == 1) i$Effects <- NULL
+      if (insight::n_unique(i$Component) == 1L) i$Component <- NULL
+      if (insight::n_unique(i$Effects) == 1L) i$Effects <- NULL
       # format table captions for sub tables
       table_caption <- .format_model_component_header(
         x,
@@ -446,8 +446,8 @@ format.compare_parameters <- function(x,
   } else {
     formatted_table <- out
     # remove unique columns
-    if (insight::n_unique(formatted_table$Component) == 1) formatted_table$Component <- NULL
-    if (insight::n_unique(formatted_table$Effects) == 1) formatted_table$Effects <- NULL
+    if (insight::n_unique(formatted_table$Component) == 1L) formatted_table$Component <- NULL
+    if (insight::n_unique(formatted_table$Effects) == 1L) formatted_table$Effects <- NULL
     # add line with info about observations
     formatted_table <- .add_obs_row(formatted_table, parameters_attributes, style = select)
   }
@@ -814,10 +814,12 @@ format.parameters_sem <- function(x,
         ci_method <- tolower(ci_method)
 
         # in case of glm's that have df.residual(), and where residual df where requested
-        if (ci_method == "residual" &&
+        is_test_statistic_t <- ci_method == "residual" &&
           test_statistic == "z-statistic" &&
           !is.null(residual_df) &&
-          !is.infinite(residual_df) && !is.na(residual_df)) {
+          !is.infinite(residual_df) && !is.na(residual_df)
+
+        if (is_test_statistic_t) {
           test_statistic <- "t-statistic"
         }
 

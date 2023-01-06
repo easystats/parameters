@@ -33,12 +33,7 @@
     standardize <- NULL
   }
 
-  if (!is.null(standardize) && !requireNamespace("datawizard", quietly = TRUE)) {
-    if (verbose) {
-      insight::format_warning(
-        "Package 'datawizard' required to calculate standardized coefficients. Please install it."
-      )
-    }
+  if (!is.null(standardize)) {
     standardize <- NULL
   }
 
@@ -583,6 +578,7 @@
         stringsAsFactors = FALSE
       )
     }
+
     if (!is.null(df_error) && nrow(df_error) == nrow(parameters)) {
       if ("SE" %in% colnames(df_error)) {
         df_error$SE <- NULL
@@ -596,7 +592,12 @@
   parameters <- parameters[match(original_order, parameters$.id), ]
 
   # Renaming
-  names(parameters) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(parameters), fixed = TRUE)
+  names(parameters) <- gsub(
+    "Statistic",
+    gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE),
+    names(parameters),
+    fixed = TRUE
+  )
   names(parameters) <- gsub("Std. Error", "SE", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("Estimate", "Coefficient", names(parameters), fixed = TRUE)
   names(parameters) <- gsub("t value", "t", names(parameters), fixed = TRUE)
@@ -894,7 +895,7 @@
   }
 
   # CI
-  if (length(ci) > 1) {
+  if (length(ci) > 1L) {
     ci <- ci[1]
     if (verbose) {
       insight::format_warning(
@@ -928,10 +929,13 @@
   )]
 
   # Get estimates
-  data <- do.call(lavaan::parameterEstimates, c(
-    list(object = model, se = TRUE, ci = TRUE, level = ci),
-    dot_args
-  ))
+  data <- do.call(
+    lavaan::parameterEstimates,
+    c(
+      list(object = model, se = TRUE, ci = TRUE, level = ci),
+      dot_args
+    )
+  )
 
   label <- data$label
 
@@ -940,6 +944,7 @@
     if (is.logical(standardize)) {
       standardize <- "all"
     }
+
     type <- switch(standardize,
       "all" = ,
       "std.all" = "std.all",
