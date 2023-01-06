@@ -33,11 +33,6 @@
     standardize <- NULL
   }
 
-  if (!is.null(standardize)) {
-    requireNamespace("datawizard", quietly = TRUE)
-    standardize <- NULL
-  }
-
   # ==== model exceptions
 
   if (inherits(model, c("crq", "crqs"))) {
