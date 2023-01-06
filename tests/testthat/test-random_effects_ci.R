@@ -4,7 +4,7 @@ osx <- tryCatch(
   {
     si <- Sys.info()
     if (!is.null(si["sysname"])) {
-      si["sysname"] == "Darwin" || grepl("^darwin", R.version$os)
+      si["sysname"] == "Darwin" || startsWith(R.version$os, "darwin")
     } else {
       FALSE
     }
@@ -14,10 +14,7 @@ osx <- tryCatch(
   }
 )
 
-if (.runThisTest && !osx &&
-
-
-  requiet("lme4")) {
+if (.runThisTest && !osx && requiet("lme4")) {
   data(sleepstudy)
   data(cake)
   set.seed(123)
@@ -55,7 +52,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp1$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -82,7 +79,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp1$Group,
       c(
         "", "", "", "", "", "", "replicate", "recipe", "replicate",
@@ -109,7 +106,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp2$Parameter,
       c(
         "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)",
@@ -117,7 +114,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp2$Group,
       c("", "", "Subject", "Subject", "Subject", "Residual")
     )
@@ -139,7 +136,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp3$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -156,7 +153,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp3$Group,
       c(
         "", "", "", "", "", "", "recipe", "recipe", "recipe", "recipe",
@@ -184,7 +181,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp4$Parameter,
       c(
         "(Intercept)", "temperature.L", "temperature.Q", "temperature.C",
@@ -201,7 +198,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp4$Group,
       c(
         "", "", "", "", "", "", "replicate", "replicate", "replicate",
@@ -225,7 +222,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp5$Parameter,
       c(
         "(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "SD (Months)",
@@ -234,7 +231,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp5$Group,
       c(
         "", "", "Subject", "Subject", "Subject", "Subject", "Subject",
@@ -266,7 +263,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp2$Parameter,
       c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
     )
@@ -280,7 +277,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp5$Parameter,
       c(
         "(Intercept)", "Days", "SD (Days)", "SD (Months)", "Cor (Days~Months)",
@@ -309,7 +306,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp$Parameter,
       c(
         "(Intercept)", "poly(temp, 2)1", "poly(temp, 2)2", "SD (Intercept)",
@@ -345,7 +342,7 @@ if (.runThisTest && !osx &&
       ignore_attr = TRUE
     )
 
-    expect_equal(
+    expect_identical(
       mp$Parameter,
       c(
         "SD (Intercept)", "SD (Intercept)", "SD (poly(temp, 2)1)",
@@ -364,7 +361,7 @@ if (.runThisTest && !osx &&
       )
     )
 
-    expect_equal(
+    expect_identical(
       mp$Group,
       c(
         "replicate", "recipe", "replicate", "replicate", "recipe",
