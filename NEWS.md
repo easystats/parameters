@@ -1,5 +1,9 @@
 # parameters 0.20.1
 
+## General
+
+* Added support for models of class `flic` and `flac` (*logistf*).
+
 ## Changes
 
 * `model_parameters()` now includes a `Group` column `stanreg` or `brmsfit`

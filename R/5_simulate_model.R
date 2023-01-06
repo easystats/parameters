@@ -180,6 +180,12 @@ simulate_model.coxph <- simulate_model.default
 simulate_model.logistf <- simulate_model.default
 
 #' @export
+simulate_model.flic <- simulate_model.default
+
+#' @export
+simulate_model.flac <- simulate_model.default
+
+#' @export
 simulate_model.truncreg <- simulate_model.default
 
 #' @export
