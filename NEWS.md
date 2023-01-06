@@ -2,7 +2,7 @@
 
 ## General
 
-* Added support for models of class `flic` and `flac` (*logistf*).
+* Added support for models of class `flic` and `flac` (*logistf*), `mmrm` (*mmrm*).
 
 ## Changes
 

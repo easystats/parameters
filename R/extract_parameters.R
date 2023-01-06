@@ -136,10 +136,10 @@
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
     } else {
-      ci_cols <- c()
+      ci_cols <- NULL
     }
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
   }
 
 

@@ -156,6 +156,7 @@ Suggests:
     mfx,
     mgcv,
     mice,
+    mmrm,
     multcomp,
     MuMIn,
     NbClust,
