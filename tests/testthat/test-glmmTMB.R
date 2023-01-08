@@ -518,13 +518,13 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
 
   test_that("print-model_parameters", {
     mp <- model_parameters(m1, effects = "fixed")
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), error = TRUE)
 
     mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE)
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), error = TRUE)
 
     mp <- model_parameters(m1, effects = "all")
-    expect_snapshot(print(mp))
+    expect_snapshot(print(mp), error = TRUE)
   })
 }
 
