@@ -82,7 +82,7 @@ efa_to_cfa <- convert_efa_to_cfa
     )
   }
 
-  cfa <- c()
+  cfa <- NULL
   # Iterate over dimensions
   for (i in seq_along(names)) {
     cfa <- c(

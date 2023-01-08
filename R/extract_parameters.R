@@ -926,12 +926,12 @@
 
   # Get estimates
   data <- do.call(
-    lavaan::parameterEstimates,
+    suppressWarnings(lavaan::parameterEstimates,
     c(
       list(object = model, se = TRUE, ci = TRUE, level = ci),
       dot_args
     )
-  )
+  ))
 
   label <- data$label
 
