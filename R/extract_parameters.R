@@ -925,8 +925,8 @@
   )]
 
   # Get estimates
-  data <- do.call(
-    suppressWarnings(lavaan::parameterEstimates,
+  data <- suppressWarnings(do.call(
+    lavaan::parameterEstimates,
     c(
       list(object = model, se = TRUE, ci = TRUE, level = ci),
       dot_args
