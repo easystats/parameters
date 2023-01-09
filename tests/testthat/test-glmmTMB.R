@@ -166,7 +166,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
       ),
       tolerance = 1e-2
     )
-    expect_equal(
+    expect_identical(
       model_parameters(m1)$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
@@ -174,11 +174,11 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
       )
     )
     expect_null(model_parameters(m2, effects = "fixed")$Component)
-    expect_equal(
+    expect_identical(
       model_parameters(m2)$Component,
       c("conditional", "conditional", "conditional", "conditional")
     )
-    expect_equal(
+    expect_identical(
       model_parameters(m3, effects = "fixed")$Component,
       c(
         "conditional", "conditional", "conditional", "conditional",
@@ -201,21 +201,21 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   test_that("model_parameters.mixed-random", {
     params <- model_parameters(m1, effects = "random", group_level = TRUE)
     expect_equal(c(nrow(params), ncol(params)), c(8, 10))
-    expect_equal(
+    expect_identical(
       colnames(params),
       c(
         "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
         "CI_high", "Component", "Effects", "Group"
       )
     )
-    expect_equal(
+    expect_identical(
       as.vector(params$Parameter),
       c(
         "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)",
         "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c(
         "conditional", "conditional", "conditional", "conditional",
@@ -232,15 +232,15 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   test_that("model_parameters.mixed-ran_pars", {
     params <- model_parameters(m1, effects = "random")
     expect_equal(c(nrow(params), ncol(params)), c(2, 9))
-    expect_equal(
+    expect_identical(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c("SD (Intercept)", "SD (Intercept)")
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c("conditional", "zero_inflated")
     )
@@ -254,21 +254,21 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   test_that("model_parameters.mixed-all_pars", {
     params <- model_parameters(m1, effects = "all")
     expect_equal(c(nrow(params), ncol(params)), c(8, 12))
-    expect_equal(
+    expect_identical(
       colnames(params),
       c(
         "Parameter", "Coefficient", "SE", "CI", "CI_low",
         "CI_high", "z", "df_error", "p", "Effects", "Group", "Component"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
         "camper1", "SD (Intercept)", "SD (Intercept)"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
@@ -284,8 +284,8 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m1, effects = "all", group_level = TRUE)
-    expect_equal(c(nrow(params), ncol(params)), c(14, 13))
-    expect_equal(
+    expect_identical(c(nrow(params), ncol(params)), c(14L, 13L))
+    expect_identical(
       colnames(params),
       c(
         "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
@@ -293,7 +293,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
         "Group"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
@@ -301,7 +301,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
         "(Intercept)", "(Intercept)", "(Intercept)", "(Intercept)"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
@@ -326,16 +326,16 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   test_that("model_parameters, dispersion", {
     mp <- model_parameters(mdisp)
     expect_equal(mp$Coefficient, c(59.50992, -0.80396, 48.97731), tolerance = 1e-2)
-    expect_equal(mp$Parameter, c("wt", "wt:mpg", "(Intercept)"))
-    expect_equal(mp$Component, c("conditional", "conditional", "dispersion"))
+    expect_identical(mp$Parameter, c("wt", "wt:mpg", "(Intercept)"))
+    expect_identical(mp$Component, c("conditional", "conditional", "dispersion"))
   })
 
   mdisp <- glmmTMB(hp ~ 0 + wt / mpg + (1 | gear), mtcars)
   test_that("model_parameters, dispersion", {
     mp <- model_parameters(mdisp)
     expect_equal(mp$Coefficient, c(58.25869, -0.87868, 47.01676, 36.99492), tolerance = 1e-2)
-    expect_equal(mp$Parameter, c("wt", "wt:mpg", "SD (Intercept)", "SD (Observations)"))
-    expect_equal(mp$Component, c("conditional", "conditional", "conditional", "conditional"))
+    expect_identical(mp$Parameter, c("wt", "wt:mpg", "SD (Intercept)", "SD (Observations)"))
+    expect_identical(mp$Component, c("conditional", "conditional", "conditional", "conditional"))
   })
 
 
@@ -348,19 +348,19 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
 
   test_that("model_parameters.mixed-ran_pars", {
     params <- model_parameters(m4, effects = "random")
-    expect_equal(c(nrow(params), ncol(params)), c(6, 9))
-    expect_equal(
+    expect_identical(c(nrow(params), ncol(params)), c(6L, 9L))
+    expect_identical(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c(
         "SD (Intercept)", "SD (xb)", "Cor (Intercept~xb)",
         "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg)"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c(
         "conditional", "conditional", "conditional",
@@ -482,15 +482,15 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
 
   test_that("model_parameters.mixed-all", {
     params <- model_parameters(m4, effects = "all")
-    expect_equal(c(nrow(params), ncol(params)), c(12, 12))
-    expect_equal(
+    expect_identical(c(nrow(params), ncol(params)), c(12L, 12L))
+    expect_identical(
       colnames(params),
       c(
         "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
         "z", "df_error", "p", "Effects", "Group", "Component"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Parameter,
       c(
         "(Intercept)", "child", "camper1", "(Intercept)", "child",
@@ -498,7 +498,7 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
         "SD (Intercept)", "SD (zg)", "Cor (Intercept~zg)"
       )
     )
-    expect_equal(
+    expect_identical(
       params$Component,
       c(
         "conditional", "conditional", "conditional", "zero_inflated",
@@ -517,14 +517,14 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   })
 
   test_that("print-model_parameters", {
-    mp <- model_parameters(m1, effects = "fixed")
-    expect_snapshot(print(mp), error = TRUE)
+    mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)
+    expect_snapshot(print(mp))
 
-    mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE)
-    expect_snapshot(print(mp), error = TRUE)
+    mp <- model_parameters(m1, effects = "fixed", exponentiate = TRUE, verbose = FALSE)
+    expect_snapshot(print(mp))
 
-    mp <- model_parameters(m1, effects = "all")
-    expect_snapshot(print(mp), error = TRUE)
+    mp <- model_parameters(m1, effects = "all", verbose = FALSE)
+    expect_snapshot(print(mp))
   })
 }
 
