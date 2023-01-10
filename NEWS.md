@@ -6,7 +6,7 @@
 
 ## Changes
 
-* `model_parameters()` now includes a `Group` column `stanreg` or `brmsfit`
+* `model_parameters()` now includes a `Group` column for `stanreg` or `brmsfit`
   models with random effects.
 
 * The `print()` method for `model_parameters()` now uses the same pattern to
