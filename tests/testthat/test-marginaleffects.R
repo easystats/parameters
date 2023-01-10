@@ -49,7 +49,7 @@ test_that("deltamethod()", {
 
 
 test_that("multiple contrasts: Issue #779", {
-  skip_if(getRVersion() < "4.0.0")
+  skip_if(getRversion() < "4.0.0")
   mod <- lm(mpg ~ as.factor(gear) * as.factor(cyl), data = mtcars)
   cmp <- suppressWarnings(comparisons(
     mod,
