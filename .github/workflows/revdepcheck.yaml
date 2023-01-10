@@ -27,7 +27,7 @@ jobs:
             r-lib/revdepcheck
             local::.
 
-      - name: Build vignettes
+      - name: Revdepcheck
         run: |
           options(crayon.enabled = TRUE)
           library(revdepcheck)
