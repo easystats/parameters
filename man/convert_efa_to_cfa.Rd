@@ -41,10 +41,10 @@ if (require("psych") && require("lavaan")) {
   model1 <- efa_to_cfa(efa)
   model2 <- efa_to_cfa(efa, threshold = 0.3)
 
-  anova(
-    lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE),
-    lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)
-  )
+  suppressWarnings(anova(
+    lavaan::cfa(model1, data = attitude),
+    lavaan::cfa(model2, data = attitude)
+  ))
 }
 }
 }
