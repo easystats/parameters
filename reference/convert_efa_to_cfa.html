@@ -142,10 +142,10 @@ structure).</p></dd>
 <span class="r-in"><span>  <span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu">efa_to_cfa</span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu">efa_to_cfa</span><span class="op">(</span><span class="va">efa</span>, threshold <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">model1</span>, data <span class="op">=</span> <span class="va">attitude</span>, warn <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">model2</span>, data <span class="op">=</span> <span class="va">attitude</span>, warn <span class="op">=</span> <span class="cn">FALSE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">model1</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu">lavaan</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/cfa.html" class="external-link">cfa</a></span><span class="op">(</span><span class="va">model2</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: psych</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -165,30 +165,14 @@ structure).</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     cor2cov</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: GPArotation</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>lavaan WARNING: some estimated ov variances are negative</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chi-Squared Difference Test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     Df    AIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE) 10 1540.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE) 12 1549.8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                        BIC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE) 1565.7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE) 1572.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                       Chisq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)  9.1827</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE) 22.4374</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     Chisq diff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE)     13.255</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     Df diff</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE)       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                     Pr(&gt;Chisq)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE)   0.001324</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude, warn = FALSE, verbose = FALSE)   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude, warn = FALSE, verbose = FALSE) **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      Df    AIC    BIC   Chisq Chisq diff</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude) 10 1540.5 1565.7  9.1827           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude) 12 1549.8 1572.2 22.4374     13.255</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      Df diff Pr(&gt;Chisq)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model2, data = attitude)                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lavaan::cfa(model1, data = attitude)       2   0.001324 **</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
