@@ -635,21 +635,27 @@ print.n_clusters <- print.n_factors
   for (n in 1:(ncol(cor) - 1)) {
     if (tolower(type) %in% c("fa", "factor", "efa")) {
       factors <- tryCatch(
-        suppressWarnings(psych::fa(cor,
-          nfactors = n,
-          n.obs = nobs,
-          rotate = rotation,
-          fm = algorithm
-        )),
+        suppressWarnings(
+          psych::fa(
+            cor,
+            nfactors = n,
+            n.obs = nobs,
+            rotate = rotation,
+            fm = algorithm
+          )
+        ),
         error = function(e) NA
       )
     } else {
       factors <- tryCatch(
-        suppressWarnings(psych::pca(cor,
-          nfactors = n,
-          n.obs = nobs,
-          rotate = rotation
-        )),
+        suppressWarnings(
+          psych::pca(
+            cor,
+            nfactors = n,
+            n.obs = nobs,
+            rotate = rotation
+          )
+        ),
         error = function(e) NA
       )
     }

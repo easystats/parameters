@@ -1,6 +1,4 @@
-if (requiet("sandwich") &&
-  requiet("clubSandwich") &&
-  requiet("datawizard")) {
+if (requiet("sandwich") && requiet("clubSandwich")) {
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   model <- lm(mpg ~ wt * am + cyl + gear, data = mtcars)

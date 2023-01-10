@@ -153,12 +153,15 @@ ci.mlm <- function(x,
 
     # .ci_generic does handle `vcov` correctly.
   } else {
-    out <- .data_frame(.ci_generic(x,
-      ci = ci,
-      vcov = vcov,
-      vcov_args = vcov_args,
-      ...
-    ))
+    out <- .data_frame(
+      .ci_generic(
+        x,
+        ci = ci,
+        vcov = vcov,
+        vcov_args = vcov_args,
+        ...
+      )
+    )
 
     resp <- insight::get_parameters(x)$Response
     if (!"Reponse" %in% colnames(out) && nrow(out) == length(resp)) {

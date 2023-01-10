@@ -52,13 +52,16 @@ select_parameters.lm <- function(model,
                                  steps = 1000,
                                  k = 2,
                                  ...) {
-  junk <- utils::capture.output(best <- stats::step(model,
-    trace = 0,
-    direction = direction,
-    steps = steps,
-    k = k,
-    ...
-  ))
+  junk <- utils::capture.output(
+    best <- stats::step(
+      model,
+      trace = 0,
+      direction = direction,
+      steps = steps,
+      k = k,
+      ...
+    )
+  )
 
   best
 }
@@ -91,13 +94,18 @@ select_parameters.merMod <- function(model,
   factors <- gsub(":", "/", factors, fixed = TRUE)
 
 
-  best <- suppressMessages(suppressWarnings(cAIC4::stepcAIC(model,
-    # slopeCandidates = nums,
-    groupCandidates = factors,
-    direction = direction,
-    steps = steps,
-    allowUseAcross = TRUE
-  )$finalModel))
+  best <- suppressMessages(
+    suppressWarnings(
+      cAIC4::stepcAIC(
+        model,
+        # slopeCandidates = nums,
+        groupCandidates = factors,
+        direction = direction,
+        steps = steps,
+        allowUseAcross = TRUE
+      )$finalModel
+    )
+  )
 
 
   # Using MuMIn's dredge(): works nicely BUT throws unnecessary warnings and requires to set global options for na.action even tho no NaNs.

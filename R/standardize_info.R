@@ -118,9 +118,7 @@ standardize_info.default <- function(model,
   )
 
   # Pseudo (for LMM)
-  if (include_pseudo &&
-    mi$is_mixed &&
-    length(insight::find_random(model)$random) == 1) {
+  if (include_pseudo && mi$is_mixed && length(insight::find_random(model)$random) == 1L) {
     out <- merge(
       out,
       .std_info_pseudo(

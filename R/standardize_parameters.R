@@ -620,8 +620,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
     # factors are allowed
     if (!cant_posthocsmart &&
-      !all(params == insight::clean_names(params) |
-        grepl("(as.factor|factor)\\(", params))) {
+      !all(params == insight::clean_names(params) | grepl("(as.factor|factor)\\(", params))) {
       cant_posthocsmart <- TRUE
     }
 

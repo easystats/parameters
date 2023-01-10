@@ -112,15 +112,15 @@ p_value.wbgee <- p_value.wbm
 .mixed_model_parameters_generic <- function(model,
                                             ci,
                                             ci_random = NULL,
-                                            bootstrap,    #nolint
-                                            iterations,   #nolint
-                                            merge_by,     #nolint
-                                            standardize,  #nolint
-                                            exponentiate, #nolint
-                                            effects,      #nolint
-                                            p_adjust,     #nolint
-                                            group_level,  #nolint
-                                            ci_method,    #nolint
+                                            bootstrap, # nolint
+                                            iterations, # nolint
+                                            merge_by, # nolint
+                                            standardize, # nolint
+                                            exponentiate, # nolint
+                                            effects, # nolint
+                                            p_adjust, # nolint
+                                            group_level, # nolint
+                                            ci_method, # nolint
                                             include_sigma = FALSE,
                                             verbose = TRUE,
                                             ...) {

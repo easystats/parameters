@@ -1,9 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest &&
-
-
-  requiet("lme4")) {
+if (.runThisTest && requiet("lme4")) {
   data(sleepstudy)
 
   model <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
