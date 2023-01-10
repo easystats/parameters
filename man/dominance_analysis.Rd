@@ -133,7 +133,7 @@ if (getRversion() >= "3.5.0" && require("domir") &&
   # Dominance Analysis with Weighted Logit Regression
   model_wt <- glm(vs ~ cyl + carb + mpg,
     data = mtcars,
-    weights = wt, family = binomial()
+    weights = wt, family = quasibinomial()
   )
 
   dominance_analysis(model_wt, quote_args = "weights")
