@@ -1,4 +1,3 @@
-# Run vignettes with `options(warn = 2)` to fail on warnings
 on:
   pull_request:
     branches: [main, master]
