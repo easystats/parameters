@@ -12,7 +12,7 @@ of estimates."><meta property="og:image" content="https://easystats.github.io/pa
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.0.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,19 +175,19 @@ include smooth terms, but not random effects.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">simulate_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.639268        -0.9529808        -2.361603  -0.3565021    0.9614208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3.768750        -0.8332842        -1.713444  -0.1201622    0.8819239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.568462        -1.5302426        -2.233633   0.2223057    0.9294689</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.424457        -1.3417523        -2.155253   0.7011757    0.9698070</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.328976        -1.8469628        -2.285733   0.6298810    1.0370978</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.351355        -0.7202915        -1.532396   1.4203766    0.9294820</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.778700        -0.9636012        -2.232569 -0.20454448    0.8473663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3.704551        -0.5965881        -2.512673 -0.03210682    0.9180949</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.489815        -1.4171749        -2.648156  0.20958834    0.9862519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.443995        -1.2757230        -2.352656  0.76849568    0.9490645</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.422665        -1.6974568        -2.698959  0.83876863    0.9494168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.311887        -0.5778129        -2.014052  1.47244029    0.9519336</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    -0.2555947                   0.32898252</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    -0.4415361                  -0.04262811</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    -0.2574408                  -0.14555287</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    -0.9200285                  -0.72896803</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    -0.5957326                  -0.72142852</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                    -1.9223076                  -1.59478304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    -0.1361450                   0.35672545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    -0.7728236                   0.19150859</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    -0.4524414                  -0.04714691</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    -0.9837641                  -0.65316364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    -0.7021718                  -0.53593827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                    -2.1223565                  -1.45407592</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span></span>
