@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -242,26 +242,55 @@
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 280.8487</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 610.8191</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># K-means -------------------------------</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, centers <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rez</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rez</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 3 clusters accounted for 79.05% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    33 |        6.43 |         5.18 |        3.62 |         1.47 |        0.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    21 |       17.67 |         4.74 |        2.90 |         1.79 |        0.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    96 |      118.65 |         6.31 |        2.90 |         4.97 |        1.70</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get clusters</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 1 2 2 2 1 1 1 1 2 2 1 1 2 2 1 1 1 1 1 1 1 1 1 1 2 2 1 1 1 2 2 1 1 1 2 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [38] 1 2 1 1 2 2 1 1 2 1 2 1 1 3 3 3 3 3 3 3 2 3 3 2 3 3 3 3 3 3 3 3 3 3 3 3 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [75] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3 3 3 3 2 3 3 3 3 3 3 3 3 3 3 3 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [112] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [149] 3 3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Clusters centers in long form</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">means</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Cluster n_Obs Sum_Squares     Variable      Mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        1    33    6.432121 Sepal.Length 5.1757576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        1    33    6.432121  Sepal.Width 3.6242424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        1    33    6.432121 Petal.Length 1.4727273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        1    33    6.432121  Petal.Width 0.2727273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        2    21   17.669524 Sepal.Length 4.7380952</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        2    21   17.669524  Sepal.Width 2.9047619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        2    21   17.669524 Petal.Length 1.7904762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8        2    21   17.669524  Petal.Width 0.3523810</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9        3    96  118.651875 Sepal.Length 6.3145833</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10       3    96  118.651875  Sepal.Width 2.8958333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       3    96  118.651875 Petal.Length 4.9739583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12       3    96  118.651875  Petal.Width 1.7031250</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Between and Total Sum of Squares</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 681.3706</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 538.6171</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># Hierarchical K-means (factoextra::hkclust) ----------------------</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="http://www.sthda.com/english/rpkgs/factoextra" class="external-link">"factoextra"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
@@ -281,7 +310,8 @@
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Total</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">rez</span><span class="op">)</span><span class="op">$</span><span class="va">Sum_Squares_Between</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 602.5192</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mclust-org.github.io/mclust/" class="external-link">"mclust"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">mclust</span><span class="fu">::</span><span class="fu"><a href="https://mclust-org.github.io/mclust/reference/Mclust.html" class="external-link">Mclust</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
@@ -294,18 +324,36 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       |   100 |      139.80 |         6.26 |        2.87 |         4.91 |        1.68</span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co">#</span></span></span>
 <span class="r-in"><span><span class="co"># K-Medoids (PAM and HPAM) ==============</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">"cluster"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">cluster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cluster/man/pam.html" class="external-link">pam</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, k <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 3 clusters accounted for 88.43% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    62 |       39.82 |         5.90 |        2.75 |         4.39 |        1.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    38 |       23.88 |         6.85 |        3.07 |         5.74 |        2.07</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://www.unibo.it/sitoweb/christian.hennig/en/" class="external-link">"fpc"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">fpc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fpc/man/pamk.html" class="external-link">pamk</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, criterion <span class="op">=</span> <span class="st">"ch"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Clustering Solution</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 3 clusters accounted for 88.43% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cluster | n_Obs | Sum_Squares | Sepal.Length | Sepal.Width | Petal.Length | Petal.Width</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       |    50 |       15.15 |         5.01 |        3.43 |         1.46 |        0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       |    62 |       39.82 |         5.90 |        2.75 |         4.39 |        1.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       |    38 |       23.88 |         6.85 |        3.07 |         5.74 |        2.07</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

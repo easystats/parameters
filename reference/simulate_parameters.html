@@ -14,7 +14,7 @@ can be seen as a (computationally faster) alternative to bootstrapping."><meta p
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -219,18 +219,18 @@ Press 2007: 140-143</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter                     | Coefficient |         95% CI |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                   |        3.54 | [ 3.21,  3.84] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor             |       -1.17 | [-1.84, -0.50] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica              |       -2.27 | [-3.13, -1.38] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width                   |        0.40 | [-0.47,  1.34] | 0.402 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                  |        0.94 | [ 0.78,  1.10] | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor:Petal.Width |       -0.74 | [-1.76,  0.29] | 0.174 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica:Petal.Width  |       -0.37 | [-1.37,  0.56] | 0.502 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                   |        3.54 | [ 3.23,  3.86] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor             |       -1.18 | [-1.90, -0.41] | 0.004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica              |       -2.24 | [-3.08, -1.34] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width                   |        0.40 | [-0.50,  1.33] | 0.362 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                  |        0.94 | [ 0.78,  1.08] | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesversicolor:Petal.Width |       -0.71 | [-1.77,  0.35] | 0.160 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Speciesvirginica:Petal.Width  |       -0.37 | [-1.34,  0.60] | 0.444 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>   using a simulated multivariate normal distribution approximation.</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span></span>
@@ -241,7 +241,16 @@ Press 2007: 140-143</p>
 <span class="r-in"><span>  <span class="fu">simulate_parameters</span><span class="op">(</span><span class="va">model</span>, centrality <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">simulate_parameters</span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.95</span><span class="op">)</span>, component <span class="op">=</span> <span class="st">"zero_inflated"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Fixed Effects</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Coefficient |         80% CI |         95% CI |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |        0.79 | [ 0.43,  1.13] | [ 0.25,  1.34] | 0.004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> minedno     |       -1.85 | [-2.26, -1.43] | [-2.47, -1.23] | &lt; .001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   using a MCMC distribution approximation.</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
