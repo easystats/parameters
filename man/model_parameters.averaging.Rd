@@ -788,7 +788,9 @@ if (require("multcomp", quietly = TRUE)) {
   model_parameters(mod)
 }
 if (require("PMCMRplus", quietly = TRUE)) {
-  model <- kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+  model <- suppressWarnings(
+    kwAllPairsConoverTest(count ~ spray, data = InsectSprays)
+  )
   model_parameters(model)
 }
 }
