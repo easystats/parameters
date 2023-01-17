@@ -5,10 +5,10 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
     data = fev_data
   )
 
-  test_that("model_parameters", {
-    out1 <- coef(summary(m1))
-    out2 <- model_parameters(m1)
+  out1 <- coef(summary(m1))
+  out2 <- model_parameters(m1)
 
+  test_that("model_parameters", {
     expect_equal(
       out1[, "Estimate"],
       out2$Coefficient,
@@ -38,7 +38,7 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
       out2$SE,
       tolerance = 1e-4
     )
-    expect_identical(attributes(out2)$ci_method, "ci_method")
+    expect_identical(attributes(out2)$ci_method, "Satterthwaite")
   })
 
   m1 <- mmrm(
@@ -47,10 +47,10 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
     method = "Kenward-Roger"
   )
 
-  test_that("model_parameters", {
-    out1 <- coef(summary(m1))
-    out2 <- model_parameters(m1)
+  out1 <- coef(summary(m1))
+  out2 <- model_parameters(m1)
 
+  test_that("model_parameters", {
     expect_equal(
       out1[, "Estimate"],
       out2$Coefficient,
@@ -81,5 +81,5 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
       tolerance = 1e-4
     )
   })
-  expect_identical(attributes(out2)$ci_method, "ci_method")
+  expect_identical(attributes(out2)$ci_method, "Kenward")
 }
