@@ -275,7 +275,7 @@ n_clusters <- function(x,
   )
 
   # Monte Carlo Version (Super slow)
-  if (fast == FALSE) {
+  if (isFALSE(fast)) {
     t0 <- Sys.time()
     out2 <- M3C::M3C(data, method = 1, maxK = n_max, removeplots = TRUE, silent = TRUE)
     out <- rbind(
