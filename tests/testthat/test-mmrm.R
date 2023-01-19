@@ -10,33 +10,38 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
 
   test_that("model_parameters", {
     expect_equal(
-      out1[, "Estimate"],
+      as.vector(out1[, "Estimate"]),
       out2$Coefficient,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_identical(
       rownames(out1),
       out2$Parameter
     )
     expect_equal(
-      out1[, "df"],
+      as.vector(out1[, "df"]),
       out2$df_error,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "Pr(>|t|)"],
+      as.vector(out1[, "Pr(>|t|)"]),
       out2$p,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "t value"],
+      as.vector(out1[, "t value"]),
       out2$t,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "Std. Error"],
+      as.vector(out1[, "Std. Error"]),
       out2$SE,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_identical(attributes(out2)$ci_method, "Satterthwaite")
   })
@@ -52,33 +57,38 @@ if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
 
   test_that("model_parameters", {
     expect_equal(
-      out1[, "Estimate"],
+      as.vector(out1[, "Estimate"]),
       out2$Coefficient,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_identical(
       rownames(out1),
       out2$Parameter
     )
     expect_equal(
-      out1[, "df"],
+      as.vector(out1[, "df"]),
       out2$df_error,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "Pr(>|t|)"],
+      as.vector(out1[, "Pr(>|t|)"]),
       out2$p,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "t value"],
+      as.vector(out1[, "t value"]),
       out2$t,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
     expect_equal(
-      out1[, "Std. Error"],
+      as.vector(out1[, "Std. Error"]),
       out2$SE,
-      tolerance = 1e-4
+      tolerance = 1e-4,
+      ignore_attr = TRUE
     )
   })
   expect_identical(attributes(out2)$ci_method, "Kenward")
