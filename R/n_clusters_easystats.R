@@ -226,7 +226,7 @@ n_clusters_hclust <- function(x,
 
   # pvclust works on columns, so we need to pivot the dataframe
   model <- pvclust::pvclust(
-    datawizard::data_transpose(x),
+    datawizard::data_transpose(x, verbose = FALSE),
     method.hclust = hclust_method,
     method.dist = distance_method,
     nboot = iterations,

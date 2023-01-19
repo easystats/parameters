@@ -66,7 +66,7 @@ model_parameters.hclust <- function(model, data = NULL, clusters = NULL, ...) {
 #' if (require("pvclust", quietly = TRUE)) {
 #'   data <- iris[1:4]
 #'   # NOTE: pvclust works on transposed data
-#'   model <- pvclust::pvclust(datawizard::data_transpose(data),
+#'   model <- pvclust::pvclust(datawizard::data_transpose(data, verbose = FALSE),
 #'     method.dist = "euclidean",
 #'     nboot = 50,
 #'     quiet = TRUE
@@ -125,7 +125,9 @@ model_parameters.pvclust <- function(model, data = NULL, clusters = NULL, ci = 0
 
   # Add points not in significant clusters
   remaining_rows <- row.names(data)[!row.names(data) %in% out$Row]
-  if (length(remaining_rows) > 0) out <- rbind(out, data.frame(Cluster = 0, Row = remaining_rows, stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+  if (length(remaining_rows) > 0) {
+    out <- rbind(out, data.frame(Cluster = 0, Row = remaining_rows, stringsAsFactors = FALSE), make.row.names = FALSE, stringsAsFactors = FALSE)
+  }
 
   # Reorder according to original order of rows
   out <- out[order(match(out$Row, row.names(data))), ]
