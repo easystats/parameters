@@ -47,7 +47,7 @@ standard_error.flac <- standard_error.logistf
 
 #' @export
 p_value.logistf <- function(model, ...) {
-  utils::capture.output(s <- summary(model))
+  utils::capture.output(s <- summary(model)) # nolint
 
   .data_frame(
     Parameter = .remove_backticks_from_string(names(s$prob)),
