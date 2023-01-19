@@ -207,13 +207,31 @@ n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, me
 #' }
 #' }
 #' @export
-n_clusters_hclust <- function(x, standardize = TRUE, include_factors = FALSE, distance_method = "correlation", hclust_method = "average", ci = 0.95, iterations = 100, ...) {
+n_clusters_hclust <- function(x,
+                              standardize = TRUE,
+                              include_factors = FALSE,
+                              distance_method = "correlation",
+                              hclust_method = "average",
+                              ci = 0.95,
+                              iterations = 100,
+                              ...) {
   insight::check_if_installed("pvclust")
   t0 <- Sys.time()
-  x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
+  x <- .prepare_data_clustering(
+    x,
+    include_factors = include_factors,
+    standardize = standardize,
+    ...
+  )
 
   # pvclust works on columns, so we need to pivot the dataframe
-  model <- pvclust::pvclust(datawizard::data_transpose(x), method.hclust = hclust_method, method.dist = distance_method, nboot = iterations, quiet = TRUE)
+  model <- pvclust::pvclust(
+    datawizard::data_transpose(x, verbose = FALSE),
+    method.hclust = hclust_method,
+    method.dist = distance_method,
+    nboot = iterations,
+    quiet = TRUE
+  )
   out <- .model_parameters_pvclust_clusters(model, x, ci)
 
   attr(out, "model") <- model

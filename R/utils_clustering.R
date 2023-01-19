@@ -40,6 +40,8 @@
 
   if (isTRUE(standardize)) {
     x <- datawizard::standardize(x, ...)
+    # remove "dw_transformer" attribute
+    x[] <- lapply(x, as.numeric)
   }
 
   x
