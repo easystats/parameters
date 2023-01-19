@@ -2,7 +2,7 @@
 
 ## General
 
-* Reduce unneccesary warnings.
+* Reduce unnecessary warnings.
 
 ## Bug fix
 
