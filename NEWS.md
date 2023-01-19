@@ -1,5 +1,15 @@
 # parameters (development version)
 
+## General
+
+* Reduce unneccesary warnings.
+
+## Bug fix
+
+* Fixed issues in tests for `mmrm` models.
+
+* Fixed failing examples.
+
 # parameters 0.20.1
 
 ## General
