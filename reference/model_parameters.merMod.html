@@ -563,9 +563,9 @@ variances always use a Wald t-distribution approximation.</p></li>
 <p>For some models from package <strong>glmmTMB</strong>, both the dispersion parameter and
 the residual variance from the random effects parameters are shown. Usually,
 these are the same but presented on different scales, e.g.</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(Sepal.Width <span class="sc">~</span> Petal.Length <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Species), <span class="at">data =</span> iris)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">fixef</span>(model)<span class="sc">$</span>disp) <span class="co"># 0.09902987</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sigma</span>(model)<span class="sc">^</span><span class="dv">2</span>         <span class="co"># 0.09902987</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(Sepal.Width <span class="sc">~</span> Petal.Length <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>Species), <span class="at">data =</span> iris)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">fixef</span>(model)<span class="sc">$</span>disp) <span class="co"># 0.09902987</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">sigma</span>(model)<span class="sc">^</span><span class="dv">2</span>         <span class="co"># 0.09902987</span></span></code></pre><p></p></div>
 <p>For models where the dispersion parameter and the residual variance are
 the same, only the residual variance is shown in the output.</p>
     </div>
