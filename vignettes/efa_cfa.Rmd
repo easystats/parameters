@@ -131,7 +131,7 @@ individual for these new variables:
 
 ```{r}
 # let's look only at the first five individuals
-head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"), verbose = FALSE), 5)
+head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")), 5)
 ```
 
 ## How many factors to retain in Factor Analysis (FA)
