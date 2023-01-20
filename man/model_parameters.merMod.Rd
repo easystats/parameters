@@ -623,7 +623,7 @@ if (require("glmmTMB")) {
 
 if (require("lme4")) {
   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-  model_parameters(model, bootstrap = TRUE, iterations = 50)
+  model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 }
 }
 }

@@ -103,7 +103,7 @@
 #'
 #' if (require("lme4")) {
 #'   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-#'   model_parameters(model, bootstrap = TRUE, iterations = 50)
+#'   model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 #' }
 #' }
 #' @return A data frame of indices related to the model's parameters.
@@ -167,9 +167,9 @@ model_parameters.merMod <- function(model,
   # post hoc standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Standardizing coefficients only works for fixed effects of the mixed model."
-      ), call. = FALSE)
+      )
     }
     effects <- "fixed"
   }
@@ -193,9 +193,7 @@ model_parameters.merMod <- function(model,
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          warning(insight::format_message(
-            "Bootstrapping only returns fixed effects of the mixed model."
-          ), call. = FALSE)
+          insight::format_warning("Bootstrapping only returns fixed effects of the mixed model.")
         }
       }
     } else {
@@ -231,7 +229,14 @@ model_parameters.merMod <- function(model,
   }
 
   if (effects %in% c("random", "all") && isFALSE(group_level)) {
-    params_variance <- .extract_random_variances(model, ci = ci, effects = effects, ci_method = ci_method, ci_random = ci_random, verbose = verbose)
+    params_variance <- .extract_random_variances(
+      model,
+      ci = ci,
+      effects = effects,
+      ci_method = ci_method,
+      ci_random = ci_random,
+      verbose = verbose
+    )
   }
 
   # merge random and fixed effects, if necessary
