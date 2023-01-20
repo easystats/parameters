@@ -130,8 +130,9 @@ As we can see, the 25 items nicely spread on the 5 latent factors, the famous
 individual for these new variables:
 
 ```{r}
+pred_names <- c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")
 # let's look only at the first five individuals
-head(predict(efa, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")), 5)
+head(predict(efa, names = pred_names, verbose = FALSE), 5)
 ```
 
 ## How many factors to retain in Factor Analysis (FA)

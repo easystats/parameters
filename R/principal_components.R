@@ -42,6 +42,7 @@
 #' @param ... Arguments passed to or from other methods.
 #' @param pca_results The output of the `principal_components()` function.
 #' @param digits,labels Arguments for `print()`.
+#' @param verbose Toggle warnings.
 #' @inheritParams n_factors
 #'
 #' @details

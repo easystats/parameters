@@ -42,7 +42,7 @@ For each "test", the corresponding \pkg{bayestestR} function is called
 (e.g. \code{\link[bayestestR:rope]{rope()}} or \code{\link[bayestestR:p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
-\item{verbose}{Toggle warnings and messages.}
+\item{verbose}{Toggle warnings.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
