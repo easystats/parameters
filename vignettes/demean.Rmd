@@ -274,11 +274,12 @@ knitr::asis_output(f)
 In R-code, the model is written down like this:
 
 ```{r}
-rewb <- lmer(
+# We ignore the convergence warnings for now...
+rewb <- suppressWarnings(lmer(
   QoL ~ time + phq4_within + phq4_between + education +
     (1 + time | ID) + (1 + phq4_within | ID),
   data = qol_cancer
-)
+))
 ```
 
 **What about time-constant predictors?**
@@ -339,8 +340,8 @@ x <- seq(2, 2 * n, 2)
 
 d <- do.call(rbind, lapply(1:n, function(i) {
   data.frame(
-    x = seq(1, n, by = .2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+    x = seq(1, n, by = 0.2),
+    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
     grp = as.factor(2 * i)
   )
 }))
@@ -360,7 +361,7 @@ Let's look at the raw data...
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
+  geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -372,7 +373,7 @@ speed.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(colour = "#555555", size = 2.5, alpha = .5) +
+  geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
   geom_smooth(method = "lm", se = F, colour = "#555555") +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -391,7 +392,7 @@ due to repeated measurements.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(mapping = aes(colour = grp), size = 2.5, alpha = .5) +
+  geom_point(mapping = aes(colour = grp), size = 2.5, alpha = 0.5) +
   geom_smooth(method = "lm", se = F, colour = "#555555") +
   see::scale_color_flat() +
   see::theme_modern() +
@@ -406,7 +407,7 @@ and include only the within-effects as well as the group-level indicator.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -430,7 +431,7 @@ between-effect now.
 
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
@@ -453,7 +454,7 @@ within- and between-effects.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
-  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = .6) +
+  geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
   geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
@@ -506,8 +507,8 @@ x <- seq(2, 2 * n, 2)
 
 d <- do.call(rbind, lapply(1:n, function(i) {
   data.frame(
-    x = seq(1, n, by = .2),
-    y = 2 * x[i] + b[i] * seq(1, n, by = .2) + rnorm(21),
+    x = seq(1, n, by = 0.2),
+    y = 2 * x[i] + b[i] * seq(1, n, by = 0.2) + rnorm(21),
     grp = as.factor(2 * i)
   )
 }))
