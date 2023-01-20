@@ -298,7 +298,7 @@
 
   # check if non-gaussian applies
   if (!is.null(model) && insight::model_info(model, verbose = FALSE)$is_linear &&
-      identical(exponentiate, "nongaussian")) {
+    identical(exponentiate, "nongaussian")) {
     return(params)
   }
 

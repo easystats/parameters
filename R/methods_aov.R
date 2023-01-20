@@ -459,7 +459,7 @@ model_parameters.maov <- model_parameters.aov
 
   # set error-df, when provided.
   if (!is.null(df_error) && is.data.frame(model) &&
-      !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
+    !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
     if (length(df_error) > nrow(model)) {
       insight::format_error(
         "Number of degrees of freedom in argument `df_error` is larger than number of parameters."
