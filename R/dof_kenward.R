@@ -376,8 +376,8 @@ dof_kenward <- function(model) {
 
   ## output: dimension (no of columns) of covariance matrix for random term ii
   if (inherits(model, "mer")) {
-    sapply(model@ST, function(X) nrow(X))
+    vapply(model@ST, nrow, numeric(1))
   } else {
-    sapply(lme4::getME(model, "cnms"), length)
+    lengths(lme4::getME(model, "cnms"))
   }
 }

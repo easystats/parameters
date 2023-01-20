@@ -77,14 +77,8 @@ compare_parameters <- function(...,
                                pretty_names = TRUE,
                                keep = NULL,
                                drop = NULL,
-                               verbose = TRUE,
-                               df_method = ci_method) {
+                               verbose = TRUE) {
   models <- list(...)
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
 
   if (length(models) == 1) {
     if (insight::is_model(models[[1]]) || inherits(models[[1]], "parameters_model")) {

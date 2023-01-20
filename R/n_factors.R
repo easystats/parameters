@@ -548,10 +548,10 @@ print.n_clusters <- print.n_factors
                            type = "FA") {
   # Replace with own correlation matrix
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim
+    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
   )))
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim
+    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
   )))
 
   .data_frame(
@@ -835,12 +835,21 @@ print.n_clusters <- print.n_factors
   # LRT     <- LRT[order(LRT[,1],decreasing = TRUE),]
   for (i in 1:(length(lambda) - min.k)) {
     if (i == 1) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
-    if (i > 1) {
-      if (LRT$p[i - 1] <= 0.05) bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
+    if (i > 1 && LRT$p[i - 1] <= 0.05) {
+      bentler.n <- bentler.n + as.numeric(LRT$p[i] <= significance)
     }
   }
-  if (bentler.n == 0) bentler.n <- length(lambda)
-  if (details == TRUE) details <- LRT else details <- NULL
+
+  if (bentler.n == 0) {
+    bentler.n <- length(lambda)
+  }
+
+  if (isTRUE(details)) {
+    details <- LRT
+  } else {
+    details <- NULL
+  }
+
   res <- list(detail = details, nFactors = bentler.n)
   class(res) <- c("nFactors", "list")
   res

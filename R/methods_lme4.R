@@ -124,17 +124,11 @@ model_parameters.merMod <- function(model,
                                     keep = NULL,
                                     drop = NULL,
                                     verbose = TRUE,
-                                    df_method = ci_method,
                                     include_sigma = FALSE,
                                     vcov = NULL,
                                     vcov_args = NULL,
                                     ...) {
   dots <- list(...)
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
 
   # set default
   if (is.null(ci_method)) {
