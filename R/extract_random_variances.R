@@ -200,7 +200,7 @@
   if (length(ci) == 1) {
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       ci_low <- paste0("CI_low_", i)
       ci_high <- paste0("CI_high_", i)
