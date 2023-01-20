@@ -410,7 +410,7 @@ model_parameters.maov <- model_parameters.aov
 
     # if data available, check contrasts and mean centering
     if (!is.null(predictors)) {
-      treatment_contrasts_or_not_centered <- sapply(predictors, function(i) {
+      treatment_contrasts_or_not_centered <- vapply(predictors, function(i) {
         if (is.factor(i)) {
           cn <- stats::contrasts(i)
           if (is.null(cn) || (all(cn %in% c(0, 1)))) {
@@ -422,7 +422,7 @@ model_parameters.maov <- model_parameters.aov
           }
         }
         return(FALSE)
-      })
+      }, TRUE)
     } else {
       treatment_contrasts_or_not_centered <- FALSE
     }
@@ -458,8 +458,7 @@ model_parameters.maov <- model_parameters.aov
   insight::check_if_installed("effectsize", minimum_version = "0.5.0")
 
   # set error-df, when provided.
-  if (!is.null(df_error) &&
-    is.data.frame(model) &&
+  if (!is.null(df_error) && is.data.frame(model) &&
     !any(c("DenDF", "den Df", "denDF", "df_error") %in% colnames(model))) {
     if (length(df_error) > nrow(model)) {
       insight::format_error(
@@ -541,7 +540,8 @@ model_parameters.maov <- model_parameters.aov
 .anova_table_wide <- function(data, ...) {
   wide_anova <- function(x) {
     # creating numerator and denominator degrees of freedom
-    if (length(idxResid <- x$Parameter == "Residuals")) {
+    idxResid <- x$Parameter == "Residuals"
+    if (length(idxResid)) {
       x$df_error <- x$df[idxResid]
       x$Sum_Squares_Error <- x$Sum_Squares[idxResid]
       x$Mean_Square_Error <- x$Sum_Squares[idxResid]

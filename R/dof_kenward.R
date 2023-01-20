@@ -36,7 +36,7 @@ dof_kenward <- function(model) {
   theta_unadjusted_vcov <- theta %*% unadjusted_vcov
   n.ggamma <- length(P)
   for (ii in 1:n.ggamma) {
-    for (jj in c(ii:n.ggamma)) {
+    for (jj in ii:n.ggamma) {
       if (ii == jj) {
         e <- 1
       } else {
@@ -204,7 +204,7 @@ dof_kenward <- function(model) {
   IE2 <- matrix(NA, nrow = n.ggamma, ncol = n.ggamma)
   for (ii in 1:n.ggamma) {
     Phi.P.ii <- Phi %*% PP[[ii]]
-    for (jj in c(ii:n.ggamma)) {
+    for (jj in ii:n.ggamma) {
       www <- .indexSymmat2vec(ii, jj, n.ggamma)
       IE2[ii, jj] <- IE2[jj, ii] <- Ktrace[ii, jj] -
         2 * sum(Phi * QQ[[www]]) + sum(Phi.P.ii * (PP[[jj]] %*% Phi))
@@ -222,7 +222,7 @@ dof_kenward <- function(model) {
 
   UU <- matrix(0, nrow = ncol(X), ncol = ncol(X))
   for (ii in 1:(n.ggamma - 1)) {
-    for (jj in c((ii + 1):n.ggamma)) {
+    for (jj in (ii + 1):n.ggamma) {
       www <- .indexSymmat2vec(ii, jj, n.ggamma)
       UU <- UU + WW[ii, jj] * (QQ[[www]] - PP[[ii]] %*% Phi %*% PP[[jj]])
     }
@@ -241,86 +241,6 @@ dof_kenward <- function(model) {
   attr(PhiA, "W") <- WW
   attr(PhiA, "condi") <- condi
   PhiA
-
-
-  # n.ggamma <- SigmaG$n.ggamma
-  #
-  # M <- cbind(do.call(cbind, SigmaG$G), X)
-  # SinvM <- chol2inv(chol(Matrix::forceSymmetric(SigmaG$Sigma))) %*% M
-  #
-  # v   <- c(rep(1:length(SigmaG$G), each = nrow(SinvM)), rep(length(SigmaG$G) + 1, ncol(X)))
-  # idx <- lapply(unique.default(v), function(i) {
-  #   which(v == i)
-  # })
-  # SinvG <- lapply(idx, function(z) {
-  #   SinvM[, z]
-  # })
-  #
-  # SinvX <- SinvG[[length(SinvG)]]
-  # SinvG[length(SinvG)] <- NULL
-  #
-  # OO <- lapply(1:n.ggamma, function(i) {
-  #   SigmaG$G[[i]] %*% SinvX
-  # })
-  #
-  # PP <- vector("list", n.ggamma)
-  # QQ <- vector("list", n.ggamma * (n.ggamma + 1) / 2)
-  # index <- 1
-  # for (r in 1:n.ggamma) {
-  #   OOt.r <- t(OO[[r]])
-  #   PP[[r]] <- -1 * (OOt.r %*%  SinvX)
-  #   for (s in r:n.ggamma) {
-  #     QQ[[index]] <- OOt.r %*% (SinvG[[s]] %*% SinvX)
-  #     index <- index + 1
-  #   }
-  # }
-  #
-  # Ktrace <- matrix(NA, nrow = n.ggamma, ncol = n.ggamma)
-  # for (r in 1:n.ggamma) {
-  #   HHr <- SinvG[[r]]
-  #   for (s in r:n.ggamma) {
-  #     Ktrace[r, s] <- Ktrace[s, r] <- sum(HHr * SinvG[[s]])
-  #   }
-  # }
-  #
-  # ## Finding information matrix
-  # IE2 <- matrix(0, nrow = n.ggamma, ncol = n.ggamma)
-  # for (ii in 1:n.ggamma) {
-  #   Phi.P.ii <- Phi %*% PP[[ii]]
-  #   for (jj in c(ii:n.ggamma)) {
-  #     www <- .indexSymmat2vec(ii, jj, n.ggamma)
-  #     IE2[ii, jj] <- IE2[jj, ii] <- Ktrace[ii, jj] -
-  #       2 * sum(Phi * QQ[[www]]) + sum(Phi.P.ii * (PP[[jj]] %*% Phi))
-  #   }
-  # }
-  #
-  # eigenIE2 <- eigen(IE2, only.values = TRUE)$values
-  # condi    <- min(abs(eigenIE2))
-  # WW <- if (condi > 1e-10)
-  #   Matrix::forceSymmetric(2 * solve(IE2))
-  # else
-  #   Matrix::forceSymmetric(2 * MASS::ginv(IE2))
-  #
-  # UU <- matrix(0, nrow = ncol(X), ncol = ncol(X))
-  # for (ii in 1:(n.ggamma - 1)) {
-  #   for (jj in c((ii + 1):n.ggamma)) {
-  #     www <- .indexSymmat2vec(ii, jj, n.ggamma)
-  #     UU <- UU + WW[ii, jj] * (QQ[[www]] - PP[[ii]] %*% Phi %*% PP[[jj]])
-  #   }
-  # }
-  #
-  # UU <- UU + t(UU)
-  # for (ii in 1:n.ggamma) {
-  #   www <- .indexSymmat2vec(ii, ii, n.ggamma)
-  #   UU  <- UU + WW[ii, ii] * (QQ[[www]] - PP[[ii]] %*% Phi %*% PP[[ii]])
-  # }
-  #
-  # GGAMMA <-  Phi %*% UU %*% Phi
-  # PhiA   <-  Phi + 2 * GGAMMA
-  # attr(PhiA, "P")     <- PP
-  # attr(PhiA, "W")     <- WW
-  # attr(PhiA, "condi") <- condi
-  # PhiA
 }
 
 
@@ -376,8 +296,8 @@ dof_kenward <- function(model) {
 
   ## output: dimension (no of columns) of covariance matrix for random term ii
   if (inherits(model, "mer")) {
-    sapply(model@ST, function(X) nrow(X))
+    vapply(model@ST, nrow, numeric(1))
   } else {
-    sapply(lme4::getME(model, "cnms"), length)
+    lengths(lme4::getME(model, "cnms"))
   }
 }

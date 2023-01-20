@@ -4,6 +4,8 @@
 
 * Reduce unnecessary warnings.
 
+* The deprecated argument `df_method` in `model_parameters()`was removed.
+
 ## Bug fix
 
 * Fixed issues in tests for `mmrm` models.

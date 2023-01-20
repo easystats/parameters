@@ -27,10 +27,8 @@
   )
 
   # check for errors
-  if (is.null(out)) {
-    if (isTRUE(verbose)) {
-      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
-    }
+  if (is.null(out) && isTRUE(verbose)) {
+    insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
   }
 
   out
@@ -202,7 +200,7 @@
   if (length(ci) == 1) {
     ci_cols <- c("CI_low", "CI_high")
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
     for (i in ci) {
       ci_low <- paste0("CI_low_", i)
       ci_high <- paste0("CI_high_", i)

@@ -32,7 +32,6 @@
   p_adjust = NULL,
   include_sigma = FALSE,
   verbose = TRUE,
-  df_method = ci_method,
   ...
 )
 
@@ -54,7 +53,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  df_method = ci_method,
   include_sigma = FALSE,
   ...
 )
@@ -76,7 +74,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  df_method = ci_method,
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
@@ -110,7 +107,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  df_method = ci_method,
   include_sigma = FALSE,
   ...
 )
@@ -133,7 +129,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  df_method = ci_method,
   include_sigma = FALSE,
   ...
 )
@@ -168,7 +163,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  df_method = ci_method,
   include_sigma = FALSE,
   vcov = NULL,
   vcov_args = NULL,
@@ -202,7 +196,6 @@
   p_adjust = NULL,
   include_sigma = FALSE,
   verbose = TRUE,
-  df_method = ci_method,
   ...
 )
 
@@ -220,7 +213,6 @@
   p_adjust = NULL,
   include_sigma = FALSE,
   verbose = TRUE,
-  df_method = ci_method,
   ...
 )
 
@@ -328,8 +320,6 @@ variance and the variance for the additive overdispersion term (see
 due to the longer computation time.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{df_method}{Deprecated. Please use \code{ci_method}.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
@@ -633,7 +623,7 @@ if (require("glmmTMB")) {
 
 if (require("lme4")) {
   model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-  model_parameters(model, bootstrap = TRUE, iterations = 50)
+  model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 }
 }
 }
