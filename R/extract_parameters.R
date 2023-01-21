@@ -493,7 +493,7 @@
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   } else {
-    ci_cols <- c()
+    ci_cols <- NULL
   }
 
 
@@ -676,16 +676,22 @@
   }
 
   if (!is.null(within_effects)) {
-    index <- unique(unlist(sapply(within_effects, function(i) {
-      grep(i, parameters$Parameter, fixed = TRUE)
-    })))
+    index <- unique(unlist(sapply(
+      within_effects,
+      grep,
+      x = parameters$Parameter,
+      fixed = TRUE
+    )))
     parameters$Component[index] <- "within"
   }
 
   if (!is.null(between_effects)) {
-    index <- unique(unlist(sapply(between_effects, function(i) {
-      grep(i, parameters$Parameter, fixed = TRUE)
-    })))
+    index <- unique(unlist(sapply(
+      between_effects,
+      grep,
+      x = parameters$Parameter,
+      fixed = TRUE
+    )))
     parameters$Component[index] <- "between"
   }
 
@@ -695,7 +701,7 @@
   }
 
   if (((!all(c("within", "between") %in% parameters$Component)) && inherits(model, "merMod")) ||
-    all(parameters$Component == "rewb-contextual")) {
+      all(parameters$Component == "rewb-contextual")) {
     parameters$Component <- NULL
   }
 
@@ -878,16 +884,15 @@
   }
 
   # check for valid parameters
-  if (!is.logical(standardize)) {
-    if (!(standardize %in% c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox"))) {
-      if (verbose) {
-        insight::format_warning(
-          "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
-          "Returning unstandardized solution."
-        )
-      }
-      standardize <- FALSE
+  valid_std_options <- c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox")
+  if (!is.logical(standardize) && !(standardize %in% valid_std_options)) {
+    if (verbose) {
+      insight::format_warning(
+        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
+        "Returning unstandardized solution."
+      )
     }
+    standardize <- FALSE
   }
 
   # CI
