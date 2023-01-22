@@ -701,7 +701,7 @@
   }
 
   if (((!all(c("within", "between") %in% parameters$Component)) && inherits(model, "merMod")) ||
-      all(parameters$Component == "rewb-contextual")) {
+    all(parameters$Component == "rewb-contextual")) {
     parameters$Component <- NULL
   }
 

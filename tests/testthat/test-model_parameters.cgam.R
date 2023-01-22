@@ -1,8 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("cgam") &&
-  utils::packageVersion("insight") > "0.18.0" &&
-  getRversion() >= "4.0.0") {
+if (.runThisTest && requiet("cgam") && getRversion() >= "4.0.0") {
   test_that("model_parameters - cgam", {
     # cgam -----------------------
 
