@@ -68,9 +68,7 @@
 
 \method{model_parameters}{Gam}(
   model,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
+  effectsize_type = NULL,
   df_error = NULL,
   type = NULL,
   table_wide = FALSE,
@@ -194,7 +192,9 @@ names.}
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}.}
 
-\item{omega_squared, eta_squared, epsilon_squared}{Deprecated. Please use \code{effectsize_type}.}
+\item{effectsize_type}{The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.}
 
 \item{df_error}{Denominator degrees of freedom (or degrees of freedom of the
 error estimate, i.e., the residuals). This is used to compute effect sizes
