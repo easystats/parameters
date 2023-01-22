@@ -405,7 +405,7 @@ model_parameters.maov <- model_parameters.aov
       ci_low <- which(endsWith(colnames(params), "CI_low"))
       ci_high <- which(endsWith(colnames(params), "CI_high"))
       if (length(ci_low) && length(ci_high)) {
-        bound <- if (alternative == "less") params[[ci_low]][1] else params[[ci_high]][1]
+        bound <- if (alternative == "less") params[[ci_low[1]]][1] else params[[ci_high[1]]][1]
         bound <- insight::format_value(bound, digits = 2)
         side <- if (alternative == "less") "lower" else "upper"
         alternative_footer <- sprintf(
