@@ -123,9 +123,27 @@ model_parameters.aov <- function(model,
                                  ...) {
   ## TODO: remove in a later update
   # handle deprected arguments ------
-  if (!is.null(omega_squared)) effectsize_type <- "omega"
-  if (!is.null(eta_squared)) effectsize_type <- "eta"
-  if (!is.null(epsilon_squared)) effectsize_type <- "epsilon"
+  if (!is.null(omega_squared)) {
+    insight::format_warning(
+      "Argument `omega_squared` is deprecated.",
+      "Please use `effectsize_type = \"omega\"` instead."
+    )
+    effectsize_type <- "omega"
+  }
+  if (!is.null(eta_squared)) {
+    insight::format_warning(
+      "Argument `eta_squared` is deprecated.",
+      "Please use `effectsize_type = \"eta\"` instead."
+    )
+    effectsize_type <- "eta"
+  }
+  if (!is.null(epsilon_squared)) {
+    insight::format_warning(
+      "Argument `epsilon_squared` is deprecated.",
+      "Please use `effectsize_type = \"epsilon\"` instead."
+    )
+    effectsize_type <- "epsilon"
+  }
 
   # save model object, for later checks
   original_model <- model
