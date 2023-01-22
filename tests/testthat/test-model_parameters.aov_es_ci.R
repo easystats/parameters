@@ -10,14 +10,14 @@ if (requiet("lme4") && requiet("effectsize")) {
   test_that("model_parameters.aov", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(Sepal.Width ~ Species, data = iris)
-    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), ci = .9))
-    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
+    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), ci = 0.9, alternative = "greater"))
+    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = 0.9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.3122, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), 1, tolerance = 1e-3, ignore_attr = TRUE)
 
-    expect_equal(colnames(mp), c(
+    expect_identical(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
       "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
       "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
@@ -25,14 +25,14 @@ if (requiet("lme4") && requiet("effectsize")) {
     ))
 
     model <- aov(Sepal.Length ~ Species * Cat1 * Cat2, data = iris)
-    mp <- model_parameters(model, effectsize_type = "eta", ci = .9, partial = FALSE)
-    es <- effectsize::eta_squared(model, partial = FALSE, ci = .9)
+    mp <- model_parameters(model, effectsize_type = "eta", ci = 0.9, partial = FALSE, alternative = "greater")
+    es <- effectsize::eta_squared(model, partial = FALSE, ci = 0.9)
     expect_equal(na.omit(mp$Eta2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Eta2_CI_low, c(0.5572, 0, 0, 0, 0, 0, 0, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Eta2_CI_high), rep(1, 7), tolerance = 1e-3, ignore_attr = TRUE)
 
-    expect_equal(colnames(mp), c(
+    expect_identical(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
       "Eta2", "Eta2_CI_low", "Eta2_CI_high"
     ))
@@ -45,12 +45,12 @@ if (requiet("lme4") && requiet("effectsize")) {
   test_that("model_parameters.anova", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
-    mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
-    es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
+    mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9, alternative = "greater")
+    es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
-    expect_equal(colnames(mp), c(
+    expect_identical(colnames(mp), c(
       "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
       "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
       "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",

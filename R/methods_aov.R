@@ -207,7 +207,7 @@ model_parameters.aov <- function(model,
   }
 
   # add attributes
-  params <- .add_anova_attributes(params, model, ci, test = test, ...)
+  params <- .add_anova_attributes(params, model, ci, test = test, alternative = alternative, ...)
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   attr(params, "object_name") <- object_name
@@ -314,7 +314,7 @@ model_parameters.afex_aov <- function(model,
   )
 
   # add attributes
-  out <- .add_anova_attributes(out, model, ci, test = NULL, ...)
+  out <- .add_anova_attributes(out, model, ci, test = NULL, alternative = NULL, ...)
 
   # filter parameters
   if (!is.null(keep) || !is.null(drop)) {
@@ -394,6 +394,24 @@ model_parameters.maov <- model_parameters.aov
   }
 
   type
+}
+
+
+.anova_alternative <- function(params, alternative) {
+  alternative_footer <- NULL
+  if (!is.null(alternative)) {
+    alternative <- match.arg(tolower(alternative), choices = c("two.sided", "greater", "less"))
+    if (alternative != "two.sided") {
+      bound <- if (alternative == "less") params$CI_low[1] else params$CI_high[1]
+      bound <- insight::format_value(bound, digits = 2)
+      side <- if (alternative == "less") "lower" else "upper"
+      alternative_footer <- sprintf(
+        "One-sided CIs: %s bound fixed at [%s].",
+        side, bound
+      )
+    }
+  }
+  alternative_footer
 }
 
 
