@@ -63,13 +63,13 @@ if (requiet("lme4") && requiet("effectsize")) {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
     suppressWarnings({
-      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
-      es <- effectsize::omega_squared(model, partial = TRUE, ci = .9, verbose = FALSE)
+      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
+      es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9, verbose = FALSE)
     })
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low[2], tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
-    expect_equal(colnames(mp), c(
+    expect_identical(colnames(mp), c(
       "Group", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
       "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
       "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",
@@ -91,14 +91,14 @@ if (requiet("lme4") && requiet("effectsize")) {
       ))
     test_that("model_parameters.car-anova", {
       skip_if_not_installed("effectsize", minimum_version = "0.5.1")
-      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9)
-      es <- effectsize::omega_squared(model, partial = TRUE, ci = .9)
+      mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9)
+      es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
       expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
       expect_equal(mp$Omega2_CI_low, c(0, 0.05110, 0.00666, NA), tolerance = 1e-3, ignore_attr = TRUE)
       expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
       expect_equal(na.omit(mp$Omega2_CI_high), rep(1, 3), tolerance = 1e-3, ignore_attr = TRUE)
 
-      expect_equal(colnames(mp), c(
+      expect_identical(colnames(mp), c(
         "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
         "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high", "Eta2_partial",
         "Eta2_CI_low", "Eta2_CI_high", "Epsilon2_partial", "Epsilon2_CI_low",
@@ -116,14 +116,14 @@ if (requiet("lme4") && requiet("effectsize")) {
 
   test_that("model_parameters.maov", {
     skip_if_not_installed("effectsize", minimum_version = "0.5.1")
-    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = .9))
-    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = .9))
+    mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9))
+    es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = 0.9))
     expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(mp$Omega2_CI_low, c(0.58067, NA, 0.74092, NA, 0.55331, NA), tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
     expect_equal(na.omit(mp$Omega2_CI_high), rep(1, 3), tolerance = 1e-3, ignore_attr = TRUE)
 
-    expect_equal(colnames(mp), c(
+    expect_identical(colnames(mp), c(
       "Response", "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
       "Omega2", "Omega2_CI_low", "Omega2_CI_high", "Eta2",
       "Eta2_CI_low", "Eta2_CI_high", "Epsilon2", "Epsilon2_CI_low",
@@ -266,10 +266,10 @@ if (requiet("lme4") && requiet("effectsize")) {
           partial = TRUE
         ))
 
-      expect_equal(
+      expect_identical(
         df_manova$Parameter, c("block", "N", "P", "K", "N:P", "N:K", "P:K", "Residuals")
       )
-      expect_equal(
+      expect_identical(
         colnames(df_manova),
         c(
           "Parameter", "Pillai", "df", "F", "p", "Epsilon2_partial",
