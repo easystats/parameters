@@ -115,13 +115,13 @@ if (.runThisTest) {
     # parameters table including effect sizes
     mp <- model_parameters(
       model,
-      eta_squared = "partial",
-      ci = .9,
+      effectsize_type = "eta",
+      ci = 0.9,
       df_error = dof_satterthwaite(mm)[2:3]
     )
 
     test_that("model_parameters_Anova-effectsize", {
-      expect_equal(
+      expect_identical(
         colnames(mp),
         c(
           "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "Eta2_partial",
@@ -141,17 +141,17 @@ if (.runThisTest && requiet("testthat")) {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
     a1 <- aov(m)
-    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+    expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
 
     a1 <- anova(m)
-    expect_equal(attr(model_parameters(a1), "anova_type"), 1)
+    expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
 
     skip_if_not_installed("car")
 
     a2 <- car::Anova(m, type = 2)
     a3 <- car::Anova(m, type = 3)
-    expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-    expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+    expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3L)
 
     m <- lm(mpg ~ factor(cyl) + hp + disp, mtcars)
     expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
