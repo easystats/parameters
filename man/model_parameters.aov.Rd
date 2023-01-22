@@ -149,10 +149,9 @@ error estimate, i.e., the residuals). This is used to compute effect sizes
 for ANOVA-tables from mixed models. See 'Examples'. (Ignored for
 \code{afex_aov}.)}
 
-\item{ci}{Confidence Interval (CI) level for effect sizes
-\code{omega_squared}, \code{eta_squared} etc. The default, \code{NULL},
-will compute no confidence intervals. \code{ci} should be a scalar between
-0 and 1.}
+\item{ci}{Confidence Interval (CI) level for effect sizes specified in
+\code{effectsize_type}. The default, \code{NULL}, will compute no confidence
+intervals. \code{ci} should be a scalar between 0 and 1.}
 
 \item{alternative}{A character string specifying the alternative hypothesis;
 Controls the type of CI returned: \code{"two.sided"} (default, two-sided CI),
@@ -262,24 +261,16 @@ df <- iris
 df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 
 model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-model_parameters(
-  model,
-  omega_squared = "partial",
-  eta_squared = "partial",
-  epsilon_squared = "partial"
-)
+model_parameters(model)
 
-model_parameters(
-  model,
-  effectsize_type = c("omega", "eta"),
-  ci = .9
-)
+model_parameters(model, effectsize_type = c("omega", "eta"), ci = 0.9)
 
 model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 model_parameters(model)
 model_parameters(
   model,
-  effectsize_type = c("omega", "eta", "epsilon")
+  effectsize_type = c("omega", "eta", "epsilon"),
+  alternative = "greater"
 )
 
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -297,7 +288,7 @@ model_parameters(model)
 model_parameters(
   model,
   effectsize_type = "eta",
-  ci = .9,
+  ci = 0.9,
   df_error = dof_satterthwaite(mm)[2:3]
 )
 }

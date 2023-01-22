@@ -17,10 +17,9 @@
 #' @param type Numeric, type of sums of squares. May be 1, 2 or 3. If 2 or 3,
 #'   ANOVA-tables using `car::Anova()` will be returned. (Ignored for
 #'   `afex_aov`.)
-#' @param ci Confidence Interval (CI) level for effect sizes
-#'   `omega_squared`, `eta_squared` etc. The default, `NULL`,
-#'   will compute no confidence intervals. `ci` should be a scalar between
-#'   0 and 1.
+#' @param ci Confidence Interval (CI) level for effect sizes specified in
+#'   `effectsize_type`. The default, `NULL`, will compute no confidence
+#'   intervals. `ci` should be a scalar between 0 and 1.
 #' @param test String, indicating the type of test for `Anova.mlm` to be
 #'   returned. If `"multivariate"` (or `NULL`), returns the summary of
 #'   the multivariate test (that is also given by the `print`-method). If
@@ -65,24 +64,16 @@
 #' df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big, data = df)
-#' model_parameters(
-#'   model,
-#'   omega_squared = "partial",
-#'   eta_squared = "partial",
-#'   epsilon_squared = "partial"
-#' )
+#' model_parameters(model)
 #'
-#' model_parameters(
-#'   model,
-#'   effectsize_type = c("omega", "eta"),
-#'   ci = .9
-#' )
+#' model_parameters(model, effectsize_type = c("omega", "eta"), ci = 0.9)
 #'
 #' model <- anova(lm(Sepal.Length ~ Sepal.Big, data = df))
 #' model_parameters(model)
 #' model_parameters(
 #'   model,
-#'   effectsize_type = c("omega", "eta", "epsilon")
+#'   effectsize_type = c("omega", "eta", "epsilon"),
+#'   alternative = "greater"
 #' )
 #'
 #' model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
@@ -100,7 +91,7 @@
 #' model_parameters(
 #'   model,
 #'   effectsize_type = "eta",
-#'   ci = .9,
+#'   ci = 0.9,
 #'   df_error = dof_satterthwaite(mm)[2:3]
 #' )
 #' }
