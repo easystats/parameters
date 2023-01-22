@@ -402,13 +402,17 @@ model_parameters.maov <- model_parameters.aov
   if (!is.null(alternative)) {
     alternative <- match.arg(tolower(alternative), choices = c("two.sided", "greater", "less"))
     if (alternative != "two.sided") {
-      bound <- if (alternative == "less") params$CI_low[1] else params$CI_high[1]
-      bound <- insight::format_value(bound, digits = 2)
-      side <- if (alternative == "less") "lower" else "upper"
-      alternative_footer <- sprintf(
-        "One-sided CIs: %s bound fixed at [%s].",
-        side, bound
-      )
+      ci_low <- which(endsWith(colnames(params), "CI_low"))
+      ci_high <- which(endsWith(colnames(params), "CI_high"))
+      if (length(ci_low) && length(ci_high)) {
+        bound <- if (alternative == "less") params[[ci_low]][1] else params[[ci_high]][1]
+        bound <- insight::format_value(bound, digits = 2)
+        side <- if (alternative == "less") "lower" else "upper"
+        alternative_footer <- sprintf(
+          "One-sided CIs: %s bound fixed at [%s].",
+          side, bound
+        )
+      }
     }
   }
   alternative_footer
