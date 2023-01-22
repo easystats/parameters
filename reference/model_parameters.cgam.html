@@ -156,9 +156,7 @@ of generalized additive models (GAM(M)s).</p>
 <span><span class="co"># S3 method for Gam</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
-<span>  omega_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  eta_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  epsilon_squared <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  df_error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -308,8 +306,10 @@ names.</p></dd>
 passed down to <code><a href="bootstrap_model.html">bootstrap_model()</a></code>.</p></dd>
 
 
-<dt>omega_squared, eta_squared, epsilon_squared</dt>
-<dd><p>Deprecated. Please use <code>effectsize_type</code>.</p></dd>
+<dt>effectsize_type</dt>
+<dd><p>The effect size of interest. Not that possibly not all
+effect sizes are applicable to the model object. See 'Details'. For Anova
+models, can also be a character vector with multiple effect size names.</p></dd>
 
 
 <dt>df_error</dt>
