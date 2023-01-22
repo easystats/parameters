@@ -115,13 +115,13 @@ if (.runThisTest) {
     # parameters table including effect sizes
     mp <- model_parameters(
       model,
-      eta_squared = "partial",
-      ci = .9,
+      effectsize_type = "eta",
+      ci = 0.9,
       df_error = dof_satterthwaite(mm)[2:3]
     )
 
     test_that("model_parameters_Anova-effectsize", {
-      expect_equal(
+      expect_identical(
         colnames(mp),
         c(
           "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "Eta2_partial",

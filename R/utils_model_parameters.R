@@ -352,12 +352,13 @@
 
 
 #' @keywords internal
-.add_anova_attributes <- function(params, model, ci, test = NULL, ...) {
+.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
   attr(params, "anova_type") <- .anova_type(model)
+  attr(params, "text_alternative") <- .anova_alternative(params, alternative)
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test

@@ -29,10 +29,10 @@ format.parameters_model <- function(x,
   # process selection of columns
   style <- NULL
   if (!is.null(select) &&
-      # glue-like syntax, so we switch to "style" argument here
-      length(select) == 1 &&
-      is.character(select) &&
-      (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+    # glue-like syntax, so we switch to "style" argument here
+    length(select) == 1 &&
+    is.character(select) &&
+    (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
     style <- select
     select <- NULL
   }
@@ -81,9 +81,9 @@ format.parameters_model <- function(x,
 
   # rename columns for t-tests
   if (!is.null(htest_type) &&
-        htest_type == "ttest" &&
-        !is.null(mean_group_values) &&
-        all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
+    htest_type == "ttest" &&
+    !is.null(mean_group_values) &&
+    all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
     colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
     colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
   }
