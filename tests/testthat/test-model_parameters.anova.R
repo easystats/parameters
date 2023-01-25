@@ -136,7 +136,7 @@ if (.runThisTest) {
 
 # XXX -----
 
-if (.runThisTest && requiet("testthat")) {
+if (.runThisTest) {
   test_that("anova type | lm", {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
@@ -238,7 +238,7 @@ if (.runThisTest && requiet("testthat")) {
 
 
 
-if (.runThisTest && requiet("rms") && requiet("testthat")) {
+if (.runThisTest && requiet("rms")) {
   m <- rms::ols(mpg ~ cyl + disp + hp + drat, data = mtcars)
   a <- anova(m)
   mp <- model_parameters(a)
