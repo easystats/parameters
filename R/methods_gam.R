@@ -19,14 +19,25 @@ ci.gam <- function(x, ci = 0.95, method = NULL, ...) {
 standard_error.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table
-  n_cond <- nrow(p.table)
-  n_smooth <- nrow(s.table)
+  d1 <- d2 <- NULL
 
-  .data_frame(
-    Parameter = .remove_backticks_from_string(c(rownames(p.table), rownames(s.table))),
-    SE = c(as.vector(p.table[, 2]), rep(NA, n_smooth)),
-    Component = c(rep("conditional", n_cond), rep("smooth_terms", n_smooth))
-  )
+  if (!is.null(p.table)) {
+    d1 <- .data_frame(
+      Parameter = rownames(p.table),
+      SE = as.vector(p.table[, 2]),
+      Component = "conditional"
+    )
+  }
+
+  if (!is.null(s.table)) {
+    d2 <- .data_frame(
+      Parameter = rownames(s.table),
+      SE = NA,
+      Component = "smooth_terms"
+    )
+  }
+
+  insight::text_remove_backticks(rbind(d1, d2), verbose = FALSE)
 }
 
 
@@ -34,18 +45,23 @@ standard_error.gam <- function(model, ...) {
 p_value.gam <- function(model, ...) {
   p.table <- summary(model)$p.table
   s.table <- summary(model)$s.table
+  d1 <- d2 <- NULL
 
-  d1 <- .data_frame(
-    Parameter = rownames(p.table),
-    p = as.vector(p.table[, 4]),
-    Component = "conditional"
-  )
+  if (!is.null(p.table)) {
+    d1 <- .data_frame(
+      Parameter = rownames(p.table),
+      p = as.vector(p.table[, 4]),
+      Component = "conditional"
+    )
+  }
 
-  d2 <- .data_frame(
-    Parameter = rownames(s.table),
-    p = as.vector(s.table[, 4]),
-    Component = "smooth_terms"
-  )
+  if (!is.null(s.table)) {
+    d2 <- .data_frame(
+      Parameter = rownames(s.table),
+      p = as.vector(s.table[, 4]),
+      Component = "smooth_terms"
+    )
+  }
 
   insight::text_remove_backticks(rbind(d1, d2), verbose = FALSE)
 }
