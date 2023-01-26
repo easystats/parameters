@@ -272,9 +272,9 @@ if (requiet("lme4") && requiet("effectsize")) {
       expect_identical(
         colnames(df_manova),
         c(
-          "Parameter", "Pillai", "df", "F", "p", "Epsilon2_partial",
-          "Epsilon2_CI_low", "Epsilon2_CI_high", "Omega2_partial", "Omega2_CI_low",
-          "Omega2_CI_high"
+          "Parameter", "Pillai", "df", "df_num", "df_error", "F", "p",
+          "Epsilon2_partial", "Epsilon2_CI_low", "Epsilon2_CI_high",
+          "Omega2_partial", "Omega2_CI_low", "Omega2_CI_high"
         )
       )
       expect_equal(
