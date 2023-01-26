@@ -67,11 +67,17 @@ model_parameters.emmGrid <- function(model,
 
 
   # Renaming
+  estName <- attr(s, "estName")
   if (!is.null(statistic)) {
-    names(params) <- gsub("Statistic", gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE), names(params))
+    names(params) <- gsub(
+      "Statistic",
+      gsub("-statistic", "", attr(statistic, "statistic", exact = TRUE), fixed = TRUE),
+      names(params),
+      fixed = TRUE
+    )
   }
   names(params) <- gsub("Std. Error", "SE", names(params), fixed = TRUE)
-  names(params) <- gsub(estName <- attr(s, "estName"), "Estimate", names(params), fixed = TRUE)
+  names(params) <- gsub(estName, "Estimate", names(params), fixed = TRUE)
   names(params) <- gsub("lower.CL", "CI_low", names(params), fixed = TRUE)
   names(params) <- gsub("upper.CL", "CI_high", names(params), fixed = TRUE)
   names(params) <- gsub("asymp.LCL", "CI_low", names(params), fixed = TRUE)
@@ -122,7 +128,15 @@ model_parameters.emmGrid <- function(model,
     )
   }
 
-  params <- suppressWarnings(.add_model_parameters_attributes(params, model, ci, exponentiate = FALSE, p_adjust = p_adjust, verbose = verbose, ...))
+  params <- suppressWarnings(.add_model_parameters_attributes(
+    params,
+    model,
+    ci,
+    exponentiate = FALSE,
+    p_adjust = p_adjust,
+    verbose = verbose,
+    ...
+  ))
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(params, "parameter_names") <- parameter_names
 
@@ -169,6 +183,68 @@ model_parameters.emm_list <- function(model,
   params
 }
 
+
+#' @export
+model_parameters.summary_emm <- function(model,
+                                         keep = NULL,
+                                         drop = NULL,
+                                         verbose = TRUE,
+                                         ...) {
+  params <- model
+  # Renaming
+  estName <- attr(model, "estName")
+  names(params) <- gsub("Std. Error", "SE", names(params), fixed = TRUE)
+  names(params) <- gsub(estName, "Estimate", names(params), fixed = TRUE)
+  names(params) <- gsub("response", "Response", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.CL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.CL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.LCL", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("asymp.UCL", "CI_high", names(params), fixed = TRUE)
+  names(params) <- gsub("lower.HPD", "CI_low", names(params), fixed = TRUE)
+  names(params) <- gsub("upper.HPD", "CI_high", names(params), fixed = TRUE)
+
+  # rename if necessary
+  if ("df" %in% colnames(params)) {
+    colnames(params)[colnames(params) == "df"] <- "df_error"
+  }
+
+  # Reorder
+  estimate_pos <- which(colnames(model) == estName)
+  parameter_names <- colnames(params)[seq_len(estimate_pos - 1)]
+  order <- c(
+    parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
+    "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
+    "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
+  )
+  params <- params[order[order %in% names(params)]]
+
+  # rename
+  names(params) <- gsub("Estimate", "Coefficient", names(params), fixed = TRUE)
+
+  # filter parameters
+  if (!is.null(keep) || !is.null(drop)) {
+    params <- .filter_parameters(params,
+      keep = keep,
+      drop = drop,
+      verbose = verbose
+    )
+  }
+
+  params <- suppressWarnings(.add_model_parameters_attributes(
+    params,
+    model,
+    ci = 0.95,
+    exponentiate = FALSE,
+    p_adjust = NULL,
+    verbose = verbose,
+    ...
+  ))
+  attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  attr(params, "parameter_names") <- parameter_names
+
+  class(params) <- c("parameters_model", "see_parameters_model", class(params))
+  params
+}
 
 
 
@@ -223,13 +299,14 @@ boot_em_standard_error <- function(model) {
   est <- insight::get_parameters(model, summary = FALSE)
 
   Component <- NULL
-  if (inherits(s <- summary(model), "list")) {
+  s <- summary(model)
+  if (inherits(s, "list")) {
     Component <- .pretty_emmeans_Component_names(s)
   }
 
   out <- .data_frame(
     Parameter = .pretty_emmeans_Parameter_names(model),
-    SE = sapply(est, stats::sd)
+    SE = vapply(est, stats::sd, numeric(1))
   )
 
   if (!is.null(Component)) out$Component <- Component
@@ -353,13 +430,12 @@ p_value.emm_list <- function(model, adjust = "none", ...) {
 
 boot_em_pval <- function(model, adjust) {
   est <- insight::get_parameters(model, summary = FALSE)
-
   p <- sapply(est, p_value)
-
   p <- stats::p.adjust(p, method = adjust)
 
   Component <- NULL
-  if (inherits(s <- summary(model), "list")) {
+  s <- summary(model)
+  if (inherits(s, "list")) {
     Component <- .pretty_emmeans_Component_names(s)
   }
 
@@ -396,7 +472,7 @@ format_parameters.emm_list <- function(model, ...) {
     params <- s[, 1:(estimate_pos - 1), drop = FALSE]
     if (ncol(params) >= 2) {
       r <- apply(params, 1, function(i) paste0(colnames(params), " [", i, "]"))
-      parnames <- unname(sapply(as.data.frame(r), paste, collapse = ", "))
+      parnames <- unname(sapply(as.data.frame(r), toString))
     } else {
       parnames <- as.vector(params[[1]])
     }
