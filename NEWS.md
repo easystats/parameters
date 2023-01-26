@@ -10,6 +10,9 @@
 
 * Fixed issues in tests for `mmrm` models.
 
+* Fixed issue in `bootstrap_model()` for models of class `glmmTMB` with
+  dispersion parameters.
+
 * Fixed failing examples.
 
 # parameters 0.20.1
