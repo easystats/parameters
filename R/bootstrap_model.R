@@ -169,6 +169,16 @@ bootstrap_model.merMod <- function(model,
     params <- insight::get_parameters(model, verbose = FALSE)
     n_params <- insight::n_parameters(model)
 
+    # for glmmTMB, remove dispersion paramters, if any
+    if (inherits(model, "glmmTMB") && "Component" %in% names(params) && "dispersion" %in% params$Component) {
+      # find number of dispersion parameters
+      n_disp <- sum(params$Component == "dispersion")
+      # remove dispersion parameters
+      params <- params[params$Component != "dispersion", ]
+      # make sure number of parameters is updated
+      n_params <- n_params - n_disp
+    }
+
     if (nrow(params) != n_params) {
       params <- stats::setNames(rep.int(NA, n_params), params$Parameter)
     } else {
