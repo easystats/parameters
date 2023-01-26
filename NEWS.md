@@ -6,6 +6,9 @@
 
 * The deprecated argument `df_method` in `model_parameters()`was removed.
 
+* Output from `model_parameters()` for objects returned by `manova()` and
+  `car::Manova()` is now more consistent.
+
 ## Bug fix
 
 * Fixed issues in tests for `mmrm` models.
