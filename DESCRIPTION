@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.20.1.5
+Version: 0.20.2
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -199,7 +199,6 @@ Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.2.3.9000
 Roxygen: list(markdown = TRUE)
-Remotes: easystats/insight
 Config/testthat/edition: 3
 Config/Needs/website:
     rstudio/bslib,
