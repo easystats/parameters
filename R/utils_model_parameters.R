@@ -365,6 +365,13 @@
     attr(params, "anova_test") <- model$test
   }
 
+  # some tweaks for MANOVA, so outputs of manova(model) and car::Manova(model)
+  # look the same, see #833
+  if (inherits(model, "maov") && is.null(test) && "Pillai" %in% names(params)) {
+    attr(params, "anova_test") <- "Pillai"
+    names(params)[names(params) == "Pillai"] <- "Statistic"
+  }
+
   # here we add exception for objects that should not have a table headline
   if (inherits(model, c("aov", "anova", "lm"))) {
     attr(params, "title") <- ""

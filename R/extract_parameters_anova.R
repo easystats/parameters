@@ -93,6 +93,8 @@
 .extract_anova_manova <- function(model) {
   parameters <- as.data.frame(summary(model)$stats)
   parameters$Parameter <- insight::trim_ws(row.names(parameters))
+  parameters$df_num <- parameters[["num Df"]]
+  parameters$df_error <- parameters[["den Df"]]
   parameters[["den Df"]] <- NULL
   parameters[["num Df"]] <- NULL
   parameters
