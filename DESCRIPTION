@@ -144,7 +144,7 @@ Suggests:
     logspline,
     lqmm,
     M3C,
-    marginaleffects,
+    marginaleffects (>= 0.9.0),
     MASS,
     Matrix,
     mclust,

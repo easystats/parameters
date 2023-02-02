@@ -1,18 +1,25 @@
 skip_if(!isTRUE(Sys.getenv("RunAllparametersTests") == "yes"))
-skip_if_not_installed("marginaleffects", minimum_version = "0.5.0")
+skip_if_not_installed("marginaleffects", minimum_version = "0.9.0")
 requiet("marginaleffects")
 requiet("rstanarm")
 
 test_that("marginaleffects()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
-  model <- marginaleffects(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  model <- slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
   expect_equal(nrow(parameters(model)), 1)
 
   # Bayesian
   x <- suppressWarnings(stan_glm(Sepal.Width ~ Species * Petal.Length, data = iris, refresh = 0, iter = 100, chains = 1))
-  model <- marginaleffects(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  model <- slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
   expect_equal(nrow(parameters(model)), 1)
+})
+
+
+test_that("predictions()", {
+  x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
+  p <- avg_predictions(x, by = "Species")
+  expect_equal(nrow(parameters(p)), 3)
 })
 
 
@@ -39,11 +46,11 @@ test_that("marginalmeans()", {
 })
 
 
-test_that("deltamethod()", {
+test_that("hypotheses()", {
   # deltamethod() was introduced in 0.6.0
   skip_if_not_installed("marginaleffects", minimum_version = "0.6.0")
   x <- lm(mpg ~ hp + wt, data = mtcars)
-  m <- deltamethod(x, "hp = wt")
+  m <- hypotheses(x, "hp = wt")
   expect_equal(nrow(parameters(m)), 1)
 })
 
@@ -57,7 +64,7 @@ test_that("multiple contrasts: Issue #779", {
     newdata = insight::get_datagrid(mod, at = c("gear", "cyl")),
     cross = TRUE
   ))
-  cmp <- parameters(cmp)
+  cmp <- suppressWarnings(parameters(cmp))
   expect_true("Comparison: gear" %in% colnames(cmp))
   expect_true("Comparison: cyl" %in% colnames(cmp))
 })

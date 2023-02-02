@@ -35,7 +35,8 @@
 \alias{model_parameters.marginaleffects}
 \alias{model_parameters.comparisons}
 \alias{model_parameters.marginalmeans}
-\alias{model_parameters.deltamethod}
+\alias{model_parameters.hypotheses}
+\alias{model_parameters.slopes}
 \alias{model_parameters.predictions}
 \alias{model_parameters.margins}
 \alias{model_parameters.maxLik}
@@ -252,7 +253,9 @@
 
 \method{model_parameters}{marginalmeans}(model, ci = 0.95, ...)
 
-\method{model_parameters}{deltamethod}(model, ci = 0.95, ...)
+\method{model_parameters}{hypotheses}(model, ci = 0.95, ...)
+
+\method{model_parameters}{slopes}(model, ci = 0.95, ...)
 
 \method{model_parameters}{predictions}(model, ci = 0.95, ...)
 

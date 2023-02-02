@@ -33,11 +33,14 @@ model_parameters.marginaleffects <- function(model,
     if ("Type" %in% colnames(out)) {
       attr(out, "prediction_type") <- out$Type[1]
     }
-  } else if (inherits(model, "marginaleffects")) {
+  } else if (inherits(model, "slopes")) {
     attr(out, "coefficient_name") <- "Slope"
   } else if (inherits(model, "predictions")) {
     attr(out, "coefficient_name") <- "Predicted"
+  } else if (inherits(model, "hypotheses")) {
+    attr(out, "coefficient_name") <- "Estimate"
   }
+
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
@@ -55,7 +58,12 @@ model_parameters.marginalmeans <- model_parameters.marginaleffects
 
 #' @rdname model_parameters.averaging
 #' @export
-model_parameters.deltamethod <- model_parameters.marginaleffects
+model_parameters.hypotheses <- model_parameters.marginaleffects
+
+
+#' @rdname model_parameters.averaging
+#' @export
+model_parameters.slopes <- model_parameters.marginaleffects
 
 
 #' @rdname model_parameters.averaging
@@ -63,13 +71,16 @@ model_parameters.deltamethod <- model_parameters.marginaleffects
 model_parameters.predictions <- function(model,
                                          ci = 0.95,
                                          ...) {
-  insight::check_if_installed("marginaleffects")
-  out <- insight::standardize_names(model, style = "easystats")
+  insight::check_if_installed("marginaleffects", minimum_version = "0.9.0")
+
+  out <- datawizard::data_rename(model, "estimate", "predicted")
+  out <- datawizard::data_relocate(out, "predicted", before = 1)
+  out <- insight::standardize_names(out, style = "easystats")
   out <- insight::standardize_column_order(out, style = "easystats")
 
   # remove and reorder some columns
   out$rowid <- out$Type <- NULL
-  out <- datawizard::data_relocate(out, select = attributes(model)$newdata_at, before = "Predicted")
+  out <- datawizard::data_relocate(out, select = attributes(model)$newdata_at, after = "Predicted")
 
   # extract response, remove from data frame
   reg_model <- attributes(model)$model
