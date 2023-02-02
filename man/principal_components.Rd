@@ -35,7 +35,14 @@ principal_components(
 
 rotated_data(pca_results)
 
-\method{predict}{parameters_efa}(object, newdata = NULL, names = NULL, keep_na = TRUE, ...)
+\method{predict}{parameters_efa}(
+  object,
+  newdata = NULL,
+  names = NULL,
+  keep_na = TRUE,
+  verbose = TRUE,
+  ...
+)
 
 \method{print}{parameters_efa}(x, digits = 2, sort = FALSE, threshold = NULL, labels = NULL, ...)
 
@@ -95,6 +102,8 @@ frame.}
 \item{keep_na}{Logical, if \code{TRUE}, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.}
+
+\item{verbose}{Toggle warnings.}
 
 \item{digits, labels}{Arguments for \code{print()}.}
 }

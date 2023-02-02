@@ -1,4 +1,4 @@
-if (require("testthat") && require("parameters") && require("splines")) {
+if (require("splines")) {
   data(iris)
   set.seed(123)
   iris$cat <- sample(LETTERS[1:4], nrow(iris), replace = TRUE)

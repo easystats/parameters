@@ -146,13 +146,14 @@ predict.parameters_efa <- function(object,
                                    newdata = NULL,
                                    names = NULL,
                                    keep_na = TRUE,
+                                   verbose = TRUE,
                                    ...) {
   attri <- attributes(object)
   if (is.null(newdata)) {
     if ("scores" %in% names(attri)) {
       out <- as.data.frame(attri$scores)
       if (isTRUE(keep_na)) {
-        out <- .merge_na(object, out)
+        out <- .merge_na(object, out, verbose)
       }
     } else {
       if ("dataset" %in% names(attri)) {
@@ -172,7 +173,7 @@ predict.parameters_efa <- function(object,
     } else if (inherits(attri$model, "spca")) {
       # https://github.com/erichson/spca/issues/7
       newdata <- newdata[names(attri$model$center)]
-      if (attri$standardize == TRUE) {
+      if (attri$standardize) {
         newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
         newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
       }
@@ -195,9 +196,9 @@ predict.parameters_pca <- predict.parameters_efa
 
 
 
-.merge_na <- function(object, out) {
+.merge_na <- function(object, out, verbose = TRUE) {
   compl_cases <- attributes(object)$complete_cases
-  if (is.null(compl_cases)) {
+  if (is.null(compl_cases) && verbose) {
     insight::format_warning(
       "Could not retrieve information about missing data. Returning only complete cases."
     )

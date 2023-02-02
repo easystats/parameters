@@ -1,7 +1,7 @@
-requiet("Hmisc")
-requiet("rms")
-
 test_that("issue 697", {
+  requiet("Hmisc")
+  requiet("rms")
+
   set.seed(1)
   n <- 100
   df <- data.frame(
@@ -29,7 +29,7 @@ test_that("issue 697", {
   expect_s3_class(parameters(mod), "parameters_model")
   expect_s3_class(standard_error(mod), "data.frame")
   expect_s3_class(p_value(mod), "data.frame")
-  expect_equal(nrow(parameters(mod)), 3)
-  expect_equal(nrow(standard_error(mod)), 3)
-  expect_equal(nrow(p_value(mod)), 3)
+  expect_equal(nrow(parameters(mod)), 3L)
+  expect_equal(nrow(standard_error(mod)), 3L)
+  expect_equal(nrow(p_value(mod)), 3L)
 })

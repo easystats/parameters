@@ -39,7 +39,6 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
-  df_method = ci_method,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -76,7 +75,6 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
-  df_method = ci_method,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -93,7 +91,6 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
-  df_method = ci_method,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -226,8 +223,6 @@ or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}.}
-
-\item{df_method}{Deprecated. Please use \code{ci_method}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

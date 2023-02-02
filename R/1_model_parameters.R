@@ -372,7 +372,6 @@ parameters <- model_parameters
 #'   _Confidence intervals and approximation of degrees of freedom_ in
 #'   [`model_parameters()`] for further details. When `ci_method=NULL`, in most
 #'   cases `"wald"` is used then.
-#' @param df_method Deprecated. Please use `ci_method`.
 #' @param summary Logical, if `TRUE`, prints summary information about the
 #'   model (model formula, number of observations, residual standard deviation
 #'   and more).
@@ -546,17 +545,10 @@ model_parameters.default <- function(model,
                                       keep_parameters = NULL,
                                       drop_parameters = NULL,
                                       verbose = TRUE,
-                                      df_method = ci_method,
                                       vcov = NULL,
                                       vcov_args = NULL,
                                       ...) {
   dots <- list(...)
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
-
 
   # ==== 1. first step, extracting (bootstrapped) model parameters -------
 
@@ -647,7 +639,6 @@ model_parameters.glm <- function(model,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
                                  summary = getOption("parameters_summary", FALSE),
-                                 df_method = ci_method,
                                  vcov = NULL,
                                  vcov_args = NULL,
                                  verbose = TRUE,
@@ -657,11 +648,6 @@ model_parameters.glm <- function(model,
   # set default
   if (is.null(ci_method)) {
     ci_method <- ifelse(isTRUE(bootstrap), "quantile", "profile")
-  }
-
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it

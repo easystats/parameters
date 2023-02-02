@@ -3,7 +3,7 @@ skip_if_offline()
 
 if (.runThisTest) {
   if (requiet("lme4")) {
-    if (requireNamespace("effectsize")) {
+    if (requiet("effectsize")) {
       unloadNamespace("afex")
       unloadNamespace("lmerTest")
       data(iris)

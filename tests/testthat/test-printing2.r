@@ -1,5 +1,3 @@
-requiet("parameters")
-
 skip_if(getRversion() < "4.0.0")
 options("parameters_interaction" = "*")
 

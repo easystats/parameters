@@ -87,7 +87,7 @@ attributes(rez)$Between_Sum_Squares
 if (require("pvclust", quietly = TRUE)) {
   data <- iris[1:4]
   # NOTE: pvclust works on transposed data
-  model <- pvclust::pvclust(datawizard::data_transpose(data),
+  model <- pvclust::pvclust(datawizard::data_transpose(data, verbose = FALSE),
     method.dist = "euclidean",
     nboot = 50,
     quiet = TRUE

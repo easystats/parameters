@@ -122,10 +122,10 @@ model_parameters(model)
 
 smokers <- c(83, 90, 129, 70)
 patients <- c(86, 93, 136, 82)
-model <- pairwise.prop.test(smokers, patients)
+model <- suppressWarnings(pairwise.prop.test(smokers, patients))
 model_parameters(model)
 
-model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
+model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
 model_parameters(model, effectsize_type = "cramers_v")
 
 }

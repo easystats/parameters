@@ -93,7 +93,7 @@ standard_error.zcpglm <- function(model,
   insight::check_if_installed("cplm")
 
   component <- match.arg(component)
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
   tweedie <- .data_frame(
@@ -141,7 +141,7 @@ p_value.zcpglm <- function(model,
   insight::check_if_installed("cplm")
 
   component <- match.arg(component)
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
   tweedie <- .data_frame(
@@ -183,7 +183,7 @@ p_value.bcplm <- p_value.brmsfit
 p_value.cpglm <- function(model, ...) {
   insight::check_if_installed("cplm")
 
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
   .data_frame(
@@ -197,7 +197,7 @@ p_value.cpglm <- function(model, ...) {
 standard_error.cpglm <- function(model, ...) {
   insight::check_if_installed("cplm")
 
-  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients)
+  junk <- utils::capture.output(stats <- cplm::summary(model)$coefficients) # nolint
   params <- insight::get_parameters(model)
 
   .data_frame(
@@ -228,13 +228,7 @@ model_parameters.cpglmm <- function(model,
                                     p_adjust = NULL,
                                     include_sigma = FALSE,
                                     verbose = TRUE,
-                                    df_method = ci_method,
                                     ...) {
-  ## TODO remove later
-  if (!missing(df_method) && !identical(ci_method, df_method)) {
-    insight::format_error("Argument `df_method` is defunct. Please use `ci_method` instead.")
-  }
-
   # p-values, CI and se might be based on different df-methods
   ci_method <- .check_df_method(ci_method)
   effects <- match.arg(effects, choices = c("fixed", "random", "all"))
@@ -300,7 +294,7 @@ standard_error.cpglmm <- function(model, ...) {
   if (!is.null(df_method)) {
     df_method <- tolower(df_method)
     if (df_method %in% c("satterthwaite", "kenward", "kr")) {
-      warning(insight::format_message("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models."), call. = FALSE)
+      insight::format_warning("Satterthwaite or Kenward-Rogers approximation of degrees of freedom is only available for linear mixed models.")
       df_method <- "wald"
     }
     df_method <- match.arg(df_method, choices = c("wald", "normal", "residual", "ml1", "betwithin", "profile", "boot", "uniroot"))

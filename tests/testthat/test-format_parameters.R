@@ -273,83 +273,81 @@ if (requiet("splines")) {
   })
 
 
-  if (requiet("datawizard")) {
-    test_that("format_parameters-labelled data-1", {
-      data(efc, package = "datawizard", envir = globalenv())
-      m <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
-      mp <- model_parameters(m, verbose = FALSE)
+  test_that("format_parameters-labelled data-1", {
+    data(efc, package = "datawizard", envir = globalenv())
+    m <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
+    mp <- model_parameters(m, verbose = FALSE)
 
-      out <- utils::capture.output(print(mp, pretty_names = "labels"))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "elder's dependency [slightly dependent]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
-        "elder's dependency [moderately dependent]"
-      )
+    out <- utils::capture.output(print(mp, pretty_names = "labels"))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "elder's dependency [slightly dependent]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+      "elder's dependency [moderately dependent]"
+    )
 
-      out <- utils::capture.output(print(mp))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "e42dep [2]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
-        "e42dep [3]"
-      )
-    })
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "e42dep [2]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+      "e42dep [3]"
+    )
+  })
 
-    test_that("format_parameters-labelled data-2", {
-      data(iris)
-      m <- lm(Sepal.Width ~ Species + Sepal.Length, data = iris)
-      mp <- model_parameters(m, verbose = FALSE)
+  test_that("format_parameters-labelled data-2", {
+    data(iris)
+    m <- lm(Sepal.Width ~ Species + Sepal.Length, data = iris)
+    mp <- model_parameters(m, verbose = FALSE)
 
-      out <- utils::capture.output(print(mp, pretty_names = "labels"))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "Species [versicolor]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
-        "Species [virginica]"
-      )
+    out <- utils::capture.output(print(mp, pretty_names = "labels"))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "Species [versicolor]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+      "Species [virginica]"
+    )
 
-      out <- utils::capture.output(print(mp))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "Species [versicolor]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
-        "Species [virginica]"
-      )
-    })
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "Species [versicolor]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[5], "|", fixed = TRUE))[1]),
+      "Species [virginica]"
+    )
+  })
 
-    test_that("format_parameters-labelled data-3", {
-      data(efc, package = "datawizard", envir = globalenv())
-      m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
-      mp <- model_parameters(m, verbose = FALSE)
+  test_that("format_parameters-labelled data-3", {
+    data(efc, package = "datawizard", envir = globalenv())
+    m <- lm(neg_c_7 ~ e42dep * c12hour, data = efc)
+    mp <- model_parameters(m, verbose = FALSE)
 
-      out <- utils::capture.output(print(mp, pretty_names = "labels"))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "elder's dependency [slightly dependent]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
-        "elder's dependency [slightly dependent] * average number of hours of care per week"
-      )
+    out <- utils::capture.output(print(mp, pretty_names = "labels"))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "elder's dependency [slightly dependent]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+      "elder's dependency [slightly dependent] * average number of hours of care per week"
+    )
 
-      out <- utils::capture.output(print(mp))
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
-        "e42dep [2]"
-      )
-      expect_equal(
-        insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
-        "e42dep [2] * c12hour"
-      )
-    })
-  }
+    out <- utils::capture.output(print(mp))
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[4], "|", fixed = TRUE))[1]),
+      "e42dep [2]"
+    )
+    expect_equal(
+      insight::trim_ws(unlist(strsplit(out[8], "|", fixed = TRUE))[1]),
+      "e42dep [2] * c12hour"
+    )
+  })
 }

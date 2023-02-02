@@ -19,8 +19,7 @@ compare_parameters(
   pretty_names = TRUE,
   keep = NULL,
   drop = NULL,
-  verbose = TRUE,
-  df_method = ci_method
+  verbose = TRUE
 )
 
 compare_models(
@@ -37,8 +36,7 @@ compare_models(
   pretty_names = TRUE,
   keep = NULL,
   drop = NULL,
-  verbose = TRUE,
-  df_method = ci_method
+  verbose = TRUE
 )
 }
 \arguments{
@@ -174,8 +172,6 @@ names.}
 \item{drop}{See \code{keep}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{df_method}{Deprecated. Please use \code{ci_method}.}
 }
 \value{
 A data frame of indices related to the model's parameters.

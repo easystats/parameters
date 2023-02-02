@@ -36,9 +36,7 @@ degrees_of_freedom.complmrob <- function(model, method = "wald", ...) {
 #' @inheritParams model_parameters.aov
 #' @export
 model_parameters.Gam <- function(model,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
+                                 effectsize_type = NULL,
                                  df_error = NULL,
                                  type = NULL,
                                  table_wide = FALSE,
@@ -46,9 +44,7 @@ model_parameters.Gam <- function(model,
                                  ...) {
   model_parameters(
     summary(model)$parametric.anova,
-    omega_squared = omega_squared,
-    eta_squared = eta_squared,
-    epsilon_squared = epsilon_squared,
+    effectsize_type = effectsize_type,
     df_error = df_error,
     type = type,
     table_wide = table_wide,

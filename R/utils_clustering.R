@@ -6,7 +6,7 @@
                                      standardize = FALSE,
                                      preprocess = TRUE,
                                      ...) {
-  if (preprocess == FALSE) {
+  if (isFALSE(preprocess)) {
     return(x)
   }
 
@@ -38,8 +38,10 @@
   # Remove all missing values from data, only use numerics
   x <- stats::na.omit(x)
 
-  if (standardize == TRUE) {
+  if (isTRUE(standardize)) {
     x <- datawizard::standardize(x, ...)
+    # remove "dw_transformer" attribute
+    x[] <- lapply(x, as.numeric)
   }
 
   x

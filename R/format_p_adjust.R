@@ -112,10 +112,8 @@ format_p_adjust <- function(method) {
         params$p <- 1 - (1 - params$p)^(nrow(params) / rank_adjust)
       }
 
-      if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none")) {
-        if (verbose) {
-          insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."))
-        }
+      if (isTRUE(all(old_p_vals == params$p)) && !identical(p_adjust, "none") && verbose) {
+        insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."))
       }
     } else if (verbose) {
       insight::format_warning(paste0("`p_adjust` must be one of ", toString(all_methods)))

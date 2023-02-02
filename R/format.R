@@ -28,14 +28,13 @@ format.parameters_model <- function(x,
 
   # process selection of columns
   style <- NULL
-  if (!is.null(select)) {
+  if (!is.null(select) &&
     # glue-like syntax, so we switch to "style" argument here
-    if (length(select) == 1 &&
-      is.character(select) &&
-      (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
-      style <- select
-      select <- NULL
-    }
+    length(select) == 1 &&
+    is.character(select) &&
+    (grepl("{", select, fixed = TRUE) || select %in% .style_shortcuts)) {
+    style <- select
+    select <- NULL
   }
 
   # is information about grouped parameters stored as attribute?
@@ -81,11 +80,12 @@ format.parameters_model <- function(x,
   }
 
   # rename columns for t-tests
-  if (!is.null(htest_type) && htest_type == "ttest" && !is.null(mean_group_values)) {
-    if (all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
-      colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
-      colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
-    }
+  if (!is.null(htest_type) &&
+    htest_type == "ttest" &&
+    !is.null(mean_group_values) &&
+    all(c("Mean_Group1", "Mean_Group2") %in% colnames(x))) {
+    colnames(x)[which(colnames(x) == "Mean_Group1")] <- paste0(x$Group, " = ", mean_group_values[1])
+    colnames(x)[which(colnames(x) == "Mean_Group2")] <- paste0(x$Group, " = ", mean_group_values[2])
   }
 
   # Special print for mcp from WRS2
@@ -98,26 +98,24 @@ format.parameters_model <- function(x,
   # check if we have mixed models with random variance parameters
   # in such cases, we don't need the group-column, but we rather
   # merge it with the parameter column
-  if (isTRUE(random_variances)) {
-    if (!is.null(x$Group) && !is.null(x$Effects)) {
-      ran_pars <- which(x$Effects == "random")
-      stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
-      x$Parameter[ran_pars[stddevs]] <- paste0(
-        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
-        ": ",
-        x$Group[ran_pars[stddevs]],
-        ")"
-      )
-      corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
-      x$Parameter[ran_pars[corrs]] <- paste0(
-        gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
-        ": ",
-        x$Group[ran_pars[corrs]],
-        ")"
-      )
-      x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
-      x$Group <- NULL
-    }
+  if (isTRUE(random_variances) && !is.null(x$Group) && !is.null(x$Effects)) {
+    ran_pars <- which(x$Effects == "random")
+    stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
+    x$Parameter[ran_pars[stddevs]] <- paste0(
+      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
+      ": ",
+      x$Group[ran_pars[stddevs]],
+      ")"
+    )
+    corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
+    x$Parameter[ran_pars[corrs]] <- paste0(
+      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
+      ": ",
+      x$Group[ran_pars[corrs]],
+      ")"
+    )
+    x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
+    x$Group <- NULL
   }
 
   # group parameters - this function find those parameters that should be
@@ -908,13 +906,11 @@ format.parameters_sem <- function(x,
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
         msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
       }
-    } else if (.is_valid_exponentiate_argument(exponentiate)) {
-      if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- c(
-          "This model has a log-transformed response variable, and exponentiated parameters are reported.",
-          "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
-        )
-      }
+    } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+      msg <- c(
+        "This model has a log-transformed response variable, and exponentiated parameters are reported.",
+        "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
+      )
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {

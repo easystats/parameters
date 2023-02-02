@@ -79,18 +79,17 @@
 
 
   # for summaries, add R2
-  if (isTRUE(summary)) {
-    if (requireNamespace("performance", quietly = TRUE)) {
-      rsq <- tryCatch(suppressWarnings(performance::r2(model)), error = function(e) NULL)
-      attr(params, "r2") <- rsq
-    }
+  if (isTRUE(summary) && requireNamespace("performance", quietly = TRUE)) {
+    rsq <- tryCatch(suppressWarnings(performance::r2(model)), error = function(e) NULL)
+    attr(params, "r2") <- rsq
   }
 
 
   # Models for which titles should be removed - here we add exceptions for
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
-  if (inherits(model, c("mediate", "emmGrid", "emm_list", "lm", "glm", "coxph", "bfsl", "deltaMethod"))) {
+  if (inherits(model, c("mediate", "emmGrid", "emm_list", "summary_emm", "lm",
+                        "glm", "coxph", "bfsl", "deltaMethod"))) {
     attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
@@ -256,30 +255,26 @@
         "Coefficient"
       )
     }
-  } else if (!is.null(info)) {
-    if (!info$family == "unknown") {
-      if (isTRUE(exponentiate)) {
-        if (info$is_exponential && identical(info$link_function, "log")) {
-          coef_col <- "Prevalence Ratio"
-        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal ||
-          info$is_multinomial || info$is_categorical) {
-          coef_col <- "Odds Ratio"
-        } else if (info$is_binomial && !info$is_logit) {
-          coef_col <- "Risk Ratio"
-        } else if (info$is_count) {
-          coef_col <- "IRR"
-        }
-      } else {
-        if (info$is_exponential && identical(info$link_function, "log")) {
-          coef_col <- "Log-Prevalence"
-        } else if ((info$is_binomial && info$is_logit) || info$is_ordinal ||
-          info$is_multinomial || info$is_categorical) {
-          coef_col <- "Log-Odds"
-        } else if (info$is_binomial && !info$is_logit) {
-          coef_col <- "Log-Risk"
-        } else if (info$is_count) {
-          coef_col <- "Log-Mean"
-        }
+  } else if (!is.null(info) && !info$family == "unknown") {
+    if (isTRUE(exponentiate)) {
+      if (info$is_exponential && identical(info$link_function, "log")) {
+        coef_col <- "Prevalence Ratio"
+      } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        coef_col <- "Odds Ratio"
+      } else if (info$is_binomial && !info$is_logit) {
+        coef_col <- "Risk Ratio"
+      } else if (info$is_count) {
+        coef_col <- "IRR"
+      }
+    } else {
+      if (info$is_exponential && identical(info$link_function, "log")) {
+        coef_col <- "Log-Prevalence"
+      } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+        coef_col <- "Log-Odds"
+      } else if (info$is_binomial && !info$is_logit) {
+        coef_col <- "Log-Risk"
+      } else if (info$is_count) {
+        coef_col <- "Log-Mean"
       }
     }
   }
@@ -358,15 +353,23 @@
 
 
 #' @keywords internal
-.add_anova_attributes <- function(params, model, ci, test = NULL, ...) {
+.add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, ...) {
   dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
 
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
   attr(params, "anova_type") <- .anova_type(model)
+  attr(params, "text_alternative") <- .anova_alternative(params, alternative)
 
   if (inherits(model, "Anova.mlm") && !identical(test, "univariate")) {
     attr(params, "anova_test") <- model$test
+  }
+
+  # some tweaks for MANOVA, so outputs of manova(model) and car::Manova(model)
+  # look the same, see #833
+  if (inherits(model, "maov") && is.null(test) && "Pillai" %in% names(params)) {
+    attr(params, "anova_test") <- "Pillai"
+    names(params)[names(params) == "Pillai"] <- "Statistic"
   }
 
   # here we add exception for objects that should not have a table headline

@@ -18,7 +18,7 @@ model_parameters.DirichletRegModel <- function(model,
 
   ## TODO check merge by
 
-  junk <- utils::capture.output(out <- .model_parameters_generic(
+  junk <- utils::capture.output(out <- .model_parameters_generic( # nolint
     model = model,
     ci = ci,
     component = component,

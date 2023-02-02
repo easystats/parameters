@@ -118,13 +118,16 @@ p_value.mmrm_tmb <- p_value.mmrm
 # SE --------------------
 
 #' @export
-standard_error.mmrm <- standard_error.logistf
+standard_error.mmrm <- function(model, ...) {
+  se <- .get_se_from_summary(model)
+  .data_frame(Parameter = names(se), SE = as.vector(se))
+}
 
 #' @export
-standard_error.mmrm_fit <- standard_error.logistf
+standard_error.mmrm_fit <- standard_error.mmrm
 
 #' @export
-standard_error.mmrm_tmb <- standard_error.logistf
+standard_error.mmrm_tmb <- standard_error.mmrm
 
 
 # degrees of freedom ------------------

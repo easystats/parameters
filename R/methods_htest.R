@@ -33,10 +33,10 @@
 #'
 #' smokers <- c(83, 90, 129, 70)
 #' patients <- c(86, 93, 136, 82)
-#' model <- pairwise.prop.test(smokers, patients)
+#' model <- suppressWarnings(pairwise.prop.test(smokers, patients))
 #' model_parameters(model)
 #'
-#' model <- stats::chisq.test(table(mtcars$am, mtcars$cyl))
+#' model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
 #' model_parameters(model, effectsize_type = "cramers_v")
 #'
 #' @return A data frame of indices related to the model's parameters.
@@ -350,7 +350,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_ttest <- function(model, standardized_d = NULL, hedges_g = NULL) {
   # survey
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
-    names <- unlist(strsplit(model$data.name, " ~ "))
+    names <- unlist(strsplit(model$data.name, " ~ ", fixed = TRUE))
     out <- data.frame(
       "Parameter1" = names[1],
       "Parameter2" = names[2],
@@ -365,7 +365,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     colnames(out)[colnames(out) == "Statistic"] <- names(model$statistic)[1]
   } else {
     paired_test <- startsWith(model$method, "Paired") && length(model$estimate) == 1
-    if (grepl(" and ", model$data.name) && isFALSE(paired_test)) {
+    if (grepl(" and ", model$data.name, fixed = TRUE) && isFALSE(paired_test)) {
       names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
       out <- data.frame(
         "Parameter1" = names[1],
@@ -403,14 +403,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
           "Parameter" = names[1],
           "Group" = names[2],
           "Difference" = model$estimate,
-          "CI" = .95,
+          "CI" = 0.95,
           "CI_low" = as.vector(model$conf.int[, 1]),
           "CI_high" = as.vector(model$conf.int[, 2]),
           "t" = model$statistic,
           "df_error" = model$parameter,
           "p" = model$p.value,
-          "CI_low" = model$conf.int[1],
-          "CI_high" = model$conf.int[2],
           "Method" = model$method,
           stringsAsFactors = FALSE
         )
