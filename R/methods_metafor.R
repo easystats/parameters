@@ -40,7 +40,7 @@
 #'
 #' if (require("metaBMA", quietly = TRUE)) {
 #'   data(towels)
-#'   m <- meta_random(logOR, SE, study, data = towels)
+#'   m <- suppressWarnings(meta_random(logOR, SE, study, data = towels))
 #'   model_parameters(m)
 #' }
 #' }
