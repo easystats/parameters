@@ -119,7 +119,7 @@ theory of personality.
 
 ```{r}
 # Fit an EFA
-efa <- psych::fa(data, nfactors = 5) |>
+efa <- psych::fa(data, nfactors = 5) %>%
   model_parameters(sort = TRUE, threshold = "max")
 
 efa
