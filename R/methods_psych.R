@@ -74,16 +74,6 @@
 #'   params
 #'   summary(params)
 #' }
-#'
-#' # FactoMineR ---------
-#' if (require("FactoMineR", quietly = TRUE)) {
-#'   model <- FactoMineR::PCA(iris[, 1:4], ncp = 2)
-#'   model_parameters(model)
-#'   attributes(model_parameters(model))$scores
-#'
-#'   model <- FactoMineR::FAMD(iris, ncp = 2)
-#'   model_parameters(model)
-#' }
 #' }
 #'
 #' # lavaan
