@@ -130,9 +130,10 @@ model_parameters.mira <- function(model,
                                   verbose = TRUE,
                                   ...) {
   insight::check_if_installed("mice")
+  micemodel <- suppressWarnings(mice::pool(model))
 
   out <- .model_parameters_generic(
-    model = mice::pool(model),
+    model = micemodel,
     ci = ci,
     bootstrap = FALSE,
     iterations = 10,
