@@ -244,8 +244,8 @@ package, and compare these models against each other:
 library(lavaan)
 library(performance)
 
-big5 <- lavaan::cfa(structure_big5, data = test)
-big6 <- lavaan::cfa(structure_big6, data = test)
+big5 <- suppressWarnings(lavaan::cfa(structure_big5, data = test))
+big6 <- suppressWarnings(lavaan::cfa(structure_big6, data = test))
 
 performance::compare_performance(big5, big6)
 ```
