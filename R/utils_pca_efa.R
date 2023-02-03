@@ -198,10 +198,12 @@ predict.parameters_pca <- predict.parameters_efa
 
 .merge_na <- function(object, out, verbose = TRUE) {
   compl_cases <- attributes(object)$complete_cases
-  if (is.null(compl_cases) && verbose) {
-    insight::format_warning(
-      "Could not retrieve information about missing data. Returning only complete cases."
-    )
+  if (is.null(compl_cases)) {
+    if (verbose) {
+      insight::format_warning(
+        "Could not retrieve information about missing data. Returning only complete cases."
+      )
+    }
   } else {
     original_data <- data.frame(.parameters_merge_id = seq_along(compl_cases))
     out$.parameters_merge_id <- (seq_len(nrow(original_data)))[compl_cases]
