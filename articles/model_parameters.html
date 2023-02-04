@@ -209,15 +209,11 @@ indices for parameters summaries, including confidence intervals</p>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
-<span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
-<span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
-<span>    epsilon_squared <span class="op">=</span> <span class="st">"partial"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Epsilon2</span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |     0.61</span></span>
-<span><span class="co">#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |         </span></span>
+<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span>effectsize_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span>, <span class="st">"epsilon"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Parameter | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 | Eta2 | Epsilon2</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Species   |       63.21 |   2 |       31.61 | 119.26 | &lt; .001 |   0.61 | 0.62 |     0.61</span></span>
+<span><span class="co">#&gt; Residuals |       38.96 | 147 |        0.27 |        |        |        |      |         </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Anova Table (Type 1 tests)</span></span></code></pre></div>
 <p>Let’s complicate things further with an interaction term:</p>
@@ -226,7 +222,7 @@ indices for parameters summaries, including confidence intervals</p>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
 <span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
 <span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
-<span>    ci <span class="op">=</span> <span class="fl">.8</span></span>
+<span>    ci <span class="op">=</span> <span class="fl">0.8</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter           | Sum_Squares |  df | Mean_Square |      F |      p | Eta2 (partial) |  Eta2 80% CI</span></span>
 <span><span class="co">#&gt; -------------------------------------------------------------------------------------------------------</span></span>
