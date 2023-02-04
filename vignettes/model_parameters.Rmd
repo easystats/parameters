@@ -35,7 +35,7 @@ pkgs <- c(
   "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR"
 )
 
-successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
+successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)
 
 if (all(successfully_loaded)) {
   library(parameters)
@@ -111,11 +111,7 @@ summaries, including confidence intervals
 
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species, data = iris) |>
-  parameters(
-    omega_squared = "partial",
-    eta_squared = "partial",
-    epsilon_squared = "partial"
-  )
+  parameters(effectsize_type = c("omega", "eta", "epsilon"))
 ```
 
 Let's complicate things further with an interaction term:
@@ -125,7 +121,7 @@ aov(Sepal.Length ~ Species * Sepal.Width, data = iris) |>
   parameters(
     omega_squared = "partial",
     eta_squared = "partial",
-    ci = .8
+    ci = 0.8
   )
 ```
 
