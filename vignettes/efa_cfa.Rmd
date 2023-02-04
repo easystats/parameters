@@ -247,7 +247,7 @@ library(performance)
 big5 <- suppressWarnings(lavaan::cfa(structure_big5, data = test))
 big6 <- suppressWarnings(lavaan::cfa(structure_big6, data = test))
 
-performance::compare_performance(big5, big6)
+performance::compare_performance(big5, big6, verbose = FALSE)
 ```
 
 

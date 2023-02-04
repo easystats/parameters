@@ -50,10 +50,10 @@
 #' \dontrun{
 #' library(parameters)
 #' if (require("rstanarm")) {
-#'   model <- stan_glm(
+#'   model <- suppressWarnings(stan_glm(
 #'     Sepal.Length ~ Petal.Length * Species,
 #'     data = iris, iter = 500, refresh = 0
-#'   )
+#'   ))
 #'   model_parameters(model)
 #' }
 #' }
