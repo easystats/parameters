@@ -745,11 +745,13 @@
                                          verbose = TRUE,
                                          ...) {
   # no ROPE for multi-response models
-  if (insight::is_multivariate(model)) {
+  if (insight::is_multivariate(model) && any(c("rope", "p_rope") %in% test)) {
     test <- setdiff(test, c("rope", "p_rope"))
-    insight::format_warning(
-      "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
-    )
+    if (verbose) {
+      insight::format_warning(
+        "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
+      )
+    }
   }
 
   # MCMCglmm need special handling
