@@ -20,7 +20,8 @@ cluster_analysis(
 )
 }
 \arguments{
-\item{x}{A data frame.}
+\item{x}{A data frame (with at least two variables), or a matrix (with at
+least two columns).}
 
 \item{n}{Number of clusters used for supervised cluster methods. If \code{NULL},
 the number of clusters to extract is determined by calling \code{\link[=n_clusters]{n_clusters()}}.
