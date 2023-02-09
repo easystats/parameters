@@ -227,16 +227,16 @@ the the predictors of the model:</p>
 <span><span class="va">pca</span></span>
 <span><span class="co">#&gt; # Loadings from Principal Component Analysis (no rotation)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Variable   | PC1  | Complexity</span></span>
-<span><span class="co">#&gt; ------------------------------</span></span>
-<span><span class="co">#&gt; complaints | 0.78 |    1.00   </span></span>
-<span><span class="co">#&gt; privileges | 0.70 |    1.00   </span></span>
-<span><span class="co">#&gt; learning   | 0.82 |    1.00   </span></span>
-<span><span class="co">#&gt; raises     | 0.88 |    1.00   </span></span>
-<span><span class="co">#&gt; critical   | 0.40 |    1.00   </span></span>
-<span><span class="co">#&gt; advance    | 0.68 |    1.00   </span></span>
+<span><span class="co">#&gt; Variable   | PC1  |  PC2  | Complexity</span></span>
+<span><span class="co">#&gt; --------------------------------------</span></span>
+<span><span class="co">#&gt; complaints | 0.78 | 0.31  |    1.31   </span></span>
+<span><span class="co">#&gt; privileges | 0.70 | 0.31  |    1.37   </span></span>
+<span><span class="co">#&gt; learning   | 0.82 | 0.22  |    1.14   </span></span>
+<span><span class="co">#&gt; raises     | 0.88 | -0.12 |    1.03   </span></span>
+<span><span class="co">#&gt; critical   | 0.40 | -0.80 |    1.47   </span></span>
+<span><span class="co">#&gt; advance    | 0.68 | -0.32 |    1.43   </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</span></span></code></pre></div>
+<span><span class="co">#&gt; The 2 principal components accounted for 69.59% of the total variance of the original data (PC1 = 52.82%, PC2 = 16.77%).</span></span></code></pre></div>
 <p>The <code><a href="../reference/principal_components.html">principal_components()</a></code> function automatically
 selected one component (if the number of components is not specified,
 this function uses <a href="https://easystats.github.io/parameters/reference/n_factors.html"><code>n_factors()</code></a>
