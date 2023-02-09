@@ -416,6 +416,10 @@ principal_components.data.frame <- function(x,
   } else if (n >= ncol(x)) {
     n <- ncol(x) - 1
   }
+  # sanity check - we need at least two factors
+  if (n < 2 && ncol(x) >= 2) {
+    n <- 2
+  }
   n
 }
 

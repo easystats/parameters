@@ -7,7 +7,8 @@
 #' - Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2014) cluster: Cluster
 #' Analysis Basics and Extensions. R package.
 #'
-#' @param x A data frame.
+#' @param x A data frame (with at least two variables), or a matrix (with at
+#'   least two columns).
 #' @param n Number of clusters used for supervised cluster methods. If `NULL`,
 #' the number of clusters to extract is determined by calling [`n_clusters()`].
 #' Note that this argument does not apply for unsupervised clustering methods
@@ -144,6 +145,16 @@ cluster_analysis <- function(x,
   # coerce to data frame if input is a matrix
   if (is.matrix(x)) {
     x <- as.data.frame(x)
+  }
+
+  # sanity check - needs data frame
+  if (!is.data.frame(x)) {
+    insight::format_error("`x` needs to be a data frame.")
+  }
+
+  # sanity check - need at least two columns
+  if (ncol(x) < 2) {
+    insight::format_error("At least two variables required to compute a cluster analysis.")
   }
 
   # check if we have a correlation/covariance or distance matrix?
