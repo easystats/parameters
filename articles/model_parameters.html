@@ -220,16 +220,15 @@ indices for parameters summaries, including confidence intervals</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span></span>
-<span>    omega_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
-<span>    eta_squared <span class="op">=</span> <span class="st">"partial"</span>,</span>
+<span>    effectsize_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span><span class="op">)</span>,</span>
 <span>    ci <span class="op">=</span> <span class="fl">0.8</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter           | Sum_Squares |  df | Mean_Square |      F |      p | Eta2 (partial) |  Eta2 80% CI</span></span>
-<span><span class="co">#&gt; -------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Species             |       63.21 |   2 |       31.61 | 163.44 | &lt; .001 |           0.69 | [0.66, 1.00]</span></span>
-<span><span class="co">#&gt; Sepal.Width         |       10.95 |   1 |       10.95 |  56.64 | &lt; .001 |           0.28 | [0.23, 1.00]</span></span>
-<span><span class="co">#&gt; Species:Sepal.Width |        0.16 |   2 |        0.08 |   0.41 | 0.667  |       5.61e-03 | [0.00, 1.00]</span></span>
-<span><span class="co">#&gt; Residuals           |       27.85 | 144 |        0.19 |        |        |                |             </span></span>
+<span><span class="co">#&gt; Parameter           | Sum_Squares |  df | Mean_Square |      F |      p | Omega2 (partial) | Omega2 80% CI | Eta2 (partial) |  Eta2 80% CI</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------------------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Species             |       63.21 |   2 |       31.61 | 163.44 | &lt; .001 |             0.68 |  [0.65, 1.00] |           0.69 | [0.66, 1.00]</span></span>
+<span><span class="co">#&gt; Sepal.Width         |       10.95 |   1 |       10.95 |  56.64 | &lt; .001 |             0.27 |  [0.22, 1.00] |           0.28 | [0.23, 1.00]</span></span>
+<span><span class="co">#&gt; Species:Sepal.Width |        0.16 |   2 |        0.08 |   0.41 | 0.667  |             0.00 |  [0.00, 1.00] |       5.61e-03 | [0.00, 1.00]</span></span>
+<span><span class="co">#&gt; Residuals           |       27.85 | 144 |        0.19 |        |        |                  |               |                |             </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Anova Table (Type 1 tests)</span></span></code></pre></div>
 </div>
