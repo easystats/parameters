@@ -119,8 +119,7 @@ Let's complicate things further with an interaction term:
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species * Sepal.Width, data = iris) |>
   parameters(
-    omega_squared = "partial",
-    eta_squared = "partial",
+    effectsize_type = c("omega", "eta"),
     ci = 0.8
   )
 ```
