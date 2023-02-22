@@ -12,7 +12,7 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
     focal_term <- "Time"
   }
 
-  model <- as.data.frame(model)
+  model <- as.data.frame(model, terms_to_colnames = FALSE)
 
   # rename columns
   new_colnames <- colnames(model)

@@ -1,3 +1,10 @@
+# parameters 0.20.3
+
+## General
+
+* Fixed issue in `model_parameters.ggeffects()` to address forthcoming changes
+  in the _ggeffects_ package.
+
 # parameters 0.20.2
 
 ## General
