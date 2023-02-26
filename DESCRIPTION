@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.20.2.1
+Version: 0.20.2.3
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -123,6 +123,7 @@ Suggests:
     gamlss,
     gee,
     geepack,
+    ggeffects,
     ggplot2,
     GLMMadaptive,
     glmmTMB,

@@ -1,3 +1,8 @@
+# parameters 0.20.3.1
+
+* `equivalence_test()` gets a method for `ggeffects` objects from package
+  *ggeffects*.
+
 # parameters 0.20.3
 
 ## General

@@ -100,3 +100,16 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
 
   footer
 }
+
+
+.get_ggeffects_model <- function(x) {
+  obj_name <- attr(x, "model.name", exact = TRUE)
+  .model <- NULL
+  if (!is.null(obj_name)) {
+    .model <- tryCatch(get(obj_name, envir = parent.frame()), error = function(e) NULL)
+    if (is.null(.model)) {
+      .model <- tryCatch(get(obj_name, envir = globalenv()), error = function(e) NULL)
+    }
+  }
+  .model
+}

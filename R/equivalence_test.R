@@ -293,11 +293,94 @@ equivalence_test.parameters_simulate_model <- function(x,
 }
 
 
+#' @export
+equivalence_test.ggeffects <- function(x,
+                                       range = "default",
+                                       rule = "classic",
+                                       test = "pairwise",
+                                       verbose = TRUE,
+                                       ...) {
+  insight::check_if_installed("ggeffects")
 
+  # get attributes from ggeffects objects, so we have the original model and terms
+  focal <- attributes(x)$original.terms
+  obj_name <- attributes(x)$model.name
+  ci <- attributes(x)$ci.lvl
+
+  x <- .get_ggeffects_model(x)
+
+  # sanity check rope range
+  rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
+  range <- .check_rope_range(x, range, verbose)
+
+  out <- ggeffects::hypothesis_test(
+    x,
+    terms = focal,
+    test = test,
+    equivalence = range,
+    verbose = verbose,
+    ...
+  )
+
+  out <- insight::standardize_names(out)
+
+  # we only have one type of CIs
+  conf_int <- conf_int2 <- as.data.frame(t(out[c("CI_low", "CI_high")]))
+
+  l <- Map(
+    function(ci_wide, ci_narrow) {
+      parameters:::.equivalence_test_numeric(
+        ci_wide,
+        ci_narrow,
+        range_rope = range,
+        rule = rule,
+        verbose = verbose
+      )
+    }, conf_int, conf_int2
+  )
+
+  # bind to data frame
+  dat <- do.call(rbind, l)
+
+  # remove old CIs, bind results from equivalence test
+  out$CI_low <- out$CI_high <- NULL
+  out$CI <- ci
+  out <- cbind(out, dat)
+
+  # standardize column order
+  cols <- c("Estimate", "Contrast", "Slope", "CI", "CI_low", "CI_high",
+            "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p")
+
+  # order of shared columns
+  shared_order <- intersect(cols, colnames(out))
+  # add remaining columns, sort
+  out <- out[c(setdiff(colnames(out), shared_order), shared_order)]
+
+  attr(out, "object_name") <- obj_name
+  attr(out, "rule") <- rule
+  class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
+  out
+}
 
 
 
 # helper -------------------
+
+
+#' @keywords internal
+.check_rope_range <- function(x, range, verbose) {
+  if (all(range == "default")) {
+    range <- bayestestR::rope_range(x, verbose = verbose)
+    if (is.list(range)) {
+      range <- range[[which.max(sapply(range, diff))]]
+    }
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
+    insight::format_error(
+      "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
+    )
+  }
+  range
+}
 
 
 #' @keywords internal
@@ -309,16 +392,7 @@ equivalence_test.parameters_simulate_model <- function(x,
                                           ...) {
   # ==== define rope range ====
 
-  if (all(range == "default")) {
-    range <- bayestestR::rope_range(x, verbose = verbose)
-    if (is.list(range)) {
-      range <- range[[which.max(sapply(range, diff))]]
-    }
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
-    insight::format_error(
-      "`range` should be \"default\" or a vector of 2 numeric values (e.g., `c(-0.1, 0.1)`)."
-    )
-  }
+  range <- .check_rope_range(x, range, verbose)
 
   if (length(ci) > 1) {
     insight::format_warning("`ci` may only be of length 1. Using first ci-value now.")
