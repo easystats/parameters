@@ -236,7 +236,7 @@ Additionally, it also works for models from the **brms** package.
 For more complex models, specific model components can be printed using the
 arguments `effects` and `component` arguments.
 
-```{r eval=successfully_loaded[c("brms", "BH")]}
+```{r eval=all(successfully_loaded[c("brms", "BH")])}
 library(brms)
 data(fish)
 set.seed(123)
@@ -260,7 +260,7 @@ parameters(model, effects = "all", component = "all")
 To include information about the random effect parameters (group levels), set
 `group_level = TRUE`:
 
-```{r eval=successfully_loaded[c("brms", "BH")]}
+```{r eval=all(successfully_loaded[c("brms", "BH")])}
 parameters(model, effects = "all", component = "conditional", group_level = TRUE)
 ```
 
