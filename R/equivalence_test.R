@@ -303,7 +303,7 @@ equivalence_test.ggeffects <- function(x,
                                        test = "pairwise",
                                        verbose = TRUE,
                                        ...) {
-  insight::check_if_installed("ggeffects")
+  insight::check_if_installed("ggeffects", minimum_version = "1.2.0")
 
   # get attributes from ggeffects objects, so we have the original model and terms
   focal <- attributes(x)$original.terms
