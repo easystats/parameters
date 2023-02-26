@@ -351,8 +351,10 @@ equivalence_test.ggeffects <- function(x,
   out <- cbind(out, dat)
 
   # standardize column order
-  cols <- c("Estimate", "Contrast", "Slope", "CI", "CI_low", "CI_high",
-            "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p")
+  cols <- c(
+    "Estimate", "Contrast", "Slope", "Predicted", "CI", "CI_low", "CI_high",
+    "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
+  )
 
   # order of shared columns
   shared_order <- intersect(cols, colnames(out))
