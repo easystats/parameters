@@ -365,6 +365,7 @@ equivalence_test.ggeffects <- function(x,
   attr(out, "object_name") <- obj_name
   attr(out, "parameter_columns") <- parameter_columns
   attr(out, "rule") <- rule
+  attr(out, "rope") <- range
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
   out
 }
