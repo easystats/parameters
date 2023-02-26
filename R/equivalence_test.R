@@ -38,14 +38,14 @@ bayestestR::equivalence_test
 #' (\cite{Pernet 2017}). One way to address this issues without Bayesian methods
 #' is *Equivalence Testing*, as implemented in `equivalence_test()`.
 #' While you either can reject the null hypothesis or claim an inconclusive result
-#' in NHST, the equivalence test adds a third category, *"accept"*. Roughly
-#' speaking, the idea behind equivalence testing in a frequentist framework is
-#' to check whether an estimate and its uncertainty (i.e. confidence interval)
-#' falls within a region of "practical equivalence". Depending on the rule for
-#' this test (see below), statistical significance does not necessarily indicate
-#' whether the null hypothesis can be rejected or not, i.e. the classical
-#' interpretation of the p-value may differ from the results returned from
-#' the equivalence test.
+#' in NHST, the equivalence test - according to _Pernet_ - adds a third category,
+#' *"accept"*. Roughly speaking, the idea behind equivalence testing in a
+#' frequentist framework is to check whether an estimate and its uncertainty
+#' (i.e. confidence interval) falls within a region of "practical equivalence".
+#' Depending on the rule for this test (see below), statistical significance
+#' does not necessarily indicate whether the null hypothesis can be rejected or
+#' not, i.e. the classical interpretation of the p-value may differ from the
+#' results returned from the equivalence test.
 #'
 #' ## Calculation of equivalence testing
 #' - "bayes" - Bayesian rule (Kruschke 2018)
@@ -67,9 +67,10 @@ bayestestR::equivalence_test
 #'   (i.e. H0) is *rejected*, when the coefficient is statistically significant
 #'   *and* the narrow confidence intervals (i.e. `1-2*alpha`) *include* or
 #'   *exceed* the ROPE boundaries. Practical equivalence is assumed
-#'   (i.e. H0 accepted) when the narrow confidence intervals are completely
+#'   (i.e. H0 "accepted") when the narrow confidence intervals are completely
 #'   inside the ROPE, no matter if the effect is statistically significant
-#'   or not. Else, the decision whether to accept or reject H0 is undecided.
+#'   or not. Else, the decision whether to accept or reject practical
+#'   equivalence is undecided.
 #'
 #' - "cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)
 #'
@@ -77,7 +78,8 @@ bayestestR::equivalence_test
 #'   Gustafson 2018_. According to this rule, practical equivalence is
 #'   rejected when the coefficient is statistically significant. When the
 #'   effect is *not* significant and the narrow confidence intervals are
-#'   completely inside the ROPE, we accept H0, else it is undecided.
+#'   completely inside the ROPE, we accept (i.e. assume) practical equivalcence,
+#'   else it is undecided.
 #'
 #' ## Levels of Confidence Intervals used for Equivalence Testing
 #' For `rule = "classic"`, "narrow" confidence intervals are used for
@@ -91,7 +93,9 @@ bayestestR::equivalence_test
 #' The equivalence p-value is the area of the (cumulative) confidence
 #' distribution that is outside of the region of equivalence. It can be
 #' interpreted as p-value for *rejecting* the alternative hypothesis
-#' and *accepting* the null hypothesis.
+#' and *accepting* the "null hypothesis" (i.e. assuming practical
+#' equivalence). That is, a high p-value means we reject the assumption of
+#' practical equivalence and accept the alternative hypothesis.
 #'
 #' ## Second Generation p-Value (SGPV)
 #' Second generation p-values (SGPV) were proposed as a statistic that
@@ -702,7 +706,7 @@ format.equivalence_test_lm <- function(x,
   )
 
   # format column names
-  colnames(out)[which(colnames(out) == "Equivalence (ROPE)")] <- "H0"
+  colnames(out)[which(colnames(out) == "Equivalence (ROPE)")] <- "Equivalence"
   out$ROPE <- NULL
 
   # only show supported components

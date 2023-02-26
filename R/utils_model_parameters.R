@@ -88,8 +88,10 @@
   # Models for which titles should be removed - here we add exceptions for
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
-  if (inherits(model, c("mediate", "emmGrid", "emm_list", "summary_emm", "lm",
-                        "glm", "coxph", "bfsl", "deltaMethod"))) {
+  if (inherits(model, c(
+    "mediate", "emmGrid", "emm_list", "summary_emm", "lm",
+    "glm", "coxph", "bfsl", "deltaMethod"
+  ))) {
     attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
   }
