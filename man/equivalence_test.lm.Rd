@@ -3,6 +3,7 @@
 \name{equivalence_test.lm}
 \alias{equivalence_test.lm}
 \alias{equivalence_test.merMod}
+\alias{equivalence_test.ggeffects}
 \title{Equivalence test}
 \usage{
 \method{equivalence_test}{lm}(
@@ -20,6 +21,15 @@
   ci = 0.95,
   rule = "classic",
   effects = c("fixed", "random"),
+  verbose = TRUE,
+  ...
+)
+
+\method{equivalence_test}{ggeffects}(
+  x,
+  range = "default",
+  rule = "classic",
+  test = "pairwise",
   verbose = TRUE,
   ...
 )
@@ -45,6 +55,9 @@ equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
 effects (\code{"random"}), or both (\code{"all"}) be returned? Only applies
 to mixed models. May be abbreviated. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
+
+\item{test}{Hypothesis test for computing contrasts or pairwise comparisons.
+See \code{\link[ggeffects:hypothesis_test]{ggeffects::hypothesis_test()}} for details.}
 }
 \value{
 A data frame.

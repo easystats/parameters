@@ -16,6 +16,8 @@ bayestestR::equivalence_test
 #' @param rule Character, indicating the rules when testing for practical
 #'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.
+#' @param test Hypothesis test for computing contrasts or pairwise comparisons.
+#'   See [`ggeffects::hypothesis_test()`] for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
@@ -293,6 +295,7 @@ equivalence_test.parameters_simulate_model <- function(x,
 }
 
 
+#' @rdname equivalence_test.lm
 #' @export
 equivalence_test.ggeffects <- function(x,
                                        range = "default",
