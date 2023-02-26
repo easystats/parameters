@@ -360,7 +360,7 @@ equivalence_test.ggeffects <- function(x,
   shared_order <- intersect(cols, colnames(out))
   parameter_columns <- setdiff(colnames(out), shared_order)
   # add remaining columns, sort
-  out <- out[c(parameters, shared_order)]
+  out <- out[c(parameter_columns, shared_order)]
 
   attr(out, "object_name") <- obj_name
   attr(out, "parameter_columns") <- parameter_columns
