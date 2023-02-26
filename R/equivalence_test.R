@@ -332,7 +332,7 @@ equivalence_test.ggeffects <- function(x,
 
   l <- Map(
     function(ci_wide, ci_narrow) {
-      parameters:::.equivalence_test_numeric(
+      .equivalence_test_numeric(
         ci_wide,
         ci_narrow,
         range_rope = range,
