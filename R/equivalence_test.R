@@ -358,10 +358,12 @@ equivalence_test.ggeffects <- function(x,
 
   # order of shared columns
   shared_order <- intersect(cols, colnames(out))
+  parameter_columns <- setdiff(colnames(out), shared_order)
   # add remaining columns, sort
-  out <- out[c(setdiff(colnames(out), shared_order), shared_order)]
+  out <- out[c(parameters, shared_order)]
 
   attr(out, "object_name") <- obj_name
+  attr(out, "parameter_columns") <- parameter_columns
   attr(out, "rule") <- rule
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
   out
