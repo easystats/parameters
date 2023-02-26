@@ -77,14 +77,14 @@ was observed, but one cannot conclude that the null hypothesis is true.}
 (\cite{Pernet 2017}). One way to address this issues without Bayesian methods
 is \emph{Equivalence Testing}, as implemented in \code{equivalence_test()}.
 While you either can reject the null hypothesis or claim an inconclusive result
-in NHST, the equivalence test adds a third category, \emph{"accept"}. Roughly
-speaking, the idea behind equivalence testing in a frequentist framework is
-to check whether an estimate and its uncertainty (i.e. confidence interval)
-falls within a region of "practical equivalence". Depending on the rule for
-this test (see below), statistical significance does not necessarily indicate
-whether the null hypothesis can be rejected or not, i.e. the classical
-interpretation of the p-value may differ from the results returned from
-the equivalence test.
+in NHST, the equivalence test - according to \emph{Pernet} - adds a third category,
+\emph{"accept"}. Roughly speaking, the idea behind equivalence testing in a
+frequentist framework is to check whether an estimate and its uncertainty
+(i.e. confidence interval) falls within a region of "practical equivalence".
+Depending on the rule for this test (see below), statistical significance
+does not necessarily indicate whether the null hypothesis can be rejected or
+not, i.e. the classical interpretation of the p-value may differ from the
+results returned from the equivalence test.
 \subsection{Calculation of equivalence testing}{
 \itemize{
 \item "bayes" - Bayesian rule (Kruschke 2018)
@@ -105,16 +105,18 @@ This rule follows the "TOST rule", i.e. a two one-sided test procedure
 (i.e. H0) is \emph{rejected}, when the coefficient is statistically significant
 \emph{and} the narrow confidence intervals (i.e. \code{1-2*alpha}) \emph{include} or
 \emph{exceed} the ROPE boundaries. Practical equivalence is assumed
-(i.e. H0 accepted) when the narrow confidence intervals are completely
+(i.e. H0 "accepted") when the narrow confidence intervals are completely
 inside the ROPE, no matter if the effect is statistically significant
-or not. Else, the decision whether to accept or reject H0 is undecided.
+or not. Else, the decision whether to accept or reject practical
+equivalence is undecided.
 \item "cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)
 
 The Conditional Equivalence Testing as described by \emph{Campbell and
 Gustafson 2018}. According to this rule, practical equivalence is
 rejected when the coefficient is statistically significant. When the
 effect is \emph{not} significant and the narrow confidence intervals are
-completely inside the ROPE, we accept H0, else it is undecided.
+completely inside the ROPE, we accept (i.e. assume) practical equivalcence,
+else it is undecided.
 }
 }
 
@@ -133,7 +135,9 @@ only uses the regular intervals.
 The equivalence p-value is the area of the (cumulative) confidence
 distribution that is outside of the region of equivalence. It can be
 interpreted as p-value for \emph{rejecting} the alternative hypothesis
-and \emph{accepting} the null hypothesis.
+and \emph{accepting} the "null hypothesis" (i.e. assuming practical
+equivalence). That is, a high p-value means we reject the assumption of
+practical equivalence and accept the alternative hypothesis.
 }
 
 \subsection{Second Generation p-Value (SGPV)}{
