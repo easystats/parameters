@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2.4</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,14 +185,14 @@ was observed, but one cannot conclude that the null hypothesis is true.”
 (<cite>Pernet 2017</cite>). One way to address this issues without Bayesian methods
 is <em>Equivalence Testing</em>, as implemented in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>.
 While you either can reject the null hypothesis or claim an inconclusive result
-in NHST, the equivalence test adds a third category, <em>"accept"</em>. Roughly
-speaking, the idea behind equivalence testing in a frequentist framework is
-to check whether an estimate and its uncertainty (i.e. confidence interval)
-falls within a region of "practical equivalence". Depending on the rule for
-this test (see below), statistical significance does not necessarily indicate
-whether the null hypothesis can be rejected or not, i.e. the classical
-interpretation of the p-value may differ from the results returned from
-the equivalence test.</p><div class="section">
+in NHST, the equivalence test - according to <em>Pernet</em> - adds a third category,
+<em>"accept"</em>. Roughly speaking, the idea behind equivalence testing in a
+frequentist framework is to check whether an estimate and its uncertainty
+(i.e. confidence interval) falls within a region of "practical equivalence".
+Depending on the rule for this test (see below), statistical significance
+does not necessarily indicate whether the null hypothesis can be rejected or
+not, i.e. the classical interpretation of the p-value may differ from the
+results returned from the equivalence test.</p><div class="section">
 <h3 id="calculation-of-equivalence-testing">Calculation of equivalence testing<a class="anchor" aria-label="anchor" href="#calculation-of-equivalence-testing"></a></h3>
 
 <ul><li><p>"bayes" - Bayesian rule (Kruschke 2018)</p>
@@ -211,15 +211,17 @@ better).</p></li>
 (i.e. H0) is <em>rejected</em>, when the coefficient is statistically significant
 <em>and</em> the narrow confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
 <em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
-(i.e. H0 accepted) when the narrow confidence intervals are completely
+(i.e. H0 "accepted") when the narrow confidence intervals are completely
 inside the ROPE, no matter if the effect is statistically significant
-or not. Else, the decision whether to accept or reject H0 is undecided.</p></li>
+or not. Else, the decision whether to accept or reject practical
+equivalence is undecided.</p></li>
 <li><p>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</p>
 <p>The Conditional Equivalence Testing as described by <em>Campbell and
 Gustafson 2018</em>. According to this rule, practical equivalence is
 rejected when the coefficient is statistically significant. When the
 effect is <em>not</em> significant and the narrow confidence intervals are
-completely inside the ROPE, we accept H0, else it is undecided.</p></li>
+completely inside the ROPE, we accept (i.e. assume) practical equivalcence,
+else it is undecided.</p></li>
 </ul></div>
 
 <div class="section">
@@ -241,7 +243,9 @@ only uses the regular intervals.</p>
 <p>The equivalence p-value is the area of the (cumulative) confidence
 distribution that is outside of the region of equivalence. It can be
 interpreted as p-value for <em>rejecting</em> the alternative hypothesis
-and <em>accepting</em> the null hypothesis.</p>
+and <em>accepting</em> the "null hypothesis" (i.e. assuming practical
+equivalence). That is, a high p-value means we reject the assumption of
+practical equivalence and accept the alternative hypothesis.</p>
 </div>
 
 <div class="section">
@@ -313,13 +317,13 @@ Further readings can be found in the references.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-1.99 1.99]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI | % in ROPE |        H0 |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] |        0% |  Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] |    83.52% | Undecided | 0.137 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] |      100% |  Accepted | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] |        0% |  Rejected | 0.999 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] |        0% |  Rejected | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI | % in ROPE | Equivalence |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] |        0% |    Rejected | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] |    83.52% |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] |      100% |    Accepted | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] |        0% |    Rejected | 0.999 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] |        0% |    Rejected | &gt; .999</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># conditional equivalence test</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test</a></span><span class="op">(</span><span class="va">model</span>, rule <span class="op">=</span> <span class="st">"cet"</span><span class="op">)</span></span></span>
@@ -327,13 +331,13 @@ Further readings can be found in the references.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE: [-1.99 1.99]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI | % in ROPE |        H0 |      p</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] |        0% |  Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] |    83.52% | Undecided | 0.137 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] |      100% |  Accepted | &lt; .001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] |        0% |  Rejected | 0.999 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] |        0% |  Rejected | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI | % in ROPE | Equivalence |      p</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] |        0% |    Rejected | &gt; .999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] |    83.52% |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] |      100% |    Accepted | &lt; .001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] |        0% |    Rejected | 0.999 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] |        0% |    Rejected | &gt; .999</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot method</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/see/" class="external-link">"see"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
