@@ -423,7 +423,7 @@ equivalence_test.ggeffects <- function(x,
 
   # ==== equivalence test for each parameter ====
 
-  l <- mapply(
+  l <- Map(
     function(ci_wide, ci_narrow) {
       .equivalence_test_numeric(
         ci_wide,
@@ -432,8 +432,7 @@ equivalence_test.ggeffects <- function(x,
         rule = rule,
         verbose = verbose
       )
-    }, conf_int, conf_int2,
-    SIMPLIFY = FALSE
+    }, conf_int, conf_int2
   )
 
   dat <- do.call(rbind, l)
@@ -511,7 +510,7 @@ equivalence_test.ggeffects <- function(x,
       CI_high = est + stderr * fac_narrow
     )))
 
-    l <- mapply(
+    l <- Map(
       function(ci_wide, ci_narrow) {
         .equivalence_test_numeric(
           ci_wide,
@@ -520,8 +519,7 @@ equivalence_test.ggeffects <- function(x,
           rule = rule,
           verbose = verbose
         )
-      }, conf_int, conf_int2,
-      SIMPLIFY = FALSE
+      }, conf_int, conf_int2
     )
 
     dat <- do.call(rbind, l)
