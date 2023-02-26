@@ -31,7 +31,7 @@ knitr::opts_chunk$set(
 )
 
 pkgs <- c(
-  "effectsize", "BayesFactor", "lme4", "metafor", "lavaan", "nFactors",
+  "effectsize", "BayesFactor", "lme4", "metafor", "lavaan", "nFactors", "BH",
   "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR"
 )
 
@@ -41,6 +41,7 @@ if (all(successfully_loaded)) {
   library(parameters)
   library(effectsize)
   library(EGAnet)
+  library(BH)
   library(psych)
   library(nFactors)
   library(brms)
@@ -235,7 +236,7 @@ Additionally, it also works for models from the **brms** package.
 For more complex models, specific model components can be printed using the
 arguments `effects` and `component` arguments.
 
-```{r eval=successfully_loaded["brms"]}
+```{r eval=successfully_loaded[c("brms", "BH")]}
 library(brms)
 data(fish)
 set.seed(123)
@@ -259,7 +260,7 @@ parameters(model, effects = "all", component = "all")
 To include information about the random effect parameters (group levels), set
 `group_level = TRUE`:
 
-```{r eval=successfully_loaded["brms"]}
+```{r eval=successfully_loaded[c("brms", "BH")]}
 parameters(model, effects = "all", component = "conditional", group_level = TRUE)
 ```
 

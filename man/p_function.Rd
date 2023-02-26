@@ -141,17 +141,16 @@ probability", \emph{Schweder 2018}), and assuming that all underlying assumption
 are correct and met, \code{p_function()} interprets \emph{p}-values in a Fisherian way
 as "\emph{continuous} measure of evidence against the very test hypothesis \emph{and}
 entire model (all assumptions) used to compute it"
-(\href{https://lesslikely.com/statistics/s-values/}{P-Values Are Tough and S-Values Can Help}).
+(\emph{P-Values Are Tough and S-Values Can Help}, lesslikely.com/statistics/s-values).
 
 This interpretation as a continuous measure of evidence against the test
 hypothesis and the entire model used to compute it can be seen in the
-figure below (taken from
-\href{https://lesslikely.com/statistics/s-values/}{P-Values Are Tough and S-Values Can Help}).
-The "conditional" interpretation of \emph{p}-values and interval
-estimates (A) implicitly assumes certain assumptions to be true, thus the
-interpretation is "conditioned" on these assumptions (i.e. assumptions are
-taken as given). The unconditional interpretation (B), however, questions all
-these assumptions.
+figure below (taken from \emph{P-Values Are Tough and S-Values Can Help},
+lesslikely.com/statistics/s-values). The "conditional" interpretation of
+\emph{p}-values and interval estimates (A) implicitly assumes certain assumptions
+to be true, thus the interpretation is "conditioned" on these assumptions
+(i.e. assumptions are taken as given). The unconditional interpretation (B),
+however, questions all these assumptions.
 
 \if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
 

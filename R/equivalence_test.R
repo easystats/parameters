@@ -17,7 +17,8 @@ bayestestR::equivalence_test
 #'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.
 #' @param test Hypothesis test for computing contrasts or pairwise comparisons.
-#'   See [`ggeffects::hypothesis_test()`] for details.
+#'   See [`?ggeffects::hypothesis_test`](https://strengejacke.github.io/ggeffects/reference/hypothesis_test.html)
+#'   for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod

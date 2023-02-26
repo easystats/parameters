@@ -46,17 +46,16 @@
 #' are correct and met, `p_function()` interprets _p_-values in a Fisherian way
 #' as "_continuous_ measure of evidence against the very test hypothesis _and_
 #' entire model (all assumptions) used to compute it"
-#' ([P-Values Are Tough and S-Values Can Help](https://lesslikely.com/statistics/s-values/)).
+#' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values).
 #'
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
-#' figure below (taken from
-#' [P-Values Are Tough and S-Values Can Help](https://lesslikely.com/statistics/s-values/)).
-#' The "conditional" interpretation of _p_-values and interval
-#' estimates (A) implicitly assumes certain assumptions to be true, thus the
-#' interpretation is "conditioned" on these assumptions (i.e. assumptions are
-#' taken as given). The unconditional interpretation (B), however, questions all
-#' these assumptions.
+#' figure below (taken from *P-Values Are Tough and S-Values Can Help*,
+#' lesslikely.com/statistics/s-values). The "conditional" interpretation of
+#' _p_-values and interval estimates (A) implicitly assumes certain assumptions
+#' to be true, thus the interpretation is "conditioned" on these assumptions
+#' (i.e. assumptions are taken as given). The unconditional interpretation (B),
+#' however, questions all these assumptions.
 #'
 #' \if{html}{\cr \figure{unconditional_interpretation.png}{options: alt="Conditional versus unconditional interpretations of P-values"} \cr}
 #'

@@ -57,7 +57,8 @@ to mixed models. May be abbreviated. If the calculation of random effects
 parameters takes too long, you may use \code{effects = "fixed"}.}
 
 \item{test}{Hypothesis test for computing contrasts or pairwise comparisons.
-See \code{\link[ggeffects:hypothesis_test]{ggeffects::hypothesis_test()}} for details.}
+See \href{https://strengejacke.github.io/ggeffects/reference/hypothesis_test.html}{\code{?ggeffects::hypothesis_test}}
+for details.}
 }
 \value{
 A data frame.

@@ -94,6 +94,7 @@ Suggests:
     BayesFM,
     bbmle,
     betareg,
+    BH,
     biglm,
     blme,
     boot,
