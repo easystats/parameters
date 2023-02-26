@@ -235,6 +235,7 @@ jstatsoft
 kmeans
 labelled
 lavaan
+lesslikely
 lm
 lme
 lmerTest
