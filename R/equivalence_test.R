@@ -648,14 +648,14 @@ equivalence_test.ggeffects <- function(x,
 
 .rope_coverage <- function(rope, ci_range, ci) {
   diff_ci <- abs(diff(ci_range))
-  out <- bayestestR::distribution_normal(
+  x <- bayestestR::distribution_normal(
     n = 1000,
     mean = ci_range[2] - (diff_ci / 2),
     sd = diff_ci / 3.28
   )
 
-  rc <- bayestestR::rope(x, range = rope, ci = ci)
-  rc$ROPE_Percentage
+  out <- bayestestR::rope(x, range = rope, ci = ci)
+  out$ROPE_Percentage
 }
 
 
