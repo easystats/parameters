@@ -416,7 +416,7 @@ equivalence_test.ggeffects <- function(x,
   # standardize column order
   cols <- c(
     "Estimate", "Contrast", "Slope", "Predicted", "CI", "CI_low", "CI_high",
-    "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
+    "SGPV", "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
   )
 
   # order of shared columns
