@@ -104,7 +104,8 @@ bayestestR::equivalence_test
 #' ## Second Generation p-Value (SGPV)
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
-#' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_.
+#' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
+#' proportion of the confidence interval range that is inside the ROPE.
 #'
 #' ## Proportion of Confidence Interval inside ROPE
 #'
