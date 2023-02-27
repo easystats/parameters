@@ -153,10 +153,39 @@ practical equivalence and accept the alternative hypothesis.
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
 hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
-proportion of the confidence interval range that is inside the ROPE.
+proportion of the confidence interval range that is inside the ROPE. Use
+\code{metric = "sgpv"} or \code{metric = "all"} to display the SGPV.
 }
 
-\subsection{Proportion of Confidence Interval inside ROPE}{
+\subsection{Proportion of Confidence Intervals inside ROPE}{
+
+The \verb{\% in ROPE} refers to the proportion of a parameter's confidence interval
+that falls inside the ROPE. It's similar to the SGPV, but not exactly the
+same. The \strong{SGPV} is - roughly speaking - the length of the overlap from
+the confidence interval \emph{range} and the ROPE \emph{range} divided by the full
+length of the confidence interval \emph{range}. The calculation of the SGPV treats
+the confidence interval as if it was uniformly distributed, i.e. the probability
+mass (density) is assumed to be the same for each value inside the confidence
+interval. However, we would rather assume a different distribution for a
+confidence \emph{interval}. For the proportion inside the ROPE, a parameter's
+confidence interval is assumed to be normally distributed. The proportion
+of this distribution that falls inside the ROPE is represented by the
+\verb{\% in ROPE} metric. This means that actually more probability mass of a
+confidence interval falls inside the ROPE as stated by the SGPV. Therefore,
+the \verb{\% in ROPE} usually (not always) is larger that the SGPV. This calculation
+of the proportion inside the ROPE comes closer to the Bayesian HDI+ROPE rule,
+see \code{\link[bayestestR:equivalence_test]{bayestestR::equivalence_test()}}, and it is also in line with results
+from equivalence tests with bootstrapped or simulated model parameters:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(parameters)
+data(qol_cancer)
+model <- lm(QoL ~ time + age + education + phq4 + hospital, data = qol_cancer)
+# \% in ROPE, simulated
+equivalence_test(model, metric = "all")
+
+x <- simulate_model(model)
+equivalence_test(x, ci = 0.9)
+}\if{html}{\out{</div>}}
 }
 
 \subsection{ROPE range}{

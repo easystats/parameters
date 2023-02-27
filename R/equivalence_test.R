@@ -105,10 +105,37 @@ bayestestR::equivalence_test
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
 #' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
-#' proportion of the confidence interval range that is inside the ROPE.
+#' proportion of the confidence interval range that is inside the ROPE. Use
+#' `metric = "sgpv"` or `metric = "all"` to display the SGPV.
 #'
-#' ## Proportion of Confidence Interval inside ROPE
+#' ## Proportion of Confidence Intervals inside ROPE
+#' The `% in ROPE` refers to the proportion of a parameter's confidence interval
+#' that falls inside the ROPE. It's similar to the SGPV, but not exactly the
+#' same. The **SGPV** is - roughly speaking - the length of the overlap from
+#' the confidence interval _range_ and the ROPE _range_ divided by the full
+#' length of the confidence interval _range_. The calculation of the SGPV treats
+#' the confidence interval as if it was uniformly distributed, i.e. the probability
+#' mass (density) is assumed to be the same for each value inside the confidence
+#' interval. However, we would rather assume a different distribution for a
+#' confidence _interval_. For the proportion inside the ROPE, a parameter's
+#' confidence interval is assumed to be normally distributed. The proportion
+#' of this distribution that falls inside the ROPE is represented by the
+#' `% in ROPE` metric. This means that actually more probability mass of a
+#' confidence interval falls inside the ROPE as stated by the SGPV. Therefore,
+#' the `% in ROPE` usually (not always) is larger that the SGPV. This calculation
+#' of the proportion inside the ROPE comes closer to the Bayesian HDI+ROPE rule,
+#' see [`bayestestR::equivalence_test()`], and it is also in line with results
+#' from equivalence tests with bootstrapped or simulated model parameters:
+#' ```
+#' library(parameters)
+#' data(qol_cancer)
+#' model <- lm(QoL ~ time + age + education + phq4 + hospital, data = qol_cancer)
+#' # % in ROPE, simulated
+#' equivalence_test(model, metric = "all")
 #'
+#' x <- simulate_model(model)
+#' equivalence_test(x, ci = 0.9)
+#' ```
 #'
 #' ## ROPE range
 #' Some attention is required for finding suitable values for the ROPE limits
