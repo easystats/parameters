@@ -435,6 +435,7 @@ equivalence_test.ggeffects <- function(x,
         ci_narrow,
         range_rope = range,
         rule = rule,
+        ci = ci,
         verbose = verbose
       )
     }, conf_int, conf_int2
@@ -522,6 +523,7 @@ equivalence_test.ggeffects <- function(x,
           ci_narrow,
           range_rope = range,
           rule = rule,
+          ci = ci,
           verbose = verbose
         )
       }, conf_int, conf_int2
@@ -539,7 +541,7 @@ equivalence_test.ggeffects <- function(x,
 
 
 #' @keywords internal
-.equivalence_test_numeric <- function(ci_wide, ci_narrow, range_rope, rule, verbose) {
+.equivalence_test_numeric <- function(ci_wide, ci_narrow, range_rope, rule, ci = 0.95, verbose) {
   final_ci <- NULL
 
   # ==== HDI+ROPE decision rule, by Kruschke ====
@@ -598,6 +600,7 @@ equivalence_test.ggeffects <- function(x,
   data.frame(
     CI_low = final_ci[1],
     CI_high = final_ci[2],
+    SGPV = .sgpv(range_rope, final_ci, ci),
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
     ROPE_Percentage = .rope_coverage(range_rope, final_ci),
@@ -612,7 +615,7 @@ equivalence_test.ggeffects <- function(x,
 # helper ---------------------
 
 
-.rope_coverage <- function(rope, ci) {
+.sgpv <- function(rope, ci) {
   diff_rope <- abs(diff(rope))
   diff_ci <- abs(diff(ci))
 
@@ -642,6 +645,18 @@ equivalence_test.ggeffects <- function(x,
   coverage
 }
 
+
+.rope_coverage <- function(rope, ci_range, ci) {
+  diff_ci <- abs(diff(ci_range))
+  out <- bayestestR::distribution_normal(
+    n = 1000,
+    mean = ci_range[2] - (diff_ci / 2),
+    sd = diff_ci / 3.28
+  )
+
+  rc <- bayestestR::rope(x, range = rope, ci = ci)
+  rc$ROPE_Percentage
+}
 
 
 .add_p_to_equitest <- function(model, ci, range) {
