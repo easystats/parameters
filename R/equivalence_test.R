@@ -19,6 +19,10 @@ bayestestR::equivalence_test
 #' @param test Hypothesis test for computing contrasts or pairwise comparisons.
 #'   See [`?ggeffects::hypothesis_test`](https://strengejacke.github.io/ggeffects/reference/hypothesis_test.html)
 #'   for details.
+#' @param metric String, indicating which additional metrics should be displayed.
+#'   Can be `"sgpv"` for the Second Generation p-Value, `"rope"` for the proportion
+#'   of the confidence intervals that are inside the rope ranges, or `"all"` for
+#'   both metrics. If `NULL`, no additional metric is shown.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams model_parameters.merMod
@@ -100,10 +104,10 @@ bayestestR::equivalence_test
 #' ## Second Generation p-Value (SGPV)
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
-#' hypotheses_ _(Blume et al. 2018)_. This statistic is actually computed in
-#' the same way as the percentage inside the ROPE as returned by
-#' `equivalence_test()` (see _Lakens and Delacre 2020_ for details on
-#' computation of the SGPV). Thus, the `"inside ROPE"` column reflects the SGPV.
+#' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_.
+#'
+#' ## Proportion of Confidence Interval inside ROPE
+#'
 #'
 #' ## ROPE range
 #' Some attention is required for finding suitable values for the ROPE limits
@@ -164,9 +168,16 @@ equivalence_test.lm <- function(x,
                                 range = "default",
                                 ci = 0.95,
                                 rule = "classic",
+                                metric = NULL,
                                 verbose = TRUE,
                                 ...) {
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
+
+  # check if user wants to show extra metrics
+  if (!is.null(metric)) {
+    metric <- match.arg(tolower(metric), choices = c("sgpv", "rope", "all"), several.ok = TRUE)
+  }
+
   out <- .equivalence_test_frequentist(x, range, ci, rule, verbose, ...)
 
   if (is.null(attr(out, "pretty_names", exact = TRUE))) {
@@ -174,6 +185,7 @@ equivalence_test.lm <- function(x,
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "rule") <- rule
+  attr(out, "metric") <- metric
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
 }
@@ -228,12 +240,17 @@ equivalence_test.merMod <- function(x,
                                     ci = 0.95,
                                     rule = "classic",
                                     effects = c("fixed", "random"),
+                                    metric = NULL,
                                     verbose = TRUE,
                                     ...) {
   # ==== argument matching ====
 
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   effects <- match.arg(effects)
+  # check if user wants to show extra metrics
+  if (!is.null(metric)) {
+    metric <- match.arg(tolower(metric), choices = c("sgpv", "rope", "all"), several.ok = TRUE)
+  }
 
 
   # ==== equivalent testing for fixed or random effects ====
@@ -252,6 +269,7 @@ equivalence_test.merMod <- function(x,
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "rule") <- rule
+  attr(out, "metric") <- metric
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_lm", class(out))
   out
 }
@@ -271,6 +289,7 @@ equivalence_test.MixMod <- equivalence_test.merMod
 equivalence_test.parameters_simulate_model <- function(x,
                                                        range = "default",
                                                        ci = 0.95,
+                                                       metric = NULL,
                                                        verbose = TRUE,
                                                        ...) {
   # ==== retrieve model, to define rope range for simulated model parameters ====
@@ -285,6 +304,10 @@ equivalence_test.parameters_simulate_model <- function(x,
     )
   }
 
+  # check if user wants to show extra metrics
+  if (!is.null(metric)) {
+    metric <- match.arg(tolower(metric), choices = c("sgpv", "rope", "all"), several.ok = TRUE)
+  }
 
   # ==== classical equivalent testing for data frames ====
 
@@ -295,6 +318,7 @@ equivalence_test.parameters_simulate_model <- function(x,
   }
   attr(out, "object_name") <- attr(x, "object_name")
   attr(out, "data") <- x
+  attr(out, "metric") <- metric
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", "equivalence_test_simulate_model", class(out)))
   out
 }
@@ -306,6 +330,7 @@ equivalence_test.ggeffects <- function(x,
                                        range = "default",
                                        rule = "classic",
                                        test = "pairwise",
+                                       metric = NULL,
                                        verbose = TRUE,
                                        ...) {
   insight::check_if_installed("ggeffects", minimum_version = "1.2.0")
@@ -320,6 +345,11 @@ equivalence_test.ggeffects <- function(x,
   # sanity check rope range
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   range <- .check_rope_range(x, range, verbose)
+
+  # check if user wants to show extra metrics
+  if (!is.null(metric)) {
+    metric <- match.arg(tolower(metric), choices = c("sgpv", "rope", "all"), several.ok = TRUE)
+  }
 
   out <- ggeffects::hypothesis_test(
     x,
@@ -371,6 +401,7 @@ equivalence_test.ggeffects <- function(x,
   attr(out, "parameter_columns") <- parameter_columns
   attr(out, "rule") <- rule
   attr(out, "rope") <- range
+  attr(out, "metric") <- metric
   class(out) <- c("equivalence_test_lm", "see_equivalence_test_ggeffects", "data.frame")
   out
 }
@@ -745,6 +776,8 @@ print.equivalence_test_lm <- function(x,
   orig_x <- x
 
   rule <- attributes(x)$rule
+  metric <- attributes(x)$metric
+
   if (!is.null(rule)) {
     if (rule == "cet") {
       insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
@@ -771,6 +804,18 @@ print.equivalence_test_lm <- function(x,
     zap_small = zap_small,
     ...
   )
+
+  if (!is.null(metric)) {
+    if (all(metric == "sgpv")) {
+      x$ROPE_Percentage <- NULL
+    }
+    if (all(metric == "rope")) {
+      x$SGPV <- NULL
+    }
+  } else {
+    x$SGPV <- NULL
+    x$ROPE_Percentage <- NULL
+  }
 
   if ("Group" %in% colnames(x)) {
     out <- split(x, x$Group)

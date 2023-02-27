@@ -11,6 +11,7 @@
   range = "default",
   ci = 0.95,
   rule = "classic",
+  metric = NULL,
   verbose = TRUE,
   ...
 )
@@ -21,6 +22,7 @@
   ci = 0.95,
   rule = "classic",
   effects = c("fixed", "random"),
+  metric = NULL,
   verbose = TRUE,
   ...
 )
@@ -30,6 +32,7 @@
   range = "default",
   rule = "classic",
   test = "pairwise",
+  metric = NULL,
   verbose = TRUE,
   ...
 )
@@ -46,6 +49,11 @@ model's data.}
 \item{rule}{Character, indicating the rules when testing for practical
 equivalence. Can be \code{"bayes"}, \code{"classic"} or \code{"cet"}. See
 'Details'.}
+
+\item{metric}{String, indicating which additional metrics should be displayed.
+Can be \code{"sgpv"} for the Second Generation p-Value, \code{"rope"} for the proportion
+of the confidence intervals that are inside the rope ranges, or \code{"all"} for
+both metrics. If \code{NULL}, no additional metric is shown.}
 
 \item{verbose}{Toggle warnings and messages.}
 
@@ -144,10 +152,10 @@ practical equivalence and accept the alternative hypothesis.
 
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
-hypotheses} \emph{(Blume et al. 2018)}. This statistic is actually computed in
-the same way as the percentage inside the ROPE as returned by
-\code{equivalence_test()} (see \emph{Lakens and Delacre 2020} for details on
-computation of the SGPV). Thus, the \code{"inside ROPE"} column reflects the SGPV.
+hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}.
+}
+
+\subsection{Proportion of Confidence Interval inside ROPE}{
 }
 
 \subsection{ROPE range}{
