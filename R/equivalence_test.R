@@ -793,18 +793,7 @@ print.equivalence_test_lm <- function(x,
   .rope <- attr(x, "rope", exact = TRUE)
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2]))
 
-  # formatting
-  x <- format(x,
-    digits = digits,
-    ci_digits = ci_digits,
-    p_digits = p_digits,
-    ci_width = "auto",
-    ci_brackets = ci_brackets,
-    format = "text",
-    zap_small = zap_small,
-    ...
-  )
-
+  # keep or remove metric columns
   if (!is.null(metric)) {
     if (all(metric == "sgpv")) {
       x$ROPE_Percentage <- NULL
@@ -816,6 +805,18 @@ print.equivalence_test_lm <- function(x,
     x$SGPV <- NULL
     x$ROPE_Percentage <- NULL
   }
+
+  # formatting
+  x <- format(x,
+    digits = digits,
+    ci_digits = ci_digits,
+    p_digits = p_digits,
+    ci_width = "auto",
+    ci_brackets = ci_brackets,
+    format = "text",
+    zap_small = zap_small,
+    ...
+  )
 
   if ("Group" %in% colnames(x)) {
     out <- split(x, x$Group)
