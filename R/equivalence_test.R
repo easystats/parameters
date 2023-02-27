@@ -384,6 +384,7 @@ equivalence_test.ggeffects <- function(x,
     terms = focal,
     test = test,
     equivalence = range,
+    ci.lvl = ci,
     verbose = verbose,
     ...
   )
