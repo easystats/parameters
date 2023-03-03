@@ -654,7 +654,7 @@ equivalence_test.ggeffects <- function(x,
     sd = diff_ci / 3.28
   )
 
-  rc <- bayestestR::rope(x, range = rope, ci = ci)
+  rc <- bayestestR::rope(out, range = rope, ci = ci)
   rc$ROPE_Percentage
 }
 
