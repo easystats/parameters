@@ -600,7 +600,7 @@ equivalence_test.ggeffects <- function(x,
   data.frame(
     CI_low = final_ci[1],
     CI_high = final_ci[2],
-    SGPV = .sgpv(range_rope, final_ci, ci),
+    SGPV = .sgpv(range_rope, final_ci),
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
     ROPE_Percentage = .rope_coverage(range_rope, final_ci),
