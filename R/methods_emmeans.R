@@ -337,13 +337,13 @@ degrees_of_freedom.emm_list <- function(model, ...) {
   }
 
   s <- summary(model)
-  unname(unlist(lapply(s, function(i) {
+  unlist(lapply(s, function(i) {
     if (is.null(i$df)) {
       rep(Inf, nrow(i))
     } else {
       i$df
     }
-  })))
+  }), use.names = FALSE)
 }
 
 boot_em_df <- function(model) {
