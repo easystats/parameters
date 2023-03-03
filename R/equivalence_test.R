@@ -78,7 +78,7 @@ bayestestR::equivalence_test
 #'   Gustafson 2018_. According to this rule, practical equivalence is
 #'   rejected when the coefficient is statistically significant. When the
 #'   effect is *not* significant and the narrow confidence intervals are
-#'   completely inside the ROPE, we accept (i.e. assume) practical equivalcence,
+#'   completely inside the ROPE, we accept (i.e. assume) practical equivalence,
 #'   else it is undecided.
 #'
 #' ## Levels of Confidence Intervals used for Equivalence Testing
