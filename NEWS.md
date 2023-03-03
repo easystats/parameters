@@ -7,7 +7,7 @@
 
 * `equivalence_test()` now prints the `SGPV` column instead of `% in ROPE`.
   This is because the former `% in ROPE` actually was equivalent to the second
-  generation p-value (SGPV) and referes to the proportion of the _range_ of the
+  generation p-value (SGPV) and refers to the proportion of the _range_ of the
   confidence interval that is covered by the ROPE. However, `% in ROPE` did
   not refer to the probability mass of the underlying distribution of a confidence
   interval that was covered by the ROPE, hence the old column name was a bit
