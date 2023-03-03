@@ -601,7 +601,7 @@ equivalence_test.ggeffects <- function(x,
     SGPV = .sgpv(range_rope, final_ci),
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
-    ROPE_Percentage = .rope_coverage(range_rope, final_ci),
+    # ROPE_Percentage = .rope_coverage(range_rope, final_ci),
     ROPE_Equivalence = decision,
     stringsAsFactors = FALSE
   )
@@ -644,19 +644,17 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
+## FIXME make sure this works for different CI levels
 .rope_coverage <- function(rope, ci_range, ci) {
-  # return NA for now, until this works correctly
-  return(NA)
+  diff_ci <- abs(diff(ci_range))
+  out <- bayestestR::distribution_normal(
+    n = 1000,
+    mean = ci_range[2] - (diff_ci / 2),
+    sd = diff_ci / 3.28
+  )
 
-  # diff_ci <- abs(diff(ci_range))
-  # out <- bayestestR::distribution_normal(
-  #   n = 1000,
-  #   mean = ci_range[2] - (diff_ci / 2),
-  #   sd = diff_ci / 3.28
-  # )
-
-  # rc <- bayestestR::rope(out, range = rope, ci = ci)
-  # rc$ROPE_Percentage
+  rc <- bayestestR::rope(out, range = rope, ci = ci)
+  rc$ROPE_Percentage
 }
 
 
@@ -708,9 +706,6 @@ format.equivalence_test_lm <- function(x,
   } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
     ci_brackets <- c("[", "]")
   }
-
-  # remove rope coverage column for now
-  x$ROPE_Percentage <- NULL
 
   # main formatting
   out <- insight::format_table(
