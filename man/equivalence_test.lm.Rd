@@ -144,10 +144,8 @@ practical equivalence and accept the alternative hypothesis.
 
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
-hypotheses} \emph{(Blume et al. 2018)}. This statistic is actually computed in
-the same way as the percentage inside the ROPE as returned by
-\code{equivalence_test()} (see \emph{Lakens and Delacre 2020} for details on
-computation of the SGPV). Thus, the \code{"inside ROPE"} column reflects the SGPV.
+hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
+proportion of the confidence interval range that is inside the ROPE.
 }
 
 \subsection{ROPE range}{

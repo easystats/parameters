@@ -100,10 +100,8 @@ bayestestR::equivalence_test
 #' ## Second Generation p-Value (SGPV)
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
-#' hypotheses_ _(Blume et al. 2018)_. This statistic is actually computed in
-#' the same way as the percentage inside the ROPE as returned by
-#' `equivalence_test()` (see _Lakens and Delacre 2020_ for details on
-#' computation of the SGPV). Thus, the `"inside ROPE"` column reflects the SGPV.
+#' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
+#' proportion of the confidence interval range that is inside the ROPE.
 #'
 #' ## ROPE range
 #' Some attention is required for finding suitable values for the ROPE limits
@@ -358,7 +356,7 @@ equivalence_test.ggeffects <- function(x,
   # standardize column order
   cols <- c(
     "Estimate", "Contrast", "Slope", "Predicted", "CI", "CI_low", "CI_high",
-    "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
+    "SGPV", "ROPE_low", "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "p"
   )
 
   # order of shared columns
@@ -647,15 +645,18 @@ equivalence_test.ggeffects <- function(x,
 
 
 .rope_coverage <- function(rope, ci_range, ci) {
-  diff_ci <- abs(diff(ci_range))
-  out <- bayestestR::distribution_normal(
-    n = 1000,
-    mean = ci_range[2] - (diff_ci / 2),
-    sd = diff_ci / 3.28
-  )
+  # return NA for now, until this works correctly
+  return(NA)
 
-  rc <- bayestestR::rope(out, range = rope, ci = ci)
-  rc$ROPE_Percentage
+  # diff_ci <- abs(diff(ci_range))
+  # out <- bayestestR::distribution_normal(
+  #   n = 1000,
+  #   mean = ci_range[2] - (diff_ci / 2),
+  #   sd = diff_ci / 3.28
+  # )
+
+  # rc <- bayestestR::rope(out, range = rope, ci = ci)
+  # rc$ROPE_Percentage
 }
 
 
@@ -707,6 +708,9 @@ format.equivalence_test_lm <- function(x,
   } else if (is.null(ci_brackets) || isTRUE(ci_brackets)) {
     ci_brackets <- c("[", "]")
   }
+
+  # remove rope coverage column for now
+  x$ROPE_Percentage <- NULL
 
   # main formatting
   out <- insight::format_table(
