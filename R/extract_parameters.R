@@ -681,7 +681,7 @@
       grep,
       x = parameters$Parameter,
       fixed = TRUE
-    )))
+    ), use.names = FALSE))
     parameters$Component[index] <- "within"
   }
 
@@ -691,7 +691,7 @@
       grep,
       x = parameters$Parameter,
       fixed = TRUE
-    )))
+    ), use.names = FALSE))
     parameters$Component[index] <- "between"
   }
 
@@ -716,7 +716,7 @@
     if (!is.null(attr(mf[[i]], which_effect, exact = TRUE))) {
       i
     }
-  }))
+  }), use.names = FALSE)
 }
 
 
