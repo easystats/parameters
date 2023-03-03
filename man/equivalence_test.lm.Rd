@@ -123,7 +123,7 @@ The Conditional Equivalence Testing as described by \emph{Campbell and
 Gustafson 2018}. According to this rule, practical equivalence is
 rejected when the coefficient is statistically significant. When the
 effect is \emph{not} significant and the narrow confidence intervals are
-completely inside the ROPE, we accept (i.e. assume) practical equivalcence,
+completely inside the ROPE, we accept (i.e. assume) practical equivalence,
 else it is undecided.
 }
 }
