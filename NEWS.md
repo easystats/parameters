@@ -1,5 +1,9 @@
 # parameters 0.20.3
 
+## General
+
+* Added support for models of class `hgml` (*hglm*).
+
 ## Changes to functions
 
 * `equivalence_test()` gets a method for `ggeffects` objects from package

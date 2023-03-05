@@ -209,7 +209,7 @@ dof <- degrees_of_freedom
   if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
     dof <- Inf
     if (verbose) {
-      warning("Could not extract degrees of freedom.", call. = FALSE)
+      insight::format_warning("Could not extract degrees of freedom.")
     }
   }
 

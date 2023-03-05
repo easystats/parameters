@@ -131,10 +131,10 @@ model_parameters.glmmTMB <- function(model,
           suppressWarnings(stats::confint(model, parm = "sigma", method = "wald", level = ci)[1:2]),
           error = function(e) {
             if (verbose) {
-              message(insight::format_message(
+              insight::format_alert(
                 "Cannot compute standard errors and confidence intervals for sigma parameter.",
                 "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
-              ))
+              )
             }
             c(NA, NA)
           }
