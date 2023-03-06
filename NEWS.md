@@ -2,7 +2,7 @@
 
 ## General
 
-* Added support for models of class `hgml` (*hglm*).
+* Added support for models of class `hglm` (*hglm*).
 
 ## Changes to functions
 
