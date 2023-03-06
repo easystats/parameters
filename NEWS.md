@@ -20,6 +20,12 @@
 * Fixed issue in `model_parameters.ggeffects()` to address forthcoming changes
   in the _ggeffects_ package.
 
+## Bug fixes
+
+* When an invalid or not supported value for the `p_adjust` argument in
+  `model_parameters()` is provided, the valid options were not shown in correct
+  capital letters, where appropriate.
+
 # parameters 0.20.2
 
 ## General
