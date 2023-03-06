@@ -39,7 +39,7 @@ format_p_adjust <- function(method) {
     ## TODO add "mvt" method from emmeans
 
     # prepare arguments
-    all_methods <- c(tolower(stats::p.adjust.methods), "tukey", "scheffe", "sidak")
+    all_methods <- c(stats::p.adjust.methods, "tukey", "scheffe", "sidak")
 
     # for interaction terms, e.g. for "by" argument in emmeans
     # pairwise comparison, we have to adjust the rank resp. the
@@ -60,7 +60,7 @@ format_p_adjust <- function(method) {
 
 
     # only proceed if valid argument-value
-    if (tolower(p_adjust) %in% all_methods) {
+    if (tolower(p_adjust) %in% tolower(all_methods)) {
       # save old values, to check if p-adjustment worked
       old_p_vals <- params$p
       # find statistic column
