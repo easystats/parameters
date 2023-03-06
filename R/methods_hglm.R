@@ -212,3 +212,20 @@ ci.hglm <- function(model,
   }
   out
 }
+
+
+#' @export
+p_value.hglm <- function(model,
+                         dof = NULL,
+                         method = NULL,
+                         verbose = TRUE,
+                         ...) {
+  p_value.default(
+    model,
+    dof = dof,
+    method = method,
+    component = "conditional",
+    verbose = verbose,
+    ...
+  )
+}
