@@ -7,7 +7,7 @@
 # default method -------------------
 
 .extract_random_variances.default <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "conditional",
                                               ci_method = NULL,
@@ -26,12 +26,10 @@
   )
 
   # check for errors
-  if (is.null(out)) {
-    if (isTRUE(verbose)) {
-      insight::format_warning(
-        "Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."
-      )
-    }
+  if (is.null(out) && isTRUE(verbose)) {
+    insight::format_warning(
+      "Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`."
+    )
   }
 
   out
@@ -41,7 +39,7 @@
 # glmmTMB -------------------
 
 .extract_random_variances.glmmTMB <- function(model,
-                                              ci = .95,
+                                              ci = 0.95,
                                               effects = "random",
                                               component = "all",
                                               ci_method = NULL,
@@ -115,7 +113,7 @@
 # workhorse ------------------------
 
 .extract_random_variances_helper <- function(model,
-                                             ci = .95,
+                                             ci = 0.95,
                                              effects = "random",
                                              component = "conditional",
                                              ci_method = NULL,
@@ -304,7 +302,7 @@
 
 .random_sd_ci <- function(model, out, ci_method, ci, corr_param, sigma_param, component = NULL, verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
-  if (grepl("^mcm_lmer", insight::safe_deparse(insight::get_call(model)))) {
+  if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
   }
 
@@ -319,7 +317,7 @@
       rn <- gsub("[\\(\\)]", "", rn)
       rn <- gsub("cor_(.*)\\.(.*)", "cor \\2", rn)
 
-      var_ci_corr_param <- grepl("^cor ", rn)
+      var_ci_corr_param <- startsWith(rn, "cor ")
       var_ci_sigma_param <- rn == "sigma"
 
       out$CI_low[!corr_param & !sigma_param] <- var_ci$CI_low[!var_ci_corr_param & !var_ci_sigma_param]
@@ -422,8 +420,8 @@
             if (any(var_ci_corr_param)) {
               coefs <- out$Coefficient[var_ci_corr_param]
               delta_se <- out$SE[var_ci_corr_param] / (1 - coefs^2)
-              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(.975) * delta_se)
-              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(.975) * delta_se)
+              out$CI_low[var_ci_corr_param] <- tanh(atanh(coefs) - stats::qnorm(0.975) * delta_se)
+              out$CI_high[var_ci_corr_param] <- tanh(atanh(coefs) + stats::qnorm(0.975) * delta_se)
             }
 
             # Wald CI, based on delta-method.
@@ -432,8 +430,8 @@
             # Also, if the SD is small, then the CI might go negative
             coefs <- out$Coefficient[!var_ci_corr_param]
             delta_se <- out$SE[!var_ci_corr_param] / coefs
-            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(.975) * delta_se)
-            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(.975) * delta_se)
+            out$CI_low[!var_ci_corr_param] <- exp(log(coefs) - stats::qnorm(0.975) * delta_se)
+            out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(0.975) * delta_se)
 
             # warn if singular fit
             if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
@@ -869,7 +867,7 @@
     non_intercepts <- which(sapply(varcorr, function(i) !startsWith(dimnames(i)[[1]][1], "(Intercept)")))
     if (length(non_intercepts)) {
       if (length(non_intercepts) == length(varcorr)) {
-        out <- unlist(lapply(varcorr, function(x) diag(x)))
+        out <- unlist(lapply(varcorr, diag))
       } else {
         dn <- unlist(lapply(varcorr, function(i) dimnames(i)[1])[non_intercepts])
         rndslopes <- unlist(lapply(varcorr, function(i) {
@@ -892,7 +890,7 @@
             # we here check if random slopes from correlated and uncorrelated
             # are duplicated (i.e. their difference is 0 - including a tolerance)
             # and then remove duplicated elements
-            the_same <- which(abs(outer(out[j], rndslopes, `-`)) < .0001)
+            the_same <- which(abs(outer(out[j], rndslopes, `-`)) < 0.0001)
             if (length(the_same) && grepl(dn[the_same], names(out[j]), fixed = TRUE)) {
               to_remove <- c(to_remove, j)
             }
