@@ -1,5 +1,5 @@
 # small wrapper around this commonly used try-catch
-.hush <- function(code, on_error = NULL) {
+.safe <- function(code, on_error = NULL) {
   tryCatch(code, error = function(e) on_error)
 }
 
@@ -86,10 +86,10 @@
   obj_name <- attr(x, attribute_name, exact = TRUE)
   model <- NULL
   if (!is.null(obj_name)) {
-    model <- .hush(get(obj_name, envir = parent.frame()))
+    model <- .safe(get(obj_name, envir = parent.frame()))
     # prevent self reference
     if (is.null(model) || inherits(model, "parameters_model")) {
-      model <- .hush(get(obj_name, envir = globalenv()))
+      model <- .safe(get(obj_name, envir = globalenv()))
     }
   }
   model

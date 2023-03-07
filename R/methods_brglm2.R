@@ -25,14 +25,7 @@ model_parameters.bracl <- function(model,
   )
 
   # detect number of levels of response
-  nl <- tryCatch(
-    {
-      nlevels(factor(insight::get_response(model)))
-    },
-    error = function(e) {
-      0
-    }
-  )
+  nl <- .safe(nlevels(factor(insight::get_response(model))), 0)
 
   # merge by response as well if more than 2 levels
   if (nl > 2) {

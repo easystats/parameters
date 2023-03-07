@@ -49,7 +49,7 @@ format_parameters <- function(model, ...) {
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   # check for valid input
   .is_model_valid(model)
-  .hush(.format_parameter_default(model, brackets = brackets, ...))
+  .safe(.format_parameter_default(model, brackets = brackets, ...))
 }
 
 
@@ -407,7 +407,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # name elements
     names(lbs) <- names(preds) <- colnames(mf)
-    labels <- .hush(stats::setNames(
+    labels <- .safe(stats::setNames(
       unlist(lbs, use.names = FALSE),
       unlist(preds, use.names = FALSE)
     ))

@@ -186,7 +186,7 @@
   if (!is.null(m_attr$value) && isTRUE(startsWith(m_attr$heading[[1]], "Linear hypothesis"))) {
     # Drop unrestricted model (not interesting in linear hypothesis tests)
     # Use formula to subset if available (e.g. with car::linearHypothesis)
-    if (length(grep("Model", m_attr$heading, fixed = TRUE)) != 0) {
+    if (any(grepl("Model", m_attr$heading, fixed = TRUE))) {
       idx <- sub(".*: ", "", strsplit(
         grep("Model", m_attr$heading, fixed = TRUE, value = TRUE),
         "\n",

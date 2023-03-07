@@ -89,9 +89,7 @@ standard_error.default <- function(model,
   # vcov: function which returns a matrix
   if (is.function(vcov)) {
     args <- c(list(model), vcov_args, dots)
-    se <- tryCatch(sqrt(diag(do.call("vcov", args))),
-      error = function(x) NULL
-    )
+    se <- .safe(sqrt(diag(do.call("vcov", args))))
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
@@ -109,7 +107,7 @@ standard_error.default <- function(model,
 
   # classical se from summary()
   if (is.null(se)) {
-    se <- .hush(
+    se <- .safe(
       {
         if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_se())
@@ -122,7 +120,7 @@ standard_error.default <- function(model,
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    se <- .hush(
+    se <- .safe(
       {
         varcov <- insight::get_varcov(model, component = component)
         se_from_varcov <- sqrt(diag(varcov))

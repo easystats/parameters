@@ -791,7 +791,7 @@ print.n_clusters <- print.n_factors
   insight::check_if_installed("nFactors")
 
   lambda <- nFactors::eigenComputes(x, cor = cor, model = model, ...)
-  if (length(which(lambda < 0)) > 0) {
+  if (any(lambda < 0)) {
     insight::format_error(
       "These indices are only valid with a principal component solution. So, only positive eigenvalues are permitted."
     )

@@ -19,9 +19,7 @@
   dot.arguments <- list(...)
 
   # model info
-  info <- tryCatch(suppressWarnings(insight::model_info(model, verbose = FALSE)),
-    error = function(e) NULL
-  )
+  info <- .safe(suppressWarnings(insight::model_info(model, verbose = FALSE)))
 
   if (is.null(info)) {
     info <- list(family = "unknown", link_function = "unknown")
@@ -63,9 +61,9 @@
   attr(params, "pretty_labels") <- .format_value_labels(params, model)
 
   # use tryCatch, these might fail...
-  attr(params, "test_statistic") <- tryCatch(insight::find_statistic(model), error = function(e) NULL)
-  attr(params, "log_response") <- tryCatch(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)), error = function(e) NULL)
-  attr(params, "log_predictors") <- tryCatch(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE)), error = function(e) NULL)
+  attr(params, "test_statistic") <- .safe(insight::find_statistic(model))
+  attr(params, "log_response") <- .safe(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)))
+  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE)))
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -80,7 +78,7 @@
 
   # for summaries, add R2
   if (isTRUE(summary) && requireNamespace("performance", quietly = TRUE)) {
-    rsq <- tryCatch(suppressWarnings(performance::r2(model)), error = function(e) NULL)
+    rsq <- .safe(suppressWarnings(performance::r2(model)))
     attr(params, "r2") <- rsq
   }
 
@@ -98,20 +96,17 @@
 
 
   # weighted nobs
-  weighted_nobs <- tryCatch(
+  weighted_nobs <- .safe(
     {
       w <- insight::get_weights(model, na_rm = TRUE, null_as_ones = TRUE)
       round(sum(w))
-    },
-    error = function(e) {
-      NULL
     }
   )
   attr(params, "weighted_nobs") <- weighted_nobs
 
 
   # model formula
-  model_formula <- .hush(insight::safe_deparse(insight::find_formula(model)$conditional))
+  model_formula <- .safe(insight::safe_deparse(insight::find_formula(model)$conditional))
   attr(params, "model_formula") <- model_formula
 
 
@@ -137,7 +132,7 @@
   # special handling for meta analysis. we need additional
   # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
-    rma_data <- .hush(insight::get_data(model, verbose = FALSE))
+    rma_data <- .safe(insight::get_data(model, verbose = FALSE))
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
@@ -146,7 +141,7 @@
   # special handling for meta analysis again, but these objects save the
   # inverse weighting information in a different column.
   if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
-    rma_data <- .hush(insight::get_data(model, verbose = FALSE))
+    rma_data <- .safe(insight::get_data(model, verbose = FALSE))
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / params$SE^2
   }
@@ -334,7 +329,7 @@
 
   # add Group variable
   if (!is.null(clean_params$Group) && any(nchar(clean_params$Group) > 0)) {
-    params$Group <- .hush(gsub("(.*): (.*)", "\\2", clean_params$Group))
+    params$Group <- .safe(gsub("(.*): (.*)", "\\2", clean_params$Group))
   }
 
   attr(params, "cleaned_parameters") <- named_clean_params

@@ -20,7 +20,7 @@ model_parameters.emmGrid <- function(model,
                                      verbose = TRUE,
                                      ...) {
   # set default for p-adjust
-  emm_padjust <- tryCatch(model@misc$adjust, error = function(e) NULL)
+  emm_padjust <- .safe(model@misc$adjust)
   if (!is.null(emm_padjust) && is.null(p_adjust)) {
     p_adjust <- emm_padjust
   }

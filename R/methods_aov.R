@@ -430,14 +430,7 @@ model_parameters.maov <- model_parameters.aov
     )
 
     # try to access data of model predictors
-    predictors <- tryCatch(
-      {
-        insight::get_predictors(model)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    predictors <- .safe(insight::get_predictors(model))
 
     # if data available, check contrasts and mean centering
     if (!is.null(predictors)) {

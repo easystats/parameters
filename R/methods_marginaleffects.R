@@ -89,10 +89,7 @@ model_parameters.predictions <- function(model,
     out[[resp]] <- NULL
   }
 
-  out <- tryCatch(
-    .add_model_parameters_attributes(out, model, ci, ...),
-    error = function(e) out
-  )
+  out <- .safe(.add_model_parameters_attributes(out, model, ci, ...), out)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "coefficient_name") <- "Predicted"

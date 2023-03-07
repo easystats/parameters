@@ -304,9 +304,7 @@ parameters_type <- function(model, ...) {
     subs <- "\\2"
   }
   p <- "(.*)poly\\((.*),\\s(.*)\\)(.*)"
-  tryCatch(insight::trim_ws(sub(p, replacement = subs, x)),
-    error = function(x) 1
-  )
+  .safe(insight::trim_ws(sub(p, replacement = subs, x)), 1)
 }
 
 
@@ -322,7 +320,7 @@ parameters_type <- function(model, ...) {
   out$numeric <- names(data[vapply(data, .check_for_numerics, TRUE)])
 
   # get contrast coding
-  contrast_coding <- tryCatch(model$contrasts, error = function(e) NULL)
+  contrast_coding <- .safe(model$contrasts)
 
   # if contrasts are given as matrix, find related contrast name
   if (!is.null(contrast_coding)) {
