@@ -8,8 +8,11 @@ if (requiet("metafor")) {
   params <- model_parameters(model)
 
   test_that("model_parameters.metafor", {
-    expect_equal(params$Parameter, c("Study 1", "Study 2", "Study 3", "Study 4", "Study 5", "Overall"))
-    expect_equal(
+    expect_identical(
+      params$Parameter,
+      c("Study 1", "Study 2", "Study 3", "Study 4", "Study 5", "Overall")
+    )
+    expect_identical(
       colnames(params),
       c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "p", "Weight", "Method")
     )
