@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2.6</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,10 +88,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.20.3" id="parameters-0203">parameters 0.20.3<a class="anchor" aria-label="anchor" href="#parameters-0203"></a></h2>
 <div class="section level3">
+<h3 id="general-0-20-3">General<a class="anchor" aria-label="anchor" href="#general-0-20-3"></a></h3>
+<ul><li>Added support for models of class <code>hglm</code> (<em>hglm</em>).</li>
+</ul></div>
+<div class="section level3">
 <h3 id="changes-to-functions-0-20-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-20-3"></a></h3>
 <ul><li><p><code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> gets a method for <code>ggeffects</code> objects from package <em>ggeffects</em>.</p></li>
 <li><p><code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> now prints the <code>SGPV</code> column instead of <code>% in ROPE</code>. This is because the former <code>% in ROPE</code> actually was equivalent to the second generation p-value (SGPV) and refers to the proportion of the <em>range</em> of the confidence interval that is covered by the ROPE. However, <code>% in ROPE</code> did not refer to the probability mass of the underlying distribution of a confidence interval that was covered by the ROPE, hence the old column name was a bit misleading.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/model_parameters.averaging.html">model_parameters.ggeffects()</a></code> to address forthcoming changes in the <em>ggeffects</em> package.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-20-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-20-3"></a></h3>
+<ul><li>When an invalid or not supported value for the <code>p_adjust</code> argument in <code><a href="../reference/model_parameters.html">model_parameters()</a></code> is provided, the valid options were not shown in correct capital letters, where appropriate.</li>
 </ul></div>
 </div>
     <div class="section level2">
