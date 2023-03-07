@@ -123,7 +123,7 @@ p_value.default <- function(model,
 
   # default 1st try: summary()
   if (is.null(p)) {
-    p <- tryCatch(
+    p <- .hush(
       {
         # Zelig-models are weird
         if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
@@ -132,21 +132,19 @@ p_value.default <- function(model,
           # try to get p-value from classical summary for default models
           .get_pval_from_summary(model)
         }
-      },
-      error = function(e) NULL
+      }
     )
   }
 
   # default 2nd try: p value from test-statistic
   if (is.null(p)) {
-    p <- tryCatch(
+    p <- .hush(
       {
         stat <- insight::get_statistic(model)
         p_from_stat <- 2 * stats::pt(abs(stat$Statistic), df = Inf, lower.tail = FALSE)
         names(p_from_stat) <- stat$Parameter
         p_from_stat
-      },
-      error = function(e) NULL
+      }
     )
   }
 

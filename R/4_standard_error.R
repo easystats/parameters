@@ -109,28 +109,26 @@ standard_error.default <- function(model,
 
   # classical se from summary()
   if (is.null(se)) {
-    se <- tryCatch(
+    se <- .hush(
       {
         if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
           unlist(model$get_se())
         } else {
           .get_se_from_summary(model)
         }
-      },
-      error = function(e) NULL
+      }
     )
   }
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    se <- tryCatch(
+    se <- .hush(
       {
         varcov <- insight::get_varcov(model, component = component)
         se_from_varcov <- sqrt(diag(varcov))
         names(se_from_varcov) <- colnames(varcov)
         se_from_varcov
-      },
-      error = function(e) NULL
+      }
     )
   }
 

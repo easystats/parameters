@@ -49,11 +49,7 @@ format_parameters <- function(model, ...) {
 format_parameters.default <- function(model, brackets = c("[", "]"), ...) {
   # check for valid input
   .is_model_valid(model)
-
-  tryCatch(
-    .format_parameter_default(model, brackets = brackets, ...),
-    error = function(e) NULL
-  )
+  .hush(.format_parameter_default(model, brackets = brackets, ...))
 }
 
 
@@ -411,10 +407,10 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # name elements
     names(lbs) <- names(preds) <- colnames(mf)
-    labels <- tryCatch(stats::setNames(
+    labels <- .hush(stats::setNames(
       unlist(lbs, use.names = FALSE),
       unlist(preds, use.names = FALSE)
-    ), error = function(e) NULL)
+    ))
 
     # retrieve pretty names attribute
     pn <- attributes(params)$pretty_names

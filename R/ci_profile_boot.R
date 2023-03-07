@@ -80,9 +80,7 @@
   if (is.null(profiled)) {
     out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
   } else {
-    out <- tryCatch(as.data.frame(stats::confint(profiled, level = ci, ...)),
-      error = function(e) NULL
-    )
+    out <- .hush(as.data.frame(stats::confint(profiled, level = ci, ...)))
     if (is.null(out)) {
       out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
     }

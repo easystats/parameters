@@ -316,14 +316,10 @@
 
 .add_sigma_residual_df <- function(params, model) {
   if (is.null(params$Component) || !"sigma" %in% params$Component) {
-    sig <- tryCatch(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)),
-      error = function(e) NULL
-    )
+    sig <- .hush(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)))
     attr(params, "sigma") <- as.numeric(sig)
 
-    resdf <- tryCatch(suppressWarnings(insight::get_df(model, type = "residual")),
-      error = function(e) NULL
-    )
+    resdf <- .hush(suppressWarnings(insight::get_df(model, type = "residual")))
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params

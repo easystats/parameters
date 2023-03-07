@@ -123,22 +123,10 @@
                                              ...) {
   varcorr <- .get_variance_information(model, component)
 
-  ran_intercept <- tryCatch(data.frame(.random_intercept_variance(varcorr)),
-    error = function(e) NULL
-  )
-
-  ran_slope <- tryCatch(data.frame(.random_slope_variance(model, varcorr)),
-    error = function(e) NULL
-  )
-
-  ran_corr <- tryCatch(data.frame(.random_slope_intercept_corr(model, varcorr)),
-    error = function(e) NULL
-  )
-
-  ran_slopes_corr <- tryCatch(data.frame(.random_slopes_corr(model, varcorr)),
-    error = function(e) NULL
-  )
-
+  ran_intercept <- .hush(data.frame(.random_intercept_variance(varcorr)))
+  ran_slope <- .hush(data.frame(.random_slope_variance(model, varcorr)))
+  ran_corr <- .hush(data.frame(.random_slope_intercept_corr(model, varcorr)))
+  ran_slopes_corr <- .hush(data.frame(.random_slopes_corr(model, varcorr)))
 
   # sigma/dispersion only once,
   if (component == "conditional") {

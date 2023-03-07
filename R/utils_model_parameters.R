@@ -111,9 +111,7 @@
 
 
   # model formula
-  model_formula <- tryCatch(insight::safe_deparse(insight::find_formula(model)$conditional),
-    error = function(e) NULL
-  )
+  model_formula <- .hush(insight::safe_deparse(insight::find_formula(model)$conditional))
   attr(params, "model_formula") <- model_formula
 
 
@@ -139,9 +137,7 @@
   # special handling for meta analysis. we need additional
   # information about study weights
   if (inherits(model, c("rma", "rma.uni"))) {
-    rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
-      error = function(e) NULL
-    )
+    rma_data <- .hush(insight::get_data(model, verbose = FALSE))
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / model$vi
   }
@@ -150,9 +146,7 @@
   # special handling for meta analysis again, but these objects save the
   # inverse weighting information in a different column.
   if (inherits(model, c("meta_random", "meta_fixed", "meta_bma"))) {
-    rma_data <- tryCatch(insight::get_data(model, verbose = FALSE),
-      error = function(e) NULL
-    )
+    rma_data <- .hush(insight::get_data(model, verbose = FALSE))
     attr(params, "data") <- rma_data
     attr(params, "study_weights") <- 1 / params$SE^2
   }
@@ -340,9 +334,7 @@
 
   # add Group variable
   if (!is.null(clean_params$Group) && any(nchar(clean_params$Group) > 0)) {
-    params$Group <- tryCatch(gsub("(.*): (.*)", "\\2", clean_params$Group),
-      error = function(e) NULL
-    )
+    params$Group <- .hush(gsub("(.*): (.*)", "\\2", clean_params$Group))
   }
 
   attr(params, "cleaned_parameters") <- named_clean_params
