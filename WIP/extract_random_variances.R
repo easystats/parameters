@@ -787,7 +787,7 @@
 
   names(vc_list) <- re_names
 
-  mapply(
+  Map(
     function(x, y) {
       if ("Corr" %in% colnames(x)) {
         g_cor <- suppressWarnings(stats::na.omit(as.numeric(x[, "Corr"])))
@@ -813,8 +813,7 @@
       m1
     },
     vc_list,
-    vc_rownames,
-    SIMPLIFY = FALSE
+    vc_rownames
   )
 }
 
@@ -930,7 +929,7 @@
 # ----------------------------------------------
 .random_slope_intercept_corr <- function(model, varcorr) {
   if (inherits(model, "lme")) {
-    rho01 <- unlist(sapply(varcorr, function(i) attr(i, "cor_slope_intercept")))
+    rho01 <- unlist(sapply(varcorr, attr, which = "cor_slope_intercept"))
     if (is.null(rho01)) {
       vc <- lme4::VarCorr(model)
       if ("Corr" %in% colnames(vc)) {
@@ -943,7 +942,7 @@
     }
     rho01
   } else {
-    corrs <- lapply(varcorr, attr, "correlation")
+    corrs <- lapply(varcorr, attr, which = "correlation")
     rho01 <- sapply(corrs, function(i) {
       if (!is.null(i) && colnames(i)[1] == "(Intercept)") {
         i[-1, 1]
@@ -968,7 +967,7 @@
   cat_random_slopes <- tryCatch(
     {
       d <- insight::get_data(model)[rnd_slopes]
-      any(sapply(d, is.factor))
+      any(vapply(d, is.factor, TRUE))
     },
     error = function(e) {
       NULL
