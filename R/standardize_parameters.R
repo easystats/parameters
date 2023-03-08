@@ -4,8 +4,8 @@
 #'
 #' @param model A statistical model.
 #' @param method The method used for standardizing the parameters. Can be
-#'   `"refit"` (default), `"posthoc"`, `"smart"`, `"basic"` or `"pseudo"`. See
-#'   'Details'.
+#'   `"refit"` (default), `"posthoc"`, `"smart"`, `"basic"`, `"pseudo"` or
+#'   `"sdy"`. See Details'.
 #' @param include_response If `TRUE` (default), the response value will also be
 #'   standardized. If `FALSE`, only the predictors will be standardized. For
 #'   GLMs the response value will never be standardized (see *Generalized Linear
@@ -71,6 +71,17 @@
 #' is used for level 2 predictors, and `sqrt(residual-variance)` is used for
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 #' within-group variable is found to have access between-group variance.
+#' - **sdy** (*for logistic regression models only*): This y-standardization
+#' is useful when comparing coefficients of logistic regression models across
+#' models for the same sample. Unobserved heterogeneity varies across models
+#' with different independent variables, and thus, odds ratios from the same
+#' predictor of different models cannot be compared directly. The
+#' y-standardization makes coefficients "comparable across models by dividing
+#' them with the estimated standard deviation of the latent variable for each
+#' model" (Mood 2010). Thus, whenever one has multiple logistic regression models
+#' that are fit to the same data and share certain predictors (e.g. nested
+#' models), it can be useful to use this standardization approach to make
+#' log-odds or odds ratios comparable.
 #'
 #' ## Transformed Variables
 #' When the model's formula contains transformations (e.g. `y ~ exp(X)`) `method
@@ -164,6 +175,9 @@
 #' - Gelman, A. (2008). Scaling regression inputs by dividing by two standard
 #'   deviations. Statistics in medicine, 27(15), 2865-2873.
 #'
+#' - Mood C. Logistic Regression: Why We Cannot Do What We Think We Can Do, and
+#'   What We Can Do About It. European Sociological Review (2010) 26:67–82.
+#'
 #' @export
 #' @aliases standardise_parameters
 standardize_parameters <- function(model,
@@ -221,6 +235,9 @@ standardize_parameters.default <- function(model,
       insight::format_error(
         "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
       )
+    }
+    if (method == "sdy" && !m_info$is_binomial) {
+      insight::format_error("Method \"sdy\" is only applicable to logistic regression models.")
     }
 
     pars <- .standardize_parameters_posthoc(
@@ -589,7 +606,11 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     pars[, colnames(pars) %in% .col_2_scale, drop = FALSE],
     function(x) {
       if (exponentiate) {
-        x^.dev_factor
+        if (method == "sdy") {
+          exp(x * .dev_factor)
+        } else {
+          x^.dev_factor
+        }
       } else {
         x * .dev_factor
       }

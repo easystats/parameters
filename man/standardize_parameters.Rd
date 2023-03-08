@@ -33,8 +33,8 @@ standardize_posteriors(
 \item{model}{A statistical model.}
 
 \item{method}{The method used for standardizing the parameters. Can be
-\code{"refit"} (default), \code{"posthoc"}, \code{"smart"}, \code{"basic"} or \code{"pseudo"}. See
-'Details'.}
+\code{"refit"} (default), \code{"posthoc"}, \code{"smart"}, \code{"basic"}, \code{"pseudo"} or
+\code{"sdy"}. See Details'.}
 
 \item{ci}{Confidence Interval (CI) level}
 
@@ -126,6 +126,17 @@ on a fitted random-intercept-model, where \code{sqrt(random-intercept-variance)}
 is used for level 2 predictors, and \code{sqrt(residual-variance)} is used for
 level 1 predictors (Hoffman 2015, page 342). A warning is given when a
 within-group variable is found to have access between-group variance.
+\item \strong{sdy} (\emph{for logistic regression models only}): This y-standardization
+is useful when comparing coefficients of logistic regression models across
+models for the same sample. Unobserved heterogeneity varies across models
+with different independent variables, and thus, odds ratios from the same
+predictor of different models cannot be compared directly. The
+y-standardization makes coefficients "comparable across models by dividing
+them with the estimated standard deviation of the latent variable for each
+model" (Mood 2010). Thus, whenever one has multiple logistic regression models
+that are fit to the same data and share certain predictors (e.g. nested
+models), it can be useful to use this standardization approach to make
+log-odds or odds ratios comparable.
 }
 }
 
@@ -214,6 +225,8 @@ Psychometrika, 80(2), 365-378.
 regression models.
 \item Gelman, A. (2008). Scaling regression inputs by dividing by two standard
 deviations. Statistics in medicine, 27(15), 2865-2873.
+\item Mood C. Logistic Regression: Why We Cannot Do What We Think We Can Do, and
+What We Can Do About It. European Sociological Review (2010) 26:67–82.
 }
 }
 \seealso{
