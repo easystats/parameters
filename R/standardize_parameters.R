@@ -310,7 +310,10 @@ standardize_parameters.parameters_model <- function(model,
   m_info <- .get_model_info(model, ...)
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
 
-  if (is.null(exponentiate <- attr(pars, "exponentiate"))) exponentiate <- FALSE
+  exponentiate <- attr(pars, "exponentiate")
+  if (is.null(exponentiate)) {
+    exponentiate <- FALSE
+  }
   pars <- .standardize_parameters_posthoc(
     pars, method, model, m_info, robust, two_sd, exponentiate, include_response, verbose
   )
@@ -612,23 +615,20 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   if (method %in% c("smart", "posthoc")) {
     cant_posthocsmart <- FALSE
 
-    if (mi$is_linear) {
-      if (!colnames(stats::model.frame(model))[1] == insight::find_response(model)) {
-        can_posthocsmart <- TRUE
-      }
+    if (mi$is_linear && !colnames(stats::model.frame(model))[1] == insight::find_response(model)) {
+      can_posthocsmart <- TRUE
     }
 
     # factors are allowed
-    if (!cant_posthocsmart &&
-      !all(params == insight::clean_names(params) | grepl("(as.factor|factor)\\(", params))) {
+    if (!cant_posthocsmart && !all(params == insight::clean_names(params) | grepl("(as.factor|factor)\\(", params))) {
       cant_posthocsmart <- TRUE
     }
 
     if (cant_posthocsmart) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Method `", method, "` does not currently support models with transformed parameters.",
         "Reverting to `basic` method. Concider using the `refit` method directly."
-      ), call. = FALSE)
+      )
       method <- "basic"
     }
   }
