@@ -117,6 +117,13 @@ standardize_info.default <- function(model,
     by = "Parameter", all = TRUE
   )
 
+  # sdy (see Mood 2009, 10.1093/esr/jcp006)
+  out <- merge(
+    out,
+    .std_info_predictors_sdy(model, model_matrix, types, robust = robust, two_sd = two_sd, w = wgts),
+    by = "Parameter", all = TRUE
+  )
+
   # Pseudo (for LMM)
   if (include_pseudo && mi$is_mixed && length(insight::find_random(model)$random) == 1L) {
     out <- merge(
@@ -288,6 +295,33 @@ standardize_info.default <- function(model,
 
 
 
+# Predictors - sdy ------------------------------------------------------------
+
+
+#' @keywords internal
+.std_info_predictors_sdy <- function(model,
+                                     model_matrix,
+                                     types,
+                                     ...) {
+  deviations <- NA_real_
+  # fitted values
+  fitted_values <- .safe(stats::fitted(model))
+  if (!is.null(fitted_values)) {
+    deviations <- 1 / sum(c(stats::sd(fitted_values), sqrt(pi^2 / 3)))
+  }
+
+  # Out
+  data.frame(
+    Parameter = types$Parameter[seq_along(names(model_matrix))],
+    Deviation_SDy = deviations,
+    stringsAsFactors = FALSE
+  )
+}
+
+
+
+
+
 # Response ------------------------------------------------------------
 
 #' @keywords internal
@@ -301,8 +335,7 @@ standardize_info.default <- function(model,
     means <- deviations <- rep(NA_real_, length = length(names(model_matrix)))
     for (i in seq_along(names(model_matrix))) {
       var <- names(model_matrix)[i]
-      if (any(types$Parameter == var) &&
-        types$Link[types$Parameter == var] == "Difference") {
+      if (any(types$Parameter == var) && types$Link[types$Parameter == var] == "Difference") {
         parent_var <- types$Variable[types$Parameter == var]
         intercept <- unique(data[[parent_var]])[1]
         response_at_intercept <- response[data[[parent_var]] == intercept]
@@ -346,7 +379,7 @@ standardize_info.default <- function(model,
   }
 
   if (info$is_linear) {
-    if (robust == FALSE) {
+    if (!robust) {
       sd_y <- datawizard::weighted_sd(response, w)
       mean_y <- datawizard::weighted_mean(response, w)
     } else {
@@ -414,7 +447,8 @@ standardize_info.default <- function(model,
 
   ## test "within"s are fully "within"
   # only relevant to numeric predictors that can have variance
-  if (any(check_within <- is_within & types == "numeric")) {
+  check_within <- is_within & types == "numeric"
+  if (any(check_within)) {
     p_check_within <- params[check_within]
     temp_d <- data.frame(model_matrix[, p_check_within, drop = FALSE])
     colnames(temp_d) <- paste0("W", seq_len(ncol(temp_d))) # overwrite because can't deal with ":"
@@ -529,7 +563,7 @@ standardize_info.default <- function(model,
     response <- as.numeric(data[, variable])
   }
 
-  if (robust == FALSE) {
+  if (!robust) {
     sd_x <- datawizard::weighted_sd(response, weights)
     mean_x <- datawizard::weighted_mean(response, weights)
   } else {

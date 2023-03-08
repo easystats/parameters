@@ -193,7 +193,7 @@ standardize_parameters.default <- function(model,
   .is_model_valid(model)
 
   object_name <- insight::safe_deparse_symbol(substitute(model))
-  method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
+  method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo", "sdy"))
 
   m_info <- .get_model_info(model, ...)
   include_response <- include_response && .safe_to_standardize_response(m_info, verbose = verbose)
@@ -207,14 +207,16 @@ standardize_parameters.default <- function(model,
   }
 
   # need model_parameters to return the parameters, not the terms
-  if (inherits(model, "aov")) class(model) <- class(model)[class(model) != "aov"]
+  if (inherits(model, "aov")) {
+    class(model) <- class(model)[class(model) != "aov"]
+  }
   pars <- model_parameters(model, ci = ci, standardize = NULL, effects = "fixed", as_draws = TRUE, ...)
 
   # should post hoc exponentiate?
   exponentiate <- isTRUE(eval(match.call()[["exponentiate"]], envir = parent.frame()))
   coefficient_name <- attr(pars, "coefficient_name")
 
-  if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo")) {
+  if (method %in% c("posthoc", "smart", "basic", "classic", "pseudo", "sdy")) {
     if (m_info$is_multivariate) {
       insight::format_error(
         "Cannot post-hoc standardize multivariate models. Try using method \"refit\" instead."
@@ -355,7 +357,7 @@ standardize_parameters.bootstrap_model <- function(model,
                                                    verbose = TRUE,
                                                    ...) {
   object_name <- insight::safe_deparse_symbol(substitute(model))
-  method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo"))
+  method <- match.arg(method, c("refit", "posthoc", "smart", "basic", "classic", "pseudo", "sdy"))
 
   pars <- model
   model <- attr(pars, "original_model")
@@ -568,8 +570,12 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   } else if (method == "pseudo") {
     col_dev_resp <- "Deviation_Response_Pseudo"
     col_dev_pred <- "Deviation_Pseudo"
+  } else if (method == "sdy") {
+    col_dev_resp <- "Deviation_Response_Basic"
+    col_dev_pred <- "Deviation_SDy"
+    include_response <- FALSE
   } else {
-    insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\" or \"pseudo\".")
+    insight::format_error("`method` must be one of \"basic\", \"posthoc\", \"smart\", \"pseudo\" or \"sdy\".")
   }
 
 
