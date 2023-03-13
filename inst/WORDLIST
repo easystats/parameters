@@ -219,6 +219,7 @@ glmmTMB
 glmx
 hclust
 heteroskedasticity
+hglm
 homoscedasticity
 htest
 http
@@ -285,6 +286,7 @@ robustlmm
 rownumbers
 rstanarm
 sampleSelection
+sdy
 setosa
 spaMM
 spatialreg
