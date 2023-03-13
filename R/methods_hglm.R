@@ -163,7 +163,7 @@ degrees_of_freedom.hglm <- function(model, method = "residual", ...) {
 
 
 #' @export
-ci.hglm <- function(model,
+ci.hglm <- function(x,
                     ci = 0.95,
                     method = "wald",
                     dof = NULL,
@@ -205,7 +205,7 @@ ci.hglm <- function(model,
       ...
     )
     if (effects == "all") {
-      out <- rbind(out, .ci_Re)
+      out <- rbind(out, .ci_re)
     } else {
       out <- .ci_re
     }
