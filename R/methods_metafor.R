@@ -34,7 +34,8 @@
 #'     data = dat.bcg
 #'   )
 #'   dat$alloc <- ifelse(dat$alloc == "random", "random", "other")
-#'   model <- rma(yi, vi, mods = ~alloc, data = dat, digits = 3, slab = author)
+#'   d <<- dat
+#'   model <- rma(yi, vi, mods = ~alloc, data = d, digits = 3, slab = author)
 #'   model_parameters(model)
 #' }
 #'
