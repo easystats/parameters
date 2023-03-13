@@ -178,7 +178,7 @@ ci.hglm <- function(x,
 
   if (effects %in% c("fixed", "all")) {
     out <- .ci_generic(
-      model,
+      x,
       ci = ci,
       method = method,
       dof = dof,
@@ -192,9 +192,9 @@ ci.hglm <- function(x,
   # add random effects -----------------
 
   if (effects %in% c("random", "all")) {
-    se <- standard_error(model, effects = "random", component = "conditional")$SE
+    se <- standard_error(x, effects = "random", component = "conditional")$SE
     .ci_re <- .ci_dof(
-      model,
+      x,
       ci = ci,
       method = method,
       dof = dof,
