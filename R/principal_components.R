@@ -167,7 +167,7 @@
 #'
 #' efa <- factor_analysis(mtcars[, 1:5], n = 2)
 #' summary(efa)
-#' predict(efa)
+#' predict(efa, verbose = FALSE)
 #'
 #' \donttest{
 #' # Automated number of components
@@ -208,7 +208,7 @@ principal_components <- function(x,
 
 #' @rdname principal_components
 #' @export
-rotated_data <- function(pca_results) {
+rotated_data <- function(pca_results, verbose = TRUE) {
   original_data <- attributes(pca_results)$dataset
   rotated_matrix <- insight::get_predicted(attributes(pca_results)$model)
   out <- NULL
@@ -216,7 +216,9 @@ rotated_data <- function(pca_results) {
   if (!is.null(original_data) && !is.null(rotated_matrix)) {
     compl_cases <- attributes(pca_results)$complete_cases
     if (is.null(compl_cases) && nrow(original_data) != nrow(rotated_matrix)) {
-      insight::format_warning("Could not retrieve information about missing data.")
+      if (verbose) {
+        insight::format_warning("Could not retrieve information about missing data.")
+      }
       return(NULL)
     }
     original_data$.parameters_merge_id <- seq_len(nrow(original_data))
@@ -224,7 +226,9 @@ rotated_data <- function(pca_results) {
     out <- merge(original_data, rotated_matrix, by = ".parameters_merge_id", all = TRUE, sort = FALSE)
     out$.parameters_merge_id <- NULL
   } else {
-    insight::format_warning("Either the original or the rotated data could not be retrieved.")
+    if (verbose) {
+      insight::format_warning("Either the original or the rotated data could not be retrieved.")
+    }
     return(NULL)
   }
   out

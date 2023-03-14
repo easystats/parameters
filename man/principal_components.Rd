@@ -33,7 +33,7 @@ principal_components(
   ...
 )
 
-rotated_data(pca_results)
+rotated_data(pca_results, verbose = TRUE)
 
 \method{predict}{parameters_efa}(
   object,
@@ -91,6 +91,8 @@ interpretability and avoids overfitting. Can be \code{TRUE} or \code{"robust"} (
 
 \item{pca_results}{The output of the \code{principal_components()} function.}
 
+\item{verbose}{Toggle warnings.}
+
 \item{object}{An object of class \code{parameters_pca} or \code{parameters_efa}}
 
 \item{newdata}{An optional data frame in which to look for variables with
@@ -102,8 +104,6 @@ frame.}
 \item{keep_na}{Logical, if \code{TRUE}, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.}
-
-\item{verbose}{Toggle warnings.}
 
 \item{digits, labels}{Arguments for \code{print()}.}
 }
@@ -247,7 +247,7 @@ factor_analysis(mtcars[, 1:7], n = 2, threshold = 2, sort = TRUE)
 
 efa <- factor_analysis(mtcars[, 1:5], n = 2)
 summary(efa)
-predict(efa)
+predict(efa, verbose = FALSE)
 
 \donttest{
 # Automated number of components
