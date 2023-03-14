@@ -88,7 +88,7 @@ pool_parameters <- function(x,
   }
 
   if (isTRUE(attributes(x[[1]])$exponentiate) && verbose) {
-    insight::format_warning(
+    insight::format_alert(
       "Pooling on exponentiated parameters is not recommended. Please call `model_parameters()` with 'exponentiate = FALSE', and then call `pool_parameters(..., exponentiate = TRUE)`."
     )
   }
@@ -104,7 +104,7 @@ pool_parameters <- function(x,
       i
     })
     if (verbose) {
-      insight::format_warning(paste0("Pooling applied to the ", component, " model component."))
+      insight::format_alert(paste0("Pooling applied to the ", component, " model component."))
     }
   }
 
@@ -172,7 +172,7 @@ pool_parameters <- function(x,
       )
 
       if (verbose) {
-        insight::format_warning("Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values.")
+        insight::format_alert("Model objects had no standard errors. Cannot compute pooled confidence intervals and p-values.")
       }
 
       # regular models that have coefficients and standard errors

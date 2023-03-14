@@ -158,7 +158,7 @@ model_parameters.glmmTMB <- function(model,
     if (isTRUE(group_level)) {
       params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
       if (length(random_effects) > 1) {
-        insight::format_warning(
+        insight::format_alert(
           "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."
         )
       }
