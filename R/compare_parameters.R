@@ -114,10 +114,12 @@ compare_parameters <- function(...,
   })
 
   if (!all(supported_models)) {
-    insight::format_warning(
-      sprintf("Following objects are not supported: %s", toString(model_names[!supported_models])),
-      "Dropping unsupported models now."
-    )
+    if (verbose) {
+      insight::format_alert(
+        sprintf("Following objects are not supported: %s", toString(model_names[!supported_models])),
+        "Dropping unsupported models now."
+      )
+    }
     models <- models[supported_models]
     model_names <- model_names[supported_models]
   }
@@ -137,7 +139,7 @@ compare_parameters <- function(...,
   if (!is.null(column_names)) {
     if (length(column_names) != length(model_names)) {
       if (isTRUE(verbose)) {
-        insight::format_warning("Number of column names does not match number of models.")
+        insight::format_alert("Number of column names does not match number of models.")
       }
     } else {
       model_names <- column_names

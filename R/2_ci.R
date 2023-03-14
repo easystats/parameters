@@ -68,7 +68,7 @@ ci.glm <- function(x,
   # No robust vcov for profile method
   if (method == "profile") {
     if (!is.null(vcov) || !is.null(vcov_args) && isTRUE(verbose)) {
-      insight::format_warning(
+      insight::format_alert(
         "The `vcov` and `vcov_args` are not available with `method = \"profile\"`"
       )
     }

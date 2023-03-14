@@ -406,7 +406,7 @@ equivalence_test.ggeffects <- function(x,
   range <- .check_rope_range(x, range, verbose)
 
   if (length(ci) > 1) {
-    insight::format_warning("`ci` may only be of length 1. Using first ci-value now.")
+    insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
     ci <- ci[1]
   }
 
@@ -477,7 +477,7 @@ equivalence_test.ggeffects <- function(x,
 
   if (length(ci) > 1) {
     if (isTRUE(verbose)) {
-      insight::format_warning("`ci` may only be of length 1. Using first ci-value now.")
+      insight::format_alert("`ci` may only be of length 1. Using first ci-value now.")
     }
     ci <- ci[1]
   }
