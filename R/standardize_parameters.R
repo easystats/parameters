@@ -709,7 +709,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
 #' @keywords internal
 .get_model_info <- function(model, model_info = NULL, ...) {
-  if (is.null(model_info)) model_info <- insight::model_info(model)
+  if (is.null(model_info)) model_info <- insight::model_info(model, verbose = FALSE)
 
   model_info
 }
