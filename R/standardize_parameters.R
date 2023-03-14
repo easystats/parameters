@@ -154,10 +154,10 @@
 #' @examplesIf require("rstanarm", quietly = TRUE)
 #' \donttest{
 #' model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-#' standardize_posteriors(model, method = "refit")
-#' standardize_posteriors(model, method = "posthoc")
-#' standardize_posteriors(model, method = "smart")
-#' head(standardize_posteriors(model, method = "basic"))
+#' standardize_posteriors(model, method = "refit", verbose = FALSE)
+#' standardize_posteriors(model, method = "posthoc", verbose = FALSE)
+#' standardize_posteriors(model, method = "smart", verbose = FALSE)
+#' head(standardize_posteriors(model, method = "basic", verbose = FALSE))
 #' }
 #'
 #' @references
