@@ -30,11 +30,11 @@ test_that("print brms", {
   expect_snapshot(print(mp6))
 
   m7 <- download_model("brms_zi_1")
-  mp7 <- model_parameters(m7, effects = "all", component = "all", centrality = "mean")
+  mp7 <- model_parameters(m7, effects = "all", component = "all", centrality = "mean", verbose = FALSE)
   expect_snapshot(print(mp7))
 
   m8 <- download_model("brms_zi_3")
-  mp8 <- model_parameters(m8, effects = "all", component = "all", centrality = "mean")
+  mp8 <- model_parameters(m8, effects = "all", component = "all", centrality = "mean", verbose = FALSE)
   expect_snapshot(print(mp8))
 
   m9 <- download_model("brms_ordinal_1")

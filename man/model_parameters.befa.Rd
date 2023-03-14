@@ -57,9 +57,9 @@ library(parameters)
 \donttest{
 if (require("BayesFM")) {
   efa <- BayesFM::befa(mtcars, iter = 1000)
-  results <- model_parameters(efa, sort = TRUE)
+  results <- model_parameters(efa, sort = TRUE, verbose = FALSE)
   results
-  efa_to_cfa(results)
+  efa_to_cfa(results, verbose = FALSE)
 }
 }
 }
