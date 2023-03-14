@@ -24,18 +24,20 @@
 #' standardize_info(model, two_sd = TRUE)
 #' @aliases standardise_info
 #' @export
-standardize_info <- function(model, robust = FALSE, two_sd = FALSE, include_pseudo = FALSE, ...) {
+standardize_info <- function(model, ...) {
   UseMethod("standardize_info")
 }
 
 #' @export
 standardise_info <- standardize_info
 
+#' @rdname standardize_info
 #' @export
 standardize_info.default <- function(model,
                                      robust = FALSE,
                                      two_sd = FALSE,
                                      include_pseudo = FALSE,
+                                     verbose = TRUE,
                                      ...) {
   # check for valid input
   .is_model_valid(model)
@@ -54,8 +56,8 @@ standardize_info.default <- function(model,
   wgts <- insight::get_weights(model, na_rm = TRUE)
 
   # Sanity Check for ZI
-  if (mi$is_zero_inflated) {
-    insight::format_warning(
+  if (mi$is_zero_inflated && verbose) {
+    insight::format_alert(
       "Non-refit parameter standardization is ignoring the zero-inflation component."
     )
     # would need to also get the binomial model matrix...
@@ -135,7 +137,8 @@ standardize_info.default <- function(model,
         data,
         types = types$Type,
         robust = robust,
-        two_sd = two_sd
+        two_sd = two_sd,
+        verbose = verbose
       )
     )
   }
@@ -412,9 +415,10 @@ standardize_info.default <- function(model,
                              types,
                              robust = FALSE,
                              two_sd = FALSE,
+                             verbose = verbose,
                              ...) {
-  if (robust) {
-    insight::format_warning("`robust` standardization not available for `pseudo` method.")
+  if (robust && format_alert) {
+    insight::format_alert("`robust` standardization not available for `pseudo` method.")
   }
 
   insight::check_if_installed("performance")
@@ -465,8 +469,8 @@ standardize_info.default <- function(model,
     }) > 0.01
     also_between <- p_check_within[has_lvl2_var]
 
-    if (length(also_between)) {
-      insight::format_warning(
+    if (length(also_between) && verbose) {
+      insight::format_alert(
         "The following within-group terms have between-group variance:",
         toString(also_between),
         "This can inflate standardized within-group parameters associated with these terms.",

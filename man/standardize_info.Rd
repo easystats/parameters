@@ -3,18 +3,24 @@
 \name{standardize_info}
 \alias{standardize_info}
 \alias{standardise_info}
+\alias{standardize_info.default}
 \title{Get Standardization Information}
 \usage{
-standardize_info(
+standardize_info(model, ...)
+
+\method{standardize_info}{default}(
   model,
   robust = FALSE,
   two_sd = FALSE,
   include_pseudo = FALSE,
+  verbose = TRUE,
   ...
 )
 }
 \arguments{
 \item{model}{A statistical model.}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{robust}{Logical, if \code{TRUE}, centering is done by subtracting the
 median from the variables and dividing it by the median absolute deviation
@@ -30,7 +36,7 @@ outcome) (Gelman, 2008).}
 \item{include_pseudo}{(For (G)LMMs) Should Pseudo-standardized information be
 included?}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{verbose}{Toggle warnings and messages on or off.}
 }
 \value{
 A data frame with information on each parameter (see
