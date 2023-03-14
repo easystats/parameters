@@ -168,9 +168,9 @@ included in the summary output.</p></dd>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"BayesFM"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">efa</span> <span class="op">&lt;-</span> <span class="fu">BayesFM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFM/man/befa.html" class="external-link">befa</a></span><span class="op">(</span><span class="va">mtcars</span>, iter <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">efa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">efa</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">results</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="convert_efa_to_cfa.html">efa_to_cfa</a></span><span class="op">(</span><span class="va">results</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: BayesFM</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> starting MCMC sampling...</span>
