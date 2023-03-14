@@ -38,7 +38,7 @@ if (requiet("MCMCglmm")) {
 
   test_that("model_parameters", {
     expect_equal(
-      expect_warning(model_parameters(m1, centrality = "mean")$Mean),
+      model_parameters(m1, centrality = "mean", verbose = FALSE)$Mean,
       c(1.0132, 0.04232),
       tolerance = 0.01
     )
@@ -46,7 +46,7 @@ if (requiet("MCMCglmm")) {
 
   test_that("model_parameters", {
     expect_equal(
-      expect_warning(model_parameters(m1, centrality = "median")$Median),
+      model_parameters(m1, centrality = "median", verbose = FALSE)$Median,
       c(1.01382, 0.04207),
       tolerance = 0.01
     )
