@@ -126,7 +126,7 @@ Details section).</p>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">rotated_data</span><span class="op">(</span><span class="va">pca_results</span><span class="op">)</span></span>
+<span><span class="fu">rotated_data</span><span class="op">(</span><span class="va">pca_results</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for parameters_efa</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span></span>
@@ -209,6 +209,10 @@ interpretability and avoids overfitting. Can be <code>TRUE</code> or <code>"robu
 <dd><p>The output of the <code>principal_components()</code> function.</p></dd>
 
 
+<dt>verbose</dt>
+<dd><p>Toggle warnings.</p></dd>
+
+
 <dt>object</dt>
 <dd><p>An object of class <code>parameters_pca</code> or <code>parameters_efa</code></p></dd>
 
@@ -227,10 +231,6 @@ frame.</p></dd>
 <dd><p>Logical, if <code>TRUE</code>, predictions also return observations
 with missing values from the original data, hence the number of rows of
 predicted data and original data is equal.</p></dd>
-
-
-<dt>verbose</dt>
-<dd><p>Toggle warnings.</p></dd>
 
 
 <dt>digits, labels</dt>
@@ -585,9 +585,7 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained              | 0.782 | 0.080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Cumulative) | 0.782 | 0.861</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance Explained (Proportion) | 0.908 | 0.092</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Could not retrieve information about missing data. Returning only</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   complete cases.</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">efa</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            MR1         MR2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.41953471 -0.35544083</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.41953471 -0.35544083</span>
