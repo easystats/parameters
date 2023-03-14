@@ -416,12 +416,12 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-in"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">am</span> <span class="op">+</span> <span class="va">vs</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">cyl</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> boundary (singular) fit: see help('isSingular')</span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">m</span>, method <span class="op">=</span> <span class="st">"pseudo"</span>, ci_method <span class="op">=</span> <span class="st">"satterthwaite"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The following within-group terms have between-group variance:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   am, vs</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   This can inflate standardized within-group parameters associated with</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   these terms.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   See `help("demean", package = "datawizard")` for modeling between- and</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   within-subject effects.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following within-group terms have between-group variance:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   am, vs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   This can inflate standardized within-group parameters associated with</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   these terms.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   See `help("demean", package = "datawizard")` for modeling between- and</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>   within-subject effects.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: pseudo</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>

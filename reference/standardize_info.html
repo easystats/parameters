@@ -101,11 +101,15 @@ i.e., by what they are divided. The "basic" method of standardization uses.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">standardize_info</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">standardize_info</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for default</span></span>
+<span><span class="fu">standardize_info</span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
 <span>  robust <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  two_sd <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_pseudo <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -114,6 +118,10 @@ i.e., by what they are divided. The "basic" method of standardization uses.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
 <dd><p>A statistical model.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Arguments passed to or from other methods.</p></dd>
 
 
 <dt>robust</dt>
@@ -136,8 +144,8 @@ outcome) (Gelman, 2008).</p></dd>
 included?</p></dd>
 
 
-<dt>...</dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
+<dt>verbose</dt>
+<dd><p>Toggle warnings and messages on or off.</p></dd>
 
 </dl></div>
     <div class="section level2">
