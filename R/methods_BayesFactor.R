@@ -307,7 +307,7 @@ p_value.BFBayesFactor <- function(model, ...) {
 .method_BFBayesFactor <- function(x) {
   if (inherits(x@denominator, "BFcorrelation")) {
     "Bayesian correlation analysis"
-  } else if (inherits(x@denominator, "BFoneSample", "BFindepSample")) {
+  } else if (inherits(x@denominator, c("BFoneSample", "BFindepSample"))) {
     "Bayesian t-test"
   } else if (inherits(x@denominator, "BFmetat")) {
     "Meta-analytic Bayes factors"

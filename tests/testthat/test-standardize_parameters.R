@@ -207,8 +207,8 @@ test_that("standardize_parameters (with functions /  interactions)", {
   )
 
   # posthoc / smart don't support data transformation
-  expect_warning(standardize_parameters(m1, method = "smart"))
-  expect_warning(standardize_parameters(m1, method = "posthoc"))
+  expect_message(standardize_parameters(m1, method = "smart"))
+  expect_message(standardize_parameters(m1, method = "posthoc"))
 })
 
 
