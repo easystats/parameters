@@ -555,7 +555,7 @@
 
 .parameter_groups <- function(x, groups) {
   # only apply to conditional component for now
-  if ("Component" %in% colnames(x) && sum(x$Component == "conditional") == 0) {
+  if ("Component" %in% colnames(x) && !any(x$Component == "conditional")) {
     return(x)
   }
   if ("Component" %in% colnames(x)) {
@@ -582,9 +582,7 @@
 
     # sanity check - check if all parameter names in the
     # group list are spelled correctly
-    misspelled <- sapply(group_rows, function(i) {
-      anyNA(i)
-    })
+    misspelled <- vapply(group_rows, anyNA, TRUE)
 
     if (any(misspelled)) {
       # remove invalid groups
@@ -616,7 +614,7 @@
     names(groups) <- group_names
 
     # order groups
-    groups <- groups[order(groups)]
+    groups <- sort(groups, na.last = TRUE)
   }
 
 
@@ -928,8 +926,8 @@
       colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
     }
 
-    # rename columns for correlation part
-    if (type == "correlation" && !is.null(coef_column)) {
+    # rename columns for correlation, location or scale part
+    if (type %in% c("correlation", "scale", "location") && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- "Estimate"
     }
 
@@ -1040,11 +1038,9 @@
   # fix for lavaan here
   if (is_lavaan) {
     for (i in seq_along(final_table)) {
-      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To)) {
-        if (all(is.na(final_table[[i]]$Link))) {
-          final_table[[i]]$Link <- final_table[[i]]$To
-          final_table[[i]]$To <- NA
-        }
+      if (!is.null(final_table[[i]]$Link) && !is.null(final_table[[i]]$To) && all(is.na(final_table[[i]]$Link))) {
+        final_table[[i]]$Link <- final_table[[i]]$To
+        final_table[[i]]$To <- NA
       }
       colnames(final_table[[i]])[1] <- "Parameter"
       if (!is.null(final_table[[i]]$To) && all(is.na(final_table[[i]]$To))) {

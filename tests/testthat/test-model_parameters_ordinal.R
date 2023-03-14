@@ -11,7 +11,8 @@ if (.runThisTest && requiet("ordinal")) {
       "Confidence5", "Confidence6", "Confidence1", "Confidence2",
       "Confidence3", "Confidence4", "Confidence5", "Confidence6"
     ),
-    w = c(320, 295, 243, 206, 174, 159, 136, 188, 208, 256, 302, 333)
+    w = c(320, 295, 243, 206, 174, 159, 136, 188, 208, 256, 302, 333),
+    stringsAsFactors = FALSE
   )
 
   m1 <- clm(ordered(Response) ~ Stim,
@@ -48,6 +49,15 @@ if (.runThisTest && requiet("ordinal")) {
       c(-0.72845, -0.15862, 0.26583, 0.69614, 1.23477, 0.55237, -0.04069),
       tolerance = 1e-4
     )
+
+    mp <- model_parameters(m1, exponentiate = TRUE)
+    expect_equal(
+      mp$Coefficient,
+      c(0.48266, 0.85332, 1.30451, 2.006, 3.4376, 0.55237, -0.04069),
+      tolerance = 1e-4
+    )
+
+    expect_snapshot(print(mp))
   })
 
   test_that("model_parameters.clm2", {
@@ -71,5 +81,14 @@ if (.runThisTest && requiet("ordinal")) {
       c(-0.72845, -0.15862, 0.26583, 0.69614, 1.23477, 0.55237, -0.04069),
       tolerance = 1e-4
     )
+
+    mp <- model_parameters(m2, exponentiate = TRUE)
+    expect_equal(
+      mp$Coefficient,
+      c(0.48266, 0.85332, 1.30451, 2.006, 3.4376, 0.55237, -0.04069),
+      tolerance = 1e-4
+    )
+
+    expect_snapshot(print(mp))
   })
 }

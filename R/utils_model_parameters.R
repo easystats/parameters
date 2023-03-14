@@ -298,6 +298,9 @@
   if (any(columns)) {
     if (inherits(model, "mvord")) {
       rows <- params$Component != "correlation"
+    } else if (inherits(model, c("clm", "clm2", "clmm"))) {
+      ## TODO: make sure we catch all ordinal models properly here
+      rows <- !tolower(params$Component) %in% c("location", "scale")
     } else {
       # don't exponentiate dispersion
       if (!is.null(params$Component)) {
