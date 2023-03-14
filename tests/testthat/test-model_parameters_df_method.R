@@ -82,7 +82,7 @@ if (requiet("lmerTest") && requiet("pbkrtest") && requiet("lme4")) {
   model <- lm(mpg ~ as.factor(gear) * hp + as.factor(am) + wt, data = mtcars)
   test_that("model_parameters, ci_method-lm", {
     expect_s3_class(model_parameters(model), "parameters_model")
-    expect_warning(model_parameters(model, ci_method = "kenward"))
+    expect_message(model_parameters(model, ci_method = "kenward"))
   })
 
   unloadNamespace("afex")

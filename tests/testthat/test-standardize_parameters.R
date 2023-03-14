@@ -335,7 +335,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   )
 
   ## No robust methods... (yet)
-  expect_warning(standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE), regexp = "robust")
+  expect_message(standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE), regexp = "robust")
 
 
   ## Correctly identify within and between terms
@@ -402,7 +402,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   mM <- lme4::lmer(Y ~ X + Z + C + (1 | ID), dat)
 
   expect_warning(standardize_parameters(mW, method = "pseudo"), regexp = NA)
-  expect_warning(standardize_parameters(mM, method = "pseudo"), regexp = "within-group")
+  expect_message(standardize_parameters(mM, method = "pseudo"), regexp = "within-group")
 })
 
 
@@ -416,7 +416,9 @@ test_that("standardize_parameters (pscl)", {
 
   mp <- model_parameters(m, effects = "fixed")
   sm1 <- standardize_parameters(m, method = "refit")
-  expect_warning(sm2 <- standardize_parameters(m, method = "posthoc"))
+  expect_message({
+    sm2 <- standardize_parameters(m, method = "posthoc")
+  })
   suppressWarnings({
     sm3 <- standardize_parameters(m, method = "basic")
     sm4 <- standardize_parameters(m, method = "smart")
