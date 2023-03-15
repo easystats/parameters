@@ -311,7 +311,7 @@ standardize_parameters.parameters_model <- function(model,
                                                     ...) {
   if (method == "refit") {
     insight::format_error(
-      "Argument `refit` not supported for standardizing results from `model_parameters()`.",
+      "Argument `refit` not supported for standardizing results from `model_parameters()`."
     )
   }
 
