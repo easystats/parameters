@@ -26,7 +26,7 @@
 
   if (isTRUE(standardize)) {
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "`standardize` must be on of \"refit\", \"posthoc\", \"basic\", \"smart\" or \"pseudo\"."
       )
     }
@@ -400,7 +400,7 @@
 
   if (nrow(out) == 0) {
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."
       )
     }
@@ -744,7 +744,7 @@
   if (insight::is_multivariate(model) && any(c("rope", "p_rope") %in% test)) {
     test <- setdiff(test, c("rope", "p_rope"))
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
       )
     }
@@ -885,7 +885,7 @@
   valid_std_options <- c("all", "std.all", "latent", "std.lv", "no_exogenous", "std.nox")
   if (!is.logical(standardize) && !(standardize %in% valid_std_options)) {
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
         "Returning unstandardized solution."
       )
@@ -897,7 +897,7 @@
   if (length(ci) > 1L) {
     ci <- ci[1]
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         paste0("lavaan models only accept one level of CI. Keeping the first one: `ci = ", ci, "`.")
       )
     }
@@ -1019,7 +1019,7 @@
 .check_rank_deficiency <- function(p, verbose = TRUE) {
   if (anyNA(p$Estimate)) {
     if (isTRUE(verbose)) {
-      insight::format_warning(
+      insight::format_alert(
         sprintf(
           "Model matrix is rank deficient. Parameters `%s` were not estimable.",
           toString(p$Parameter[is.na(p$Estimate)])

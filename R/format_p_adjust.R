@@ -116,7 +116,7 @@ format_p_adjust <- function(method) {
         insight::format_warning(paste0("Could not apply ", p_adjust, "-adjustment to p-values. Either something went wrong, or the non-adjusted p-values were already very large."))
       }
     } else if (verbose) {
-      insight::format_warning(paste0("`p_adjust` must be one of ", toString(all_methods)))
+      insight::format_alert(paste0("`p_adjust` must be one of ", toString(all_methods)))
     }
   }
   params

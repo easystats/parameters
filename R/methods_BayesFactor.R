@@ -74,7 +74,7 @@ model_parameters.BFBayesFactor <- function(model,
 
   if (any(startsWith(names(model@numerator), "Null"))) {
     if (isTRUE(verbose)) {
-      insight::format_warning(
+      insight::format_alert(
         "Nothing to compute for point-null models.",
         "See github.com/easystats/parameters/issues/226"
       )
@@ -285,19 +285,19 @@ p_value.BFBayesFactor <- function(model, ...) {
 .classify_BFBayesFactor <- function(x) {
   insight::check_if_installed("BayesFactor")
 
-  if (any(class(x@denominator) %in% c("BFcorrelation"))) {
+  if (inherits(x@denominator, "BFcorrelation")) {
     "correlation"
-  } else if (any(class(x@denominator) %in% c("BFoneSample"))) {
+  } else if (inherits(x@denominator, "BFoneSample")) {
     "ttest1"
-  } else if (any(class(x@denominator) %in% c("BFindepSample"))) {
+  } else if (inherits(x@denominator, "BFindepSample")) {
     "ttest2"
-  } else if (any(class(x@denominator) %in% c("BFmetat"))) {
+  } else if (inherits(x@denominator, "BFmetat")) {
     "meta"
-  } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
+  } else if (inherits(x@denominator, "BFlinearModel")) {
     "linear"
-  } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
+  } else if (inherits(x@denominator, "BFcontingencyTable")) {
     "xtable"
-  } else if (any(class(x@denominator) %in% c("BFproportion"))) {
+  } else if (inherits(x@denominator, "BFproportion")) {
     "proptest"
   } else {
     class(x@denominator)
@@ -305,17 +305,17 @@ p_value.BFBayesFactor <- function(model, ...) {
 }
 
 .method_BFBayesFactor <- function(x) {
-  if (any(class(x@denominator) %in% c("BFcorrelation"))) {
+  if (inherits(x@denominator, "BFcorrelation")) {
     "Bayesian correlation analysis"
-  } else if (any(class(x@denominator) %in% c("BFoneSample", "BFindepSample"))) {
+  } else if (inherits(x@denominator, c("BFoneSample", "BFindepSample"))) {
     "Bayesian t-test"
-  } else if (any(class(x@denominator) %in% c("BFmetat"))) {
+  } else if (inherits(x@denominator, "BFmetat")) {
     "Meta-analytic Bayes factors"
-  } else if (any(class(x@denominator) %in% c("BFlinearModel"))) {
+  } else if (inherits(x@denominator, "BFlinearModel")) {
     "Bayes factors for linear models"
-  } else if (any(class(x@denominator) %in% c("BFcontingencyTable"))) {
+  } else if (inherits(x@denominator, "BFcontingencyTable")) {
     "Bayesian contingency table analysis"
-  } else if (any(class(x@denominator) %in% c("BFproportion"))) {
+  } else if (inherits(x@denominator, "BFproportion")) {
     "Bayesian proportion test"
   } else {
     NA_character_

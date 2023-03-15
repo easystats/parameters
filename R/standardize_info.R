@@ -417,7 +417,7 @@ standardize_info.default <- function(model,
                              two_sd = FALSE,
                              verbose = verbose,
                              ...) {
-  if (robust && format_alert) {
+  if (robust && verbose) {
     insight::format_alert("`robust` standardization not available for `pseudo` method.")
   }
 

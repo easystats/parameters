@@ -206,10 +206,10 @@ standardize_parameters(m, method = "pseudo", ci_method = "satterthwaite")
 \dontshow{if (require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-standardize_posteriors(model, method = "refit")
-standardize_posteriors(model, method = "posthoc")
-standardize_posteriors(model, method = "smart")
-head(standardize_posteriors(model, method = "basic"))
+standardize_posteriors(model, method = "refit", verbose = FALSE)
+standardize_posteriors(model, method = "posthoc", verbose = FALSE)
+standardize_posteriors(model, method = "smart", verbose = FALSE)
+head(standardize_posteriors(model, method = "basic", verbose = FALSE))
 }
 \dontshow{\}) # examplesIf}
 }

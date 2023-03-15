@@ -63,8 +63,8 @@ if (requiet("lmerTest") && requiet("pbkrtest") && requiet("lme4")) {
 
   test_that("model_parameters, satterthwaite Conf Int-2", {
     coef.table <- as.data.frame(summary(model2)$coefficients)
-    coef.table$CI_low <- coef.table$Estimate - (coef.table$"Std. Error" * qt(.975, df = coef.table$df))
-    coef.table$CI_high <- coef.table$Estimate + (coef.table$"Std. Error" * qt(.975, df = coef.table$df))
+    coef.table$CI_low <- coef.table$Estimate - (coef.table$"Std. Error" * qt(0.975, df = coef.table$df))
+    coef.table$CI_high <- coef.table$Estimate + (coef.table$"Std. Error" * qt(0.975, df = coef.table$df))
 
     expect_equal(mp2$CI_low, coef.table$CI_low, tolerance = 1e-4)
     expect_equal(mp2$CI_high, coef.table$CI_high, tolerance = 1e-4)
@@ -82,7 +82,7 @@ if (requiet("lmerTest") && requiet("pbkrtest") && requiet("lme4")) {
   model <- lm(mpg ~ as.factor(gear) * hp + as.factor(am) + wt, data = mtcars)
   test_that("model_parameters, ci_method-lm", {
     expect_s3_class(model_parameters(model), "parameters_model")
-    expect_warning(model_parameters(model, ci_method = "kenward"))
+    expect_message(model_parameters(model, ci_method = "kenward"))
   })
 
   unloadNamespace("afex")

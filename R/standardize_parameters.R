@@ -154,10 +154,10 @@
 #' @examplesIf require("rstanarm", quietly = TRUE)
 #' \donttest{
 #' model <- rstanarm::stan_glm(rating ~ critical + privileges, data = attitude, refresh = 0)
-#' standardize_posteriors(model, method = "refit")
-#' standardize_posteriors(model, method = "posthoc")
-#' standardize_posteriors(model, method = "smart")
-#' head(standardize_posteriors(model, method = "basic"))
+#' standardize_posteriors(model, method = "refit", verbose = FALSE)
+#' standardize_posteriors(model, method = "posthoc", verbose = FALSE)
+#' standardize_posteriors(model, method = "smart", verbose = FALSE)
+#' head(standardize_posteriors(model, method = "basic", verbose = FALSE))
 #' }
 #'
 #' @references
@@ -311,12 +311,12 @@ standardize_parameters.parameters_model <- function(model,
                                                     ...) {
   if (method == "refit") {
     insight::format_error(
-      "Argument `refit` not supported for standardizing results from `model_parameters()`.",
+      "Argument `refit` not supported for standardizing results from `model_parameters()`."
     )
   }
 
   if (!is.null(ci)) {
-    insight::format_warning(
+    insight::format_alert(
       "Argument `ci` not supported for standardizing results from `model_parameters()`. It is ignored."
     )
   }
@@ -556,7 +556,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)
 
   if (robust && method == "pseudo") {
-    insight::format_warning("`robust` standardization not available for `pseudo` method.")
+    insight::format_alert("`robust` standardization not available for `pseudo` method.")
     robust <- FALSE
   }
 
@@ -652,7 +652,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     }
 
     if (cant_posthocsmart) {
-      insight::format_warning(
+      insight::format_alert(
         "Method `", method, "` does not currently support models with transformed parameters.",
         "Reverting to `basic` method. Concider using the `refit` method directly."
       )
@@ -666,7 +666,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 #' @keywords internal
 .should_pseudo <- function(method, model, mi) {
   if (method == "pseudo" && !(mi$is_mixed && length(insight::find_random(model)$random) == 1)) {
-    insight::format_warning(
+    insight::format_alert(
       "`pseudo` method only available for 2-level (G)LMMs.",
       "Setting method to `basic`."
     )

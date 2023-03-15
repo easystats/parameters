@@ -40,8 +40,8 @@ if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
   ))
 
   test_that("unsupported args", {
-    expect_warning(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
-    expect_warning(model_parameters(m1, vcov = "HC3"))
+    expect_message(model_parameters(m1, vcov = "HC3", effects = "fixed", component = "conditional"))
+    expect_message(model_parameters(m1, vcov = "HC3"))
   })
 
   test_that("ci", {

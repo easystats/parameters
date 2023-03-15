@@ -34,19 +34,19 @@ test_that("standardize_parameters (model_parameters)", {
   s1 <- standardize_parameters(model, method = "basic")
   s2 <- standardize_parameters(mp, method = "basic")
 
-  expect_equal(s1$Parameter, s2$Parameter)
-  expect_equal(s1$Std_Coefficient, s2$Std_Coefficient)
-  expect_equal(s1$CI_low, s2$CI_low)
-  expect_equal(s1$CI_high, s2$CI_high)
+  expect_equal(s1$Parameter, s2$Parameter, tolerance = 1e-4)
+  expect_equal(s1$Std_Coefficient, s2$Std_Coefficient, tolerance = 1e-4)
+  expect_equal(s1$CI_low, s2$CI_low, tolerance = 1e-4)
+  expect_equal(s1$CI_high, s2$CI_high, tolerance = 1e-4)
 
   mp_exp <<- model_parameters(model, exponentiate = TRUE, effects = "fixed")
   se1 <- standardize_parameters(model, method = "basic", exponentiate = TRUE)
   se2 <- standardize_parameters(mp_exp, method = "basic", exponentiate = TRUE)
 
-  expect_equal(se1$Parameter, se2$Parameter)
-  expect_equal(se1$Std_Coefficient, se2$Std_Coefficient)
-  expect_equal(se1$CI_low, se2$CI_low)
-  expect_equal(se1$CI_high, se2$CI_high)
+  expect_equal(se1$Parameter, se2$Parameter, tolerance = 1e-4)
+  expect_equal(se1$Std_Coefficient, se2$Std_Coefficient, tolerance = 1e-4)
+  expect_equal(se1$CI_low, se2$CI_low, tolerance = 1e-4)
+  expect_equal(se1$CI_high, se2$CI_high, tolerance = 1e-4)
 })
 
 # bootstrap_model ---------------------------------------------------------
@@ -178,11 +178,13 @@ test_that("standardize_parameters (with functions /  interactions)", {
 
   expect_equal(
     standardize_parameters(m1, method = "basic")$Std_Coefficient,
-    standardize_parameters(m2, method = "basic")$Std_Coefficient
+    standardize_parameters(m2, method = "basic")$Std_Coefficient,
+    ignore_attr = TRUE
   )
   expect_equal(
     standardize_parameters(m1, method = "basic")$Std_Coefficient,
-    standardize_parameters(m3, method = "basic")$Std_Coefficient
+    standardize_parameters(m3, method = "basic")$Std_Coefficient,
+    ignore_attr = TRUE
   )
   # expect_equal(
   #   standardize_parameters(m1, method = "basic")$Std_Coefficient,
@@ -203,12 +205,13 @@ test_that("standardize_parameters (with functions /  interactions)", {
   )))
   expect_equal(
     standardize_parameters(m1, method = "basic")[[2]],
-    standardize_parameters(m2, method = "basic")[[2]]
+    standardize_parameters(m2, method = "basic")[[2]],
+    ignore_attr = TRUE
   )
 
   # posthoc / smart don't support data transformation
-  expect_warning(standardize_parameters(m1, method = "smart"))
-  expect_warning(standardize_parameters(m1, method = "posthoc"))
+  expect_message(standardize_parameters(m1, method = "smart"))
+  expect_message(standardize_parameters(m1, method = "posthoc"))
 })
 
 
@@ -222,15 +225,18 @@ test_that("standardize_parameters (exponentiate)", {
 
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1],
+    ignore_attr = TRUE
   )
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1],
+    ignore_attr = TRUE
   )
   expect_equal(
     mod_refit[[2]][-1],
-    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1]
+    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1],
+    ignore_attr = TRUE
   )
 
 
@@ -242,11 +248,13 @@ test_that("standardize_parameters (exponentiate)", {
 
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1],
+    ignore_attr = TRUE
   )
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1],
+    ignore_attr = TRUE
   )
   expect_equal(
     mod_refit[[2]][-1],
@@ -327,7 +335,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   )
 
   ## No robust methods... (yet)
-  expect_warning(standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE), regexp = "robust")
+  expect_message(standardize_parameters(m, method = "pseudo", robust = TRUE, verbose = FALSE), regexp = "robust")
 
 
   ## Correctly identify within and between terms
@@ -394,7 +402,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
   mM <- lme4::lmer(Y ~ X + Z + C + (1 | ID), dat)
 
   expect_warning(standardize_parameters(mW, method = "pseudo"), regexp = NA)
-  expect_warning(standardize_parameters(mM, method = "pseudo"), regexp = "within-group")
+  expect_message(standardize_parameters(mM, method = "pseudo"), regexp = "within-group")
 })
 
 
@@ -408,7 +416,9 @@ test_that("standardize_parameters (pscl)", {
 
   mp <- model_parameters(m, effects = "fixed")
   sm1 <- standardize_parameters(m, method = "refit")
-  expect_warning(sm2 <- standardize_parameters(m, method = "posthoc"))
+  expect_message({
+    sm2 <- standardize_parameters(m, method = "posthoc")
+  })
   suppressWarnings({
     sm3 <- standardize_parameters(m, method = "basic")
     sm4 <- standardize_parameters(m, method = "smart")

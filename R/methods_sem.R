@@ -9,7 +9,7 @@ standard_error.sem <- function(model, ...) {
     return(NULL)
   }
   if (is.null(model$se)) {
-    insight::format_warning(
+    insight::format_alert(
       "Model has no standard errors. Please fit model again with bootstrapped standard errors."
     )
     return(NULL)

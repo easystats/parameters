@@ -200,7 +200,7 @@ predict.parameters_pca <- predict.parameters_efa
   compl_cases <- attributes(object)$complete_cases
   if (is.null(compl_cases)) {
     if (verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "Could not retrieve information about missing data. Returning only complete cases."
       )
     }

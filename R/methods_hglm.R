@@ -109,7 +109,7 @@ standard_error.hglm <- function(model,
   f <- insight::find_formula(model)
   if (component == "dispersion" && is.null(f$dispersion)) {
     if (verbose) {
-      insight::format_warning("No standard errors found for model's dispersion parameters.")
+      insight::format_alert("No standard errors found for model's dispersion parameters.")
     }
     return(NULL)
   }

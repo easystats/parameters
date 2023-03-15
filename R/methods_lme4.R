@@ -167,7 +167,7 @@ model_parameters.merMod <- function(model,
   # post hoc standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      insight::format_warning(
+      insight::format_alert(
         "Standardizing coefficients only works for fixed effects of the mixed model."
       )
     }
@@ -193,7 +193,7 @@ model_parameters.merMod <- function(model,
       if (effects != "fixed") {
         effects <- "fixed"
         if (verbose) {
-          insight::format_warning("Bootstrapping only returns fixed effects of the mixed model.")
+          insight::format_alert("Bootstrapping only returns fixed effects of the mixed model.")
         }
       }
     } else {

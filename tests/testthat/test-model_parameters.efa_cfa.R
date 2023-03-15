@@ -48,7 +48,7 @@ if (
     params <- parameters::model_parameters(m1)
     expect_equal(c(nrow(params), ncol(params)), c(10, 10))
 
-    expect_warning(parameters::model_parameters(m1, ci = c(0.8, 0.9)))
+    expect_message(parameters::model_parameters(m1, ci = c(0.8, 0.9)))
 
     params <- parameters::model_parameters(m1, standardize = TRUE, component = "all")
     expect_equal(c(nrow(params), ncol(params)), c(20, 10))

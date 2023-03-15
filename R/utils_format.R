@@ -588,7 +588,7 @@
       # remove invalid groups
       group_rows[misspelled] <- NULL
       # tell user
-      insight::format_warning(
+      insight::format_alert(
         "Couldn't find one or more parameters specified in following groups:",
         toString(names(misspelled[misspelled])),
         "Maybe you misspelled parameter names?"
