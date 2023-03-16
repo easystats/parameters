@@ -434,6 +434,8 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">rstanarm</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">critical</span> <span class="op">+</span> <span class="va">privileges</span>, data <span class="op">=</span> <span class="va">attitude</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_posteriors</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"refit"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Standardizing variables without adjusting priors may lead to bogus</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   results unless priors are auto-scaled.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  critical | privileges</span>
