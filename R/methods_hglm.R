@@ -34,7 +34,8 @@ model_parameters.hglm <- function(model,
   # fixed effects
 
   mp <- model_parameters.default(
-    model, ci = ci, ci_method = ci_method, bootstrap = bootstrap,
+    model,
+    ci = ci, ci_method = ci_method, bootstrap = bootstrap,
     effects = "fixed", component = "conditional", iterations = iterations,
     exponentiate = exponentiate, p_adjust = p_adjust, summary = summary,
     keep = keep, drop = drop, verbose = verbose, ...

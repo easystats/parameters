@@ -107,27 +107,23 @@ standard_error.default <- function(model,
 
   # classical se from summary()
   if (is.null(se)) {
-    se <- .safe(
-      {
-        if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
-          unlist(model$get_se())
-        } else {
-          .get_se_from_summary(model)
-        }
+    se <- .safe({
+      if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
+        unlist(model$get_se())
+      } else {
+        .get_se_from_summary(model)
       }
-    )
+    })
   }
 
   # classical se from get_varcov()
   if (is.null(se)) {
-    se <- .safe(
-      {
-        varcov <- insight::get_varcov(model, component = component)
-        se_from_varcov <- sqrt(diag(varcov))
-        names(se_from_varcov) <- colnames(varcov)
-        se_from_varcov
-      }
-    )
+    se <- .safe({
+      varcov <- insight::get_varcov(model, component = component)
+      se_from_varcov <- sqrt(diag(varcov))
+      names(se_from_varcov) <- colnames(varcov)
+      se_from_varcov
+    })
   }
 
   # output
