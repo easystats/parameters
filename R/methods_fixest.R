@@ -133,7 +133,9 @@ ci.fixest_multi <- function(x, ...) {
   for (i in seq_along(out)) {
     out[[i]]$Response <- resp[[i]]
   }
-  do.call(rbind, out)
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }
 
 
@@ -146,7 +148,9 @@ standard_error.fixest_multi <- function(model, ...) {
   for (i in seq_along(out)) {
     out[[i]]$Response <- resp[[i]]
   }
-  do.call(rbind, out)
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }
 
 
@@ -159,7 +163,9 @@ degrees_of_freedom.fixest_multi <- function(model, ...) {
   for (i in seq_along(out)) {
     out[[i]]$Response <- resp[[i]]
   }
-  do.call(rbind, out)
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }
 
 
@@ -172,7 +178,9 @@ p_value.fixest_multi <- function(model, ...) {
   for (i in seq_along(out)) {
     out[[i]]$Response <- resp[[i]]
   }
-  do.call(rbind, out)
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+  out
 }
 
 
