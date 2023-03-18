@@ -144,7 +144,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
   }
 
   if (!is.null(dof) && length(dof) > 0 && all(dof == 0)) {
-    warning("Model has zero degrees of freedom!", call. = FALSE)
+    insight::format_warning("Model has zero degrees of freedom!")
   }
 
   dof

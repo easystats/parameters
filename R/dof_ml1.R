@@ -2,7 +2,7 @@
 #' @export
 dof_ml1 <- function(model) {
   if (!insight::is_mixed_model(model)) {
-    stop("Model must be a mixed model.", call. = FALSE)
+    insight::format_error("Model must be a mixed model.")
   }
 
   re_groups <- insight::get_random(model)

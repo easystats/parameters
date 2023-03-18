@@ -11,9 +11,9 @@ model_parameters.lmodel2 <- function(model,
                                      ...) {
   if (!missing(ci)) {
     if (isTRUE(verbose)) {
-      message(insight::format_message("'lmodel2' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."))
+      insight::format_alert("`lmodel2` models do not support other levels for confidence intervals than 0.95. Argument `ci` is ignored.")
     }
-    ci <- .95
+    ci <- 0.95
   }
 
   out <- .model_parameters_generic(

@@ -80,9 +80,9 @@ standard_error.mlm <- function(model,
     # manually
   } else {
     if (!is.null(vcov)) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Unable to extract the variance-covariance matrix requested in `vcov`."
-      ))
+      )
     }
     cs <- stats::coef(summary(model))
     se <- lapply(names(cs), function(x) {
@@ -111,9 +111,9 @@ p_value.mlm <- function(model, vcov = NULL, vcov_args = NULL, ...) {
     # manually
   } else {
     if (!is.null(vcov)) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Unable to extract the variance-covariance matrix requested in `vcov`."
-      ))
+      )
     }
     cs <- stats::coef(summary(model))
     p <- lapply(names(cs), function(x) {

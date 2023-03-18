@@ -129,7 +129,7 @@ standard_error.default <- function(model,
   # output
   if (is.null(se)) {
     if (isTRUE(verbose)) {
-      warning("Could not extract standard errors from model object.", call. = FALSE)
+      insight::format_warning("Could not extract standard errors from model object.")
     }
   } else {
     params <- insight::get_parameters(model, component = component)

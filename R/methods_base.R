@@ -6,9 +6,9 @@ model_parameters.data.frame <- function(model, as_draws = FALSE, verbose = TRUE,
     return(model_parameters.draws(model, verbose = verbose, ...))
   }
   if (isTRUE(verbose)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "A `data.frame` object is no valid regression model object and cannot be used with `model_parameters()`."
-    ), call. = FALSE)
+    )
   }
   NULL
 }
@@ -26,7 +26,7 @@ standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
     standard_error(as.numeric(model), ...)
   } else {
     if (verbose) {
-      warning("Can't compute standard error of non-numeric variables.", call. = FALSE)
+      insight::format_warning("Can't compute standard error of non-numeric variables.")
     }
     return(NA)
   }
@@ -152,7 +152,7 @@ p_value.list <- function(model, method = NULL, verbose = TRUE, ...) {
     p_value(model, method = method)
   } else {
     if (isTRUE(verbose)) {
-      warning("Could not extract p-values from model object.", call. = FALSE)
+      insight::format_warning("Could not extract p-values from model object.")
     }
   }
 }

@@ -77,7 +77,7 @@ reduce_parameters <- function(x, method = "PCA", n = "max", distance = "euclidea
 #' @export
 reduce_data <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
   if (!is.data.frame(x)) {
-    stop("Only works on data frames.", call. = FALSE)
+    insight::format_error("Only works on data frames.")
   }
   reduce_parameters(x, method = method, n = n, distance = distance, ...)
 }

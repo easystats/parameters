@@ -157,7 +157,7 @@ p_value.default <- function(model,
 
   # failure warning
   if (is.null(p) && isTRUE(verbose)) {
-    warning("Could not extract p-values from model object.", call. = FALSE)
+    insight::format_warning("Could not extract p-values from model object.")
   }
 }
 

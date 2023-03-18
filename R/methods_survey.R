@@ -13,9 +13,9 @@ model_parameters.svyglm <- function(model,
                                     verbose = TRUE,
                                     ...) {
   if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
-    message(insight::format_message(
+    insight::format_alert(
       "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."
-    ))
+    )
   }
 
   out <- .model_parameters_generic(

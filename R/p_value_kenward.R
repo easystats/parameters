@@ -143,6 +143,6 @@ p_value_kenward.lmerMod <- function(model, dof = NULL) {
   insight::check_if_installed("lme4")
 
   if (!(lme4::getME(model, "is_REML"))) {
-    warning(insight::format_message("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable."), call. = FALSE)
+    insight::format_warning("Model was not fitted by REML. Re-fitting model now, but p-values, df, etc. still might be unreliable.")
   }
 }

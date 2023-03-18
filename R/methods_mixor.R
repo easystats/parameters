@@ -15,9 +15,9 @@ model_parameters.mixor <- function(model,
   # standardize only works for fixed effects...
   if (!is.null(standardize) && standardize != "refit") {
     if (!missing(effects) && effects != "fixed" && verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Standardizing coefficients only works for fixed effects of the mixed model."
-      ), call. = FALSE)
+      )
     }
     effects <- "fixed"
   }

@@ -290,7 +290,7 @@ standardize_parameters.mediate <- function(model,
                                            verbose = TRUE,
                                            ...) {
   if (method != "refit") {
-    warning("Only `method=\"refit\"` is supported for mediation models.", immediate. = TRUE, call. = FALSE)
+    insight::format_warning("Only `method=\"refit\"` is supported for mediation models.")
   }
 
   NextMethod("standardize_parameters",
@@ -680,10 +680,10 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 .safe_to_standardize_response <- function(info, verbose = TRUE) {
   if (is.null(info)) {
     if (verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Unable to verify if response should not be standardized.",
         "Response will be standardized."
-      ), immediate. = TRUE, call. = FALSE)
+      )
     }
     return(TRUE)
   }

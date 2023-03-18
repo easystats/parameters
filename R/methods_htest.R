@@ -76,7 +76,7 @@ model_parameters.htest <- function(model,
 
 
   if (bootstrap) {
-    stop("Bootstrapped h-tests are not yet implemented.", call. = FALSE)
+    insight::format_error("Bootstrapped h-tests are not yet implemented.")
   } else {
     parameters <- .extract_parameters_htest(
       model,

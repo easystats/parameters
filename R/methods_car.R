@@ -3,9 +3,9 @@
 model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE, ...) {
   dots <- list(...)
   if ("ci" %in% names(dots)) {
-    warning(insight::format_message(
+    insight::format_warning(
       "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead."
-    ), call. = FALSE)
+    )
     dots[["ci"]] <- NULL
   }
 
@@ -13,7 +13,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   params <- insight::standardize_names(datawizard::rownames_as_column(model, "Parameter"))
 
   # find CIs
-  ci_cols <- grepl("%$", colnames(params))
+  ci_cols <- endsWith(colnames(params), "%")
   cis <- as.numeric(gsub("%", "", colnames(params)[ci_cols], fixed = TRUE)) / 100
   ci <- diff(cis)
 

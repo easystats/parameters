@@ -52,7 +52,7 @@ factor_analysis.data.frame <- function(x,
                                     cor = NULL,
                                     ...) {
   if (!inherits(x, "data.frame")) {
-    stop("`x` must be a data frame.", call. = FALSE)
+    insight::format_error("`x` must be a data frame.")
   }
 
   # rotate loadings
