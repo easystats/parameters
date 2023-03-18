@@ -2,7 +2,7 @@
 
 ## General
 
-* Added support for models of class `hglm` (*hglm*).
+* Added support for models of class `hglm` (*hglm*) and `fixest_multi` (*fixest*).
 
 ## Changes to functions
 
