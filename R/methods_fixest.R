@@ -109,15 +109,14 @@ model_parameters.fixest_multi <- function(model,
     ...
   )
 
-  # add response column
-  resp <- insight::find_response(model)
-  for (i in seq_along(out)) {
-    out[[i]]$Response <- resp[[i]]
-  }
-
   # bind lists together to one data frame, save attributes
   att <- attributes(out[[1]])
   params <- do.call(rbind, out)
+
+  # add response and group columns
+  id_columns <- .get_fixest_multi_columns(model)
+  params$Response <- id_columns$Response
+  params$Group <- id_columns$Group
 
   attributes(params) <- utils::modifyList(att, attributes(params))
   params
@@ -126,14 +125,15 @@ model_parameters.fixest_multi <- function(model,
 
 #' @export
 ci.fixest_multi <- function(x, ...) {
-  out <- lapply(x, ci, ...)
+  out <- do.call(rbind, lapply(x, ci, ...))
+
+  # add response and group columns
+  id_columns <- .get_fixest_multi_columns(x)
 
   # add response column
-  resp <- insight::find_response(x)
-  for (i in seq_along(out)) {
-    out[[i]]$Response <- resp[[i]]
-  }
-  out <- do.call(rbind, out)
+  out$Response <- id_columns$Response
+  out$Group <- id_columns$Group
+
   row.names(out) <- NULL
   out
 }
@@ -141,14 +141,15 @@ ci.fixest_multi <- function(x, ...) {
 
 #' @export
 standard_error.fixest_multi <- function(model, ...) {
-  out <- lapply(model, standard_error, ...)
+  out <- do.call(rbind, lapply(model, standard_error, ...))
+
+  # add response and group columns
+  id_columns <- .get_fixest_multi_columns(model)
 
   # add response column
-  resp <- insight::find_response(model)
-  for (i in seq_along(out)) {
-    out[[i]]$Response <- resp[[i]]
-  }
-  out <- do.call(rbind, out)
+  out$Response <- id_columns$Response
+  out$Group <- id_columns$Group
+
   row.names(out) <- NULL
   out
 }
@@ -156,14 +157,15 @@ standard_error.fixest_multi <- function(model, ...) {
 
 #' @export
 degrees_of_freedom.fixest_multi <- function(model, ...) {
-  out <- lapply(model, degrees_of_freedom, ...)
+  out <- do.call(rbind, lapply(model, degrees_of_freedom, ...))
+
+  # add response and group columns
+  id_columns <- .get_fixest_multi_columns(model)
 
   # add response column
-  resp <- insight::find_response(model)
-  for (i in seq_along(out)) {
-    out[[i]]$Response <- resp[[i]]
-  }
-  out <- do.call(rbind, out)
+  out$Response <- id_columns$Response
+  out$Group <- id_columns$Group
+
   row.names(out) <- NULL
   out
 }
@@ -171,14 +173,15 @@ degrees_of_freedom.fixest_multi <- function(model, ...) {
 
 #' @export
 p_value.fixest_multi <- function(model, ...) {
-  out <- lapply(model, p_value, ...)
+  out <- do.call(rbind, lapply(model, p_value, ...))
+
+  # add response and group columns
+  id_columns <- .get_fixest_multi_columns(model)
 
   # add response column
-  resp <- insight::find_response(model)
-  for (i in seq_along(out)) {
-    out[[i]]$Response <- resp[[i]]
-  }
-  out <- do.call(rbind, out)
+  out$Response <- id_columns$Response
+  out$Group <- id_columns$Group
+
   row.names(out) <- NULL
   out
 }
@@ -187,4 +190,37 @@ p_value.fixest_multi <- function(model, ...) {
 #' @export
 simulate_model.fixest_multi <- function(model, ...) {
   lapply(model, simulate_model, ...)
+}
+
+
+
+# helper ---------------------------------
+
+.get_fixest_multi_columns <- function(model) {
+  # add response and group columns
+  s <- summary(model)
+  l <- lengths(lapply(s, stats::coef))
+  parts <- strsplit(names(l), ";", fixed = TRUE)
+
+  id_columns <- Map(function(i, j) {
+    if (length(j) == 1 && startsWith(j, "rhs")) {
+      data.frame(
+        Group = rep(insight::trim_ws(sub("rhs:", "", j, fixed = TRUE)), i),
+        stringsAsFactors = FALSE
+      )
+    } else if (length(j) == 1 && startsWith(j, "lhs")) {
+      data.frame(
+        Response = rep(insight::trim_ws(sub("lhs:", "", j, fixed = TRUE)), i),
+        stringsAsFactors = FALSE
+      )
+    } else {
+      data.frame(
+        Response = rep(insight::trim_ws(sub("lhs:", "", j[1], fixed = TRUE)), i),
+        Group = rep(insight::trim_ws(sub("rhs:", "", j[2], fixed = TRUE)), i),
+        stringsAsFactors = FALSE
+      )
+    }
+  }, unname(l), parts)
+
+  do.call(rbind, id_columns)
 }

@@ -164,7 +164,7 @@ ci.mlm <- function(x,
     )
 
     resp <- insight::get_parameters(x)$Response
-    if (!"Reponse" %in% colnames(out) && nrow(out) == length(resp)) {
+    if (!"Response" %in% colnames(out) && nrow(out) == length(resp)) {
       out[["Response"]] <- resp
     } else {
       if (!isTRUE(all(out$Response == resp))) {
