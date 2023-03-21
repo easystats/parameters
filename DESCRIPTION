@@ -81,11 +81,13 @@ Depends:
 Imports:
     bayestestR (>= 0.13.0),
     datawizard (>= 0.6.5),
-    insight (>= 0.18.8),
+    insight (>= 0.19.1),
     graphics,
     methods,
     stats,
     utils
+Remotes:
+    easystats/see
 Suggests:
     AER,
     afex,

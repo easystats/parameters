@@ -93,7 +93,7 @@ if (requiet("boot")) {
 
   test_that("model_parameters.glm - Gamma - print", {
     expect_equal(
-      capture.output(mp),
+      suppressMessages(capture.output(mp)),
       c(
         "Parameter   | Prevalence Ratio |    SE |           95% CI |   t(7) |      p",
         "---------------------------------------------------------------------------",

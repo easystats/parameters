@@ -44,7 +44,7 @@ if (requiet("AER")) {
 
   test_that("print-model_parameters", {
     tmp <- model_parameters(m1)
-    out <- utils::capture.output(print(tmp))
+    out <- suppressMessages(utils::capture.output(print(tmp)))
     expect_equal(
       out,
       c(

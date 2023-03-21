@@ -419,7 +419,7 @@ test_that("standardize_parameters (pscl)", {
   expect_message({
     sm2 <- standardize_parameters(m, method = "posthoc")
   })
-  suppressWarnings({
+  suppressMessages({
     sm3 <- standardize_parameters(m, method = "basic")
     sm4 <- standardize_parameters(m, method = "smart")
   })

@@ -37,7 +37,7 @@ test_that("ci", {
 test_that("ci(vcov)", {
   # vcov changes results
   ci1 <- ci(m3)
-  ci2 <- ci(m3, vcov = "CR3")
+  ci2 <- suppressMessages(ci(m3, vcov = "CR3"))
   expect_true(all(ci1$CI_low != ci2$CI_low))
   # manual computation
   b <- fixef(m3)
