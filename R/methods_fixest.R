@@ -119,6 +119,7 @@ model_parameters.fixest_multi <- function(model,
   params$Group <- id_columns$Group
 
   attributes(params) <- utils::modifyList(att, attributes(params))
+  attr(params, "model_class") <- "fixest_multi"
   params
 }
 

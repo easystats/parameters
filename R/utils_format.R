@@ -771,7 +771,7 @@
   ignore_group <- isTRUE(attributes(x)$ignore_group)
   ran_pars <- isTRUE(attributes(x)$ran_pars)
   is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
-
+  is_fixest_multi <- identical(attributes(x)$model_class, "fixest_multi")
 
   # name of "Parameter" column - usually the first column, however, for
   # ggeffects objects, this column has the name of the focal term
@@ -851,6 +851,15 @@
   if (!is.null(x$Effects) && all(x$Effects == "random") && !all(startsWith(names(tables), "random."))) {
     wrong_names <- !startsWith(names(tables), "random.")
     names(tables)[wrong_names] <- paste0("random.", names(tables)[wrong_names])
+  }
+
+  # fixest_multi models can have a special structure, with multiple responses
+  # and multiple rhs of formulas. We fix headers here
+
+  if (is_fixest_multi && length(split_column) > 1) {
+    old_names <- unique(paste0(x$Response, ".", x$Group))
+    new_names <- unique(paste0(x$Response, " ~ ", x$Group))
+    names(tables) <- new_names[match(names(tables), old_names)]
   }
 
 
