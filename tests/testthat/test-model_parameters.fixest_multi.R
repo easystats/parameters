@@ -1,5 +1,4 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-.runThisTest <- TRUE
 
 if (.runThisTest && requiet("fixest")) {
   set.seed(123)
