@@ -207,6 +207,7 @@ et
 exponentiate
 exponentiating
 fastICA
+fixest
 gam
 gamlss
 gamm
@@ -232,6 +233,7 @@ ivfixed
 ivprobit
 jeffreymgirard
 joineRML
+joss
 jstatsoft
 kmeans
 labelled

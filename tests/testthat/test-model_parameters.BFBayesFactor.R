@@ -166,4 +166,3 @@ if (
     expect_equal(dim(df_t_es), c(1L, 14L))
   }
 }
-
