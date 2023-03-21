@@ -19,7 +19,7 @@ if (
 
     x <- principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
     expect_equal(c(ncol(x), nrow(x)), c(8, 7))
-    x <- principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE)
+    x <- suppressMessages(principal_components(mtcars[, 1:7], n = 2, rotation = "oblimin", threshold = "max", sort = TRUE))
     expect_equal(c(ncol(x), nrow(x)), c(6, 7))
 
     pca <- principal_components(mtcars[, 1:5], n = 2)

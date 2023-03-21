@@ -282,6 +282,6 @@ if (.runThisTest && win_os &&
   # messages for profiled CI
   test_that("profiled CI messages", {
     mp2 <- model_parameters(m2, ci_method = "profile")
-    expect_message(print(mp2), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
+    expect_message(utils::capture.output(print(mp2)), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
   })
 }

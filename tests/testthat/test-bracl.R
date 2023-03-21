@@ -35,7 +35,7 @@ if (requiet("utils") && requiet("brglm2")) {
 
   # check order of response levels
   test_that("print model_parameters", {
-    out <- utils::capture.output(print(model_parameters(m1, verbose = FALSE)))
+    out <- suppressMessages(utils::capture.output(print(model_parameters(m1, verbose = FALSE))))
     expect_identical(out[1], "# Response level: definitly")
     expect_identical(out[9], "# Response level: alterly")
     expect_identical(out[17], "# Response level: probably not")

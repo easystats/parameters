@@ -63,9 +63,9 @@ if (
 
   test_that("model_parameters.BFBayesFactor", {
     set.seed(123)
-    model <- BayesFactor::anovaBF(mpg ~ gear * am, data = df)
+    model <- suppressMessages(BayesFactor::anovaBF(mpg ~ gear * am, data = df))
     expect_equal(
-      model_parameters(model, centrality = "mean")$Mean,
+      suppressMessages(model_parameters(model, centrality = "mean", verbose = FALSE))$Mean,
       c(20.7099, -3.24884, 3.24884, 26.51413, 5.30506, NA, NA, NA),
       tolerance = 1L
     )
@@ -110,12 +110,12 @@ if (
       data = puzzles, whichRandom = "ID",
       whichModels = "top", progress = FALSE
     )
-    mp <- model_parameters(
+    mp <- suppressMessages(model_parameters(
       result,
       centrality = "median",
       dispersion = TRUE,
       verbose = FALSE
-    )
+    ))
 
     test_that("model_parameters.BFBayesFactor", {
       expect_equal(colnames(mp), c(
@@ -166,3 +166,4 @@ if (
     expect_equal(dim(df_t_es), c(1L, 14L))
   }
 }
+
