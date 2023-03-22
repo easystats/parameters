@@ -293,7 +293,7 @@
 #'
 #'   - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 #'   science: replace confidence and significance by compatibility and surprise.
-#'   BMC Med Res Methodol (2020) 20:244.
+#'   BMC Medical Research Methodology (2020) 20:244.
 
 #' @return A data frame of indices related to the model's parameters.
 #' @export
