@@ -124,8 +124,8 @@ Details section).
 number of dimensions to retain.
 \item \code{\link[performance:check_factorstructure]{performance::check_factorstructure()}} checks the suitability of the
 data for factor analysis using the sphericity (see
-\code{\link[performance:check_sphericity_bartlett]{performance::check_sphericity_bartlett()}}) and the KMO (see
-\code{\link[performance:check_kmo]{performance::check_kmo()}}) measure.
+\code{\link[performance:check_factorstructure]{performance::check_sphericity_bartlett()}}) and the KMO (see
+\code{\link[performance:check_factorstructure]{performance::check_kmo()}}) measure.
 \item \code{\link[performance:check_itemscale]{performance::check_itemscale()}} computes various measures of internal
 consistencies applied to the (sub)scales (i.e., components) extracted from
 the PCA.
