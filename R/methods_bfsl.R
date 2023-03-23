@@ -4,6 +4,9 @@ model_parameters.bfsl <- function(model,
                                   ci = 0.95,
                                   ci_method = "residual",
                                   p_adjust = NULL,
+                                  summary = getOption("parameters_summary", FALSE),
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   out <- .model_parameters_generic(
@@ -12,6 +15,9 @@ model_parameters.bfsl <- function(model,
     ci_method = ci_method,
     merge_by = "Parameter",
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     ...
   )
 

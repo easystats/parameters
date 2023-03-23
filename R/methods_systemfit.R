@@ -9,6 +9,8 @@ model_parameters.systemfit <- function(model,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
                                        summary = FALSE,
+                                       keep = NULL,
+                                       drop = NULL,
                                        verbose = TRUE,
                                        ...) {
   out <- .model_parameters_generic(
@@ -21,6 +23,8 @@ model_parameters.systemfit <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     summary = summary,
     ...
   )

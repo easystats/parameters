@@ -249,7 +249,9 @@ logistf
 logitsf
 marginaleffects
 maxLik
+mblogit
 mclust
+mclogit
 meaned
 merDeriv
 merMod
@@ -261,6 +263,7 @@ metaplus
 mfx
 mgcv
 mhurdle
+mlogit
 mmrm
 modelsummary
 multcomp

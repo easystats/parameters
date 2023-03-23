@@ -20,8 +20,8 @@ model_parameters.mblogit <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
-    keep = keep,
-    drop = drop,
+    keep_parameters = keep,
+    drop_parameters = drop,
     summary = summary,
     ...
   )
