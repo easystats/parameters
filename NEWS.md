@@ -5,9 +5,8 @@
 * Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*), and
   `fixest_multi` (*fixest*).
 
-* `as.data.frame` methods for regression model objects have been removed. The
-  `model_parameters()` function is the preferred solution to tidy regression
-  model objects into a data frame.
+* `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
+  have been retired.
   
 ## Changes to functions
 
