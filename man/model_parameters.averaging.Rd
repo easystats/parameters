@@ -497,6 +497,9 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -548,6 +551,9 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -578,6 +584,8 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = FALSE,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )

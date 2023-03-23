@@ -11,6 +11,9 @@ model_parameters.mvord <- function(model,
                                    standardize = NULL,
                                    exponentiate = FALSE,
                                    p_adjust = NULL,
+                                   summary = getOption("parameters_summary", FALSE),
+                                   keep = NULL,
+                                   drop = NULL,
                                    verbose = TRUE,
                                    ...) {
   component <- match.arg(component)
@@ -24,6 +27,9 @@ model_parameters.mvord <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     ...
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
@@ -35,7 +41,9 @@ model_parameters.mvord <- function(model,
 standard_error.mvord <- function(model, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model, component = "all")
-  junk <- utils::capture.output(s <- summary(model))
+  junk <- utils::capture.output({
+    s <- summary(model)
+  })
 
   params$SE <- c(
     unname(s$thresholds[, "Std. Error"]),
@@ -61,7 +69,9 @@ standard_error.mvord <- function(model, component = c("all", "conditional", "thr
 p_value.mvord <- function(model, component = c("all", "conditional", "thresholds", "correlation"), ...) {
   component <- match.arg(component)
   params <- insight::get_parameters(model, component = "all")
-  junk <- utils::capture.output(s <- summary(model))
+  junk <- utils::capture.output({
+    s <- summary(model)
+  })
 
   params$p <- c(
     unname(s$thresholds[, "Pr(>|z|)"]),

@@ -178,6 +178,9 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )

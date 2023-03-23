@@ -8,6 +8,9 @@ model_parameters.selection <- function(model,
                                        standardize = NULL,
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
+                                       summary = getOption("parameters_summary", FALSE),
+                                       keep = NULL,
+                                       drop = NULL,
                                        verbose = TRUE,
                                        ...) {
   component <- match.arg(component)
@@ -20,6 +23,9 @@ model_parameters.selection <- function(model,
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     p_adjust = p_adjust,
     ...
   )
