@@ -106,6 +106,8 @@
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -163,6 +165,8 @@
 <span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -222,8 +226,11 @@
 <span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -261,6 +268,9 @@
 <span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -279,6 +289,8 @@
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -297,6 +309,8 @@
 <span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -429,6 +443,32 @@ variance and the variance for the additive overdispersion term (see
 due to the longer computation time.</p></dd>
 
 
+<dt>keep</dt>
+<dd><p>Character containing a regular expression pattern that
+describes the parameters that should be included (for <code>keep</code>) or excluded
+(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
+named list of regular expressions. All non-matching parameters will be
+removed from the output. If <code>keep</code> is a character vector, every parameter
+name in the <em>"Parameter"</em> column that matches the regular expression in
+<code>keep</code> will be selected from the returned data frame (and vice versa,
+all parameter names matching <code>drop</code> will be excluded). Furthermore, if
+<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
+operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
+If <code>keep</code> is a named list of regular expression patterns, the names of the
+list-element should equal the column name where selection should be
+applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
+returns multiple columns with parameter components, like in
+<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
+should match the parameter names as they are stored in the returned data
+frame, which can be different from how they are printed. Inspect the
+<code>$Parameter</code> column of the parameters table to get the exact parameter
+names.</p></dd>
+
+
+<dt>drop</dt>
+<dd><p>See <code>keep</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Toggle warnings and messages.</p></dd>
 
@@ -460,32 +500,6 @@ conditional or zero-inflation component of the model.</p></dd>
 <dd><p>Logical, if <code>TRUE</code>, prints summary information about the
 model (model formula, number of observations, residual standard deviation
 and more).</p></dd>
-
-
-<dt>keep</dt>
-<dd><p>Character containing a regular expression pattern that
-describes the parameters that should be included (for <code>keep</code>) or excluded
-(for <code>drop</code>) in the returned data frame. <code>keep</code> may also be a
-named list of regular expressions. All non-matching parameters will be
-removed from the output. If <code>keep</code> is a character vector, every parameter
-name in the <em>"Parameter"</em> column that matches the regular expression in
-<code>keep</code> will be selected from the returned data frame (and vice versa,
-all parameter names matching <code>drop</code> will be excluded). Furthermore, if
-<code>keep</code> has more than one element, these will be merged with an <code>OR</code>
-operator into a regular expression pattern like this: <code>"(one|two|three)"</code>.
-If <code>keep</code> is a named list of regular expression patterns, the names of the
-list-element should equal the column name where selection should be
-applied. This is useful for model objects where <code><a href="model_parameters.html">model_parameters()</a></code>
-returns multiple columns with parameter components, like in
-<code><a href="model_parameters.principal.html">model_parameters.lavaan()</a></code>. Note that the regular expression pattern
-should match the parameter names as they are stored in the returned data
-frame, which can be different from how they are printed. Inspect the
-<code>$Parameter</code> column of the parameters table to get the exact parameter
-names.</p></dd>
-
-
-<dt>drop</dt>
-<dd><p>See <code>keep</code>.</p></dd>
 
 
 <dt>vcov</dt>
