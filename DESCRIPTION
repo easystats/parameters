@@ -149,6 +149,7 @@ Suggests:
     marginaleffects (>= 0.10.0),
     MASS,
     Matrix,
+    mclogit,
     mclust,
     MCMCglmm,
     mediation,
