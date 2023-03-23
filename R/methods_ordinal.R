@@ -11,6 +11,9 @@ model_parameters.clm2 <- function(model,
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
+                                  summary = getOption("parameters_summary", FALSE),
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   component <- match.arg(component)
@@ -32,6 +35,9 @@ model_parameters.clm2 <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     ...
   )
 

@@ -1,6 +1,5 @@
 # model_parameters -----------------------------------------
 
-#' @rdname model_parameters.default
 #' @export
 model_parameters.svyglm <- function(model,
                                     ci = 0.95,
@@ -10,6 +9,9 @@ model_parameters.svyglm <- function(model,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
+                                    summary = getOption("parameters_summary", FALSE),
+                                    keep = NULL,
+                                    drop = NULL,
                                     verbose = TRUE,
                                     ...) {
   if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
@@ -28,6 +30,9 @@ model_parameters.svyglm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     ...
   )
 

@@ -40,6 +40,9 @@ model_parameters.averaging <- function(model,
                                        component = c("conditional", "full"),
                                        exponentiate = FALSE,
                                        p_adjust = NULL,
+                                       summary = getOption("parameters_summary", FALSE),
+                                       keep = NULL,
+                                       drop = NULL,
                                        verbose = TRUE,
                                        ...) {
   component <- match.arg(component)
@@ -50,6 +53,9 @@ model_parameters.averaging <- function(model,
     exponentiate = exponentiate,
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    summary = summary,
     ...
   )
 
