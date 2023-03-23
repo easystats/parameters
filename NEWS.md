@@ -2,9 +2,13 @@
 
 ## General
 
-* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*) and
+* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*), and
   `fixest_multi` (*fixest*).
 
+* `as.data.frame` methods for regression model objects have been removed. The
+  `model_parameters()` function is the preferred solution to tidy regression
+  model objects into a data frame.
+  
 ## Changes to functions
 
 * `equivalence_test()` gets a method for `ggeffects` objects from package
