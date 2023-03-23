@@ -249,6 +249,7 @@ logistf
 logitsf
 marginaleffects
 maxLik
+mclogit
 mclust
 meaned
 merDeriv
