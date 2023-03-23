@@ -113,6 +113,8 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -189,6 +191,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -201,6 +205,8 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -214,19 +220,39 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
 
-\method{model_parameters}{ivFixed}(model, ci = 0.95, ci_method = "wald", verbose = TRUE, ...)
+\method{model_parameters}{ivFixed}(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{model_parameters}{ivprobit}(model, ci = 0.95, ci_method = "wald", verbose = TRUE, ...)
+\method{model_parameters}{ivprobit}(
+  model,
+  ci = 0.95,
+  ci_method = "wald",
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{model_parameters}{lmodel2}(
   model,
   ci = 0.95,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -241,6 +267,8 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,
@@ -324,6 +352,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   include_studies = TRUE,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -580,6 +610,8 @@
   exponentiate = FALSE,
   p_adjust = NULL,
   summary = getOption("parameters_summary", FALSE),
+  keep = NULL,
+  drop = NULL,
   vcov = NULL,
   vcov_args = NULL,
   verbose = TRUE,

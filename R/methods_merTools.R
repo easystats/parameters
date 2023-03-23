@@ -4,6 +4,8 @@ model_parameters.merModList <- function(model,
                                         ci = 0.95,
                                         exponentiate = FALSE,
                                         p_adjust = NULL,
+                                        keep = NULL,
+                                        drop = NULL,
                                         verbose = TRUE,
                                         ...) {
   out <- .model_parameters_generic(
@@ -14,6 +16,8 @@ model_parameters.merModList <- function(model,
     merge_by = "Parameter",
     standardize = NULL,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     p_adjust = p_adjust,
     ...
   )

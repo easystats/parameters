@@ -55,6 +55,8 @@ model_parameters.rma <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  include_studies = TRUE,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   # handle ci-level that was defined in function call...
@@ -71,6 +73,9 @@ model_parameters.rma <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 
