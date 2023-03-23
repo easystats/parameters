@@ -13,6 +13,8 @@ model_parameters.metaplus <- function(model,
                                       standardize = NULL,
                                       exponentiate = FALSE,
                                       include_studies = TRUE,
+                                      keep = NULL,
+                                      drop = NULL,
                                       verbose = TRUE,
                                       ...) {
   if (!missing(ci)) {
@@ -21,7 +23,7 @@ model_parameters.metaplus <- function(model,
         "'metaplus' models do not support other levels for confidence intervals than 0.95. Argument 'ci' is ignored."
       )
     }
-    ci <- .95
+    ci <- 0.95
   }
 
   meta_analysis_overall <- suppressWarnings(.model_parameters_generic(
@@ -32,6 +34,8 @@ model_parameters.metaplus <- function(model,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     ...
   ))
 
@@ -107,10 +111,10 @@ standard_error.metaplus <- function(model, ...) {
 
   out <- .data_frame(
     Parameter = .remove_backticks_from_string(rownames(model$results)),
-    SE = cis / (2 * stats::qnorm(.975))
+    SE = cis / (2 * stats::qnorm(0.975))
   )
 
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -121,7 +125,7 @@ p_value.metaplus <- function(model, ...) {
     Parameter = .remove_backticks_from_string(rownames(model$results)),
     p = as.vector(model$results[, "pvalue"])
   )
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -134,7 +138,7 @@ ci.metaplus <- function(x, ...) {
     CI_high = as.vector(x$results[, "95% ci.ub"])
   )
 
-  out$Parameter[grepl("muhat", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("muhat", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -254,7 +258,7 @@ standard_error.meta_random <- function(model, ...) {
     SE = params$sd,
     stringsAsFactors = FALSE
   )
-  out$Parameter[grepl("d", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("d", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 
@@ -277,7 +281,7 @@ ci.meta_random <- function(x, method = "eti", ...) {
     stringsAsFactors = FALSE
   )
 
-  out$Parameter[grepl("d", out$Parameter)] <- "(Intercept)"
+  out$Parameter[grepl("d", out$Parameter, fixed = TRUE)] <- "(Intercept)"
   out
 }
 

@@ -37,6 +37,8 @@
 model_parameters.glht <- function(model,
                                   ci = 0.95,
                                   exponentiate = FALSE,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   # p-adjustment method
@@ -52,6 +54,8 @@ model_parameters.glht <- function(model,
     standardize = NULL,
     exponentiate = exponentiate,
     p_adjust = NULL,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

@@ -5,6 +5,8 @@ model_parameters.mhurdle <- function(model,
                                      component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"),
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
                                      verbose = TRUE,
                                      ...) {
   component <- match.arg(component)
@@ -17,6 +19,8 @@ model_parameters.mhurdle <- function(model,
     effects = "fixed",
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
