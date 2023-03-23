@@ -2,7 +2,8 @@
 
 ## General
 
-* Added support for models of class `hglm` (*hglm*) and `fixest_multi` (*fixest*).
+* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*) and
+  `fixest_multi` (*fixest*).
 
 ## Changes to functions
 
