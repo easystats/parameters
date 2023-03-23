@@ -86,8 +86,6 @@ Imports:
     methods,
     stats,
     utils
-Remotes:
-    easystats/see
 Suggests:
     AER,
     afex,

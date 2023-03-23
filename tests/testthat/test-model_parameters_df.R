@@ -211,27 +211,20 @@ if (.runThisTest) {
   # ivreg ---------------------------
 
   if (requiet("ivreg")) {
-    data(CigarettesSW)
-    CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
-    CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
-    CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
-
-    model <- ivreg::ivreg(
-      log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
-      data = CigarettesSW,
-      subset = year == "1995"
+    data(CigaretteDemand)
+    model <- ivreg(log(packs) ~ log(rprice) + log(rincome) | salestax + log(rincome),
+      data = CigaretteDemand
     )
-
     test_that("model_parameters.ivreg", {
       params <- suppressWarnings(model_parameters(model))
       expect_equal(params$df_error, c(45L, 45L, 45L), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(7.76291, -1.80753, -0.20009), tolerance = 1e-3)
-      expect_equal(params$p, c(0, 1e-05, 0.24602), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(6.69477, -1.86742, -0.32644), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0.00266, 0.42867), tolerance = 1e-3)
 
       params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
       expect_equal(params$df_error, c(Inf, Inf, Inf), tolerance = 1e-3)
-      expect_equal(params$CI_low, c(7.82022, -1.79328, -0.18717), tolerance = 1e-3)
-      expect_equal(params$p, c(0, 0, 0.23984), tolerance = 1e-3)
+      expect_equal(params$CI_low, c(6.76831, -1.84795, -0.3119), tolerance = 1e-3)
+      expect_equal(params$p, c(0, 0.00147, 0.42447), tolerance = 1e-3)
     })
   }
 
