@@ -127,6 +127,8 @@ model_parameters.mira <- function(model,
                                   ci = 0.95,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   insight::check_if_installed("mice")
@@ -141,6 +143,9 @@ model_parameters.mira <- function(model,
     standardize = NULL,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 

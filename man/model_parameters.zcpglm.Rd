@@ -32,6 +32,8 @@
     "auxiliary"),
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )

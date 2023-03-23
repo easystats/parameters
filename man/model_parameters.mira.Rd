@@ -28,6 +28,8 @@
   ci = 0.95,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )

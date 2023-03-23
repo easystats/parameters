@@ -145,8 +145,11 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
-  verbose = TRUE,
   include_sigma = FALSE,
+  p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
   ...
 )
 

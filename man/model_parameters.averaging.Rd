@@ -433,6 +433,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -446,6 +448,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -459,6 +463,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -472,6 +478,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -498,6 +506,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -530,7 +540,15 @@
   ...
 )
 
-\method{model_parameters}{glht}(model, ci = 0.95, exponentiate = FALSE, verbose = TRUE, ...)
+\method{model_parameters}{glht}(
+  model,
+  ci = 0.95,
+  exponentiate = FALSE,
+  keep = NULL,
+  drop = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{model_parameters}{mvord}(
   model,
@@ -580,6 +598,9 @@
   iterations = 1000,
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )

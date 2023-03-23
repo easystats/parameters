@@ -45,6 +45,8 @@ model_parameters.poissonmfx <- function(model,
                                         standardize = NULL,
                                         exponentiate = FALSE,
                                         p_adjust = NULL,
+                                        keep = NULL,
+                                        drop = NULL,
                                         verbose = TRUE,
                                         ...) {
   component <- match.arg(component)
@@ -58,6 +60,9 @@ model_parameters.poissonmfx <- function(model,
     exponentiate = exponentiate,
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 
@@ -118,6 +123,8 @@ model_parameters.betamfx <- function(model,
                                      standardize = NULL,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
                                      verbose = TRUE,
                                      ...) {
   component <- match.arg(component)
@@ -131,6 +138,9 @@ model_parameters.betamfx <- function(model,
     exponentiate = exponentiate,
     component = component,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    verbose = verbose,
     ...
   )
 
