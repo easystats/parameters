@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.20.2.10
+Version: 0.20.2.11
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -149,6 +149,7 @@ Suggests:
     marginaleffects (>= 0.10.0),
     MASS,
     Matrix,
+    mclogit,
     mclust,
     MCMCglmm,
     mediation,
@@ -208,3 +209,4 @@ Config/Needs/website:
     r-lib/pkgdown,
     easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight
