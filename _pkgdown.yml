@@ -33,7 +33,6 @@ reference:
       - pool_parameters
       - random_parameters
       - print.parameters_model
-      - sort_parameters
       - standardize_parameters
       - standardize_info
 
