@@ -227,6 +227,8 @@ model_parameters.cpglmm <- function(model,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
                                     include_sigma = FALSE,
+                                    keep = NULL,
+                                    drop = NULL,
                                     verbose = TRUE,
                                     ...) {
   # p-values, CI and se might be based on different df-methods
@@ -255,6 +257,8 @@ model_parameters.cpglmm <- function(model,
     ci_method = ci_method,
     include_sigma = include_sigma,
     ci_random = ci_random,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )
