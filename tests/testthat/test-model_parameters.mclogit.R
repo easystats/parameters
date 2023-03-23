@@ -1,7 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 options(parameters_exponentiate = FALSE)
 
-if (.runThisTest && requiet("mclogit")) {
+if (.runThisTest && requiet("mclogit") && packageVersion("insight") > "0.19.1") {
   data(Transport)
   m1 <- mclogit(
     cbind(resp, suburb) ~ distance + cost,
