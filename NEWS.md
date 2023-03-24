@@ -6,7 +6,7 @@
   `fixest_multi` (*fixest*).
 
 * `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
-  have been retired.
+  have been retired. Instead, directly using `bootstrap_model()` is recommended.
   
 ## Changes to functions
 
