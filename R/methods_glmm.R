@@ -7,6 +7,8 @@ model_parameters.glmm <- function(model,
                                   iterations = 1000,
                                   standardize = NULL,
                                   exponentiate = FALSE,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   effects <- match.arg(effects)
@@ -18,6 +20,8 @@ model_parameters.glmm <- function(model,
     merge_by = c("Parameter", "Effects"),
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     effects = effects,
     ...
   )

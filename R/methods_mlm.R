@@ -44,6 +44,8 @@ model_parameters.mlm <- function(model,
                                  standardize = NULL,
                                  exponentiate = FALSE,
                                  p_adjust = NULL,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   out <- .model_parameters_generic(
@@ -57,6 +59,8 @@ model_parameters.mlm <- function(model,
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     ...
   )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))

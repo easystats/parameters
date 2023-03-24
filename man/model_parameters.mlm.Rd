@@ -17,6 +17,9 @@
   component = c("all", "conditional", "precision"),
   standardize = NULL,
   exponentiate = FALSE,
+  p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -48,6 +51,8 @@
   standardize = NULL,
   exponentiate = FALSE,
   p_adjust = NULL,
+  keep = NULL,
+  drop = NULL,
   verbose = TRUE,
   ...
 )
@@ -116,21 +121,11 @@ interval more clearly captures this uncertainty. For \code{compare_parameters()}
 \code{exponentiate = "nongaussian"} will only exponentiate coefficients from
 non-Gaussian families.}
 
-\item{verbose}{Toggle warnings and messages.}
-
-\item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
-
 \item{p_adjust}{Character vector, if not \code{NULL}, indicates the method to
 adjust p-values. See \code{\link[stats:p.adjust]{stats::p.adjust()}} for details. Further
 possible adjustment methods are \code{"tukey"}, \code{"scheffe"},
 \code{"sidak"} and \code{"none"} to explicitly disable adjustment for
 \code{emmGrid} objects (from \strong{emmeans}).}
-
-\item{summary}{Logical, if \code{TRUE}, prints summary information about the
-model (model formula, number of observations, residual standard deviation
-and more).}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded
@@ -153,6 +148,16 @@ frame, which can be different from how they are printed. Inspect the
 names.}
 
 \item{drop}{See \code{keep}.}
+
+\item{verbose}{Toggle warnings and messages.}
+
+\item{...}{Arguments passed to or from other methods. For instance, when
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
+passed down to \code{bootstrap_model()}.}
+
+\item{summary}{Logical, if \code{TRUE}, prints summary information about the
+model (model formula, number of observations, residual standard deviation
+and more).}
 
 \item{vcov}{Variance-covariance matrix used to compute uncertainty estimates
 (e.g., for robust standard errors). This argument accepts a covariance matrix,

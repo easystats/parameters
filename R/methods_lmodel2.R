@@ -7,6 +7,8 @@ model_parameters.lmodel2 <- function(model,
                                      ci = 0.95,
                                      exponentiate = FALSE,
                                      p_adjust = NULL,
+                                     keep = NULL,
+                                     drop = NULL,
                                      verbose = TRUE,
                                      ...) {
   if (!missing(ci)) {
@@ -25,6 +27,8 @@ model_parameters.lmodel2 <- function(model,
     standardize = NULL,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     verbose = verbose,
     ...
   )

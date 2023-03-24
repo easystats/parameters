@@ -7,6 +7,9 @@ model_parameters.DirichletRegModel <- function(model,
                                                component = c("all", "conditional", "precision"),
                                                standardize = NULL,
                                                exponentiate = FALSE,
+                                               p_adjust = NULL,
+                                               keep = NULL,
+                                               drop = NULL,
                                                verbose = TRUE,
                                                ...) {
   component <- match.arg(component)
@@ -27,6 +30,9 @@ model_parameters.DirichletRegModel <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
     ...
   ))
 

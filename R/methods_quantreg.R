@@ -16,6 +16,9 @@ model_parameters.rqs <- function(model,
                                  iterations = 1000,
                                  standardize = NULL,
                                  exponentiate = FALSE,
+                                 p_adjust = NULL,
+                                 keep = NULL,
+                                 drop = NULL,
                                  verbose = TRUE,
                                  ...) {
   out <- .model_parameters_generic(
@@ -26,6 +29,10 @@ model_parameters.rqs <- function(model,
     merge_by = c("Parameter", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    p_adjust = p_adjust,
+    verbose = verbose,
     ...
   )
 

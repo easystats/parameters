@@ -8,6 +8,8 @@ model_parameters.glmx <- function(model,
                                   standardize = NULL,
                                   exponentiate = FALSE,
                                   p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
                                   verbose = TRUE,
                                   ...) {
   component <- match.arg(component)
@@ -26,6 +28,8 @@ model_parameters.glmx <- function(model,
     merge_by = merge_by,
     standardize = standardize,
     exponentiate = exponentiate,
+    keep_parameters = keep,
+    drop_parameters = drop,
     p_adjust = p_adjust,
     ...
   )
