@@ -242,7 +242,7 @@ data(fish)
 set.seed(123)
 
 # fitting a model using `brms`
-model <- brm(
+model <- suppressWarnings(brm(
   bf(
     count ~ persons + child + camper + (1 | persons),
     zi ~ child + camper + (1 | persons)
@@ -250,7 +250,7 @@ model <- brm(
   data = fish,
   family = zero_inflated_poisson(),
   refresh = 0
-)
+))
 
 parameters(model, component = "conditional")
 
