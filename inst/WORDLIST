@@ -250,8 +250,8 @@ logitsf
 marginaleffects
 maxLik
 mblogit
-mclust
 mclogit
+mclust
 meaned
 merDeriv
 merMod

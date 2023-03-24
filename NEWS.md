@@ -2,9 +2,12 @@
 
 ## General
 
-* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*) and
+* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*), and
   `fixest_multi` (*fixest*).
 
+* `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
+  have been retired. Instead, directly using `bootstrap_model()` is recommended.
+  
 ## Changes to functions
 
 * `equivalence_test()` gets a method for `ggeffects` objects from package

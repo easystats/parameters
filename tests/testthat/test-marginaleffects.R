@@ -1,4 +1,3 @@
-skip_if(!isTRUE(Sys.getenv("RunAllparametersTests") == "yes"))
 skip_if_not_installed("marginaleffects", minimum_version = "0.9.0")
 requiet("marginaleffects")
 requiet("rstanarm")
@@ -10,7 +9,15 @@ test_that("marginaleffects()", {
   expect_equal(nrow(parameters(model)), 1)
 
   # Bayesian
-  x <- suppressWarnings(stan_glm(Sepal.Width ~ Species * Petal.Length, data = iris, refresh = 0, iter = 100, chains = 1))
+  x <- suppressWarnings(
+    stan_glm(
+      Sepal.Width ~ Species * Petal.Length,
+      data = iris,
+      refresh = 0,
+      iter = 100,
+      chains = 1
+    )
+  )
   model <- slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
   expect_equal(nrow(parameters(model)), 1)
 })
@@ -30,7 +37,15 @@ test_that("comparisons()", {
   expect_equal(nrow(parameters(m)), 1)
 
   # Bayesian
-  x <- suppressWarnings(stan_glm(Sepal.Width ~ Species * Petal.Length, data = iris, refresh = 0, iter = 100, chains = 1))
+  x <- suppressWarnings(
+    stan_glm(
+      Sepal.Width ~ Species * Petal.Length,
+      data = iris,
+      refresh = 0,
+      iter = 100,
+      chains = 1
+    )
+  )
   m <- marginaleffects(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
   expect_equal(nrow(parameters(m)), 1)
 })
