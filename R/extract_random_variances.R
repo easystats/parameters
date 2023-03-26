@@ -380,6 +380,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       # lme4 - wald / normal CI
 
       merDeriv_loaded <- isNamespaceLoaded("merDeriv")
+      # detach on exit
+      on.exit({
+        if (!merDeriv_loaded) {
+          .unregister_vcov()
+        }
+      })
 
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
@@ -504,11 +510,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out
           }
         )
-
-        # detach
-        if (!merDeriv_loaded) {
-          .unregister_vcov()
-        }
       } else if (isTRUE(verbose)) {
         insight::format_alert("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters.")
       }
