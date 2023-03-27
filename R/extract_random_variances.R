@@ -385,7 +385,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         if (!merDeriv_loaded) {
           .unregister_vcov()
         }
-      })
+      }, add = TRUE, after = FALSE)
 
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html
