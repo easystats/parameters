@@ -88,7 +88,7 @@
   # there is nothing else than fixed effects (redundant title)
   if (inherits(model, c(
     "mediate", "emmGrid", "emm_list", "summary_emm", "lm",
-    "glm", "coxph", "bfsl", "deltaMethod"
+    "glm", "coxph", "bfsl", "deltaMethod", "phylolm", "phyloglm"
   ))) {
     attr(params, "no_caption") <- TRUE
     attr(params, "title") <- ""
