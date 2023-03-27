@@ -30,6 +30,8 @@
   `model_parameters()` is provided, the valid options were not shown in correct
   capital letters, where appropriate.
 
+* Fixed bug in `cluster_analysis()` for `include_factors = TRUE`.
+
 # parameters 0.20.2
 
 ## General

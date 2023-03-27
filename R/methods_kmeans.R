@@ -30,7 +30,8 @@ model_parameters.kmeans <- function(model, ...) {
     data.frame(
       Cluster = row.names(model$centers),
       n_Obs = model$size,
-      Sum_Squares = model$withinss
+      Sum_Squares = model$withinss,
+      stringsAsFactors = FALSE
     ),
     model$centers
   )

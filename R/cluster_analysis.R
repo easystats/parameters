@@ -232,7 +232,11 @@ cluster_analysis <- function(x,
   # Create NA-vector of same length as original data frame
   clusters <- rep(NA, times = nrow(x))
   # Create vector with cluster group classification (with missing)
-  complete_cases <- stats::complete.cases(x[names(data)])
+  if (include_factors) {
+    complete_cases <- stats::complete.cases(x)
+  } else {
+    complete_cases <- stats::complete.cases(x[vapply(x, is.numeric, TRUE)])
+  }
   clusters[complete_cases] <- rez$clusters
 
   # Get clustering parameters
