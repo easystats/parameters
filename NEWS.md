@@ -2,8 +2,8 @@
 
 ## General
 
-* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*), and
-  `fixest_multi` (*fixest*).
+* Added support for models of class `hglm` (*hglm*), `mblogit` (*mclogit*),
+  `fixest_multi` (*fixest*), and `phylolm` / `phyloglm` (*phylolm*).
 
 * `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
   have been retired. Instead, directly using `bootstrap_model()` is recommended.

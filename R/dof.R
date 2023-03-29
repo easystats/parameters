@@ -267,6 +267,8 @@ dof <- degrees_of_freedom
   }
 
   method <- tolower(method)
+
+  # exceptions 1
   if (inherits(model, c("polr", "glm", "svyglm"))) {
     if (method %in% c(
       "analytical", "any", "fit", "profile", "residual",
@@ -276,6 +278,18 @@ dof <- degrees_of_freedom
     } else {
       if (verbose) {
         insight::format_alert(sprintf("`%s` must be one of \"wald\", \"residual\" or \"profile\". Using \"wald\" now.", type))
+      }
+      return(FALSE)
+    }
+  }
+
+  # exceptions 2
+  if (inherits(model, c("phylolm", "phyloglm"))) {
+    if (method %in% c("analytical", "any", "fit", "residual", "wald", "nokr", "normal", "boot")) {
+      return(TRUE)
+    } else {
+      if (verbose) {
+        insight::format_alert(sprintf("`%s` must be one of \"wald\", \"normal\" or \"boot\". Using \"wald\" now.", type))
       }
       return(FALSE)
     }
