@@ -118,7 +118,7 @@
     }
 
     # if we have a non-empty stderror, use it
-    if (datawizard::is_empty_object(stderror)) {
+    if (insight::is_empty_object(stderror)) {
       return(NULL)
     }
 

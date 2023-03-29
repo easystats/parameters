@@ -381,11 +381,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
       merDeriv_loaded <- isNamespaceLoaded("merDeriv")
       # detach on exit
-      on.exit({
-        if (!merDeriv_loaded) {
-          .unregister_vcov()
-        }
-      }, add = TRUE, after = FALSE)
+      on.exit(
+        {
+          if (!merDeriv_loaded) {
+            .unregister_vcov()
+          }
+        },
+        add = TRUE,
+        after = FALSE
+      )
 
       # Wald based CIs
       # see https://stat.ethz.ch/pipermail/r-sig-mixed-models/2022q1/029985.html

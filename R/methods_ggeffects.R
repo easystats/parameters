@@ -76,19 +76,19 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
   })
   footer <- NULL
 
-  if (!datawizard::is_empty_object(cv)) {
+  if (!insight::is_empty_object(cv)) {
     cv.names <- names(cv)
     cv.space <- max(nchar(cv.names))
 
     # ignore this string when determining maximum length
     poplev <- which(cv %in% c("NA (population-level)", "0 (population-level)"))
-    if (!datawizard::is_empty_object(poplev)) {
+    if (!insight::is_empty_object(poplev)) {
       mcv <- cv[-poplev]
     } else {
       mcv <- cv
     }
 
-    if (!datawizard::is_empty_object(mcv)) {
+    if (!insight::is_empty_object(mcv)) {
       cv.space2 <- max(nchar(mcv))
     } else {
       cv.space2 <- 0

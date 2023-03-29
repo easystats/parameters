@@ -97,7 +97,7 @@ pool_parameters <- function(x,
   # only pool for specific component -----
 
   original_x <- x
-  if ("Component" %in% colnames(x[[1]]) && !datawizard::is_empty_object(component) && component != "all") {
+  if ("Component" %in% colnames(x[[1]]) && !insight::is_empty_object(component) && component != "all") {
     x <- lapply(x, function(i) {
       i <- i[i$Component == component, ]
       i$Component <- NULL
