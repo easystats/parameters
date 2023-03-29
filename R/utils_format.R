@@ -1033,7 +1033,7 @@
     )
     do.call(rbind, final_table)
   } else {
-    datawizard::compact_list(final_table)
+    insight::compact_list(final_table)
   }
 }
 

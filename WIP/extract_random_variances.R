@@ -684,7 +684,7 @@
       attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
     }
 
-    varcorr <- datawizard::compact_list(list(vc1, vc2))
+    varcorr <- insight::compact_list(list(vc1, vc2))
     names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
 
     # joineRML
@@ -738,7 +738,7 @@
       }
       out
     })
-    varcorr <- datawizard::compact_list(varcorr)
+    varcorr <- insight::compact_list(varcorr)
     names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
     attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
 

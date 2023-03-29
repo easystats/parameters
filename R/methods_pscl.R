@@ -70,7 +70,7 @@ standard_error.zeroinfl <- function(model,
     return(standard_error.default(model, component = component, ...))
   }
 
-  cs <- datawizard::compact_list(stats::coef(summary(model)))
+  cs <- insight::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     if (i == "count") {
       comp <- "conditional"
@@ -131,7 +131,7 @@ p_value.zeroinfl <- function(model,
     return(p_value.default(model, component = component, ...))
   }
 
-  cs <- datawizard::compact_list(stats::coef(summary(model)))
+  cs <- insight::compact_list(stats::coef(summary(model)))
   x <- lapply(names(cs), function(i) {
     if (i == "count") {
       comp <- "conditional"

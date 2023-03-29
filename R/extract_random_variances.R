@@ -707,7 +707,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       attr(vc2, "useSc") <- FALSE
     }
 
-    varcorr <- datawizard::compact_list(list(vc1, vc2))
+    varcorr <- insight::compact_list(list(vc1, vc2))
     names(varcorr) <- c("cond", "zi")[seq_along(varcorr)]
 
     # joineRML
@@ -757,7 +757,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       }
       out
     })
-    varcorr <- datawizard::compact_list(varcorr)
+    varcorr <- insight::compact_list(varcorr)
     names(varcorr) <- setdiff(names(lme4::VarCorr(model)), "residual__")
     attr(varcorr, "sc") <- lme4::VarCorr(model)$residual__$sd[1, 1]
 
