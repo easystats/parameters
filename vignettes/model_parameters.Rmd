@@ -319,7 +319,7 @@ model_parameters(model)
 ```{r eval=successfully_loaded["metafor"]}
 library(metafor)
 
-mydat <- data.frame(
+mydat <<- data.frame(
   effectsize = c(-0.393, 0.675, 0.282, -1.398),
   standarderror = c(0.317, 0.317, 0.13, 0.36)
 )
