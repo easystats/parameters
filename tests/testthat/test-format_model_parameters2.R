@@ -117,7 +117,7 @@ if (requiet("lme4")) {
       14L, 42L, 17L, 18L, 13L, 17L, 12L, 18L, 5L, 3L, 9L)), row.names = c(NA,
       -166L), class = "data.frame")
 
-    d <- factor(d$Year)
+    d$Year <- factor(d$Year)
     d$Drought <- as.factor(d$Drought)
     d$Stratum <- as.factor(d$Stratum)
     levels(d$Stratum) <- list(lower = "shade", upper = "sun")
