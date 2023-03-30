@@ -252,16 +252,22 @@ model <- suppressWarnings(brm(
   refresh = 0
 ))
 
-parameters(model, component = "conditional")
+parameters(model, component = "conditional", verbose = FALSE)
 
-parameters(model, effects = "all", component = "all")
+parameters(model, effects = "all", component = "all", verbose = FALSE)
 ```
 
 To include information about the random effect parameters (group levels), set
 `group_level = TRUE`:
 
 ```{r eval=all(successfully_loaded[c("brms", "BH")])}
-parameters(model, effects = "all", component = "conditional", group_level = TRUE)
+parameters(
+  model,
+  effects = "all",
+  component = "conditional",
+  group_level = TRUE,
+  verbose = FALSE
+)
 ```
 
 ## Structural Models (PCA, EFA, CFA, SEM...)
