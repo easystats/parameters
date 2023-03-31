@@ -87,7 +87,7 @@
   # objects that should not have a table headline like "# Fixed Effects", when
   # there is nothing else than fixed effects (redundant title)
   if (inherits(model, c(
-    "mediate", "emmGrid", "emm_list", "summary_emm", "lm",
+    "mediate", "emmGrid", "emm_list", "summary_emm", "lm", "averaging",
     "glm", "coxph", "bfsl", "deltaMethod", "phylolm", "phyloglm"
   ))) {
     attr(params, "no_caption") <- TRUE
