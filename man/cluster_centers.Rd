@@ -16,7 +16,9 @@ cluster_centers(data, clusters, fun = mean, ...)
 \item{...}{Other arguments to be passed to or from other functions.}
 }
 \value{
-A dataframe containing the cluster centers. Attributes include performance statistics and distance between each observation and its respective cluster centre.
+A dataframe containing the cluster centers. Attributes include
+performance statistics and distance between each observation and its
+respective cluster centre.
 }
 \description{
 For each cluster, computes the mean (or other indices) of the variables. Can be used

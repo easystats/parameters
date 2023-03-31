@@ -48,7 +48,8 @@
 #'   as `nrow(x)`.
 #'
 #' @note
-#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
+#' There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
+#' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @details
 #' The `print()` and `plot()` methods show the (standardized) mean value for
@@ -319,9 +320,13 @@ cluster_analysis <- function(x,
     out <- list(model = attributes(rez)$model, clusters = rez$Cluster)
   } else {
     if (distance_method %in% c("correlation", "uncentered", "abscor")) {
-      insight::format_warning(paste0(
-        "Method `", distance_method, "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
-      ))
+      insight::format_warning(
+        paste0(
+          "Method `",
+          distance_method,
+          "` not supported by regular `hclust()`. Please specify another one or set `n = NULL` to use pvclust."
+        )
+      )
     }
     dist <- dist(data, method = distance_method, ...)
     model <- stats::hclust(dist, method = hclust_method, ...)

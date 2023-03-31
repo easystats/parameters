@@ -8,7 +8,9 @@
 #' @param fun What function to use, `mean` by default.
 #' @param ... Other arguments to be passed to or from other functions.
 #'
-#' @return A dataframe containing the cluster centers. Attributes include performance statistics and distance between each observation and its respective cluster centre.
+#' @return A dataframe containing the cluster centers. Attributes include
+#'   performance statistics and distance between each observation and its
+#'   respective cluster centre.
 #'
 #'
 #' @examples

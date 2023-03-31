@@ -90,7 +90,8 @@ mean values).
 Clusters classification can be obtained via \code{print(x, newdata = NULL, ...)}.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
+implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
 set.seed(33)

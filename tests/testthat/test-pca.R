@@ -56,7 +56,9 @@ if (requiet("psych") && requiet("nFactors")) {
   mp <- model_parameters(model, sort = TRUE, threshold = "max")
 
   test_that("predict model_parameters fa", {
-    pr <- suppressMessages(predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness")))
+    pr <- suppressMessages(
+      predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
+    )
     out <- head(pr, 5)
     expect_equal(
       out$Neuroticism,
