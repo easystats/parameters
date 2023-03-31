@@ -20,9 +20,10 @@ if (
   test3333 <- data.frame(
     ID = c("TOM", "TOM", "TOM", "TOM", "MARY", "MARY", "MARY", "JOHN", "JOHN"),
     Year = c(1992:1995, 1991:1993, 1993:1994),
-    ret = rnorm(9)
+    ret = rnorm(9),
+    stringsAsFactors = FALSE
   )
-  test3333 <- pdata.frame(test3333)
+  test3333 <- plm::pdata.frame(test3333)
   test3333["lag"] <- lag(test3333$ret)
   test3333 <- na.omit(test3333)
   test3333model <- ret ~ lag
