@@ -1,21 +1,12 @@
-requiet("nlme")
-requiet("lme4")
-requiet("lavaSearch2")
+testthat::skip_if_not_installed("nlme")
+testthat::skip_if_not_installed("lme4")
+testthat::skip_if_not_installed("lavaSearch2")
 
+data("sleepstudy", package = "lme4")
+m1_lme <- nlme::lme(Reaction ~ Days, random = ~ 1 + Days | Subject, data = sleepstudy)
 
-data("sleepstudy")
-m1_lme <- nlme::lme(Reaction ~ Days,
-  random = ~ 1 + Days | Subject,
-  data = sleepstudy
-)
-
-data("Orthodont")
-m2_lme <- nlme::lme(
-  distance ~ age + Sex,
-  random = ~ 1 | Subject,
-  data = Orthodont,
-  method = "ML"
-)
+data("Orthodont", package = "nlme")
+m2_lme <- nlme::lme(distance ~ age + Sex, random = ~ 1 | Subject, data = Orthodont, method = "ML")
 
 data(iris)
 set.seed(1234)
@@ -40,7 +31,7 @@ test_that("ci(vcov)", {
   ci2 <- suppressMessages(ci(m3_lme, vcov = "CR3"))
   expect_true(all(ci1$CI_low != ci2$CI_low))
   # manual computation
-  b <- fixef(m3_lme)
+  b <- lme4::fixef(m3_lme)
   se <- standard_error(m3_lme, vcov = "CR3")$SE
   tstat <- b / se
   critical_t <- abs(qt(0.025, df = dof(m3_lme)))
@@ -74,15 +65,15 @@ test_that("p_value", {
 })
 
 test_that("p: vcov", {
-  requiet("clubSandwich")
-  requiet("lmtest")
+  skip_if_not_installed("clubSandwich")
+  skip_if_not_installed("lmtest")
   # default
   p1 <- stats::coef(summary(m3_lme))[, 5]
   p2 <- p_value(m3_lme)$p
   expect_equal(p1, p2, ignore_attr = TRUE)
   # manual computation
   p1 <- p_value(m3_lme, vcov = "CR3")$p
-  b2 <- fixef(m3_lme)
+  b2 <- lme4::fixef(m3_lme)
   se2 <- sqrt(diag(as.matrix(vcovCR(m3_lme, type = "CR3"))))
   t2 <- b2 / se2
   # same DF used in `nlme:::summary.lme`
