@@ -1,3 +1,4 @@
+unloadNamespace("cplm")
 if (requiet("BayesFactor") && requiet("logspline")) {
   .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 

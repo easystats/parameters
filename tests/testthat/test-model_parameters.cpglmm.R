@@ -11,3 +11,5 @@ if (requiet("cplm")) {
     )
   })
 }
+
+unloadNamespace("cplm")
