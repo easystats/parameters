@@ -131,8 +131,10 @@ if (requiet("lme4")) {
       attributes(out)$pretty_names,
       c(
         `(Intercept)` = "(Intercept)", Droughtyes = "Drought [yes]",
-        Stratumupper = "Stratum [upper]", Year2 = "Year [2]", `Droughtyes:Stratumupper` = "Drought [yes] × Stratum [upper]",
-        `Droughtyes:Year2` = "Drought [yes] × Year [2]", `Stratumupper:Year2` = "Stratum [upper] × Year [2]"
+        Stratumupper = "Stratum [upper]", Year2 = "Year [2]",
+        `Droughtyes:Stratumupper` = "Drought [yes] * Stratum [upper]",
+        `Droughtyes:Year2` = "Drought [yes] * Year [2]",
+        `Stratumupper:Year2` = "Stratum [upper] * Year [2]"
       )
     )
   })
