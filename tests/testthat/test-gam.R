@@ -51,7 +51,7 @@ if (requiet("mgcv")) {
 
     test_that("print model_parameters", {
       out <- utils::capture.output(print(mp))
-      expect_equal(
+      expect_identical(
         out,
         c(
           "# Fixed Effects",

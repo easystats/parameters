@@ -1,21 +1,20 @@
 if (requiet("mgcv")) {
   set.seed(123)
-  void <- capture.output(
-    dat <- gamSim(6, n = 200, scale = .2, dist = "poisson")
+  void <- capture.output({
+    dat <- gamSim(6, n = 200, scale = 0.2, dist = "poisson")
+  })
+  m1_gamm <- gamm(
+    y ~ s(x0) + s(x1) + s(x2),
+    family = poisson,
+    data = dat,
+    random = list(fac = ~1),
+    verbosePQL = FALSE
   )
-  m1 <-
-    gamm(
-      y ~ s(x0) + s(x1) + s(x2),
-      family = poisson,
-      data = dat,
-      random = list(fac = ~1),
-      verbosePQL = FALSE
-    )
 
 
   test_that("ci", {
     expect_equal(
-      ci(m1)$CI_low,
+      ci(m1_gamm)$CI_low,
       c(2.361598, NA, NA, NA),
       tolerance = 1e-3
     )
@@ -23,7 +22,7 @@ if (requiet("mgcv")) {
 
   test_that("se", {
     expect_equal(
-      standard_error(m1)$SE,
+      standard_error(m1_gamm)$SE,
       c(0.3476989, NA, NA, NA),
       tolerance = 1e-3
     )
@@ -31,13 +30,13 @@ if (requiet("mgcv")) {
 
   test_that("p_value", {
     expect_equal(
-      p_value(m1)$p,
+      p_value(m1_gamm)$p,
       c(0, 0, 0, 0),
       tolerance = 1e-3
     )
   })
 
-  mp <- model_parameters(m1)
+  mp <- model_parameters(m1_gamm)
   test_that("model_parameters", {
     expect_equal(
       mp$Coefficient,
