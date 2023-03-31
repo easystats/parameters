@@ -172,3 +172,5 @@ if (requiet("splines")) {
     )
   })
 }
+
+options(parameters_interaction = NULL)

@@ -187,7 +187,7 @@ format_parameters.parameters_model <- function(model, ...) {
         }
       }
       names[i] <- .format_interaction(
-        components,
+        components = components,
         type = types[i, "Type"],
         is_nested = is_nested,
         is_simple = is_simple,
