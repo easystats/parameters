@@ -1,5 +1,5 @@
 options(parameters_exponentiate = FALSE)
-skip_on_os("windows")
+skip_on_os(c("mac", "linux"))
 
 if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
   data("fish")

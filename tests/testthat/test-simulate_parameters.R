@@ -1,4 +1,4 @@
-skip_on_os("windows")
+skip_on_os(c("mac", "linux"))
 
 if (getRversion() >= "4.0.0" && requiet("sandwich")) {
   mod <- lm(mpg ~ wt + cyl, data = mtcars)

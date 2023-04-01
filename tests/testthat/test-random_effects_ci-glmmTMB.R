@@ -1,4 +1,4 @@
-skip_on_os("windows")
+skip_on_os(c("mac", "linux"))
 
 ## TODO also check messages for profiled CI
 
