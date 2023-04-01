@@ -1,18 +1,6 @@
-win_os <- tryCatch(
-  {
-    si <- Sys.info()
-    if (!is.null(si["sysname"])) {
-      si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-    } else {
-      FALSE
-    }
-  },
-  error = function(e) {
-    FALSE
-  }
-)
+skip_on_os("windows")
 
-if (win_os && getRversion() >= "4.0.0" && requiet("sandwich")) {
+if (getRversion() >= "4.0.0" && requiet("sandwich")) {
   mod <- lm(mpg ~ wt + cyl, data = mtcars)
 
   test_that("simulate_parameters, lm", {

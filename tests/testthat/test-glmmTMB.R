@@ -1,22 +1,9 @@
 options(parameters_exponentiate = FALSE)
+skip_on_os("windows")
 
 if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
   data("fish")
   data("Salamanders")
-
-  win_os <- tryCatch(
-    {
-      si <- Sys.info()
-      if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-      } else {
-        FALSE
-      }
-    },
-    error = function(e) {
-      FALSE
-    }
-  )
 
   m1 <- suppressWarnings(glmmTMB(
     count ~ child + camper + (1 | persons),
@@ -405,7 +392,7 @@ if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
 
   # proper printing ---------------------
 
-  if (win_os && getRversion() < "4.3.0") {
+  if (getRversion() < "4.3.0") {
     test_that("print-model_parameters glmmTMB", {
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))

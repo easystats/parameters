@@ -126,21 +126,8 @@ if (requiet("lme4") && requiet("GLMMadaptive") && requiet("glmmTMB")) {
     )
   })
 
-  win_os <- tryCatch(
-    {
-      si <- Sys.info()
-      if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-      } else {
-        FALSE
-      }
-    },
-    error = function(e) {
-      FALSE
-    }
-  )
-
-  if (requiet("glmmTMB") && win_os) {
+  if (requiet("glmmTMB")) {
+    skip_on_os("windows")
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,
