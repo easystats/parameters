@@ -1,5 +1,6 @@
 test_that("standardize_info", {
   skip_if_not_installed("nlme")
+  skip_if_not_installed("lme4")
   fm1 <- nlme::lme(mpg ~ cyl, mtcars, random = ~ 1 | gear)
   fm2 <- nlme::gls(mpg ~ cyl, mtcars)
 

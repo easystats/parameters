@@ -1,4 +1,5 @@
 test_that("principal_components", {
+  skip_if_not_installed("psych")
   set.seed(333)
   x <- principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
   expect_identical(c(ncol(x), nrow(x)), c(8L, 7L))
