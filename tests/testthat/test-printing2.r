@@ -87,11 +87,8 @@ withr::with_options(
       )
     })
 
-
-    .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-    if (.runThisTest) {
       test_that("combination of different models", {
+        skip_on_cran()
         skip_if_not_installed("glmmTMB")
         data("fish")
 
@@ -113,6 +110,5 @@ withr::with_options(
         cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
         expect_snapshot(print(cp))
       })
-    }
   }
 )

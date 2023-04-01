@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
 
   test_that("model_parameters - cgam", {
     skip_if_not(getRversion() >= "4.0.0")
@@ -161,4 +160,4 @@ if (.runThisTest) {
       tolerance = 0.01
     )
   })
-}
+

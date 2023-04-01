@@ -85,24 +85,12 @@ data(mtcars)
 m1 <- lm(mpg ~ hp, mtcars)
 m2 <- lm(mpg ~ hp, mtcars)
 test_that("compare_parameters, proper printing for CI=NULL #820", {
-  out <- utils::capture.output(compare_parameters(m1, m2, ci = NULL))
-  expect_identical(
-    out,
-    c(
-      "Parameter    |    m1 |    m2",
-      "----------------------------",
-      "(Intercept)  | 30.10 | 30.10",
-      "hp           | -0.07 | -0.07",
-      "----------------------------",
-      "Observations |    32 |    32"
-    )
-  )
+  expect_snapshot(compare_parameters(m1, m2, ci = NULL))
 })
 
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
 
   test_that("compare_parameters, correct random effects", {
     skip_if_not_installed("glmmTMB")
@@ -127,4 +115,4 @@ if (.runThisTest) {
     cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
     expect_snapshot(cp)
   })
-}
+

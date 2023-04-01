@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("mmrm")
   skip_if_not(packageVersion("insight") > "0.18.8")
 
@@ -97,4 +96,3 @@ if (.runThisTest) {
     )
   })
   expect_identical(attributes(out2)$ci_method, "Kenward")
-}

@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not(getRversion() >= "4.0.0" )
   skip_if_not_installed("glmmTMB")
 
@@ -60,4 +59,3 @@ if (.runThisTest) {
     expect_equal(mp$Coefficient, as.vector(unlist(fixef(model))), tolerance = 1e-3)
     expect_equal(mp$Component, c("conditional", "conditional", "dispersion", "dispersion"))
   })
-}

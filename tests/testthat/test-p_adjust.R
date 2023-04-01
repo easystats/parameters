@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
 
   test_that("model_parameters, p-adjust", {
     model <- lm(mpg ~ wt * cyl + am + log(hp), data = mtcars)
@@ -52,4 +51,3 @@ if (.runThisTest) {
     mp <- model_parameters(m, p_adjust = "scheffe")
     expect_equal(mp$p, as.data.frame(m)$p.value, tolerance = 1e-4)
   })
-}

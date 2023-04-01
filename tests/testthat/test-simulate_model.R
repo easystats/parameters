@@ -2,7 +2,6 @@ skip_on_os(c("mac", "linux", "solaris"))
 skip_if_not(getRversion() >= "4.0.0")
 skip_if_not_installed("sandwich")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
 mod <- lm(mpg ~ wt + cyl, data = mtcars)
 
@@ -17,7 +16,8 @@ test_that("simulate_model, lm", {
   expect_false(isTRUE(all.equal(mean(s1$cyl), mean(s2$cyl), tolerance = 1e-5)))
 })
 
-if (.runThisTest) {
+skip_on_cran()
+
   skip_if_not_installed("glmmTMB")
 
   data(fish)
@@ -59,5 +59,4 @@ if (.runThisTest) {
     )
     expect_equal(mean(s$camper1), 0.717259, tolerance = 1e-1)
   })
-}
 

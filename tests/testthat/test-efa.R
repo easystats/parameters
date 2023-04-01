@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   test_that("predict.parameters_efa works with verbose", {
     skip_if_not_installed("psych")
     d <- psych::bfi[, 1:25]
@@ -15,4 +14,4 @@ if (.runThisTest) {
     )
     expect_identical(dim(predictions), as.integer(c(2436, 5)))
   })
-}
+

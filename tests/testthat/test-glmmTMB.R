@@ -5,13 +5,11 @@ skip_if_not(getRversion() >= "4.0.0")
 data("fish")
 data("Salamanders", package = "glmmTMB")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
 withr::with_options(
   list(parameters_exponentiate = FALSE),
   {
-    if (.runThisTest) {
-
       m1 <- suppressWarnings(glmmTMB::glmmTMB(
         count ~ child + camper + (1 | persons),
         ziformula = ~ child + camper + (1 | persons),
@@ -530,7 +528,6 @@ withr::with_options(
         mp <- model_parameters(m1, effects = "all", verbose = FALSE)
         expect_snapshot(mp)
       })
-    }
   }
 )
 

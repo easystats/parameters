@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("lme4")
   data(sleepstudy, package = "lme4")
 
@@ -143,4 +142,3 @@ if (.runThisTest) {
       )
     )
   })
-}

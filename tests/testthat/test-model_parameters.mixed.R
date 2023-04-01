@@ -1,9 +1,6 @@
 skip_if_not_installed("lme4")
+skip_on_cran()
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
-  data(mtcars)
   m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
 
@@ -121,4 +118,4 @@ if (.runThisTest) {
 
     expect_snapshot(model_parameters(m1, effects = "fixed", summary = TRUE))
   })
-}
+

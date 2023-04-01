@@ -1,9 +1,6 @@
 skip_on_os("mac")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-
-if (.runThisTest) {
+skip_on_cran()
 
   test_that("mp", {
     skip_if_not_installed("rstanarm")
@@ -44,4 +41,3 @@ test_that("mp2", {
     expect_identical(mp$Response, c("y1", "y1", "y2", "y2", "y2"))
     expect_equal(mp$Prior_Scale, c(4.9647, 0.3465, 5.57448, 1.39362, 0.38906), tolerance = 1e-2)
   })
-}

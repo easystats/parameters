@@ -1,8 +1,7 @@
 skip_if_not_installed("sandwich")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   # standard errors -------------------------------------
   test_that("robust-se lm", {
     m <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
@@ -436,4 +435,3 @@ if (.runThisTest) {
     expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
     expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
   })
-}

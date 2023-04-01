@@ -27,11 +27,9 @@ test_that("p_value", {
   )
 })
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   mp <- model_parameters(m1)
   test_that("model_parameters", {
     expect_snapshot(mp)
   })
-}

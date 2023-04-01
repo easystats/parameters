@@ -2,12 +2,11 @@ skip_if_not_installed("mclogit")
 skip_if_not_installed("withr")
 skip_if_not(packageVersion("insight") > "0.19.1")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
 withr::with_options(
   list(parameters_exponentiate = FALSE),
   {
-    if (.runThisTest) {
       data(Transport, package = "mclogit")
       m1 <- mclogit::mclogit(
         cbind(resp, suburb) ~ distance + cost,
@@ -28,6 +27,5 @@ withr::with_options(
         params <- model_parameters(m2)
         expect_snapshot(params)
       })
-    }
   }
 )

@@ -1,8 +1,7 @@
 skip_if_not_installed("fixest")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
 
   set.seed(123)
   iris$x <- rnorm(150)
@@ -22,4 +21,4 @@ if (.runThisTest) {
     expect_snapshot(print(model_parameters(mod)))
     expect_snapshot(print(ci(mod)))
   })
-}
+

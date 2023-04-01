@@ -1,13 +1,11 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest) {
   test_that("model_parameters.BFBayesFactor", {
+    skip_on_cran()
     skip("TODO")
     skip_if_not_installed("BayesFactor")
     model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
     expect_equal(model_parameters(model)$BF, c(492.770567186302, NA), tolerance = 1e-2)
   })
-}
 
 
 # make sure BF is returned, even if NA
@@ -53,12 +51,12 @@ test_that("model_parameters.BFBayesFactor", {
   )
 })
 
-# if (.runThisTest) {
 #   test_that("model_parameters.BFBayesFactor", {
+#   skip_on_cran()
+
 #     model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
 #     expect_equal(model_parameters(model)$BF, c(86.58973, NA), tolerance = 1)
 #   })
-# }
 
 test_that("model_parameters.BFBayesFactor", {
   skip_if_not_installed("BayesFactor")
@@ -74,8 +72,8 @@ test_that("model_parameters.BFBayesFactor", {
   )
 })
 
-if (.runThisTest) {
   test_that("model_parameters.BFBayesFactor", {
+    skip_on_cran()
     skip_if_not_installed("BayesFactor")
     data(raceDolls, package = "BayesFactor")
     bf <- BayesFactor::contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
@@ -110,6 +108,7 @@ if (.runThisTest) {
   })
 
   test_that("model_parameters.BFBayesFactor", {
+    skip_on_cran()
     skip_if_not_installed("BayesFactor")
     data(puzzles, package = "BayesFactor")
     result <- BayesFactor::anovaBF(RT ~ shape * color + ID,
@@ -133,7 +132,6 @@ if (.runThisTest) {
       "random", "random", "random", "fixed", "fixed", "fixed", "fixed"
     ))
   })
-}
 
 # one-sample t-test
 

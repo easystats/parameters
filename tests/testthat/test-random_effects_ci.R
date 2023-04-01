@@ -1,10 +1,9 @@
 skip_on_os("mac")
 skip_if_not_installed("lme4")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
 
-if (.runThisTest) {
   data(sleepstudy, package = "lme4")
   data(cake, package = "lme4")
   set.seed(123)
@@ -361,4 +360,3 @@ if (.runThisTest) {
       )
     )
   })
-}

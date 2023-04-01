@@ -1,8 +1,7 @@
 skip_if_not_installed("VGAM")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   data("pneumo", package = "VGAM")
   data("hunua", package = "VGAM")
 
@@ -39,4 +38,4 @@ if (.runThisTest) {
       "df_error", "p", "Component"
     ))
   })
-}
+

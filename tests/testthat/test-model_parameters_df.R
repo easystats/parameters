@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   # glm ---------------------------
 
   set.seed(123)
@@ -310,5 +309,3 @@ if (.runThisTest) {
     ), tolerance = 1e-3)
     expect_equal(params$p, c(0, 0, 0, 0, 0, 0, 0, 0), tolerance = 1e-3)
   })
-
-}

@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
   iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
 
@@ -54,7 +53,7 @@ if (.runThisTest) {
     expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 2)
   })
 
-  if (.runThisTest) {
+
     test_that("model_parameters.anova", {
       skip_if_offline()
       skip_if_not_installed("httr")
@@ -71,7 +70,7 @@ if (.runThisTest) {
       model <- insight::download_model("anova_lmerMod_6")
       expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 12)
     })
-  }
+
 
   test_that("model_parameters.anova", {
     model <- aov(wt ~ cyl + Error(gear), data = mtcars)
@@ -83,4 +82,4 @@ if (.runThisTest) {
     model <- aov(Sepal.Length ~ Species / Cat1 + Error(Cat2), data = iris)
     expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)
   })
-}
+

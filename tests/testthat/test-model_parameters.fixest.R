@@ -1,8 +1,7 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest) {
 
   test_that("model_parameters.fixest", {
+    skip_on_cran()
     skip_if_not_installed("fixest")
     data("qol_cancer")
     qol_cancer <- cbind(
@@ -27,7 +26,6 @@ if (.runThisTest) {
       model_parameters(m, summary = TRUE, verbose = FALSE)
     )
   })
-}
 
 test_that("robust standard errors", {
   skip_if_not_installed("fixest")

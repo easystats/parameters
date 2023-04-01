@@ -2,9 +2,8 @@ skip_if_offline()
 skip_if_not_installed("posterior")
 skip_if_not_installed("brms")
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   model <- insight::download_model("brms_1")
 
   test_that("mp-posterior-draws", {
@@ -49,4 +48,3 @@ if (.runThisTest) {
     se2 <- standard_error(model)
     expect_equal(se1$SE[1:4], se2$SE[1:4], tolerance = 1e-2, ignore_attr = TRUE)
   })
-}

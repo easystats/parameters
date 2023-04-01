@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   test_that("model_parameters.anova", {
     m <- glm(am ~ mpg + hp + factor(cyl),
              data = mtcars, family = binomial()
@@ -105,11 +104,10 @@ if (.runThisTest) {
       )
       expect_equal(mp$Eta2_partial, c(0.03262, 0.6778), tolerance = 1e-3)
     })
-}
+
 
 # XXX -----
 
-if (.runThisTest) {
   test_that("anova type | lm", {
     skip_if_not_installed("car")
 
@@ -211,11 +209,7 @@ if (.runThisTest) {
     expect_equal(attr(model_parameters(m), "anova_type"), 3)
     expect_equal(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3)
   })
-}
 
-
-
-if (.runThisTest) {
   test_that("anova rms", {
     skip_if_not_installed("rms")
     m <- rms::ols(mpg ~ cyl + disp + hp + drat, data = mtcars)
@@ -239,4 +233,4 @@ if (.runThisTest) {
     expect_equal(colnames(mp), c("Parameter", "Chi2", "df", "p"))
     expect_equal(mp$Chi2, data.frame(a)$Chi.Square, tolerance = 1e-3)
   })
-}
+

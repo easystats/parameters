@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   test_that("emmeans | lm", {
     skip_if_not_installed("emmeans")
     skip_if_not_installed("boot")
@@ -84,4 +83,4 @@ if (.runThisTest) {
     )
     expect_identical(nrow(out), 7L)
   })
-}
+

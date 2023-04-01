@@ -3,15 +3,12 @@
 skip_on_os(c("mac", "linux", "solaris"))
 skip_if_not_installed("glmmTMB", minimum_version = "1.1.5")
 skip_if_not_installed("lme4")
+skip_on_cran()
 
-# only run for dev-version, not on CRAN
-.runThisTest <- length(strsplit(packageDescription("parameters")$Version, ".", fixed = TRUE)[[1]]) > 3
 
 # tests --------------------------------
 
 ## TODO also check messages for profiled CI
-
-if (.runThisTest) {
 
   data(sleepstudy, package = "lme4")
   data(cake, package = "lme4")
@@ -268,4 +265,3 @@ if (.runThisTest) {
     mp2 <- model_parameters(m2, ci_method = "profile")
     expect_message(utils::capture.output(print(mp2)), regexp = "(.*)profile-likelihood(.*)z-distribution(.*)")
   })
-}

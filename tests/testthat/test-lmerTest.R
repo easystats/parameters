@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("lmerTest")
   skip_if_not_installed("pbkrtest")
 
@@ -22,4 +21,3 @@ if (.runThisTest) {
     expect_equal(params$t, as.vector(s$coefficients[, "t value"]), tolerance = 1e-4)
     expect_equal(params$p, as.vector(s$coefficients[, "Pr(>|t|)"]), tolerance = 1e-4)
   })
-}

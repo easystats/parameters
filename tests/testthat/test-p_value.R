@@ -1,7 +1,3 @@
-
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-
 test_that("p_value", {
   expect_equal(p_value(c(1, 1, 1)), p_value(-c(1, 1, 1)), tolerance = 1e-3)
 
@@ -15,8 +11,9 @@ test_that("p_value", {
 
 
 
-if (.runThisTest) {
-  test_that("p_value", {
+skip_on_cran()
+
+test_that("p_value", {
     skip_if_offline()
     skip_if_not_installed("httr")
     skip_if_not_installed("lme4")
@@ -114,4 +111,3 @@ if (.runThisTest) {
     expect_equal(p_value(model)$p[1], 0.29912, tolerance = 0.01)
   })
 
-}

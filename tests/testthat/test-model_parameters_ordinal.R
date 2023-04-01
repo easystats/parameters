@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("ordinal")
   d <- data.frame(
     Stim = c(
@@ -92,4 +91,3 @@ if (.runThisTest) {
 
     expect_snapshot(print(mp))
   })
-}

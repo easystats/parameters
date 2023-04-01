@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("panelr")
   data("WageData", package = "panelr")
   wages <- panelr::panel_data(WageData, id = id, wave = t)
@@ -66,4 +65,3 @@ if (.runThisTest) {
       tolerance = 1e-3
     )
   })
-}

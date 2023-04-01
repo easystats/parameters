@@ -1,6 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-
 skip_if_not_installed("mediation")
 skip_if_not_installed("MASS")
 
@@ -30,10 +27,9 @@ test_that("model_parameters.mediate-2", {
   expect_equal(params$Parameter, c("ACME", "ADE", "Total Effect", "Prop. Mediated"))
 })
 
-if (.runThisTest) {
-
 
   test_that("model_parameters.mediate-3", {
+    skip_on_cran()
     jobs$job_disc <- as.factor(jobs$job_disc)
     b.ord <- MASS::polr(
       job_disc ~ treat + econ_hard + sex + age,
@@ -65,5 +61,4 @@ if (.runThisTest) {
       "control", "treated", "average", "average", "average"
     ))
   })
-}
 

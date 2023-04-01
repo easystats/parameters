@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("lme4")
   data("cbpp", package = "lme4")
 
@@ -75,4 +74,3 @@ if (.runThisTest) {
     expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
     expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
   })
-}

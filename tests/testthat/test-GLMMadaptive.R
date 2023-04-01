@@ -1,5 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
+skip_on_cran()
 skip_if_not_installed("lme4")
 skip_if_not_installed("GLMMadaptive")
 skip_if_not_installed("glmmTMB")

@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   data(iris)
   iris$`a m` <<- iris$Species
   iris$`Sepal Width` <<- iris$Sepal.Width
@@ -109,4 +108,4 @@ if (.runThisTest) {
       )
     )
   })
-}
+

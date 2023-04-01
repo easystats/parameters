@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("emmeans")
   skip_if_not_installed("lme4")
   data(sleep, package = "lme4")
@@ -40,4 +39,4 @@ if (.runThisTest) {
     mp <- model_parameters(es1)
     expect_snapshot(mp)
   })
-}
+

@@ -1,6 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_cran()
 
-if (.runThisTest) {
   skip_if_not_installed("effectsize")
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
@@ -38,4 +37,3 @@ if (.runThisTest) {
     expect_equal(params$SE, c(0, 0.12755, 0.69148, 0.23428), tolerance = 1e-3)
     expect_equal(params$CI_high, c(0, -0.35336, 3.82922, -0.37931), tolerance = 0.1)
   })
-}
