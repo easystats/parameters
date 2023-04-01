@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
+if (TRUE) {
   if (requiet("psych")) {
     data(mtcars)
     pca <- principal_components(mtcars[, 1:7], n = 2, rotation = "varimax")

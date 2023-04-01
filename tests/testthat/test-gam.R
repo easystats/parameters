@@ -27,9 +27,9 @@ if (requiet("mgcv")) {
     )
   })
 
-  .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-  if (.runThisTest) {
+
+  if (TRUE) {
     mp <- model_parameters(m1)
     test_that("model_parameters", {
       expect_equal(

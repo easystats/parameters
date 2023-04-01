@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
+if (TRUE) {
   data(mtcars)
   model <- lm(mpg ~ wt * cyl + am + log(hp), data = mtcars)
 

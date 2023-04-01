@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("mmrm") && packageVersion("insight") > "0.18.8") {
+if (requiet("mmrm") && packageVersion("insight") > "0.18.8") {
   data(fev_data)
   m1 <- mmrm(
     formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),

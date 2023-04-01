@@ -1,14 +1,12 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest &&
+if (
 
 
   requiet("MASS") &&
-  requiet("pscl") &&
-  requiet("survival") &&
-  requiet("ivreg") &&
-  requiet("AER") &&
-  requiet("sandwich")) {
+    requiet("pscl") &&
+    requiet("survival") &&
+    requiet("ivreg") &&
+    requiet("AER") &&
+    requiet("sandwich")) {
   # standard errors -------------------------------------
 
   data(iris)

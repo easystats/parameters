@@ -1,7 +1,7 @@
 skip_if_offline()
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest) {
+
+if (TRUE) {
   if (requiet("lme4")) {
     if (requiet("effectsize")) {
       unloadNamespace("afex")
@@ -60,7 +60,7 @@ if (.runThisTest) {
         expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 2)
       })
 
-      if (.runThisTest && requiet("httr")) {
+      if (requiet("httr")) {
         test_that("model_parameters.anova", {
           model <- insight::download_model("anova_3")
           expect_equal(sum(model_parameters(model, verbose = FALSE)$df), 149)

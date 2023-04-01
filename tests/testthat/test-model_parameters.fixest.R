@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("fixest")) {
+if (requiet("fixest")) {
   data("qol_cancer")
   qol_cancer <- cbind(
     qol_cancer,

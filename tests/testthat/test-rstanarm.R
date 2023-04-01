@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 osx <- tryCatch(
   {
     si <- Sys.info()
@@ -14,7 +12,7 @@ osx <- tryCatch(
   }
 )
 
-if (.runThisTest && !osx && requiet("rstanarm")) {
+if (!osx && requiet("rstanarm")) {
   data(mtcars)
   set.seed(123)
   model <- stan_glm(

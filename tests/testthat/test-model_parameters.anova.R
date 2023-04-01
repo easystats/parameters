@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
+if (TRUE) {
   data(mtcars)
   m <- glm(am ~ mpg + hp + factor(cyl),
     data = mtcars, family = binomial()
@@ -93,7 +91,7 @@ if (.runThisTest) {
 
     if (requiet("MASS")) {
       data(housing)
-      m <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
+      m <- MASS::polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
       a <- car::Anova(m)
       mp <- model_parameters(a)
 
@@ -104,7 +102,7 @@ if (.runThisTest) {
     }
   }
 
-  if (requiet("lme4") && requiet("effectsize") && utils::packageVersion("effectsize") > "0.4.3") {
+  if (requiet("lme4") && requiet("effectsize")) {
     data(iris)
     df <- iris
     df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
@@ -136,7 +134,7 @@ if (.runThisTest) {
 
 # XXX -----
 
-if (.runThisTest) {
+if (TRUE) {
   test_that("anova type | lm", {
     m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
@@ -196,9 +194,7 @@ if (.runThisTest) {
   test_that("anova type | lme4", {
     skip_if_not_installed("lmerTest")
     m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1 | gear), mtcars)
-    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
-      family = poisson()
-    )
+    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars, family = poisson())
 
     a1 <- anova(m1)
     expect_equal(attr(model_parameters(a1), "anova_type"), 1)
@@ -238,7 +234,7 @@ if (.runThisTest) {
 
 
 
-if (.runThisTest && requiet("rms")) {
+if (requiet("rms")) {
   m <- rms::ols(mpg ~ cyl + disp + hp + drat, data = mtcars)
   a <- anova(m)
   mp <- model_parameters(a)

@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 if (FALSE && requiet("lqmm")) {
   # lqm -----------------------
 

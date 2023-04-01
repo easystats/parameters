@@ -100,9 +100,9 @@ test_that("compare_parameters, proper printing for CI=NULL #820", {
 })
 
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
+
+if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
   data("fish")
   m0 <- glm(count ~ child + camper, data = fish, family = poisson())
 

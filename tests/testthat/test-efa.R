@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("psych")) {
+if (requiet("psych")) {
   d <- psych::bfi[, 1:25]
   d <- na.omit(d)
   efa <- psych::fa(d, nfactors = 5)

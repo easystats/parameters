@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
+if (TRUE) {
   # glm ---------------------------
 
   set.seed(123)

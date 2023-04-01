@@ -1,20 +1,6 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+skip_on_os("windows")
 
-win_os <- tryCatch(
-  {
-    si <- Sys.info()
-    if (!is.null(si["sysname"])) {
-      si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-    } else {
-      FALSE
-    }
-  },
-  error = function(e) {
-    FALSE
-  }
-)
-
-if (win_os && getRversion() >= "4.0.0" && requiet("sandwich")) {
+if (getRversion() >= "4.0.0" && requiet("sandwich")) {
   mod <- lm(mpg ~ wt + cyl, data = mtcars)
 
   test_that("simulate_model, lm", {
@@ -28,7 +14,7 @@ if (win_os && getRversion() >= "4.0.0" && requiet("sandwich")) {
     expect_false(isTRUE(all.equal(mean(s1$cyl), mean(s2$cyl), tolerance = 1e-5)))
   })
 
-  if (requiet("glmmTMB") && .runThisTest) {
+  if (requiet("glmmTMB")) {
     data(fish)
     mod <- suppressWarnings(glmmTMB(
       count ~ child + camper + (1 | persons),

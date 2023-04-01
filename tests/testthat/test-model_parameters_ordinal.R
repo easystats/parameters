@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("ordinal")) {
+if (requiet("ordinal")) {
   d <- data.frame(
     Stim = c(
       "New", "New", "New", "New", "New", "New",

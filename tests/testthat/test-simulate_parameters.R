@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 win_os <- tryCatch(
   {
     si <- Sys.info()
@@ -28,7 +26,7 @@ if (win_os && getRversion() >= "4.0.0" && requiet("sandwich")) {
     expect_false(isTRUE(all.equal(s1$Coefficient, s2$CI_low, tolerance = 1e-5)))
   })
 
-  if (requiet("glmmTMB") && .runThisTest) {
+  if (requiet("glmmTMB")) {
     data(fish)
     mod <- suppressWarnings(glmmTMB(
       count ~ child + camper + (1 | persons),

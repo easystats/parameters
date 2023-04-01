@@ -87,9 +87,9 @@ test_that("templates, glue-3, separate columnns", {
 })
 
 
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("glmmTMB")) {
+
+if (requiet("glmmTMB")) {
   data("fish")
 
   m0 <- glm(count ~ child + camper, data = fish, family = poisson())

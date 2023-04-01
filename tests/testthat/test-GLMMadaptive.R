@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 if (requiet("lme4") && requiet("GLMMadaptive") && requiet("glmmTMB")) {
   data("fish")
   data("cbpp")
@@ -142,7 +140,7 @@ if (requiet("lme4") && requiet("GLMMadaptive") && requiet("glmmTMB")) {
     }
   )
 
-  if (.runThisTest && requiet("glmmTMB") && win_os) {
+  if (requiet("glmmTMB") && win_os) {
     data("Salamanders")
     model <- mixed_model(
       count ~ spp + mined,

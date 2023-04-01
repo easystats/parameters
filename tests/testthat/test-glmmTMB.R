@@ -1,7 +1,6 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 options(parameters_exponentiate = FALSE)
 
-if (.runThisTest && requiet("glmmTMB") && getRversion() >= "4.0.0") {
+if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
   data("fish")
   data("Salamanders")
 

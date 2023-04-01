@@ -1,15 +1,5 @@
 unloadNamespace("cplm")
 if (requiet("BayesFactor") && requiet("logspline")) {
-  .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-  # if (.runThisTest) {
-  #   test_that("model_parameters.BFBayesFactor", {
-  #     model <- BayesFactor::ttestBF(iris$Sepal.Width, iris$Petal.Length, paired = TRUE)
-  #     expect_equal(parameters::model_parameters(model)$BF, c(492.770567186302, NA), tolerance = 1e-2)
-  #   })
-  # }
-
-
   # make sure BF is returned, even if NA
   # see https://github.com/easystats/correlation/issues/269
   test_that("model_parameters.BFBayesFactor", {
@@ -50,13 +40,6 @@ if (requiet("BayesFactor") && requiet("logspline")) {
     )
   })
 
-  # if (.runThisTest) {
-  #   test_that("model_parameters.BFBayesFactor", {
-  #     model <- BayesFactor::ttestBF(formula = mpg ~ am, data = df)
-  #     expect_equal(model_parameters(model)$BF, c(86.58973, NA), tolerance = 1)
-  #   })
-  # }
-
   test_that("model_parameters.BFBayesFactor", {
     df <- mtcars
     df$gear <- as.factor(df$gear)
@@ -70,7 +53,7 @@ if (requiet("BayesFactor") && requiet("logspline")) {
     )
   })
 
-  if (.runThisTest && requiet("effectsize")) {
+  if (requiet("effectsize")) {
     test_that("model_parameters.BFBayesFactor", {
       data(raceDolls)
       bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")

@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest) {
+if (TRUE) {
   data(iris)
   iris$`a m` <<- iris$Species
   iris$`Sepal Width` <<- iris$Sepal.Width

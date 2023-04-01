@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("fixest")) {
+if (requiet("fixest")) {
   set.seed(123)
   iris$x <- rnorm(150)
 

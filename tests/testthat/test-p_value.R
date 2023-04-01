@@ -1,5 +1,5 @@
 skip_if_offline()
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
+
 
 
 test_that("p_value", {
@@ -15,7 +15,7 @@ test_that("p_value", {
 
 
 
-if (.runThisTest) {
+if (TRUE) {
   if (requiet("httr") && requiet("lme4")) {
     data(mtcars)
     test_that("p_value", {

@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 if (requiet("mediation") && requiet("MASS")) {
   data(jobs)
   b <- lm(job_seek ~ treat + econ_hard + sex + age, data = jobs)
@@ -27,7 +25,7 @@ if (requiet("mediation") && requiet("MASS")) {
     expect_equal(params$Parameter, c("ACME", "ADE", "Total Effect", "Prop. Mediated"))
   })
 
-  if (.runThisTest) {
+  if (TRUE) {
     jobs$job_disc <- as.factor(jobs$job_disc)
     b.ord <- MASS::polr(
       job_disc ~ treat + econ_hard + sex + age,

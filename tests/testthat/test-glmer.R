@@ -1,6 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
-if (.runThisTest && requiet("lme4")) {
+if (requiet("lme4")) {
   data("cbpp")
   set.seed(123)
   model <- glmer(

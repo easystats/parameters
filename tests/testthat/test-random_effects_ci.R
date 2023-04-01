@@ -1,5 +1,3 @@
-.runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
-
 osx <- tryCatch(
   {
     si <- Sys.info()
@@ -14,7 +12,7 @@ osx <- tryCatch(
   }
 )
 
-if (.runThisTest && !osx && requiet("lme4")) {
+if (!osx && requiet("lme4")) {
   data(sleepstudy)
   data(cake)
   set.seed(123)

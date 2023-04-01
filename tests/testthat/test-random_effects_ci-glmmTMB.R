@@ -1,33 +1,8 @@
-# Test Setup --------------------------------
-
-# only run for dev-version, not on CRAN
-.runThisTest <- length(strsplit(packageDescription("parameters")$Version, ".", fixed = TRUE)[[1]]) > 3
-
-# only run on windows - there are some minor rounding issues on other OS
-win_os <- tryCatch(
-  {
-    si <- Sys.info()
-    if (!is.null(si["sysname"])) {
-      si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-    } else {
-      FALSE
-    }
-  },
-  error = function(e) {
-    FALSE
-  }
-)
-
-
-
-# tests --------------------------------
+skip_on_os("windows")
 
 ## TODO also check messages for profiled CI
 
-if (.runThisTest && win_os &&
-
-
-  requiet("glmmTMB") &&
+if (requiet("glmmTMB") &&
   requiet("lme4") &&
   packageVersion("glmmTMB") >= "1.1.5") {
   data(sleepstudy)
