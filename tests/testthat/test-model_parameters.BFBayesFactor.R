@@ -42,7 +42,7 @@ test_that("model_parameters.BFBayesFactor", {
 test_that("model_parameters.BFBayesFactor", {
   skip_if_not_installed("BayesFactor")
   set.seed(123)
-  model <- BayesFactor::anovaBF(Sepal.Length ~ Species, data = iris)
+  model <- BayesFactor::anovaBF(Sepal.Length ~ Species, data = iris, progress = FALSE)
   expect_equal(
     model_parameters(model, centrality = "median")$Median,
     c(5.8431, -0.8266, 0.092, 0.734, 0.2681, 2.0415),
@@ -63,7 +63,7 @@ test_that("model_parameters.BFBayesFactor", {
   df$gear <- as.factor(df$gear)
   df$am <- as.factor(df$am)
   set.seed(123)
-  model <- suppressMessages(BayesFactor::anovaBF(mpg ~ gear * am, data = df))
+  model <- suppressMessages(BayesFactor::anovaBF(mpg ~ gear * am, data = df, progress = FALSE))
   expect_equal(
     suppressMessages(model_parameters(model, centrality = "mean", verbose = FALSE))$Mean,
     c(20.7099, -3.24884, 3.24884, 26.51413, 5.30506, NA, NA, NA),
@@ -75,7 +75,9 @@ test_that("model_parameters.BFBayesFactor", {
   skip_on_cran()
   skip_if_not_installed("BayesFactor")
   data(raceDolls, package = "BayesFactor")
+
   bf <- BayesFactor::contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
+
   mp <- suppressWarnings(model_parameters(bf,
     centrality = "mean",
     dispersion = TRUE,
