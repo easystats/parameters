@@ -1,7 +1,10 @@
+skip_if_offline()
+skip_if_not_installed("posterior")
+skip_if_not_installed("brms")
+
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("posterior") && requiet("brms")) {
-  skip_if_offline()
+if (.runThisTest) {
   model <- insight::download_model("brms_1")
 
   test_that("mp-posterior-draws", {

@@ -1,9 +1,8 @@
+skip_if_not_installed("lme4")
+
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest &&
-
-
-  requiet("lme4")) {
+if (.runThisTest) {
   data(mtcars)
   m1 <- lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars)
   m2 <- lme4::glmer(vs ~ cyl + (1 | gear), data = mtcars, family = "binomial")
@@ -102,7 +101,7 @@ if (.runThisTest &&
     qol_cancer,
     demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
   )
-  model <- lmer(
+  model <- lme4::lmer(
     QoL ~ time + phq4_within + phq4_between + (1 | ID),
     data = qol_cancer
   )
@@ -114,66 +113,12 @@ if (.runThisTest &&
 
 
   test_that("print-model_parameters", {
-    out <- utils::capture.output(print(model_parameters(model, effects = "fixed")))
-    expect_equal(
-      out,
-      c(
-        "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
-        "-------------------------------------------------------------------",
-        "(Intercept) |       71.53 | 1.56 | [68.48, 74.59] |  45.98 | < .001",
-        "time        |        1.09 | 0.64 | [-0.17,  2.34] |   1.70 | 0.089 ",
-        "",
-        "# Within-Effects",
-        "",
-        "Parameter   | Coefficient |   SE |         95% CI | t(558) |      p",
-        "-------------------------------------------------------------------",
-        "phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | < .001",
-        "",
-        "# Between-Effects",
-        "",
-        "Parameter    | Coefficient |   SE |         95% CI | t(558) |      p",
-        "--------------------------------------------------------------------",
-        "phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001"
-      )
-    )
+    expect_snapshot(model_parameters(model, effects = "fixed"))
   })
 
   test_that("print-model_parameters", {
-    out <- utils::capture.output(print(model_parameters(m1, effects = "all")))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
-        "-----------------------------------------------------------------",
-        "(Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 ",
-        "cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001",
-        "",
-        "# Random Effects",
-        "",
-        "Parameter            | Coefficient |   SE |       95% CI",
-        "--------------------------------------------------------",
-        "SD (Intercept: gear) |        0.27 | 0.24 | [0.05, 1.54]",
-        "SD (Residual)        |        0.59 | 0.08 | [0.46, 0.77]"
-      )
-    )
+    expect_snapshot(model_parameters(m1, effects = "all"))
 
-    out <- utils::capture.output(print(model_parameters(m1, effects = "fixed", summary = TRUE)))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Coefficient |   SE |        95% CI | t(28) |      p",
-        "-----------------------------------------------------------------",
-        "(Intercept) |        0.65 | 0.50 | [-0.38, 1.68] |  1.29 | 0.206 ",
-        "cyl         |        0.40 | 0.08 | [ 0.25, 0.56] |  5.29 | < .001",
-        "",
-        "Model: wt ~ cyl (32 Observations)",
-        "Residual standard deviation: 0.594 (df = 28)",
-        "Conditional R2: 0.628; Marginal R2: 0.550"
-      )
-    )
+    expect_snapshot(model_parameters(m1, effects = "fixed", summary = TRUE))
   })
 }

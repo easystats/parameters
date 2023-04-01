@@ -1,13 +1,11 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest &&
-
-
-  requiet("panelr")) {
-  data("WageData")
-  wages <- panel_data(WageData, id = id, wave = t)
-  m1 <- wbm(lwage ~ lag(union) + wks | blk + fem | blk * lag(union), data = wages)
-  m2 <- suppressWarnings(wbm(lwage ~ lag(union) + wks | blk + fem | blk * (t | id), data = wages))
+if (.runThisTest) {
+  skip_if_not_installed("panelr")
+  data("WageData", package = "panelr")
+  wages <- panelr::panel_data(WageData, id = id, wave = t)
+  m1 <- panelr::wbm(lwage ~ lag(union) + wks | blk + fem | blk * lag(union), data = wages)
+  m2 <- suppressWarnings(panelr::wbm(lwage ~ lag(union) + wks | blk + fem | blk * (t | id), data = wages))
 
   test_that("ci", {
     expect_equal(

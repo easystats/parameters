@@ -1,22 +1,24 @@
+skip_if_not_installed("VGAM")
+
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("VGAM")) {
-  data("pneumo")
-  data("hunua")
+if (.runThisTest) {
+  data("pneumo", package = "VGAM")
+  data("hunua", package = "VGAM")
 
   set.seed(123)
   pneumo <- transform(pneumo, let = log(exposure.time))
 
-  m1 <- suppressWarnings(vgam(
-    cbind(normal, mild, severe) ~ s(let) + exposure.time,
-    cumulative(parallel = TRUE),
+  m1 <- suppressWarnings(VGAM::vgam(
+    cbind(normal, mild, severe) ~ VGAM::s(let) + exposure.time,
+    VGAM::cumulative(parallel = TRUE),
     data = pneumo,
     trace = FALSE
   ))
 
   set.seed(123)
   hunua$x <- rnorm(nrow(hunua))
-  m2 <- vgam(agaaus ~ s(altitude, df = 2) + s(x) + beitaw + corlae, binomialff, data = hunua)
+  m2 <- VGAM::vgam(agaaus ~ VGAM::s(altitude, df = 2) + VGAM::s(x) + beitaw + corlae, VGAM::binomialff, data = hunua)
 
   test_that("model_parameters.vgam", {
     params <- suppressWarnings(model_parameters(m1))

@@ -1,30 +1,20 @@
+skip_on_os("mac")
+skip_if_not_installed("lme4")
+
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-osx <- tryCatch(
-  {
-    si <- Sys.info()
-    if (!is.null(si["sysname"])) {
-      si["sysname"] == "Darwin" || startsWith(R.version$os, "darwin")
-    } else {
-      FALSE
-    }
-  },
-  error = function(e) {
-    FALSE
-  }
-)
 
-if (.runThisTest && !osx && requiet("lme4")) {
-  data(sleepstudy)
-  data(cake)
+if (.runThisTest) {
+  data(sleepstudy, package = "lme4")
+  data(cake, package = "lme4")
   set.seed(123)
   sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
-  m1 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
-  m2 <- suppressMessages(lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy))
-  m3 <- suppressMessages(lmer(angle ~ temperature + (temperature | recipe), data = cake))
-  m4 <- suppressMessages(lmer(angle ~ temperature + (temperature | replicate), data = cake))
-  m5 <- suppressMessages(lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
+  m1 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
+  m2 <- suppressMessages(lme4::lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy))
+  m3 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | recipe), data = cake))
+  m4 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | replicate), data = cake))
+  m5 <- suppressMessages(lme4::lmer(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
   ## TODO also check messages for profiled CI
 
@@ -244,18 +234,17 @@ if (.runThisTest && !osx && requiet("lme4")) {
 
 
   # no random intercept --------------------------
-
-  data(sleepstudy)
-  set.seed(123)
-  sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
-
-  m2 <- lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
-  m5 <- lmer(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy)
-
-  mp2 <- model_parameters(m2)
-  mp5 <- model_parameters(m5)
-
   test_that("random effects CIs, simple slope", {
+
+    data(sleepstudy, package = "lme4")
+    set.seed(123)
+    sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+
+    m2 <- lme4::lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
+    m5 <- lme4::lmer(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy)
+
+    mp2 <- model_parameters(m2)
+    mp5 <- model_parameters(m5)
     expect_equal(
       mp2$CI_low,
       c(243.47155, 6.77765, 5.09041, 26.01525),
@@ -290,12 +279,12 @@ if (.runThisTest && !osx && requiet("lme4")) {
 
 
   # poly random slope --------------------------
-
-  data(cake)
-  m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
-  mp <- model_parameters(m, ci_random = TRUE)
-
   test_that("random effects CIs, poly slope", {
+
+    data(cake, package = "lme4")
+    m <- lme4::lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
+    mp <- model_parameters(m, ci_random = TRUE)
+
     expect_equal(
       mp$CI_low,
       c(
@@ -322,14 +311,14 @@ if (.runThisTest && !osx && requiet("lme4")) {
 
   # poly and categorical random slope --------------------------
 
-  m <- lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (temperature | recipe),
-    data = cake
-  )
-  mp <- model_parameters(m, effects = "random")
-
   test_that("random effects CIs, poly categorical slope", {
     ## NOTE check back every now and then and see if tests still work
     skip("works interactively")
+
+    m <- lme4::lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (temperature | recipe),
+                    data = cake
+    )
+    mp <- model_parameters(m, effects = "random")
 
     expect_equal(
       mp$CI_low,

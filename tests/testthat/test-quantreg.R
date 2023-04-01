@@ -1,10 +1,7 @@
+
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest &&
-
-
-
-  requiet("quantreg")) {
+if (.runThisTest) {
   # rqss ---------
 
   # data("CobarOre")
@@ -22,12 +19,12 @@ if (.runThisTest &&
 
 
   # rq ---------
-
-  data(stackloss)
-  m1 <- rq(stack.loss ~ Air.Flow + Water.Temp, data = stackloss, tau = .25)
-
-  mp <- suppressWarnings(model_parameters(m1))
   test_that("mp_rq", {
+    skip_if_not_installed("quantreg")
+    data(stackloss)
+    m1 <- quantreg::rq(stack.loss ~ Air.Flow + Water.Temp, data = stackloss, tau = .25)
+
+    mp <- suppressWarnings(model_parameters(m1))
     expect_identical(mp$Parameter, c("(Intercept)", "Air.Flow", "Water.Temp"))
     expect_equal(mp$Coefficient, c(-36, 0.5, 1), tolerance = 1e-3)
   })
@@ -35,13 +32,13 @@ if (.runThisTest &&
 
 
   # rqs ---------
-
-  set.seed(123)
-  data("engel")
-  m1 <- rq(foodexp ~ income, data = engel, tau = 1:9 / 10)
-
-  mp <- suppressWarnings(model_parameters(m1))
   test_that("mp_rqs", {
+    skip_if_not_installed("quantreg")
+    set.seed(123)
+    data("engel", package = "quantreg")
+    m1 <- quantreg::rq(foodexp ~ income, data = engel, tau = 1:9 / 10)
+
+    mp <- suppressWarnings(model_parameters(m1))
     expect_identical(mp$Parameter, c(
       "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
       "income", "(Intercept)", "income", "(Intercept)", "income", "(Intercept)",
@@ -60,22 +57,21 @@ if (.runThisTest &&
     ), tolerance = 1e-3)
   })
 
-
-
   # crq ---------
-
-  set.seed(123)
-  n <- 200
-  x <- rnorm(n)
-  y <- 5 + x + rnorm(n)
-  c <- 4 + x + rnorm(n)
-  d <- (y > c)
-
-  dat <- data.frame(y, x, c, d)
-  m1 <- crq(survival::Surv(pmax(y, c), d, type = "left") ~ x, method = "Portnoy", data = dat)
-
-  mp <- model_parameters(m1)
   test_that("mp_rq", {
+    skip_if_not_installed("quantreg")
+    skip_if_not_installed("survival")
+    set.seed(123)
+    n <- 200
+    x <- rnorm(n)
+    y <- 5 + x + rnorm(n)
+    c <- 4 + x + rnorm(n)
+    d <- (y > c)
+
+    dat <- data.frame(y, x, c, d)
+    m1 <- quantreg::crq(survival::Surv(pmax(y, c), d, type = "left") ~ x, method = "Portnoy", data = dat)
+
+    mp <- model_parameters(m1)
     expect_identical(mp$Parameter, c("(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x"))
     expect_equal(mp$Coefficient, c(4.26724, 0.97534, 4.84961, 0.92638, 5.21843, 0.98038, 5.91301, 0.97382), tolerance = 1e-3)
   })

@@ -1,16 +1,19 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("mmrm") && packageVersion("insight") > "0.18.8") {
-  data(fev_data)
-  m1 <- mmrm(
-    formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
-    data = fev_data
-  )
+if (.runThisTest) {
+  skip_if_not_installed("mmrm")
+  skip_if_not(packageVersion("insight") > "0.18.8")
 
-  out1 <- coef(summary(m1))
-  out2 <- model_parameters(m1)
+  data(fev_data, package = "mmrm")
 
   test_that("model_parameters", {
+    m1 <- mmrm::mmrm(
+      formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
+      data = fev_data
+    )
+
+    out1 <- coef(summary(m1))
+    out2 <- model_parameters(m1)
     expect_equal(
       as.vector(out1[, "Estimate"]),
       out2$Coefficient,
@@ -48,16 +51,16 @@ if (.runThisTest && requiet("mmrm") && packageVersion("insight") > "0.18.8") {
     expect_identical(attributes(out2)$ci_method, "Satterthwaite")
   })
 
-  m1 <- mmrm(
-    formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
-    data = fev_data,
-    method = "Kenward-Roger"
-  )
-
-  out1 <- coef(summary(m1))
-  out2 <- model_parameters(m1)
-
   test_that("model_parameters", {
+    m1 <- mmrm(
+      formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
+      data = fev_data,
+      method = "Kenward-Roger"
+    )
+
+    out1 <- coef(summary(m1))
+    out2 <- model_parameters(m1)
+
     expect_equal(
       as.vector(out1[, "Estimate"]),
       out2$Coefficient,

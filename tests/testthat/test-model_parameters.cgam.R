@@ -1,13 +1,17 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("cgam") && getRversion() >= "4.0.0") {
+if (.runThisTest) {
+
   test_that("model_parameters - cgam", {
+    skip_if_not(getRversion() >= "4.0.0")
+    skip_if_not_installed("cgam")
+
     # cgam -----------------------
 
-    data(cubic)
+    data(cubic, package = "cgam")
 
     # model
-    m_cgam <- cgam::cgam(formula = y ~ incr.conv(x), data = cubic)
+    m_cgam <- cgam::cgam(formula = y ~ cgam::incr.conv(x), data = cubic)
 
     df_cgam <- parameters::model_parameters(m_cgam)
 
@@ -49,7 +53,7 @@ if (.runThisTest && requiet("cgam") && getRversion() >= "4.0.0") {
         log_response = FALSE,
         log_predictors = FALSE,
         weighted_nobs = 50,
-        model_formula = "y ~ incr.conv(x)",
+        model_formula = "y ~ cgam::incr.conv(x)",
         coefficient_name = "Coefficient",
         zi_coefficient_name = "Log-Odds",
         digits = 2,
@@ -66,6 +70,9 @@ if (.runThisTest && requiet("cgam") && getRversion() >= "4.0.0") {
   # cgamm -----------------------
 
   test_that("model_parameters - cgamm", {
+    skip_if_not(getRversion() >= "4.0.0")
+    skip_if_not_installed("cgam")
+
     # setup
     set.seed(123)
 

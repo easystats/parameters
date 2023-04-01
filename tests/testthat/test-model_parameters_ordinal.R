@@ -1,6 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("ordinal")) {
+if (.runThisTest) {
+  skip_if_not_installed("ordinal")
   d <- data.frame(
     Stim = c(
       "New", "New", "New", "New", "New", "New",
@@ -15,13 +16,13 @@ if (.runThisTest && requiet("ordinal")) {
     stringsAsFactors = FALSE
   )
 
-  m1 <- clm(ordered(Response) ~ Stim,
+  m1 <- ordinal::clm(ordered(Response) ~ Stim,
     scale = ~Stim,
     link = "probit",
     data = d, weights = w
   )
 
-  m2 <- clm2(ordered(Response) ~ Stim,
+  m2 <- ordinal::clm2(ordered(Response) ~ Stim,
     scale = ~Stim,
     link = "probit",
     data = d, weights = w

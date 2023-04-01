@@ -1,5 +1,5 @@
-requiet("effectsize")
-requiet("lme4")
+skip_if_not_installed("effectsize")
+skip_if_not_installed("lme4")
 skip_on_cran()
 
 

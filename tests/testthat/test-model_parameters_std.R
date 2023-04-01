@@ -1,6 +1,7 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("effectsize")) {
+if (.runThisTest) {
+  skip_if_not_installed("effectsize")
   data(mtcars)
   mtcars$am <- as.factor(mtcars$am)
   d <- mtcars

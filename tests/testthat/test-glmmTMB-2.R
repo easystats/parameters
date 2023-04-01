@@ -1,11 +1,14 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && getRversion() >= "4.0.0" && requiet("glmmTMB")) {
-  data(Salamanders)
-  model <- suppressWarnings(glmmTMB(
+if (.runThisTest) {
+  skip_if_not(getRversion() >= "4.0.0" )
+  skip_if_not_installed("glmmTMB")
+
+  data(Salamanders, package = "glmmTMB")
+  model <- suppressWarnings(glmmTMB::glmmTMB(
     count ~ spp + mined + spp * mined,
     ziformula = ~ spp + mined + spp * mined,
-    family = truncated_poisson,
+    family = glmmTMB::truncated_poisson,
     data = Salamanders
   ))
 
@@ -50,7 +53,7 @@ if (.runThisTest && getRversion() >= "4.0.0" && requiet("glmmTMB")) {
   d2$sd <- "five"
   dat <- rbind(d1, d2)
 
-  model <- suppressWarnings(glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat))
+  model <- suppressWarnings(glmmTMB::glmmTMB(x ~ sd + (1 | t), dispformula = ~sd, data = dat))
   mp <- model_parameters(model, effects = "fixed")
 
   test_that("model_parameters", {

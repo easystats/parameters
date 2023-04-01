@@ -1,9 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllparametersTests") == "yes"
 
-if (.runThisTest && requiet("lme4")) {
-  data(sleepstudy)
+if (.runThisTest) {
+  skip_if_not_installed("lme4")
+  data(sleepstudy, package = "lme4")
 
-  model <- lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (1 | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 1", {
@@ -13,7 +14,7 @@ if (.runThisTest && requiet("lme4")) {
     expect_equal(mp$Parameter, c("SD (Intercept)", "SD (Observations)"))
   })
 
-  model <- lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (1 + Days | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 2", {
@@ -23,7 +24,7 @@ if (.runThisTest && requiet("lme4")) {
     expect_equal(mp$Parameter, c("SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)", "SD (Observations)"))
   })
 
-  model <- lmer(Reaction ~ Days + (1 + Days || Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (1 + Days || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 3", {
@@ -33,7 +34,7 @@ if (.runThisTest && requiet("lme4")) {
     expect_equal(mp$Parameter, c("SD (Intercept)", "SD (Days)", "SD (Observations)"))
   })
 
-  model <- lmer(Reaction ~ Days + (0 + Days || Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (0 + Days || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 4", {
@@ -43,7 +44,7 @@ if (.runThisTest && requiet("lme4")) {
     expect_equal(mp$Parameter, c("SD (Days)", "SD (Observations)"))
   })
 
-  data(sleepstudy)
+  data(sleepstudy, package = "lme4")
   set.seed(12345)
   sleepstudy$grp <- sample(1:5, size = 180, replace = TRUE)
   sleepstudy$subgrp <- NA
@@ -53,7 +54,7 @@ if (.runThisTest && requiet("lme4")) {
       sample(1:30, size = sum(filter_group), replace = TRUE)
   }
 
-  model <- lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (1 | grp / subgrp) + (1 | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random", ci_random = TRUE)
 
   test_that("model_parameters-random pars 5", {
@@ -63,7 +64,7 @@ if (.runThisTest && requiet("lme4")) {
     expect_equal(mp$Parameter, c("SD (Intercept)", "SD (Intercept)", "SD (Intercept)", "SD (Observations)"))
   })
 
-  model <- lmer(Reaction ~ Days + (1 | grp / subgrp), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days + (1 | grp / subgrp), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 6", {
@@ -76,7 +77,7 @@ if (.runThisTest && requiet("lme4")) {
   data("sleepstudy")
   sleepstudy$Days2 <- cut(sleepstudy$Days, breaks = c(-1, 3, 6, 10))
 
-  model <- lmer(Reaction ~ Days2 + (1 + Days2 | Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days2 + (1 + Days2 | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 7", {
@@ -93,7 +94,7 @@ if (.runThisTest && requiet("lme4")) {
     )
   })
 
-  model <- lmer(Reaction ~ Days2 + (0 + Days2 | Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days2 + (0 + Days2 | Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 8", {
@@ -110,7 +111,7 @@ if (.runThisTest && requiet("lme4")) {
     )
   })
 
-  model <- lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 9", {
@@ -126,7 +127,7 @@ if (.runThisTest && requiet("lme4")) {
     )
   })
 
-  model <- lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
+  model <- lme4::lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
   mp <- model_parameters(model, effects = "random")
 
   test_that("model_parameters-random pars 10", {
