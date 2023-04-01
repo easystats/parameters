@@ -51,4 +51,3 @@ test_that("model_parameters", {
     tolerance = 0.01
   )
 })
-

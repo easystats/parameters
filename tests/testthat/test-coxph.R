@@ -56,4 +56,3 @@ test_that("model_parameters", {
   expect_equal(model_parameters(m2)$z, 0.9756088, tolerance = 1e-4)
   expect_equal(model_parameters(m2)$p, 0.3292583, tolerance = 1e-4)
 })
-

@@ -106,6 +106,5 @@ withr::with_options(
       p <- parameters::parameters(mod, pretty_names = "labels")
       expect_true("SD (Intercept)" %in% attr(p, "pretty_labels"))
     })
-
   }
 )

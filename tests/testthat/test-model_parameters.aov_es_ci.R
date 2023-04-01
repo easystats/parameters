@@ -140,9 +140,9 @@ test_that("works with aov", {
   set.seed(123)
   df_aov <-
     as.data.frame(parameters::model_parameters(npk.aov,
-                                               ci = 0.95,
-                                               effectsize_type = c("eta", "omega"),
-                                               partial = FALSE
+      ci = 0.95,
+      effectsize_type = c("eta", "omega"),
+      partial = FALSE
     ))
 
   expect_equal(
@@ -255,9 +255,9 @@ test_that("works with manova", {
   set.seed(123)
   df_manova <-
     as.data.frame(model_parameters(m,
-                                   ci = 0.99,
-                                   effectsize_type = c("epsilon", "omega"),
-                                   partial = TRUE
+      ci = 0.99,
+      effectsize_type = c("epsilon", "omega"),
+      partial = TRUE
     ))
 
   expect_identical(
@@ -308,9 +308,9 @@ test_that("works with Gam", {
   set.seed(123)
   df_Gam <-
     as.data.frame(model_parameters(g,
-                                   ci = 0.50,
-                                   effectsize_type = "omega",
-                                   partial = TRUE
+      ci = 0.50,
+      effectsize_type = "omega",
+      partial = TRUE
     ))
 
   expect_equal(
@@ -359,9 +359,9 @@ test_that("works with anova", {
   set.seed(123)
   df_car <-
     as.data.frame(model_parameters(mod,
-                                   ci = 0.89,
-                                   effectsize_type = c("eta", "epsilon"),
-                                   partial = FALSE
+      ci = 0.89,
+      effectsize_type = c("eta", "epsilon"),
+      partial = FALSE
     ))
 
   expect_equal(

@@ -46,4 +46,3 @@ test_that("print-model_parameters", {
   tmp <- model_parameters(m1)
   expect_snapshot(tmp)
 })
-

@@ -87,28 +87,28 @@ withr::with_options(
       )
     })
 
-      test_that("combination of different models", {
-        skip_on_cran()
-        skip_if_not_installed("glmmTMB")
-        data("fish")
+    test_that("combination of different models", {
+      skip_on_cran()
+      skip_if_not_installed("glmmTMB")
+      data("fish")
 
-        m0 <- glm(count ~ child + camper, data = fish, family = poisson())
+      m0 <- glm(count ~ child + camper, data = fish, family = poisson())
 
-        m1 <- glmmTMB::glmmTMB(
-          count ~ child + camper + (1 | persons) + (1 | ID),
-          data = fish,
-          family = poisson()
-        )
+      m1 <- glmmTMB::glmmTMB(
+        count ~ child + camper + (1 | persons) + (1 | ID),
+        data = fish,
+        family = poisson()
+      )
 
-        m2 <- glmmTMB::glmmTMB(
-          count ~ child + camper + zg + (1 | ID),
-          ziformula = ~ child + (1 | persons),
-          data = fish,
-          family = glmmTMB::truncated_poisson()
-        )
+      m2 <- glmmTMB::glmmTMB(
+        count ~ child + camper + zg + (1 | ID),
+        ziformula = ~ child + (1 | persons),
+        data = fish,
+        family = glmmTMB::truncated_poisson()
+      )
 
-        cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
-        expect_snapshot(print(cp))
-      })
+      cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
+      expect_snapshot(print(cp))
+    })
   }
 )

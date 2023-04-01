@@ -90,4 +90,3 @@ test_that("parameters_type", {
     tolerance = 1e-4
   )
 })
-

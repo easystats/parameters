@@ -2,7 +2,9 @@ test_that("issue 697", {
   skip_if_not_installed("Hmisc")
   skip_if_not_installed("rms")
 
-  skip("TODO: need to understand why Hmisc:::na.retain is not found")
+  # for some reason, Hmisc::transcan() doesn't find na.retain (which is an internal
+  # function in Hmisc)
+  na.retain <<- Hmisc:::na.retain
 
   set.seed(1)
   n <- 100
@@ -17,7 +19,6 @@ test_that("issue 697", {
     data = df,
     imputed = TRUE,
     n.impute = 2,
-    na.action = Hmisc:::na.retain,
     pr = FALSE,
     pl = FALSE
   ))
@@ -25,7 +26,7 @@ test_that("issue 697", {
   suppressWarnings(
     mod <- Hmisc::fit.mult.impute(
       y ~ x1 + x2,
-      fitter = orm, xtrans = imputer, data = df, pr = FALSE
+      fitter = rms::orm, xtrans = imputer, data = df, pr = FALSE
     )
   )
 

@@ -21,4 +21,3 @@ test_that("afex_aov", {
     c("Parameter", "Sum_Squares", "Sum_Squares_Error", "df", "df_error", "Mean_Square", "F", "p", "Method")
   )
 })
-

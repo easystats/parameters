@@ -104,4 +104,3 @@ test_that("model_parameters-t-test reports the same unregarding of interface", {
   formula_ttest <- model_parameters(t.test(y ~ x, df))[compare_only]
   expect_equal(default_ttest, formula_ttest)
 })
-

@@ -1,8 +1,8 @@
 skip_if_not_installed("nlme")
 data(Ovary, package = "nlme")
 m1 <- nlme::gls(follicles ~ sin(2 * pi * Time) + cos(2 * pi * Time),
-                data = Ovary,
-                correlation = nlme::corAR1(form = ~ 1 | Mare)
+  data = Ovary,
+  correlation = nlme::corAR1(form = ~ 1 | Mare)
 )
 
 test_that("ci", {
@@ -36,4 +36,3 @@ test_that("model_parameters", {
     tolerance = 1e-4
   )
 })
-

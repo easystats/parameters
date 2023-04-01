@@ -7,4 +7,3 @@ test_that("model_parameters.PMCMR", {
   # no need to add strict tests, since `toTidy` is tested in `PMCMRplus` itself
   expect_equal(dim(df), c(15L, 8L))
 })
-

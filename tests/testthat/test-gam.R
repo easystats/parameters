@@ -29,7 +29,7 @@ test_that("p_value", {
 
 skip_on_cran()
 
-  mp <- model_parameters(m1)
-  test_that("model_parameters", {
-    expect_snapshot(mp)
-  })
+mp <- model_parameters(m1)
+test_that("model_parameters", {
+  expect_snapshot(mp)
+})

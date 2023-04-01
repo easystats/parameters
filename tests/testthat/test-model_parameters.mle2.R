@@ -16,4 +16,3 @@ test_that("model_parameters.mle2", {
     c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "z", "df_error", "p")
   )
 })
-

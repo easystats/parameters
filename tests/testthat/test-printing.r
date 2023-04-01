@@ -9,9 +9,9 @@ withr::with_options(
       skip_if_not_installed("glmmTMB")
       data("Salamanders", package = "glmmTMB")
       model <- glmmTMB::glmmTMB(count ~ spp + mined + (1 | site),
-                                ziformula = ~ spp + mined,
-                                family = glmmTMB::nbinom2(),
-                                data = Salamanders
+        ziformula = ~ spp + mined,
+        family = glmmTMB::nbinom2(),
+        data = Salamanders
       )
       out <- model_parameters(model, exponentiate = TRUE)
       expect_snapshot(print(out))
@@ -42,12 +42,12 @@ withr::with_options(
       )
       expect_snapshot(
         print(out,
-              sep = "  ",
-              groups = list(
-                "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-                "Interactions" = c("gear4:vs", "gear5:vs"),
-                "Controls" = c(2, 3, 7)
-              )
+          sep = "  ",
+          groups = list(
+            "Engine" = c("cyl6", "cyl8", "vs", "hp"),
+            "Interactions" = c("gear4:vs", "gear5:vs"),
+            "Controls" = c(2, 3, 7)
+          )
         )
       )
     })
@@ -79,19 +79,15 @@ withr::with_options(
       )
       expect_snapshot(
         print(out,
-              sep = "  ",
-              groups = list(
-                "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-                "Interactions" = c("gear4:vs", "gear5:vs"),
-                "Controls" = c(2, 3, 7)
-              ),
-              select = "{coef}{stars}|[{ci}]"
+          sep = "  ",
+          groups = list(
+            "Engine" = c("cyl6", "cyl8", "vs", "hp"),
+            "Interactions" = c("gear4:vs", "gear5:vs"),
+            "Controls" = c(2, 3, 7)
+          ),
+          select = "{coef}{stars}|[{ci}]"
         )
       )
     })
   }
 )
-
-
-
-

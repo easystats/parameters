@@ -58,4 +58,3 @@ test_that("model_parameters.poissonmfx", {
   expect_equal(params$Coefficient, c(0.96036, 0.54496), tolerance = 1e-2)
   expect_null(params$Component)
 })
-

@@ -89,4 +89,3 @@ test_that("model_parameters", {
   )
   expect_equal(model_parameters(m3)$Coefficient, -0.381721, tolerance = 1e-3)
 })
-

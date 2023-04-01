@@ -42,4 +42,3 @@ test_that("print model_parameters", {
   expect_identical(out[9], "# Response level: alterly")
   expect_identical(out[17], "# Response level: probably not")
 })
-

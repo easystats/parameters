@@ -17,4 +17,3 @@ test_that("model_parameters.truncreg", {
     c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p")
   )
 })
-

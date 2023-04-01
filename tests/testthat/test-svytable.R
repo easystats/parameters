@@ -4,7 +4,7 @@ test_that("model_parameters", {
   svychisq <<- survey::svychisq
 
   data(api, package = "survey")
-  dclus1 <- survey::svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
+  dclus1 <<- survey::svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
   m <- survey::svytable(~ sch.wide + stype, dclus1)
   mp <- model_parameters(m)
   expect_equal(colnames(mp), c("F", "df", "df_error", "p", "Method"))

@@ -27,4 +27,3 @@ test_that("model_parameters.blmerMod-all", {
     c("(Intercept)", "Days", "SD (Intercept)", "SD (Days)", "Cor (Intercept~Days)", "SD (Observations)")
   )
 })
-

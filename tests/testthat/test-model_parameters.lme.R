@@ -4,8 +4,8 @@ skip_if_not_installed("lme4")
 data("sleepstudy", package = "lme4")
 
 model <- nlme::lme(Reaction ~ Days,
-             random = ~ 1 + Days | Subject,
-             data = sleepstudy
+  random = ~ 1 + Days | Subject,
+  data = sleepstudy
 )
 
 test_that("model_parameters.lme", {
@@ -29,4 +29,3 @@ test_that("model_parameters.lme", {
     )
   )
 })
-

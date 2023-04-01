@@ -20,4 +20,3 @@ test_that("model_parameters.glht", {
     c("Agriculture == 0", "Examination == 0", "Education == 0", "Catholic == 0", "Infant.Mortality == 0")
   )
 })
-

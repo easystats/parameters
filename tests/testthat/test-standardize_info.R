@@ -10,4 +10,3 @@ test_that("standardize_info", {
   expect_equal(i1$Deviation_Basic, c(0, sd(mtcars$cyl)), tolerance = 1e-3)
   expect_equal(i2$Deviation_Basic, c(0, sd(mtcars$cyl)), tolerance = 1e-3)
 })
-

@@ -59,4 +59,3 @@ test_that("model_parameters.onesampb", {
   set.seed(123)
   mod <- WRS2::onesampb(x, nboot = 100)
 })
-

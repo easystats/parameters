@@ -67,4 +67,3 @@ test_that("model_parameters.glm - Gamma - print", {
   mp <- model_parameters(m, exponentiate = TRUE)
   expect_snapshot(mp)
 })
-

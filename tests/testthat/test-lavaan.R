@@ -61,4 +61,3 @@ test_that("standardized no CI", {
   p <- parameters(mod, standardize = "all", ci = NULL)
   expect_s3_class(p, "parameters_sem")
 })
-

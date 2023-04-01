@@ -48,13 +48,13 @@ test_that("dominance_analysis$complete_dominance", {
 
 DA_performance2 <-
   dominance_analysis(DA_test_model,
-                     all = ~vs, sets = c(~carb),
-                     complete = FALSE, conditional = FALSE
+    all = ~vs, sets = c(~carb),
+    complete = FALSE, conditional = FALSE
   )
 DA_domir2 <-
   domir::domin(mpg ~ cyl, lm, list(performance::r2, "R2"),
-        all = "vs", sets = list("carb"), data = mtcars,
-        complete = FALSE, conditional = FALSE
+    all = "vs", sets = list("carb"), data = mtcars,
+    complete = FALSE, conditional = FALSE
   )
 
 test_that("dominance_analysis$general_dominance with sets/all", {
@@ -85,4 +85,3 @@ test_that("dominance_analysis$general_dominance with sets/all", {
     gnrl_da2
   )
 })
-

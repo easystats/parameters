@@ -32,4 +32,3 @@ mp <- model_parameters(x)
 test_that("model_parameters", {
   expect_equal(attributes(mp)$ci, 0.8, tolerance = 1e-3)
 })
-

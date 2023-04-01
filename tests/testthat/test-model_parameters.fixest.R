@@ -1,31 +1,29 @@
+test_that("model_parameters.fixest", {
+  skip_on_cran()
+  skip_if_not_installed("fixest")
+  data("qol_cancer")
+  qol_cancer <- cbind(
+    qol_cancer,
+    datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  )
 
+  m <- fixest::feols(
+    QoL ~ time + phq4 | ID,
+    data = qol_cancer
+  )
+  params <- model_parameters(m, verbose = FALSE)
 
-  test_that("model_parameters.fixest", {
-    skip_on_cran()
-    skip_if_not_installed("fixest")
-    data("qol_cancer")
-    qol_cancer <- cbind(
-      qol_cancer,
-      datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
-    )
+  expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+  expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-3)
+  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-3)
+  expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-3)
 
-    m <- fixest::feols(
-      QoL ~ time + phq4 | ID,
-      data = qol_cancer
-    )
-    params <- model_parameters(m, verbose = FALSE)
-
-    expect_equal(c(nrow(params), ncol(params)), c(2, 9))
-    expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-3)
-    expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-3)
-    expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-3)
-
-    # currently, a bug for fixest 10.4 on R >= 4.3
-    skip_if_not(getRversion() < "4.2.0")
-    expect_snapshot(
-      model_parameters(m, summary = TRUE, verbose = FALSE)
-    )
-  })
+  # currently, a bug for fixest 10.4 on R >= 4.3
+  skip_if_not(getRversion() < "4.2.0")
+  expect_snapshot(
+    model_parameters(m, summary = TRUE, verbose = FALSE)
+  )
+})
 
 test_that("robust standard errors", {
   skip_if_not_installed("fixest")

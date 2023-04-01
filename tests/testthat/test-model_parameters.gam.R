@@ -20,4 +20,3 @@ test_that("model_parameters.gam", {
     )
   )
 })
-

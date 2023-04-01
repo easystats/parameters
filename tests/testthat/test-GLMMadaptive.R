@@ -171,5 +171,3 @@ test_that("model_parameters.mixed-ran_pars", {
     tolerance = 1e-2
   )
 })
-
-

@@ -13,4 +13,3 @@ test_that("model_parameters.mixed.coeforder", {
   mp <- model_parameters(m, effects = "fixed")
   expect_equal(mp$Parameter, rownames(cs))
 })
-

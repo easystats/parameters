@@ -69,4 +69,3 @@ test_that("model_parameters", {
   expect_equal(model_parameters(m2)$Coefficient, c(-0.62255, -0.0123, 0.11846), tolerance = 1e-4)
   expect_equal(model_parameters(m2, component = "all")$Coefficient, c(-0.62255, -0.0123, 0.11846, 35.60975033), tolerance = 1e-4)
 })
-
