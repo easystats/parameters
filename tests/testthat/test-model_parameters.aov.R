@@ -14,6 +14,7 @@ test_that("model_parameters.aov", {
 })
 
 test_that("model_parameters.aov", {
+  skip_if_not_installed("effectsize", minimum_version = "0.5.0")
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon")))
   expect_equal(sum(mp$df), 149)
