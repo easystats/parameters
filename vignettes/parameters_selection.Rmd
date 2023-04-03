@@ -29,17 +29,11 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-if (!requireNamespace("poorman", quietly = TRUE) ||
-  !requireNamespace("performance", quietly = TRUE) ||
-  !requireNamespace("rstanarm", quietly = TRUE) ||
-  !requireNamespace("cAIC4", quietly = TRUE) ||
-  # !requireNamespace("projpred", quietly = TRUE) ||
-  !requireNamespace("lme4", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-} else {
+pkgs <- c("performance", "cAIC4", "lme4")
+successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)
+
+if (all(successfully_loaded)) {
   library(parameters)
-  library(poorman)
-  library(rstanarm)
   library(lme4)
 }
 
@@ -98,7 +92,7 @@ that have actually no relation to the dependent variable being predicted will be
 Let's run a few checks using the
 [**performance**](https://github.com/easystats/performance) package:
 
-```{r}
+```{r eval=successfully_loaded["performance"]}
 library(performance)
 
 check_normality(model)
@@ -122,8 +116,9 @@ a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)),
 using this output to update a new model.
 
 ```{r}
-lm(Sepal.Length ~ . * ., data = iris) %>%
-  select_parameters() %>%
+library(parameters)
+lm(Sepal.Length ~ . * ., data = iris) |>
+  select_parameters() |>
   summary()
 ```
 
@@ -153,7 +148,7 @@ random effects until the `cAIC` can't be improved further.
 
 This is what our initial model looks like.
 
-```{r}
+```{r eval=successfully_loaded["lme4"]}
 library(lme4)
 data("qol_cancer")
 
@@ -161,7 +156,7 @@ data("qol_cancer")
 lmer(
   QoL ~ time + phq4 + age + (1 + time | hospital / ID),
   data = qol_cancer
-) %>%
+) |>
   summary()
 ```
 
@@ -177,7 +172,7 @@ models:
 lmer(
   QoL ~ time + phq4 + age + (1 + time | hospital / ID),
   data = qol_cancer
-) %>%
-  select_parameters() %>%
+)  |>
+  select_parameters() |>
   summary()
 ```

@@ -37,7 +37,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   attr(params, "Sum_Squares_Total") <- ss$TSS
   attr(params, "Sum_Squares_Between") <- ss$BSS
   attr(params, "variance") <- ss$BSS / ss$TSS
-  attr(params, "scale") <- sapply(data, stats::sd)
+  attr(params, "scale") <- vapply(data, stats::sd, numeric(1))
   attr(params, "distance") <- .cluster_centers_distance(data, clusters, centers, attributes(params)$scale)
 
   params
@@ -77,7 +77,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
 
 #' @keywords internal
 .cluster_centers_distance <- function(data, clusters, centers, scale) {
-  dis <- c()
+  dis <- NULL
   for (c in unique(clusters)) {
     center <- centers[centers$Cluster == c, ]
     center$Cluster <- NULL # Remove column
