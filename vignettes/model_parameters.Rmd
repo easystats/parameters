@@ -40,13 +40,9 @@ successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)
 if (all(successfully_loaded)) {
   library(parameters)
   library(effectsize)
-  library(EGAnet)
-  library(BH)
   library(psych)
-  library(nFactors)
   library(brms)
   library(GLMMadaptive)
-  library(FactoMineR)
 }
 
 set.seed(333)
@@ -89,8 +85,6 @@ t.test(mpg ~ vs, data = mtcars) |>
 ### Bayesian
 
 ```{r eval=successfully_loaded["BayesFactor"]}
-library(BayesFactor)
-
 BayesFactor::correlationBF(iris$Sepal.Length, iris$Sepal.Width) |>
   parameters()
 ```
@@ -277,8 +271,6 @@ The **parameters** package extends the support to structural models.
 ### Principal Component Analysis (PCA) and Exploratory Factor Analysis (EFA) 
 
 ```{r eval=all(successfully_loaded[c("psych", "nFactors")])}
-library(psych)
-
 psych::pca(mtcars, nfactors = 3) |>
   parameters()
 ```
@@ -286,8 +278,6 @@ psych::pca(mtcars, nfactors = 3) |>
 We will avoid displaying a graph while carrying out factor analysis:
 
 ```{r eval=all(successfully_loaded[c("FactoMineR", "psych", "nFactors")])}
-library(FactoMineR)
-
 FactoMineR::FAMD(iris, ncp = 3, graph = FALSE) |>
   parameters()
 ```
