@@ -92,7 +92,7 @@ that have actually no relation to the dependent variable being predicted will be
 Let's run a few checks using the
 [**performance**](https://github.com/easystats/performance) package:
 
-```{r}
+```{r successfully_loaded["performance"]}
 library(performance)
 
 check_normality(model)
@@ -115,7 +115,7 @@ the best variables and update the model accordingly. One way of using that is in
 a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)),
 using this output to update a new model.
 
-```{r eval=getRversion() >= "4.1.0"}
+```{r}
 lm(Sepal.Length ~ . * ., data = iris) |>
   select_parameters() |>
   summary()
@@ -147,7 +147,7 @@ random effects until the `cAIC` can't be improved further.
 
 This is what our initial model looks like.
 
-```{r eval=getRversion() >= "4.1.0" & successfully_loaded["lme4"]}
+```{r eval=successfully_loaded["lme4"]}
 library(lme4)
 data("qol_cancer")
 
