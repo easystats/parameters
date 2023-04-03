@@ -15,7 +15,7 @@ emm2 <- emmeans::emmeans(m2, ~group, df = NA)
 es2 <- emmeans::eff_size(emm2, sigma = sigma(m2), edf = df.residual(m2))
 
 test_that("df", {
-  expect_equal(
+  expect_identical(
     colnames(model_parameters(es1)),
     c(
       "contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high",
@@ -23,7 +23,7 @@ test_that("df", {
     )
   )
 
-  expect_equal(
+  expect_identical(
     colnames(model_parameters(es2)),
     c(
       "contrast", "Coefficient", "SE", "CI", "CI_low", "CI_high",
