@@ -240,10 +240,6 @@ test_that("random effects CIs, simple slope", {
     mp2$Parameter,
     c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
   )
-})
-
-test_that("random effects CIs, simple slope", {
-  skip("TODO: this test fails")
 
   ## FIXME: Results differ across R versions, no idea why...
   # expect_equal(

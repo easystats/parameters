@@ -257,9 +257,7 @@ test_that("random effects CIs, simple slope", {
     mp2$Parameter,
     c("(Intercept)", "Days", "SD (Days)", "SD (Observations)")
   )
-})
 
-test_that("random effects CIs, simple slope", {
   expect_equal(
     mp5$CI_low,
     c(241.61021, 7.43503, 4.11446, 2.69857, -0.40595, 24.632),
