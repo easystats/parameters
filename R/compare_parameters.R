@@ -109,9 +109,9 @@ compare_parameters <- function(...,
     }
   }
 
-  supported_models <- sapply(models, function(i) {
-    insight::is_model_supported(i) | inherits(i, "lavaan") | inherits(i, "parameters_model")
-  })
+  supported_models <- vapply(models, function(i) {
+    insight::is_model_supported(i) || inherits(i, "lavaan") || inherits(i, "parameters_model")
+  }, TRUE)
 
   if (!all(supported_models)) {
     if (verbose) {
