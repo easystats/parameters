@@ -140,8 +140,11 @@ test_that("format_model_parameters", {
       levels(d$Stratum) <- list(lower = "shade", upper = "sun")
       d$Tree.ID <- as.factor(d$Tree.ID)
 
-      mod <- lme4::glmer(cbind(branch_miner_Yes, branch_miner_No) ~ Drought * Stratum + Drought * Year + Year * Stratum + (1 | Tree.ID),
-        data = d, family = binomial(), na.action = na.exclude
+      mod <- lme4::glmer(
+        cbind(branch_miner_Yes, branch_miner_No) ~ Drought * Stratum + Drought * Year + Year * Stratum + (1 | Tree.ID),
+        data = d,
+        family = binomial(),
+        na.action = na.exclude
       )
       out <- model_parameters(mod, component = "conditional")
       expect_identical(

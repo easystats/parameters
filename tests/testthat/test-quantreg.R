@@ -70,6 +70,13 @@ test_that("mp_rq", {
   m1 <- quantreg::crq(survival::Surv(pmax(y, c), d, type = "left") ~ x, method = "Portnoy", data = dat)
 
   mp <- model_parameters(m1)
-  expect_identical(mp$Parameter, c("(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x"))
-  expect_equal(mp$Coefficient, c(4.26724, 0.97534, 4.84961, 0.92638, 5.21843, 0.98038, 5.91301, 0.97382), tolerance = 1e-3)
+  expect_identical(
+    mp$Parameter,
+    c("(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x", "(Intercept)", "x")
+  )
+  expect_equal(
+    mp$Coefficient,
+    c(4.26724, 0.97534, 4.84961, 0.92638, 5.21843, 0.98038, 5.91301, 0.97382),
+    tolerance = 1e-3
+  )
 })

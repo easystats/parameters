@@ -45,7 +45,11 @@ test_that("comparisons()", {
       chains = 1
     )
   )
-  m <- marginaleffects::marginaleffects(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  m <- marginaleffects::marginaleffects(
+    x,
+    newdata = insight::get_datagrid(x, at = "Species"),
+    variables = "Petal.Length"
+  )
   expect_equal(nrow(parameters(m)), 1)
 })
 

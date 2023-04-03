@@ -16,7 +16,10 @@ set.seed(123)
 sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
 set.seed(123)
-m1 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
+m1 <- suppressWarnings(glmmTMB::glmmTMB(
+  angle ~ temperature + (temperature | recipe) + (temperature | replicate),
+  data = cake
+))
 m2 <- glmmTMB::glmmTMB(Reaction ~ Days + (Days | Subject), data = sleepstudy)
 m3 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | recipe), data = cake))
 m4 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | replicate), data = cake))

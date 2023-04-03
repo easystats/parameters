@@ -68,11 +68,17 @@ withr::with_options(
       expect_equal(
         attr(model_parameters(m7), "pretty_names"),
         c(
-          `(Intercept)` = "(Intercept)", `as.factor(cyl)6` = "cyl6",
-          `as.factor(cyl)8` = "cyl8", `poly(wt, 2)1` = "wt [1st degree]",
-          `poly(wt, 2)2` = "wt [2nd degree]", hp = "hp", `log(gear)` = "gear [log]",
-          `as.factor(cyl)6:poly(wt, 2)1` = "cyl6 * wt [1st degree]", `as.factor(cyl)8:poly(wt, 2)1` = "cyl8 * wt [1st degree]",
-          `as.factor(cyl)6:poly(wt, 2)2` = "cyl6 * wt [2nd degree]", `as.factor(cyl)8:poly(wt, 2)2` = "cyl8 * wt [2nd degree]",
+          `(Intercept)` = "(Intercept)",
+          `as.factor(cyl)6` = "cyl6",
+          `as.factor(cyl)8` = "cyl8",
+          `poly(wt, 2)1` = "wt [1st degree]",
+          `poly(wt, 2)2` = "wt [2nd degree]",
+          hp = "hp",
+          `log(gear)` = "gear [log]",
+          `as.factor(cyl)6:poly(wt, 2)1` = "cyl6 * wt [1st degree]",
+          `as.factor(cyl)8:poly(wt, 2)1` = "cyl8 * wt [1st degree]",
+          `as.factor(cyl)6:poly(wt, 2)2` = "cyl6 * wt [2nd degree]",
+          `as.factor(cyl)8:poly(wt, 2)2` = "cyl8 * wt [2nd degree]",
           `hp:log(gear)` = "hp * gear [log]"
         )
       )
@@ -81,10 +87,15 @@ withr::with_options(
       expect_equal(
         attr(model_parameters(m8), "pretty_names"),
         c(
-          `(Intercept)` = "(Intercept)", `as.factor(cyl)6` = "cyl [6]",
-          `as.factor(cyl)8` = "cyl [8]", `I(wt^2)` = "wt^2", hp = "hp",
-          `log(gear)` = "gear [log]", `as.factor(cyl)6:I(wt^2)` = "cyl [6] * wt^2",
-          `as.factor(cyl)8:I(wt^2)` = "cyl [8] * wt^2", `hp:log(gear)` = "hp * gear [log]"
+          `(Intercept)` = "(Intercept)",
+          `as.factor(cyl)6` = "cyl [6]",
+          `as.factor(cyl)8` = "cyl [8]",
+          `I(wt^2)` = "wt^2",
+          hp = "hp",
+          `log(gear)` = "gear [log]",
+          `as.factor(cyl)6:I(wt^2)` = "cyl [6] * wt^2",
+          `as.factor(cyl)8:I(wt^2)` = "cyl [8] * wt^2",
+          `hp:log(gear)` = "hp * gear [log]"
         )
       )
     })

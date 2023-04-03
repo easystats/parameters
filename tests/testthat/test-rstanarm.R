@@ -37,7 +37,12 @@ test_that("mp2", {
 
   mp <- suppressWarnings(model_parameters(model, centrality = "mean"))
   s <- summary(model)
-  expect_equal(mp$Mean, unname(s[c("y1|(Intercept)", "y1|year", "y2|(Intercept)", "y2|sexf", "y2|year"), 1]), tolerance = 1e-2, ignore_attr = TRUE)
+  expect_equal(
+    mp$Mean,
+    unname(s[c("y1|(Intercept)", "y1|year", "y2|(Intercept)", "y2|sexf", "y2|year"), 1]),
+    tolerance = 1e-2,
+    ignore_attr = TRUE
+  )
   expect_identical(mp$Response, c("y1", "y1", "y2", "y2", "y2"))
   expect_equal(mp$Prior_Scale, c(4.9647, 0.3465, 5.57448, 1.39362, 0.38906), tolerance = 1e-2)
 })

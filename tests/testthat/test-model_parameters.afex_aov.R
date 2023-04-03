@@ -2,8 +2,12 @@ test_that("afex_aov", {
   skip_if_not_installed("afex")
 
   data(obk.long, package = "afex")
-  m_between <- suppressMessages(suppressWarnings(afex::aov_car(value ~ treatment * gender + Error(id), data = obk.long)))
-  m_within <- suppressMessages(suppressWarnings(afex::aov_car(value ~ Error(id / (phase * hour)), data = obk.long)))
+  m_between <- suppressMessages(suppressWarnings(
+    afex::aov_car(value ~ treatment * gender + Error(id), data = obk.long)
+  ))
+  m_within <- suppressMessages(suppressWarnings(
+    afex::aov_car(value ~ Error(id / (phase * hour)), data = obk.long)
+  ))
 
   mp1 <- model_parameters(m_between, verbose = FALSE)
   mp2 <- model_parameters(m_within, verbose = FALSE)

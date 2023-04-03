@@ -1,7 +1,6 @@
 skip_if_not_installed("brglm2")
 
 data("stemcell", package = "brglm2")
-
 levels(stemcell$research) <- c("definitly", "alterly", "probably not", "definitely not")
 m1 <- brglm2::bracl(research ~ as.numeric(religion) + gender, weights = frequency, data = stemcell, type = "ML")
 
@@ -9,7 +8,17 @@ test_that("model_parameters", {
   params <- model_parameters(m1, verbose = FALSE)
   expect_identical(
     params$Response,
-    c("definitly", "alterly", "probably not", "definitly", "alterly", "probably not", "definitly", "alterly", "probably not")
+    c(
+      "definitly",
+      "alterly",
+      "probably not",
+      "definitly",
+      "alterly",
+      "probably not",
+      "definitly",
+      "alterly",
+      "probably not"
+    )
   )
   expect_identical(
     params$Parameter,

@@ -5,9 +5,16 @@ iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
 
 test_that("model_parameters.aov", {
   skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+
   model <- aov(Sepal.Width ~ Species, data = iris)
-  mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), ci = 0.9, alternative = "greater"))
+  mp <- suppressMessages(model_parameters(
+    model,
+    effectsize_type = c("omega", "eta", "epsilon"),
+    ci = 0.9,
+    alternative = "greater"
+  ))
   es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = 0.9))
+
   expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(mp$Omega2_CI_low, c(0.3122, NA), tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
@@ -28,10 +35,13 @@ test_that("model_parameters.aov", {
   expect_equal(na.omit(mp$Eta2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Eta2_CI_high), rep(1, 7), tolerance = 1e-3, ignore_attr = TRUE)
 
-  expect_identical(colnames(mp), c(
-    "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
-    "Eta2", "Eta2_CI_low", "Eta2_CI_high"
-  ))
+  expect_identical(
+    colnames(mp),
+    c(
+      "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
+      "Eta2", "Eta2_CI_low", "Eta2_CI_high"
+    )
+  )
 })
 
 
@@ -39,9 +49,17 @@ test_that("model_parameters.aov", {
 
 test_that("model_parameters.anova", {
   skip_if_not_installed("effectsize", minimum_version = "0.5.1")
+
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
-  mp <- model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9, alternative = "greater")
+  mp <- model_parameters(
+    model,
+    effectsize_type = c("omega", "eta", "epsilon"),
+    partial = TRUE,
+    ci = 0.9,
+    alternative = "greater"
+  )
   es <- effectsize::omega_squared(model, partial = TRUE, ci = 0.9)
+
   expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)
 
@@ -113,8 +131,14 @@ test_that("model_parameters.maov", {
   fit <- lm(cbind(mpg, disp, hp) ~ factor(cyl), data = mtcars)
   model <- aov(fit)
 
-  mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon"), partial = TRUE, ci = 0.9))
+  mp <- suppressMessages(model_parameters(
+    model,
+    effectsize_type = c("omega", "eta", "epsilon"),
+    partial = TRUE,
+    ci = 0.9
+  ))
   es <- suppressMessages(effectsize::omega_squared(model, partial = TRUE, ci = 0.9))
+
   expect_equal(na.omit(mp$Omega2_CI_low), es$CI_low, tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(mp$Omega2_CI_low, c(0.58067, NA, 0.74092, NA, 0.55331, NA), tolerance = 1e-3, ignore_attr = TRUE)
   expect_equal(na.omit(mp$Omega2_CI_high), es$CI_high, tolerance = 1e-3, ignore_attr = TRUE)

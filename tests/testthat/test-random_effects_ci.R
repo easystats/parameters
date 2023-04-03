@@ -9,7 +9,10 @@ data(cake, package = "lme4")
 set.seed(123)
 sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
 
-m1 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | recipe) + (temperature | replicate), data = cake))
+m1 <- suppressMessages(lme4::lmer(
+  angle ~ temperature + (temperature | recipe) + (temperature | replicate),
+  data = cake
+))
 m2 <- suppressMessages(lme4::lmer(Reaction ~ Days + (Days | Subject), data = sleepstudy))
 m3 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | recipe), data = cake))
 m4 <- suppressMessages(lme4::lmer(angle ~ temperature + (temperature | replicate), data = cake))
