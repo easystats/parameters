@@ -52,7 +52,7 @@ select_parameters.lm <- function(model,
                                  steps = 1000,
                                  k = 2,
                                  ...) {
-  junk <- utils::capture.output(
+  junk <- utils::capture.output({
     best <- stats::step(
       model,
       trace = 0,
@@ -61,7 +61,7 @@ select_parameters.lm <- function(model,
       k = k,
       ...
     )
-  )
+  })
 
   best
 }
