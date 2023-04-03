@@ -1,5 +1,4 @@
 skip_on_cran()
-
 skip_if_not_installed("lme4")
 data("cbpp", package = "lme4")
 
@@ -10,7 +9,6 @@ model <- lme4::glmer(
   family = binomial(),
   nAGQ = 0
 )
-
 params <- model_parameters(model, effects = "fixed")
 
 test_that("model_parameters.glmer", {
@@ -18,6 +16,13 @@ test_that("model_parameters.glmer", {
 })
 
 test_that("print model_parameters", {
+  skip_if_not_installed("withr")
+  withr::local_options(
+    list(
+      parameters_exponentiate = TRUE,
+      parameters_warning_exponentiate = TRUE
+    )
+  )
   expect_snapshot(params)
 
   mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
@@ -30,7 +35,6 @@ test_that("print model_parameters", {
     family = binomial(),
     nAGQ = 2
   )
-
   mp <- model_parameters(model, effects = "all")
   expect_snapshot(mp)
 })

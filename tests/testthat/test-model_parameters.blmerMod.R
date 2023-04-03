@@ -15,6 +15,7 @@ test_that("model_parameters.blmerMod", {
 })
 
 test_that("model_parameters.blmerMod-all", {
+  skip_if_not_installed("merDeriv")
   params <- model_parameters(model, effects = "all")
   expect_equal(params$SE, c(6.8246, 1.54579, 5.83626, 1.24804, 0.31859, 1.50801), tolerance = 1e-3)
   expect_equal(params$Coefficient, c(251.4051, 10.46729, 24.74066, 5.92214, 0.06555, 25.5918), tolerance = 1e-3)

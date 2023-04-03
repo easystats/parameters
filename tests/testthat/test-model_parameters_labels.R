@@ -5,6 +5,7 @@ withr::with_options(
   {
     test_that("model_parameters_labels", {
       skip_if_not_installed("lme4")
+      skip_if_not_installed("merDeriv")
       data(mtcars)
       mtcars$am <- as.factor(mtcars$am)
 
@@ -113,6 +114,7 @@ withr::with_options(
 
     test_that("Issue #806: Missing label for variance component in lme4", {
       skip_if_not_installed("lme4")
+      skip_if_not_installed("merDeriv")
       mod <- lme4::lmer(mpg ~ hp + (1 | gear), data = mtcars)
       p <- parameters::parameters(mod, pretty_names = "labels")
       expect_true("SD (Intercept)" %in% attr(p, "pretty_labels"))
