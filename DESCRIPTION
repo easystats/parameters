@@ -107,6 +107,7 @@ Suggests:
     ClassDiscovery,
     clubSandwich,
     cluster,
+    coda,
     cplm,
     dbscan,
     domir (>= 0.2.0),
