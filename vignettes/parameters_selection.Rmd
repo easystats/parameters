@@ -116,6 +116,7 @@ a tidy pipeline (using [`%>%`](https://cran.r-project.org/package=magrittr/)),
 using this output to update a new model.
 
 ```{r}
+library(parameters)
 lm(Sepal.Length ~ . * ., data = iris) |>
   select_parameters() |>
   summary()
