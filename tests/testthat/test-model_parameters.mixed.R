@@ -114,6 +114,7 @@ test_that("print-model_parameters", {
 })
 
 test_that("print-model_parameters", {
+  skip_if_not_installed("merDeriv")
   expect_snapshot(model_parameters(m1, effects = "all"))
 
   expect_snapshot(model_parameters(m1, effects = "fixed", summary = TRUE))

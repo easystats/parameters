@@ -43,6 +43,13 @@ test_that("model_parameters", {
 })
 
 test_that("print-model_parameters", {
+  skip_if_not_installed("withr")
+  withr::local_options(
+    list(
+      parameters_exponentiate = TRUE,
+      parameters_warning_exponentiate = TRUE
+    )
+  )
   tmp <- model_parameters(m1)
   expect_snapshot(tmp)
 })
