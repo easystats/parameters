@@ -1,3 +1,5 @@
+skip_on_cran()
+
 osx <- tryCatch(
   {
     si <- Sys.info()
