@@ -40,7 +40,7 @@ test_that("model_parameters", {
 
 
 test_that("model_parameters", {
-  skip("TODO: fix model_parameters() with namespace prefix '::'")
+  suppressPackageStartupMessages(library(survival, quietly = TRUE))
 
   # Create the simplest test data set
   test1 <- list(
@@ -50,9 +50,13 @@ test_that("model_parameters", {
     sex = c(0, 0, 0, 0, 1, 1, 1)
   )
   # Fit a stratified model
-  m2 <- survival::coxph(survival::Surv(time, status) ~ x + survival::strata(sex), test1)
+  m2 <- coxph(Surv(time, status) ~ x + strata(sex), test1)
 
   expect_equal(model_parameters(m2)$Coefficient, 0.8023179, tolerance = 1e-4)
   expect_equal(model_parameters(m2)$z, 0.9756088, tolerance = 1e-4)
   expect_equal(model_parameters(m2)$p, 0.3292583, tolerance = 1e-4)
+
+  unloadNamespace("multcomp")
+  unloadNamespace("TH.data")
+  unloadNamespace("survival")
 })
