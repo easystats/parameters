@@ -104,7 +104,7 @@ compare_parameters <- function(...,
     } else if (any(vapply(model_names, is.call, TRUE))) {
       model_names <- paste("Model", seq_along(models), sep = " ")
     } else {
-      model_names <- sapply(model_names, as.character)
+      model_names <- vapply(model_names, as.character, character(1))
       names(models) <- model_names
     }
   }
