@@ -92,7 +92,7 @@ that have actually no relation to the dependent variable being predicted will be
 Let's run a few checks using the
 [**performance**](https://github.com/easystats/performance) package:
 
-```{r successfully_loaded["performance"]}
+```{r eval=successfully_loaded["performance"]}
 library(performance)
 
 check_normality(model)
