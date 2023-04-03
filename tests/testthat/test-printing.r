@@ -20,6 +20,9 @@ withr::with_options(
 
     # Adding model summaries -----
     test_that("adding model summaries", {
+      # summary doesn't show the R2 if performance is not installed so the
+      # snapshot breaks between R CMD check "classic" and "strict"
+      skip_if_not_installed("performance")
       model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
       out <- model_parameters(model, summary = TRUE)
       expect_snapshot(print(out))

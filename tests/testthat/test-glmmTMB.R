@@ -390,8 +390,8 @@ withr::with_options(
     test_that("model_parameters, no dispersion, glmmTMB", {
       mp1 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = TRUE)
       mp2 <- model_parameters(m_exp, effects = "fixed", component = "conditional", exponentiate = FALSE)
-      expect_equal(mp1$Coefficient, unname(exp(unlist(fixef(m_exp)$cond))), tolerance = 1e-3)
-      expect_equal(mp2$Coefficient, unname(unlist(fixef(m_exp)$cond)), tolerance = 1e-3)
+      expect_equal(mp1$Coefficient, unname(exp(unlist(glmmTMB::fixef(m_exp)$cond))), tolerance = 1e-3)
+      expect_equal(mp2$Coefficient, unname(unlist(glmmTMB::fixef(m_exp)$cond)), tolerance = 1e-3)
     })
 
 
