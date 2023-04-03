@@ -17,6 +17,7 @@ test_that("model_parameters.glmer", {
 
 test_that("print model_parameters", {
   skip_if_not_installed("withr")
+  skip_if_not_installed("merDeriv")
   withr::local_options(
     list(
       parameters_exponentiate = TRUE,
@@ -25,7 +26,9 @@ test_that("print model_parameters", {
   )
   expect_snapshot(params)
 
-  mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
+  suppressMessages({
+    mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
+  })
   expect_snapshot(mp)
 
   set.seed(123)
