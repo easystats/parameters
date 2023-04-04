@@ -1,8 +1,8 @@
+unloadNamespace("BayesFactor")
+
 test_that("model_parameters.cpglmm", {
-  # 'cplm' exports a class "mcmc" which conflicts with the one of 'BayesFactor'
-  # (in the tests with random order).
-  skip_if(requireNamespace("BayesFactor", quietly = TRUE))
   skip_if_not_installed("cplm")
+  loadNamespace("cplm")
 
   data("FineRoot", package = "cplm")
   cpglmm <- cplm::cpglmm
@@ -15,4 +15,6 @@ test_that("model_parameters.cpglmm", {
     colnames(params),
     c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "t", "df_error", "p", "Effects")
   )
+
+  unloadNamespace("cplm")
 })

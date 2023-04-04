@@ -17,7 +17,10 @@ m1 <- suppressWarnings(VGAM::vgam(
 
 set.seed(123)
 hunua$x <- rnorm(nrow(hunua))
-m2 <- VGAM::vgam(agaaus ~ VGAM::s(altitude, df = 2) + VGAM::s(x) + beitaw + corlae, VGAM::binomialff, data = hunua)
+m2 <- VGAM::vgam(
+  agaaus ~ VGAM::s(altitude, df = 2) + VGAM::s(x) + beitaw + corlae, VGAM::binomialff,
+  data = hunua
+)
 
 test_that("model_parameters.vgam", {
   skip("TODO: model_parameters doesn't work with 'VGAM::' in the formula")
