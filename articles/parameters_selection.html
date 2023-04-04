@@ -376,7 +376,7 @@ the initial and the selected models:</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">time</span> <span class="op">|</span> <span class="va">hospital</span> <span class="op">/</span> <span class="va">ID</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
-<span><span class="op">)</span>  <span class="op">|&gt;</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/select_parameters.html">select_parameters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
