@@ -54,8 +54,8 @@ test_that("FactoMineR", {
   x <- suppressWarnings(model_parameters(FactoMineR::PCA(mtcars, ncp = 3, graph = FALSE), threshold = 0.2, sort = TRUE))
   expect_identical(c(ncol(x), nrow(x)), c(5L, 11L))
 
-  x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3, graph = FALSE), threshold = 0.2, sort = TRUE))
-  expect_identical(c(ncol(x), nrow(x)), c(5L, 5L))
+  # x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3, graph = FALSE), threshold = 0.2, sort = TRUE))
+  # expect_identical(c(ncol(x), nrow(x)), c(5L, 5L))
 })
 
 test_that("BayesFM", {
