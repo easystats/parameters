@@ -1,7 +1,7 @@
 # print brms
 
     Code
-      print(mp1)
+      mp1
     Output
       # Fixed Effects
       
@@ -24,7 +24,7 @@
 ---
 
     Code
-      print(mp2)
+      mp2
     Output
       # Fixed Effects
       
@@ -55,7 +55,7 @@
 ---
 
     Code
-      print(mp3)
+      mp3
     Output
       # Fixed Effects
       
@@ -85,7 +85,7 @@
 ---
 
     Code
-      print(mp4)
+      mp4
     Output
       # Fixed Effects
       
@@ -115,7 +115,7 @@
 ---
 
     Code
-      print(mp5)
+      mp5
     Output
       # Fixed Effects
       
@@ -143,7 +143,7 @@
 ---
 
     Code
-      print(mp6)
+      mp6
     Output
       # Fixed Effects
       
@@ -174,7 +174,7 @@
 ---
 
     Code
-      print(mp7)
+      mp7
     Output
       # Fixed Effects
       
@@ -196,7 +196,7 @@
 ---
 
     Code
-      print(mp8)
+      mp8
     Output
       # Fixed Effects (Count Model)
       
@@ -229,7 +229,7 @@
 ---
 
     Code
-      print(mp9)
+      mp9
     Output
       Parameter    |   Mean |           95% CI |   pd |  Rhat |     ESS
       -----------------------------------------------------------------

@@ -1,4 +1,5 @@
-if (requiet("lme4")) {
+test_that("model_parameters.mixed.coeforder", {
+  skip_if_not_installed("lme4")
   set.seed(1)
   dat <- data.frame(
     TST.diff = runif(100, 0, 100),
@@ -8,10 +9,7 @@ if (requiet("lme4")) {
   )
 
   m <- lme4::lmer(TST.diff ~ Exposition + Gruppe + Gruppe:Exposition + (1 | Kennung), data = dat)
-
-  test_that("model_parameters.mixed.coeforder", {
-    cs <- coef(summary(m))
-    mp <- model_parameters(m, effects = "fixed")
-    expect_equal(mp$Parameter, rownames(cs))
-  })
-}
+  cs <- coef(summary(m))
+  mp <- model_parameters(m, effects = "fixed")
+  expect_equal(mp$Parameter, rownames(cs))
+})

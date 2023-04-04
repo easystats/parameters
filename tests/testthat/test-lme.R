@@ -1,6 +1,6 @@
-testthat::skip_if_not_installed("nlme")
-testthat::skip_if_not_installed("lme4")
-testthat::skip_if_not_installed("lavaSearch2")
+skip_if_not_installed("nlme")
+skip_if_not_installed("lme4")
+skip_if_not_installed("lavaSearch2")
 
 data("sleepstudy", package = "lme4")
 m1_lme <- nlme::lme(Reaction ~ Days, random = ~ 1 + Days | Subject, data = sleepstudy)
@@ -50,9 +50,9 @@ test_that("se", {
 })
 
 test_that("se: vcov", {
-  requiet("clubSandwich")
+  skip_if_not_installed("clubSandwich")
   se1 <- standard_error(m1_lme, vcov = "CR3")$SE
-  se2 <- sqrt(diag(as.matrix(vcovCR(m1_lme, type = "CR3"))))
+  se2 <- sqrt(diag(as.matrix(clubSandwich::vcovCR(m1_lme, type = "CR3"))))
   expect_equal(se1, se2, ignore_attr = TRUE)
 })
 
@@ -74,7 +74,7 @@ test_that("p: vcov", {
   # manual computation
   p1 <- p_value(m3_lme, vcov = "CR3")$p
   b2 <- lme4::fixef(m3_lme)
-  se2 <- sqrt(diag(as.matrix(vcovCR(m3_lme, type = "CR3"))))
+  se2 <- sqrt(diag(as.matrix(clubSandwich::vcovCR(m3_lme, type = "CR3"))))
   t2 <- b2 / se2
   # same DF used in `nlme:::summary.lme`
   p2 <- 2 * pt(-abs(t2), df = m3_lme$fixDF[["X"]])

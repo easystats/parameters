@@ -1,125 +1,83 @@
-if (requiet("lme4")) {
-  data("cbpp")
+skip_on_cran()
+skip_if_not_installed("lme4")
+data("cbpp", package = "lme4")
+
+set.seed(123)
+model <- lme4::glmer(
+  cbind(incidence, size - incidence) ~ period + (1 | herd),
+  data = cbpp,
+  family = binomial(),
+  nAGQ = 0
+)
+params <- model_parameters(model, effects = "fixed")
+
+test_that("model_parameters.glmer", {
+  expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)
+})
+
+test_that("print model_parameters", {
+  skip_if_not_installed("withr")
+  skip_if_not_installed("merDeriv")
+  withr::local_options(
+    list(
+      parameters_exponentiate = TRUE,
+      parameters_warning_exponentiate = TRUE
+    )
+  )
+  expect_snapshot(params)
+
+  suppressMessages({
+    mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
+  })
+  expect_snapshot(mp)
+
   set.seed(123)
-  model <- glmer(
+  model <- lme4::glmer(
     cbind(incidence, size - incidence) ~ period + (1 | herd),
     data = cbpp,
     family = binomial(),
-    nAGQ = 0
+    nAGQ = 2
   )
+  mp <- model_parameters(model, effects = "all")
+  expect_snapshot(mp)
+})
 
+
+
+test_that("model_parameters.glmer ml1", {
+  params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
+  expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)
+  expect_equal(params$df, c(54, 54, 54, 54), tolerance = 1e-2)
+})
+
+test_that("model_parameters.glmer betwithin", {
+  params <- model_parameters(model, ci_method = "betwithin", effects = "fixed")
+  expect_equal(params$SE, c(0.23009, 0.30433, 0.32476, 0.42632), tolerance = 1e-2)
+  expect_equal(params$df, c(822, 822, 822, 822), tolerance = 1e-2)
+})
+
+set.seed(123)
+cbpp$time <- runif(nrow(cbpp), 1, 4)
+model <- lme4::glmer(
+  cbind(incidence, size - incidence) ~ period + time + (1 + time | herd),
+  data = cbpp,
+  family = binomial(),
+  nAGQ = 0
+)
+
+test_that("model_parameters.glmer", {
   params <- model_parameters(model, effects = "fixed")
+  expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
+})
 
-  test_that("model_parameters.glmer", {
-    expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)
-  })
+test_that("model_parameters.glmer ml1", {
+  params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
+  expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
+  expect_equal(params$df, c(53, 53, 53, 53, 53), tolerance = 1e-2)
+})
 
-  test_that("print model_parameters", {
-    out <- utils::capture.output(print(params))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
-        "---------------------------------------------------------------",
-        "(Intercept) |    -1.36 | 0.23 | [-1.81, -0.91] | -5.98 | < .001",
-        "period [2]  |    -0.98 | 0.30 | [-1.57, -0.38] | -3.22 | 0.001 ",
-        "period [3]  |    -1.11 | 0.32 | [-1.75, -0.48] | -3.43 | < .001",
-        "period [4]  |    -1.56 | 0.42 | [-2.39, -0.73] | -3.67 | < .001"
-      )
-    )
-
-    mp <- model_parameters(model, effects = "all", exponentiate = TRUE)
-    out <- utils::capture.output(print(mp))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Odds Ratio |   SE |       95% CI |     z |      p",
-        "---------------------------------------------------------------",
-        "(Intercept) |       0.26 | 0.06 | [0.16, 0.40] | -5.98 | < .001",
-        "period [2]  |       0.38 | 0.11 | [0.21, 0.68] | -3.22 | 0.001 ",
-        "period [3]  |       0.33 | 0.11 | [0.17, 0.62] | -3.43 | < .001",
-        "period [4]  |       0.21 | 0.09 | [0.09, 0.48] | -3.67 | < .001",
-        "",
-        "# Random Effects",
-        "",
-        "Parameter            | Coefficient",
-        "----------------------------------",
-        "SD (Intercept: herd) |        0.64"
-      )
-    )
-
-    set.seed(123)
-    model <- glmer(
-      cbind(incidence, size - incidence) ~ period + (1 | herd),
-      data = cbpp,
-      family = binomial(),
-      nAGQ = 2
-    )
-
-    mp <- model_parameters(model, effects = "all")
-    out <- utils::capture.output(print(mp))
-    expect_equal(
-      out,
-      c(
-        "# Fixed Effects",
-        "",
-        "Parameter   | Log-Odds |   SE |         95% CI |     z |      p",
-        "---------------------------------------------------------------",
-        "(Intercept) |    -1.40 | 0.23 | [-1.85, -0.94] | -6.02 | < .001",
-        "period [2]  |    -0.99 | 0.31 | [-1.59, -0.39] | -3.24 | 0.001 ",
-        "period [3]  |    -1.13 | 0.33 | [-1.77, -0.49] | -3.46 | < .001",
-        "period [4]  |    -1.58 | 0.43 | [-2.42, -0.74] | -3.70 | < .001",
-        "",
-        "# Random Effects",
-        "",
-        "Parameter            | Coefficient |   SE |       95% CI",
-        "--------------------------------------------------------",
-        "SD (Intercept: herd) |        0.64 | 0.18 | [0.37, 1.11]"
-      )
-    )
-  })
-
-
-
-  test_that("model_parameters.glmer ml1", {
-    params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
-    expect_equal(params$SE, c(0.22758, 0.30329, 0.32351, 0.42445), tolerance = 1e-2)
-    expect_equal(params$df, c(54, 54, 54, 54), tolerance = 1e-2)
-  })
-
-  test_that("model_parameters.glmer betwithin", {
-    params <- model_parameters(model, ci_method = "betwithin", effects = "fixed")
-    expect_equal(params$SE, c(0.23009, 0.30433, 0.32476, 0.42632), tolerance = 1e-2)
-    expect_equal(params$df, c(822, 822, 822, 822), tolerance = 1e-2)
-  })
-
-  set.seed(123)
-  cbpp$time <- runif(nrow(cbpp), 1, 4)
-  model <- glmer(
-    cbind(incidence, size - incidence) ~ period + time + (1 + time | herd),
-    data = cbpp,
-    family = binomial(),
-    nAGQ = 0
-  )
-
-  test_that("model_parameters.glmer", {
-    params <- model_parameters(model, effects = "fixed")
-    expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
-  })
-
-  test_that("model_parameters.glmer ml1", {
-    params <- model_parameters(model, ci_method = "ml1", effects = "fixed")
-    expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
-    expect_equal(params$df, c(53, 53, 53, 53, 53), tolerance = 1e-2)
-  })
-
-  test_that("model_parameters.glmer betwithin", {
-    params <- model_parameters(model, ci_method = "betwithin", effects = "fixed")
-    expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
-    expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
-  })
-}
+test_that("model_parameters.glmer betwithin", {
+  params <- model_parameters(model, ci_method = "betwithin", effects = "fixed")
+  expect_equal(params$SE, c(0.66539, 0.36178, 0.36223, 0.45528, 0.2379), tolerance = 1e-2)
+  expect_equal(params$df, c(821, 821, 821, 821, 9), tolerance = 1e-2)
+})

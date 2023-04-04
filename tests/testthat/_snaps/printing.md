@@ -152,6 +152,31 @@
 # select pattern
 
     Code
+      print(out, groups = list(Engine = c("cyl6", "cyl8", "vs", "hp"), Interactions = c(
+        "gear4:vs", "gear5:vs"), Controls = c(2, 3, 7)))
+    Output
+      Parameter        | Coefficient |   SE |          95% CI | t(22) |     p
+      -----------------------------------------------------------------------
+      Engine           |             |      |                 |       |      
+        cyl [6]        |       -2.47 | 2.21 | [ -7.05,  2.12] | -1.12 | 0.276
+        cyl [8]        |        1.97 | 5.11 | [ -8.63, 12.58] |  0.39 | 0.703
+        vs             |        3.18 | 3.79 | [ -4.68, 11.04] |  0.84 | 0.410
+        hp             |       -0.06 | 0.02 | [ -0.11, -0.02] | -2.91 | 0.008
+      Interactions     |             |      |                 |       |      
+        gear [4] * vs  |       -2.90 | 4.67 | [-12.57,  6.78] | -0.62 | 0.541
+        gear [5] * vs  |        2.59 | 4.54 | [ -6.82, 12.00] |  0.57 | 0.574
+      Controls         |             |      |                 |       |      
+        gear [4]       |        3.10 | 4.34 | [ -5.90, 12.10] |  0.71 | 0.482
+        gear [5]       |        4.80 | 3.48 | [ -2.42, 12.01] |  1.38 | 0.182
+        drat           |        2.70 | 2.03 | [ -1.52,  6.91] |  1.33 | 0.198
+    Message <simpleMessage>
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
       print(out, select = "{coef} ({se})")
     Output
       Parameter     | Estimate (SE)
