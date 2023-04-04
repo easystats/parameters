@@ -114,7 +114,11 @@
   )
   dots <- list(...)
   dot_args <- intersect(names(dots), .profile_formals)
-  dots[dot_args]
+  out <- dots[dot_args]
+  if (!length(out)) {
+    return(NULL)
+  }
+  out
 }
 
 
