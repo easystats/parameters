@@ -110,10 +110,12 @@ test_that("model_parameters-random pars 8", {
   )
 })
 
-model <- lme4::lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
-mp <- model_parameters(model, effects = "random")
-
 test_that("model_parameters-random pars 9", {
+  suppressMessages(
+    model <- lme4::lmer(Reaction ~ Days2 + (1 + Days2 || Subject), data = sleepstudy)
+  )
+  mp <- model_parameters(model, effects = "random", verbose = FALSE)
+
   expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor, tolerance = 1e-3)
   expect_true(all(is.na(mp$SE)))
   expect_equal(
@@ -126,10 +128,9 @@ test_that("model_parameters-random pars 9", {
   )
 })
 
-model <- lme4::lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
-mp <- model_parameters(model, effects = "random")
-
 test_that("model_parameters-random pars 10", {
+  model <- lme4::lmer(Reaction ~ Days2 + (0 + Days2 || Subject), data = sleepstudy)
+  mp <- model_parameters(model, effects = "random")
   expect_equal(mp$Coefficient, as.data.frame(lme4::VarCorr(model))$sdcor, tolerance = 1e-3)
   expect_equal(mp$SE, c(5.68188, 4.951, 9.773, 0.34887, 0.59977, 0.3494, 1.7238), tolerance = 1e-3)
   expect_equal(mp$CI_low, c(16.713, 37.06178, 36.14261, -0.65336, -0.92243, -0.99569, 24.18612), tolerance = 1e-3)

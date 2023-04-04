@@ -22,7 +22,10 @@ test_that("model_parameters, p-adjust after keep/drop", {
     ignore_attr = TRUE
   )
 
-  mp <- model_parameters(model, summary = TRUE, keep = c("wt", "hp"), p_adjust = "bonferroni")
+  expect_message(
+    mp <- model_parameters(model, summary = TRUE, keep = c("wt", "hp"), p_adjust = "bonferroni"),
+    "more than 1 element"
+  )
   expect_equal(
     mp[["p"]],
     p.adjust(coef(summary(model))[c(2, 5), 4], "bonferroni"),
@@ -30,7 +33,10 @@ test_that("model_parameters, p-adjust after keep/drop", {
     ignore_attr = TRUE
   )
 
-  mp <- model_parameters(model, summary = TRUE, keep = c("cyl", "gear"), p_adjust = "bonferroni")
+  expect_message(
+    mp <- model_parameters(model, summary = TRUE, keep = c("cyl", "gear"), p_adjust = "bonferroni"),
+    "more than 1 element"
+  )
   expect_equal(
     mp[["p"]],
     p.adjust(coef(summary(model))[3:4, 4], "bonferroni"),

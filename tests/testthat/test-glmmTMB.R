@@ -63,7 +63,10 @@ withr::with_options(
         tolerance = 1e-3
       )
 
-      expect_null(ci(m2, component = "zi"))
+      expect_message(
+        expect_null(ci(m2, component = "zi")),
+        "no zero-inflation component"
+      )
     })
 
 
@@ -96,7 +99,10 @@ withr::with_options(
         tolerance = 1e-3
       )
 
-      expect_null(standard_error(m2, component = "zi"))
+      expect_message(
+        expect_null(standard_error(m2, component = "zi")),
+        "no zero-inflation component"
+      )
     })
 
 
@@ -128,7 +134,10 @@ withr::with_options(
         tolerance = 1e-3
       )
 
-      expect_null(p_value(m2, component = "zi"))
+      expect_message(
+        expect_null(p_value(m2, component = "zi")),
+        "no zero-inflation component"
+      )
     })
 
 
