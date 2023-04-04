@@ -1,8 +1,8 @@
-set.seed(123)
-mod <- lm(formula = cbind(mpg, disp) ~ wt, data = mtcars)
-mp <- model_parameters(mod)
-
 test_that("model_parameters,mlm", {
+  set.seed(123)
+  mod <- lm(formula = cbind(mpg, disp) ~ wt, data = mtcars)
+  mp <- model_parameters(mod)
+
   expect_equal(
     mp$Coefficient,
     c(37.28513, -5.34447, -131.14842, 112.47814),
@@ -19,10 +19,10 @@ test_that("model_parameters,mlm", {
   expect_equal(mp$Parameter, c("(Intercept)", "wt", "(Intercept)", "wt"))
 })
 
-model <- lm(cbind(mpg, hp) ~ cyl * disp, mtcars)
-mp <- model_parameters(model)
-
 test_that("model_parameters,mlm", {
+  model <- lm(cbind(mpg, hp) ~ cyl * disp, mtcars)
+  mp <- model_parameters(model)
+
   expect_equal(
     mp$Coefficient,
     c(49.03721, -3.40524, -0.14553, 0.01585, 23.55, 17.43527, -0.36762, 0.06174),
@@ -40,8 +40,8 @@ test_that("model_parameters,mlm", {
 })
 
 test_that("sandwich standard errors", {
-  requiet("sandwich")
-  requiet("lmtest")
+  skip_if_not_installed("sandwich")
+  skip_if_not_installed("lmtest")
 
   mod <- lm(formula = cbind(mpg, disp) ~ wt + factor(cyl) + am, data = mtcars)
   se1 <- standard_error(mod)

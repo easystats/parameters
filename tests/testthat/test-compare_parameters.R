@@ -85,74 +85,33 @@ data(mtcars)
 m1 <- lm(mpg ~ hp, mtcars)
 m2 <- lm(mpg ~ hp, mtcars)
 test_that("compare_parameters, proper printing for CI=NULL #820", {
-  out <- utils::capture.output(compare_parameters(m1, m2, ci = NULL))
-  expect_identical(
-    out,
-    c(
-      "Parameter    |    m1 |    m2",
-      "----------------------------",
-      "(Intercept)  | 30.10 | 30.10",
-      "hp           | -0.07 | -0.07",
-      "----------------------------",
-      "Observations |    32 |    32"
-    )
-  )
+  expect_snapshot(compare_parameters(m1, m2, ci = NULL))
 })
 
 
+skip_on_cran()
 
 
-if (requiet("glmmTMB") && getRversion() >= "4.0.0") {
+test_that("compare_parameters, correct random effects", {
+  skip_if_not_installed("glmmTMB")
+  skip_if_not(getRversion() >= "4.0.0")
+
   data("fish")
   m0 <- glm(count ~ child + camper, data = fish, family = poisson())
 
-  m1 <- glmmTMB(
+  m1 <- glmmTMB::glmmTMB(
     count ~ child + camper + (1 | persons) + (1 | ID),
     data = fish,
     family = poisson()
   )
 
-  m2 <- glmmTMB(
+  m2 <- glmmTMB::glmmTMB(
     count ~ child + camper + zg + (1 | ID),
     ziformula = ~ child + (1 | persons),
     data = fish,
-    family = truncated_poisson()
+    family = glmmTMB::truncated_poisson()
   )
 
   cp <- compare_parameters(m0, m1, m2, effects = "all", component = "all")
-  out <- utils::capture.output(print(cp))
-  test_that("compare_parameters, correct random effects", {
-    expect_equal(
-      cp$`Log-Mean.m2`,
-      c(
-        1.4075, -0.52925, 0.58381, 0.27885, NA, 0.13266, -0.92451,
-        1.96104, 1.07818
-      ),
-      tolerance = 1e-3
-    )
-    expect_equal(
-      cp$`Log-Mean.m1`,
-      c(0.6835, -1.67334, 0.94341, 0.26717, 1.20775, NA, NA, NA, NA),
-      tolerance = 1e-3
-    )
-    expect_identical(
-      cp$Component,
-      c(
-        "conditional", "conditional", "conditional", "conditional",
-        "conditional", "conditional", "zero_inflated", "zero_inflated",
-        "zero_inflated"
-      )
-    )
-    expect_identical(
-      cp$Effects,
-      c(
-        "fixed", "fixed", "fixed", "random", "random", "fixed", "fixed",
-        "fixed", "random"
-      )
-    )
-    expect_identical(
-      out[22],
-      "SD (Intercept: persons) |    |  1.21 ( 0.60,  2.43) |                     "
-    )
-  })
-}
+  expect_snapshot(cp)
+})
