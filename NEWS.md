@@ -32,6 +32,9 @@
 
 * Fixed bug in `cluster_analysis()` for `include_factors = TRUE`.
 
+* Fixed warning in `model_parameters()` and `ci()` for models from package
+  *glmmTMB* when `ci_method` was either `"profile"` or `"uniroot"`.
+
 # parameters 0.20.2
 
 ## General
