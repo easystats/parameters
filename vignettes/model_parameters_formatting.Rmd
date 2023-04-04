@@ -30,15 +30,12 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 100)
 )
 
-if (!requireNamespace("broom", quietly = TRUE) ||
-  !requireNamespace("gt", quietly = TRUE) ||
-  !requireNamespace("magrittr", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-} else {
+pkgs <- c("broom", "gt")
+successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)
+
+if (all(successfully_loaded)) {
   library(parameters)
   library(broom)
-  library(gt)
-  library(magrittr)
   library(insight)
 }
 
@@ -120,7 +117,7 @@ naming scheme to access model parameters when the input model is unknown. This
 is the typical approach from the *broom* package, where you get "standardized"
 column names:
 
-```{r}
+```{r eval=successfully_loaded["broom"]}
 library(broom)
 colnames(tidy(model))
 ```
@@ -133,19 +130,18 @@ statistic-column is no longer named `t`, but `statistic`. `df_error` or
 
 ```{r}
 library(insight)
-library(magrittr)
-model %>%
-  model_parameters() %>%
-  standardize_names() %>%
+model |>
+  model_parameters() |>
+  standardize_names() |>
   colnames()
 ```
 
 Furthermore, you can request "broom"-style for column names:
 
 ```{r}
-model %>%
-  model_parameters() %>%
-  standardize_names(style = "broom") %>%
+model |>
+  model_parameters() |>
+  standardize_names(style = "broom") |>
   colnames()
 ```
 
@@ -161,7 +157,7 @@ cbind(summary(model)$coefficients, confint(model))
 
 We can get a similar tabular output using *broom*.
 
-```{r}
+```{r eval=successfully_loaded["broom"]}
 tidy(model, conf.int = TRUE)
 ```
 
@@ -177,9 +173,9 @@ column names must follow a certain pattern to be recognized, and this pattern
 may either be the naming convention from *broom* or the [*easystats*
 packages](https://easystats.github.io/easystats/).
 
-```{r}
-model %>%
-  tidy(conf.int = TRUE) %>%
+```{r eval=successfully_loaded["broom"]}
+model |>
+  tidy(conf.int = TRUE) |>
   format_table()
 ```
 
@@ -188,8 +184,8 @@ freedom are the same for each parameter, then this information is included in
 the statistic-column. This is usually the default for `model_parameters()`:
 
 ```{r}
-model %>%
-  model_parameters() %>%
+model |>
+  model_parameters() |>
   format_table()
 ```
 
@@ -207,10 +203,10 @@ export_table(mtcars[1:8, 1:5])
 Putting all this together allows us to create nice tabular outputs of parameters
 tables. This can be done using *broom*:
 
-```{r}
-model %>%
-  tidy(conf.int = TRUE) %>%
-  format_table() %>%
+```{r eval=successfully_loaded["broom"]}
+model |>
+  tidy(conf.int = TRUE) |>
+  format_table() |>
   export_table()
 ```
 
@@ -235,11 +231,11 @@ The following table has six columns. Using `align = "lcccrr"` would left-align
 the first column, center columns two to four, and right-align the last two
 columns.
 
-```{r}
-model %>%
-  tidy(conf.int = TRUE) %>%
+```{r eval=successfully_loaded["broom"]}
+model |>
+  tidy(conf.int = TRUE) |>
   # parenthesis look better in markdown-tables, so we use "brackets" here
-  format_table(ci_brackets = c("(", ")")) %>%
+  format_table(ci_brackets = c("(", ")")) |>
   export_table(format = "markdown", caption = "My Table", align = "lcccrr")
 ```
 
@@ -253,15 +249,15 @@ Word or PDF. `print_md()` applies some default settings that have proven to work
 well for markdown, PDF or Word tables.
 
 ```{r}
-model_parameters(model) %>% print_md()
+model_parameters(model) |> print_md()
 ```
 
 A similar option is `print_html()`, which is a convenient wrapper for
 `format_table()` and `export_table(format = "html")`. Using HTML in markdown has
 the advantage that it will be properly rendered when exporting to PDF.
 
-```{r}
-model_parameters(model) %>% print_html()
+```{r eval=successfully_loaded["gt"]}
+model_parameters(model) |> print_html()
 ```
 
 `print_md()` and `print_html()` are considered as main functions for users who
@@ -269,6 +265,6 @@ want to generate nicely rendered tables inside markdown-documents. A wrapper
 around these both is `display()`, which either calls `print_md()` or
 `print_html()`.
 
-```{r}
-model_parameters(model) %>% display(format = "html")
+```{r eval=successfully_loaded["gt"]}
+model_parameters(model) |> display(format = "html")
 ```
