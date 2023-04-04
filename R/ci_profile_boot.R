@@ -77,12 +77,18 @@
 
 #' @keywords internal
 .ci_profile_glmmTMB <- function(x, ci, profiled, component, ...) {
+  # make sure "..." doesn't pass invalid arguments to package TMB
+  dot_args <- .check_profile_uniroot_args(...)
+
   if (is.null(profiled)) {
-    out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
+    args <- list(x, method = "profile", level = ci, dot_args)
+    out <- as.data.frame(do.call(stats::confint, args))
   } else {
-    out <- .safe(as.data.frame(stats::confint(profiled, level = ci, ...)))
+    args <- list(profiled, level = ci, dot_args)
+    out <- .safe(as.data.frame(do.call(stats::confint, args)))
     if (is.null(out)) {
-      out <- as.data.frame(stats::confint(x, method = "profile", level = ci, ...))
+      args <- list(x, method = "profile", level = ci, dot_args)
+      out <- as.data.frame(do.call(stats::confint, args))
     }
   }
   .process_glmmTMB_CI(x, out, ci, component)
@@ -92,10 +98,24 @@
 
 #' @keywords internal
 .ci_uniroot_glmmTMB <- function(x, ci, component, ...) {
-  out <- as.data.frame(stats::confint(x, level = ci, method = "uniroot", ...))
+  # make sure "..." doesn't pass invalid arguments to package TMB
+  dot_args <- .check_profile_uniroot_args(...)
+  args <- list(x, level = ci, method = "uniroot", dot_args)
+  out <- as.data.frame(do.call(stats::confint, args))
   .process_glmmTMB_CI(x, out, ci, component)
 }
 
+
+.check_profile_uniroot_args <- function(...) {
+  .profile_formals <- c(
+    "cl", "fitted", "h", "level_max", "lincomb", "maxit", "name",
+    "ncpus", "npts", "obj", "parallel", "parm", "parm.range", "slice",
+    "stderr", "stepfac", "trace", "ystep", "ytol"
+  )
+  dots <- list(...)
+  dot_args <- intersect(names(dots), .profile_formals)
+  dots[dot_args]
+}
 
 
 .process_glmmTMB_CI <- function(x, out, ci, component) {
