@@ -126,7 +126,10 @@ test_that("anova type | lm", {
   a2 <- car::Anova(m, type = 2)
   a3 <- car::Anova(m, type = 3)
   expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-  expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  expect_message(
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3),
+    "Type 3 ANOVAs only give"
+  )
 
   m <- lm(mpg ~ factor(cyl) + hp + disp, mtcars)
   expect_warning(model_parameters(aov(m)), regexp = NA) # no need for warning, because no interactions
@@ -136,7 +139,10 @@ test_that("anova type | lm", {
     contrasts = list("factor(cyl)" = contr.helmert)
   )
   a3 <- car::Anova(m, type = 3)
-  expect_warning(model_parameters(a3), regexp = NA) # expect no warning
+  expect_message(
+    model_parameters(a3),
+    "Type 3 ANOVAs only give"
+  )
 })
 
 test_that("anova type | mlm", {
@@ -167,7 +173,10 @@ test_that("anova type | glm", {
   a2 <- suppressWarnings(car::Anova(m, type = 2))
   a3 <- suppressWarnings(car::Anova(m, type = 3))
   expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-  expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  expect_message(
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3),
+    "Type 3 ANOVAs only give"
+  )
 })
 
 test_that("anova type | lme4", {
@@ -176,8 +185,10 @@ test_that("anova type | lme4", {
   skip_if_not_installed("car")
 
   m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1 | gear), mtcars)
-  m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
-    family = poisson()
+  suppressMessages(
+    m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
+                      family = poisson()
+    )
   )
 
   a1 <- anova(m1)
@@ -187,17 +198,26 @@ test_that("anova type | lme4", {
   expect_equal(attr(model_parameters(a1), "anova_type"), 1)
 
   a3 <- anova(lmerTest::as_lmerModLmerTest(m1))
-  expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  expect_message(
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3),
+    "Type 3 ANOVAs only give"
+  )
 
   a2 <- car::Anova(m1, type = 2)
   a3 <- car::Anova(m1, type = 3)
   expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-  expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  expect_message(
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3),
+    "Type 3 ANOVAs only give"
+  )
 
   a2 <- car::Anova(m2, type = 2)
   a3 <- car::Anova(m2, type = 3)
   expect_equal(attr(model_parameters(a2), "anova_type"), 2)
-  expect_equal(attr(model_parameters(a3), "anova_type"), 3)
+  expect_message(
+    expect_equal(attr(model_parameters(a3), "anova_type"), 3),
+    "Type 3 ANOVAs only give"
+  )
 })
 
 test_that("anova type | afex + Anova.mlm", {
@@ -205,9 +225,11 @@ test_that("anova type | afex + Anova.mlm", {
 
   data(obk.long, package = "afex")
 
-  m <- afex::aov_ez("id", "value", obk.long,
-    between = c("treatment", "gender"),
-    within = c("phase", "hour"), observed = "gender"
+  suppressMessages(
+    m <- afex::aov_ez("id", "value", obk.long,
+                      between = c("treatment", "gender"),
+                      within = c("phase", "hour"), observed = "gender"
+    )
   )
 
   expect_equal(attr(model_parameters(m), "anova_type"), 3)
