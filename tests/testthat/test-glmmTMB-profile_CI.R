@@ -9,7 +9,7 @@ if (requiet("glmmTMB") && requiet("TMB") && requiet("lme4")) {
     expect_silent({
       mp2 <- model_parameters(m, ci_method = "profile")
     })
-    expect_snapshot(print(m1))
-    expect_snapshot(print(m2))
+    expect_snapshot(print(mp1))
+    expect_snapshot(print(mp2))
   })
 }
