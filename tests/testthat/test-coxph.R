@@ -51,11 +51,11 @@ test_that("model_parameters", {
   )
   # Fit a stratified model
   m2 <- coxph(Surv(time, status) ~ x + strata(sex), test1)
-
   expect_equal(model_parameters(m2)$Coefficient, 0.8023179, tolerance = 1e-4)
   expect_equal(model_parameters(m2)$z, 0.9756088, tolerance = 1e-4)
   expect_equal(model_parameters(m2)$p, 0.3292583, tolerance = 1e-4)
 
+  unloadNamespace("rms")
   unloadNamespace("multcomp")
   unloadNamespace("TH.data")
   unloadNamespace("survival")
