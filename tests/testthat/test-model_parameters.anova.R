@@ -187,7 +187,7 @@ test_that("anova type | lme4", {
   m1 <- lme4::lmer(mpg ~ factor(cyl) * hp + disp + (1 | gear), mtcars)
   suppressMessages(
     m2 <- lme4::glmer(carb ~ factor(cyl) * hp + disp + (1 | gear), mtcars,
-                      family = poisson()
+      family = poisson()
     )
   )
 
@@ -227,8 +227,8 @@ test_that("anova type | afex + Anova.mlm", {
 
   suppressMessages(
     m <- afex::aov_ez("id", "value", obk.long,
-                      between = c("treatment", "gender"),
-                      within = c("phase", "hour"), observed = "gender"
+      between = c("treatment", "gender"),
+      within = c("phase", "hour"), observed = "gender"
     )
   )
 

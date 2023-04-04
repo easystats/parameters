@@ -18,8 +18,8 @@ withr::with_options(
     data(housing, package = "MASS")
     invisible(capture.output(
       m2 <- mclogit::mblogit(Sat ~ Infl + Type + Cont,
-                             weights = Freq,
-                             data = housing
+        weights = Freq,
+        data = housing
       )
     ))
 
