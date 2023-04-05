@@ -3,6 +3,7 @@ skip_on_cran()
 test_that("emmeans | lm", {
   skip_if_not_installed("emmeans")
   skip_if_not_installed("boot")
+  skip_if_not_installed("coda")
 
   model <- lm(mpg ~ log(wt) + factor(cyl), data = mtcars)
 
@@ -33,6 +34,7 @@ test_that("emmeans | lmer", {
   skip_if_not_installed("emmeans")
   skip_if_not_installed("boot")
   skip_if_not_installed("lme4")
+  skip_if_not_installed("coda")
 
   model <- lme4::lmer(mpg ~ log(wt) + factor(cyl) + (1 | gear), data = mtcars)
 
@@ -59,6 +61,7 @@ test_that("emmeans | lmer", {
 })
 
 test_that("emmeans | glmmTMB", {
+  skip_if_not_installed("coda")
   skip_if_not_installed("emmeans")
   skip_if_not_installed("boot")
   skip_if_not_installed("lme4")
