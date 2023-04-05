@@ -1,4 +1,4 @@
-if (require("testthat", quietly = TRUE)) {
-  library(parameters)
-  test_check("parameters")
-}
+library(parameters)
+library(testthat)
+
+test_check("parameters")

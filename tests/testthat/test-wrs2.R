@@ -1,58 +1,61 @@
-if (requiet("WRS2")) {
-  # model_parameters.t1way ---------------------------------------------------
+skip_if_not_installed("WRS2")
+data(viagra, package = "WRS2")
+data(WineTasting, package = "WRS2")
+data(spider, package = "WRS2")
 
-  test_that("model_parameters.t1way", {
-    set.seed(123)
-    df_b <- model_parameters(t1way(libido ~ dose, data = viagra))
+# model_parameters.t1way ---------------------------------------------------
 
-    set.seed(123)
-    df_w <- model_parameters(rmanova(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
-  })
+test_that("model_parameters.t1way", {
+  set.seed(123)
+  df_b <- model_parameters(WRS2::t1way(libido ~ dose, data = viagra))
 
-  # model_parameters.yuen ---------------------------------------------------
+  set.seed(123)
+  df_w <- model_parameters(WRS2::rmanova(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
+})
 
-  test_that("model_parameters.yuen", {
-    set.seed(123)
-    df_b <- model_parameters(yuen(Anxiety ~ Group, data = spider))
+# model_parameters.yuen ---------------------------------------------------
 
-    before <- c(190, 210, 300, 240, 280, 170, 280, 250, 240, 220)
-    after <- c(210, 210, 340, 190, 260, 180, 200, 220, 230, 200)
-    set.seed(123)
-    df_w <- model_parameters(yuend(before, after))
-  })
+test_that("model_parameters.yuen", {
+  set.seed(123)
+  df_b <- model_parameters(WRS2::yuen(Anxiety ~ Group, data = spider))
 
-  # model_parameters.mcp and robtab ---------------------------------------
+  before <- c(190, 210, 300, 240, 280, 170, 280, 250, 240, 220)
+  after <- c(210, 210, 340, 190, 260, 180, 200, 220, 230, 200)
+  set.seed(123)
+  df_w <- model_parameters(WRS2::yuend(before, after))
+})
 
-  test_that("model_parameters.mcp and robtab", {
-    set.seed(123)
-    df_b <- model_parameters(lincon(libido ~ dose, data = viagra))
+# model_parameters.mcp and robtab ---------------------------------------
 
-    set.seed(123)
-    df_w <- model_parameters(rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
+test_that("model_parameters.mcp and robtab", {
+  set.seed(123)
+  df_b <- model_parameters(WRS2::lincon(libido ~ dose, data = viagra))
 
-    set.seed(123)
-    df <- model_parameters(discmcp(libido ~ dose, viagra, nboot = 100))
-  })
+  set.seed(123)
+  df_w <- model_parameters(WRS2::rmmcp(WineTasting$Taste, WineTasting$Wine, WineTasting$Taster))
 
-  # model_parameters.akp.effect -----------------------------------------------
+  set.seed(123)
+  df <- model_parameters(WRS2::discmcp(libido ~ dose, viagra, nboot = 100))
+})
 
-  test_that("model_parameters.AKP", {
-    set.seed(123)
-    mod <- WRS2::akp.effect(
-      formula = wt ~ am,
-      data = mtcars,
-      EQVAR = FALSE
-    )
-  })
+# model_parameters.akp.effect -----------------------------------------------
+
+test_that("model_parameters.AKP", {
+  set.seed(123)
+  mod <- WRS2::akp.effect(
+    formula = wt ~ am,
+    data = mtcars,
+    EQVAR = FALSE
+  )
+})
 
 
-  # model_parameters.onesampb ---------------------------------------------------
+# model_parameters.onesampb ---------------------------------------------------
 
-  test_that("model_parameters.onesampb", {
-    set.seed(123)
-    x <- rnorm(30)
+test_that("model_parameters.onesampb", {
+  set.seed(123)
+  x <- rnorm(30)
 
-    set.seed(123)
-    mod <- onesampb(x, nboot = 100)
-  })
-}
+  set.seed(123)
+  mod <- WRS2::onesampb(x, nboot = 100)
+})

@@ -103,10 +103,12 @@ Suggests:
     broom,
     cAIC4,
     car,
+    carData,
     cgam,
     ClassDiscovery,
     clubSandwich,
     cluster,
+    coda,
     cplm,
     dbscan,
     domir (>= 0.2.0),
@@ -115,6 +117,7 @@ Suggests:
     effectsize (>= 0.8.2),
     EGAnet (>= 0.7),
     emmeans (>= 1.7.0),
+    estimatr,
     factoextra,
     FactoMineR,
     fastICA,
@@ -195,6 +198,7 @@ Suggests:
     TMB,
     truncreg,
     VGAM,
+    withr,
     WRS2
 VignetteBuilder:
     knitr
