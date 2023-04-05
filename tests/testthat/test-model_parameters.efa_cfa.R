@@ -1,5 +1,6 @@
 test_that("principal_components", {
   skip_if_not_installed("psych")
+
   set.seed(333)
   x <- principal_components(mtcars[, 1:7], n = "all", threshold = 0.2)
   expect_identical(c(ncol(x), nrow(x)), c(8L, 7L))
@@ -26,6 +27,7 @@ test_that("principal_components", {
 test_that("efa-cfa", {
   skip_if_not_installed("psych")
   skip_if_not_installed("lavaan")
+
   efa <- psych::fa(attitude, nfactors = 3)
   params <- parameters::model_parameters(efa)
   expect_identical(c(nrow(params), ncol(params)), c(7L, 6L))
@@ -51,7 +53,12 @@ test_that("efa-cfa", {
 
 test_that("FactoMineR", {
   skip_if_not_installed("FactoMineR")
-  x <- suppressWarnings(model_parameters(FactoMineR::PCA(mtcars, ncp = 3, graph = FALSE), threshold = 0.2, sort = TRUE))
+
+  x <- suppressWarnings(model_parameters(
+    FactoMineR::PCA(mtcars, ncp = 3, graph = FALSE),
+    threshold = 0.2,
+    sort = TRUE
+  ))
   expect_identical(c(ncol(x), nrow(x)), c(5L, 11L))
 
   # x <- suppressWarnings(model_parameters(FactoMineR::FAMD(iris, ncp = 3, graph = FALSE), threshold = 0.2, sort = TRUE))
@@ -60,6 +67,7 @@ test_that("FactoMineR", {
 
 test_that("BayesFM", {
   skip_if_not_installed("BayesFM")
+
   set.seed(333)
   befa <- BayesFM::befa(mtcars, iter = 1000, verbose = FALSE)
   params <- suppressWarnings(parameters::model_parameters(befa, sort = TRUE))

@@ -38,7 +38,6 @@ test_that("model_parameters", {
   )
 })
 
-
 test_that("model_parameters", {
   suppressPackageStartupMessages(library(survival, quietly = TRUE))
 
