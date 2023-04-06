@@ -96,7 +96,7 @@ test_that("model_parameters.mixed-all_pars", {
 data("qol_cancer")
 qol_cancer <- cbind(
   qol_cancer,
-  demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
 )
 model <- lme4::lmer(
   QoL ~ time + phq4_within + phq4_between + (1 | ID),
