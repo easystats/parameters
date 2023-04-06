@@ -1,3 +1,13 @@
+# parameters 0.21.0
+
+## Breaking Changes
+
+* As noted in release notes for 0.15.0 version, all re-exported functions from
+  *datawizard* package have now been removed.
+
+* Following re-exported functions from *insight* have been removed:
+  `standardize_names()`, `supported_models()`
+
 # parameters 0.20.3
 
 ## General

@@ -9,15 +9,8 @@
 \alias{ci}
 \alias{n_parameters}
 \alias{print_md}
-\alias{standardize_names}
-\alias{supported_models}
 \alias{print_html}
-\alias{describe_distribution}
-\alias{demean}
-\alias{rescale_weights}
 \alias{visualisation_recipe}
-\alias{kurtosis}
-\alias{skewness}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -27,8 +20,8 @@ below to see their documentation.
 \describe{
   \item{bayestestR}{\code{\link[bayestestR]{ci}}, \code{\link[bayestestR]{equivalence_test}}}
 
-  \item{datawizard}{\code{\link[datawizard]{demean}}, \code{\link[datawizard]{describe_distribution}}, \code{\link[datawizard:skewness]{kurtosis}}, \code{\link[datawizard]{rescale_weights}}, \code{\link[datawizard]{skewness}}, \code{\link[datawizard]{visualisation_recipe}}}
+  \item{datawizard}{\code{\link[datawizard]{visualisation_recipe}}}
 
-  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{n_parameters}}, \code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{standardize_names}}, \code{\link[insight:is_model_supported]{supported_models}}}
+  \item{insight}{\code{\link[insight]{display}}, \code{\link[insight]{n_parameters}}, \code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}}
 }}
 
