@@ -100,6 +100,7 @@ model_parameters.mipo <- function(model,
     verbose = verbose
   )
 
+  # check if we have ordinal/categorical response
   s <- summary(model)
   if ("y.level" %in% colnames(s)) {
     merge_by <- c("Parameter", "Response")
