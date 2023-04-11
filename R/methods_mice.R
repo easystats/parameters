@@ -100,10 +100,17 @@ model_parameters.mipo <- function(model,
     verbose = verbose
   )
 
+  s <- summary(model)
+  if ("y.level" %in% colnames(s)) {
+    merge_by <- c("Parameter", "Response")
+  } else {
+    merge_by <- "Parameter"
+  }
+
   args <- list(
     model,
     ci = ci,
-    merge_by = c("Parameter", "Response"),
+    merge_by = merge_by,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
     keep_parameters = keep,
