@@ -30,10 +30,16 @@ degrees_of_freedom.mipo <- function(model, ...) {
 
 #' @export
 p_value.mipo <- function(model, ...) {
-  .data_frame(
-    Parameter = as.vector(summary(model)$term),
-    p = as.vector(summary(model)$p.value)
+  s <- summary(model)
+  out <- .data_frame(
+    Parameter = as.vector(s$term),
+    p = as.vector(s$p.value)
   )
+  # check for ordinal-alike models
+  if ("y.level" %in% colnames(s)) {
+    out$Response <- as.vector(s$y.level)
+  }
+  out
 }
 
 
@@ -48,10 +54,16 @@ p_value.mira <- function(model, ...) {
 
 #' @export
 standard_error.mipo <- function(model, ...) {
-  .data_frame(
-    Parameter = as.vector(summary(model)$term),
-    SE = as.vector(summary(model)$std.error)
+  s <- summary(model)
+  out <- .data_frame(
+    Parameter = as.vector(s$term),
+    SE = as.vector(s$std.error)
   )
+  # check for ordinal-alike models
+  if ("y.level" %in% colnames(s)) {
+    out$Response <- as.vector(s$y.level)
+  }
+  out
 }
 
 
@@ -72,14 +84,55 @@ format_parameters.mira <- format_parameters.rma
 
 #' @rdname model_parameters.mira
 #' @export
-model_parameters.mipo <- model_parameters.default
+model_parameters.mipo <- function(model,
+                                  ci = 0.95,
+                                  exponentiate = FALSE,
+                                  p_adjust = NULL,
+                                  keep = NULL,
+                                  drop = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+  # sanity check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
+
+  # check if we have ordinal/categorical response
+  s <- summary(model)
+  if ("y.level" %in% colnames(s)) {
+    merge_by <- c("Parameter", "Response")
+  } else {
+    merge_by <- "Parameter"
+  }
+
+  args <- list(
+    model,
+    ci = ci,
+    merge_by = merge_by,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    keep_parameters = keep,
+    drop_parameters = drop,
+    vcov = NULL,
+    vcov_args = NULL
+  )
+  args <- c(args, dot_args)
+
+  out <- do.call(".model_parameters_generic", args)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
 
 
 #' Parameters from multiply imputed repeated analyses
 #'
-#' Format models of class `mira`, obtained from `mice::width.mids()`.
+#' Format models of class `mira`, obtained from `mice::width.mids()`, or of
+#' class `mipo`.
 #'
-#' @param model An object of class `mira`.
+#' @param model An object of class `mira` or `mipo`.
 #' @inheritParams model_parameters.default
 #' @param ... Arguments passed to or from other methods.
 #'

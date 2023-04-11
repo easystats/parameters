@@ -8,6 +8,11 @@
 * Following re-exported functions from *insight* have been removed:
   `standardize_names()`, `supported_models()`
 
+## Changes to functions
+
+* Improved support for objects of class `mipo` for models with ordinal or
+  categorical outcome.
+
 # parameters 0.20.3
 
 ## General
