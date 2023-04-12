@@ -8,6 +8,10 @@
 * Following re-exported functions from *insight* have been removed:
   `standardize_names()`, `supported_models()`
 
+* It is no longer possible to calculate Satterthwaite-approximated degrees of
+  freedom for mixed models from package *nlme*. This was based on the
+  *lavaSearch2* package, which no longer seems to support models of class `lme`.
+
 ## Changes to functions
 
 * Improved support for objects of class `mipo` for models with ordinal or

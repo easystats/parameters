@@ -140,7 +140,6 @@ Suggests:
     ivreg,
     knitr,
     lavaan,
-    lavaSearch2,
     lfe,
     lm.beta,
     lme4,

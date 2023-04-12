@@ -1,6 +1,5 @@
 skip_if_not_installed("nlme")
 skip_if_not_installed("lme4")
-skip_if_not_installed("lavaSearch2")
 
 data("sleepstudy", package = "lme4")
 m1_lme <- nlme::lme(Reaction ~ Days, random = ~ 1 + Days | Subject, data = sleepstudy)
@@ -95,20 +94,4 @@ test_that("model_parameters", {
   expect_equal(params$SE, c(0.83155, 0.06209, 0.74307), tolerance = 1e-4)
   # expect_equal(params$df, c(80, 80, 25), tolerance = 1e-4)
   expect_equal(params$CI_low, c(16.07503, 0.53834, -3.82999), tolerance = 1e-4)
-})
-
-test_that("model_parameters, satterthwaite", {
-  params <- model_parameters(m2_lme, ci_method = "satterthwaite", effects = "fixed")
-  expect_equal(params$Coefficient, c(17.70671, 0.66019, -2.32102), tolerance = 1e-4)
-  expect_equal(params$SE, c(0.83155, 0.06209, 0.74307), tolerance = 1e-4)
-  # expect_equal(params$df, c(104.1503, 82.87867, 26.25), tolerance = 1e-4)
-  expect_equal(params$CI_low, c(16.0391, 0.53609, -3.88541), tolerance = 1e-3)
-})
-
-test_that("model_parameters, satterthwaite", {
-  params <- model_parameters(m2_lme, ci_method = "satterthwaite", effects = "all")
-  expect_equal(params$Coefficient, c(17.70671, 0.66019, -2.32102, 1.73008, 1.42273), tolerance = 1e-4)
-  expect_equal(params$SE, c(0.83155, 0.06209, 0.74307, NA, NA), tolerance = 1e-4)
-  # expect_equal(params$df, c(104.1503, 82.87867, 26.25), tolerance = 1e-4)
-  expect_equal(params$CI_low, c(16.0391, 0.53609, -3.88541, NA, NA), tolerance = 1e-3)
 })
