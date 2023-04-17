@@ -6,6 +6,7 @@
 #' @param model An EFA model (e.g., a `psych::fa` object).
 #' @inheritParams principal_components
 #' @param names Vector containing dimension names.
+#' @param max_per_dimension Max number of variables to keep per dimension.
 #'
 #' @examples
 #' \donttest{
@@ -15,10 +16,12 @@
 #'
 #'   model1 <- efa_to_cfa(efa)
 #'   model2 <- efa_to_cfa(efa, threshold = 0.3)
+#'   model3 <- efa_to_cfa(efa, max_per_dimension = 2)
 #'
 #'   suppressWarnings(anova(
 #'     lavaan::cfa(model1, data = attitude),
-#'     lavaan::cfa(model2, data = attitude)
+#'     lavaan::cfa(model2, data = attitude),
+#'     lavaan::cfa(model3, data = attitude)
 #'   ))
 #' }
 #' }
@@ -33,8 +36,15 @@ convert_efa_to_cfa <- function(model, ...) {
 #' @rdname convert_efa_to_cfa
 #' @inheritParams model_parameters.principal
 #' @export
-convert_efa_to_cfa.fa <- function(model, threshold = "max", names = NULL, ...) {
-  .efa_to_cfa(model_parameters(model, threshold = threshold, ...), names = names, ...)
+convert_efa_to_cfa.fa <- function(model,
+                                  threshold = "max",
+                                  names = NULL,
+                                  max_per_dimension = NULL,
+                                  ...) {
+  .efa_to_cfa(model_parameters(model, threshold = threshold, ...),
+              names = names,
+              max_per_dimension = max_per_dimension,
+              ...)
 }
 
 #' @export
@@ -46,12 +56,13 @@ convert_efa_to_cfa.fa.ci <- convert_efa_to_cfa.fa
 convert_efa_to_cfa.parameters_efa <- function(model,
                                               threshold = NULL,
                                               names = NULL,
+                                              max_per_dimension = NULL,
                                               ...) {
   if (!is.null(threshold)) {
     model <- model_parameters(attributes(model)$model, threshold = threshold, ...)
   }
 
-  .efa_to_cfa(model, names = names, ...)
+  .efa_to_cfa(model, names = names, max_per_dimension = max_per_dimension, ...)
 }
 
 #' @export
@@ -67,7 +78,7 @@ efa_to_cfa <- convert_efa_to_cfa
 
 
 #' @keywords internal
-.efa_to_cfa <- function(loadings, names = NULL, ...) {
+.efa_to_cfa <- function(loadings, names = NULL, max_per_dimension=NULL, ...) {
   loadings <- attributes(loadings)$loadings_long
 
   # Get dimension names
@@ -85,9 +96,20 @@ efa_to_cfa <- convert_efa_to_cfa
   cfa <- NULL
   # Iterate over dimensions
   for (i in seq_along(names)) {
+
+    # Find correct subset
+    items <- loadings[loadings$Component == unique(loadings$Component)[i], ]
+
+    # Find corresponding items
+    items <- as.character(loadings[loadings$Component == unique(loadings$Component)[i], "Variable"])
+
+    # Subset if need be to keep only a certain number
+    if(!is.null(max_per_dimension) && max_per_dimension > 0) items <- as.character(na.omit(items[1:max_per_dimension]))
+
+    # Append that list
     cfa <- c(
       cfa,
-      paste0(names[i], " =~ ", paste(as.character(loadings[loadings$Component == unique(loadings$Component)[i], "Variable"]), collapse = " + "))
+      paste0(names[i], " =~ ", paste(items, collapse = " + "))
     )
   }
 
