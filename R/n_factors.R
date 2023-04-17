@@ -138,6 +138,13 @@ n_factors <- function(x,
   }
 
   # Get only numeric
+  if(!all(vapply(x, is.numeric, TRUE))) {
+    warning(paste0(
+      "Some variables are not numeric (",
+      paste0(names(x)[!vapply(x, is.numeric, TRUE)], collapse = ", "),
+      "). Dropping them.")
+    )
+  }
   x <- x[vapply(x, is.numeric, TRUE)]
 
   # Correlation matrix
@@ -247,7 +254,7 @@ n_factors <- function(x,
       out <- rbind(
         out,
         tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
-          warning = function(w) data.frame(),
+          # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
@@ -268,7 +275,7 @@ n_factors <- function(x,
       out <- rbind(
         out,
         tryCatch(.n_factors_vss(x, cor, nobs, type, rotation, algorithm),
-          warning = function(w) data.frame(),
+          # warning = function(w) data.frame(),
           error = function(e) data.frame()
         )
       )
@@ -300,7 +307,7 @@ n_factors <- function(x,
     }
   }
 
-  # fit -------------------------------------------
+  # pcdimension -------------------------------------------
   if ("pcdimension" %in% tolower(package)) {
     insight::check_if_installed("PCDimension")
 
@@ -563,6 +570,31 @@ print.n_clusters <- print.n_factors
 
 
 # psych ------------------------
+
+#' @keywords internal
+.n_factors_parallel <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           type = "FA") {
+
+  # Altnerative version of parralel analysis
+  # Not used because already included in nFactors
+
+  if (tolower(type) %in% c("fa", "factor", "efa")) {
+    fa <- "fa"
+  } else {
+    fa <- "pc"
+  }
+
+  out <- psych::fa.parallel(cor, n.obs = nobs, fa=fa, plot=FALSE, fm="ml")
+
+
+  .data_frame(
+    n_Factors = as.numeric(na.omit(c(out$nfact, out$ncomp))),
+    Method = c("Parallel"),
+    Family = "psych"
+  )
+}
 
 #' @keywords internal
 .n_factors_vss <- function(x = NULL,

@@ -24,7 +24,7 @@ factor_analysis.data.frame <- function(x,
                                        ...) {
   # Standardize
   if (standardize && is.null(cor)) {
-    x <- as.data.frame(scale(x))
+    x <- datawizard::standardize(x, ...)
   }
 
   # N factors
