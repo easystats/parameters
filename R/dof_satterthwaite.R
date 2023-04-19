@@ -15,14 +15,3 @@ dof_satterthwaite.lmerMod <- function(model) {
 
   stats::setNames(as.vector(s$coefficients[, 3]), parameters)
 }
-
-
-#' @export
-dof_satterthwaite.lme <- function(model) {
-  insight::check_if_installed("lavaSearch2")
-
-  parameters <- insight::find_parameters(model, effects = "fixed", flatten = TRUE)
-  lavaSearch2::sCorrect(model) <- TRUE
-  s <- lavaSearch2::summary2(model)
-  stats::setNames(as.vector(s$tTable[, "df"]), parameters)
-}
