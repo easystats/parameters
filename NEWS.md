@@ -2,12 +2,6 @@
 
 ## Breaking Changes
 
-* As noted in release notes for 0.15.0 version, all re-exported functions from
-  *datawizard* package have now been removed.
-
-* Following re-exported functions from *insight* have been removed:
-  `standardize_names()`, `supported_models()`
-
 * It is no longer possible to calculate Satterthwaite-approximated degrees of
   freedom for mixed models from package *nlme*. This was based on the
   *lavaSearch2* package, which no longer seems to support models of class `lme`.
