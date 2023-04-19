@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.20.3</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,6 +85,17 @@
       <small>Source: <a href="https://github.com/easystats/parameters/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.21.0" id="parameters-0210">parameters 0.21.0<a class="anchor" aria-label="anchor" href="#parameters-0210"></a></h2><p class="text-muted">CRAN release: 2023-04-19</p>
+<div class="section level3">
+<h3 id="breaking-changes-0-21-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-21-0"></a></h3>
+<ul><li>It is no longer possible to calculate Satterthwaite-approximated degrees of freedom for mixed models from package <em>nlme</em>. This was based on the <em>lavaSearch2</em> package, which no longer seems to support models of class <code>lme</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="changes-to-functions-0-21-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-21-0"></a></h3>
+<ul><li>Improved support for objects of class <code>mipo</code> for models with ordinal or categorical outcome.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.20.3" id="parameters-0203">parameters 0.20.3<a class="anchor" aria-label="anchor" href="#parameters-0203"></a></h2><p class="text-muted">CRAN release: 2023-04-05</p>
 <div class="section level3">
@@ -175,7 +186,7 @@
 <li><p>The minimum needed R version has been bumped to <code>3.6</code>.</p></li>
 <li><p>Removed deprecated argument <code>parameters</code> from <code><a href="../reference/model_parameters.html">model_parameters()</a></code>.</p></li>
 <li><p><code>standard_error_robust()</code>, <code>ci_robust()</code> and <code>p_value_robust()</code> are now deprecated and superseded by the <code>vcov</code> and <code>vcov_args</code> arguments in the related methods <code><a href="../reference/standard_error.html">standard_error()</a></code>, <code><a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">ci()</a></code> and <code><a href="../reference/p_value.html">p_value()</a></code>, respectively.</p></li>
-<li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_kmo.html" class="external-link">check_kmo()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
+<li><p>Following functions were moved from package <em>parameters</em> to <em>performance</em>: <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_sphericity_bartlett()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_kmo()</a></code>, <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_factorstructure()</a></code> and <code><a href="https://easystats.github.io/performance/reference/check_clusterstructure.html" class="external-link">check_clusterstructure()</a></code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-0-19-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-0-19-0"></a></h3>
@@ -384,7 +395,7 @@
 <h2 class="pkg-version" data-toc-text="0.14.0" id="parameters-0140">parameters 0.14.0<a class="anchor" aria-label="anchor" href="#parameters-0140"></a></h2><p class="text-muted">CRAN release: 2021-05-29</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-14-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-14-0"></a></h3>
-<ul><li><p><code><a href="https://easystats.github.io/performance/reference/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="https://easystats.github.io/performance/reference/check_sphericity_bartlett.html" class="external-link">check_sphericity_bartlett()</a></code>.</p></li>
+<ul><li><p><code><a href="https://easystats.github.io/performance/reference/check_sphericity.html" class="external-link">check_sphericity()</a></code> has been renamed into <code><a href="https://easystats.github.io/performance/reference/check_factorstructure.html" class="external-link">check_sphericity_bartlett()</a></code>.</p></li>
 <li><p>Removed deprecated arguments.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for bootstrapped samples used in <em>emmeans</em> now treats the bootstrap samples as samples from posterior distributions (Bayesian models).</p></li>
 </ul></div>
@@ -440,8 +451,8 @@
 <div class="section level4">
 <h4 id="model_parameters-0-13-0"><code>model_parameters()</code><a class="anchor" aria-label="anchor" href="#model_parameters-0-13-0"></a></h4>
 <ul><li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code>blavaan</code> models is now fully treated as Bayesian model and thus relies on the functions from <em>bayestestR</em> (i.e. ROPE, Rhat or ESS are reported) .</p></li>
-<li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom.mixed::tidy()</a></code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
-<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">broom.mixed::tidy()</a></code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
+<li><p>The <code>effects</code>-argument from <code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models was revised and now shows the random effects variances by default (same functionality as <code><a href="../reference/random_parameters.html">random_parameters()</a></code>, but mimicking the behaviour from <code>broom.mixed::tidy()</code>). When the <code>group_level</code> argument is set to <code>TRUE</code>, the conditional modes (BLUPs) of the random effects are shown.</p></li>
+<li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for mixed models now returns an <code>Effects</code> column even when there is just one type of “effects”, to mimic the behaviour from <code>broom.mixed::tidy()</code>. In conjunction with <code><a href="https://easystats.github.io/insight/reference/standardize_names.html" class="external-link">standardize_names()</a></code> users can get the same column names as in <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> objects.</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for t-tests now uses the group values as column names.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> gains a <code>zap_small</code> argument, to avoid scientific notation for very small numbers. Instead, <code>zap_small</code> forces to round to the specified number of digits.</p></li>
 <li><p>To be internally consistent, the degrees of freedom column for <code>lqm(m)</code> and <code>cgam(m)</code> objects (with <em>t</em>-statistic) is called <code>df_error</code>.</p></li>
