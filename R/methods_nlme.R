@@ -15,7 +15,7 @@ ci.lme <- function(x,
                    method = "wald",
                    ...) {
   method <- tolower(method)
-  method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1", "satterthwaite"))
+  method <- match.arg(method, choices = c("wald", "normal", "residual", "betwithin", "ml1"))
 
   if (method %in% c("wald", "residual", "normal")) {
     # `vcov` argument must be computed using the `.ci_generic` function.
@@ -49,10 +49,6 @@ ci.lme <- function(x,
     # betwithin approx
   } else if (method == "betwithin") {
     ci_betwithin(x, ci)
-
-    # Satterthwaite
-  } else if (method == "satterthwaite") {
-    ci_satterthwaite(x, ci)
   }
 }
 
