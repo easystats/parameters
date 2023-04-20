@@ -213,7 +213,7 @@ test_that("model_parameters.ivreg", {
 
 test_that("model_parameters.plm", {
   skip_if_not_installed("plm")
-  skip_if_not(getRversion() > "3.5")
+
   data("Produc", package = "plm")
   set.seed(123)
 

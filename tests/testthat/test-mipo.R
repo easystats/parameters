@@ -1,5 +1,6 @@
 skip_if_not_installed("mice")
 skip_if_not_installed("nnet")
+skip_if_not(packageVersion("insight") > "0.19.1")
 
 test_that("param ordinal", {
   set.seed(1234)

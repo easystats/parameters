@@ -1,6 +1,5 @@
 skip_if_not_installed("stats")
 skip_if_not_installed("plm")
-skip_if_not(getRversion() > "3.5")
 
 data(Crime, package = "plm")
 data("Produc", package = "plm")
