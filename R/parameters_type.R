@@ -322,6 +322,13 @@ parameters_type <- function(model, ...) {
   # get contrast coding
   contrast_coding <- .safe(model$contrasts)
 
+  # clean names from on-the-fly conversion, like "as.ordered(x)"
+  names(contrast_coding) <- gsub(
+    "(as\\.ordered|ordered|as\\.factor|factor)\\((.*)\\)",
+    "\\2",
+    names(contrast_coding)
+  )
+
   # if contrasts are given as matrix, find related contrast name
   if (!is.null(contrast_coding)) {
     contrast_coding <- lapply(contrast_coding, function(i) {
