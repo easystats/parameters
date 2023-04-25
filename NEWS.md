@@ -1,10 +1,13 @@
+# parameters 0.21.1
+
+## Changes
+
+* `model_parameters()` now also prints correct "pretty names" when predictors
+  where converted to ordered factors inside formulas, e.g. `y ~ as.ordered(x)`.
+
 # parameters 0.21.0
 
 ## Breaking Changes
-
-* It is no longer possible to calculate Satterthwaite-approximated degrees of
-  freedom for mixed models from package *nlme*. This was based on the
-  *lavaSearch2* package, which no longer seems to support models of class `lme`.
 
 * It is no longer possible to calculate Satterthwaite-approximated degrees of
   freedom for mixed models from package *nlme*. This was based on the
