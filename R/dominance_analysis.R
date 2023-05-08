@@ -28,6 +28,13 @@
 #' is necessary for data masked arguments (e.g., `weights`) to prevent them
 #' from being evaluated before being applied to the model and causing an error.
 #'
+#' @param contrasts A named list of [`contrasts`] used by the model object.
+#' This list is required in order for the correct mapping of parameters to
+#' predictors in the output when the model creates indicator codes for factor
+#' variables using [`model_matrix`]. By default, the `contrast` element from
+#' the model object submitted is used. If the model object does not have a
+#' `contrast` element the user can supply this named list.
+#'
 #' @param ...  Not used at current.
 #'
 #' @return Object of class `"parameters_da"`.
@@ -58,7 +65,7 @@
 #'  subsets referenced in each variable. Whether the subset
 #'  in each variable dominates the subset in each observation is
 #'  represented in the  logical value. `NULL` if `complete`
-#'  argument is `FALSE`..}
+#'  argument is `FALSE`.}
 #' }
 #'
 #' @details Computes two decompositions of the model's R2 and returns
@@ -73,9 +80,8 @@
 #' complete dominance designations.
 #'
 #' The input model is parsed using `insight::find_predictors()`, does not
-#' yet support interactions, transformations, factor variables created by
-#' [`model.matrix()`] or offsets applied in the R formula, and will fail
-#' with an error if any such terms are detected.
+#' yet support interactions, transformations, or offsets applied in the R
+#' formula, and will fail with an error if any such terms are detected.
 #'
 #' The model submitted must accept an formula object as a `formula`
 #' argument.  In addition, the model object must accept the data on which
@@ -130,7 +136,8 @@
 #' @export
 dominance_analysis <- function(model, sets = NULL, all = NULL,
                                conditional = TRUE, complete = TRUE,
-                               quote_args = NULL, ...) {
+                               quote_args = NULL, contrasts = model$contrasts,
+                               ...) {
   # Exit Conditions ----
   insight::check_if_installed("domir")
   insight::check_if_installed("performance")
@@ -167,11 +174,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
                           "Try using package {.pkg domir}.")
   }
 
-  if (!all(insight::find_predictors(model, flatten = TRUE) %in% insight::find_parameters(model, flatten = TRUE))) {
+  if (!all(insight::find_predictors(model, flatten = TRUE) %in% insight::find_terms(model)$conditional)) {
     insight::format_error(
       "Predictors do not match terms.",
-      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z)`",
-      "or when a factor variable is processed using R's internal `model.matrix()` functions to get indicator codes.",
+      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z)`.",
       "`dominance_analysis()` cannot yet accommodate such terms. Reformat your model to ensure all parameters",
       "match predictors in the data or use the {.pkg domir} package."
     )
@@ -322,6 +328,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   # Build non-formula model arguments to `domin` ----
+  if (length(ivs) == 0) ivs <- "1"
   fml <- stats::reformulate(ivs, response = dv, intercept = insight::has_intercept(model))
 
   data <- insight::get_data(model, verbose = FALSE)
@@ -407,6 +414,43 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
            da_df_cat$subset
     )
 
+  # Expand contrast names
+  if (!is.null(contrasts)) {
+
+    contr_names <-
+      lapply(
+        names(contrasts),
+        function(name) {
+          pred_loc <-
+            which(find_predictors(model, flatten = TRUE)==name)
+
+          pred_names <-
+            colnames(get_modelmatrix(model))[
+              which(attr(get_modelmatrix(model), "assign")==pred_loc)
+            ]
+        }
+      )
+
+    names(contr_names) <- names(contrasts)
+
+    contr_map <-
+      rep(names(contr_names),
+          sapply(contr_names, length))
+
+    names(contr_map) <- unlist(contr_names)
+
+    for (subset in which(is.na(da_df_cat$subset))) {
+
+      if ((da_df_res$parameter[[subset]] %in%
+           names(contr_map)))
+        da_df_cat$subset[[subset]] <-
+          contr_map[[
+            which(names(contr_map) ==
+              da_df_res$parameter[[subset]] ) ]]
+    }
+
+  }
+
   # Apply set names
   if (!is.null(sets)) {
     for (set in seq_along(sets)) {
@@ -421,6 +465,13 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
           da_df_cat$subset,
           da_df_res$parameter %in% all.vars(sets[[set]]), set_name
         )
+
+      da_df_cat$subset <-
+        replace(
+          da_df_cat$subset,
+          da_df_cat$subset %in% all.vars(sets[[set]]), set_name
+        )
+
     }
 
   }
@@ -431,6 +482,12 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       replace(
         da_df_cat$subset,
         da_df_res$parameter %in% all.vars(all), "all"
+      )
+
+    da_df_cat$subset <-
+      replace(
+        da_df_cat$subset,
+        da_df_cat$subset %in% all.vars(all), "all"
       )
   }
 

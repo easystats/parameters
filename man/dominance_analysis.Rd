@@ -11,6 +11,7 @@ dominance_analysis(
   conditional = TRUE,
   complete = TRUE,
   quote_args = NULL,
+  contrasts = model$contrasts,
   ...
 )
 }
@@ -47,6 +48,13 @@ If complete dominance is not desired as an importance criterion, avoiding comput
 is necessary for data masked arguments (e.g., \code{weights}) to prevent them
 from being evaluated before being applied to the model and causing an error.}
 
+\item{contrasts}{A named list of \code{\link{contrasts}} used by the model object.
+This list is required in order for the correct mapping of parameters to
+predictors in the output when the model creates indicator codes for factor
+variables using \code{\link{model_matrix}}. By default, the \code{contrast} element from
+the model object submitted is used. If the model object does not have a
+\code{contrast} element the user can supply this named list.}
+
 \item{...}{Not used at current.}
 }
 \value{
@@ -78,7 +86,7 @@ designations. The subsets in the observations are compared to the
 subsets referenced in each variable. Whether the subset
 in each variable dominates the subset in each observation is
 represented in the  logical value. \code{NULL} if \code{complete}
-argument is \code{FALSE}..}
+argument is \code{FALSE}.}
 }
 }
 \description{
@@ -97,9 +105,8 @@ therefore does not receive a rank, conditional dominance statistics, or
 complete dominance designations.
 
 The input model is parsed using \code{insight::find_predictors()}, does not
-yet support interactions, transformations, factor variables created by
-\code{\link[=model.matrix]{model.matrix()}} or offsets applied in the R formula, and will fail
-with an error if any such terms are detected.
+yet support interactions, transformations, or offsets applied in the R
+formula, and will fail with an error if any such terms are detected.
 
 The model submitted must accept an formula object as a \code{formula}
 argument.  In addition, the model object must accept the data on which
