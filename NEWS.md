@@ -1,3 +1,10 @@
+# parameters 0.21.1
+
+## Changes
+
+* `model_parameters()` now also prints correct "pretty names" when predictors
+  where converted to ordered factors inside formulas, e.g. `y ~ as.ordered(x)`.
+
 # parameters 0.21.0
 
 ## Breaking Changes

@@ -322,6 +322,15 @@ parameters_type <- function(model, ...) {
   # get contrast coding
   contrast_coding <- .safe(model$contrasts)
 
+  # clean names from on-the-fly conversion, like "as.ordered(x)"
+  if (!is.null(contrast_coding) && !is.null(names(contrast_coding))) {
+    names(contrast_coding) <- gsub(
+      "(as\\.ordered|ordered|as\\.factor|factor)\\((.*)\\)",
+      "\\2",
+      names(contrast_coding)
+    )
+  }
+
   # if contrasts are given as matrix, find related contrast name
   if (!is.null(contrast_coding)) {
     contrast_coding <- lapply(contrast_coding, function(i) {
@@ -356,16 +365,26 @@ parameters_type <- function(model, ...) {
 
   out$levels <- NA
   out$levels_parent <- NA
+
+  # clean names from on-the-fly conversion, like "as.ordered(x)"
+  if (!is.null(contrast_coding) && !is.null(names(contrast_coding))) {
+    names(contrast_coding) <- gsub(
+      "(as\\.ordered|ordered|as\\.factor|factor)\\((.*)\\)",
+      "\\2",
+      names(contrast_coding)
+    )
+  }
+
   for (fac in out$factor) {
     if ((fac %in% out$ordered && is.null(contrast_coding[[fac]])) || (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.poly"))) {
       levels <- paste0(fac, c(".L", ".Q", ".C", paste0("^", 4:1000))[seq_along(unique(data[[fac]]))])
     } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.SAS2", "contr.sum", "contr.bayes", "contr.helmert"))) {
       levels <- paste0(fac, seq_along(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.treatment2"))) {
+    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.treatment2")) {
       levels <- paste0(fac, 2:length(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.SAS"))) {
+    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.SAS")) {
       levels <- paste0(fac, rev(unique(data[[fac]])))
-    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% c("contr.custom"))) {
+    } else if (!is.null(contrast_coding[[fac]]) && any(contrast_coding[[fac]] %in% "contr.custom")) {
       levels <- paste0(fac, attributes(contrast_coding[[fac]])$column_names)
     } else {
       levels <- paste0(fac, unique(data[[fac]]))
