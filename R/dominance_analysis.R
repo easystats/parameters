@@ -422,11 +422,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
         names(contrasts),
         function(name) {
           pred_loc <-
-            which(find_predictors(model, flatten = TRUE)==name)
+            which(insight::find_predictors(model, flatten = TRUE)==name)
 
           pred_names <-
-            colnames(get_modelmatrix(model))[
-              which(attr(get_modelmatrix(model), "assign")==pred_loc)
+            colnames(insight::get_modelmatrix(model))[
+              which(attr(insight::get_modelmatrix(model), "assign")==pred_loc)
             ]
         }
       )
