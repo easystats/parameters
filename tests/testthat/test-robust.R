@@ -1,7 +1,17 @@
 skip_if_not_installed("sandwich")
-skip("TO FIX")
-
 skip_on_cran()
+
+# standard errors -------------------------------------
+test_that("robust-se glm warn with profile-CI", {
+  mglm <- glm(mpg ~ wt, data = mtcars)
+  expect_message(
+    model_parameters(mglm, vcov = "HC3"),
+    regex = "available"
+  )
+})
+
+
+skip("TO FIX")
 
 # standard errors -------------------------------------
 test_that("robust-se lm", {
@@ -248,7 +258,7 @@ test_that("robust-ci lm", {
   params <- insight::get_parameters(m)
   se <- sqrt(diag(sandwich::vcovHC(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = params$Estimate - se * fac,
     CI_high = params$Estimate + se * fac
@@ -266,7 +276,7 @@ test_that("robust-ci polr", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = c(m$coefficients, m$zeta) - se * fac,
     CI_high = c(m$coefficients, m$zeta) + se * fac
@@ -278,7 +288,7 @@ test_that("robust-ci polr", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = c(m$coefficients, m$zeta) - se * fac,
     CI_high = c(m$coefficients, m$zeta) + se * fac
@@ -303,7 +313,7 @@ test_that("robust-ci ivreg", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -315,7 +325,7 @@ test_that("robust-ci ivreg", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -332,7 +342,7 @@ test_that("robust-ci zeroinfl", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -344,7 +354,7 @@ test_that("robust-ci zeroinfl", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -369,7 +379,7 @@ test_that("robust-ci survival", {
   set.seed(123)
   se <- sqrt(diag(sandwich::vcovBS(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -381,7 +391,7 @@ test_that("robust-ci survival", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = insight::get_parameters(m)$Estimate - se * fac,
     CI_high = insight::get_parameters(m)$Estimate + se * fac
@@ -427,7 +437,7 @@ test_that("robust-ci lmer", {
   params <- insight::get_parameters(m)
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = params$Estimate - se * fac,
     CI_high = params$Estimate + se * fac
