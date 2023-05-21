@@ -661,7 +661,13 @@ model_parameters.glm <- function(model,
 
   # set default
   if (is.null(ci_method)) {
-    ci_method <- ifelse(isTRUE(bootstrap), "quantile", "profile")
+    if (isTRUE(bootstrap)) {
+      ci_method <- "quantile"
+    } else if (!is.null(vcov) || !is.null(vcov_args)) {
+      ci_method <- "wald"
+    } else {
+      ci_method <- "profile"
+    }
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it

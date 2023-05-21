@@ -9,13 +9,13 @@ test_that("robust-se glm warn with profile-CI", {
     regex = "available"
   )
   expect_message(
-    model_parameters(mglm, vcov = "HC3"),
+    model_parameters(mglm, vcov = "HC3", ci_method = "profile"),
     regex = "modifies"
   )
 })
 
 
-skip("TO FIX")
+# skip("TO FIX")
 
 # standard errors -------------------------------------
 test_that("robust-se lm", {
