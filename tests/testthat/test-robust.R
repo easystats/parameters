@@ -5,8 +5,12 @@ skip_on_cran()
 test_that("robust-se glm warn with profile-CI", {
   mglm <- glm(mpg ~ wt, data = mtcars)
   expect_message(
-    model_parameters(mglm, vcov = "HC3"),
+    ci(mglm, vcov = "HC3"),
     regex = "available"
+  )
+  expect_message(
+    model_parameters(mglm, vcov = "HC3"),
+    regex = "modifies"
   )
 })
 
