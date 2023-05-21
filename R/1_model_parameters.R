@@ -681,7 +681,7 @@ model_parameters.glm <- function(model,
   # tell user that profiled CIs don't respect vcov-args
   if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
     insight::format_alert(
-      "When `ci_method = \"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.",
+      "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.",
       "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."
     )
   }
