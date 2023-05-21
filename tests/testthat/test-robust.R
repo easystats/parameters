@@ -351,8 +351,8 @@ test_that("robust-ci survival", {
 skip_if_not_installed("clubSandwich")
 skip_if_not_installed("lme4")
 
-
 test_that("robust-se lmer", {
+  data(iris)
   set.seed(1234)
   iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
 
@@ -366,6 +366,14 @@ test_that("robust-se lmer", {
 })
 
 test_that("robust-p lmer", {
+  data(iris)
+  set.seed(1234)
+  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+
+  m <- lme4::lmer(
+    Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
+    data = iris
+  )
   p1 <- p_value(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
@@ -375,6 +383,14 @@ test_that("robust-p lmer", {
 })
 
 test_that("robust-ci lmer", {
+  data(iris)
+  set.seed(1234)
+  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+
+  m <- lme4::lmer(
+    Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
+    data = iris
+  )
   ci1 <- ci(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
   # robust CI manually
   params <- insight::get_parameters(m)
