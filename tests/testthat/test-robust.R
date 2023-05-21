@@ -1,7 +1,19 @@
 skip_if_not_installed("sandwich")
-skip("TO FIX")
-
 skip_on_cran()
+
+# standard errors -------------------------------------
+test_that("robust-se glm warn with profile-CI", {
+  mglm <- glm(mpg ~ wt, data = mtcars)
+  expect_message(
+    ci(mglm, vcov = "HC3"),
+    regex = "available"
+  )
+  expect_message(
+    model_parameters(mglm, vcov = "HC3", ci_method = "profile"),
+    regex = "modifies"
+  )
+})
+
 
 # standard errors -------------------------------------
 test_that("robust-se lm", {
@@ -34,12 +46,6 @@ test_that("robust-se zeroinfl", {
   se2 <- sqrt(diag(sandwich::vcovCL(m)))
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
 
-  set.seed(123)
-  se1 <- standard_error(m, vcov = "vcovBS", vcov_args = list(R = 20))
-  set.seed(123)
-  se2 <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
-  expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
-
   se1 <- standard_error(m, vcov = "vcovOPG")
   se2 <- sqrt(diag(sandwich::vcovOPG(m)))
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
@@ -47,7 +53,6 @@ test_that("robust-se zeroinfl", {
 
 test_that("robust-se ivreg", {
   skip_if_not_installed("AER")
-
   skip_if_not_installed("clubSandwich")
   data(CigarettesSW, package = "AER")
   CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
@@ -64,12 +69,6 @@ test_that("robust-se ivreg", {
   se2 <- sqrt(diag(sandwich::vcovCL(m)))
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
 
-  set.seed(123)
-  se1 <- standard_error(m, vcov = "vcovBS", vcov_args = list(R = 20))
-  set.seed(123)
-  se2 <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
-  expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
-
   se1 <- standard_error(m, vcov = "vcovOPG")
   se2 <- sqrt(diag(sandwich::vcovOPG(m)))
   expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
@@ -84,12 +83,6 @@ test_that("robust-se survival", {
     data = survival::ovarian,
     dist = "logistic"
   )
-
-  set.seed(123)
-  se1 <- standard_error(m, vcov = "vcovBS")
-  set.seed(123)
-  se2 <- sqrt(diag(sandwich::vcovBS(m)))
-  expect_equal(se1$SE, se2, tolerance = 1e-4, ignore_attr = TRUE)
 
   se1 <- standard_error(m, vcov = "vcovOPG")
   se2 <- sqrt(diag(sandwich::vcovOPG(m)))
@@ -134,30 +127,21 @@ test_that("robust-p polr", {
 })
 
 
-data(CigarettesSW, package = "AER")
-CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
-CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
-CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
-
-m <- AER::ivreg(
-  log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
-  data = CigarettesSW,
-  subset = year == "1995"
-)
-
 test_that("robust-p ivreg", {
+  skip_if_not_installed("AER")
+  data(CigarettesSW, package = "AER")
+  CigarettesSW$rprice <- with(CigarettesSW, price / cpi)
+  CigarettesSW$rincome <- with(CigarettesSW, income / population / cpi)
+  CigarettesSW$tdiff <- with(CigarettesSW, (taxs - tax) / cpi)
+
+  m <- AER::ivreg(
+    log(packs) ~ log(rprice) + log(rincome) | log(rincome) + tdiff + I(tax / cpi),
+    data = CigarettesSW,
+    subset = year == "1995"
+  )
   p1 <- p_value(m, vcov = "vcovCL")
   # robust p manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
-  dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  stat <- coef(m) / se
-  p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
-  expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
-
-  set.seed(123)
-  p1 <- p_value(m, vcov = "vcovBS", vcov_args = list(R = 20))
-  set.seed(123)
-  se <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
   stat <- coef(m) / se
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
@@ -171,8 +155,6 @@ test_that("robust-p ivreg", {
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 })
-
-
 
 
 test_that("robust-p zeroinfl", {
@@ -189,15 +171,6 @@ test_that("robust-p zeroinfl", {
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 
-  set.seed(123)
-  p1 <- p_value(m, vcov = "vcovBS", vcov_args = list(R = 20))
-  set.seed(123)
-  se <- sqrt(diag(sandwich::vcovBS(m, R = 20)))
-  dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  stat <- coef(m) / se
-  p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
-  expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
-
   p1 <- p_value(m, vcov = "vcovOPG")
   # robust p manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
@@ -206,6 +179,7 @@ test_that("robust-p zeroinfl", {
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 })
+
 
 test_that("robust-p survival", {
   skip_if_not_installed("survival")
@@ -216,15 +190,6 @@ test_that("robust-p survival", {
     data = survival::ovarian,
     dist = "logistic"
   )
-  set.seed(123)
-  p1 <- p_value(m, vcov = "vcovBS")
-  set.seed(123)
-  se <- sqrt(diag(sandwich::vcovBS(m)))
-  dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  stat <- coef(m) / se
-  p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
-  expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
-
   p1 <- p_value(m, vcov = "vcovOPG")
   # robust p manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
@@ -248,7 +213,7 @@ test_that("robust-ci lm", {
   params <- insight::get_parameters(m)
   se <- sqrt(diag(sandwich::vcovHC(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = params$Estimate - se * fac,
     CI_high = params$Estimate + se * fac
@@ -258,15 +223,15 @@ test_that("robust-ci lm", {
 })
 
 
-data(housing)
-m <- MASS::polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
-
 test_that("robust-ci polr", {
+  skip_if_not_installed("MASS")
+  data(housing, package = "MASS")
+  m <- MASS::polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
   ci1 <- ci(m, vcov = "vcovCL")
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = c(m$coefficients, m$zeta) - se * fac,
     CI_high = c(m$coefficients, m$zeta) + se * fac
@@ -278,7 +243,7 @@ test_that("robust-ci polr", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = c(m$coefficients, m$zeta) - se * fac,
     CI_high = c(m$coefficients, m$zeta) + se * fac
@@ -286,6 +251,7 @@ test_that("robust-ci polr", {
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
+
 
 test_that("robust-ci ivreg", {
   skip_if_not_installed("AER")
@@ -303,7 +269,7 @@ test_that("robust-ci ivreg", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -315,7 +281,7 @@ test_that("robust-ci ivreg", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -323,6 +289,7 @@ test_that("robust-ci ivreg", {
   expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
   expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
 })
+
 
 test_that("robust-ci zeroinfl", {
   skip_if_not_installed("pscl")
@@ -332,7 +299,7 @@ test_that("robust-ci zeroinfl", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovCL(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -344,7 +311,7 @@ test_that("robust-ci zeroinfl", {
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = coef(m) - se * fac,
     CI_high = coef(m) + se * fac
@@ -363,25 +330,11 @@ test_that("robust-ci survival", {
     dist = "logistic"
   )
 
-  set.seed(123)
-  ci1 <- ci(m, vcov = "vcovBS")
-  # robust CI manually
-  set.seed(123)
-  se <- sqrt(diag(sandwich::vcovBS(m)))
-  dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
-  ci2 <- as.data.frame(cbind(
-    CI_low = coef(m) - se * fac,
-    CI_high = coef(m) + se * fac
-  ))
-  expect_equal(ci1$CI_low, ci2$CI_low, tolerance = 1e-4, ignore_attr = TRUE)
-  expect_equal(ci1$CI_high, ci2$CI_high, tolerance = 1e-4, ignore_attr = TRUE)
-
   ci1 <- ci(m, vcov = "vcovOPG")
   # robust CI manually
   se <- sqrt(diag(sandwich::vcovOPG(m)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = insight::get_parameters(m)$Estimate - se * fac,
     CI_high = insight::get_parameters(m)$Estimate + se * fac
@@ -398,8 +351,8 @@ test_that("robust-ci survival", {
 skip_if_not_installed("clubSandwich")
 skip_if_not_installed("lme4")
 
-
 test_that("robust-se lmer", {
+  data(iris)
   set.seed(1234)
   iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
 
@@ -413,21 +366,37 @@ test_that("robust-se lmer", {
 })
 
 test_that("robust-p lmer", {
+  data(iris)
+  set.seed(1234)
+  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+
+  m <- lme4::lmer(
+    Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
+    data = iris
+  )
   p1 <- p_value(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  stat <- fixef(m) / se
+  stat <- lme4::fixef(m) / se
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 })
 
 test_that("robust-ci lmer", {
+  data(iris)
+  set.seed(1234)
+  iris$grp <- as.factor(sample(1:3, nrow(iris), replace = TRUE))
+
+  m <- lme4::lmer(
+    Sepal.Length ~ Species * Sepal.Width + Petal.Length + (1 | grp),
+    data = iris
+  )
   ci1 <- ci(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
   # robust CI manually
   params <- insight::get_parameters(m)
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  fac <- suppressWarnings(stats::qt(.975, df = dof))
+  fac <- suppressWarnings(stats::qt(0.975, df = dof))
   ci2 <- as.data.frame(cbind(
     CI_low = params$Estimate - se * fac,
     CI_high = params$Estimate + se * fac

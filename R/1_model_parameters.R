@@ -661,7 +661,13 @@ model_parameters.glm <- function(model,
 
   # set default
   if (is.null(ci_method)) {
-    ci_method <- ifelse(isTRUE(bootstrap), "quantile", "profile")
+    if (isTRUE(bootstrap)) {
+      ci_method <- "quantile"
+    } else if (!is.null(vcov) || !is.null(vcov_args)) {
+      ci_method <- "wald"
+    } else {
+      ci_method <- "profile"
+    }
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it
@@ -669,6 +675,14 @@ model_parameters.glm <- function(model,
     insight::format_alert(
       "Profiled confidence intervals may take longer time to compute.",
       "Use `ci_method=\"wald\"` for faster computation of CIs."
+    )
+  }
+
+  # tell user that profiled CIs don't respect vcov-args
+  if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
+    insight::format_alert(
+      "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.",
+      "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."
     )
   }
 
