@@ -377,7 +377,7 @@ test_that("robust-p lmer", {
   p1 <- p_value(m, vcov = "vcovCR", vcov_args = list(type = "CR1", cluster = iris$grp))
   se <- sqrt(diag(clubSandwich::vcovCR(m, type = "CR1", cluster = iris$grp)))
   dof <- degrees_of_freedom(m, method = "wald", verbose = FALSE)
-  stat <- fixef(m) / se
+  stat <- lme4::fixef(m) / se
   p2 <- 2 * pt(abs(stat), df = dof, lower.tail = FALSE)
   expect_equal(p1$p, p2, tolerance = 1e-4, ignore_attr = TRUE)
 })
