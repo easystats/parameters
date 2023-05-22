@@ -166,6 +166,7 @@ Suggests:
     MuMIn,
     NbClust,
     nFactors,
+    nestedLogit,
     nlme,
     nnet,
     openxlsx,
