@@ -251,3 +251,63 @@ ci.nestedLogit <- function(x,
   out$Response <- params$Response
   out[c("Parameter", "CI", "CI_low", "CI_high", "Response", "Component")]
 }
+
+
+#' @export
+simulate_model.nestedLogit <- function(model, iterations = 1000, ...) {
+  if (is.null(iterations)) iterations <- 1000
+
+  params <- insight::get_parameters(model, component = "all", verbose = FALSE)
+  varcov <- insight::get_varcov(model, component = "all", verbose = FALSE, ...)
+
+  out <- lapply(unique(params$Component), function(i) {
+    pars <- params[params$Component == i, ]
+    beta <- stats::setNames(pars$Estimate, pars$Parameter)
+    d <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov[[i]]))
+    d$Component <- i
+    d
+  })
+
+  out <- do.call(rbind, out)
+
+  class(out) <- c("parameters_simulate_model", class(out))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
+
+
+#' @export
+simulate_parameters.nestedLogit <- function(model,
+                                            iterations = 1000,
+                                            centrality = "median",
+                                            ci = 0.95,
+                                            ci_method = "quantile",
+                                            test = "p-value",
+                                            ...) {
+  data <- simulate_model(model, iterations = iterations, ...)
+
+  out <- lapply(unique(data$Component), function(i) {
+    pars <- data[data$Component == i, ]
+    d <- .summary_bootstrap(
+      data = pars,
+      test = test,
+      centrality = centrality,
+      ci = ci,
+      ci_method = ci_method,
+      ...
+    )
+    d$Component <- i
+    d
+  })
+  out <- do.call(rbind, out)
+
+  class(out) <- c("parameters_simulate", "see_parameters_simulate", class(out))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  attr(out, "iterations") <- iterations
+  attr(out, "ci") <- ci
+  attr(out, "ci_method") <- ci_method
+  attr(out, "centrality") <- centrality
+  attr(out, "simulated") <- TRUE
+
+  out
+}
