@@ -244,7 +244,7 @@ ci.nestedLogit <- function(x,
     }
   }
 
-  params <- insight::get_parameters(model, component = component)
+  params <- insight::get_parameters(x, component = component)
   out$Response <- params$Response
   out[c("Parameter", "CI", "CI_low", "CI_high", "Response", "Component")]
 }
