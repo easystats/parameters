@@ -1,5 +1,9 @@
 # parameters 0.21.1
 
+## General
+
+* Added support for models of class `nestedLogit` (*nestedLogit*).
+
 ## Changes to functions
 
 * `model_parameters()` now also prints correct "pretty names" when predictors

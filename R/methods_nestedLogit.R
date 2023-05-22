@@ -1,18 +1,18 @@
 #' @export
-model_parameters.mblogit <- function(model,
-                                     ci = 0.95,
-                                     bootstrap = FALSE,
-                                     iterations = 1000,
-                                     standardize = NULL,
-                                     exponentiate = FALSE,
-                                     p_adjust = NULL,
-                                     summary = getOption("parameters_summary", FALSE),
-                                     keep = NULL,
-                                     drop = NULL,
-                                     vcov = NULL,
-                                     vcov_args = NULL,
-                                     verbose = TRUE,
-                                     ...) {
+model_parameters.nestedLogit <- function(model,
+                                         ci = 0.95,
+                                         bootstrap = FALSE,
+                                         iterations = 1000,
+                                         standardize = NULL,
+                                         exponentiate = FALSE,
+                                         p_adjust = NULL,
+                                         summary = getOption("parameters_summary", FALSE),
+                                         keep = NULL,
+                                         drop = NULL,
+                                         vcov = NULL,
+                                         vcov_args = NULL,
+                                         verbose = TRUE,
+                                         ...) {
   dots <- list(...)
 
   # set default
@@ -63,6 +63,42 @@ model_parameters.mblogit <- function(model,
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
+}
+
+
+#' @export
+degrees_of_freedom.nestedLogit <- function(model,
+                                           method = NULL,
+                                           component = "all",
+                                           verbose = TRUE,
+                                           ...) {
+  if (is.null(method)) {
+    method <- "wald"
+  }
+  if (tolower(method) == "residual") {
+    cf <- as.data.frame(stats::coef(model))
+    dof <- rep(vapply(model$models, df.residual, numeric(1)), each = nrow(cf))
+    if (!is.null(component) && !identical(component, "all")) {
+      comp <- intersect(names(dof), component)
+      if (!length(comp)) {
+        if (verbose) {
+          insight::format_alert(
+            paste0(
+              "No matching model found. Possible values for `component` are ",
+              toString(paste0("'", names(model$models), "'")),
+              "."
+            )
+          )
+        }
+        dof <- Inf
+      } else {
+        dof <- dof[comp]
+      }
+    }
+  } else {
+    dof <- Inf
+  }
+  dof
 }
 
 
@@ -124,18 +160,5 @@ standard_error.nestedLogit <- function(model,
     SE = as.vector(se),
     Response = params$Response,
     Component = params$Component
-  )
-}
-
-
-#' @export
-p_value.mblogit <- function(model, ...) {
-  s <- stats::coef(summary(model))
-  out <- data.frame(
-    Parameter = gsub("(.*)~(.*)", "\\2", rownames(s)),
-    p = unname(s[, "Pr(>|z|)"]),
-    Response = gsub("(.*)~(.*)", "\\1", rownames(s)),
-    stringsAsFactors = FALSE,
-    row.names = NULL
   )
 }
