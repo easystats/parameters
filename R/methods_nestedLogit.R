@@ -80,7 +80,7 @@ degrees_of_freedom.nestedLogit <- function(model,
   }
   if (tolower(method) == "residual") {
     cf <- as.data.frame(stats::coef(model))
-    dof <- rep(vapply(model$models, df.residual, numeric(1)), each = nrow(cf))
+    dof <- rep(vapply(model$models, stats::df.residual, numeric(1)), each = nrow(cf))
     if (!is.null(component) && !identical(component, "all")) {
       comp <- intersect(names(dof), component)
       if (!length(comp)) {
