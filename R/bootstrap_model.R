@@ -222,3 +222,56 @@ bootstrap_model.merMod <- function(model,
 
 #' @export
 bootstrap_model.glmmTMB <- bootstrap_model.merMod
+
+
+#' @export
+bootstrap_model.nestedLogit <- function(model,
+                                        iterations = 1000,
+                                        type = "ordinary",
+                                        parallel = c("no", "multicore", "snow"),
+                                        n_cpus = 1,
+                                        verbose = FALSE,
+                                        ...) {
+  insight::check_if_installed("boot")
+
+  type <- match.arg(type, choices = c("ordinary", "balanced", "permutation", "antithetic"))
+  parallel <- match.arg(parallel)
+
+  model_data <- data <- insight::get_data(model, verbose = FALSE)
+  model_response <- insight::find_response(model)
+
+  boot_function <- function(model, data, indices) {
+    d <- data[indices, ] # allows boot to select sample
+
+    if (verbose) {
+      fit <- stats::update(model, data = d)
+    } else {
+      fit <- suppressMessages(stats::update(model, data = d))
+    }
+
+    params <- insight::get_parameters(fit, verbose = FALSE)
+    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+
+    return(params)
+  }
+
+  results <- boot::boot(
+    data = data,
+    statistic = boot_function,
+    R = iterations,
+    sim = type,
+    parallel = parallel,
+    ncpus = n_cpus,
+    model = model
+  )
+
+  out <- as.data.frame(results$t)
+  out <- out[stats::complete.cases(out), ]
+
+  params <- insight::get_parameters(model, verbose = FALSE)
+  names(out) <- paste0(params$Parameter, ".", params$Component)
+
+  class(out) <- unique(c("bootstrap_model", "see_bootstrap_model", class(out)))
+  attr(out, "original_model") <- model
+  out
+}

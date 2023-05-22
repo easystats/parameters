@@ -1,9 +1,18 @@
 # parameters 0.21.1
 
-## Changes
+## General
+
+* Added support for models of class `nestedLogit` (*nestedLogit*).
+
+## Changes to functions
 
 * `model_parameters()` now also prints correct "pretty names" when predictors
   where converted to ordered factors inside formulas, e.g. `y ~ as.ordered(x)`.
+
+* `model_parameters()` now prints a message when the `vcov` argument is provided
+  and `ci_method` is explicitly set to `"profile"`. Else, when `vcov` is not
+  `NULL` and `ci_method` is `NULL`, it defaults to `"wald"`, to return confidence
+  intervals based on robust standard errors.
 
 # parameters 0.21.0
 

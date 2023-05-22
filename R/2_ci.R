@@ -67,9 +67,9 @@ ci.glm <- function(x,
 
   # No robust vcov for profile method
   if (method == "profile") {
-    if (!is.null(vcov) || !is.null(vcov_args) && isTRUE(verbose)) {
+    if ((!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
       insight::format_alert(
-        "The `vcov` and `vcov_args` are not available with `method = \"profile\"`"
+        "The `vcov` and `vcov_args` are not available with `method=\"profile\"`."
       )
     }
     out <- lapply(ci, function(i) .ci_profiled(model = x, ci = i))
