@@ -270,6 +270,7 @@ modelsummary
 multcomp
 multicollinearity
 mvord
+nestedLogit
 nlme
 nnet
 nubmer
