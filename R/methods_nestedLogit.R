@@ -162,3 +162,40 @@ standard_error.nestedLogit <- function(model,
     Component = params$Component
   )
 }
+
+
+#' @export
+p_value.nestedLogit <- function(model,
+                                dof = NULL,
+                                method = NULL,
+                                component = "all",
+                                vcov = NULL,
+                                vcov_args = NULL,
+                                verbose = TRUE,
+                                ...) {
+
+  if (!is.null(vcov)) {
+    return(p_value.default(
+      model,
+      dof = dof,
+      method = method,
+      component = component,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose,
+      ...
+    ))
+  }
+
+  p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
+    stats::coef(summary(i))
+  })))[, "Pr(>|z|)"])
+
+  params <- insight::get_parameters(model, component = component)
+  .data_frame(
+    Parameter = params$Parameter,
+    p = p,
+    Response = params$Response,
+    Component = params$Component
+  )
+}
