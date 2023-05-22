@@ -1,6 +1,8 @@
 #' @export
 model_parameters.nestedLogit <- function(model,
                                          ci = 0.95,
+                                         ci_method = NULL,
+                                         component = "all",
                                          bootstrap = FALSE,
                                          iterations = 1000,
                                          standardize = NULL,
@@ -27,7 +29,7 @@ model_parameters.nestedLogit <- function(model,
   }
 
   # profiled CIs may take a long time to compute, so we warn the user about it
-  if (insight::n_obs(model) > 1e4 && identical(ci_method, "profile")) {
+  if (any(unlist(insight::n_obs(model)) > 1e4) && identical(ci_method, "profile")) {
     insight::format_alert(
       "Profiled confidence intervals may take longer time to compute.",
       "Use `ci_method=\"wald\"` for faster computation of CIs."
@@ -46,9 +48,10 @@ model_parameters.nestedLogit <- function(model,
     model = model,
     ci = ci,
     ci_method = ci_method,
+    component = component,
     bootstrap = bootstrap,
     iterations = iterations,
-    merge_by = c("Parameter", "Response"),
+    merge_by = c("Parameter", "Response", "Component"),
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
@@ -138,7 +141,7 @@ standard_error.nestedLogit <- function(model,
 
   # classical se from summary()
   if (is.null(se)) {
-    se <- as.vector(as.data.frame(do.call(rbind, lapply(x$models, function(i) {
+    se <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
       stats::coef(summary(i))
     })))[, "Std. Error"])
   }
@@ -175,7 +178,7 @@ p_value.nestedLogit <- function(model,
                                 ...) {
 
   if (!is.null(vcov)) {
-    return(p_value.default(
+    p <- p_value.default(
       model,
       dof = dof,
       method = method,
@@ -184,12 +187,12 @@ p_value.nestedLogit <- function(model,
       vcov_args = vcov_args,
       verbose = verbose,
       ...
-    ))
+    )[["p"]]
+  } else {
+    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
+      stats::coef(summary(i))
+    })))[, "Pr(>|z|)"])
   }
-
-  p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
-    stats::coef(summary(i))
-  })))[, "Pr(>|z|)"])
 
   params <- insight::get_parameters(model, component = component)
   .data_frame(
