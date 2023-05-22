@@ -176,7 +176,6 @@ p_value.nestedLogit <- function(model,
                                 vcov_args = NULL,
                                 verbose = TRUE,
                                 ...) {
-
   if (!is.null(vcov)) {
     p <- p_value.default(
       model,

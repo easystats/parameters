@@ -74,6 +74,7 @@ test_that("model_parameters.nestedLogit", {
 
 
 test_that("simulate_parameters.nestedLogit", {
+  skip_if(getRversion() < "4.2.0")
   data(Womenlf, package = "carData")
 
   comparisons <- nestedLogit::logits(
