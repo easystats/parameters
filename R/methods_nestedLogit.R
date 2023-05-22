@@ -199,3 +199,52 @@ p_value.nestedLogit <- function(model,
     Component = params$Component
   )
 }
+
+
+#' @export
+ci.nestedLogit <- function(x,
+                           ci = 0.95,
+                           dof = NULL,
+                           method = "profile",
+                           component = "all",
+                           vcov = NULL,
+                           vcov_args = NULL,
+                           verbose = TRUE,
+                           ...) {
+  out <- lapply(
+    x$models,
+    ci,
+    dof = dof,
+    method = method,
+    vcov = vcov,
+    vcov_args = vcov_args,
+    verbose = verbose,
+    ...
+  )
+
+  for (i in names(out)) {
+    out[[i]]$Component <- i
+  }
+
+  out <- do.call(rbind, out)
+  row.names(out) <- NULL
+
+  if (!is.null(component) && !identical(component, "all")) {
+    comp <- intersect(names(x$models), component)
+    if (!length(comp) && verbose) {
+      insight::format_alert(
+        paste0(
+          "No matching model found. Possible values for `component` are ",
+          toString(paste0("\"", names(x$models), "\"")),
+          "."
+        )
+      )
+    } else {
+      out <- out[out$Component %in% component, ]
+    }
+  }
+
+  params <- insight::get_parameters(model, component = component)
+  out$Response <- params$Response
+  out[c("Parameter", "CI", "CI_low", "CI_high", "Response", "Component")]
+}
