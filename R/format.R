@@ -77,6 +77,9 @@ format.parameters_model <- function(x,
   # remove component for nestedLogit
   if (!is.null(m_class) && any(m_class == "nestedLogit")) {
     x$Component <- NULL
+    if (insight::n_unique(x$Response) == 1) {
+      x$Response <- NULL
+    }
   }
 
   # remove type for comparisons()
