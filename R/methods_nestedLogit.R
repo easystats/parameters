@@ -28,6 +28,12 @@ model_parameters.nestedLogit <- function(model,
     }
   }
 
+  # "component" might be set to "conditional", when called from "compare_parameters()"
+  # set to "all" here.
+  if (identical(component, "conditional")) {
+    component <- "all"
+  }
+
   # profiled CIs may take a long time to compute, so we warn the user about it
   if (any(unlist(insight::n_obs(model)) > 1e4) && identical(ci_method, "profile")) {
     insight::format_alert(
