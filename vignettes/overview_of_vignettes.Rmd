@@ -47,3 +47,7 @@ All package vignettes are available at [https://easystats.github.io/parameters/]
 * [Structural Models (EFA, CFA, SEM, ...)](https://easystats.github.io/parameters/articles/efa_cfa.html)
 * [Selection of Model Parameters](https://easystats.github.io/parameters/articles/parameters_selection.html)
 * [Clustering with easystats](https://easystats.github.io/parameters/articles/clustering.html)
+
+## Plotting Functions
+
+  * [Plotting functions in the **see** package](https://easystats.github.io/see/articles/parameters.html)
