@@ -67,7 +67,8 @@
 #' **Note:** The term "conditional" as used by Rafi and Greenland probably has
 #' a slightly different meaning than normally. "Conditional" in this notion
 #' means that all model assumptions are taken as given - it should not be
-#' confused with terms like "conditional probability".
+#' confused with terms like "conditional probability". See also _Greenland et al. 2022_
+#' for a detailed elaboration on this issue.
 #'
 #' In other words, the term compatibility interval emphasizes "the dependence
 #' of the _p_-value on the assumptions as well as on the data, recognizing that
