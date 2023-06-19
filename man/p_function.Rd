@@ -212,6 +212,14 @@ might be because (1) that parameter value isn't supported by the data, or
 bad assumptions, the compatibility interval might be too wide or (more
 commonly and seriously) too narrow, making us think we know more about the
 parameter than is warranted.
+
+When we say "there is a 95\% chance the true value is in the interval", that is
+a statement of \emph{epistemic probability} (i.e. description of uncertainty related
+to our knowledge or belief). When we talk about repeated samples or sampling
+distributions, that is referring to \emph{aleatoric} (physical properties) probability.
+Frequentist inference is built on defining estimators with known \emph{aleatoric}
+probability properties, from which we can draw \emph{epistemic} probalistic
+statements of uncertainty (\emph{Schweder and Hjort 2016}).
 }
 }
 \note{

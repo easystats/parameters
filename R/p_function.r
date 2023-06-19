@@ -110,6 +110,14 @@
 #' commonly and seriously) too narrow, making us think we know more about the
 #' parameter than is warranted.
 #'
+#' When we say "there is a 95% chance the true value is in the interval", that is
+#' a statement of _epistemic probability_ (i.e. description of uncertainty related
+#' to our knowledge or belief). When we talk about repeated samples or sampling
+#' distributions, that is referring to _aleatoric_ (physical properties) probability.
+#' Frequentist inference is built on defining estimators with known _aleatoric_
+#' probability properties, from which we can draw _epistemic_ probalistic
+#' statements of uncertainty (_Schweder and Hjort 2016_).
+#'
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
