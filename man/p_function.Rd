@@ -147,7 +147,8 @@ probability", \emph{Schweder 2018}), and assuming that all underlying assumption
 are correct and met, \code{p_function()} interprets \emph{p}-values in a Fisherian way
 as "\emph{continuous} measure of evidence against the very test hypothesis \emph{and}
 entire model (all assumptions) used to compute it"
-(\emph{P-Values Are Tough and S-Values Can Help}, lesslikely.com/statistics/s-values).
+(\emph{P-Values Are Tough and S-Values Can Help}, lesslikely.com/statistics/s-values;
+see also \emph{Amrhein and Greenland 2022}).
 
 This interpretation as a continuous measure of evidence against the test
 hypothesis and the entire model used to compute it can be seen in the
@@ -235,6 +236,10 @@ if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
 }
 \references{
 \itemize{
+\item Amrhein V, Greenland S. Discuss practical importance of results based on
+interval estimates and p-value functions, not only on point estimates and
+null p-values. Journal of Information Technology 2022;37:316–20.
+\doi{10.1177/02683962221105904}
 \item Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 \item Gelman A, Greenland S. Are confidence intervals better termed "uncertainty

@@ -46,7 +46,8 @@
 #' are correct and met, `p_function()` interprets _p_-values in a Fisherian way
 #' as "_continuous_ measure of evidence against the very test hypothesis _and_
 #' entire model (all assumptions) used to compute it"
-#' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values).
+#' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values;
+#' see also _Amrhein and Greenland 2022_).
 #'
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
@@ -112,6 +113,11 @@
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
+#' - Amrhein V, Greenland S. Discuss practical importance of results based on
+#'   interval estimates and p-value functions, not only on point estimates and
+#'   null p-values. Journal of Information Technology 2022;37:316–20.
+#'   \doi{10.1177/02683962221105904}
+#'
 #' - Fraser DAS. The P-value function and statistical inference. The American
 #'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 #'
