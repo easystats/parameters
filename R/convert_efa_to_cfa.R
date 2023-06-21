@@ -4,9 +4,9 @@
 #' Confirmatory Factor Analysis (CFA) `lavaan`-ready structure.
 #'
 #' @param model An EFA model (e.g., a `psych::fa` object).
-#' @inheritParams principal_components
 #' @param names Vector containing dimension names.
 #' @param max_per_dimension Max number of variables to keep per dimension.
+#' @inheritParams principal_components
 #'
 #' @examples
 #' \donttest{
@@ -104,7 +104,9 @@ efa_to_cfa <- convert_efa_to_cfa
     items <- as.character(loadings[loadings$Component == unique(loadings$Component)[i], "Variable"])
 
     # Subset if need be to keep only a certain number
-    if(!is.null(max_per_dimension) && max_per_dimension > 0) items <- as.character(na.omit(items[1:max_per_dimension]))
+    if (!is.null(max_per_dimension) && max_per_dimension > 0) {
+      items <- as.character(stats::na.omit(items[1:max_per_dimension]))
+    }
 
     # Append that list
     cfa <- c(

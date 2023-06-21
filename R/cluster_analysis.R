@@ -451,8 +451,8 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   ori_data <- stats::na.omit(attributes(x)$data)
 
   # Check number of columns: if more than 2, display PCs, if less, fail
-  if(ncol(ori_data) <= 2) {
-    stop("Less than 2 variables in the dataset. Cannot compute enough principal components to represent clustering.")
+  if (ncol(ori_data) <= 2) {
+    insight::format_error("Less than 2 variables in the dataset. Cannot compute enough principal components to represent clustering.")
   }
 
   # Get 2 PCA Components

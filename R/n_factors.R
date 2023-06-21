@@ -138,12 +138,12 @@ n_factors <- function(x,
   }
 
   # Get only numeric
-  if(!all(vapply(x, is.numeric, TRUE))) {
-    warning(paste0(
+  if (!all(vapply(x, is.numeric, TRUE))) {
+    insight::format_warning(paste0(
       "Some variables are not numeric (",
-      paste0(names(x)[!vapply(x, is.numeric, TRUE)], collapse = ", "),
-      "). Dropping them.")
-    )
+      toString(names(x)[!vapply(x, is.numeric, TRUE)]),
+      "). Dropping them."
+    ))
   }
   x <- x[vapply(x, is.numeric, TRUE)]
 
@@ -586,12 +586,12 @@ print.n_clusters <- print.n_factors
     fa <- "pc"
   }
 
-  out <- psych::fa.parallel(cor, n.obs = nobs, fa=fa, plot=FALSE, fm="ml")
+  out <- psych::fa.parallel(cor, n.obs = nobs, fa = fa, plot = FALSE, fm = "ml")
 
 
   .data_frame(
-    n_Factors = as.numeric(na.omit(c(out$nfact, out$ncomp))),
-    Method = c("Parallel"),
+    n_Factors = as.numeric(stats::na.omit(c(out$nfact, out$ncomp))),
+    Method = "Parallel",
     Family = "psych"
   )
 }
