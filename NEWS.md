@@ -1,3 +1,9 @@
+# parameters 0.21.2
+
+## General
+
+* Minor improvements to factor analysis functions.
+
 # parameters 0.21.1
 
 ## General
