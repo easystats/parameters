@@ -46,7 +46,8 @@
 #' are correct and met, `p_function()` interprets _p_-values in a Fisherian way
 #' as "_continuous_ measure of evidence against the very test hypothesis _and_
 #' entire model (all assumptions) used to compute it"
-#' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values).
+#' (*P-Values Are Tough and S-Values Can Help*, lesslikely.com/statistics/s-values;
+#' see also _Amrhein and Greenland 2022_).
 #'
 #' This interpretation as a continuous measure of evidence against the test
 #' hypothesis and the entire model used to compute it can be seen in the
@@ -66,7 +67,8 @@
 #' **Note:** The term "conditional" as used by Rafi and Greenland probably has
 #' a slightly different meaning than normally. "Conditional" in this notion
 #' means that all model assumptions are taken as given - it should not be
-#' confused with terms like "conditional probability".
+#' confused with terms like "conditional probability". See also _Greenland et al. 2022_
+#' for a detailed elaboration on this issue.
 #'
 #' In other words, the term compatibility interval emphasizes "the dependence
 #' of the _p_-value on the assumptions as well as on the data, recognizing that
@@ -109,9 +111,22 @@
 #' commonly and seriously) too narrow, making us think we know more about the
 #' parameter than is warranted.
 #'
+#' When we say "there is a 95% chance the true value is in the interval", that is
+#' a statement of _epistemic probability_ (i.e. description of uncertainty related
+#' to our knowledge or belief). When we talk about repeated samples or sampling
+#' distributions, that is referring to _aleatoric_ (physical properties) probability.
+#' Frequentist inference is built on defining estimators with known _aleatoric_
+#' probability properties, from which we can draw _epistemic_ probalistic
+#' statements of uncertainty (_Schweder and Hjort 2016_).
+#'
 #' @return A data frame with p-values and compatibility intervals.
 #'
 #' @references
+#' - Amrhein V, Greenland S. Discuss practical importance of results based on
+#'   interval estimates and p-value functions, not only on point estimates and
+#'   null p-values. Journal of Information Technology 2022;37:316–20.
+#'   \doi{10.1177/02683962221105904}
+#'
 #' - Fraser DAS. The P-value function and statistical inference. The American
 #'   Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 #'

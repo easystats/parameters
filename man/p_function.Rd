@@ -147,7 +147,8 @@ probability", \emph{Schweder 2018}), and assuming that all underlying assumption
 are correct and met, \code{p_function()} interprets \emph{p}-values in a Fisherian way
 as "\emph{continuous} measure of evidence against the very test hypothesis \emph{and}
 entire model (all assumptions) used to compute it"
-(\emph{P-Values Are Tough and S-Values Can Help}, lesslikely.com/statistics/s-values).
+(\emph{P-Values Are Tough and S-Values Can Help}, lesslikely.com/statistics/s-values;
+see also \emph{Amrhein and Greenland 2022}).
 
 This interpretation as a continuous measure of evidence against the test
 hypothesis and the entire model used to compute it can be seen in the
@@ -167,7 +168,8 @@ to arrive at the statistical results." (\emph{Greenland et al. 2022}).
 \strong{Note:} The term "conditional" as used by Rafi and Greenland probably has
 a slightly different meaning than normally. "Conditional" in this notion
 means that all model assumptions are taken as given - it should not be
-confused with terms like "conditional probability".
+confused with terms like "conditional probability". See also \emph{Greenland et al. 2022}
+for a detailed elaboration on this issue.
 
 In other words, the term compatibility interval emphasizes "the dependence
 of the \emph{p}-value on the assumptions as well as on the data, recognizing that
@@ -211,6 +213,14 @@ might be because (1) that parameter value isn't supported by the data, or
 bad assumptions, the compatibility interval might be too wide or (more
 commonly and seriously) too narrow, making us think we know more about the
 parameter than is warranted.
+
+When we say "there is a 95\% chance the true value is in the interval", that is
+a statement of \emph{epistemic probability} (i.e. description of uncertainty related
+to our knowledge or belief). When we talk about repeated samples or sampling
+distributions, that is referring to \emph{aleatoric} (physical properties) probability.
+Frequentist inference is built on defining estimators with known \emph{aleatoric}
+probability properties, from which we can draw \emph{epistemic} probalistic
+statements of uncertainty (\emph{Schweder and Hjort 2016}).
 }
 }
 \note{
@@ -235,6 +245,10 @@ if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
 }
 \references{
 \itemize{
+\item Amrhein V, Greenland S. Discuss practical importance of results based on
+interval estimates and p-value functions, not only on point estimates and
+null p-values. Journal of Information Technology 2022;37:316–20.
+\doi{10.1177/02683962221105904}
 \item Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. \doi{10.1080/00031305.2018.1556735}
 \item Gelman A, Greenland S. Are confidence intervals better termed "uncertainty

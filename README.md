@@ -72,6 +72,8 @@ these vignettes:
   selection](https://easystats.github.io/parameters/articles/parameters_selection.html)
 - [A Practical Guide for Panel Data
   Analysis](https://easystats.github.io/parameters/articles/demean.html)
+- [Plotting
+  functions](https://easystats.github.io/see/articles/parameters.html)
 
 ## Contributing and Support
 
@@ -235,7 +237,6 @@ In order to cite this package, please use the following command:
 
 ``` r
 citation("parameters")
-
 To cite package 'parameters' in publications use:
 
   Lüdecke D, Ben-Shachar M, Patil I, Makowski D (2020). "Extracting,
