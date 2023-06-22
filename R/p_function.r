@@ -116,7 +116,7 @@
 #' to our knowledge or belief). When we talk about repeated samples or sampling
 #' distributions, that is referring to _aleatoric_ (physical properties) probability.
 #' Frequentist inference is built on defining estimators with known _aleatoric_
-#' probability properties, from which we can draw _epistemic_ probalistic
+#' probability properties, from which we can draw _epistemic_ probabilistic
 #' statements of uncertainty (_Schweder and Hjort 2016_).
 #'
 #' @return A data frame with p-values and compatibility intervals.
