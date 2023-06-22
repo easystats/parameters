@@ -20,7 +20,7 @@ different levels."><meta property="og:image" content="https://easystats.github.i
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -269,7 +269,8 @@ probability", <em>Schweder 2018</em>), and assuming that all underlying assumpti
 are correct and met, <code>p_function()</code> interprets <em>p</em>-values in a Fisherian way
 as "<em>continuous</em> measure of evidence against the very test hypothesis <em>and</em>
 entire model (all assumptions) used to compute it"
-(<em>P-Values Are Tough and S-Values Can Help</em>, lesslikely.com/statistics/s-values).</p>
+(<em>P-Values Are Tough and S-Values Can Help</em>, lesslikely.com/statistics/s-values;
+see also <em>Amrhein and Greenland 2022</em>).</p>
 <p>This interpretation as a continuous measure of evidence against the test
 hypothesis and the entire model used to compute it can be seen in the
 figure below (taken from <em>P-Values Are Tough and S-Values Can Help</em>,
@@ -285,7 +286,8 @@ to arrive at the statistical results." (<em>Greenland et al. 2022</em>).</p>
 <p><strong>Note:</strong> The term "conditional" as used by Rafi and Greenland probably has
 a slightly different meaning than normally. "Conditional" in this notion
 means that all model assumptions are taken as given - it should not be
-confused with terms like "conditional probability".</p>
+confused with terms like "conditional probability". See also <em>Greenland et al. 2022</em>
+for a detailed elaboration on this issue.</p>
 <p>In other words, the term compatibility interval emphasizes "the dependence
 of the <em>p</em>-value on the assumptions as well as on the data, recognizing that
 <em>p</em>&lt;0.05 can arise from assumption violations even if the effect under
@@ -330,6 +332,13 @@ might be because (1) that parameter value isn't supported by the data, or
 bad assumptions, the compatibility interval might be too wide or (more
 commonly and seriously) too narrow, making us think we know more about the
 parameter than is warranted.</p>
+<p>When we say "there is a 95% chance the true value is in the interval", that is
+a statement of <em>epistemic probability</em> (i.e. description of uncertainty related
+to our knowledge or belief). When we talk about repeated samples or sampling
+distributions, that is referring to <em>aleatoric</em> (physical properties) probability.
+Frequentist inference is built on defining estimators with known <em>aleatoric</em>
+probability properties, from which we can draw <em>epistemic</em> probalistic
+statements of uncertainty (<em>Schweder and Hjort 2016</em>).</p>
 </div>
 
     </div>
@@ -342,7 +351,11 @@ accurate, however, this is currently not supported.</p>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     
-<ul><li><p>Fraser DAS. The P-value function and statistical inference. The American
+<ul><li><p>Amrhein V, Greenland S. Discuss practical importance of results based on
+interval estimates and p-value functions, not only on point estimates and
+null p-values. Journal of Information Technology 2022;37:316–20.
+<a href="https://doi.org/10.1177/02683962221105904" class="external-link">doi:10.1177/02683962221105904</a></p></li>
+<li><p>Fraser DAS. The P-value function and statistical inference. The American
 Statistician. 2019;73(sup1):135-147. <a href="https://doi.org/10.1080/00031305.2018.1556735" class="external-link">doi:10.1080/00031305.2018.1556735</a></p></li>
 <li><p>Gelman A, Greenland S. Are confidence intervals better termed "uncertainty
 intervals"? BMJ (2019)l5381. <a href="https://doi.org/10.1136/bmj.l5381" class="external-link">doi:10.1136/bmj.l5381</a></p></li>
