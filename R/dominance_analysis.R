@@ -28,6 +28,13 @@
 #' is necessary for data masked arguments (e.g., `weights`) to prevent them
 #' from being evaluated before being applied to the model and causing an error.
 #'
+#' @param contrasts A named list of [`contrasts`] used by the model object.
+#' This list is required in order for the correct mapping of parameters to
+#' predictors in the output when the model creates indicator codes for factor
+#' variables using [`model_matrix`]. By default, the `contrast` element from
+#' the model object submitted is used. If the model object does not have a
+#' `contrast` element the user can supply this named list.
+#'
 #' @param ...  Not used at current.
 #'
 #' @return Object of class `"parameters_da"`.
@@ -58,7 +65,7 @@
 #'  subsets referenced in each variable. Whether the subset
 #'  in each variable dominates the subset in each observation is
 #'  represented in the  logical value. `NULL` if `complete`
-#'  argument is `FALSE`..}
+#'  argument is `FALSE`.}
 #' }
 #'
 #' @details Computes two decompositions of the model's R2 and returns
@@ -73,8 +80,8 @@
 #' complete dominance designations.
 #'
 #' The input model is parsed using `insight::find_predictors()`, does not
-#' yet support interactions, transformations, or offsets applied in the
-#' R formula, and will fail with an error if any such terms are detected.
+#' yet support interactions, transformations, or offsets applied in the R
+#' formula, and will fail with an error if any such terms are detected.
 #'
 #' The model submitted must accept an formula object as a `formula`
 #' argument.  In addition, the model object must accept the data on which
@@ -90,10 +97,6 @@
 #'
 #' When `performance::r2()` returns multiple values, only the first is used
 #' by default.
-#'
-#' The underlying `domir::domin()` function that implements the dominance
-#' statistic and designation computations has only been tested to R version
-#' 3.5 and will fail with an error if called in R versions < 3.5.
 #'
 #' @references
 #' - Azen, R., & Budescu, D. V. (2003). The dominance analysis approach
@@ -113,8 +116,7 @@
 #' @author Joseph Luchman
 #'
 #' @examples
-#' if (getRversion() >= "3.5.0" && require("domir") &&
-#'   require("performance")) {
+#' if (require("domir") && require("performance")) {
 #'   data(mtcars)
 #'
 #'   # Dominance Analysis with Logit Regression
@@ -134,7 +136,8 @@
 #' @export
 dominance_analysis <- function(model, sets = NULL, all = NULL,
                                conditional = TRUE, complete = TRUE,
-                               quote_args = NULL, ...) {
+                               quote_args = NULL, contrasts = model$contrasts,
+                               ...) {
   # Exit Conditions ----
   insight::check_if_installed("domir")
   insight::check_if_installed("performance")
@@ -146,8 +149,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     )
   }
 
-  if (!any(utils::.S3methods("r2", class = class(model)[[1]], envir = getNamespace("performance")) ==
-    paste0("r2.", class(model)[[1]]))) {
+  if (!any(utils::.S3methods("r2", class = class(model)[[1]], envir = getNamespace("performance")) %in%
+    paste0("r2.", class(model)))) {
     insight::format_error(
       paste(deparse(substitute(model)), "does not have a {.pkg perfomance}-supported `r2()` method."),
       "You may be able to dominance analyze this model using the {.pkg domir} package."
@@ -157,28 +160,31 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   model_info <- insight::model_info(model)
   if (any(unlist(model_info[c("is_bayesian", "is_mixed", "is_gam", "is_multivariate", "is_zero_inflated", "is_hurdle")]))) {
     insight::format_error(
-      paste0("`dominance_analysis()` does not yet support models of class `", class(model), "`."),
+      paste0("`dominance_analysis()` does not yet support models of class `", class(model)[[1]], "`."),
       "You may be able to dominance analyze this model using the {.pkg domir} package."
+    )
+  }
+
+  if (length(insight::find_predictors(model, flatten = TRUE)) < 2) {
+    insight::format_error("Too few predictors for a dominance analysis.")
+  }
+
+  if (!is.null(insight::find_offset(model))) {
+    insight::format_error("Offsets in the model are not allowed in this version of `dominance_analysis()`.",
+                          "Try using package {.pkg domir}.")
+  }
+
+  if (!all(insight::find_predictors(model, flatten = TRUE) %in% insight::find_terms(model)$conditional)) {
+    insight::format_error(
+      "Predictors do not match terms.",
+      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z)`.",
+      "`dominance_analysis()` cannot yet accommodate such terms. Reformat your model to ensure all parameters",
+      "match predictors in the data or use the {.pkg domir} package."
     )
   }
 
   if (!is.null(insight::find_interactions(model))) {
     insight::format_error("Interactions in the model formula are not allowed.")
-  }
-
-  if (!all(insight::find_predictors(model)$conditional %in% attr(stats::terms(insight::find_formula(model)$conditional), "term.labels"))) {
-    insight::format_error(
-      "Predictors do not match terms.",
-      "This usually occurs when there are in-formula predictor transformations such as `log(x)` or `I(x+z).`"
-    )
-  }
-
-  if (!is.null(insight::find_offset(model))) {
-    insight::format_error("Offsets in the model formula are not allowed.")
-  }
-
-  if (getRversion() < "3.5") {
-    insight::format_error("R versions < 3.5 not supported.")
   }
 
   if (!is.null(sets)) {
@@ -218,7 +224,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   dv <- insight::find_response(model)
 
-  reg <- insight::model_name(model)
+  #reg <- insight::model_name(model) # insight::get_call + as.list() and take first element? glm.nb doesn't work...
+  reg <- as.list(insight::get_call(model))[[1]]
 
   # Process sets ----
   if (!is.null(sets)) {
@@ -278,7 +285,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     all_remove_loc <- which(ivs %in% all_processed)
 
     if (any(all_processed %in% unlist(sets_processed))) {
-      reused_terms <- all_processed[which(all_processed %in% unlist(sets_processed))]
+      reused_terms <-
+        all_processed[which(all_processed %in% unlist(sets_processed))]
 
       insight::format_error(
         "Terms",
@@ -320,6 +328,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   # Build non-formula model arguments to `domin` ----
+  if (length(ivs) == 0) ivs <- "1"
   fml <- stats::reformulate(ivs, response = dv, intercept = insight::has_intercept(model))
 
   data <- insight::get_data(model, verbose = FALSE)
@@ -341,7 +350,8 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     if (!(arg %in% names(args))) {
       insight::format_error(arg, " in `quote_args` not among arguments in model.")
     } else {
-      args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
+      args[[arg]] <-
+        str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
     }
   }
 
@@ -360,20 +370,25 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   utils::capture.output(domir_res <- do.call(domir::domin, args2domin))
 
   # Set up returned data.frames ----
+  # Apply set names to domin results
   if (!is.null(sets)) {
     names(domir_res$General_Dominance) <-
       c(
-        names(domir_res$General_Dominance)[1:(length(domir_res$General_Dominance) - length(set_names))],
+        names(domir_res$General_Dominance)[
+          1:(length(domir_res$General_Dominance) - length(set_names))
+          ],
         set_names
       )
 
     if (conditional) {
-      rownames(domir_res$Conditional_Dominance) <- names(domir_res$General_Dominance)
+      rownames(domir_res$Conditional_Dominance) <-
+        names(domir_res$General_Dominance)
     }
   }
 
   if (complete) {
-    colnames(domir_res$Complete_Dominance) <- paste0("dmn_", names(domir_res$General_Dominance))
+    colnames(domir_res$Complete_Dominance) <-
+      paste0("dmn_", names(domir_res$General_Dominance))
 
     dimnames(domir_res$Complete_Dominance) <- list(
       colnames(domir_res$Complete_Dominance),
@@ -383,11 +398,60 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     domir_res$Complete_Dominance <- t(domir_res$Complete_Dominance)
   }
 
-  da_df_res <- da_df_cat <-
+  # Map parameter names to subsets - structure set-up
+  da_df_res <-
+    da_df_cat <-
     .data_frame(parameter = insight::find_parameters(model, flatten = TRUE))
 
   da_df_cat <- .data_frame(da_df_cat, subset = NA_character_)
 
+  # if parameter is same as domin name, copy it to 'subset'
+  da_df_cat$subset <-
+    ifelse((da_df_res$parameter %in%
+              names(domir_res$General_Dominance)) &
+             (is.na(da_df_cat$subset)),
+           da_df_res$parameter,
+           da_df_cat$subset
+    )
+
+  # Expand contrast names
+  if (!is.null(contrasts)) {
+
+    contr_names <-
+      lapply(
+        names(contrasts),
+        function(name) {
+          pred_loc <-
+            which(insight::find_predictors(model, flatten = TRUE)==name)
+
+          pred_names <-
+            colnames(insight::get_modelmatrix(model))[
+              which(attr(insight::get_modelmatrix(model), "assign")==pred_loc)
+            ]
+        }
+      )
+
+    names(contr_names) <- names(contrasts)
+
+    contr_map <-
+      rep(names(contr_names),
+          sapply(contr_names, length))
+
+    names(contr_map) <- unlist(contr_names)
+
+    for (subset in which(is.na(da_df_cat$subset))) {
+
+      if ((da_df_res$parameter[[subset]] %in%
+           names(contr_map)))
+        da_df_cat$subset[[subset]] <-
+          contr_map[[
+            which(names(contr_map) ==
+              da_df_res$parameter[[subset]] ) ]]
+    }
+
+  }
+
+  # Apply set names
   if (!is.null(sets)) {
     for (set in seq_along(sets)) {
       set_name <- if (!is.null(names(sets)[[set]])) {
@@ -401,30 +465,40 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
           da_df_cat$subset,
           da_df_res$parameter %in% all.vars(sets[[set]]), set_name
         )
+
+      da_df_cat$subset <-
+        replace(
+          da_df_cat$subset,
+          da_df_cat$subset %in% all.vars(sets[[set]]), set_name
+        )
+
     }
+
   }
 
+  # Apply 'all' names
   if (!is.null(all)) {
     da_df_cat$subset <-
       replace(
         da_df_cat$subset,
         da_df_res$parameter %in% all.vars(all), "all"
       )
+
+    da_df_cat$subset <-
+      replace(
+        da_df_cat$subset,
+        da_df_cat$subset %in% all.vars(all), "all"
+      )
   }
 
-  da_df_cat$subset <-
-    ifelse((da_df_res$parameter %in% (insight::find_predictors(model, flatten = TRUE))) &
-      (is.na(da_df_cat$subset)),
-    da_df_res$parameter,
-    da_df_cat$subset
-    )
-
+  # assume remaining parameters are part of 'constant'
   da_df_cat$subset <-
     replace(
       da_df_cat$subset,
       is.na(da_df_cat$subset), "constant"
     )
 
+  # merge subsets and DA results to parameter names
   da_df_res <-
     datawizard::data_merge(
       da_df_cat,
@@ -434,11 +508,15 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       )
     )
 
+  # plug in value of 'all' in 'all' subsets/parameters
   if (!is.null(all)) {
     da_df_res$general_dominance <-
-      replace(da_df_res$general_dominance, da_df_res$subset == "all", domir_res$Fit_Statistic_All_Subsets)
+      replace(da_df_res$general_dominance,
+              da_df_res$subset == "all",
+              domir_res$Fit_Statistic_All_Subsets)
   }
 
+  # merge standardized general dominance stat values
   da_df_res <-
     datawizard::data_merge(
       da_df_res,
@@ -448,6 +526,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       )
     )
 
+  # merge  ranks based on general dominance stat values
   da_df_res <-
     datawizard::data_merge(
       da_df_res,
