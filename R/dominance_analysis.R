@@ -170,8 +170,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   }
 
   if (!is.null(insight::find_offset(model))) {
-    insight::format_error("Offsets in the model are not allowed in this version of `dominance_analysis()`.",
-                          "Try using package {.pkg domir}.")
+    insight::format_error(
+      "Offsets in the model are not allowed in this version of `dominance_analysis()`.",
+      "Try using package {.pkg domir}."
+    )
   }
 
   if (!all(insight::find_predictors(model, flatten = TRUE) %in% insight::find_terms(model)$conditional)) {
@@ -224,7 +226,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   dv <- insight::find_response(model)
 
-  #reg <- insight::model_name(model) # insight::get_call + as.list() and take first element? glm.nb doesn't work...
+  # reg <- insight::model_name(model) # insight::get_call + as.list() and take first element? glm.nb doesn't work...
   reg <- as.list(insight::get_call(model))[[1]]
 
   # Process sets ----
@@ -408,15 +410,14 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   # if parameter is same as domin name, copy it to 'subset'
   da_df_cat$subset <-
     ifelse((da_df_res$parameter %in%
-              names(domir_res$General_Dominance)) &
-             (is.na(da_df_cat$subset)),
-           da_df_res$parameter,
-           da_df_cat$subset
+      names(domir_res$General_Dominance)) &
+      (is.na(da_df_cat$subset)),
+    da_df_res$parameter,
+    da_df_cat$subset
     )
 
   # Expand contrast names
   if (!is.null(contrasts)) {
-
     contr_names <-
       lapply(
         names(contrasts),
@@ -462,9 +463,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
           da_df_cat$subset,
           da_df_cat$subset %in% all.vars(sets[[set]]), set_name
         )
-
     }
-
   }
 
   # Apply 'all' names
@@ -502,9 +501,11 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   # plug in value of 'all' in 'all' subsets/parameters
   if (!is.null(all)) {
     da_df_res$general_dominance <-
-      replace(da_df_res$general_dominance,
-              da_df_res$subset == "all",
-              domir_res$Fit_Statistic_All_Subsets)
+      replace(
+        da_df_res$general_dominance,
+        da_df_res$subset == "all",
+        domir_res$Fit_Statistic_All_Subsets
+      )
   }
 
   # merge standardized general dominance stat values
