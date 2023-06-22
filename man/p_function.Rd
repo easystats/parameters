@@ -219,7 +219,7 @@ a statement of \emph{epistemic probability} (i.e. description of uncertainty rel
 to our knowledge or belief). When we talk about repeated samples or sampling
 distributions, that is referring to \emph{aleatoric} (physical properties) probability.
 Frequentist inference is built on defining estimators with known \emph{aleatoric}
-probability properties, from which we can draw \emph{epistemic} probalistic
+probability properties, from which we can draw \emph{epistemic} probabilistic
 statements of uncertainty (\emph{Schweder and Hjort 2016}).
 }
 }

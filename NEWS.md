@@ -4,6 +4,10 @@
 
 * Minor improvements to factor analysis functions.
 
+## Bug fixes
+
+* Minor fixes for `dominance_analysis()`.
+
 # parameters 0.21.1
 
 ## General
