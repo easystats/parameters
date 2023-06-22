@@ -367,16 +367,16 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
     sets = sets_processed, all = all_processed
   ), args)
 
-  utils::capture.output(domir_res <- do.call(domir::domin, args2domin))
+  utils::capture.output({
+    domir_res <- do.call(domir::domin, args2domin)
+  })
 
   # Set up returned data.frames ----
   # Apply set names to domin results
   if (!is.null(sets)) {
     names(domir_res$General_Dominance) <-
       c(
-        names(domir_res$General_Dominance)[
-          1:(length(domir_res$General_Dominance) - length(set_names))
-          ],
+        names(domir_res$General_Dominance)[1:(length(domir_res$General_Dominance) - length(set_names))],
         set_names
       )
 
@@ -421,34 +421,25 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
       lapply(
         names(contrasts),
         function(name) {
-          pred_loc <-
-            which(insight::find_predictors(model, flatten = TRUE)==name)
+          pred_loc <- which(insight::find_predictors(model, flatten = TRUE) == name)
 
           pred_names <-
             colnames(insight::get_modelmatrix(model))[
-              which(attr(insight::get_modelmatrix(model), "assign")==pred_loc)
+              which(attr(insight::get_modelmatrix(model), "assign") == pred_loc)
             ]
         }
       )
 
     names(contr_names) <- names(contrasts)
-
-    contr_map <-
-      rep(names(contr_names),
-          sapply(contr_names, length))
-
+    contr_map <- rep(names(contr_names), lengths(contr_names))
     names(contr_map) <- unlist(contr_names)
 
     for (subset in which(is.na(da_df_cat$subset))) {
-
-      if ((da_df_res$parameter[[subset]] %in%
-           names(contr_map)))
+      if ((da_df_res$parameter[[subset]] %in% names(contr_map))) {
         da_df_cat$subset[[subset]] <-
-          contr_map[[
-            which(names(contr_map) ==
-              da_df_res$parameter[[subset]] ) ]]
+          contr_map[[which(names(contr_map) == da_df_res$parameter[[subset]])]]
+      }
     }
-
   }
 
   # Apply set names
@@ -605,7 +596,7 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
   if (conditional) attr(da_list$Conditional, "table_title") <- "Conditional Dominance Statistics"
   if (complete) attr(da_list$Complete, "table_title") <- "Complete Dominance Designations"
 
-  class(da_list) <- c("parameters_da")
+  class(da_list) <- "parameters_da"
 
   da_list
 }
