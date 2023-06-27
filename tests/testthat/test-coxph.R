@@ -58,5 +58,6 @@ test_that("model_parameters", {
   unloadNamespace("quantreg")
   unloadNamespace("multcomp")
   unloadNamespace("TH.data")
+  unloadNamespace("survey")
   unloadNamespace("survival")
 })
