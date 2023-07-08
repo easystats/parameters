@@ -1,4 +1,8 @@
-# parameters 0.21.2
+# parameters 0.21.xx
+
+## General
+
+* Various `print` functions now also pass by default the `digits` argument to the `ci_digitcs` argument.
 
 ## Bug fixes
 
