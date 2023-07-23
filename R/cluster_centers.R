@@ -102,7 +102,7 @@ cluster_centers <- function(data, clusters, fun = mean, ...) {
   TSS <- sum(scale(data, scale = FALSE)^2)
   # Within clusters sum of squares (WCSS)
   WSS <- sapply(split(data, clusters), function(x) sum(scale(x, scale = FALSE)^2))
-  # Between clsuters sum of squares
+  # Between clusters sum of squares
   BSS <- TSS - sum(WSS)
 
   # Compute BSS directly (without TSS to double check)

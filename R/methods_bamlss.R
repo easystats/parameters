@@ -43,7 +43,14 @@ model_parameters.bamlss <- function(model,
   # exponentiate coefficients and SE/CI, if requested
   params <- .exponentiate_parameters(params, model, exponentiate)
 
-  params <- .add_model_parameters_attributes(params, model, ci, exponentiate, ci_method = ci_method, verbose = verbose, ...)
+  params <- .add_model_parameters_attributes(params,
+    model,
+    ci,
+    exponentiate,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
 
   attr(params, "parameter_info") <- insight::clean_parameters(model)
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
