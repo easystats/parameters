@@ -479,7 +479,7 @@ model_parameters.maov <- model_parameters.aov
     return(params)
   }
 
-  insight::check_if_installed("effectsize", minimum_version = "0.5.0")
+  insight::check_if_installed("effectsize")
 
   # set error-df, when provided.
   if (!is.null(df_error) && is.data.frame(model) &&
