@@ -71,7 +71,7 @@ model_parameters.slopes <- model_parameters.marginaleffects
 model_parameters.predictions <- function(model,
                                          ci = 0.95,
                                          ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.9.0")
+  insight::check_if_installed("marginaleffects")
 
   out <- datawizard::data_rename(model, "estimate", "predicted")
   out <- datawizard::data_relocate(out, "predicted", before = 1)
