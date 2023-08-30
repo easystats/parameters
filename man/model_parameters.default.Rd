@@ -423,6 +423,17 @@ model_parameters(model)
 
 # show odds ratio / exponentiated coefficients
 model_parameters(model, exponentiate = TRUE)
+
+# bias-corrected logistic regression with penalized maximum likelihood
+if (require("brglm2")) {
+  model <- glm(
+    vs ~ wt + cyl,
+    data = mtcars,
+    family = "binomial",
+    method = "brglmFit"
+  )
+  model_parameters(model)
+}
 }
 }
 \seealso{
