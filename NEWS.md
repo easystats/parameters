@@ -2,6 +2,9 @@
 
 ## Bug fixes
 
+* Fixed issue with wrong calculation of test-statistic and p-values in
+  `model_parameters()` for `fixest` models.
+
 * Minor fixes for `dominance_analysis()`.
 
 # parameters 0.21.1
