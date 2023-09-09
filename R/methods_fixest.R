@@ -1,6 +1,67 @@
 # .fixest -----------------------
 
 #' @export
+model_parameters.fixest <- function(model,
+                                    ci = 0.95,
+                                    ci_method = NULL,
+                                    bootstrap = FALSE,
+                                    iterations = 1000,
+                                    standardize = NULL,
+                                    exponentiate = FALSE,
+                                    p_adjust = NULL,
+                                    summary = getOption("parameters_summary", FALSE),
+                                    keep = NULL,
+                                    drop = NULL,
+                                    verbose = TRUE,
+                                    vcov = NULL,
+                                    vcov_args = NULL,
+                                    ...) {
+  # default ci-method, based on statistic
+  if (is.null(ci_method)) {
+    if (identical(insight::find_statistic(model), "t-statistic")) {
+      ci_method <- "residual"
+    } else {
+      ci_method <- "wald"
+    }
+  }
+
+  # extract model parameters table, as data frame
+  out <- tryCatch(
+    {
+      .model_parameters_generic(
+        model = model,
+        ci = ci,
+        ci_method = ci_method,
+        bootstrap = bootstrap,
+        iterations = iterations,
+        merge_by = "Parameter",
+        standardize = standardize,
+        exponentiate = exponentiate,
+        p_adjust = p_adjust,
+        summary = summary,
+        keep_parameters = keep,
+        drop_parameters = drop,
+        vcov = vcov,
+        vcov_args = vcov_args,
+        verbose = verbose,
+        ...
+      )
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+
+  if (is.null(out)) {
+    insight::format_error("Something went wrong... :-/")
+  }
+
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
+  out
+}
+
+
+#' @export
 standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
   params <- insight::get_parameters(model)
 
@@ -44,6 +105,9 @@ degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
 
 
 # .feglm -----------------------
+
+#' @export
+model_parameters.feglm <- model_parameters.fixest
 
 #' @export
 standard_error.feglm <- function(model, ...) {
