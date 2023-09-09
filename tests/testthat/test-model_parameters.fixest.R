@@ -14,16 +14,35 @@ test_that("model_parameters.fixest", {
   params <- model_parameters(m, verbose = FALSE)
 
   expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
-  expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-3)
-  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-3)
-  expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-3)
+  expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-4)
+  expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-4)
+  expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-4)
 
   # currently, a bug for fixest 10.4 on R >= 4.3
-  skip_if_not(getRversion() < "4.2.0")
+  # skip_if_not(getRversion() < "4.2.0")
   expect_snapshot(
     model_parameters(m, summary = TRUE, verbose = FALSE)
   )
 })
+
+
+test_that("model_parameters.fixest", {
+  skip_on_cran()
+  skip_if_not_installed("fixest")
+  skip_if_not_installed("carData")
+
+  data(Greene, package = "carData")
+  d <- Greene
+  d$dv <- as.numeric(Greene$decision == "yes")
+
+  mod1 <- fixest::feglm(dv ~ language | judge,
+    data = d,
+    cluster = "judge", family = "logit"
+  )
+  out1 <- model_parameters(mod1)
+  expect_equal(out1$p, fixest::pvalue(mod1), tolerance = 1e-4)
+})
+
 
 test_that("robust standard errors", {
   skip_if_not_installed("fixest")
