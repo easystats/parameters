@@ -40,7 +40,8 @@ test_that("model_parameters.fixest", {
     cluster = "judge", family = "logit"
   )
   out1 <- model_parameters(mod1)
-  expect_equal(out1$p, fixest::pvalue(mod1), tolerance = 1e-4)
+  expect_equal(out1$p, as.vector(fixest::pvalue(mod1)), tolerance = 1e-4, ignore_attr = TRUE)
+  expect_equal(out1$SE, as.vector(sqrt(diag(vcov(mod1)))), tolerance = 1e-4, ignore_attr = TRUE)
 })
 
 
