@@ -18,10 +18,10 @@ model_parameters.fixest <- function(model,
                                     ...) {
   # default ci-method, based on statistic
   if (is.null(ci_method)) {
-    if (identical(insight::find_statistic(model), "t-statistic")) {
+    if (identical(insight::find_statistic(model), "t-statistic") && identical(model$method, "feols")) {
       ci_method <- "residual"
     } else {
-      ci_method <- "wald"
+      ci_method <- "normal"
     }
   }
 
@@ -92,8 +92,14 @@ degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
   }
   method <- match.arg(
     tolower(method),
-    choices = c("wald", "residual")
+    choices = c("wald", "residual", "normal")
   )
+
+  # we may have Inf DF, too
+  if (method == "normal") {
+    return(Inf)
+  }
+
   method <- switch(method,
     "wald" = "t",
     "residual" = "resid"

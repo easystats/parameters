@@ -13,7 +13,7 @@ test_that("model_parameters.fixest", {
   )
   params <- model_parameters(m, verbose = FALSE)
 
-  expect_equal(c(nrow(params), ncol(params)), c(2, 9))
+  expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
   expect_equal(params$p, as.vector(fixest::pvalue(m)), tolerance = 1e-3)
   expect_equal(params$df_error[1], as.vector(fixest::degrees_freedom(m, type = "t")), tolerance = 1e-3)
   expect_equal(params$Coefficient, as.vector(coef(m)), tolerance = 1e-3)
