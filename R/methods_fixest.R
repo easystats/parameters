@@ -18,7 +18,7 @@ model_parameters.fixest <- function(model,
                                     ...) {
   # default ci-method, based on statistic
   if (is.null(ci_method)) {
-    if (identical(insight::find_statistic(model), "t-statistic") && identical(model$method, "feols")) {
+    if (identical(insight::find_statistic(model), "t-statistic")) {
       ci_method <- "wald"
     } else {
       ci_method <- "normal"
