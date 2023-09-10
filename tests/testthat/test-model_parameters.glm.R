@@ -72,5 +72,5 @@ test_that("model_parameters.glm - glm, identity link", {
   data(mtcars)
   m <- glm(am ~ vs, data = mtcars, family = binomial(link = "identity"))
   p <- model_parameters(m)
-  expect_identical(attributes(p)$coefficient_name, "Probability")
+  expect_identical(attributes(p)$coefficient_name, "Probability (difference)")
 })

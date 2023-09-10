@@ -262,7 +262,7 @@
         coef_col <- "Log-Odds"
       } else if (info$is_binomial && !info$is_logit) {
         if (info$link_function == "identity") {
-          coef_col <- "Probability"
+          coef_col <- "Probability (difference)"
         } else {
           coef_col <- "Log-Risk"
         }
