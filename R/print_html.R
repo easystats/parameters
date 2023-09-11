@@ -30,7 +30,7 @@ print_html.parameters_model <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {
@@ -155,7 +155,7 @@ print_html.compare_parameters <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {

@@ -475,9 +475,16 @@ format.parameters_sem <- function(x,
                                   ci_brackets = TRUE,
                                   pretty_names = TRUE,
                                   ...) {
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", 2)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", 3)
+  }
+
   .format_columns_multiple_components(
     x,
     pretty_names = TRUE,

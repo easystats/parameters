@@ -159,7 +159,7 @@
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- dot.arguments[["ci_digits"]]
   } else {
-    attr(params, "ci_digits") <- attr(params, "digits")
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
@@ -394,7 +394,7 @@
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
   } else {
-    attr(params, "ci_digits") <- attr(params, "digits")
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {

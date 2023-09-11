@@ -21,7 +21,7 @@ print.compare_parameters <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
