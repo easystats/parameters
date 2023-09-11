@@ -11,7 +11,7 @@ print_md.parameters_model <- function(x,
                                       footer = NULL,
                                       align = NULL,
                                       digits = 2,
-                                      ci_digits = 2,
+                                      ci_digits = digits,
                                       p_digits = 3,
                                       footer_digits = 3,
                                       ci_brackets = c("(", ")"),
@@ -26,7 +26,7 @@ print_md.parameters_model <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -124,7 +124,7 @@ print_md.parameters_simulate <- print_md.parameters_model
 #' @export
 print_md.compare_parameters <- function(x,
                                         digits = 2,
-                                        ci_digits = 2,
+                                        ci_digits = digits,
                                         p_digits = 3,
                                         caption = NULL,
                                         subtitle = NULL,
@@ -137,7 +137,7 @@ print_md.compare_parameters <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -178,7 +178,7 @@ print_md.compare_parameters <- function(x,
 #' @export
 print_md.parameters_sem <- function(x,
                                     digits = 2,
-                                    ci_digits = 2,
+                                    ci_digits = digits,
                                     p_digits = 3,
                                     ci_brackets = c("(", ")"),
                                     ...) {
@@ -188,7 +188,7 @@ print_md.parameters_sem <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)

@@ -159,7 +159,7 @@
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- dot.arguments[["ci_digits"]]
   } else {
-    attr(params, "ci_digits") <- 2
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
@@ -300,7 +300,17 @@
     return(params)
   }
 
-  columns <- grepl(pattern = "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)", colnames(params))
+  # pattern for marginaleffects objects
+  if (!is.null(attr(params, "coefficient_name"))) {
+    pattern <- sprintf(
+      "^(Coefficient|Mean|Median|MAP|Std_Coefficient|%s|CI_|Std_CI)",
+      attr(params, "coefficient_name")
+    )
+  } else {
+    pattern <- "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)"
+  }
+
+  columns <- grepl(pattern = pattern, colnames(params))
   if (any(columns)) {
     if (inherits(model, "mvord")) {
       rows <- params$Component != "correlation"
@@ -384,7 +394,7 @@
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
   } else {
-    attr(params, "ci_digits") <- 2
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {

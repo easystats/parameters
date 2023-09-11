@@ -11,7 +11,7 @@ print_html.parameters_model <- function(x,
                                         footer = NULL,
                                         align = NULL,
                                         digits = 2,
-                                        ci_digits = 2,
+                                        ci_digits = digits,
                                         p_digits = 3,
                                         footer_digits = 3,
                                         ci_brackets = c("(", ")"),
@@ -30,7 +30,7 @@ print_html.parameters_model <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {
@@ -139,7 +139,7 @@ print_html.compare_parameters <- function(x,
                                           subtitle = NULL,
                                           footer = NULL,
                                           digits = 2,
-                                          ci_digits = 2,
+                                          ci_digits = digits,
                                           p_digits = 3,
                                           zap_small = FALSE,
                                           groups = NULL,
@@ -155,7 +155,7 @@ print_html.compare_parameters <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {
