@@ -33,6 +33,7 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
+  add_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -99,6 +100,7 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
+  add_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -121,6 +123,7 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
+  add_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -233,6 +236,11 @@ places than \code{digits} are printed in scientific notation.}
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
 column names are generated. See 'Examples'.}
 
+\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
+be added to the parameter table. This is only relevant for models with
+categorical predictors. The coefficient for the reference level is always
+\code{0}, so this is just for completeness.}
+
 \item{verbose}{Toggle messages and warnings.}
 
 \item{...}{Arguments passed to or from other methods.}
@@ -264,11 +272,6 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
-
-\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
-be added to the parameter table. This is only relevant for models with
-categorical predictors. The coefficient for the reference level is always
-\code{0}, so this is just for completeness.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

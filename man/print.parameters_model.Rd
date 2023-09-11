@@ -22,6 +22,7 @@
   groups = NULL,
   column_width = NULL,
   ci_brackets = c("[", "]"),
+  add_reference = FALSE,
   ...
 )
 
@@ -131,12 +132,12 @@ columns across all table components are adjusted to have the same width.}
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
 
-\item{...}{Arguments passed to or from other methods.}
-
 \item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
 be added to the parameter table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always
 \code{0}, so this is just for completeness.}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 Invisibly returns the original input object.

@@ -237,6 +237,7 @@ print.parameters_model <- function(x,
                                    groups = NULL,
                                    column_width = NULL,
                                    ci_brackets = c("[", "]"),
+                                   add_reference = FALSE,
                                    ...) {
   # save original input
   orig_x <- x
@@ -286,6 +287,7 @@ print.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
+    add_reference = add_reference,
     ...
   )
 
@@ -382,6 +384,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                         ci_brackets = TRUE,
                         format = "text",
                         group = NULL,
+                        add_reference = FALSE,
                         ...) {
   format(
     x,
@@ -396,6 +399,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     zap_small = zap_small,
     format = format,
     group = group,
+    add_reference = add_reference,
     ...
   )
 }
