@@ -377,7 +377,7 @@
       # the reference level is *not* in the pretty names yet
       reference_level <- f[!f %in% names(pretty_names)]
       # create a pretty level for the reference category
-      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "] (ref.)")
+      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
       # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
