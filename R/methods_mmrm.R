@@ -15,7 +15,7 @@ model_parameters.mmrm <- function(model,
                                   verbose = TRUE,
                                   ...) {
   ci_method <- switch(model$method,
-    "Satterthwaite" = "satterthwaite",
+    Satterthwaite = "satterthwaite",
     "kenward"
   )
 

@@ -101,8 +101,8 @@ degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
   }
 
   method <- switch(method,
-    "wald" = "t",
-    "residual" = "resid"
+    wald = "t",
+    residual = "resid"
   )
   fixest::degrees_freedom(model, type = method)
 }

@@ -92,7 +92,7 @@ format.p_calibrate <- function(x, ...) {
 print.p_calibrate <- function(x, ...) {
   formatted <- format(x, ...)
   footer <- switch(attributes(x)$type,
-    "frequentist" = "Calibrated p-values indicate the posterior probability of H0.\n",
+    frequentist = "Calibrated p-values indicate the posterior probability of H0.\n",
     "Calibrated p-values indicate the Bayes Factor (evidence) in favor of H0 over H1.\n"
   )
   cat(insight::export_table(formatted, footer = c(footer, "blue"), ...))

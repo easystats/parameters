@@ -241,7 +241,7 @@
         emmean     = "Marginal Means",
         rate       = "Estimated Counts",
         ratio      = "Ratio",
-        Coefficient
+        "Coefficient"
       )
     }
   } else if (!is.null(info) && !info$family == "unknown") {
