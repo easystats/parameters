@@ -355,7 +355,7 @@
     found <- which(names(pretty_names) %in% f)
     if (length(found)) {
       reference_level <- f[!f %in% names(pretty_names)]
-      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), " (ref.)]")
+      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "] (ref.)")
       pretty_names <- .insert_element_at(
         pretty_names,
         stats::setNames(pretty_level, reference_level),
@@ -363,7 +363,11 @@
       )
       out <- .insert_row_at(
         out,
-        data.frame(Parameter = reference_level, Coefficient = 0, stringsAsFactors = FALSE),
+        data.frame(
+          Parameter = reference_level,
+          Coefficient = as.numeric(attributes(x)$exponentiate),
+          stringsAsFactors = FALSE
+        ),
         min(found)
       )
     }
