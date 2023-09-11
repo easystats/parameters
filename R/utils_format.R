@@ -353,6 +353,10 @@
   if (is.null(coef_name)) {
     coef_name <- "Coefficient"
   }
+  zi_coef_name <- attributes(params)$zi_coefficient_name
+  if (is.null(zi_coef_name)) {
+    zi_coef_name <- "Coefficient"
+  }
 
   # copy object, so we save original data
   out <- params
@@ -390,6 +394,8 @@
       # have the correct column name in the data row we want to insert
       if (coef_name %in% colnames(out)) {
         colnames(row_data)[2] <- coef_name
+      } else if (zi_coef_name %in% colnames(out)) {
+        colnames(row_data)[2] <- zi_coef_name
       }
       out <- .insert_row_at(out, row_data, min(found))
     }
