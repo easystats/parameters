@@ -152,7 +152,7 @@ p_value.blavaan <- p_value.BFBayesFactor
 # print ---------------------------
 
 #' @export
-print.parameters_sem <- function(x, digits = 2, ci_digits = 2, p_digits = 3, ...) {
+print.parameters_sem <- function(x, digits = 2, ci_digits = digits, p_digits = 3, ...) {
   # check if user supplied digits attributes
   if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
   if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)

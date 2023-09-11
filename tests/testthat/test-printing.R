@@ -56,6 +56,19 @@ withr::with_options(
     })
 
 
+    # Digits ------
+    test_that("digits and ci_digits", {
+      mtcars$cyl <- as.factor(mtcars$cyl)
+      mtcars$gear <- as.factor(mtcars$gear)
+      model <- lm(mpg ~ hp + gear + vs + cyl + drat, data = mtcars)
+
+      # don't select "Intercept" parameter
+      out <- model_parameters(model, drop = "^\\(Intercept")
+      expect_snapshot(print(out, digits = 4))
+      expect_snapshot(print(out, digits = 4, ci_digits = 2))
+    })
+
+
     # Table templates ------
     test_that("select pattern", {
       mtcars$cyl <- as.factor(mtcars$cyl)

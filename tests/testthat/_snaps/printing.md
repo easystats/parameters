@@ -149,6 +149,44 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
 
+# digits and ci_digits
+
+    Code
+      print(out, digits = 4)
+    Output
+      Parameter | Coefficient |     SE |         95% CI |   t(24) |     p
+      -------------------------------------------------------------------
+      hp        |     -0.0627 | 0.0199 | [-0.10, -0.02] | -3.1541 | 0.004
+      gear [4]  |      0.8223 | 2.2921 | [-3.91,  5.55] |  0.3587 | 0.723
+      gear [5]  |      5.1839 | 2.6751 | [-0.34, 10.71] |  1.9378 | 0.064
+      vs        |      1.9583 | 2.0920 | [-2.36,  6.28] |  0.9361 | 0.359
+      cyl [6]   |     -2.3057 | 2.1418 | [-6.73,  2.11] | -1.0765 | 0.292
+      cyl [8]   |      0.9279 | 4.3980 | [-8.15, 10.00] |  0.2110 | 0.835
+      drat      |      2.3430 | 1.9741 | [-1.73,  6.42] |  1.1869 | 0.247
+    Message <simpleMessage>
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
+---
+
+    Code
+      print(out, digits = 4, ci_digits = 2)
+    Output
+      Parameter | Coefficient |     SE |         95% CI |   t(24) |     p
+      -------------------------------------------------------------------
+      hp        |     -0.0627 | 0.0199 | [-0.10, -0.02] | -3.1541 | 0.004
+      gear [4]  |      0.8223 | 2.2921 | [-3.91,  5.55] |  0.3587 | 0.723
+      gear [5]  |      5.1839 | 2.6751 | [-0.34, 10.71] |  1.9378 | 0.064
+      vs        |      1.9583 | 2.0920 | [-2.36,  6.28] |  0.9361 | 0.359
+      cyl [6]   |     -2.3057 | 2.1418 | [-6.73,  2.11] | -1.0765 | 0.292
+      cyl [8]   |      0.9279 | 4.3980 | [-8.15, 10.00] |  0.2110 | 0.835
+      drat      |      2.3430 | 1.9741 | [-1.73,  6.42] |  1.1869 | 0.247
+    Message <simpleMessage>
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+
 # select pattern
 
     Code
