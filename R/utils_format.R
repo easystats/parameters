@@ -347,33 +347,51 @@
     params
   }
 
+  # we need some more information about prettified labels etc.
   pretty_names <- attributes(params)$pretty_names
+  coef_name <- attributes(params)$coefficient_name
+  if (is.null(coef_name)) {
+    coef_name <- "Coefficient"
+  }
+
+  # copy object, so we save original data
   out <- params
 
+  # iterate all factors in the data and check if any factor was used in the model
   for (fn in names(factors)) {
     f <- factors[[fn]]
+    # "f" contains all combinations of factor name and levels from the data,
+    # which we can match with the names of the pretty_names vector    
     found <- which(names(pretty_names) %in% f)
+    # if we have a match, we add the reference level to the pretty_names vector
     if (length(found)) {
+      # the reference level is *not* in the pretty names yet
       reference_level <- f[!f %in% names(pretty_names)]
+      # create a pretty level for the reference category
       pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "] (ref.)")
+      # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
         stats::setNames(pretty_level, reference_level),
         min(found)
       )
-      out <- .insert_row_at(
-        out,
-        data.frame(
-          Parameter = reference_level,
-          Coefficient = as.numeric(attributes(x)$exponentiate),
-          stringsAsFactors = FALSE
-        ),
-        min(found)
+      # now we need to update the data as well (i.e. the parameters table)
+      row_data <- data.frame(
+        Parameter = reference_level,
+        Coefficient = as.numeric(attributes(params)$exponentiate),
+        stringsAsFactors = FALSE
       )
+      # coefficient name can also be "Odds Ratio" etc., so make sure we
+      # have the correct column name in the data row we want to insert
+      if (coef_name %in% colnames(out)) {
+        colnames(row_data)[2] <- coef_name
+      }
+      out <- .insert_row_at(out, row_data, min(found))
     }
-    attr(out, "pretty_names") <- pretty_names
-    attr(out, "pretty_labels") <- pretty_names
   }
+  # update pretty_names attribute
+  attr(out, "pretty_names") <- pretty_names
+  attr(out, "pretty_labels") <- pretty_names
 
   out
 }
