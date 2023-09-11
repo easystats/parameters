@@ -22,6 +22,7 @@ print_html.parameters_model <- function(x,
                                         font_size = "100%",
                                         line_padding = 4,
                                         column_labels = NULL,
+                                        add_reference = FALSE,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -82,6 +83,7 @@ print_html.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "html",
     groups = groups,
+    add_reference = add_reference,
     ...
   )
 

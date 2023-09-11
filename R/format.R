@@ -15,6 +15,7 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     groups = NULL,
+                                    add_reference = FALSE,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -167,6 +168,7 @@ format.parameters_model <- function(x,
       ci_width = ci_width,
       ci_brackets = ci_brackets,
       zap_small = zap_small,
+      add_reference = add_reference,
       ...
     )
   } else {
@@ -183,6 +185,7 @@ format.parameters_model <- function(x,
       format = format,
       coef_name = coef_name,
       zap_small = zap_small,
+      add_reference = add_reference,
       ...
     )
   }
@@ -925,7 +928,7 @@ format.parameters_sem <- function(x,
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
       insight::format_alert(paste0("\n", msg))
       # set flag, so message only displayed once per session
-      options("parameters_warning_exponentiate" = FALSE)
+      options(parameters_warning_exponentiate = FALSE)
     }
   }
 }

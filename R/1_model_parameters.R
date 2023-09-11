@@ -711,7 +711,8 @@ model_parameters.glm <- function(model,
     keep_parameters = keep,
     drop_parameters = drop,
     vcov = vcov,
-    vcov_args = vcov_args
+    vcov_args = vcov_args,
+    verbose = verbose
   )
   args <- c(args, dots)
   out <- do.call(".model_parameters_generic", args)
