@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.5</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -361,11 +361,11 @@ are especially for the confidence intervals and p-values.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter            | Coefficient |     SE |       95% CI |  t(147) |      p</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)          |      5.0060 | 0.0728 | [4.86, 5.15] | 68.7616 | &lt; .001</span></span>
-<span><span class="co">#&gt; Species [versicolor] |      0.9300 | 0.1030 | [0.73, 1.13] |  9.0328 | &lt; .001</span></span>
-<span><span class="co">#&gt; Species [virginica]  |      1.5820 | 0.1030 | [1.38, 1.79] | 15.3655 | &lt; .001</span></span></code></pre></div>
+<span><span class="co">#&gt; Parameter            | Coefficient |     SE |           95% CI |  t(147) |      p</span></span>
+<span><span class="co">#&gt; ---------------------------------------------------------------------------------</span></span>
+<span><span class="co">#&gt; (Intercept)          |      5.0060 | 0.0728 | [4.8621, 5.1499] | 68.7616 | &lt; .001</span></span>
+<span><span class="co">#&gt; Species [versicolor] |      0.9300 | 0.1030 | [0.7265, 1.1335] |  9.0328 | &lt; .001</span></span>
+<span><span class="co">#&gt; Species [virginica]  |      1.5820 | 0.1030 | [1.3785, 1.7855] | 15.3655 | &lt; .001</span></span></code></pre></div>
 <p>p-values can be displayed in exact, scientific notation if
 required.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
