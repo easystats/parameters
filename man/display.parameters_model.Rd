@@ -74,6 +74,7 @@
   zap_small = FALSE,
   format = NULL,
   groups = NULL,
+  add_reference = FALSE,
   ...
 )
 
@@ -263,6 +264,11 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
+
+\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
+be added to the parameter table. This is only relevant for models with
+categorical predictors. The coefficient for the reference level is always
+\code{0}, so this is just for completeness.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character

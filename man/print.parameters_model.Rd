@@ -132,6 +132,11 @@ columns across all table components are adjusted to have the same width.}
 encompassed in square brackets (else in parentheses).}
 
 \item{...}{Arguments passed to or from other methods.}
+
+\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
+be added to the parameter table. This is only relevant for models with
+categorical predictors. The coefficient for the reference level is always
+\code{0}, so this is just for completeness.}
 }
 \value{
 Invisibly returns the original input object.

@@ -87,6 +87,10 @@
 #'   labels will be used as parameters names. The latter only works for "labelled"
 #'   data, i.e. if the data used to fit the model had `"label"` and `"labels"`
 #'   attributes. See also section _Global Options to Customize Messages when Printing_.
+#' @param add_reference Logical, if `TRUE`, the reference level of factors will
+#'   be added to the parameter table. This is only relevant for models with
+#'   categorical predictors. The coefficient for the reference level is always
+#'   `0`, so this is just for completeness.
 #' @inheritParams insight::format_table
 #' @inheritParams compare_parameters
 #'

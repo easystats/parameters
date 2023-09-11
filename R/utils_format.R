@@ -347,6 +347,11 @@
     params
   }
 
+  out <- params
+  for (f in factors) {
+    min(which(f %in% out$Parameter))
+  }
+
   params
 }
 
@@ -794,6 +799,7 @@
                                                 ci_width = "auto",
                                                 ci_brackets = TRUE,
                                                 zap_small = FALSE,
+                                                add_reference = FALSE,
                                                 ...) {
   final_table <- list()
 
