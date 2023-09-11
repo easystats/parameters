@@ -56,7 +56,6 @@ test_that("model_parameters - cgam", {
       coefficient_name = "Coefficient",
       zi_coefficient_name = "Log-Odds",
       digits = 2,
-      ci_digits = 2,
       p_digits = 3,
       footer_digits = 3,
       class = c("parameters_model", "see_parameters_model", "data.frame"),
@@ -152,7 +151,6 @@ test_that("model_parameters - cgamm", {
       coefficient_name = "Coefficient",
       zi_coefficient_name = "Log-Odds",
       digits = 2,
-      ci_digits = 2,
       p_digits = 3,
       footer_digits = 3,
       class = c("parameters_model", "see_parameters_model", "data.frame"), object_name = "ans"
