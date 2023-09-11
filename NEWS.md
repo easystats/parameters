@@ -2,6 +2,8 @@
 
 ## Changes
 
+* Minor improvements to factor analysis functions.
+
 * The `ci_digits` argument of the `print()` method for `model_parameters()` now
   defaults to the same value of `digits`.
 
