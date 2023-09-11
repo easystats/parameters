@@ -357,6 +357,11 @@
   # copy object, so we save original data
   out <- params
 
+  # if we use "keep" or "drop", we have less parameters in our data frame,
+  # so we need to make sure we only have those pretty_names, which names match
+  # the parameters in the data frame
+  pretty_names <- pretty_names[names(pretty_names) %in% params$Parameter]
+
   # iterate all factors in the data and check if any factor was used in the model
   for (fn in names(factors)) {
     f <- factors[[fn]]
@@ -1038,6 +1043,11 @@
       sample_rows <- round(c(1, stats::quantile(seq_len(n_rows), seq_len(row_steps - 2) / row_steps), n_rows))
       tables[[type]] <- tables[[type]][sample_rows, ]
       tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
+    }
+
+    # add the coefficient for the base-(reference)-level of factors?
+    if (add_reference) {
+      tables[[type]] <- .add_reference_level(tables[[type]])
     }
 
     formatted_table <- insight::format_table(
