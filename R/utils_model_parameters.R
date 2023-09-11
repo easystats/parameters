@@ -213,16 +213,16 @@
 
   switch(tolower(ci_method),
     # abbreviations
-    "eti" = ,
-    "hdi" = ,
-    "si" = toupper(ci_method),
+    eti = ,
+    hdi = ,
+    si = toupper(ci_method),
     # named after people
-    "satterthwaite" = ,
-    "kenward" = ,
-    "wald" = insight::format_capitalize(ci_method),
+    satterthwaite = ,
+    kenward = ,
+    wald = insight::format_capitalize(ci_method),
     # special cases
-    "bci" = ,
-    "bcai" = "BCa",
+    bci = ,
+    bcai = "BCa",
     # no change otherwise
     ci_method
   )
@@ -236,12 +236,12 @@
     name <- attributes(s)$estName
     if (!is.null(name)) {
       coef_col <- switch(name,
-        "prob"       = "Probability",
-        "odds.ratio" = "Odds Ratio",
-        "emmean"     = "Marginal Means",
-        "rate"       = "Estimated Counts",
-        "ratio"      = "Ratio",
-        "Coefficient"
+        prob       = "Probability",
+        odds.ratio = "Odds Ratio",
+        emmean     = "Marginal Means",
+        rate       = "Estimated Counts",
+        ratio      = "Ratio",
+        Coefficient
       )
     }
   } else if (!is.null(info) && !info$family == "unknown") {
