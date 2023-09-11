@@ -5,6 +5,9 @@
 * Fixed issue with wrong calculation of test-statistic and p-values in
   `model_parameters()` for `fixest` models.
 
+* Fixed issue with wrong column header for `glm` models with
+  `family = binomial("identiy")`.
+
 * Minor fixes for `dominance_analysis()`.
 
 # parameters 0.21.1
