@@ -251,7 +251,11 @@
       } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
         coef_col <- "Odds Ratio"
       } else if (info$is_binomial && !info$is_logit) {
-        coef_col <- "Risk Ratio"
+        if (info$link_function == "identity") {
+          coef_col <- "Exp. Risk"
+        } else {
+          coef_col <- "Risk Ratio"
+        }
       } else if (info$is_count) {
         coef_col <- "IRR"
       }
@@ -262,7 +266,7 @@
         coef_col <- "Log-Odds"
       } else if (info$is_binomial && !info$is_logit) {
         if (info$link_function == "identity") {
-          coef_col <- "Probability (difference)"
+          coef_col <- "Risk"
         } else {
           coef_col <- "Log-Risk"
         }
