@@ -280,6 +280,7 @@
                                              format = NULL,
                                              coef_name = NULL,
                                              zap_small = FALSE,
+                                             add_reference = FALSE,
                                              ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -308,6 +309,11 @@
     x$Level <- NULL
   }
 
+  # add the coefficient for the base-(reference)-level of factors?
+  if (add_reference) {
+    x <- .add_reference_level(x)
+  }
+
   insight::format_table(
     x,
     pretty_names = pretty_names,
@@ -319,6 +325,29 @@
     zap_small = zap_small,
     ...
   )
+}
+
+
+.add_reference_level <- function(params) {
+  # check if we have a model object, else return parameter table
+  model <- .get_object(params)
+  if (is.null(model)) {
+    params
+  }
+
+  # check if we have model data, else return parameter table
+  model_data <- insight::get_data(model)
+  if (is.null(model_data)) {
+    params
+  }
+
+  # find factors and factor levels and check if we have any factors in the data
+  factors <- .find_factor_levels(model_data)
+  if (!length(factors)) {
+    params
+  }
+
+  params
 }
 
 

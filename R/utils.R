@@ -99,3 +99,37 @@
 .is_semLme <- function(x) {
   all(inherits(x, c("sem", "lme")))
 }
+
+
+.insert_row_at <- function(data, row, index, default_value = NA) {
+  # add missing columns
+  new_columns <- setdiff(colnames(data), colnames(row))
+  if (length(new_columns) > 0) {
+    row[new_columns] <- default_value
+  }
+  # match column order
+  row <- row[match(colnames(data), colnames(row))]
+
+  # insert row
+  if (index == 1) {
+    rbind(row, data)
+  } else if (index == nrow(data)) {
+    rbind(data, row)
+  } else {
+    rbind(data[1:(index - 1), ], row, data[index:nrow(data), ])
+  }
+}
+
+
+.find_factor_levels <- function(data) {
+  out <- lapply(colnames(data), function(i) {
+    v <- data[[i]]
+    if (is.factor(v)) {
+      paste0(i, levels(v))
+    } else {
+      NULL
+    }
+  })
+  names(out) <- names(data)
+  insight::compact_list(out)
+}
