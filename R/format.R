@@ -8,7 +8,7 @@ format.parameters_model <- function(x,
                                     split_components = TRUE,
                                     select = NULL,
                                     digits = 2,
-                                    ci_digits = 2,
+                                    ci_digits = digits,
                                     p_digits = 3,
                                     ci_width = NULL,
                                     ci_brackets = NULL,
@@ -202,16 +202,16 @@ format.parameters_model <- function(x,
   # to "split" the formatted table, because the glue-function needs the columns
   # without the parameters-column.
   if (!is.null(style)) {
-    if (!is.data.frame(formatted_table)) {
-      formatted_table[] <- lapply(
+    if (is.data.frame(formatted_table)) {
+      formatted_table <- .style_formatted_table(
         formatted_table,
-        .style_formatted_table,
         style = style,
         format = format
       )
     } else {
-      formatted_table <- .style_formatted_table(
+      formatted_table[] <- lapply(
         formatted_table,
+        .style_formatted_table,
         style = style,
         format = format
       )
@@ -259,7 +259,7 @@ format.compare_parameters <- function(x,
                                       split_components = TRUE,
                                       select = NULL,
                                       digits = 2,
-                                      ci_digits = 2,
+                                      ci_digits = digits,
                                       p_digits = 3,
                                       ci_width = NULL,
                                       ci_brackets = NULL,
@@ -468,16 +468,23 @@ format.compare_parameters <- function(x,
 #' @export
 format.parameters_sem <- function(x,
                                   digits = 2,
-                                  ci_digits = 2,
+                                  ci_digits = digits,
                                   p_digits = 3,
                                   format = NULL,
                                   ci_width = NULL,
                                   ci_brackets = TRUE,
                                   pretty_names = TRUE,
                                   ...) {
-  if (missing(digits)) digits <- .additional_arguments(x, "digits", 2)
-  if (missing(ci_digits)) ci_digits <- .additional_arguments(x, "ci_digits", 2)
-  if (missing(p_digits)) p_digits <- .additional_arguments(x, "p_digits", 3)
+  if (missing(digits)) {
+    digits <- .additional_arguments(x, "digits", 2)
+  }
+  if (missing(ci_digits)) {
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
+  }
+  if (missing(p_digits)) {
+    p_digits <- .additional_arguments(x, "p_digits", 3)
+  }
+
   .format_columns_multiple_components(
     x,
     pretty_names = TRUE,
@@ -824,9 +831,9 @@ format.parameters_sem <- function(x,
         }
 
         string_tailed <- switch(ci_method,
-          "hdi" = "highest-density",
-          "uniroot" = ,
-          "profile" = "profile-likelihood",
+          hdi = "highest-density",
+          uniroot = ,
+          profile = "profile-likelihood",
           "equal-tailed"
         )
 
@@ -840,15 +847,15 @@ format.parameters_sem <- function(x,
         }
 
         string_method <- switch(ci_method,
-          "bci" = ,
-          "bcai" = "bias-corrected accelerated bootstrap",
-          "si" = ,
-          "ci" = ,
-          "quantile" = ,
-          "eti" = ,
-          "hdi" = sampling_method,
-          "normal" = "Wald normal",
-          "boot" = "parametric bootstrap",
+          bci = ,
+          bcai = "bias-corrected accelerated bootstrap",
+          si = ,
+          ci = ,
+          quantile = ,
+          eti = ,
+          hdi = sampling_method,
+          normal = "Wald normal",
+          boot = "parametric bootstrap",
           "Wald"
         )
 
@@ -860,9 +867,9 @@ format.parameters_sem <- function(x,
 
         if (!is.null(test_statistic) && !ci_method == "normal" && !isTRUE(bootstrap)) {
           string_statistic <- switch(tolower(test_statistic),
-            "t-statistic" = "t",
-            "chi-squared statistic" = ,
-            "z-statistic" = "z",
+            `t-statistic` = "t",
+            `chi-squared statistic` = ,
+            `z-statistic` = "z",
             ""
           )
           string_method <- paste0(string_method, " ", string_statistic, "-")

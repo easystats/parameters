@@ -224,7 +224,7 @@ print.parameters_model <- function(x,
                                    caption = NULL,
                                    footer = NULL,
                                    digits = 2,
-                                   ci_digits = 2,
+                                   ci_digits = digits,
                                    p_digits = 3,
                                    footer_digits = 3,
                                    show_sigma = FALSE,
@@ -256,7 +256,7 @@ print.parameters_model <- function(x,
     digits <- .additional_arguments(x, "digits", digits)
   }
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
   if (missing(p_digits)) {
     p_digits <- .additional_arguments(x, "p_digits", p_digits)
@@ -371,7 +371,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                         split_components = TRUE,
                         select = NULL,
                         digits = 2,
-                        ci_digits = 2,
+                        ci_digits = digits,
                         p_digits = 3,
                         zap_small = FALSE,
                         ci_width = "auto",

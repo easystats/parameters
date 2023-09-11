@@ -5,7 +5,14 @@ test_that("marginaleffects()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   model <- marginaleffects::slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
-  expect_equal(nrow(parameters(model)), 1)
+  out <- parameters(model)
+  expect_identical(nrow(out), 1L)
+  expect_named(out, c(
+    "Parameter", "Comparison", "Coefficient", "SE", "Statistic",
+    "p", "CI", "CI_low", "CI_high"
+  ))
+  out <- model_parameters(model, exponentiate = TRUE)
+  expect_equal(out$Coefficient, 1.394, tolerance = 1e-3)
 
   # Bayesian
   x <- suppressWarnings(
@@ -18,14 +25,21 @@ test_that("marginaleffects()", {
     )
   )
   model <- marginaleffects::slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
-  expect_equal(nrow(parameters(model)), 1)
+  expect_identical(nrow(parameters(model)), 1L)
 })
 
 
 test_that("predictions()", {
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   p <- marginaleffects::avg_predictions(x, by = "Species")
-  expect_equal(nrow(parameters(p)), 3)
+  out <- parameters(p)
+  expect_identical(nrow(out), 3L)
+  expect_named(out, c(
+    "Predicted", "SE", "CI", "CI_low", "CI_high", "Statistic",
+    "p", "Species", "s.value"
+  ))
+  out <- parameters(p, exponentiate = TRUE)
+  expect_equal(out$Predicted, c(30.81495, 15.95863, 19.57004), tolerance = 1e-4)
 })
 
 
@@ -33,7 +47,9 @@ test_that("comparisons()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   m <- marginaleffects::comparisons(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
-  expect_equal(nrow(parameters(m)), 1)
+  expect_identical(nrow(parameters(m)), 1L)
+  out <- parameters(m, exponentiate = TRUE)
+  expect_equal(out$Coefficient, 1.393999, tolerance = 1e-4)
 
   # Bayesian
   x <- suppressWarnings(
@@ -50,7 +66,7 @@ test_that("comparisons()", {
     newdata = insight::get_datagrid(x, at = "Species"),
     variables = "Petal.Length"
   )
-  expect_equal(nrow(parameters(m)), 1)
+  expect_identical(nrow(parameters(m)), 1L)
 })
 
 
@@ -60,14 +76,14 @@ test_that("marginalmeans()", {
   dat$gear <- factor(dat$gear)
   x <- lm(mpg ~ cyl + gear, data = dat)
   m <- marginaleffects::marginalmeans(x)
-  expect_equal(nrow(parameters(m)), 6)
+  expect_identical(nrow(parameters(m)), 6L)
 })
 
 
 test_that("hypotheses()", {
   x <- lm(mpg ~ hp + wt, data = mtcars)
   m <- marginaleffects::hypotheses(x, "hp = wt")
-  expect_equal(nrow(parameters(m)), 1)
+  expect_identical(nrow(parameters(m)), 1L)
 })
 
 

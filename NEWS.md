@@ -1,5 +1,13 @@
 # parameters 0.21.2
 
+## Changes
+
+* The `ci_digits` argument of the `print()` method for `model_parameters()` now
+  defaults to the same value of `digits`.
+
+* `model_parameters()` for objects from package *marginaleffects*  now also
+  accepts the `exponentiate` argument.
+
 ## Bug fixes
 
 * Fixed issue with wrong calculation of test-statistic and p-values in
