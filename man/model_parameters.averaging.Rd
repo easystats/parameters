@@ -295,7 +295,7 @@
 
 \method{model_parameters}{slopes}(model, ci = 0.95, exponentiate = FALSE, ...)
 
-\method{model_parameters}{predictions}(model, ci = 0.95, ...)
+\method{model_parameters}{predictions}(model, ci = 0.95, exponentiate = TRUE, ...)
 
 \method{model_parameters}{margins}(
   model,
