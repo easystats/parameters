@@ -133,9 +133,10 @@ columns across all table components are adjusted to have the same width.}
 encompassed in square brackets (else in parentheses).}
 
 \item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
-be added to the parameter table. This is only relevant for models with
+be added to the parameters table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always
-\code{0}, so this is just for completeness.}
+\code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
+so this is just for completeness.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

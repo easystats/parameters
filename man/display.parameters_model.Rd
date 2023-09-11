@@ -237,9 +237,10 @@ places than \code{digits} are printed in scientific notation.}
 column names are generated. See 'Examples'.}
 
 \item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
-be added to the parameter table. This is only relevant for models with
+be added to the parameters table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always
-\code{0}, so this is just for completeness.}
+\code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
+so this is just for completeness.}
 
 \item{verbose}{Toggle messages and warnings.}
 
