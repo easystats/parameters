@@ -13,7 +13,7 @@
   caption = NULL,
   footer = NULL,
   digits = 2,
-  ci_digits = 2,
+  ci_digits = digits,
   p_digits = 3,
   footer_digits = 3,
   show_sigma = FALSE,

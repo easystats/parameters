@@ -285,15 +285,15 @@
   ...
 )
 
-\method{model_parameters}{marginaleffects}(model, ci = 0.95, ...)
+\method{model_parameters}{marginaleffects}(model, ci = 0.95, exponentiate = FALSE, ...)
 
-\method{model_parameters}{comparisons}(model, ci = 0.95, ...)
+\method{model_parameters}{comparisons}(model, ci = 0.95, exponentiate = FALSE, ...)
 
-\method{model_parameters}{marginalmeans}(model, ci = 0.95, ...)
+\method{model_parameters}{marginalmeans}(model, ci = 0.95, exponentiate = FALSE, ...)
 
-\method{model_parameters}{hypotheses}(model, ci = 0.95, ...)
+\method{model_parameters}{hypotheses}(model, ci = 0.95, exponentiate = FALSE, ...)
 
-\method{model_parameters}{slopes}(model, ci = 0.95, ...)
+\method{model_parameters}{slopes}(model, ci = 0.95, exponentiate = FALSE, ...)
 
 \method{model_parameters}{predictions}(model, ci = 0.95, ...)
 
