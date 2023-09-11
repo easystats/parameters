@@ -361,7 +361,7 @@
   for (fn in names(factors)) {
     f <- factors[[fn]]
     # "f" contains all combinations of factor name and levels from the data,
-    # which we can match with the names of the pretty_names vector    
+    # which we can match with the names of the pretty_names vector
     found <- which(names(pretty_names) %in% f)
     # if we have a match, we add the reference level to the pretty_names vector
     if (length(found)) {

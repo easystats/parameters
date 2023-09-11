@@ -928,7 +928,7 @@ format.parameters_sem <- function(x,
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
       insight::format_alert(paste0("\n", msg))
       # set flag, so message only displayed once per session
-      options("parameters_warning_exponentiate" = FALSE)
+      options(parameters_warning_exponentiate = FALSE)
     }
   }
 }
