@@ -15,16 +15,16 @@ format_p_adjust <- function(method) {
   method <- tolower(method)
 
   switch(method,
-    "holm" = "Holm (1979)",
-    "hochberg" = "Hochberg (1988)",
-    "hommel" = "Hommel (1988)",
-    "bonferroni" = "Bonferroni",
-    "fdr" = "Benjamini & Hochberg (1995)",
-    "bh" = "Benjamini & Hochberg (1995)",
-    "by" = "Benjamini & Yekutieli (2001)",
-    "tukey" = "Tukey",
-    "scheffe" = "Scheffe",
-    "sidak" = "Sidak",
+    holm = "Holm (1979)",
+    hochberg = "Hochberg (1988)",
+    hommel = "Hommel (1988)",
+    bonferroni = "Bonferroni",
+    fdr = "Benjamini & Hochberg (1995)",
+    bh = "Benjamini & Hochberg (1995)",
+    by = "Benjamini & Yekutieli (2001)",
+    tukey = "Tukey",
+    scheffe = "Scheffe",
+    sidak = "Sidak",
     method
   )
 }

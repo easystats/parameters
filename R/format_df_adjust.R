@@ -19,15 +19,15 @@ format_df_adjust <- function(method,
   method <- tolower(method)
 
   out <- switch(method,
-    "kr" = ,
-    "kenward-rogers" = ,
-    "kenward-roger" = ,
-    "kenward" = "Kenward-Roger",
-    "ml1" = "m-l-1",
-    "betwithin" = ,
-    "bw" = "Between-within",
-    "fit" = "Residual",
-    "boot" = "Bootstrapped",
+    kr = ,
+    `kenward-rogers` = ,
+    `kenward-roger` = ,
+    kenward = "Kenward-Roger",
+    ml1 = "m-l-1",
+    betwithin = ,
+    bw = "Between-within",
+    fit = "Residual",
+    boot = "Bootstrapped",
     insight::format_capitalize(method)
   )
 

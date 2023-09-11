@@ -136,7 +136,7 @@ model_parameters.merMod <- function(model,
       ci_method <- "quantile"
     } else {
       ci_method <- switch(insight::find_statistic(model),
-        "t-statistic" = "residual",
+        `t-statistic` = "residual",
         "wald"
       )
     }

@@ -51,9 +51,9 @@
 #' @keywords internal
 .filter_component <- function(dat, component) {
   switch(component,
-    "conditional" = dat[dat$Component == "conditional", ],
-    "zi" = ,
-    "zero_inflated" = dat[dat$Component == "zero_inflated", ],
+    conditional = dat[dat$Component == "conditional", ],
+    zi = ,
+    zero_inflated = dat[dat$Component == "zero_inflated", ],
     dat
   )
 }

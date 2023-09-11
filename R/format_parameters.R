@@ -345,9 +345,9 @@ format_parameters.parameters_model <- function(model, ...) {
 #' @keywords internal
 .format_ordered <- function(degree, brackets = c("[", "]")) {
   switch(degree,
-    ".L" = paste0(brackets[1], "linear", brackets[2]),
-    ".Q" = paste0(brackets[1], "quadratic", brackets[2]),
-    ".C" = paste0(brackets[1], "cubic", brackets[2]),
+    `.L` = paste0(brackets[1], "linear", brackets[2]),
+    `.Q` = paste0(brackets[1], "quadratic", brackets[2]),
+    `.C` = paste0(brackets[1], "cubic", brackets[2]),
     paste0(
       brackets[1],
       parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE),

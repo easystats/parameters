@@ -353,12 +353,12 @@ model_parameters.maov <- model_parameters.aov
         return(type)
       }
       switch(type,
-        "1" = ,
-        "I" = 1,
-        "2" = ,
-        "II" = 2,
-        "3" = ,
-        "III" = 3,
+        `1` = ,
+        `I` = 1,
+        `2` = ,
+        `II` = 2,
+        `3` = ,
+        `III` = 3,
         1
       )
     }

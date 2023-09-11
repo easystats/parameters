@@ -64,9 +64,9 @@
 
   # filter component
   out <- switch(component,
-    "zi" = ,
-    "zero_inflated" = out[out$Component == "zi", ],
-    "conditional" = out[out$Component == "cond", ],
+    zi = ,
+    zero_inflated = out[out$Component == "zi", ],
+    conditional = out[out$Component == "cond", ],
     out
   )
 
