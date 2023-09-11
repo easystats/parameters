@@ -5,7 +5,7 @@
 #'
 #' @param model An EFA model (e.g., a `psych::fa` object).
 #' @param names Vector containing dimension names.
-#' @param max_per_dimension Max number of variables to keep per dimension.
+#' @param max_per_dimension Maximum number of variables to keep per dimension.
 #' @inheritParams principal_components
 #'
 #' @examples
@@ -89,7 +89,11 @@ efa_to_cfa <- convert_efa_to_cfa
   # Catch error
   if (length(names) != insight::n_unique(loadings$Component)) {
     insight::format_error(
-      paste0("The `names` vector must be of same length as the number of dimensions, in this case ", length(unique(loadings$Component)), ".")
+      paste0(
+        "The `names` vector must be of same length as the number of dimensions, in this case ",
+        length(unique(loadings$Component)),
+        "."
+      )
     )
   }
 
@@ -109,10 +113,7 @@ efa_to_cfa <- convert_efa_to_cfa
     }
 
     # Append that list
-    cfa <- c(
-      cfa,
-      paste0(names[i], " =~ ", paste(items, collapse = " + "))
-    )
+    cfa <- c(cfa, paste0(names[i], " =~ ", paste(items, collapse = " + ")))
   }
 
   cfa <- paste0(cfa, collapse = "\n")

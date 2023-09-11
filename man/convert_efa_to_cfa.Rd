@@ -31,7 +31,7 @@ structure).}
 
 \item{names}{Vector containing dimension names.}
 
-\item{max_per_dimension}{Max number of variables to keep per dimension.}
+\item{max_per_dimension}{Maximum number of variables to keep per dimension.}
 }
 \value{
 Converted index.
