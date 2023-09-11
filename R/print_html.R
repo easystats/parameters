@@ -11,7 +11,7 @@ print_html.parameters_model <- function(x,
                                         footer = NULL,
                                         align = NULL,
                                         digits = 2,
-                                        ci_digits = 2,
+                                        ci_digits = digits,
                                         p_digits = 3,
                                         footer_digits = 3,
                                         ci_brackets = c("(", ")"),
@@ -22,6 +22,7 @@ print_html.parameters_model <- function(x,
                                         font_size = "100%",
                                         line_padding = 4,
                                         column_labels = NULL,
+                                        add_reference = FALSE,
                                         verbose = TRUE,
                                         ...) {
   # check if user supplied digits attributes
@@ -30,7 +31,7 @@ print_html.parameters_model <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {
@@ -82,6 +83,7 @@ print_html.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "html",
     groups = groups,
+    add_reference = add_reference,
     ...
   )
 
@@ -139,7 +141,7 @@ print_html.compare_parameters <- function(x,
                                           subtitle = NULL,
                                           footer = NULL,
                                           digits = 2,
-                                          ci_digits = 2,
+                                          ci_digits = digits,
                                           p_digits = 3,
                                           zap_small = FALSE,
                                           groups = NULL,
@@ -155,7 +157,7 @@ print_html.compare_parameters <- function(x,
   }
 
   if (missing(ci_digits)) {
-    ci_digits <- .additional_arguments(x, "ci_digits", ci_digits)
+    ci_digits <- .additional_arguments(x, "ci_digits", digits)
   }
 
   if (missing(p_digits)) {

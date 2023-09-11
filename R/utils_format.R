@@ -273,13 +273,14 @@
 .format_columns_single_component <- function(x,
                                              pretty_names,
                                              digits = 2,
-                                             ci_digits = 2,
+                                             ci_digits = digits,
                                              p_digits = 3,
                                              ci_width = "auto",
                                              ci_brackets = TRUE,
                                              format = NULL,
                                              coef_name = NULL,
                                              zap_small = FALSE,
+                                             add_reference = FALSE,
                                              ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -308,6 +309,11 @@
     x$Level <- NULL
   }
 
+  # add the coefficient for the base-(reference)-level of factors?
+  if (add_reference) {
+    x <- .add_reference_level(x)
+  }
+
   insight::format_table(
     x,
     pretty_names = pretty_names,
@@ -319,6 +325,86 @@
     zap_small = zap_small,
     ...
   )
+}
+
+
+.add_reference_level <- function(params) {
+  # check if we have a model object, else return parameter table
+  model <- .get_object(params)
+  if (is.null(model)) {
+    params
+  }
+
+  # check if we have model data, else return parameter table
+  model_data <- insight::get_data(model)
+  if (is.null(model_data)) {
+    params
+  }
+
+  # find factors and factor levels and check if we have any factors in the data
+  factors <- .find_factor_levels(model_data)
+  if (!length(factors)) {
+    params
+  }
+
+  # we need some more information about prettified labels etc.
+  pretty_names <- attributes(params)$pretty_names
+  coef_name <- attributes(params)$coefficient_name
+  if (is.null(coef_name)) {
+    coef_name <- "Coefficient"
+  }
+  zi_coef_name <- attributes(params)$zi_coefficient_name
+  if (is.null(zi_coef_name)) {
+    zi_coef_name <- "Coefficient"
+  }
+
+  # copy object, so we save original data
+  out <- params
+
+  # if we use "keep" or "drop", we have less parameters in our data frame,
+  # so we need to make sure we only have those pretty_names, which names match
+  # the parameters in the data frame
+  pretty_names <- pretty_names[names(pretty_names) %in% params$Parameter]
+
+  # iterate all factors in the data and check if any factor was used in the model
+  for (fn in names(factors)) {
+    f <- factors[[fn]]
+    # "f" contains all combinations of factor name and levels from the data,
+    # which we can match with the names of the pretty_names vector
+    found <- which(names(pretty_names) %in% f)
+    # if we have a match, we add the reference level to the pretty_names vector
+    if (length(found)) {
+      # the reference level is *not* in the pretty names yet
+      reference_level <- f[!f %in% names(pretty_names)]
+      # create a pretty level for the reference category
+      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
+      # insert new pretty level at the correct position in "pretty_names"
+      pretty_names <- .insert_element_at(
+        pretty_names,
+        stats::setNames(pretty_level, reference_level),
+        min(found)
+      )
+      # now we need to update the data as well (i.e. the parameters table)
+      row_data <- data.frame(
+        Parameter = reference_level,
+        Coefficient = as.numeric(attributes(params)$exponentiate),
+        stringsAsFactors = FALSE
+      )
+      # coefficient name can also be "Odds Ratio" etc., so make sure we
+      # have the correct column name in the data row we want to insert
+      if (coef_name %in% colnames(out)) {
+        colnames(row_data)[2] <- coef_name
+      } else if (zi_coef_name %in% colnames(out)) {
+        colnames(row_data)[2] <- zi_coef_name
+      }
+      out <- .insert_row_at(out, row_data, min(found))
+    }
+  }
+  # update pretty_names attribute
+  attr(out, "pretty_names") <- pretty_names
+  attr(out, "pretty_labels") <- pretty_names
+
+  out
 }
 
 
@@ -408,64 +494,64 @@
   }
 
   component_name <- switch(type,
-    "mu" = ,
-    "fixed" = ,
-    "fixed." = ,
-    "conditional" = ,
-    "conditional." = "Fixed Effects",
-    "random." = ,
-    "random" = "Random Effects",
-    "conditional.fixed" = ,
-    "conditional.fixed." = .conditional_fixed_text,
-    "conditional.random" = .conditional_random_text,
-    "zero_inflated" = "Zero-Inflation",
-    "zero_inflated.fixed" = ,
-    "zero_inflated.fixed." = "Fixed Effects (Zero-Inflation Component)",
-    "zero_inflated.random" = "Random Effects (Zero-Inflation Component)",
-    "survival" = ,
-    "survival.fixed" = "Survival",
-    "dispersion.fixed" = ,
-    "dispersion.fixed." = ,
-    "dispersion" = "Dispersion",
-    "marginal" = "Marginal Effects",
-    "emmeans" = "Estimated Marginal Means",
-    "contrasts" = "Contrasts",
-    "simplex.fixed" = ,
-    "simplex" = "Monotonic Effects",
-    "smooth_sd" = "Smooth Terms (SD)",
-    "smooth_terms" = "Smooth Terms",
-    "sigma.fixed" = ,
-    "sigma.fixed." = ,
-    "sigma" = "Sigma",
-    "thresholds" = "Thresholds",
-    "correlation" = "Correlation",
-    "SD/Cor" = "SD / Correlation",
-    "Loading" = "Loading",
-    "location" = ,
-    "location.fixed" = ,
-    "location.fixed." = "Location Parameters",
-    "scale" = ,
-    "scale.fixed" = ,
-    "scale.fixed." = "Scale Parameters",
-    "extra" = ,
-    "extra.fixed" = ,
-    "extra.fixed." = "Extra Parameters",
-    "nu" = "Nu",
-    "tau" = "Tau",
-    "meta" = "Meta-Parameters",
-    "studies" = "Studies",
-    "within" = "Within-Effects",
-    "between" = "Between-Effects",
-    "interactions" = "(Cross-Level) Interactions",
-    "precision" = ,
-    "precision." = "Precision",
-    "infrequent_purchase" = "Infrequent Purchase",
-    "auxiliary" = "Auxiliary",
-    "residual" = "Residual",
-    "intercept" = "Intercept",
-    "regression" = "Regression",
-    "latent" = "Latent",
-    "time_dummies" = "Time Dummies",
+    mu = ,
+    fixed = ,
+    fixed. = ,
+    conditional = ,
+    conditional. = "Fixed Effects",
+    random. = ,
+    random = "Random Effects",
+    conditional.fixed = ,
+    conditional.fixed. = .conditional_fixed_text,
+    conditional.random = .conditional_random_text,
+    zero_inflated = "Zero-Inflation",
+    zero_inflated.fixed = ,
+    zero_inflated.fixed. = "Fixed Effects (Zero-Inflation Component)",
+    zero_inflated.random = "Random Effects (Zero-Inflation Component)",
+    survival = ,
+    survival.fixed = "Survival",
+    dispersion.fixed = ,
+    dispersion.fixed. = ,
+    dispersion = "Dispersion",
+    marginal = "Marginal Effects",
+    emmeans = "Estimated Marginal Means",
+    contrasts = "Contrasts",
+    simplex.fixed = ,
+    simplex = "Monotonic Effects",
+    smooth_sd = "Smooth Terms (SD)",
+    smooth_terms = "Smooth Terms",
+    sigma.fixed = ,
+    sigma.fixed. = ,
+    sigma = "Sigma",
+    thresholds = "Thresholds",
+    correlation = "Correlation",
+    `SD/Cor` = "SD / Correlation",
+    Loading = "Loading",
+    location = ,
+    location.fixed = ,
+    location.fixed. = "Location Parameters",
+    scale = ,
+    scale.fixed = ,
+    scale.fixed. = "Scale Parameters",
+    extra = ,
+    extra.fixed = ,
+    extra.fixed. = "Extra Parameters",
+    nu = "Nu",
+    tau = "Tau",
+    meta = "Meta-Parameters",
+    studies = "Studies",
+    within = "Within-Effects",
+    between = "Between-Effects",
+    interactions = "(Cross-Level) Interactions",
+    precision = ,
+    precision. = "Precision",
+    infrequent_purchase = "Infrequent Purchase",
+    auxiliary = "Auxiliary",
+    residual = "Residual",
+    intercept = "Intercept",
+    regression = "Regression",
+    latent = "Latent",
+    time_dummies = "Time Dummies",
     type
   )
 
@@ -758,13 +844,14 @@
                                                 pretty_names,
                                                 split_column = "Component",
                                                 digits = 2,
-                                                ci_digits = 2,
+                                                ci_digits = digits,
                                                 p_digits = 3,
                                                 coef_column = NULL,
                                                 format = NULL,
                                                 ci_width = "auto",
                                                 ci_brackets = TRUE,
                                                 zap_small = FALSE,
+                                                add_reference = FALSE,
                                                 ...) {
   final_table <- list()
 
@@ -962,6 +1049,11 @@
       sample_rows <- round(c(1, stats::quantile(seq_len(n_rows), seq_len(row_steps - 2) / row_steps), n_rows))
       tables[[type]] <- tables[[type]][sample_rows, ]
       tables[[type]][[1]] <- insight::format_value(tables[[type]][[1]], digits = digits, protect_integers = TRUE)
+    }
+
+    # add the coefficient for the base-(reference)-level of factors?
+    if (add_reference) {
+      tables[[type]] <- .add_reference_level(tables[[type]])
     }
 
     formatted_table <- insight::format_table(

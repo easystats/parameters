@@ -13,7 +13,7 @@
   caption = NULL,
   footer = NULL,
   digits = 2,
-  ci_digits = 2,
+  ci_digits = digits,
   p_digits = 3,
   footer_digits = 3,
   show_sigma = FALSE,
@@ -22,6 +22,7 @@
   groups = NULL,
   column_width = NULL,
   ci_brackets = c("[", "]"),
+  add_reference = FALSE,
   ...
 )
 
@@ -130,6 +131,12 @@ columns across all table components are adjusted to have the same width.}
 
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
+
+\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
+be added to the parameters table. This is only relevant for models with
+categorical predictors. The coefficient for the reference level is always
+\code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
+so this is just for completeness.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

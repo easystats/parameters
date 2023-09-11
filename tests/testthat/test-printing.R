@@ -38,21 +38,34 @@ withr::with_options(
       out <- model_parameters(model, drop = "^\\(Intercept")
       expect_snapshot(
         print(out, groups = list(
-          "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-          "Interactions" = c("gear4:vs", "gear5:vs"),
-          "Controls" = c(2, 3, 7)
+          Engine = c("cyl6", "cyl8", "vs", "hp"),
+          Interactions = c("gear4:vs", "gear5:vs"),
+          Controls = c(2, 3, 7)
         ))
       )
       expect_snapshot(
         print(out,
           sep = "  ",
           groups = list(
-            "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-            "Interactions" = c("gear4:vs", "gear5:vs"),
-            "Controls" = c(2, 3, 7)
+            Engine = c("cyl6", "cyl8", "vs", "hp"),
+            Interactions = c("gear4:vs", "gear5:vs"),
+            Controls = c(2, 3, 7)
           )
         )
       )
+    })
+
+
+    # Digits ------
+    test_that("digits and ci_digits", {
+      mtcars$cyl <- as.factor(mtcars$cyl)
+      mtcars$gear <- as.factor(mtcars$gear)
+      model <- lm(mpg ~ hp + gear + vs + cyl + drat, data = mtcars)
+      expect_snapshot(model_parameters(model, digits = 4))
+      expect_snapshot(model_parameters(model, digits = 4, ci_digits = 1))
+      out <- model_parameters(model)
+      expect_snapshot(print(out, digits = 4))
+      expect_snapshot(print(out, digits = 4, ci_digits = 1))
     })
 
 
@@ -66,27 +79,27 @@ withr::with_options(
       out <- model_parameters(model, drop = "^\\(Intercept")
       expect_snapshot(
         print(out, groups = list(
-          "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-          "Interactions" = c("gear4:vs", "gear5:vs"),
-          "Controls" = c(2, 3, 7)
+          Engine = c("cyl6", "cyl8", "vs", "hp"),
+          Interactions = c("gear4:vs", "gear5:vs"),
+          Controls = c(2, 3, 7)
         ))
       )
       expect_snapshot(print(out, select = "{coef} ({se})"))
       expect_snapshot(print(out, select = "{coef}{stars}|[{ci}]"))
       expect_snapshot(
         print(out, groups = list(
-          "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-          "Interactions" = c("gear4:vs", "gear5:vs"),
-          "Controls" = c(2, 3, 7)
+          Engine = c("cyl6", "cyl8", "vs", "hp"),
+          Interactions = c("gear4:vs", "gear5:vs"),
+          Controls = c(2, 3, 7)
         ), select = "{coef}{stars}|[{ci}]")
       )
       expect_snapshot(
         print(out,
           sep = "  ",
           groups = list(
-            "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-            "Interactions" = c("gear4:vs", "gear5:vs"),
-            "Controls" = c(2, 3, 7)
+            Engine = c("cyl6", "cyl8", "vs", "hp"),
+            Interactions = c("gear4:vs", "gear5:vs"),
+            Controls = c(2, 3, 7)
           ),
           select = "{coef}{stars}|[{ci}]"
         )

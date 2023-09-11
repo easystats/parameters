@@ -1,10 +1,26 @@
 # parameters 0.21.2
 
-## General
+## Changes
 
 * Minor improvements to factor analysis functions.
 
+* The `ci_digits` argument of the `print()` method for `model_parameters()` now
+  defaults to the same value of `digits`.
+
+* `model_parameters()` for objects from package *marginaleffects*  now also
+  accepts the `exponentiate` argument.
+
+* The `print()`, `print_html()`, `print_md()` and `format()` methods for
+  `model_parameters()` get an `add_reference` argument, to add the reference
+  category of categorical predictors to the parameters table.
+
 ## Bug fixes
+
+* Fixed issue with wrong calculation of test-statistic and p-values in
+  `model_parameters()` for `fixest` models.
+
+* Fixed issue with wrong column header for `glm` models with
+  `family = binomial("identiy")`.
 
 * Minor fixes for `dominance_analysis()`.
 

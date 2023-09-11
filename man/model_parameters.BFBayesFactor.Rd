@@ -25,12 +25,17 @@
 \arguments{
 \item{model}{Object of class \code{BFBayesFactor}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+\item{centrality}{The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
+(see \code{\link[bayestestR:map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
+\code{"mode"} or \code{"all"}.}
 
-\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related
+to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
+Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (\verb{95\%}).}
+to be estimated. Default to \code{0.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"ETI"} (default, see \code{\link[bayestestR:eti]{eti()}}), \code{"HDI"}

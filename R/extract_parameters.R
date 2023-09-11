@@ -945,12 +945,12 @@
     }
 
     type <- switch(standardize,
-      "all" = ,
-      "std.all" = "std.all",
-      "latent" = ,
-      "std.lv" = "std.lv",
-      "no_exogenous" = ,
-      "std.nox" = "std.nox",
+      all = ,
+      std.all = "std.all",
+      latent = ,
+      std.lv = "std.lv",
+      no_exogenous = ,
+      std.nox = "std.nox",
       "std.all"
     )
 

@@ -210,8 +210,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 .extract_htest_correlation <- function(model) {
   names <- unlist(strsplit(model$data.name, " (and|by) "))
   out <- data.frame(
-    "Parameter1" = names[1],
-    "Parameter2" = names[2],
+    Parameter1 = names[1],
+    Parameter2 = names[2],
     stringsAsFactors = FALSE
   )
 
@@ -261,12 +261,12 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
     names <- gsub("~", "", unlist(strsplit(model$data.name, " + ", fixed = TRUE)), fixed = TRUE)
     out <- data.frame(
-      "Parameter1" = names[1],
-      "Parameter2" = names[2],
-      "Statistic" = model$statistic[[1]],
-      "df_error" = model$parameter[[1]],
-      "Method" = model$method,
-      "p" = model$p.value[[1]],
+      Parameter1 = names[1],
+      Parameter2 = names[2],
+      Statistic = model$statistic[[1]],
+      df_error = model$parameter[[1]],
+      Method = model$method,
+      p = model$p.value[[1]],
       stringsAsFactors = FALSE
     )
     out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
@@ -275,13 +275,13 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     if (grepl(" (and|by) ", model$data.name)) {
       names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
-        "Parameter1" = names[1],
-        "Parameter2" = names[2],
+        Parameter1 = names[1],
+        Parameter2 = names[2],
         stringsAsFactors = FALSE
       )
     } else {
       out <- data.frame(
-        "Parameter" = model$data.name,
+        Parameter = model$data.name,
         stringsAsFactors = FALSE
       )
     }
@@ -311,8 +311,8 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_levenetest <- function(model) {
   data.frame(
-    "df" = model$Df[1],
-    "df_error" = model$Df[2],
+    df = model$Df[1],
+    df_error = model$Df[2],
     `F` = model$`F value`[1],
     p = model$`Pr(>F)`[1],
     Method = "Levene's Test for Homogeneity of Variance",
@@ -328,13 +328,13 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_vartest <- function(model) {
   data.frame(
-    "Parameter" = model$data.name,
-    "Estimate" = model$estimate,
-    "df" = model$parameter[1],
-    "df_error" = model$parameter[2],
+    Parameter = model$data.name,
+    Estimate = model$estimate,
+    df = model$parameter[1],
+    df_error = model$parameter[2],
     `F` = model$statistic,
-    "CI_low" = model$conf.int[1],
-    "CI_high" = model$conf.int[2],
+    CI_low = model$conf.int[1],
+    CI_high = model$conf.int[2],
     p = model$p.value,
     Method = "F test to compare two variances",
     stringsAsFactors = FALSE
@@ -352,13 +352,13 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   if (grepl("design-based", tolower(model$method), fixed = TRUE)) {
     names <- unlist(strsplit(model$data.name, " ~ ", fixed = TRUE))
     out <- data.frame(
-      "Parameter1" = names[1],
-      "Parameter2" = names[2],
-      "Difference" = model$estimate[[1]],
-      "t" = model$statistic[[1]],
-      "df_error" = model$parameter[[1]],
-      "Method" = model$method,
-      "p" = model$p.value[[1]],
+      Parameter1 = names[1],
+      Parameter2 = names[2],
+      Difference = model$estimate[[1]],
+      t = model$statistic[[1]],
+      df_error = model$parameter[[1]],
+      Method = model$method,
+      p = model$p.value[[1]],
       stringsAsFactors = FALSE
     )
     out$Method <- gsub("KruskalWallis", "Kruskal-Wallis", out$Method, fixed = TRUE)
@@ -368,80 +368,80 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     if (grepl(" and ", model$data.name, fixed = TRUE) && isFALSE(paired_test)) {
       names <- unlist(strsplit(model$data.name, " and ", fixed = TRUE))
       out <- data.frame(
-        "Parameter1" = names[1],
-        "Parameter2" = names[2],
-        "Mean_Parameter1" = model$estimate[1],
-        "Mean_Parameter2" = model$estimate[2],
-        "Difference" = model$estimate[1] - model$estimate[2],
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
-        "t" = model$statistic,
-        "df_error" = model$parameter,
-        "p" = model$p.value,
-        "Method" = model$method,
+        Parameter1 = names[1],
+        Parameter2 = names[2],
+        Mean_Parameter1 = model$estimate[1],
+        Mean_Parameter2 = model$estimate[2],
+        Difference = model$estimate[1] - model$estimate[2],
+        CI_low = model$conf.int[1],
+        CI_high = model$conf.int[2],
+        t = model$statistic,
+        df_error = model$parameter,
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE
       )
       attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
     } else if (isTRUE(paired_test)) {
       names <- unlist(strsplit(model$data.name, " (and|by) "))
       out <- data.frame(
-        "Parameter" = names[1],
-        "Group" = names[2],
-        "Difference" = model$estimate,
-        "t" = model$statistic,
-        "df_error" = model$parameter,
-        "p" = model$p.value,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
-        "Method" = model$method,
+        Parameter = names[1],
+        Group = names[2],
+        Difference = model$estimate,
+        t = model$statistic,
+        df_error = model$parameter,
+        p = model$p.value,
+        CI_low = model$conf.int[1],
+        CI_high = model$conf.int[2],
+        Method = model$method,
         stringsAsFactors = FALSE
       )
     } else if (grepl(" by ", model$data.name, fixed = TRUE)) {
       if (length(model$estimate) == 1) {
         names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
         out <- data.frame(
-          "Parameter" = names[1],
-          "Group" = names[2],
-          "Difference" = model$estimate,
-          "CI" = 0.95,
-          "CI_low" = as.vector(model$conf.int[, 1]),
-          "CI_high" = as.vector(model$conf.int[, 2]),
-          "t" = model$statistic,
-          "df_error" = model$parameter,
-          "p" = model$p.value,
-          "Method" = model$method,
+          Parameter = names[1],
+          Group = names[2],
+          Difference = model$estimate,
+          CI = 0.95,
+          CI_low = as.vector(model$conf.int[, 1]),
+          CI_high = as.vector(model$conf.int[, 2]),
+          t = model$statistic,
+          df_error = model$parameter,
+          p = model$p.value,
+          Method = model$method,
           stringsAsFactors = FALSE
         )
       } else {
         names <- unlist(strsplit(model$data.name, " by ", fixed = TRUE))
         out <- data.frame(
-          "Parameter" = names[1],
-          "Group" = names[2],
-          "Mean_Group1" = model$estimate[1],
-          "Mean_Group2" = model$estimate[2],
-          "Difference" = model$estimate[1] - model$estimate[2],
-          "CI_low" = model$conf.int[1],
-          "CI_high" = model$conf.int[2],
-          "t" = model$statistic,
-          "df_error" = model$parameter,
-          "p" = model$p.value,
-          "Method" = model$method,
+          Parameter = names[1],
+          Group = names[2],
+          Mean_Group1 = model$estimate[1],
+          Mean_Group2 = model$estimate[2],
+          Difference = model$estimate[1] - model$estimate[2],
+          CI_low = model$conf.int[1],
+          CI_high = model$conf.int[2],
+          t = model$statistic,
+          df_error = model$parameter,
+          p = model$p.value,
+          Method = model$method,
           stringsAsFactors = FALSE
         )
         attr(out, "mean_group_values") <- gsub("mean in group ", "", names(model$estimate), fixed = TRUE)
       }
     } else {
       out <- data.frame(
-        "Parameter" = model$data.name,
-        "Mean" = model$estimate,
-        "mu" = model$null.value,
-        "Difference" = model$estimate - model$null.value,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
-        "t" = model$statistic,
-        "df_error" = model$parameter,
-        "p" = model$p.value,
-        "Method" = model$method,
+        Parameter = model$data.name,
+        Mean = model$estimate,
+        mu = model$null.value,
+        Difference = model$estimate - model$null.value,
+        CI_low = model$conf.int[1],
+        CI_high = model$conf.int[2],
+        t = model$statistic,
+        df_error = model$parameter,
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE
       )
     }
@@ -459,11 +459,11 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_oneway <- function(model) {
   data.frame(
-    "F" = model$statistic,
-    "df" = model$parameter[1],
-    "df_error" = model$parameter[2],
-    "p" = model$p.value,
-    "Method" = model$method,
+    `F` = model$statistic,
+    df = model$parameter[1],
+    df_error = model$parameter[2],
+    p = model$p.value,
+    Method = model$method,
     stringsAsFactors = FALSE
   )
 }
@@ -483,40 +483,40 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     }
     if (names(model$statistic) == "F") {
       data.frame(
-        "F" = model$statistic,
-        "df" = model$parameter[1],
-        "df_error" = model$parameter[2],
-        "p" = model$p.value,
-        "Method" = model$method,
+        `F` = model$statistic,
+        df = model$parameter[1],
+        df_error = model$parameter[2],
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE
       )
     } else {
       data.frame(
-        "Chi2" = model$statistic,
-        "df" = model$parameter,
-        "p" = model$p.value,
-        "Method" = model$method,
+        Chi2 = model$statistic,
+        df = model$parameter,
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE
       )
     }
   } else {
     if (!is.null(model$estimate) && identical(names(model$estimate), "odds ratio")) {
       data.frame(
-        "Odds Ratio" = model$estimate,
-        # "CI" = attributes(model$conf.int)$conf.level,
-        "CI_low" = model$conf.int[1],
-        "CI_high" = model$conf.int[2],
-        "p" = model$p.value,
-        "Method" = model$method,
+        `Odds Ratio` = model$estimate,
+        # CI = attributes(model$conf.int)$conf.level,
+        CI_low = model$conf.int[1],
+        CI_high = model$conf.int[2],
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE,
         check.names = FALSE
       )
     } else {
       data.frame(
-        "Chi2" = model$statistic,
-        "df" = model$parameter,
-        "p" = model$p.value,
-        "Method" = model$method,
+        Chi2 = model$statistic,
+        df = model$parameter,
+        p = model$p.value,
+        Method = model$method,
         stringsAsFactors = FALSE
       )
     }
@@ -560,11 +560,11 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_binom <- function(model) {
   out <- data.frame(
-    "Probability" = model$estimate,
-    "CI_low" = model$conf.int[1],
-    "CI_high" = model$conf.int[2],
-    "Success" = model$statistic,
-    "Trials" = model$parameter,
+    Probability = model$estimate,
+    CI_low = model$conf.int[1],
+    CI_high = model$conf.int[2],
+    Success = model$statistic,
+    Trials = model$parameter,
     stringsAsFactors = FALSE
   )
   out$Null_value <- model$null.value
@@ -622,17 +622,17 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   # Find prefix for CI-columns
   prefix <- switch(effectsize_type,
-    "cohens_g" = "Cohens_",
-    "cramers_v" = "Cramers_",
-    "phi" = "phi_",
-    "cohens_d" = "d_",
-    "hedges_g" = "g_",
-    "rank_biserial" = "rank_biserial_",
-    "rank_epsilon_squared" = "rank_epsilon_squared_",
-    "kendalls_w" = "W_",
-    "omega" = "Omega2_",
-    "eta" = "Eta2_",
-    "epsilon" = "Epsilon2_"
+    cohens_g = "Cohens_",
+    cramers_v = "Cramers_",
+    phi = "phi_",
+    cohens_d = "d_",
+    hedges_g = "g_",
+    rank_biserial = "rank_biserial_",
+    rank_epsilon_squared = "rank_epsilon_squared_",
+    kendalls_w = "W_",
+    omega = "Omega2_",
+    eta = "Eta2_",
+    epsilon = "Epsilon2_"
   )
 
   es$CI <- NULL
@@ -695,7 +695,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
   } else {
-    attr(params, "ci_digits") <- 2
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {
@@ -747,7 +747,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   if ("ci_digits" %in% names(dot.arguments)) {
     attr(params, "ci_digits") <- eval(dot.arguments[["ci_digits"]])
   } else {
-    attr(params, "ci_digits") <- 2
+    attr(params, "ci_digits") <- NULL
   }
 
   if ("p_digits" %in% names(dot.arguments)) {

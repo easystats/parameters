@@ -7,6 +7,7 @@
 #' @export
 model_parameters.marginaleffects <- function(model,
                                              ci = 0.95,
+                                             exponentiate = FALSE,
                                              ...) {
   insight::check_if_installed("marginaleffects")
   out <- insight::standardize_names(
@@ -18,10 +19,7 @@ model_parameters.marginaleffects <- function(model,
   colnames(out)[colnames(out) == "contrast"] <- "Comparison"
   colnames(out) <- gsub("^contrast_", "Comparison: ", colnames(out))
 
-  out <- tryCatch(
-    .add_model_parameters_attributes(out, model, ci, ...),
-    error = function(e) out
-  )
+  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
@@ -41,6 +39,8 @@ model_parameters.marginaleffects <- function(model,
     attr(out, "coefficient_name") <- "Estimate"
   }
 
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model = NULL, exponentiate)
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out
@@ -70,8 +70,9 @@ model_parameters.slopes <- model_parameters.marginaleffects
 #' @export
 model_parameters.predictions <- function(model,
                                          ci = 0.95,
+                                         exponentiate = TRUE,
                                          ...) {
-  insight::check_if_installed("marginaleffects", minimum_version = "0.9.0")
+  insight::check_if_installed("marginaleffects")
 
   out <- datawizard::data_rename(model, "estimate", "predicted")
   out <- datawizard::data_relocate(out, "predicted", before = 1)
@@ -89,11 +90,14 @@ model_parameters.predictions <- function(model,
     out[[resp]] <- NULL
   }
 
-  out <- .safe(.add_model_parameters_attributes(out, model, ci, ...), out)
+  out <- .safe(.add_model_parameters_attributes(out, model, ci, exponentiate = exponentiate, ...), out)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   attr(out, "coefficient_name") <- "Predicted"
   attr(out, "no_caption") <- TRUE
+
+  # exponentiate coefficients and SE/CI, if requested
+  out <- .exponentiate_parameters(out, model = NULL, exponentiate)
 
   class(out) <- c("parameters_model", "see_parameters_model", class(out))
   out

@@ -226,10 +226,10 @@
       }
       eigs <- Re(eigen(qr.coef(qr_value, model$SSP[[i]]), symmetric = FALSE)$values)
       test <- switch(model$test,
-        "Pillai" = .pillai_test(eigs, model$df[i], model$error.df),
-        "Wilks" = .wilks_test(eigs, model$df[i], model$error.df),
-        "Hotelling-Lawley" = .hl_test(eigs, model$df[i], model$error.df),
-        "Roy" = .roy_test(eigs, model$df[i], model$error.df)
+        Pillai = .pillai_test(eigs, model$df[i], model$error.df),
+        Wilks = .wilks_test(eigs, model$df[i], model$error.df),
+        `Hotelling-Lawley` = .hl_test(eigs, model$df[i], model$error.df),
+        Roy = .roy_test(eigs, model$df[i], model$error.df)
       )
       data.frame(
         Parameter = model$terms[i],

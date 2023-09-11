@@ -353,12 +353,12 @@ model_parameters.maov <- model_parameters.aov
         return(type)
       }
       switch(type,
-        "1" = ,
-        "I" = 1,
-        "2" = ,
-        "II" = 2,
-        "3" = ,
-        "III" = 3,
+        `1` = ,
+        `I` = 1,
+        `2` = ,
+        `II` = 2,
+        `3` = ,
+        `III` = 3,
         1
       )
     }
@@ -479,7 +479,7 @@ model_parameters.maov <- model_parameters.aov
     return(params)
   }
 
-  insight::check_if_installed("effectsize", minimum_version = "0.5.0")
+  insight::check_if_installed("effectsize")
 
   # set error-df, when provided.
   if (!is.null(df_error) && is.data.frame(model) &&
