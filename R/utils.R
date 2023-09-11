@@ -124,7 +124,7 @@
 .insert_element_at <- function(data, element, index) {
   if (index == 1) {
     c(element, data)
-  } else if (index == length(data)) {
+  } else if (index == (length(data) + 1)) {
     c(data, element)
   } else {
     c(data[1:(index - 1)], element, data[index:length(data)])
