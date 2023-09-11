@@ -347,12 +347,31 @@
     params
   }
 
+  pretty_names <- attributes(params)$pretty_names
   out <- params
-  for (f in factors) {
-    min(which(f %in% out$Parameter))
+
+  for (fn in names(factors)) {
+    f <- factors[[fn]]
+    found <- which(names(pretty_names) %in% f)
+    if (length(found)) {
+      reference_level <- f[!f %in% names(pretty_names)]
+      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), " (ref.)]")
+      pretty_names <- .insert_element_at(
+        pretty_names,
+        stats::setNames(pretty_level, reference_level),
+        min(found)
+      )
+      out <- .insert_row_at(
+        out,
+        data.frame(Parameter = reference_level, Coefficient = 0, stringsAsFactors = FALSE),
+        min(found)
+      )
+    }
+    attr(out, "pretty_names") <- pretty_names
+    attr(out, "pretty_labels") <- pretty_names
   }
 
-  params
+  out
 }
 
 

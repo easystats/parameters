@@ -113,10 +113,21 @@
   # insert row
   if (index == 1) {
     rbind(row, data)
-  } else if (index == nrow(data)) {
+  } else if (index == (nrow(data) + 1)) {
     rbind(data, row)
   } else {
     rbind(data[1:(index - 1), ], row, data[index:nrow(data), ])
+  }
+}
+
+
+.insert_element_at <- function(data, element, index) {
+  if (index == 1) {
+    c(element, data)
+  } else if (index == length(data)) {
+    c(data, element)
+  } else {
+    c(data[1:(index - 1)], element, data[index:length(data)])
   }
 }
 
