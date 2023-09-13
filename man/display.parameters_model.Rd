@@ -33,7 +33,7 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
-  add_reference = FALSE,
+  include_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -75,7 +75,7 @@
   zap_small = FALSE,
   format = NULL,
   groups = NULL,
-  add_reference = FALSE,
+  include_reference = FALSE,
   ...
 )
 
@@ -100,7 +100,7 @@
   font_size = "100\%",
   line_padding = 4,
   column_labels = NULL,
-  add_reference = FALSE,
+  include_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -123,7 +123,7 @@
   show_formula = FALSE,
   zap_small = FALSE,
   groups = NULL,
-  add_reference = FALSE,
+  include_reference = FALSE,
   verbose = TRUE,
   ...
 )
@@ -236,7 +236,7 @@ places than \code{digits} are printed in scientific notation.}
 \item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
 column names are generated. See 'Examples'.}
 
-\item{add_reference}{Logical, if \code{TRUE}, the reference level of factors will
+\item{include_reference}{Logical, if \code{TRUE}, the reference level of factors will
 be added to the parameters table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always
 \code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),

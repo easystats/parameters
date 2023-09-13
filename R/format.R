@@ -15,7 +15,7 @@ format.parameters_model <- function(x,
                                     zap_small = FALSE,
                                     format = NULL,
                                     groups = NULL,
-                                    add_reference = FALSE,
+                                    include_reference = FALSE,
                                     ...) {
   # save attributes
   coef_name <- attributes(x)$coefficient_name
@@ -168,7 +168,7 @@ format.parameters_model <- function(x,
       ci_width = ci_width,
       ci_brackets = ci_brackets,
       zap_small = zap_small,
-      add_reference = add_reference,
+      include_reference = include_reference,
       ...
     )
   } else {
@@ -185,7 +185,7 @@ format.parameters_model <- function(x,
       format = format,
       coef_name = coef_name,
       zap_small = zap_small,
-      add_reference = add_reference,
+      include_reference = include_reference,
       ...
     )
   }

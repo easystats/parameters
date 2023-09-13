@@ -5,7 +5,7 @@
 #   d <<- PlantGrowth
 #   m <- lm(weight ~ group, data = d)
 #   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, add_reference = TRUE))
+#   expect_snapshot(print(mp, include_reference = TRUE))
 
 #   data(mtcars)
 #   d <<- mtcars
@@ -13,19 +13,19 @@
 #   d$am <- as.factor(d$am)
 #   m <- lm(mpg ~ hp + cyl + gear + am, data = d)
 #   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, add_reference = TRUE))
+#   expect_snapshot(print(mp, include_reference = TRUE))
 
 #   data(iris)
 #   d <<- iris
 #   m <- lm(Sepal.Length ~ Sepal.Width * Species, data = d)
 #   mp <- model_parameters(m)
-#   expect_snapshot(print(mp, add_reference = TRUE))
+#   expect_snapshot(print(mp, include_reference = TRUE))
 
 #   data(mtcars)
 #   d <<- mtcars
 #   d$gear <- as.factor(d$gear)
 #   m <- glm(vs ~ wt + gear, data = d, family = "binomial")
-#   expect_snapshot(print(model_parameters(m, exponentiate = TRUE, drop = "(Intercept)"), add_reference = TRUE))
+#   expect_snapshot(print(model_parameters(m, exponentiate = TRUE, drop = "(Intercept)"), include_reference = TRUE))
 # })
 
 # test_that("reference for models with multiple components", {
@@ -40,5 +40,5 @@
 #     family = glmmTMB::truncated_poisson()
 #   )
 
-#   print(model_parameters(m1), add_reference = TRUE)
+#   print(model_parameters(m1), include_reference = TRUE)
 # })

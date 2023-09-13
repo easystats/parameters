@@ -280,7 +280,7 @@
                                              format = NULL,
                                              coef_name = NULL,
                                              zap_small = FALSE,
-                                             add_reference = FALSE,
+                                             include_reference = FALSE,
                                              ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -310,7 +310,7 @@
   }
 
   # add the coefficient for the base-(reference)-level of factors?
-  if (add_reference) {
+  if (include_reference) {
     x <- .add_reference_level(x)
   }
 
@@ -851,7 +851,7 @@
                                                 ci_width = "auto",
                                                 ci_brackets = TRUE,
                                                 zap_small = FALSE,
-                                                add_reference = FALSE,
+                                                include_reference = FALSE,
                                                 ...) {
   final_table <- list()
 
@@ -1052,7 +1052,7 @@
     }
 
     # add the coefficient for the base-(reference)-level of factors?
-    if (add_reference) {
+    if (include_reference) {
       tables[[type]] <- .add_reference_level(tables[[type]])
     }
 

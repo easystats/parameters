@@ -91,7 +91,7 @@ display.parameters_model <- function(object,
                                      font_size = "100%",
                                      line_padding = 4,
                                      column_labels = NULL,
-                                     add_reference = FALSE,
+                                     include_reference = FALSE,
                                      verbose = TRUE,
                                      ...) {
   if (identical(format, "html")) {
