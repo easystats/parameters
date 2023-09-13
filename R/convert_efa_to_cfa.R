@@ -42,9 +42,10 @@ convert_efa_to_cfa.fa <- function(model,
                                   max_per_dimension = NULL,
                                   ...) {
   .efa_to_cfa(model_parameters(model, threshold = threshold, ...),
-              names = names,
-              max_per_dimension = max_per_dimension,
-              ...)
+    names = names,
+    max_per_dimension = max_per_dimension,
+    ...
+  )
 }
 
 #' @export
@@ -78,7 +79,7 @@ efa_to_cfa <- convert_efa_to_cfa
 
 
 #' @keywords internal
-.efa_to_cfa <- function(loadings, names = NULL, max_per_dimension=NULL, ...) {
+.efa_to_cfa <- function(loadings, names = NULL, max_per_dimension = NULL, ...) {
   loadings <- attributes(loadings)$loadings_long
 
   # Get dimension names
@@ -100,7 +101,6 @@ efa_to_cfa <- convert_efa_to_cfa
   cfa <- NULL
   # Iterate over dimensions
   for (i in seq_along(names)) {
-
     # Find correct subset
     items <- loadings[loadings$Component == unique(loadings$Component)[i], ]
 
