@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_if(getRversion() < "4.2.0")
 
 # rqss ---------
 
@@ -20,7 +21,7 @@ skip_on_cran()
 test_that("mp_rq", {
   skip_if_not_installed("quantreg")
   data(stackloss)
-  m1 <- quantreg::rq(stack.loss ~ Air.Flow + Water.Temp, data = stackloss, tau = .25)
+  m1 <- quantreg::rq(stack.loss ~ Air.Flow + Water.Temp, data = stackloss, tau = 0.25)
 
   mp <- suppressWarnings(model_parameters(m1))
   expect_identical(mp$Parameter, c("(Intercept)", "Air.Flow", "Water.Temp"))
