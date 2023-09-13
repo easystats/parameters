@@ -124,7 +124,9 @@ n_factors <- function(x,
   }
 
   # Get number of observations
-  if (!is.data.frame(x)) {
+  if (is.data.frame(x)) {
+    nobs <- nrow(x)
+  } else {
     if (is.numeric(x) && !is.null(cor)) {
       nobs <- x
       package <- package[!package %in% c("pcdimension", "PCDimension")]
@@ -133,8 +135,6 @@ n_factors <- function(x,
         "Please input the correlation matrix via the `cor` argument and the number of rows / observations via the first argument."
       )
     }
-  } else {
-    nobs <- nrow(x)
   }
 
   # Get only numeric
