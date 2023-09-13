@@ -927,7 +927,7 @@
   tables <- split(x, f = split_by)
 
   # sanity check - only preserve tables with any data in data frames
-  tables <- tables[sapply(tables, nrow) > 0]
+  tables <- tables[vapply(tables, nrow, numeric(1)) > 0]
 
 
   # fix table names for random effects, when we only have random
@@ -993,10 +993,10 @@
     # if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][sapply(colnames(tables[[type]]), function(x) {
+    tables[[type]][vapply(colnames(tables[[type]]), function(x) {
       col <- tables[[type]][[x]]
       (all(col == "") | all(is.na(col))) && !grepl("_CI_(high|low)$", x)
-    })] <- NULL
+    }, logical(1))] <- NULL
 
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits
@@ -1151,7 +1151,7 @@
   }
 
   # then check for correct column length
-  col_len <- sapply(final_table, function(i) length(colnames(i)))
+  col_len <- vapply(final_table, function(i) length(colnames(i)), numeric(1))
 
   # remove non matching columns
   if (!all(col_len) == max(col_len)) {
