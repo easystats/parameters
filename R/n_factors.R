@@ -577,7 +577,6 @@ print.n_clusters <- print.n_factors
                                 cor = NULL,
                                 nobs = NULL,
                                 type = "FA") {
-
   # Altnerative version of parralel analysis
   # Not used because already included in nFactors
 
