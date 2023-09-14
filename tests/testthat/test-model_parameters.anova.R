@@ -118,16 +118,16 @@ test_that("anova type | lm", {
   m <- lm(mpg ~ factor(cyl) * hp + disp, mtcars)
 
   a1 <- aov(m)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a1 <- anova(m)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a2 <- car::Anova(m, type = 2)
   a3 <- car::Anova(m, type = 3)
-  expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
+  expect_identical(attr(model_parameters(a2), "anova_type"), 2)
   expect_message(
-    expect_identical(attr(model_parameters(a3), "anova_type"), 3L),
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3),
     "Type 3 ANOVAs only give"
   )
 
@@ -151,15 +151,15 @@ test_that("anova type | mlm", {
   m <- lm(cbind(mpg, drat) ~ factor(cyl) * hp + disp, mtcars)
 
   a1 <- aov(m)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a1 <- anova(m)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a2 <- car::Anova(m, type = 2)
   a3 <- car::Anova(m, type = 3)
-  expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
-  expect_identical(attr(model_parameters(a3, verbose = FALSE), "anova_type"), 3L)
+  expect_identical(attr(model_parameters(a2), "anova_type"), 2)
+  expect_identical(attr(model_parameters(a3, verbose = FALSE), "anova_type"), 3)
 })
 
 test_that("anova type | glm", {
@@ -168,13 +168,13 @@ test_that("anova type | glm", {
   m <- suppressWarnings(glm(am ~ factor(cyl) * hp + disp, mtcars, family = binomial()))
 
   a1 <- anova(m)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a2 <- suppressWarnings(car::Anova(m, type = 2))
   a3 <- suppressWarnings(car::Anova(m, type = 3))
-  expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
+  expect_identical(attr(model_parameters(a2), "anova_type"), 2)
   expect_message(
-    expect_identical(attr(model_parameters(a3), "anova_type"), 3L),
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3),
     "Type 3 ANOVAs only give"
   )
 })
@@ -192,30 +192,30 @@ test_that("anova type | lme4", {
   })
 
   a1 <- anova(m1)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a1 <- anova(m2)
-  expect_identical(attr(model_parameters(a1), "anova_type"), 1L)
+  expect_identical(attr(model_parameters(a1), "anova_type"), 1)
 
   a3 <- anova(lmerTest::as_lmerModLmerTest(m1))
   expect_message(
-    expect_identical(attr(model_parameters(a3), "anova_type"), 3L),
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3),
     "Type 3 ANOVAs only give"
   )
 
   a2 <- car::Anova(m1, type = 2)
   a3 <- car::Anova(m1, type = 3)
-  expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
+  expect_identical(attr(model_parameters(a2), "anova_type"), 2)
   expect_message(
-    expect_identical(attr(model_parameters(a3), "anova_type"), 3L),
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3),
     "Type 3 ANOVAs only give"
   )
 
   a2 <- car::Anova(m2, type = 2)
   a3 <- car::Anova(m2, type = 3)
-  expect_identical(attr(model_parameters(a2), "anova_type"), 2L)
+  expect_identical(attr(model_parameters(a2), "anova_type"), 2)
   expect_message(
-    expect_identical(attr(model_parameters(a3), "anova_type"), 3L),
+    expect_identical(attr(model_parameters(a3), "anova_type"), 3),
     "Type 3 ANOVAs only give"
   )
 })
@@ -232,8 +232,8 @@ test_that("anova type | afex + Anova.mlm", {
     )
   })
 
-  expect_identical(attr(model_parameters(m), "anova_type"), 3L)
-  expect_identical(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3L)
+  expect_identical(attr(model_parameters(m), "anova_type"), 3)
+  expect_identical(attr(model_parameters(m$Anova, verbose = FALSE), "anova_type"), 3)
 })
 
 test_that("anova rms", {
@@ -242,7 +242,7 @@ test_that("anova rms", {
   a <- anova(m)
   mp <- model_parameters(a)
 
-  expect_identical(attr(mp, "anova_type"), 2L)
+  expect_identical(attr(mp, "anova_type"), 2)
   expect_identical(mp$Parameter, c("cyl", "disp", "hp", "drat", "Total", "Residuals"))
   expect_identical(colnames(mp), c("Parameter", "Sum_Squares_Partial", "df", "Mean_Square", "F", "p"))
   expect_equal(mp$Sum_Squares_Partial, data.frame(a)$Partial.SS, tolerance = 1e-3)
@@ -255,7 +255,7 @@ test_that("anova rms", {
   a <- anova(m)
   mp <- model_parameters(a)
 
-  expect_identical(attr(mp, "anova_type"), 2L)
+  expect_identical(attr(mp, "anova_type"), 2)
   expect_identical(mp$Parameter, c("cyl", "disp", "hp", "drat", "Total"))
   expect_named(mp, c("Parameter", "Chi2", "df", "p"))
   expect_equal(mp$Chi2, data.frame(a)$Chi.Square, tolerance = 1e-3)
