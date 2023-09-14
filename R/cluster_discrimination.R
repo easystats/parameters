@@ -14,14 +14,12 @@
 #' [`performance::check_clusterstructure()`] to check suitability of data for
 #' clustering.
 #'
-#' @examples
-#' if (requireNamespace("MASS", quietly = TRUE)) {
-#'   # Retrieve group classification from hierarchical cluster analysis
-#'   clustering <- cluster_analysis(iris[, 1:4], n = 3)
+#' @examplesIf requireNamespace("MASS", quietly = TRUE)
+#' # Retrieve group classification from hierarchical cluster analysis
+#' clustering <- cluster_analysis(iris[, 1:4], n = 3)
 #'
-#'   # Goodness of group classification
-#'   cluster_discrimination(clustering)
-#' }
+#' # Goodness of group classification
+#' cluster_discrimination(clustering)
 #' @export
 cluster_discrimination <- function(x, cluster_groups = NULL, ...) {
   UseMethod("cluster_discrimination")

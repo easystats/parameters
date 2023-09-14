@@ -33,19 +33,15 @@
 #'   p-values can be biased, and it is suggested to use proper permutation tests
 #'   to obtain non-parametric p-values.
 #'
-#' @examples
+#' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
 #' \dontrun{
-#' if (require("boot", quietly = TRUE)) {
-#'   set.seed(2)
-#'   model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-#'   b <- bootstrap_parameters(model)
-#'   print(b)
+#' set.seed(2)
+#' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+#' b <- bootstrap_parameters(model)
+#' print(b)
 #'
-#'   if (require("emmeans")) {
-#'     est <- emmeans(b, trt.vs.ctrl ~ Species)
-#'     print(model_parameters(est))
-#'   }
-#' }
+#' est <- emmeans::emmeans(b, trt.vs.ctrl ~ Species)
+#' print(model_parameters(est))
 #' }
 #' @export
 bootstrap_parameters <- function(model,

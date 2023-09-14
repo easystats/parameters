@@ -390,28 +390,25 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
+\dontshow{if (require("boot", quietly = TRUE) && require("sandwich") && require("clubSandwich") && require("brglm2")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parameters)
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 
 model_parameters(model)
 
 # bootstrapped parameters
-if (require("boot", quietly = TRUE)) {
-  model_parameters(model, bootstrap = TRUE)
-}
+model_parameters(model, bootstrap = TRUE)
 
 # standardized parameters
 model_parameters(model, standardize = "refit")
 
 # robust, heteroskedasticity-consistent standard errors
-if (require("sandwich") && require("clubSandwich")) {
-  model_parameters(model, vcov = "HC3")
+model_parameters(model, vcov = "HC3")
 
-  model_parameters(model,
-    vcov = "vcovCL",
-    vcov_args = list(cluster = mtcars$cyl)
-  )
-}
+model_parameters(model,
+  vcov = "vcovCL",
+  vcov_args = list(cluster = mtcars$cyl)
+)
 
 # different p-value style in output
 model_parameters(model, p_digits = 5)
@@ -425,16 +422,15 @@ model_parameters(model)
 model_parameters(model, exponentiate = TRUE)
 
 # bias-corrected logistic regression with penalized maximum likelihood
-if (require("brglm2")) {
-  model <- glm(
-    vs ~ wt + cyl,
-    data = mtcars,
-    family = "binomial",
-    method = "brglmFit"
-  )
-  model_parameters(model)
+model <- glm(
+  vs ~ wt + cyl,
+  data = mtcars,
+  family = "binomial",
+  method = "brglmFit"
+)
+model_parameters(model)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to
