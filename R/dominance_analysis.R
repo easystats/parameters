@@ -31,9 +31,9 @@
 #' @param contrasts A named list of [`contrasts`] used by the model object.
 #' This list is required in order for the correct mapping of parameters to
 #' predictors in the output when the model creates indicator codes for factor
-#' variables using [`model_matrix`]. By default, the `contrast` element from
-#' the model object submitted is used. If the model object does not have a
-#' `contrast` element the user can supply this named list.
+#' variables using [`insight::get_modelmatrix()`]. By default, the `contrast`
+#' element from the model object submitted is used. If the model object does
+#' not have a `contrast` element the user can supply this named list.
 #'
 #' @param ...  Not used at current.
 #'
@@ -115,24 +115,22 @@
 #'
 #' @author Joseph Luchman
 #'
-#' @examples
-#' if (require("domir") && require("performance")) {
-#'   data(mtcars)
+#' @examplesIf require("domir") && require("performance")
+#' data(mtcars)
 #'
-#'   # Dominance Analysis with Logit Regression
-#'   model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
+#' # Dominance Analysis with Logit Regression
+#' model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
 #'
-#'   performance::r2(model)
-#'   dominance_analysis(model)
+#' performance::r2(model)
+#' dominance_analysis(model)
 #'
-#'   # Dominance Analysis with Weighted Logit Regression
-#'   model_wt <- glm(vs ~ cyl + carb + mpg,
-#'     data = mtcars,
-#'     weights = wt, family = quasibinomial()
-#'   )
+#' # Dominance Analysis with Weighted Logit Regression
+#' model_wt <- glm(vs ~ cyl + carb + mpg,
+#'   data = mtcars,
+#'   weights = wt, family = quasibinomial()
+#' )
 #'
-#'   dominance_analysis(model_wt, quote_args = "weights")
-#' }
+#' dominance_analysis(model_wt, quote_args = "weights")
 #' @export
 dominance_analysis <- function(model, sets = NULL, all = NULL,
                                conditional = TRUE, complete = TRUE,
