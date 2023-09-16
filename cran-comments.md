@@ -1,4 +1,4 @@
-Regular update.
+Maintainance release.
 
 ## revdepcheck results
 
