@@ -61,14 +61,12 @@ cluster_performance.hclust <- function(model, data, clusters, ...) {
 
 
 #' @rdname cluster_performance
-#' @examples
+#' @examplesIf require("dbscan", quietly = TRUE)
 #' # DBSCAN
-#' if (require("dbscan", quietly = TRUE)) {
-#'   model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
+#' model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
 #'
-#'   rez <- cluster_performance(model, iris[1:4])
-#'   rez
-#' }
+#' rez <- cluster_performance(model, iris[1:4])
+#' rez
 #' @export
 cluster_performance.dbscan <- function(model, data, ...) {
   if (is.null(data)) {

@@ -31,20 +31,19 @@
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @examples
+#' @examplesIf require("glmmTMB")
 #' \donttest{
 #' library(parameters)
-#' if (require("glmmTMB")) {
-#'   model <- glmmTMB(
-#'     count ~ spp + mined + (1 | site),
-#'     ziformula = ~mined,
-#'     family = poisson(),
-#'     data = Salamanders
-#'   )
+#' data(Salamanders, package = "glmmTMB")
+#' model <- glmmTMB::glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula = ~mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
 #'
-#'   ci(model)
-#'   ci(model, component = "zi")
-#' }
+#' ci(model)
+#' ci(model, component = "zi")
 #' }
 #' @export
 ci.default <- function(x, ci = 0.95, dof = NULL, method = NULL, ...) {

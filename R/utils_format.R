@@ -280,7 +280,7 @@
                                              format = NULL,
                                              coef_name = NULL,
                                              zap_small = FALSE,
-                                             add_reference = FALSE,
+                                             include_reference = FALSE,
                                              ...) {
   # default brackets are parenthesis for HTML / MD
   if ((is.null(ci_brackets) || isTRUE(ci_brackets)) && (identical(format, "html") || identical(format, "markdown"))) {
@@ -310,7 +310,7 @@
   }
 
   # add the coefficient for the base-(reference)-level of factors?
-  if (add_reference) {
+  if (include_reference) {
     x <- .add_reference_level(x)
   }
 
@@ -851,7 +851,7 @@
                                                 ci_width = "auto",
                                                 ci_brackets = TRUE,
                                                 zap_small = FALSE,
-                                                add_reference = FALSE,
+                                                include_reference = FALSE,
                                                 ...) {
   final_table <- list()
 
@@ -927,7 +927,7 @@
   tables <- split(x, f = split_by)
 
   # sanity check - only preserve tables with any data in data frames
-  tables <- tables[sapply(tables, nrow) > 0]
+  tables <- tables[vapply(tables, nrow, numeric(1)) > 0]
 
 
   # fix table names for random effects, when we only have random
@@ -993,10 +993,10 @@
     # if (all(is.na(tables[[type]]$CI_high))) tables[[type]]$CI_high <- NULL
 
     # Don't print if empty col
-    tables[[type]][sapply(colnames(tables[[type]]), function(x) {
+    tables[[type]][vapply(colnames(tables[[type]]), function(x) {
       col <- tables[[type]][[x]]
       (all(col == "") | all(is.na(col))) && !grepl("_CI_(high|low)$", x)
-    })] <- NULL
+    }, logical(1))] <- NULL
 
     attr(tables[[type]], "digits") <- digits
     attr(tables[[type]], "ci_digits") <- ci_digits
@@ -1052,7 +1052,7 @@
     }
 
     # add the coefficient for the base-(reference)-level of factors?
-    if (add_reference) {
+    if (include_reference) {
       tables[[type]] <- .add_reference_level(tables[[type]])
     }
 
@@ -1151,7 +1151,7 @@
   }
 
   # then check for correct column length
-  col_len <- sapply(final_table, function(i) length(colnames(i)))
+  col_len <- vapply(final_table, function(i) length(colnames(i)), numeric(1))
 
   # remove non matching columns
   if (!all(col_len) == max(col_len)) {

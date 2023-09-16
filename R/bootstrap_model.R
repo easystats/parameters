@@ -40,18 +40,14 @@
 #'
 #' @seealso [`bootstrap_parameters()`], [`simulate_model()`], [`simulate_parameters()`]
 #'
-#' @examples
+#' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
 #' \dontrun{
-#' if (require("boot", quietly = TRUE)) {
-#'   model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
-#'   b <- bootstrap_model(model)
-#'   print(head(b))
+#' model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
+#' b <- bootstrap_model(model)
+#' print(head(b))
 #'
-#'   if (require("emmeans", quietly = TRUE)) {
-#'     est <- emmeans(b, consec ~ cyl)
-#'     print(model_parameters(est))
-#'   }
-#' }
+#' est <- emmeans::emmeans(b, consec ~ cyl)
+#' print(model_parameters(est))
 #' }
 #' @export
 bootstrap_model <- function(model,

@@ -420,6 +420,14 @@ principal_components.data.frame <- function(x,
   } else if (n >= ncol(x)) {
     n <- ncol(x) - 1
   }
+
+  ## TODO: the next if-statement was removed by Dom, but this breaks
+  ## performance code. Need to check, so we for now add this back
+
+  # sanity check - we need at least two factors
+  if (n < 2 && ncol(x) >= 2) {
+    n <- 2
+  }
   n
 }
 

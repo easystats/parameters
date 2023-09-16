@@ -87,7 +87,7 @@
 #'   labels will be used as parameters names. The latter only works for "labelled"
 #'   data, i.e. if the data used to fit the model had `"label"` and `"labels"`
 #'   attributes. See also section _Global Options to Customize Messages when Printing_.
-#' @param add_reference Logical, if `TRUE`, the reference level of factors will
+#' @param include_reference Logical, if `TRUE`, the reference level of factors will
 #'   be added to the parameters table. This is only relevant for models with
 #'   categorical predictors. The coefficient for the reference level is always
 #'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
@@ -238,7 +238,7 @@ print.parameters_model <- function(x,
                                    groups = NULL,
                                    column_width = NULL,
                                    ci_brackets = c("[", "]"),
-                                   add_reference = FALSE,
+                                   include_reference = FALSE,
                                    ...) {
   # save original input
   orig_x <- x
@@ -288,7 +288,7 @@ print.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
-    add_reference = add_reference,
+    include_reference = include_reference,
     ...
   )
 
@@ -385,7 +385,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                         ci_brackets = TRUE,
                         format = "text",
                         group = NULL,
-                        add_reference = FALSE,
+                        include_reference = FALSE,
                         ...) {
   format(
     x,
@@ -400,7 +400,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     zap_small = zap_small,
     format = format,
     group = group,
-    add_reference = add_reference,
+    include_reference = include_reference,
     ...
   )
 }

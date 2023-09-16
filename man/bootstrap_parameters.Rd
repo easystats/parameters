@@ -76,19 +76,17 @@ to obtain non-parametric p-values.
 }
 
 \examples{
+\dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
-if (require("boot", quietly = TRUE)) {
-  set.seed(2)
-  model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
-  b <- bootstrap_parameters(model)
-  print(b)
+set.seed(2)
+model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
+b <- bootstrap_parameters(model)
+print(b)
 
-  if (require("emmeans")) {
-    est <- emmeans(b, trt.vs.ctrl ~ Species)
-    print(model_parameters(est))
-  }
+est <- emmeans::emmeans(b, trt.vs.ctrl ~ Species)
+print(model_parameters(est))
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 Davison, A. C., & Hinkley, D. V. (1997). Bootstrap methods and their

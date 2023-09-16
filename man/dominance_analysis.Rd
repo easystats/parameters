@@ -51,9 +51,9 @@ from being evaluated before being applied to the model and causing an error.}
 \item{contrasts}{A named list of \code{\link{contrasts}} used by the model object.
 This list is required in order for the correct mapping of parameters to
 predictors in the output when the model creates indicator codes for factor
-variables using \code{\link{model_matrix}}. By default, the \code{contrast} element from
-the model object submitted is used. If the model object does not have a
-\code{contrast} element the user can supply this named list.}
+variables using \code{\link[insight:get_modelmatrix]{insight::get_modelmatrix()}}. By default, the \code{contrast}
+element from the model object submitted is used. If the model object does
+not have a \code{contrast} element the user can supply this named list.}
 
 \item{...}{Not used at current.}
 }
@@ -124,23 +124,23 @@ When \code{performance::r2()} returns multiple values, only the first is used
 by default.
 }
 \examples{
-if (require("domir") && require("performance")) {
-  data(mtcars)
+\dontshow{if (require("domir") && require("performance")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data(mtcars)
 
-  # Dominance Analysis with Logit Regression
-  model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
+# Dominance Analysis with Logit Regression
+model <- glm(vs ~ cyl + carb + mpg, data = mtcars, family = binomial())
 
-  performance::r2(model)
-  dominance_analysis(model)
+performance::r2(model)
+dominance_analysis(model)
 
-  # Dominance Analysis with Weighted Logit Regression
-  model_wt <- glm(vs ~ cyl + carb + mpg,
-    data = mtcars,
-    weights = wt, family = quasibinomial()
-  )
+# Dominance Analysis with Weighted Logit Regression
+model_wt <- glm(vs ~ cyl + carb + mpg,
+  data = mtcars,
+  weights = wt, family = quasibinomial()
+)
 
-  dominance_analysis(model_wt, quote_args = "weights")
-}
+dominance_analysis(model_wt, quote_args = "weights")
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

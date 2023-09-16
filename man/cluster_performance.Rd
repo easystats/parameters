@@ -41,13 +41,13 @@ clusters <- cutree(model, 3)
 
 rez <- cluster_performance(model, data, clusters)
 rez
+\dontshow{if (require("dbscan", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # DBSCAN
-if (require("dbscan", quietly = TRUE)) {
-  model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
+model <- dbscan::dbscan(iris[1:4], eps = 1.45, minPts = 10)
 
-  rez <- cluster_performance(model, iris[1:4])
-  rez
-}
+rez <- cluster_performance(model, iris[1:4])
+rez
+\dontshow{\}) # examplesIf}
 # Retrieve performance from parameters
 params <- model_parameters(kmeans(iris[1:4], 3))
 cluster_performance(params)

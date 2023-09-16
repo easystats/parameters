@@ -204,7 +204,9 @@ principal_components.merMod <- principal_components.lm
 
   insight::check_if_installed("DRR")
 
-  junk <- utils::capture.output(suppressMessages(rez <- DRR::drr(x, n)))
+  junk <- utils::capture.output(suppressMessages({
+    rez <- DRR::drr(x, n)
+  }))
 
   features <- as.data.frame(rez$fitted.data)
   names(features) <- paste0("DRR", seq_len(ncol(features)))

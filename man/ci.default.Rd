@@ -225,18 +225,19 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
+\dontshow{if (require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 library(parameters)
-if (require("glmmTMB")) {
-  model <- glmmTMB(
-    count ~ spp + mined + (1 | site),
-    ziformula = ~mined,
-    family = poisson(),
-    data = Salamanders
-  )
+data(Salamanders, package = "glmmTMB")
+model <- glmmTMB::glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula = ~mined,
+  family = poisson(),
+  data = Salamanders
+)
 
-  ci(model)
-  ci(model, component = "zi")
+ci(model)
+ci(model, component = "zi")
 }
-}
+\dontshow{\}) # examplesIf}
 }

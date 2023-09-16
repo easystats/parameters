@@ -20,13 +20,13 @@ determines the goodness of classification for each cluster group. See \code{MASS
 for details.
 }
 \examples{
-if (requireNamespace("MASS", quietly = TRUE)) {
-  # Retrieve group classification from hierarchical cluster analysis
-  clustering <- cluster_analysis(iris[, 1:4], n = 3)
+\dontshow{if (requireNamespace("MASS", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+# Retrieve group classification from hierarchical cluster analysis
+clustering <- cluster_analysis(iris[, 1:4], n = 3)
 
-  # Goodness of group classification
-  cluster_discrimination(clustering)
-}
+# Goodness of group classification
+cluster_discrimination(clustering)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=n_clusters]{n_clusters()}} to determine the number of clusters to extract,

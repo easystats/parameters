@@ -19,7 +19,7 @@ print_md.parameters_model <- function(x,
                                       show_formula = FALSE,
                                       zap_small = FALSE,
                                       groups = NULL,
-                                      add_reference = FALSE,
+                                      include_reference = FALSE,
                                       verbose = TRUE,
                                       ...) {
   # check if user supplied digits attributes
@@ -67,7 +67,7 @@ print_md.parameters_model <- function(x,
     ci_brackets = ci_brackets,
     format = "markdown",
     groups = groups,
-    add_reference = add_reference,
+    include_reference = include_reference,
     ...
   )
 

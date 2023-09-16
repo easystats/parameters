@@ -11,7 +11,7 @@
   accepts the `exponentiate` argument.
 
 * The `print()`, `print_html()`, `print_md()` and `format()` methods for
-  `model_parameters()` get an `add_reference` argument, to add the reference
+  `model_parameters()` get an `include_reference` argument, to add the reference
   category of categorical predictors to the parameters table.
 
 ## Bug fixes

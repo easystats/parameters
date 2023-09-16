@@ -81,18 +81,16 @@ to obtain non-parametric p-values.
 }
 
 \examples{
+\dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
-if (require("boot", quietly = TRUE)) {
-  model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
-  b <- bootstrap_model(model)
-  print(head(b))
+model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
+b <- bootstrap_model(model)
+print(head(b))
 
-  if (require("emmeans", quietly = TRUE)) {
-    est <- emmeans(b, consec ~ cyl)
-    print(model_parameters(est))
-  }
+est <- emmeans::emmeans(b, consec ~ cyl)
+print(model_parameters(est))
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=bootstrap_parameters]{bootstrap_parameters()}}, \code{\link[=simulate_model]{simulate_model()}}, \code{\link[=simulate_parameters]{simulate_parameters()}}

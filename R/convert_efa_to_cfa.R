@@ -8,22 +8,21 @@
 #' @param max_per_dimension Maximum number of variables to keep per dimension.
 #' @inheritParams principal_components
 #'
-#' @examples
+#' @examplesIf require("psych") && require("lavaan")
 #' \donttest{
 #' library(parameters)
-#' if (require("psych") && require("lavaan")) {
-#'   efa <- psych::fa(attitude, nfactors = 3)
+#' data(attitude)
+#' efa <- psych::fa(attitude, nfactors = 3)
 #'
-#'   model1 <- efa_to_cfa(efa)
-#'   model2 <- efa_to_cfa(efa, threshold = 0.3)
-#'   model3 <- efa_to_cfa(efa, max_per_dimension = 2)
+#' model1 <- efa_to_cfa(efa)
+#' model2 <- efa_to_cfa(efa, threshold = 0.3)
+#' model3 <- efa_to_cfa(efa, max_per_dimension = 2)
 #'
-#'   suppressWarnings(anova(
-#'     lavaan::cfa(model1, data = attitude),
-#'     lavaan::cfa(model2, data = attitude),
-#'     lavaan::cfa(model3, data = attitude)
-#'   ))
-#' }
+#' suppressWarnings(anova(
+#'   lavaan::cfa(model1, data = attitude),
+#'   lavaan::cfa(model2, data = attitude),
+#'   lavaan::cfa(model3, data = attitude)
+#' ))
 #' }
 #' @return Converted index.
 #' @export
@@ -42,9 +41,10 @@ convert_efa_to_cfa.fa <- function(model,
                                   max_per_dimension = NULL,
                                   ...) {
   .efa_to_cfa(model_parameters(model, threshold = threshold, ...),
-              names = names,
-              max_per_dimension = max_per_dimension,
-              ...)
+    names = names,
+    max_per_dimension = max_per_dimension,
+    ...
+  )
 }
 
 #' @export
@@ -78,7 +78,7 @@ efa_to_cfa <- convert_efa_to_cfa
 
 
 #' @keywords internal
-.efa_to_cfa <- function(loadings, names = NULL, max_per_dimension=NULL, ...) {
+.efa_to_cfa <- function(loadings, names = NULL, max_per_dimension = NULL, ...) {
   loadings <- attributes(loadings)$loadings_long
 
   # Get dimension names
@@ -100,7 +100,6 @@ efa_to_cfa <- convert_efa_to_cfa
   cfa <- NULL
   # Iterate over dimensions
   for (i in seq_along(names)) {
-
     # Find correct subset
     items <- loadings[loadings$Component == unique(loadings$Component)[i], ]
 
