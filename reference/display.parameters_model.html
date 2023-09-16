@@ -12,7 +12,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span>  font_size <span class="op">=</span> <span class="st">"100%"</span>,</span>
 <span>  line_padding <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  column_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -164,7 +164,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span>  zap_small <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  format <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -190,7 +190,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span>  font_size <span class="op">=</span> <span class="st">"100%"</span>,</span>
 <span>  line_padding <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  column_labels <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -214,7 +214,7 @@ print_md() is a alias for display(format = "markdown").'><meta property="og:imag
 <span>  show_formula <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  zap_small <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  groups <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  add_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_reference <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -356,7 +356,7 @@ places than <code>digits</code> are printed in scientific notation.</p></dd>
 column names are generated. See 'Examples'.</p></dd>
 
 
-<dt>add_reference</dt>
+<dt>include_reference</dt>
 <dd><p>Logical, if <code>TRUE</code>, the reference level of factors will
 be added to the parameters table. This is only relevant for models with
 categorical predictors. The coefficient for the reference level is always

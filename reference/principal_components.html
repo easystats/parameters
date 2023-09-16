@@ -18,7 +18,7 @@ Details section)."><meta property="og:image" content="https://easystats.github.i
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -386,14 +386,14 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span><span class="fu">principal_components</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Principal Component Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  | Complexity</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |    1.00   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.91  |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  PC1  |  PC2  | Complexity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.93 | 0.20  |    1.10   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  | -0.04 |    1.00   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  | -0.16 |    1.05   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.91  | 0.41  |    1.40   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique principal component accounted for 87.55% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 principal components accounted for 93.54% of the total variance of the original data (PC1 = 87.55%, PC2 = 5.99%).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Sparse PCA</span></span></span>
@@ -625,14 +625,14 @@ statistics (6th ed.). Boston: Pearson Education.</p></li>
 <span class="r-in"><span><span class="fu">factor_analysis</span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Loadings from Factor Analysis (no rotation)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  | Complexity | Uniqueness</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.90 |    1.00    |    0.19   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.96  |    1.00    |    0.08   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.93  |    1.00    |    0.13   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.86  |    1.00    |    0.26   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variable |  MR1  |   MR2    | Complexity | Uniqueness</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mpg      | -0.89 | 3.15e-03 |    1.00    |    0.20   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl      | 0.95  |   0.01   |    1.00    |    0.09   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> disp     | 0.95  |  -0.18   |    1.07    |    0.07   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp       | 0.87  |   0.19   |    1.09    |    0.21   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The unique latent factor accounted for 83.55% of the total variance of the original data.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">The 2 latent factors accounted for 85.78% of the total variance of the original data (MR1 = 84.09%, MR2 = 1.69%).</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

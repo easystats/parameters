@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.1.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -195,37 +195,33 @@ to obtain non-parametric p-values.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"boot"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">bootstrap_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rvlenth/emmeans" class="external-link">"emmeans"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">consec</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu">bootstrap_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)        wt factor(cyl)6 factor(cyl)8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    32.43904 -2.688929    -3.976348    -5.763244</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    32.61438 -3.095408    -3.340250    -5.486923</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    37.53700 -4.716639    -4.085509    -3.890478</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    33.48938 -2.865037    -4.608070    -7.520817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    33.00846 -2.940534    -4.131137    -6.249707</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    34.64131 -2.632454    -6.430044    -8.848191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    37.87929 -4.506499    -3.635585    -5.196473</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    36.63387 -4.311361    -3.262669    -5.023165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    31.60659 -2.972973    -2.666047    -4.892519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    32.87230 -2.890194    -4.814886    -6.403551</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    34.51845 -4.007986    -1.555621    -4.228459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    34.95325 -3.096820    -6.587620    -7.263334</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">b</span>, <span class="va">consec</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Estimated Marginal Means </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |         95% CI |   pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         |  23.57 | [21.46, 26.27] | 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         |  19.43 | [18.61, 20.36] | 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8         |  17.52 | [16.36, 19.12] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4         |  23.56 | [21.21, 26.27] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6         |  19.37 | [18.65, 20.26] | 100%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8         |  17.54 | [16.46, 19.19] | 100%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Contrasts </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Median |         95% CI |     pd</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl6 - cyl4 |  -4.14 | [-6.83, -1.77] | 99.90%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl8 - cyl6 |  -1.90 | [-3.40,  0.00] | 97.40%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl6 - cyl4 |  -4.16 | [-6.95, -1.66] | 99.90%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl8 - cyl6 |  -1.84 | [-3.35,  0.05] | 97.40%</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
