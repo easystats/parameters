@@ -1,3 +1,10 @@
+# parameters 0.21.3
+
+## Changes
+
+* `principal_components()` and `factor_analysis()` now also work when argument
+  `n = 1`.
+
 # parameters 0.21.2
 
 ## Changes

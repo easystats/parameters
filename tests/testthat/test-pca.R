@@ -19,10 +19,17 @@ test_that("principal_components", {
     tolerance = 0.01
   )
 
-  expect_equal(
-    colnames(x),
-    c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA")
-  )
+  expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA"))
+})
+
+
+test_that("principal_components, n", {
+  data(iris)
+  x <- parameters::principal_components(iris[1:4], n = 2)
+  expect_named(x, c("Variable", "PC1", "PC2", "Complexity"))
+
+  x <- parameters::principal_components(iris[1:4], n = 1)
+  expect_named(x, c("Variable", "PC1", "Complexity"))
 })
 
 
@@ -43,17 +50,13 @@ test_that("principal_components", {
     tolerance = 0.01
   )
 
-  expect_equal(
-    colnames(x),
-    c("Variable", "PC1", "PC2", "Complexity")
-  )
+  expect_named(x, c("Variable", "PC1", "PC2", "Complexity"))
 })
 
 
 # predict ----------------------
 # N.B tests will fail if `GPArotation` package is not installed
 
-require("GPArotation", quietly = TRUE)
 d <- na.omit(psych::bfi[, 1:25])
 model <- psych::fa(d, nfactors = 5)
 mp <- model_parameters(model, sort = TRUE, threshold = "max")
