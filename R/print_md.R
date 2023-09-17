@@ -322,13 +322,3 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
 
   insight::export_table(formatted_table, format = "markdown", align = "firstleft", ...)
 }
-
-
-
-
-
-# Reexports models ------------------------
-
-#' @importFrom insight print_md
-#' @export
-insight::print_md

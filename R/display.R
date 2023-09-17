@@ -223,13 +223,3 @@ display.equivalence_test_lm <- function(object, format = "markdown", digits = 2,
 display.parameters_distribution <- function(object, format = "markdown", digits = 2, ...) {
   print_md(x = object, digits = digits, ...)
 }
-
-
-
-
-
-# Reexports models ------------------------
-
-#' @importFrom insight display
-#' @export
-insight::display
