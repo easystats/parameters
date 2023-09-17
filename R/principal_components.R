@@ -7,13 +7,14 @@
 #' Details section).
 #'
 #' @param x A data frame or a statistical model.
-#' @param n Number of components to extract. If `n="all"`, then `n` is
-#'   set as the number of variables minus 1 (`ncol(x)-1`). If
-#'   `n="auto"` (default) or `n=NULL`, the number of components is
-#'   selected through [`n_factors()`] resp. [`n_components()`].
-#'   In [`reduce_parameters()`], can also be `"max"`, in which case
-#'   it will select all the components that are maximally pseudo-loaded (i.e.,
-#'   correlated) by at least one variable.
+#' @param n Number of components to extract. If `n="all"`, then `n` is set as
+#'   the number of variables minus 1 (`ncol(x)-1`). If `n="auto"` (default) or
+#'   `n=NULL`, the number of components is selected through [`n_factors()`] resp.
+#'   [`n_components()`]. Else, if `n` is a number, `n` components are extracted.
+#'   If `n` exceeds number of variables in the data, it is automatically set to
+#'   the maximum number (i.e. `ncol(x)`). In [`reduce_parameters()`], can also
+#'   be `"max"`, in which case it will select all the components that are
+#'   maximally pseudo-loaded (i.e., correlated) by at least one variable.
 #' @param rotation If not `"none"`, the PCA / FA will be computed using the
 #'   **psych** package. Possible options include `"varimax"`,
 #'   `"quartimax"`, `"promax"`, `"oblimin"`, `"simplimax"`,
@@ -418,15 +419,9 @@ principal_components.data.frame <- function(x,
   } else if (n == "all") {
     n <- ncol(x) - 1
   } else if (n >= ncol(x)) {
-    n <- ncol(x) - 1
-  }
-
-  ## TODO: the next if-statement was removed by Dom, but this breaks
-  ## performance code. Need to check, so we for now add this back
-
-  # sanity check - we need at least two factors
-  if (n < 2 && ncol(x) >= 2) {
-    n <- 2
+    n <- ncol(x)
+  } else if (n < 1) {
+    n <- 1
   }
   n
 }
