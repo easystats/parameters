@@ -5,6 +5,9 @@
 * `principal_components()` and `factor_analysis()` now also work when argument
   `n = 1`.
 
+* `print_md()` for `compare_parameters()` now gains more arguments, similar to
+  the `print()` method.
+
 # parameters 0.21.2
 
 ## Changes
