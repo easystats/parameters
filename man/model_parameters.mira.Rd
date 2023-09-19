@@ -94,7 +94,7 @@ if (require("mice", quietly = TRUE)) {
   fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
   model_parameters(fit)
 }
-\dontrun{
+\donttest{
 # model_parameters() also works for models that have no "tidy"-method in mice
 if (require("mice", quietly = TRUE) && require("gee", quietly = TRUE)) {
   data(warpbreaks)

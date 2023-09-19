@@ -82,7 +82,7 @@ to obtain non-parametric p-values.
 
 \examples{
 \dontshow{if (require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
+\donttest{
 model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 b <- bootstrap_model(model)
 print(head(b))

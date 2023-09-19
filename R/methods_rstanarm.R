@@ -47,7 +47,7 @@
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(parameters)
 #' if (require("rstanarm")) {
 #'   model <- suppressWarnings(stan_glm(

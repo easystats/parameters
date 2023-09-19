@@ -1,7 +1,7 @@
 #' @rdname model_parameters.kmeans
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #
 #' # K-Medoids (PAM and HPAM) ==============
 #' if (require("cluster", quietly = TRUE)) {

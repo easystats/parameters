@@ -508,7 +508,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
-\dontrun{
+\donttest{
 library(parameters)
 if (require("rstanarm")) {
   model <- suppressWarnings(stan_glm(

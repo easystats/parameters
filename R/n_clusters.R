@@ -48,7 +48,7 @@
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html) implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(parameters)
 #'
 #' # The main 'n_clusters' function ===============================

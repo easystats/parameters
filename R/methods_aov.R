@@ -80,7 +80,7 @@
 #' model_parameters(model)
 #'
 #' @examplesIf requireNamespace("lme4", quietly = TRUE)
-#' \dontrun{
+#' \donttest{
 #' mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
 #' model <- anova(mm)
 #'

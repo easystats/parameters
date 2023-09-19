@@ -135,7 +135,7 @@ the examples below for more details.
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(parameters)
 
 # The main 'n_clusters' function ===============================

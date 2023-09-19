@@ -41,7 +41,7 @@
 #' @seealso [`bootstrap_parameters()`], [`simulate_model()`], [`simulate_parameters()`]
 #'
 #' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
-#' \dontrun{
+#' \donttest{
 #' model <- lm(mpg ~ wt + factor(cyl), data = mtcars)
 #' b <- bootstrap_model(model)
 #' print(head(b))

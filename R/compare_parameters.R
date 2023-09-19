@@ -41,7 +41,7 @@
 #' # custom style
 #' compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
 #'
-#' \dontrun{
+#' \donttest{
 #' # custom style, in HTML
 #' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
 #' print_html(result)
@@ -51,7 +51,7 @@
 #' m1 <- lm(mpg ~ wt, data = mtcars)
 #' m2 <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
 #' compare_parameters(m1, m2)
-#' \dontrun{
+#' \donttest{
 #' # exponentiate coefficients, but not for lm
 #' compare_parameters(m1, m2, exponentiate = "nongaussian")
 #'

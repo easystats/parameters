@@ -32,7 +32,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data <- iris[1:4]
 #'
 #' rez1 <- cluster_analysis(data, n = 2, method = "kmeans")

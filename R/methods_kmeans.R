@@ -7,7 +7,7 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #
 #' # K-means -------------------------------
 #' model <- kmeans(iris[1:4], centers = 3)
@@ -69,7 +69,7 @@ model_parameters.kmeans <- function(model, ...) {
 #' @inheritParams cluster_centers
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' #
 #' # Hierarchical K-means (factoextra::hkclust) ----------------------
 #' if (require("factoextra", quietly = TRUE)) {

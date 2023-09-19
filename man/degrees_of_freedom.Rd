@@ -70,7 +70,7 @@ dof(model)
 
 model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
-\dontrun{
+\donttest{
 if (require("lme4", quietly = TRUE)) {
   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
   dof(model)

@@ -21,7 +21,7 @@
 #'   model <- rma(yi = effectsize, sei = stderr, method = "REML", data = mydat)
 #'   model_parameters(model)
 #' }
-#' \dontrun{
+#' \donttest{
 #' # with subgroups
 #' if (require("metafor", quietly = TRUE)) {
 #'   data(dat.bcg)

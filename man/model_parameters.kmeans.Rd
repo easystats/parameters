@@ -107,7 +107,7 @@ if (require("pvclust", quietly = TRUE)) {
   attributes(rez)$Sum_Squares_Between
 }
 }
-\dontrun{
+\donttest{
 #
 # K-means -------------------------------
 model <- kmeans(iris[1:4], centers = 3)
@@ -124,7 +124,7 @@ attributes(rez)$means
 attributes(rez)$Sum_Squares_Total
 attributes(rez)$Sum_Squares_Between
 }
-\dontrun{
+\donttest{
 #
 # Hierarchical K-means (factoextra::hkclust) ----------------------
 if (require("factoextra", quietly = TRUE)) {
@@ -149,7 +149,7 @@ if (require("mclust", quietly = TRUE)) {
   model <- mclust::Mclust(iris[1:4], verbose = FALSE)
   model_parameters(model)
 }
-\dontrun{
+\donttest{
 #
 # K-Medoids (PAM and HPAM) ==============
 if (require("cluster", quietly = TRUE)) {

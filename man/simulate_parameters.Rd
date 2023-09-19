@@ -91,7 +91,7 @@ There is also a \href{https://easystats.github.io/see/articles/parameters.html}{
 model <- lm(Sepal.Length ~ Species * Petal.Width + Petal.Length, data = iris)
 simulate_parameters(model)
 
-\dontrun{
+\donttest{
 if (require("glmmTMB", quietly = TRUE)) {
   model <- glmmTMB(
     count ~ spp + mined + (1 | site),

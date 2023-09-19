@@ -216,7 +216,7 @@
 #' result <- compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
 #' print(result)
 #'
-#' \dontrun{
+#' \donttest{
 #' # custom style, in HTML
 #' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
 #' print_html(result)

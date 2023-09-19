@@ -34,7 +34,7 @@
 #'   to obtain non-parametric p-values.
 #'
 #' @examplesIf require("boot", quietly = TRUE) && require("emmeans", quietly = TRUE)
-#' \dontrun{
+#' \donttest{
 #' set.seed(2)
 #' model <- lm(Sepal.Length ~ Species * Petal.Width, data = iris)
 #' b <- bootstrap_parameters(model)
