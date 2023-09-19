@@ -276,9 +276,11 @@ model_parameters(
 model <- aov(Sepal.Length ~ Sepal.Big + Error(Species), data = df)
 model_parameters(model)
 \dontshow{\}) # examplesIf}
-\dontshow{if (requireNamespace("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (requireNamespace("lme4", quietly = TRUE) && requireNamespace("effectsize", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-mm <- lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
+df <- iris
+df$Sepal.Big <- ifelse(df$Sepal.Width >= 3, "Yes", "No")
+mm <- lme4::lmer(Sepal.Length ~ Sepal.Big + Petal.Width + (1 | Species), data = df)
 model <- anova(mm)
 
 # simple parameters table
