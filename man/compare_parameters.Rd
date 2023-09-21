@@ -190,6 +190,7 @@ Therefore, you should not use this function to compare models with
 interaction terms with models without interaction terms.
 }
 \examples{
+\dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)
 lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -220,4 +221,5 @@ compare_parameters(m1, m2, column_names = c("linear model", "logistic reg."))
 compare_parameters(list(m1, m2))
 compare_parameters(list("linear model" = m1, "logistic reg." = m2))
 }
+\dontshow{\}) # examplesIf}
 }

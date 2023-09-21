@@ -32,7 +32,7 @@
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
-#' @examples
+#' @examplesIf require("gt", quietly = TRUE)
 #' data(iris)
 #' lm1 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
