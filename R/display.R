@@ -45,7 +45,7 @@
 #'
 #' @seealso [print.parameters_model()]
 #'
-#' @examples
+#' @examplesIf require("gt", quietly = TRUE)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)
 #' mp <- model_parameters(model)
 #' display(mp)

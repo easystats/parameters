@@ -292,6 +292,7 @@ knitted from rmarkdown to PDF or Word files. See
 for examples.
 }
 \examples{
+\dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(mpg ~ wt + cyl, data = mtcars)
 mp <- model_parameters(model)
 display(mp)
@@ -316,6 +317,7 @@ print_html(
   column_labels = c("Est. (95\% CI)")
 )
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=print.parameters_model]{print.parameters_model()}}
