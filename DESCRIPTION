@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.2.2
+Version: 0.21.2.3
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -80,8 +80,8 @@ Depends:
     R (>= 3.6)
 Imports:
     bayestestR (>= 0.13.0),
-    datawizard (>= 0.7.0),
-    insight (>= 0.19.4),
+    datawizard (>= 0.9.0),
+    insight (>= 0.19.5),
     graphics,
     methods,
     stats,
@@ -174,7 +174,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.10.1),
+    performance (>= 0.10.5),
     plm,
     PMCMRplus,
     poorman,
@@ -189,7 +189,7 @@ Suggests:
     rms,
     rstanarm,
     sandwich,
-    see (>= 0.7.5),
+    see (>= 0.8.0),
     sparsepca,
     survey,
     survival,
