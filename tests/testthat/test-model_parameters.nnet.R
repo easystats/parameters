@@ -12,7 +12,7 @@ test_that("model_parameters.multinom - long and wide", {
   )[, 3:6]
   cns2$Type <- factor(cns2$Type, levels = unique(cns2$Type))
 
-  mnnet1 <- multinom(Type ~ Water + Work, data = cns2, weights = Freq, trace = FALSE)
+  mnnet1 <- nnet::multinom(Type ~ Water + Work, data = cns2, weights = Freq, trace = FALSE)
   mpnnet1 <- model_parameters(mnnet1)
 
   expect_named(
@@ -36,7 +36,7 @@ test_that("model_parameters.multinom - long and wide", {
     tolerance = 1e-4
   )
 
-  mnnet2 <- multinom(cbind(An, Sp, Other) ~ Water + Work, data = cns, trace = FALSE)
+  mnnet2 <- nnet::multinom(cbind(An, Sp, Other) ~ Water + Work, data = cns, trace = FALSE)
   mpnnet2 <- model_parameters(mnnet2)
 
   expect_named(
