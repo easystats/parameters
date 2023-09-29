@@ -14,6 +14,9 @@ cns2$Type <- factor(cns2$Type, levels = unique(cns2$Type))
 mnnet1 <- nnet::multinom(Type ~ Water + Work, data = cns2, weights = Freq, trace = FALSE)
 mnnet2 <- nnet::multinom(cbind(An, Sp, Other) ~ Water + Work, data = cns, trace = FALSE)
 
+ci1 <- confint(mnnet1)
+ci2 <- confint(mnnet2)
+
 test_that("model_parameters.multinom - long and wide", {
   mpnnet1 <- model_parameters(mnnet1)
   mpnnet2 <- model_parameters(mnnet2)
@@ -22,7 +25,7 @@ test_that("model_parameters.multinom - long and wide", {
     mpnnet1,
     c(
       "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-      "t", "df_error", "p", "Response"
+      "z", "df_error", "p", "Response"
     )
   )
   expect_identical(
@@ -38,12 +41,17 @@ test_that("model_parameters.multinom - long and wide", {
     c(0.3752, -0.0013, 0.11576, -1.12255, 0.00218, -0.27028),
     tolerance = 1e-4
   )
+  expect_equal(
+    mpnnet1$CI_low,
+    as.vector(ci1[1:3, 1, 1:2]),
+    tolerance = 1e-4
+  )
 
   expect_named(
     mpnnet2,
     c(
       "Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high",
-      "t", "df_error", "p", "Response"
+      "z", "df_error", "p", "Response"
     )
   )
   expect_identical(
@@ -57,6 +65,11 @@ test_that("model_parameters.multinom - long and wide", {
   expect_equal(
     mpnnet2$Coefficient,
     c(0.3752, -0.0013, 0.11576, -1.12255, 0.00218, -0.27028),
+    tolerance = 1e-4
+  )
+  expect_equal(
+    mpnnet2$CI_low,
+    as.vector(ci2[1:3, 1, 1:2]),
     tolerance = 1e-4
   )
 })
@@ -74,11 +87,11 @@ test_that("ci.multinom - long and wide", {
     cinnet1$Response,
     c("Sp", "Sp", "Sp", "Other", "Other", "Other")
   )
-  # expect_equal(
-  #   cinnet1$CI_low,
-  #   c(-0.0083, -0.0054, -0.30539, -1.68673, -0.00366, -0.9256),
-  #   tolerance = 1e-4
-  # )
+  expect_equal(
+    cinnet1$CI_low,
+    as.vector(ci1[1:3, 1, 1:2]),
+    tolerance = 1e-4
+  )
 
   expect_identical(
     cinnet2$Parameter,
@@ -88,9 +101,9 @@ test_that("ci.multinom - long and wide", {
     cinnet2$Response,
     c("Sp", "Sp", "Sp", "Other", "Other", "Other")
   )
-  # expect_equal(
-  #   cinnet2$CI_low,
-  #   c(-0.0083, -0.0054, -0.30539, -1.68673, -0.00366, -0.9256),
-  #   tolerance = 1e-4
-  # )
+  expect_equal(
+    cinnet2$CI_low,
+    as.vector(ci1[1:3, 1, 1:2]),
+    tolerance = 1e-4
+  )
 })
