@@ -28,7 +28,15 @@ model_parameters.bracl <- function(model,
   )
 
   # detect number of levels of response
-  nl <- .safe(nlevels(factor(insight::get_response(model))), 0)
+  resp <- insight::get_response(model)
+
+  # for cbind(), response is a data frame, not a factor. We then need to use
+  # number of columns as "nl"
+  if (is.data.frame(resp)) {
+    nl <- ncol(resp)
+  } else {
+    nl <- .safe(nlevels(factor(resp)), 0)
+  }
 
   # merge by response as well if more than 2 levels
   if (nl > 2) {
@@ -136,19 +144,46 @@ p_value.bracl <- function(model, verbose = TRUE, ...) {
 
 
 #' @export
-model_parameters.multinom <- model_parameters.bracl
+model_parameters.multinom <- function(model,
+                                      ci = 0.95,
+                                      ci_method = "normal",
+                                      bootstrap = FALSE,
+                                      iterations = 1000,
+                                      standardize = NULL,
+                                      exponentiate = FALSE,
+                                      p_adjust = NULL,
+                                      summary = getOption("parameters_summary", FALSE),
+                                      keep = NULL,
+                                      drop = NULL,
+                                      verbose = TRUE,
+                                      ...) {
+  model_parameters.bracl(
+    model,
+    ci = ci,
+    ci_method = ci_method,
+    bootstrap = bootstrap,
+    iterations = iterations,
+    standardize = standardize,
+    exponentiate = exponentiate,
+    p_adjust = p_adjust,
+    summary = summary,
+    keep = keep,
+    drop = drop,
+    verbose = verbose,
+    ...
+  )
+}
 
 
 #' @export
-ci.multinom <- ci.bracl
-
-
-
+ci.multinom <- function(x, ci = 0.95, method = "normal", verbose = TRUE, ...) {
+  ci.bracl(x, ci = ci, method = method, verbose = verbose, ...)
+}
 
 
 #' @export
 degrees_of_freedom.multinom <- function(model, method = NULL, ...) {
-  if (identical(method, "normal")) {
+  if (is.null(method) || identical(method, "normal")) {
     Inf
   } else {
     insight::n_obs(model) - model$edf
@@ -157,8 +192,6 @@ degrees_of_freedom.multinom <- function(model, method = NULL, ...) {
 
 #' @export
 degrees_of_freedom.nnet <- degrees_of_freedom.multinom
-
-
 
 
 #' @export
@@ -171,7 +204,7 @@ standard_error.multinom <- function(model, ...) {
         stderr <- as.vector(sqrt(diag(vc)))
       } else {
         if (is.matrix(stderr)) {
-          tmp <- c()
+          tmp <- NULL
           for (i in seq_len(nrow(stderr))) {
             tmp <- c(tmp, as.vector(stderr[i, ]))
           }
@@ -206,7 +239,7 @@ standard_error.multinom <- function(model, ...) {
 
 
 #' @export
-p_value.multinom <- function(model, method = "residual", ...) {
+p_value.multinom <- function(model, method = "normal", ...) {
   stat <- insight::get_statistic(model)
   out <- p_value.default(model, method = method, ...)
   if (!is.null(stat$Response)) {
