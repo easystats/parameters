@@ -179,7 +179,7 @@ standard_error.multinom <- function(model, ...) {
         stderr <- as.vector(sqrt(diag(vc)))
       } else {
         if (is.matrix(stderr)) {
-          tmp <- c()
+          tmp <- NULL
           for (i in seq_len(nrow(stderr))) {
             tmp <- c(tmp, as.vector(stderr[i, ]))
           }
