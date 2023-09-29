@@ -336,7 +336,7 @@
   }
 
   # check if we have model data, else return parameter table
-  model_data <- insight::get_data(model)
+  model_data <- insight::get_data(model, verbose = FALSE)
   if (is.null(model_data)) {
     params
   }

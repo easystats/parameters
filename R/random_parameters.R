@@ -68,7 +68,7 @@ random_parameters <- function(model, component = "conditional") {
 .n_randomeffects <- function(model) {
   vapply(
     insight::get_data(model, verbose = FALSE)[insight::find_random(model, split_nested = TRUE, flatten = TRUE)],
-    function(i) insight::n_unique(i),
+    insight::n_unique,
     numeric(1)
   )
 }
