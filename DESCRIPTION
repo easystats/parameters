@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.2.4
+Version: 0.21.2.5
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -120,6 +120,7 @@ Suggests:
     estimatr,
     factoextra,
     FactoMineR,
+    faraway,
     fastICA,
     fixest,
     fpc,

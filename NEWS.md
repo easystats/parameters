@@ -12,6 +12,9 @@
 
 * Fixed issue in `print_html()` for objects from package _ggeffects_.
 
+* Fixed issues for `nnet::multinom()` with wide-format response variables (using
+  `cbind()`).
+
 # parameters 0.21.2
 
 ## Changes

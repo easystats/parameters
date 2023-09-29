@@ -28,7 +28,15 @@ model_parameters.bracl <- function(model,
   )
 
   # detect number of levels of response
-  nl <- .safe(nlevels(factor(insight::get_response(model))), 0)
+  resp <- insight::get_response(model)
+
+  # for cbind(), response is a data frame, not a factor. We then need to use
+  # number of columns as "nl"
+  if (is.data.frame(resp)) {
+    nl <- ncol(resp)
+  } else {
+    nl <- .safe(nlevels(factor(resp)), 0)
+  }
 
   # merge by response as well if more than 2 levels
   if (nl > 2) {

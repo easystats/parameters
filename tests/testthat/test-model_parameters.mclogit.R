@@ -9,18 +9,22 @@ withr::with_options(
   {
     data(Transport, package = "mclogit")
     invisible(capture.output(
-      m1 <- mclogit::mclogit(
-        cbind(resp, suburb) ~ distance + cost,
-        data = Transport
-      )
+      {
+        m1 <- mclogit::mclogit(
+          cbind(resp, suburb) ~ distance + cost,
+          data = Transport
+        )
+      }
     ))
 
     data(housing, package = "MASS")
     invisible(capture.output(
-      m2 <- mclogit::mblogit(Sat ~ Infl + Type + Cont,
-        weights = Freq,
-        data = housing
-      )
+      {
+        m2 <- mclogit::mblogit(Sat ~ Infl + Type + Cont,
+          weights = Freq,
+          data = housing
+        )
+      }
     ))
 
     test_that("model_parameters.mclogit", {
