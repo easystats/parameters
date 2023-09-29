@@ -53,12 +53,16 @@ test_that("model_parameters.BBmm", {
   dat$z <- as.factor(dat$z)
 
   # apply the model
-  invisible(capture.output(model <- PROreg::BBmm(
-    fixed.formula = y ~ x,
-    random.formula = ~z,
-    m = m,
-    data = dat
-  )))
+  invisible(capture.output(
+    {
+      model <- PROreg::BBmm(
+        fixed.formula = y ~ x,
+        random.formula = ~z,
+        m = m,
+        data = dat
+      )
+    }
+  ))
   params <- suppressWarnings(model_parameters(model))
   expect_equal(params$df_error, c(96, 96), tolerance = 1e-3)
   expect_equal(params$CI_low, c(0.26363, -1.46645), tolerance = 1e-3)
@@ -113,7 +117,7 @@ test_that("model_parameters.multinom", {
     data = bwt,
     trace = FALSE
   )
-  params <- suppressWarnings(model_parameters(model))
+  params <- suppressWarnings(model_parameters(model, ci_method = "wald"))
   expect_equal(params$df_error, c(178, 178, 178, 178, 178, 178, 178, 178, 178, 178, 178), tolerance = 1e-3)
   expect_equal(params$CI_low, c(
     -1.6332, -0.11362, -0.02963, 0.13471, -0.17058,
