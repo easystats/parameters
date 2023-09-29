@@ -556,6 +556,7 @@ format.parameters_sem <- function(x,
   footer_text <- attributes(x)$footer_text
   text_alternative <- attributes(x)$text_alternative
   n_obs <- attributes(x)$n_obs
+  is_ggeffects <- isTRUE(attributes(x)$is_ggeffects)
 
   # footer: model formula
   if (isTRUE(show_formula)) {
@@ -599,7 +600,7 @@ format.parameters_sem <- function(x,
 
   # footer: generic text
   if (!is.null(footer_text)) {
-    footer <- .add_footer_text(footer, footer_text, type)
+    footer <- .add_footer_text(footer, footer_text, type, is_ggeffects)
   }
 
   # add color code, if we have a footer
@@ -612,12 +613,18 @@ format.parameters_sem <- function(x,
     footer[1] <- substr(footer[1], 0, nchar(x) - 1)
   }
 
+  # finally, for ggeffects and HTML, remove *
+  if (is_ggeffects && type == "html") {
+    footer <- gsub("*", "", footer, fixed = TRUE)
+    footer <- gsub(":;", ":", footer, fixed = TRUE)
+  }
+
   footer
 }
 
 
 # footer: generic text
-.add_footer_text <- function(footer = NULL, text, type = "text") {
+.add_footer_text <- function(footer = NULL, text, type = "text", is_ggeffects = FALSE) {
   if (!is.null(text)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -627,7 +634,8 @@ format.parameters_sem <- function(x,
       }
       footer <- paste0(footer, sprintf("%s%s\n", fill, text))
     } else if (type == "html") {
-      footer <- c(footer, gsub("\n", "", text, fixed = TRUE))
+      replacement <- ifelse(is_ggeffects, ";", "")
+      footer <- c(footer, gsub("\n", replacement, text, fixed = TRUE))
     }
   }
   footer

@@ -8,6 +8,10 @@
 * `print_md()` for `compare_parameters()` now gains more arguments, similar to
   the `print()` method.
 
+## Bug fixes
+
+* Fixed issue in `print_html()` for objects from package _ggeffects_.
+
 # parameters 0.21.2
 
 ## Changes
