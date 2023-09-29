@@ -30,16 +30,12 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 100)
 )
 
-pkgs <- c(
-  "gt", "magrittr", "datawizard", "glmmTMB", "parameters"
-)
+pkgs <- c("gt", "datawizard", "glmmTMB", "parameters")
 
 successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
 
 if (all(successfully_loaded)) {
   library(parameters)
-  library(gt)
-  library(magrittr)
   library(datawizard)
   library(glmmTMB)
 }
@@ -131,6 +127,16 @@ A model summary can be added to the table when `summary = TRUE` in the call to `
 ```{r}
 model <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 model_parameters(model, summary = TRUE)
+```
+
+## Including the reference level of categorical variables
+
+Sometimes, it can be helpful to include the reference level of categorical predictors in the table. This can be done by setting `include_reference = TRUE` in the `print()` method. Since the reference level is not a parameter, it is shown in a separate row, with `0` for the coefficient and blank cells for the remaining columns.
+
+```{r}
+model <- lm(Sepal.Length ~ Petal.Length + Species, data = iris)
+mp <- model_parameters(model)
+print(mp, include_reference = TRUE)
 ```
 
 ## Changing number of digits
