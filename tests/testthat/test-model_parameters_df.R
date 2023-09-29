@@ -53,16 +53,14 @@ test_that("model_parameters.BBmm", {
   dat$z <- as.factor(dat$z)
 
   # apply the model
-  invisible(capture.output(
-    {
-      model <- PROreg::BBmm(
-        fixed.formula = y ~ x,
-        random.formula = ~z,
-        m = m,
-        data = dat
-      )
-    }
-  ))
+  invisible(capture.output({
+    model <- PROreg::BBmm(
+      fixed.formula = y ~ x,
+      random.formula = ~z,
+      m = m,
+      data = dat
+    )
+  }))
   params <- suppressWarnings(model_parameters(model))
   expect_equal(params$df_error, c(96, 96), tolerance = 1e-3)
   expect_equal(params$CI_low, c(0.26363, -1.46645), tolerance = 1e-3)
