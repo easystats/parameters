@@ -175,19 +175,19 @@ include smooth terms, but not random effects.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">simulate_model</span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept) Speciesversicolor Speciesvirginica Petal.Width Petal.Length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.404915         -1.005686        -2.562729   0.8323238    0.9328638</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    4.005883         -1.486997        -1.204242   0.3666363    0.6805719</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.388161         -0.956636        -2.429024   0.4987078    1.0070344</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.446659         -1.360393        -2.382023   0.8066322    0.9501982</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.415024         -1.004004        -1.926401   0.9240066    0.9281500</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.280865         -1.148010        -2.294658   0.7260310    1.0535616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    3.691652        -0.9702980        -2.222233 -0.13992569    0.8909679</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    3.532233        -0.9248112        -1.697018  0.71496602    0.9149557</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3.529013        -1.1908629        -1.936518  0.36035280    0.9653964</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    3.524944        -0.6862546        -2.548035  0.02803116    0.9638630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5    3.747054        -1.3318753        -1.717888  0.23768085    0.8259299</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6    3.503598        -0.9693067        -2.404608  0.24136418    0.9747787</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Speciesversicolor:Petal.Width Speciesvirginica:Petal.Width</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                   -1.15552570                   -0.5475169</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    0.02330236                   -0.3723944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                   -1.06984575                   -0.4676776</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4                   -0.97619863                   -0.6580704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   -1.21401662                   -0.9822157</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                   -1.27512671                   -0.8268928</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    -0.3643108                   0.18568075</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                    -1.0969139                  -0.87941044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    -0.8193458                  -0.56496500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                    -0.8082522                   0.08156438</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    -0.2403911                  -0.26124933</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                    -0.7401780                  -0.22702716</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">"glmmTMB"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span></span></span>
@@ -200,12 +200,12 @@ include smooth terms, but not random effects.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">simulate_model</span><span class="op">(</span><span class="va">model</span>, component <span class="op">=</span> <span class="st">"zero_inflated"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   (Intercept)   minedno</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.1845184 -1.346765</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.7287636 -1.704010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   1.2110542 -2.118863</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.4841667 -1.406178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.4262444 -1.428976</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.6211372 -1.444925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.8605370 -1.938033</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.9374614 -1.766841</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.7401030 -1.728777</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.8916873 -1.643877</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.5761701 -1.594584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.7098450 -1.581972</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
