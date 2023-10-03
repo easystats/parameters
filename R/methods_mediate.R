@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mediate <- function(model, ci = 0.95, exponentiate = FALSE, verbose = TRUE, ...) {
   # Parameters, Estimate and CI
@@ -13,7 +12,7 @@ model_parameters.mediate <- function(model, ci = 0.95, exponentiate = FALSE, ver
 
   # ==== Renaming
 
-  if (any(grepl("\\(control\\)$", params$Parameter))) {
+  if (any(endsWith(params$Parameter, "(control)"))) {
     params$Component <- gsub("(.*)\\((.*)\\)$", "\\2", params$Parameter)
   }
 

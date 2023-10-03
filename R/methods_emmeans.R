@@ -3,7 +3,6 @@
 # model_parameters ----------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.emmGrid <- function(model,
                                      ci = 0.95,

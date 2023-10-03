@@ -133,12 +133,8 @@ model_parameters.ridgelm <- function(model, verbose = TRUE, ...) {
   parameters
 }
 
-
-#' @rdname model_parameters.default
 #' @export
 model_parameters.polr <- model_parameters.glm
 
-
-#' @rdname model_parameters.default
 #' @export
 model_parameters.negbin <- model_parameters.glm

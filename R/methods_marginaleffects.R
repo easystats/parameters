@@ -46,27 +46,22 @@ model_parameters.marginaleffects <- function(model,
   out
 }
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.comparisons <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.marginalmeans <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.hypotheses <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.slopes <- model_parameters.marginaleffects
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.predictions <- function(model,
                                          ci = 0.95,

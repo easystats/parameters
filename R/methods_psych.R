@@ -234,7 +234,6 @@ model_parameters.principal <- function(model,
   loadings
 }
 
-
 #' @export
 model_parameters.fa <- model_parameters.principal
 
@@ -242,8 +241,6 @@ model_parameters.fa <- model_parameters.principal
 model_parameters.fa.ci <- model_parameters.fa
 
 
-
-#' @rdname model_parameters.principal
 #' @export
 model_parameters.omega <- function(model, verbose = TRUE, ...) {
   # Table of omega coefficients

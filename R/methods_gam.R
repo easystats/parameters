@@ -4,7 +4,6 @@
 #################### .gam ------
 
 
-#' @rdname model_parameters.cgam
 #' @export
 model_parameters.gam <- model_parameters.cgam
 
