@@ -1,7 +1,6 @@
 # lmodel2
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.lmodel2 <- function(model,
                                      ci = 0.95,

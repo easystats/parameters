@@ -1,6 +1,5 @@
 # .varest
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.varest <- function(model,
                                     ci = 0.95,

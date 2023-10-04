@@ -14,7 +14,7 @@ reference:
       - model_parameters.befa
       - model_parameters.default
       - model_parameters.zcpglm
-      - model_parameters.gam
+      - model_parameters.cgam
       - model_parameters.mlm
       - model_parameters.merMod
       - model_parameters.lavaan

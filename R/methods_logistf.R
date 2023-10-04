@@ -1,6 +1,5 @@
 # model_parameters --------------------
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.logistf <- model_parameters.glm
 

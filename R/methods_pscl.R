@@ -2,16 +2,12 @@
 
 # model parameters -----------------
 
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zeroinfl <- model_parameters.zcpglm
 
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.hurdle <- model_parameters.zcpglm
 
-
-#' @rdname model_parameters.zcpglm
 #' @export
 model_parameters.zerocount <- model_parameters.zcpglm
 
@@ -40,10 +36,8 @@ ci.zeroinfl <- function(x,
   .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component, ...)
 }
 
-
 #' @export
 ci.hurdle <- ci.zeroinfl
-
 
 #' @export
 ci.zerocount <- ci.zeroinfl
@@ -100,10 +94,8 @@ standard_error.zeroinfl <- function(model,
   .filter_component(se, component)
 }
 
-
 #' @export
 standard_error.hurdle <- standard_error.zeroinfl
-
 
 #' @export
 standard_error.zerocount <- standard_error.zeroinfl
@@ -160,10 +152,8 @@ p_value.zeroinfl <- function(model,
   .filter_component(p, component)
 }
 
-
 #' @export
 p_value.hurdle <- p_value.zeroinfl
-
 
 #' @export
 p_value.zerocount <- p_value.zeroinfl
@@ -230,10 +220,8 @@ simulate_parameters.zeroinfl <- function(model,
   out
 }
 
-
 #' @export
 simulate_parameters.hurdle <- simulate_parameters.zeroinfl
-
 
 #' @export
 simulate_parameters.zerocount <- simulate_parameters.zeroinfl

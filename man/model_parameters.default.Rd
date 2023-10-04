@@ -6,8 +6,6 @@
 \alias{model_parameters.glm}
 \alias{model_parameters.censReg}
 \alias{model_parameters.ridgelm}
-\alias{model_parameters.polr}
-\alias{model_parameters.negbin}
 \title{Parameters from (General) Linear Models}
 \usage{
 \method{model_parameters}{default}(
@@ -65,42 +63,6 @@
 )
 
 \method{model_parameters}{ridgelm}(model, verbose = TRUE, ...)
-
-\method{model_parameters}{polr}(
-  model,
-  ci = 0.95,
-  ci_method = NULL,
-  bootstrap = FALSE,
-  iterations = 1000,
-  standardize = NULL,
-  exponentiate = FALSE,
-  p_adjust = NULL,
-  summary = getOption("parameters_summary", FALSE),
-  keep = NULL,
-  drop = NULL,
-  vcov = NULL,
-  vcov_args = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{model_parameters}{negbin}(
-  model,
-  ci = 0.95,
-  ci_method = NULL,
-  bootstrap = FALSE,
-  iterations = 1000,
-  standardize = NULL,
-  exponentiate = FALSE,
-  p_adjust = NULL,
-  summary = getOption("parameters_summary", FALSE),
-  keep = NULL,
-  drop = NULL,
-  vcov = NULL,
-  vcov_args = NULL,
-  verbose = TRUE,
-  ...
-)
 }
 \arguments{
 \item{model}{Model object.}

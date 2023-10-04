@@ -59,10 +59,10 @@ model_parameters.PCA <- function(model,
 
 
   # add class-attribute for printing
-  if ("PCA" %in% class(model)) {
+  if (inherits(model, "PCA")) {
     attr(loadings, "type") <- "pca"
     class(loadings) <- unique(c("parameters_pca", "see_parameters_pca", class(loadings)))
-  } else if ("FAMD" %in% class(model)) {
+  } else if (inherits(model, "FAMD")) {
     attr(loadings, "type") <- "fa"
     class(loadings) <- unique(c("parameters_efa", "see_parameters_efa", class(loadings)))
   }
@@ -70,7 +70,5 @@ model_parameters.PCA <- function(model,
   loadings
 }
 
-
-#' @rdname model_parameters.principal
 #' @export
 model_parameters.FAMD <- model_parameters.PCA
