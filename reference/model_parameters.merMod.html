@@ -82,7 +82,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Mixed Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cplm.R" class="external-link"><code>R/methods_cplm.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_lme4.R" class="external-link"><code>R/methods_lme4.R</code></a>, and 8 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_cplm.R" class="external-link"><code>R/methods_cplm.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_glmmTMB.R" class="external-link"><code>R/methods_glmmTMB.R</code></a>, <a href="https://github.com/easystats/parameters/blob/HEAD/R/methods_lme4.R" class="external-link"><code>R/methods_lme4.R</code></a>, and 4 more</small>
       <div class="d-none name"><code>model_parameters.merMod.Rd</code></div>
     </div>
 
@@ -159,18 +159,6 @@
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for merModList</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S3 method for mixed</span></span>
 <span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">model</span>,</span>
@@ -214,23 +202,6 @@
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for mixor</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  effects <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -292,45 +263,6 @@
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for rlmerMod</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ci_random <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  effects <span class="op">=</span> <span class="st">"all"</span>,</span>
-<span>  group_level <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  include_sigma <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for HLfit</span></span>
-<span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span></span>
-<span>  <span class="va">model</span>,</span>
-<span>  ci <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ci_method <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  bootstrap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iterations <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  exponentiate <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  p_adjust <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  summary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">getOption</a></span><span class="op">(</span><span class="st">"parameters_summary"</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  vcov <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  vcov_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
