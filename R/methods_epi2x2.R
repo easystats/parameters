@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.epi.2by2 <- function(model, verbose = TRUE, ...) {
   # get parameter estimates

@@ -2,53 +2,10 @@
 % Please edit documentation in R/methods_aov.R
 \name{model_parameters.aov}
 \alias{model_parameters.aov}
-\alias{model_parameters.anova}
-\alias{model_parameters.aovlist}
 \alias{model_parameters.afex_aov}
-\alias{model_parameters.anova.rms}
-\alias{model_parameters.Anova.mlm}
-\alias{model_parameters.maov}
 \title{Parameters from ANOVAs}
 \usage{
 \method{model_parameters}{aov}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{anova}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{aovlist}(
   model,
   type = NULL,
   df_error = NULL,
@@ -75,63 +32,6 @@
   keep = NULL,
   drop = NULL,
   verbose = TRUE,
-  ...
-)
-
-\method{model_parameters}{anova.rms}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{Anova.mlm}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  ...
-)
-
-\method{model_parameters}{maov}(
-  model,
-  type = NULL,
-  df_error = NULL,
-  ci = NULL,
-  alternative = NULL,
-  test = NULL,
-  power = FALSE,
-  effectsize_type = NULL,
-  keep = NULL,
-  drop = NULL,
-  table_wide = FALSE,
-  verbose = TRUE,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
   ...
 )
 }

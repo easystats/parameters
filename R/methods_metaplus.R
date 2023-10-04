@@ -290,7 +290,6 @@ ci.meta_random <- function(x, method = "eti", ...) {
 
 ###### .meta_fixed -------------------
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.meta_fixed <- model_parameters.meta_random
 

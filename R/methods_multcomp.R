@@ -2,7 +2,6 @@
 #'
 #' Parameters from Hypothesis Testing.
 #'
-#' @rdname model_parameters.averaging
 #' @param model Object of class [multcomp::glht()] (**multcomp**)
 #'   or of class `PMCMR`, `trendPMCMR` or `osrt` (**PMCMRplus**).
 #' @inheritParams model_parameters.default

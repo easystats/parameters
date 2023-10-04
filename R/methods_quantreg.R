@@ -3,12 +3,10 @@
 # model parameters ---------------------
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.rqss <- model_parameters.cgam
 
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.rqs <- function(model,
                                  ci = 0.95,

@@ -4,7 +4,6 @@
 # model parameters -------------
 
 
-#' @rdname model_parameters.stanreg
 #' @export
 model_parameters.blrm <- model_parameters.bayesQR
 

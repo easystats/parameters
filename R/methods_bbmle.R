@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.mle2 <- model_parameters.glm
 

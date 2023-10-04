@@ -1,6 +1,6 @@
 #################### .gamlss ------
 
-#' @rdname model_parameters.cgam
+
 #' @export
 model_parameters.gamlss <- model_parameters.gam
 
@@ -8,7 +8,9 @@ model_parameters.gamlss <- model_parameters.gam
 #' @export
 standard_error.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
-  utils::capture.output(cs <- summary(model))
+  utils::capture.output({
+    cs <- summary(model)
+  })
 
   .data_frame(
     Parameter = parms$Parameter,
@@ -21,7 +23,9 @@ standard_error.gamlss <- function(model, ...) {
 #' @export
 p_value.gamlss <- function(model, ...) {
   parms <- insight::get_parameters(model)
-  utils::capture.output(cs <- summary(model))
+  utils::capture.output({
+    cs <- summary(model)
+  })
   .data_frame(
     Parameter = parms$Parameter,
     p = as.vector(cs[, 4]),

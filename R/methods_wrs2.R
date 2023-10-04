@@ -14,7 +14,6 @@
 
 # anova ----------------------
 
-#' @rdname model_parameters.averaging
 model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_t1way(model)
   parameters <- .add_htest_parameters_attributes(parameters, model, ...)
@@ -27,31 +26,31 @@ model_parameters.t1way <- function(model, keep = NULL, verbose = TRUE, ...) {
   # effect sizes are by default contained for `t1way` but not `rmanova`
   if (grepl("^(t1way|WRS2::t1way)", fcall)) {
     data.frame(
-      "F" = model$test,
-      "df" = model$df1,
-      "df_error" = model$df2,
-      "p" = model$p.value,
-      "Method" = "A heteroscedastic one-way ANOVA for trimmed means",
-      "Estimate" = model$effsize,
-      "CI" = 1 - model$alpha,
-      "CI_low" = model$effsize_ci[1],
-      "CI_high" = model$effsize_ci[2],
-      "Effectsize" = "Explanatory measure of effect size",
+      `F` = model$test,
+      df = model$df1,
+      df_error = model$df2,
+      p = model$p.value,
+      Method = "A heteroscedastic one-way ANOVA for trimmed means",
+      Estimate = model$effsize,
+      CI = 1 - model$alpha,
+      CI_low = model$effsize_ci[1],
+      CI_high = model$effsize_ci[2],
+      Effectsize = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
     )
   } else if (grepl("^(rmanova|WRS2::rmanova)", fcall)) {
     data.frame(
-      "F" = model$test,
-      "df" = model$df1,
-      "df_error" = model$df2,
-      "p" = model$p.value,
-      "Method" = "A heteroscedastic one-way repeated measures ANOVA for trimmed means",
+      `F` = model$test,
+      df = model$df1,
+      df_error = model$df2,
+      p = model$p.value,
+      Method = "A heteroscedastic one-way repeated measures ANOVA for trimmed means",
       stringsAsFactors = FALSE
     )
   }
 }
 
-#' @rdname model_parameters.averaging
+
 #' @export
 model_parameters.med1way <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_med1way(model)
@@ -62,15 +61,14 @@ model_parameters.med1way <- function(model, verbose = TRUE, ...) {
 
 .extract_wrs2_med1way <- function(model) {
   data.frame(
-    "F" = model$test,
-    "Critical value" = model$crit.val,
-    "p" = model$p.value,
-    "Method" = "Heteroscedastic one-way ANOVA for medians",
+    `F` = model$test,
+    `Critical value` = model$crit.val,
+    p = model$p.value,
+    Method = "Heteroscedastic one-way ANOVA for medians",
     stringsAsFactors = FALSE
   )
 }
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.dep.effect <- function(model,
                                         keep = NULL,
@@ -123,7 +121,6 @@ model_parameters.dep.effect <- function(model,
 
 # t-test ----------------------
 
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   parameters <- .extract_wrs2_yuen(model)
@@ -141,31 +138,31 @@ model_parameters.yuen <- function(model, verbose = TRUE, ...) {
   if (grepl("^(yuen\\(|WRS2::yuen\\()", fcall) ||
     grepl("function (formula, data, tr = 0.2, ...)", fcall, fixed = TRUE)) {
     out <- data.frame(
-      "t" = model$test,
-      "df_error" = model$df,
-      "p" = model$p.value,
-      "Method" = "Yuen's test on trimmed means for independent samples",
-      "Difference" = model$diff,
-      "CI" = 0.95,
-      "Difference_CI_low" = model$conf.int[1],
-      "Difference_CI_high" = model$conf.int[2],
-      "Estimate" = model$effsize,
-      "Effectsize" = "Explanatory measure of effect size",
+      t = model$test,
+      df_error = model$df,
+      p = model$p.value,
+      Method = "Yuen's test on trimmed means for independent samples",
+      Difference = model$diff,
+      CI = 0.95,
+      Difference_CI_low = model$conf.int[1],
+      Difference_CI_high = model$conf.int[2],
+      Estimate = model$effsize,
+      Effectsize = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
     )
   } else {
     # within-subjects
     out <- data.frame(
-      "t" = model$test,
-      "df_error" = model$df,
-      "p" = model$p.value,
-      "Method" = "Yuen's test on trimmed means for dependent samples",
-      "Difference" = model$diff,
-      "CI" = 0.95,
-      "Difference_CI_low" = model$conf.int[1],
-      "Difference_CI_high" = model$conf.int[2],
-      "Estimate" = model$effsize,
-      "Effectsize" = "Explanatory measure of effect size",
+      t = model$test,
+      df_error = model$df,
+      p = model$p.value,
+      Method = "Yuen's test on trimmed means for dependent samples",
+      Difference = model$diff,
+      CI = 0.95,
+      Difference_CI_low = model$conf.int[1],
+      Difference_CI_high = model$conf.int[2],
+      Estimate = model$effsize,
+      Effectsize = "Explanatory measure of effect size",
       stringsAsFactors = FALSE
     )
   }
@@ -256,14 +253,14 @@ model_parameters.onesampb <- function(model, verbose = TRUE, ...) {
 
 .extract_wrs2_onesampb <- function(model) {
   data.frame(
-    "Estimate" = model$estimate,
-    "CI" = 1 - model$alpha,
-    "CI_low" = model$ci[1],
-    "CI_high" = model$ci[2],
-    "p" = model$p.value,
-    "n_Obs" = model$n,
-    "Effectsize" = "Robust location measure",
-    "Method" = "One-sample percentile bootstrap",
+    Estimate = model$estimate,
+    CI = 1 - model$alpha,
+    CI_low = model$ci[1],
+    CI_high = model$ci[2],
+    p = model$p.value,
+    n_Obs = model$n,
+    Effectsize = "Robust location measure",
+    Method = "One-sample percentile bootstrap",
     stringsAsFactors = FALSE
   )
 }
@@ -278,15 +275,15 @@ model_parameters.trimcibt <- function(model, verbose = TRUE, ...) {
 
 .extract_wrs2_trimcibt <- function(model) {
   data.frame(
-    "t" = model$test.stat,
-    "p" = model$p.value,
-    "n_Obs" = model$n,
-    "Method" = "Bootstrap-t method for one-sample test",
-    "Estimate" = model$estimate[[1]],
-    "CI" = 1 - model$alpha,
-    "CI_low" = model$ci[1],
-    "CI_high" = model$ci[2],
-    "Effectsize" = "Trimmed mean",
+    t = model$test.stat,
+    p = model$p.value,
+    n_Obs = model$n,
+    Method = "Bootstrap-t method for one-sample test",
+    Estimate = model$estimate[[1]],
+    CI = 1 - model$alpha,
+    CI_low = model$ci[1],
+    CI_high = model$ci[2],
+    Effectsize = "Trimmed mean",
     stringsAsFactors = FALSE
   )
 }
@@ -304,11 +301,11 @@ model_parameters.AKP <- function(model, verbose = TRUE, ...) {
 
 .extract_wrs2_AKP <- function(model) {
   data.frame(
-    "Estimate" = model$AKPeffect,
-    "CI" = 1 - model$alpha,
-    "CI_low" = model$AKPci[1],
-    "CI_high" = model$AKPci[2],
-    "Effectsize" = "Algina-Keselman-Penfield robust standardized difference",
+    Estimate = model$AKPeffect,
+    CI = 1 - model$alpha,
+    CI_low = model$AKPci[1],
+    CI_high = model$AKPci[2],
+    Effectsize = "Algina-Keselman-Penfield robust standardized difference",
     stringsAsFactors = FALSE
   )
 }
@@ -322,11 +319,11 @@ model_parameters.wmcpAKP <- function(model, verbose = TRUE, ...) {
 
 .extract_wrs2_wmcpAKP <- function(model) {
   data.frame(
-    "Estimate" = model[[1]],
-    "CI" = 0.95,
-    "CI_low" = model[[2]],
-    "CI_high" = model[[3]],
-    "Effectsize" = "Algina-Keselman-Penfield robust standardized difference average",
+    Estimate = model[[1]],
+    CI = 0.95,
+    CI_low = model[[2]],
+    CI_high = model[[3]],
+    Effectsize = "Algina-Keselman-Penfield robust standardized difference average",
     stringsAsFactors = FALSE
   )
 }
