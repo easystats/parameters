@@ -116,7 +116,6 @@ p_value.htest <- function(model, ...) {
 # .pairwise.htest --------------------
 
 
-#' @rdname model_parameters.htest
 #' @export
 model_parameters.pairwise.htest <- function(model, verbose = TRUE, ...) {
   m <- model$p.value

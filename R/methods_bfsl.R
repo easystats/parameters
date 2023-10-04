@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.bfsl <- function(model,
                                   ci = 0.95,

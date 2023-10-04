@@ -1,4 +1,3 @@
-#' @rdname model_parameters.averaging
 #' @export
 model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl

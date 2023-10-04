@@ -1,4 +1,3 @@
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.mixor <- function(model,
                                    ci = 0.95,

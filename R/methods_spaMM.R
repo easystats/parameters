@@ -1,4 +1,3 @@
-#' @rdname model_parameters.merMod
 #' @export
 model_parameters.HLfit <- model_parameters.default
 
@@ -51,7 +50,9 @@ ci.HLfit <- function(x,
 standard_error.HLfit <- function(model, method = NULL, ...) {
   if (is.null(method)) method <- "wald"
 
-  utils::capture.output(se <- summary(model)$beta_table[, 2])
+  utils::capture.output({
+    se <- summary(model)$beta_table[, 2]
+  })
   .data_frame(
     Parameter = insight::find_parameters(model,
       effects = "fixed",

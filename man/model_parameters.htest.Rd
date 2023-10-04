@@ -2,7 +2,6 @@
 % Please edit documentation in R/methods_htest.R, R/methods_lmtest.R
 \name{model_parameters.htest}
 \alias{model_parameters.htest}
-\alias{model_parameters.pairwise.htest}
 \alias{model_parameters.coeftest}
 \title{Parameters from hypothesis tests}
 \usage{
@@ -26,8 +25,6 @@
   kendalls_w = NULL,
   ...
 )
-
-\method{model_parameters}{pairwise.htest}(model, verbose = TRUE, ...)
 
 \method{model_parameters}{coeftest}(
   model,
