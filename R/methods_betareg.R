@@ -15,7 +15,7 @@ model_parameters.betareg <- function(model,
                                      drop = NULL,
                                      verbose = TRUE,
                                      ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -62,7 +62,7 @@ ci.betareg <- function(x,
                        component = "all",
                        verbose = TRUE,
                        ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -81,7 +81,7 @@ standard_error.betareg <- function(model,
                                    component = "all",
                                    verbose = TRUE,
                                    ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -116,7 +116,7 @@ p_value.betareg <- function(model,
                             component = c("all", "conditional", "precision"),
                             verbose = TRUE,
                             ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),

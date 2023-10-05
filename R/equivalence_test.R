@@ -315,7 +315,7 @@ equivalence_test.ggeffects <- function(x,
 
   x <- .get_ggeffects_model(x)
 
-  # sanity check rope range
+  # validation check rope range
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   range <- .check_rope_range(x, range, verbose)
 

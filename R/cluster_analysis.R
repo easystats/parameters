@@ -148,12 +148,12 @@ cluster_analysis <- function(x,
     x <- as.data.frame(x)
   }
 
-  # sanity check - needs data frame
+  # validation check - needs data frame
   if (!is.data.frame(x)) {
     insight::format_error("`x` needs to be a data frame.")
   }
 
-  # sanity check - need at least two columns
+  # validation check - need at least two columns
   if (ncol(x) < 2) {
     insight::format_error("At least two variables required to compute a cluster analysis.")
   }

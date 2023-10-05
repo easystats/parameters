@@ -91,7 +91,7 @@
   # for polr, we need to fix parameter names
   params$Parameter <- gsub("Intercept: ", "", params$Parameter, fixed = TRUE)
 
-  # sanity check...
+  # validation check...
   if (is.null(method)) {
     method <- "wald"
   }

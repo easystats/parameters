@@ -19,7 +19,7 @@ model_parameters.bracl <- function(model,
                                    drop = NULL,
                                    verbose = TRUE,
                                    ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -70,7 +70,7 @@ model_parameters.bracl <- function(model,
 
 #' @export
 ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -90,7 +90,7 @@ ci.bracl <- function(x, ci = 0.95, method = NULL, verbose = TRUE, ...) {
 
 #' @export
 standard_error.bracl <- function(model, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -115,7 +115,7 @@ standard_error.bracl <- function(model, verbose = TRUE, ...) {
 
 #' @export
 p_value.bracl <- function(model, verbose = TRUE, ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),

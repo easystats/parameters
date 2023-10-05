@@ -55,7 +55,7 @@ standardize_info.default <- function(model,
   data <- insight::get_data(model, source = "mf", verbose = FALSE)
   wgts <- insight::get_weights(model, na_rm = TRUE)
 
-  # Sanity Check for ZI
+  # validation check for ZI
   if (mi$is_zero_inflated && verbose) {
     insight::format_alert(
       "Non-refit parameter standardization is ignoring the zero-inflation component."
@@ -63,7 +63,7 @@ standardize_info.default <- function(model,
     # would need to also get the binomial model matrix...
   }
 
-  # Sanity Check for glmmTMB with dispersion
+  # validation check for glmmTMB with dispersion
   if (length(params) != nrow(types)) {
     types <- types[types$Parameter %in% params, ]
   }

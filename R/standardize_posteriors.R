@@ -51,7 +51,7 @@ standardise_posteriors <- standardize_posteriors
 
 #' @keywords internal
 .standardize_posteriors_posthoc <- function(pars, method, model, mi, robust, two_sd, include_response, verbose) {
-  # Sanity Check for "pseudo"
+  # validation check for "pseudo"
   method <- .should_pseudo(method, model)
 
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)

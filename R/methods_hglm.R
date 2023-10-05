@@ -115,7 +115,7 @@ standard_error.hglm <- function(model,
     return(NULL)
   }
 
-  # sanity check, make sure we have a dispersion component
+  # validation check, make sure we have a dispersion component
   if (component == "all" && is.null(f$dispersion)) {
     compomnent <- "conditional"
   }
