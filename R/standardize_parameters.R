@@ -550,7 +550,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
                                             exponentiate,
                                             include_response,
                                             verbose) {
-  # Sanity Check for "pseudo"
+  # validation check for "pseudo"
   method <- .should_pseudo(method, model, mi)
 
   method <- .cant_smart_or_posthoc(method, model, mi, pars$Parameter)

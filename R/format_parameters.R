@@ -367,7 +367,7 @@ format_parameters.parameters_model <- function(model, ...) {
     model <- .get_object(params)
   }
 
-  # sanity check
+  # validation check
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)

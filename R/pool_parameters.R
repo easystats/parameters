@@ -186,7 +186,7 @@ pool_parameters <- function(x,
       df_column <- grep("(\\bdf\\b|\\bdf_error\\b)", colnames(i), value = TRUE)[1]
       if (length(df_column)) {
         pooled_df <- .barnad_rubin(m = nrow(i), b = stats::var(i$Coefficient), t = tmp, dfcom = unique(i[[df_column]]))
-        # sanity check length
+        # validation check length
         if (length(pooled_df) > 1 && length(pooled_se) == 1) {
           pooled_df <- round(mean(pooled_df, na.rm = TRUE))
         }

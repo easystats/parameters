@@ -28,7 +28,7 @@ model_parameters.glmmTMB <- function(model,
                                      ...) {
   insight::check_if_installed("glmmTMB")
 
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),
@@ -268,7 +268,7 @@ ci.glmmTMB <- function(x,
     return(NULL)
   }
 
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args"),

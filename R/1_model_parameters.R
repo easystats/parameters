@@ -475,10 +475,10 @@ model_parameters.default <- function(model,
                                      vcov = NULL,
                                      vcov_args = NULL,
                                      ...) {
-  # sanity check for inputs
+  # validation check for inputs
   .is_model_valid(model)
 
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   # unsupported arguments will be removed from the argument list.
   dots <- .check_dots(
     dots = list(...),

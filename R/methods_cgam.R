@@ -43,7 +43,7 @@ model_parameters.cgam <- function(model,
                                   drop = NULL,
                                   verbose = TRUE,
                                   ...) {
-  # sanity check, warn if unsupported argument is used.
+  # validation check, warn if unsupported argument is used.
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args", "component"),

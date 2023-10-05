@@ -666,7 +666,7 @@
       i
     })
 
-    # sanity check - check if all parameter names in the
+    # validation check - check if all parameter names in the
     # group list are spelled correctly
     misspelled <- vapply(group_rows, anyNA, TRUE)
 
@@ -926,7 +926,7 @@
   # make sure we have correct sorting here...
   tables <- split(x, f = split_by)
 
-  # sanity check - only preserve tables with any data in data frames
+  # validation check - only preserve tables with any data in data frames
   tables <- tables[vapply(tables, nrow, numeric(1)) > 0]
 
 
