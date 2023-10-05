@@ -15,6 +15,8 @@
 * Fixed issues for `nnet::multinom()` with wide-format response variables (using
   `cbind()`).
 
+* Minor fixes for `print_html()` method for `model_parameters()`.
+
 # parameters 0.21.2
 
 ## Changes
