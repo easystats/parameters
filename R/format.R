@@ -624,7 +624,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: generic text
-.add_footer_text <- function(footer = NULL, text, type = "text", is_ggeffects = FALSE) {
+.add_footer_text <- function(footer = NULL, text = NULL, type = "text", is_ggeffects = FALSE) {
   if (!is.null(text)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -643,7 +643,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: residual standard deviation
-.add_footer_sigma <- function(footer = NULL, digits, sigma, residual_df = NULL, type = "text") {
+.add_footer_sigma <- function(footer = NULL, digits = 3, sigma = NULL, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
     # format residual df
     if (!is.null(residual_df)) {
@@ -668,7 +668,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: r-squared
-.add_footer_r2 <- function(footer = NULL, digits, r2 = NULL, type = "text") {
+.add_footer_r2 <- function(footer = NULL, digits = 3, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
     rsq <- .safe(paste0(unlist(lapply(r2, function(i) {
       paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
@@ -692,7 +692,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: anova type
-.add_footer_anova_type <- function(footer = NULL, aov_type, type = "text") {
+.add_footer_anova_type <- function(footer = NULL, aov_type = NULL, type = "text") {
   if (!is.null(aov_type)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -710,7 +710,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: marginaleffects::comparisions() prediction_type
-.add_footer_prediction_type <- function(footer = NULL, prediction_type, type = "text") {
+.add_footer_prediction_type <- function(footer = NULL, prediction_type = NULL, type = "text") {
   if (!is.null(prediction_type)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -728,7 +728,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: anova test
-.add_footer_anova_test <- function(footer = NULL, test, type = "text") {
+.add_footer_anova_test <- function(footer = NULL, test = NULL, type = "text") {
   if (!is.null(test)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -746,7 +746,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: htest alternative
-.add_footer_alternative <- function(footer = NULL, text_alternative, type = "text") {
+.add_footer_alternative <- function(footer = NULL, text_alternative = NULL, type = "text") {
   if (!is.null(text_alternative)) {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -764,7 +764,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: p-adjustment
-.add_footer_padjust <- function(footer = NULL, p_adjust, type = "text") {
+.add_footer_padjust <- function(footer = NULL, p_adjust = NULL, type = "text") {
   if (!is.null(p_adjust) && p_adjust != "none") {
     if (type == "text" || type == "markdown") {
       if (is.null(footer)) {
@@ -782,7 +782,7 @@ format.parameters_sem <- function(x,
 
 
 # footer: model formula
-.add_footer_formula <- function(footer = NULL, model_formula, n_obs = NULL, type = "text") {
+.add_footer_formula <- function(footer = NULL, model_formula = NULL, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
     # format n of observations
     if (!is.null(n_obs)) {
@@ -892,7 +892,7 @@ format.parameters_sem <- function(x,
         if (isTRUE(bootstrap)) {
           msg <- paste0("\nUncertainty intervals (", string_tailed, ") are ", string_method, "intervals.")
         } else {
-          msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.")
+          msg <- paste0("\nUncertainty intervals (", string_tailed, ") and p-values (two-tailed) computed using a ", string_method, "distribution ", string_approx, "approximation.") # nolint
         }
       }
 
@@ -907,7 +907,7 @@ format.parameters_sem <- function(x,
           !ci_method %in% c("wald", "normal", "profile", "boot"))
 
       if (show_re_msg && isTRUE(random_variances) && !is.null(x$Effects) && "random" %in% x$Effects) {
-        msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.")
+        msg <- paste(msg, "Uncertainty intervals for random effect variances computed using a Wald z-distribution approximation.") # nolint
       }
 
       insight::format_alert(msg)
@@ -922,14 +922,14 @@ format.parameters_sem <- function(x,
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
-        msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
+        msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
-        msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios."
+        msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
       }
-    } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) {
+    } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
       msg <- c(
         "This model has a log-transformed response variable, and exponentiated parameters are reported.",
-        "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient."
+        "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
       )
     }
 
