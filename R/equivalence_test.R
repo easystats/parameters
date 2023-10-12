@@ -31,11 +31,11 @@ bayestestR::equivalence_test
 #' In classical null hypothesis significance testing (NHST) within a frequentist
 #' framework, it is not possible to accept the null hypothesis, H0 - unlike
 #' in Bayesian statistics, where such probability statements are possible.
-#' \dQuote{[...] one can only reject the null hypothesis if the test
+#' "[...] one can only reject the null hypothesis if the test
 #' statistics falls into the critical region(s), or fail to reject this
 #' hypothesis. In the latter case, all we can say is that no significant effect
-#' was observed, but one cannot conclude that the null hypothesis is true.}
-#' (\cite{Pernet 2017}). One way to address this issues without Bayesian methods
+#' was observed, but one cannot conclude that the null hypothesis is true."
+#' (_Pernet 2017_). One way to address this issues without Bayesian methods
 #' is *Equivalence Testing*, as implemented in `equivalence_test()`.
 #' While you either can reject the null hypothesis or claim an inconclusive result
 #' in NHST, the equivalence test - according to _Pernet_ - adds a third category,
@@ -50,9 +50,8 @@ bayestestR::equivalence_test
 #' ## Calculation of equivalence testing
 #' - "bayes" - Bayesian rule (Kruschke 2018)
 #'
-#'   This rule follows the \dQuote{HDI+ROPE decision rule} \cite{(Kruschke,
-#'   2014, 2018)} used for the
-#'   [`Bayesian counterpart()`][bayestestR::equivalence_test]. This
+#'   This rule follows the "HDI+ROPE decision rule" (_Kruschke, 2014, 2018_) used
+#'   for the [`Bayesian counterpart()`][bayestestR::equivalence_test]. This
 #'   means, if the confidence intervals are completely outside the ROPE, the
 #'   "null hypothesis" for this parameter is "rejected". If the ROPE
 #'   completely covers the CI, the null hypothesis is accepted. Else, it's

@@ -69,7 +69,7 @@ cell proportions/counts for Bayesian contingency table analysis (from
 \code{BayesFactor::contingencyTableBF()}). Defaults to \code{FALSE}, as this
 information is often redundant.}
 
-\item{verbose}{Toggle warnings and messages.}
+\item{verbose}{Toggle off warnings.}
 
 \item{cohens_d, cramers_v}{Deprecated. Please use \code{effectsize_type}.}
 
