@@ -109,6 +109,9 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
     if (is.null(.model)) {
       .model <- .safe(get(obj_name, envir = globalenv()))
     }
+    if (is.null(.model)) {
+      .model <- .safe(.dynGet(obj_name))
+    }
   }
   .model
 }
