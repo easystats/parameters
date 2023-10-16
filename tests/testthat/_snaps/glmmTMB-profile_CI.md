@@ -18,7 +18,7 @@
       SD (Days: Subject)            |        5.72 | [ 3.81,  8.59]
       Cor (Intercept~Days: Subject) |        0.08 | [-0.49,  0.59]
       SD (Residual)                 |       25.59 | [22.80, 28.72]
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (profile-likelihood) and p-values (two-tailed)
         computed using a Wald z-distribution approximation. Uncertainty
@@ -45,7 +45,7 @@
       SD (Days: Subject)            |        5.72 | [ 3.81,  8.59]
       Cor (Intercept~Days: Subject) |        0.08 | [-0.49,  0.59]
       SD (Residual)                 |       25.59 | [22.80, 28.72]
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (profile-likelihood) and p-values (two-tailed)
         computed using a Wald z-distribution approximation. Uncertainty
