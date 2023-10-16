@@ -10,17 +10,16 @@
 #' @param type Can be `"FA"` or `"PCA"`, depending on what you want to
 #'   do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see
-#'   [psych::VSS()]). The rotation to apply. Can be `"none"`,
-#'   `"varimax"`, `"quartimax"`, `"bentlerT"`, `"equamax"`,
-#'   `"varimin"`, `"geominT"` and `"bifactor"` for orthogonal
-#'   rotations, and `"promax"`, `"oblimin"`, `"simplimax"`,
-#'   `"bentlerQ"`, `"geominQ"`, `"biquartimin"` and
-#'   `"cluster"` for oblique transformations.
-#' @param algorithm Factoring method used by VSS. Can be `"pa"` for
-#'   Principal Axis Factor Analysis, `"minres"` for minimum residual (OLS)
-#'   factoring, `"mle"` for Maximum Likelihood FA and `"pc"` for
-#'   Principal Components. `"default"` will select `"minres"` if
-#'   `type = "FA"` and `"pc"` if `type = "PCA"`.
+#'   [psych::VSS()]). The rotation to apply. Can be `"none"`, `"varimax"`,
+#'   `"quartimax"`, `"bentlerT"`, `"equamax"`, `"varimin"`, `"geominT"` and
+#'   `"bifactor"` for orthogonal rotations, and `"promax"`, `"oblimin"`,
+#'   `"simplimax"`, `"bentlerQ"`, `"geominQ"`, `"biquartimin"` and `"cluster"`
+#'   for oblique transformations.
+#' @param algorithm Factoring method used by VSS. Can be `"pa"` for Principal
+#'   Axis Factor Analysis, `"minres"` for minimum residual (OLS) factoring,
+#'   `"mle"` for Maximum Likelihood FA and `"pc"` for Principal Components.
+#'   `"default"` will select `"minres"` if `type = "FA"` and `"pc"` if
+#'   `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
 #'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"` or
 #'   `"fit"`. Note that `"fit"` (which actually also relies on the **psych**
@@ -45,9 +44,8 @@
 #' @note There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #'   implemented in the
-#'   [**see**-package](https://easystats.github.io/see/)..
-#'   `n_components()` is a convenient short for `n_factors(type =
-#'   "PCA")`.
+#'   [**see**-package](https://easystats.github.io/see/).
+#'   `n_components()` is a convenient short-cut  for `n_factors(type = "PCA")`.
 #'
 #' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE)
 #' library(parameters)
