@@ -8,6 +8,9 @@
 * `print_md()` for `compare_parameters()` now gains more arguments, similar to
   the `print()` method.
 
+* `n_factors()` no longer supports `package = "EGAnet"`, as package *EGAnet* was
+  removed from CRAN.
+
 ## Bug fixes
 
 * Fixed issue in `print_html()` for objects from package _ggeffects_.

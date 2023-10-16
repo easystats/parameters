@@ -22,11 +22,11 @@
 #'   Principal Components. `"default"` will select `"minres"` if
 #'   `type = "FA"` and `"pc"` if `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
-#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"`, `"fit"` or
-#'   `"EGAnet"`. Note that `"fit"` (which actually also relies on the `psych`
-#'   package) and `"EGAnet"` can be very slow for bigger
-#'   datasets. Thus, the default is `c("nFactors", "psych")`. You must have
-#'   the respective packages installed for the methods to be used.
+#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"` or
+#'   `"fit"`. Note that `"fit"` (which actually also relies on the **psych**
+#'   package) can be very slow for bigger datasets. Thus, the default is
+#'   `c("nFactors", "psych")`. You must have the respective packages installed
+#'   for the methods to be used.
 #' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
@@ -49,7 +49,7 @@
 #'   `n_components()` is a convenient short for `n_factors(type =
 #'   "PCA")`.
 #'
-#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE)
+#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE)
 #' library(parameters)
 #' n_factors(mtcars, type = "PCA")
 #'
@@ -120,7 +120,7 @@ n_factors <- function(x,
                       n_max = NULL,
                       ...) {
   if (all(package == "all")) {
-    package <- c("nFactors", "EGAnet", "psych", "fit", "pcdimension")
+    package <- c("nFactors", "psych", "fit", "pcdimension")
   }
 
   # Get number of observations
@@ -247,25 +247,27 @@ n_factors <- function(x,
     }
   }
 
-  # EGAnet -------------------------------------------
-  if ("EGAnet" %in% package) {
-    insight::check_if_installed("EGAnet")
+  # EGAnet was removed from CRAN
 
-    if (safe) {
-      out <- rbind(
-        out,
-        tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
-          # warning = function(w) data.frame(),
-          error = function(e) data.frame()
-        )
-      )
-    } else {
-      out <- rbind(
-        out,
-        .n_factors_ega(x, cor, nobs, eigen_values, type)
-      )
-    }
-  }
+  # EGAnet -------------------------------------------
+  # if ("EGAnet" %in% package) {
+  #   insight::check_if_installed("EGAnet")
+
+  #   if (safe) {
+  #     out <- rbind(
+  #       out,
+  #       tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
+  #         # warning = function(w) data.frame(),
+  #         error = function(e) data.frame()
+  #       )
+  #     )
+  #   } else {
+  #     out <- rbind(
+  #       out,
+  #       .n_factors_ega(x, cor, nobs, eigen_values, type)
+  #     )
+  #   }
+  # }
 
 
   # psych -------------------------------------------
@@ -545,29 +547,28 @@ print.n_clusters <- print.n_factors
 }
 
 
+# EGAnet was removed from CRAN
 
 # EGAnet ------------------------
+# .n_factors_ega <- function(x = NULL,
+#                            cor = NULL,
+#                            nobs = NULL,
+#                            eigen_values = NULL,
+#                            type = "FA") {
+#   # Replace with own correlation matrix
+#   junk <- utils::capture.output(suppressWarnings(suppressMessages(
+#     nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
+#   )))
+#   junk <- utils::capture.output(suppressWarnings(suppressMessages(
+#     nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
+#   )))
 
-#' @keywords internal
-.n_factors_ega <- function(x = NULL,
-                           cor = NULL,
-                           nobs = NULL,
-                           eigen_values = NULL,
-                           type = "FA") {
-  # Replace with own correlation matrix
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
-  )))
-  junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
-  )))
-
-  .data_frame(
-    n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-    Method = c("EGA (glasso)", "EGA (TMFG)"),
-    Family = "EGA"
-  )
-}
+#   .data_frame(
+#     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
+#     Method = c("EGA (glasso)", "EGA (TMFG)"),
+#     Family = "EGA"
+#   )
+# }
 
 
 # psych ------------------------
