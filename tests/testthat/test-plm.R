@@ -111,3 +111,19 @@ test_that("vcov standard errors", {
   expect_snapshot(print(model_parameters(ran)))
   expect_snapshot(print(model_parameters(ran, vcov = "HC1")))
 })
+
+
+test_that("vcov standard errors, methods", {
+  data("Produc", package = "plm")
+  zz <- plm::plm(log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
+    data = Produc, model = "random"
+  )
+
+  out1 <- standard_error(ran, vcov = "HC1")
+  out2 <- standard_error(zz, vcov = "HC1", vcov_args = list(method = "white1"))
+  validate1 <- sqrt(diag(plm::vcovHC(zz, method = "arellano", type = "HC1")))
+  validate2 <- sqrt(diag(plm::vcovHC(zz, method = "white1", type = "HC1")))
+
+  expect_equal(out1$SE, validate1, tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(out2$SE, validate2, tolerance = 1e-3, ignore_attr = TRUE)
+})
