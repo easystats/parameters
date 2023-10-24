@@ -135,10 +135,10 @@ standard_error.pgmm <- function(model, component = c("conditional", "all"), ...)
 
 #' @export
 ci.pgmm <- function(x, ci = 0.95, dof = Inf, method = NULL, component = "conditional", ...) {
-  if (!is.null(method)) {
-    method <- tolower(method)
-  } else {
+  if (is.null(method)) {
     method <- "wald"
+  } else {
+    method <- tolower(method)
   }
 
   .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component)
