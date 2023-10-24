@@ -44,16 +44,33 @@
 #' print(model_parameters(est))
 #' }
 #' @export
-bootstrap_parameters <- function(model,
-                                 iterations = 1000,
-                                 centrality = "median",
-                                 ci = 0.95,
-                                 ci_method = "quantile",
-                                 test = "p-value",
-                                 ...) {
+bootstrap_parameters <- function(model, ...) {
+  UseMethod("bootstrap_parameters")
+}
+
+#' @rdname bootstrap_parameters
+#' @export
+bootstrap_parameters.default <- function(model,
+                                         iterations = 1000,
+                                         centrality = "median",
+                                         ci = 0.95,
+                                         ci_method = "quantile",
+                                         test = "p-value",
+                                         ...) {
   data <- bootstrap_model(model, iterations = iterations, ...)
+  bootstrap_parameters(data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
+}
+
+
+#' @export
+bootstrap_parameters.bootstrap_model <- function(model,
+                                                 centrality = "median",
+                                                 ci = 0.95,
+                                                 ci_method = "quantile",
+                                                 test = "p-value",
+                                                 ...) {
   out <- .summary_bootstrap(
-    data = data,
+    data = model,
     test = test,
     centrality = centrality,
     ci = ci,
@@ -62,11 +79,9 @@ bootstrap_parameters <- function(model,
   )
 
   class(out) <- c("bootstrap_parameters", "parameters_model", class(out))
-  attr(out, "boot_samples") <- data
+  attr(out, "boot_samples") <- model
   out
 }
-
-
 
 
 #' @keywords internal

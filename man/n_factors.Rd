@@ -35,18 +35,17 @@ n_components(
 do.}
 
 \item{rotation}{Only used for VSS (Very Simple Structure criterion, see
-\code{\link[psych:VSS]{psych::VSS()}}). The rotation to apply. Can be \code{"none"},
-\code{"varimax"}, \code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"},
-\code{"varimin"}, \code{"geominT"} and \code{"bifactor"} for orthogonal
-rotations, and \code{"promax"}, \code{"oblimin"}, \code{"simplimax"},
-\code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and
-\code{"cluster"} for oblique transformations.}
+\code{\link[psych:VSS]{psych::VSS()}}). The rotation to apply. Can be \code{"none"}, \code{"varimax"},
+\code{"quartimax"}, \code{"bentlerT"}, \code{"equamax"}, \code{"varimin"}, \code{"geominT"} and
+\code{"bifactor"} for orthogonal rotations, and \code{"promax"}, \code{"oblimin"},
+\code{"simplimax"}, \code{"bentlerQ"}, \code{"geominQ"}, \code{"biquartimin"} and \code{"cluster"}
+for oblique transformations.}
 
-\item{algorithm}{Factoring method used by VSS. Can be \code{"pa"} for
-Principal Axis Factor Analysis, \code{"minres"} for minimum residual (OLS)
-factoring, \code{"mle"} for Maximum Likelihood FA and \code{"pc"} for
-Principal Components. \code{"default"} will select \code{"minres"} if
-\code{type = "FA"} and \code{"pc"} if \code{type = "PCA"}.}
+\item{algorithm}{Factoring method used by VSS. Can be \code{"pa"} for Principal
+Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring,
+\code{"mle"} for Maximum Likelihood FA and \code{"pc"} for Principal Components.
+\code{"default"} will select \code{"minres"} if \code{type = "FA"} and \code{"pc"} if
+\code{type = "PCA"}.}
 
 \item{package}{Package from which respective methods are used. Can be
 \code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"}, \code{"PCDimension"} or
@@ -88,8 +87,8 @@ different defaults for the function arguments.
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the
-\href{https://easystats.github.io/see/}{\strong{see}-package}..
-\code{n_components()} is a convenient short for \code{n_factors(type = "PCA")}.
+\href{https://easystats.github.io/see/}{\strong{see}-package}.
+\code{n_components()} is a convenient short-cut  for \code{n_factors(type = "PCA")}.
 }
 \examples{
 \dontshow{if (require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
