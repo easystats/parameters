@@ -31,7 +31,7 @@
       ---------------------------------------------------------------------------
       (Intercept) |           245.48 | 46.72 | [173.66, 351.67] |  28.92 | < .001
       u [log]     |             0.55 |  0.03 | [  0.49,   0.61] | -10.88 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (profile-likelihood) and p-values (two-tailed)
         computed using a Wald t-distribution approximation.

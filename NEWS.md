@@ -23,6 +23,8 @@
 
 * Minor fixes for `print_html()` method for `model_parameters()`.
 
+* Robust standard errors (argument `vcov`) now works for `plm` models.
+
 # parameters 0.21.2
 
 ## Changes

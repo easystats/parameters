@@ -15,12 +15,41 @@ degrees_of_freedom.plm <- function(model, method = "wald", ...) {
 
 
 #' @export
-standard_error.plm <- function(model, ...) {
-  se <- stats::coef(summary(model))
+standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...) {
+  dots <- list(...)
+  se <- NULL
+  se_standard <- stats::coef(summary(model))
+
+  # vcov: matrix
+  if (is.matrix(vcov)) {
+    se <- sqrt(diag(vcov))
+  }
+
+  # vcov: function which returns a matrix
+  if (is.function(vcov)) {
+    args <- c(list(model), vcov_args, dots)
+    se <- .safe(sqrt(diag(do.call("vcov", args))))
+  }
+
+  # vcov: character (with backward compatibility for `robust = TRUE`)
+  if (is.character(vcov) || isTRUE(dots[["robust"]])) {
+    .vcov <- insight::get_varcov(
+      model,
+      vcov = vcov,
+      vcov_args = vcov_args,
+      verbose = verbose,
+      ...
+    )
+    se <- sqrt(diag(.vcov))
+  }
+
+  if (is.null(se)) {
+    se <- as.vector(se_standard[, 2])
+  }
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(rownames(se)),
-    SE = as.vector(se[, 2])
+    Parameter = .remove_backticks_from_string(rownames(se_standard)),
+    SE = se
   )
 }
 
@@ -106,10 +135,10 @@ standard_error.pgmm <- function(model, component = c("conditional", "all"), ...)
 
 #' @export
 ci.pgmm <- function(x, ci = 0.95, dof = Inf, method = NULL, component = "conditional", ...) {
-  if (!is.null(method)) {
-    method <- tolower(method)
-  } else {
+  if (is.null(method)) {
     method <- "wald"
+  } else {
+    method <- tolower(method)
   }
 
   .ci_generic(model = x, ci = ci, dof = dof, method = method, component = component)

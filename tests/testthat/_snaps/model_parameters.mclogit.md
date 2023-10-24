@@ -7,7 +7,7 @@
       --------------------------------------------------------------
       distance  |    -1.44 | 0.05 | [-1.54, -1.34] | -27.07 | < .001
       cost      |    -0.98 | 0.04 | [-1.06, -0.90] | -24.52 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
@@ -40,7 +40,7 @@
       TypeAtrium    |    -0.41 | 0.21 | [-0.82,  0.01] | -1.93 | 0.054 
       TypeTerrace   |    -1.41 | 0.20 | [-1.80, -1.02] | -7.06 | < .001
       ContHigh      |     0.48 | 0.12 | [ 0.24,  0.73] |  3.88 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.

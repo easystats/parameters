@@ -33,6 +33,7 @@ m3 <- suppressWarnings(plm::plm(
   index = c("ID", "Year")
 ))
 
+
 test_that("ci", {
   expect_equal(
     ci(m1)$CI_low,
@@ -46,6 +47,7 @@ test_that("ci", {
   )
   expect_equal(ci(m3)$CI_low, -2.60478, tolerance = 1e-3)
 })
+
 
 test_that("se", {
   expect_equal(
@@ -61,6 +63,7 @@ test_that("se", {
   expect_equal(standard_error(m3)$SE, 0.5166726, tolerance = 1e-3)
 })
 
+
 test_that("p_value", {
   expect_equal(
     p_value(m1)$p,
@@ -75,6 +78,7 @@ test_that("p_value", {
   expect_equal(p_value(m3)$p, 0.53696, tolerance = 1e-3)
 })
 
+
 test_that("model_parameters", {
   expect_equal(
     model_parameters(m1)$Coefficient,
@@ -87,4 +91,39 @@ test_that("model_parameters", {
     tolerance = 1e-3
   )
   expect_equal(model_parameters(m3)$Coefficient, -0.381721, tolerance = 1e-3)
+})
+
+
+test_that("vcov standard errors", {
+  skip_if_not_installed("sandwich")
+  data("Grunfeld", package = "plm")
+  ran <- suppressWarnings(
+    plm::plm(value ~ capital + inv, data = Grunfeld, model = "random", effect = "twoways")
+  )
+  out1 <- standard_error(ran)
+  out2 <- standard_error(ran, vcov = "HC1")
+  validate1 <- coef(summary(ran))[, 2]
+  validate2 <- sqrt(diag(sandwich::vcovHC(ran, type = "HC1")))
+
+  expect_equal(out1$SE, validate1, tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(out2$SE, validate2, tolerance = 1e-3, ignore_attr = TRUE)
+
+  expect_snapshot(print(model_parameters(ran)))
+  expect_snapshot(print(model_parameters(ran, vcov = "HC1")))
+})
+
+
+test_that("vcov standard errors, methods", {
+  data("Produc", package = "plm")
+  zz <- plm::plm(log(gsp) ~ log(pcap) + log(pc) + log(emp) + unemp,
+    data = Produc, model = "random"
+  )
+
+  out1 <- standard_error(zz, vcov = "HC1")
+  out2 <- standard_error(zz, vcov = "HC1", vcov_args = list(method = "white1"))
+  validate1 <- sqrt(diag(plm::vcovHC(zz, method = "arellano", type = "HC1")))
+  validate2 <- sqrt(diag(plm::vcovHC(zz, method = "white1", type = "HC1")))
+
+  expect_equal(out1$SE, validate1, tolerance = 1e-3, ignore_attr = TRUE)
+  expect_equal(out2$SE, validate2, tolerance = 1e-3, ignore_attr = TRUE)
 })
