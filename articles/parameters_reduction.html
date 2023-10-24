@@ -40,7 +40,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,26 +151,12 @@ feedback considered too <strong>critical</strong> and opportunity of
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"attitude"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">attitude</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |    SE |          95% CI | t(23) |      p</span></span>
-<span><span class="co">#&gt; --------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       10.79 | 11.59 | [-13.19, 34.76] |  0.93 | 0.362 </span></span>
-<span><span class="co">#&gt; complaints  |        0.61 |  0.16 | [  0.28,  0.95] |  3.81 | &lt; .001</span></span>
-<span><span class="co">#&gt; privileges  |       -0.07 |  0.14 | [ -0.35,  0.21] | -0.54 | 0.596 </span></span>
-<span><span class="co">#&gt; learning    |        0.32 |  0.17 | [ -0.03,  0.67] |  1.90 | 0.070 </span></span>
-<span><span class="co">#&gt; raises      |        0.08 |  0.22 | [ -0.38,  0.54] |  0.37 | 0.715 </span></span>
-<span><span class="co">#&gt; critical    |        0.04 |  0.15 | [ -0.27,  0.34] |  0.26 | 0.796 </span></span>
-<span><span class="co">#&gt; advance     |       -0.22 |  0.18 | [ -0.59,  0.15] | -1.22 | 0.236</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p>We can explore a reduction of the number of parameters with the
 <code><a href="../reference/reduce_parameters.html">reduce_parameters()</a></code> function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">newmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter                                                              | Coefficient |   SE |         95% CI | t(27) |      p</span></span>
-<span><span class="co">#&gt; -----------------------------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)                                                            |       64.63 | 1.57 | [61.41, 67.85] | 41.19 | &lt; .001</span></span>
-<span><span class="co">#&gt; raises 0 88/learning 0 82/complaints 0 78/privileges 0 70/advance 0 68 |        4.62 | 0.90 | [ 2.78,  6.46] |  5.16 | &lt; .001</span></span>
-<span><span class="co">#&gt; critical -0 80                                                         |        3.41 | 1.59 | [ 0.14,  6.67] |  2.14 | 0.041</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="va">newmodel</span><span class="op">)</span></span></code></pre></div>
 <p>This output <em>hints</em> at the fact that the model could be
 represented via <strong>two “latent” dimensions</strong>, one correlated
 with all the positive things that a company has to offer, and the other
@@ -195,13 +181,7 @@ means that the respective variables (<code>raises</code>,
 .82, .78, .70, .68, respectively) with this dimension.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/reduce_parameters.html">reduce_parameters</a></span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"cMDS"</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter                                                 | Coefficient |   SE |         95% CI | t(26) |      p</span></span>
-<span><span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept)                                               |       64.63 | 1.41 | [61.73, 67.53] | 45.80 | &lt; .001</span></span>
-<span><span class="co">#&gt; raises 0 85/complaints 0 84/learning 0 83/privileges 0 74 |        0.43 | 0.07 | [ 0.28,  0.57] |  6.14 | &lt; .001</span></span>
-<span><span class="co">#&gt; advance 0 60                                              |       -0.32 | 0.13 | [-0.59, -0.04] | -2.36 | 0.026 </span></span>
-<span><span class="co">#&gt; critical -0 65                                            |       -0.24 | 0.15 | [-0.56,  0.07] | -1.61 | 0.120</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>A different method (<strong>Classical Multidimensional Scaling -
 cMDS</strong>) suggests that negative critiques do not have a
 significant impact on the rating, and that the lack of opportunities of
@@ -225,19 +205,7 @@ question on its own.</p>
 the the predictors of the model:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/principal_components.html">principal_components</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_predictors.html" class="external-link">get_predictors</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>, n <span class="op">=</span> <span class="st">"auto"</span><span class="op">)</span></span>
-<span><span class="va">pca</span></span>
-<span><span class="co">#&gt; # Loadings from Principal Component Analysis (no rotation)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Variable   | PC1  | Complexity</span></span>
-<span><span class="co">#&gt; ------------------------------</span></span>
-<span><span class="co">#&gt; complaints | 0.78 |    1.00   </span></span>
-<span><span class="co">#&gt; privileges | 0.70 |    1.00   </span></span>
-<span><span class="co">#&gt; learning   | 0.82 |    1.00   </span></span>
-<span><span class="co">#&gt; raises     | 0.88 |    1.00   </span></span>
-<span><span class="co">#&gt; critical   | 0.40 |    1.00   </span></span>
-<span><span class="co">#&gt; advance    | 0.68 |    1.00   </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The unique principal component accounted for 52.82% of the total variance of the original data.</span></span></code></pre></div>
+<span><span class="va">pca</span></span></code></pre></div>
 <p>The <code><a href="../reference/principal_components.html">principal_components()</a></code> function automatically
 selected one component (if the number of components is not specified,
 this function uses <a href="https://easystats.github.io/parameters/reference/n_factors.html"><code>n_factors()</code></a>
@@ -256,11 +224,7 @@ response variable of our initial dataset.</p>
 <p>We can know update the model with this new component:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">rating</span> <span class="op">~</span> <span class="va">PC1</span>, data <span class="op">=</span> <span class="va">newdata</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parameter   | Coefficient |   SE |         95% CI | t(28) |      p</span></span>
-<span><span class="co">#&gt; ------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; (Intercept) |       64.63 | 1.67 | [61.22, 68.05] | 38.78 | &lt; .001</span></span>
-<span><span class="co">#&gt; PC1         |        4.62 | 0.95 | [ 2.67,  6.57] |  4.86 | &lt; .001</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/model_parameters.html">parameters</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="using-the-psych-package-for-pca">Using the <code>psych</code> package for PCA<a class="anchor" aria-label="anchor" href="#using-the-psych-package-for-pca"></a>
 </h4>
@@ -277,20 +241,7 @@ function. For instance, we can redo the above analysis using the
 <span></span>
 <span><span class="co"># Fit the PCA</span></span>
 <span><span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="fu">psych</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/psych/man/principal.html" class="external-link">principal</a></span><span class="op">(</span><span class="va">attitude</span>, nfactors <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">pca</span></span>
-<span><span class="co">#&gt; # Rotated loadings from Principal Component Analysis (varimax-rotation)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Variable   | PC1  | Complexity | Uniqueness</span></span>
-<span><span class="co">#&gt; -------------------------------------------</span></span>
-<span><span class="co">#&gt; rating     | 0.80 |    1.00    |    0.37   </span></span>
-<span><span class="co">#&gt; complaints | 0.85 |    1.00    |    0.28   </span></span>
-<span><span class="co">#&gt; privileges | 0.68 |    1.00    |    0.53   </span></span>
-<span><span class="co">#&gt; learning   | 0.83 |    1.00    |    0.32   </span></span>
-<span><span class="co">#&gt; raises     | 0.86 |    1.00    |    0.26   </span></span>
-<span><span class="co">#&gt; critical   | 0.36 |    1.00    |    0.87   </span></span>
-<span><span class="co">#&gt; advance    | 0.58 |    1.00    |    0.66   </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; The unique principal component (varimax rotation) accounted for 53.09% of the total variance of the original data.</span></span></code></pre></div>
+<span><span class="va">pca</span></span></code></pre></div>
 <p><em>Note:</em> By default, <code><a href="https://rdrr.io/pkg/psych/man/principal.html" class="external-link">psych::principal()</a></code> uses a
 <strong>varimax</strong> rotation to extract rotated components,
 possibly leading to discrepancies in the results.</p>

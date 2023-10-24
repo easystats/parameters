@@ -18,7 +18,7 @@ with the fewer factors."><meta property="og:image" content="https://easystats.gi
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.2.9</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,20 +141,19 @@ do.</p></dd>
 
 <dt>rotation</dt>
 <dd><p>Only used for VSS (Very Simple Structure criterion, see
-<code><a href="https://rdrr.io/pkg/psych/man/VSS.html" class="external-link">psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>,
-<code>"varimax"</code>, <code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>,
-<code>"varimin"</code>, <code>"geominT"</code> and <code>"bifactor"</code> for orthogonal
-rotations, and <code>"promax"</code>, <code>"oblimin"</code>, <code>"simplimax"</code>,
-<code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and
-<code>"cluster"</code> for oblique transformations.</p></dd>
+<code><a href="https://rdrr.io/pkg/psych/man/VSS.html" class="external-link">psych::VSS()</a></code>). The rotation to apply. Can be <code>"none"</code>, <code>"varimax"</code>,
+<code>"quartimax"</code>, <code>"bentlerT"</code>, <code>"equamax"</code>, <code>"varimin"</code>, <code>"geominT"</code> and
+<code>"bifactor"</code> for orthogonal rotations, and <code>"promax"</code>, <code>"oblimin"</code>,
+<code>"simplimax"</code>, <code>"bentlerQ"</code>, <code>"geominQ"</code>, <code>"biquartimin"</code> and <code>"cluster"</code>
+for oblique transformations.</p></dd>
 
 
 <dt>algorithm</dt>
-<dd><p>Factoring method used by VSS. Can be <code>"pa"</code> for
-Principal Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS)
-factoring, <code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for
-Principal Components. <code>"default"</code> will select <code>"minres"</code> if
-<code>type = "FA"</code> and <code>"pc"</code> if <code>type = "PCA"</code>.</p></dd>
+<dd><p>Factoring method used by VSS. Can be <code>"pa"</code> for Principal
+Axis Factor Analysis, <code>"minres"</code> for minimum residual (OLS) factoring,
+<code>"mle"</code> for Maximum Likelihood FA and <code>"pc"</code> for Principal Components.
+<code>"default"</code> will select <code>"minres"</code> if <code>type = "FA"</code> and <code>"pc"</code> if
+<code>type = "PCA"</code>.</p></dd>
 
 
 <dt>package</dt>
@@ -205,8 +204,8 @@ different defaults for the function arguments.</p>
     <p>There is also a
 <a href="https://easystats.github.io/see/articles/parameters.html" class="external-link"><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>-method</a>
 implemented in the
-<a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>..
-<code>n_components()</code> is a convenient short for <code>n_factors(type = "PCA")</code>.</p>
+<a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong>-package</a>.
+<code>n_components()</code> is a convenient short-cut  for <code>n_factors(type = "PCA")</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
