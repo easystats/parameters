@@ -16,7 +16,7 @@
       Parameter | Mean |       95% CI |   pd |  Rhat |     ESS
       --------------------------------------------------------
       sigma     | 2.67 | [2.06, 3.51] | 100% | 1.000 | 2390.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -47,7 +47,7 @@
       SD (Intercept: gear)     |  3.88 | [ 0.21, 10.30] |   100% | 1.010 | 424.00
       SD (wt: gear)            |  1.96 | [ 0.06,  5.06] |   100% | 1.385 |   9.00
       Cor (Intercept~wt: gear) | -0.25 | [-0.99,  0.83] | 62.48% | 1.106 |  36.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -77,7 +77,7 @@
       SD (Intercept: Subject)       | 26.63 | [15.46, 42.36] |   100% | 1.002 | 1823.00
       SD (Days: Subject)            |  6.58 | [ 4.12, 10.16] |   100% | 1.000 | 1228.00
       Cor (Intercept~Days: Subject) |  0.09 | [-0.47,  0.67] | 60.42% | 1.003 |  899.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -107,7 +107,7 @@
       SD (Intercept: grp)        |  8.22 | [ 0.44, 25.69] | 100% | 1.000 | 1604.00
       SD (Intercept: grp:subgrp) |  7.41 | [ 0.44, 16.87] | 100% | 1.003 |  770.00
       SD (Intercept: Subject)    | 38.51 | [26.89, 55.98] | 100% | 1.003 | 1254.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -135,7 +135,7 @@
       Parameter               | Mean |       95% CI |   pd |  Rhat |    ESS
       ---------------------------------------------------------------------
       SD (Intercept: Species) | 1.68 | [0.64, 3.64] | 100% | 1.003 | 796.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -166,7 +166,7 @@
       SD (Intercept: gear)     |  3.76 | [ 0.14, 10.13] |   100% | 1.015 | 643.00
       SD (wt: gear)            |  1.47 | [ 0.06,  3.96] |   100% | 1.039 |  94.00
       Cor (Intercept~wt: gear) | -0.38 | [-0.99,  0.82] | 76.85% | 1.003 | 854.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.
@@ -236,7 +236,7 @@
       Intercept[1] | -38.42 | [-67.76, -19.66] | 100% | 1.002 |  992.00
       Intercept[2] | -33.26 | [-59.09, -16.53] | 100% | 1.001 | 1039.00
       mpg          |  -1.80 | [ -3.20,  -0.90] | 100% | 1.002 | 1021.00
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a MCMC distribution approximation.

@@ -19,7 +19,7 @@
       Parameter    | Coefficient |   SE |         95% CI | t(558) |      p
       --------------------------------------------------------------------
       phq4 between |       -6.28 | 0.50 | [-7.27, -5.30] | -12.53 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
@@ -42,7 +42,7 @@
       --------------------------------------------------------
       SD (Intercept: gear) |        0.27 | 0.24 | [0.05, 1.54]
       SD (Residual)        |        0.59 | 0.08 | [0.46, 0.77]
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation. Uncertainty intervals for
@@ -64,7 +64,7 @@
       Model: wt ~ cyl (32 Observations)
       Residual standard deviation: 0.594 (df = 28)
       Conditional R2: 0.628; Marginal R2: 0.550
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.

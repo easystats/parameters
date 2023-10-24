@@ -18,7 +18,7 @@
       (Intercept) |      -92.86 | 67.62 | [-232.47, 46.75] |     -1.37 | 23.87 | 0.182
       disp        |        0.26 |  0.40 | [  -0.57,  1.09] |      0.64 | 23.53 | 0.528
       hp          |        0.43 |  0.63 | [  -0.88,  1.73] |      0.67 | 24.15 | 0.507
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald distribution approximation.
@@ -35,7 +35,7 @@
       (Intercept) |       30.65 |     1.43 | [27.72, 33.58] |     21.46 | 26.96 | < .001
       disp        |       -0.03 | 7.52e-03 | [-0.05, -0.02] |     -4.40 | 25.57 | < .001
       hp          |       -0.02 |     0.01 | [-0.05,  0.01] |     -1.37 | 24.82 | 0.182 
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald distribution approximation.

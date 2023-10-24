@@ -24,7 +24,7 @@
       Parameter  | Estimate |   SE |       95% CI |     z |      p
       ------------------------------------------------------------
       Stim [Old] |    -0.04 | 0.04 | [0.47, 0.63] | 13.64 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
@@ -55,7 +55,7 @@
       Parameter  | Estimate |   SE |        95% CI |     z |     p
       ------------------------------------------------------------
       Stim [Old] |    -0.04 | 0.04 | [-0.12, 0.04] | -1.11 | 0.268
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.

@@ -44,7 +44,7 @@
       x            |        0.03 | 0.04 | [-0.15, 0.22] |  0.81 | 0.502
       Petal.Length |       -0.04 | 0.19 | [-0.85, 0.78] | -0.20 | 0.858
       Sepal.Length |        0.37 | 0.20 | [-0.49, 1.23] |  1.86 | 0.205
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
@@ -99,7 +99,7 @@
       ----------------------------------------------------------------
       x            |        0.04 | 0.06 | [-0.22, 0.31] | 0.71 | 0.553
       Petal Length |        0.30 | 0.06 | [ 0.05, 0.54] | 5.15 | 0.036
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
@@ -140,7 +140,7 @@
       x            |        0.01 | 0.02 | [-0.07, 0.10] |  0.74 | 0.539
       Petal.Length |        0.23 | 0.08 | [-0.11, 0.58] |  2.93 | 0.099
       Sepal.Length |   -4.24e-03 | 0.03 | [-0.14, 0.13] | -0.13 | 0.906
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.

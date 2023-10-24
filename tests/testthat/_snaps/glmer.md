@@ -11,7 +11,7 @@
       period [2]  |    -0.98 | 0.30 | [-1.57, -0.38] | -3.22 | 0.001 
       period [3]  |    -1.11 | 0.32 | [-1.75, -0.48] | -3.43 | < .001
       period [4]  |    -1.56 | 0.42 | [-2.39, -0.73] | -3.67 | < .001
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
@@ -38,7 +38,7 @@
       Parameter            | Coefficient
       ----------------------------------
       SD (Intercept: herd) |        0.64
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
@@ -62,7 +62,7 @@
       Parameter            | Coefficient |   SE |       95% CI
       --------------------------------------------------------
       SD (Intercept: herd) |        0.64 | 0.18 | [0.37, 1.11]
-    Message <simpleMessage>
+    Message
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
