@@ -2,9 +2,12 @@
 % Please edit documentation in R/bootstrap_parameters.R
 \name{bootstrap_parameters}
 \alias{bootstrap_parameters}
+\alias{bootstrap_parameters.default}
 \title{Parameters bootstrapping}
 \usage{
-bootstrap_parameters(
+bootstrap_parameters(model, ...)
+
+\method{bootstrap_parameters}{default}(
   model,
   iterations = 1000,
   centrality = "median",
@@ -16,6 +19,8 @@ bootstrap_parameters(
 }
 \arguments{
 \item{model}{Statistical model.}
+
+\item{...}{Arguments passed to or from other methods.}
 
 \item{iterations}{The number of draws to simulate/bootstrap.}
 
@@ -39,8 +44,6 @@ these options: \code{"p-value"} (or \code{"p"}), \code{"p_direction"} (or \code{
 or \code{"all"} to compute all tests. For each "test", the corresponding
 \strong{bayestestR} function is called (e.g. \code{\link[bayestestR:rope]{bayestestR::rope()}} or
 \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}) and its results included in the summary output.}
-
-\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 A data frame summarizing the bootstrapped parameters.

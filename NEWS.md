@@ -11,6 +11,9 @@
 * `n_factors()` no longer supports `package = "EGAnet"`, as package *EGAnet* was
   removed from CRAN.
 
+* `bootstrap_parameters()` now works for bootstrapped samples returned by
+  `bootstrap_model()`.
+
 ## Bug fixes
 
 * Fixed issue in `print_html()` for objects from package _ggeffects_.
