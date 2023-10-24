@@ -48,6 +48,9 @@ bootstrap_parameters <- function(model, ...) {
   UseMethod("bootstrap_parameters")
 }
 
+
+# methods ----------------------------------------------------------------------
+
 #' @rdname bootstrap_parameters
 #' @export
 bootstrap_parameters.default <- function(model,
@@ -83,6 +86,12 @@ bootstrap_parameters.bootstrap_model <- function(model,
   out
 }
 
+
+#' @export
+model_parameters.bootstrap_model <- bootstrap_parameters.bootstrap_model
+
+
+# utilities --------------------------------------------------------------------
 
 #' @keywords internal
 .summary_bootstrap <- function(data, test, centrality, ci, ci_method, ...) {
