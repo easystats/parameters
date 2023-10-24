@@ -119,7 +119,7 @@ test_that("vcov standard errors, methods", {
     data = Produc, model = "random"
   )
 
-  out1 <- standard_error(ran, vcov = "HC1")
+  out1 <- standard_error(zz, vcov = "HC1")
   out2 <- standard_error(zz, vcov = "HC1", vcov_args = list(method = "white1"))
   validate1 <- sqrt(diag(plm::vcovHC(zz, method = "arellano", type = "HC1")))
   validate2 <- sqrt(diag(plm::vcovHC(zz, method = "white1", type = "HC1")))
