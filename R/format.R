@@ -946,7 +946,7 @@ format.parameters_sem <- function(x,
     }
 
     # following check only for models with logit-link
-    logit_model <- isTRUE(.additional_arguments(x, "logit_link", FALSE)) || 
+    logit_model <- isTRUE(.additional_arguments(x, "logit_link", FALSE)) ||
       isTRUE(attributes(x)$coefficient_name %in% c("Log-Odds", "Odds Ratio"))
 
     # check for complete separation coefficients or possible issues with
