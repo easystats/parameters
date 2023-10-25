@@ -1,7 +1,10 @@
 .ci_profiled <- function(model, ci) {
   glm_ci <- tryCatch(
     {
-      out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
+      out <- as.data.frame(
+        suppressWarnings(stats::confint(model, level = ci)),
+        stringsAsFactors = FALSE
+      )
       names(out) <- c("CI_low", "CI_high")
 
       out$CI <- ci
