@@ -306,12 +306,12 @@ format.compare_parameters <- function(x,
   ran_pars <- which(x$Effects == "random")
 
   # find all random effect groups
-  if (!is.null(x$Group)) {
-    ran_groups <- unique(insight::compact_character(x$Group))
-    ran_group_rows <- which(nchar(x$Group) > 0)
-  } else {
+  if (is.null(x$Group)) {
     ran_groups <- NULL
     ran_group_rows <- NULL
+  } else {
+    ran_groups <- unique(insight::compact_character(x$Group))
+    ran_group_rows <- which(nchar(x$Group) > 0)
   }
 
   for (i in models) {
@@ -646,10 +646,10 @@ format.parameters_sem <- function(x,
 .add_footer_sigma <- function(footer = NULL, digits = 3, sigma = NULL, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
     # format residual df
-    if (!is.null(residual_df)) {
-      res_df <- paste0(" (df = ", residual_df, ")")
-    } else {
+    if (is.null(residual_df)) {
       res_df <- ""
+    } else {
+      res_df <- paste0(" (df = ", residual_df, ")")
     }
 
     if (type == "text" || type == "markdown") {
@@ -785,10 +785,10 @@ format.parameters_sem <- function(x,
 .add_footer_formula <- function(footer = NULL, model_formula = NULL, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
     # format n of observations
-    if (!is.null(n_obs)) {
-      n <- paste0(" (", n_obs, " Observations)")
-    } else {
+    if (is.null(n_obs)) {
       n <- ""
+    } else {
+      n <- paste0(" (", n_obs, " Observations)")
     }
 
     if (type == "text" || type == "markdown") {

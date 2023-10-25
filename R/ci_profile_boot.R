@@ -135,9 +135,9 @@
   )
 
   param_names <- switch(component,
-    "conditional" = pars$Parameter,
-    "zi" = ,
-    "zero_inflated" = paste0("zi~", pars$Parameter),
+    conditional = pars$Parameter,
+    zi = ,
+    zero_inflated = paste0("zi~", pars$Parameter),
     c(
       pars$Parameter[pars$Component == "conditional"],
       paste0("zi~", pars$Parameter[pars$Component == "zero_inflated"])

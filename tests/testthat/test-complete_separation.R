@@ -2,7 +2,7 @@ skip_if(getRversion() < "4.0.0")
 skip_if_not_installed("withr")
 
 withr::with_options(
-  list("parameters_warning_exponentiate" = TRUE),
+  list(parameters_warning_exponentiate = TRUE),
   {
     test_that("print warning about complete separation", {
       d_sep <- data.frame(
@@ -18,7 +18,7 @@ withr::with_options(
 )
 
 withr::with_options(
-  list("parameters_warning_exponentiate" = TRUE),
+  list(parameters_warning_exponentiate = TRUE),
   {
     test_that("print warning about complete separation", {
       data(mtcars)
@@ -30,7 +30,7 @@ withr::with_options(
 )
 
 withr::with_options(
-  list("parameters_warning_exponentiate" = TRUE),
+  list(parameters_warning_exponentiate = TRUE),
   {
     test_that("print warning about quasi complete separation", {
       data(mtcars)
