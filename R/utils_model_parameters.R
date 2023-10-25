@@ -56,6 +56,7 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
+  attr(params, "logit_link") <- isTRUE(identical(info$link_function, "logit"))
 
   # add parameters with value and variable
   attr(params, "pretty_labels") <- .format_value_labels(params, model)
@@ -63,7 +64,7 @@
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- .safe(insight::find_statistic(model))
   attr(params, "log_response") <- .safe(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)))
-  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE)))
+  attr(params, "log_predictors") <- .safe(any(grepl("log", unlist(insight::find_terms(model)[c("conditional", "zero_inflated", "instruments")]), fixed = TRUE))) # nolint
 
   # save if model is multivariate response model
   if (isTRUE(info$is_multivariate)) {
@@ -301,13 +302,13 @@
   }
 
   # pattern for marginaleffects objects
-  if (!is.null(attr(params, "coefficient_name"))) {
+  if (is.null(attr(params, "coefficient_name"))) {
+    pattern <- "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)"
+  } else {
     pattern <- sprintf(
       "^(Coefficient|Mean|Median|MAP|Std_Coefficient|%s|CI_|Std_CI)",
       attr(params, "coefficient_name")
     )
-  } else {
-    pattern <- "^(Coefficient|Mean|Median|MAP|Std_Coefficient|CI_|Std_CI)"
   }
 
   columns <- grepl(pattern = pattern, colnames(params))
@@ -319,10 +320,10 @@
       rows <- !tolower(params$Component) %in% c("location", "scale")
     } else {
       # don't exponentiate dispersion
-      if (!is.null(params$Component)) {
-        rows <- !tolower(params$Component) %in% c("dispersion", "residual")
-      } else {
+      if (is.null(params$Component)) {
         rows <- seq_len(nrow(params))
+      } else {
+        rows <- !tolower(params$Component) %in% c("dispersion", "residual")
       }
     }
     params[rows, columns] <- exp(params[rows, columns])
@@ -362,7 +363,7 @@
 
 #' @keywords internal
 .add_anova_attributes <- function(params, model, ci, test = NULL, alternative = NULL, ...) {
-  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
+  dot.arguments <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x) # nolint
 
   attr(params, "ci") <- ci
   attr(params, "model_class") <- class(model)
@@ -448,8 +449,8 @@
     if (verbose) {
       not_allowed_string <- datawizard::text_concatenate(not_allowed, enclose = "\"")
       insight::format_alert(
-        sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string),
-        sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name)
+        sprintf("Following arguments are not supported in `%s()` for models of class `%s` and will be ignored: %s", function_name, model_class, not_allowed_string), # nolint
+        sprintf("Please run `%s()` again without specifying the above mentioned arguments to obtain expected results.", function_name) # nolint
       )
     }
     dots[not_allowed] <- NULL

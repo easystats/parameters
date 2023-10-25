@@ -306,12 +306,12 @@ format.compare_parameters <- function(x,
   ran_pars <- which(x$Effects == "random")
 
   # find all random effect groups
-  if (!is.null(x$Group)) {
-    ran_groups <- unique(insight::compact_character(x$Group))
-    ran_group_rows <- which(nchar(x$Group) > 0)
-  } else {
+  if (is.null(x$Group)) {
     ran_groups <- NULL
     ran_group_rows <- NULL
+  } else {
+    ran_groups <- unique(insight::compact_character(x$Group))
+    ran_group_rows <- which(nchar(x$Group) > 0)
   }
 
   for (i in models) {
@@ -646,10 +646,10 @@ format.parameters_sem <- function(x,
 .add_footer_sigma <- function(footer = NULL, digits = 3, sigma = NULL, residual_df = NULL, type = "text") {
   if (!is.null(sigma)) {
     # format residual df
-    if (!is.null(residual_df)) {
-      res_df <- paste0(" (df = ", residual_df, ")")
-    } else {
+    if (is.null(residual_df)) {
       res_df <- ""
+    } else {
+      res_df <- paste0(" (df = ", residual_df, ")")
     }
 
     if (type == "text" || type == "markdown") {
@@ -785,10 +785,10 @@ format.parameters_sem <- function(x,
 .add_footer_formula <- function(footer = NULL, model_formula = NULL, n_obs = NULL, type = "text") {
   if (!is.null(model_formula)) {
     # format n of observations
-    if (!is.null(n_obs)) {
-      n <- paste0(" (", n_obs, " Observations)")
-    } else {
+    if (is.null(n_obs)) {
       n <- ""
+    } else {
+      n <- paste0(" (", n_obs, " Observations)")
     }
 
     if (type == "text" || type == "markdown") {
@@ -919,18 +919,44 @@ format.parameters_sem <- function(x,
 .print_footer_exp <- function(x) {
   if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
     msg <- NULL
+    # we need this to check whether we have extremely large cofficients
+    if (all(c("Coefficient", "Parameter") %in% colnames(x))) {
+      spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
+    } else {
+      spurious_coefficients <- NULL
+    }
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
         msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
+        # we only check for exp(coef), so exp() here soince coefficients are on logit-scale
+        spurious_coefficients <- exp(spurious_coefficients)
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
         msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
+        # don't show warning about complete separation
+        spurious_coefficients <- NULL
       }
     } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
       msg <- c(
         "This model has a log-transformed response variable, and exponentiated parameters are reported.",
         "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
       )
+      # don't show warning about complete separation
+      spurious_coefficients <- NULL
+    }
+
+    # following check only for models with logit-link
+    logit_model <- isTRUE(.additional_arguments(x, "logit_link", FALSE)) ||
+      isTRUE(attributes(x)$coefficient_name %in% c("Log-Odds", "Odds Ratio"))
+
+    # check for complete separation coefficients or possible issues with
+    # too few data points
+    if (!is.null(spurious_coefficients) && logit_model) {
+      if (any(spurious_coefficients > 140)) {
+        msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
+      } else if (any(spurious_coefficients > 20)) {
+        msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models.") # nolint
+      }
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {

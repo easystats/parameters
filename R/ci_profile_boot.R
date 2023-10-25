@@ -1,7 +1,10 @@
 .ci_profiled <- function(model, ci) {
   glm_ci <- tryCatch(
     {
-      out <- as.data.frame(stats::confint(model, level = ci), stringsAsFactors = FALSE)
+      out <- as.data.frame(
+        suppressWarnings(stats::confint(model, level = ci)),
+        stringsAsFactors = FALSE
+      )
       names(out) <- c("CI_low", "CI_high")
 
       out$CI <- ci
@@ -132,9 +135,9 @@
   )
 
   param_names <- switch(component,
-    "conditional" = pars$Parameter,
-    "zi" = ,
-    "zero_inflated" = paste0("zi~", pars$Parameter),
+    conditional = pars$Parameter,
+    zi = ,
+    zero_inflated = paste0("zi~", pars$Parameter),
     c(
       pars$Parameter[pars$Component == "conditional"],
       paste0("zi~", pars$Parameter[pars$Component == "zero_inflated"])
