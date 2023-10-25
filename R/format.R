@@ -920,7 +920,11 @@ format.parameters_sem <- function(x,
   if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
     msg <- NULL
     # we need this to check whether we have extremely large cofficients
-    spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
+    if (all(c("Coefficient", "Parameter") %in% colnames(x))) {
+      spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
+    } else {
+      spurious_coefficients <- NULL
+    }
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
@@ -943,7 +947,7 @@ format.parameters_sem <- function(x,
 
     # check for complete separation coefficients or possible issues with
     # too few data points
-    if (!is.null(spurious_coefficients)) {
+    if (!is.null(spurious_coefficients) && isTRUE(.additional_arguments(x, "log_link", FALSE))) {
       if (any(spurious_coefficients > 140)) {
         msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
       } else if (any(spurious_coefficients > 20)) {
