@@ -14,6 +14,10 @@
 * `bootstrap_parameters()` and `model_parameters()` now accept bootstrapped
   samples returned by `bootstrap_model()`.
 
+* The `print()` method for `model_parameters()` now also yields a warning for
+  models with logit-links when possible issues with (quasi) complete separation
+  occur.
+
 ## Bug fixes
 
 * Fixed issue in `print_html()` for objects from package _ggeffects_.
