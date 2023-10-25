@@ -919,18 +919,34 @@ format.parameters_sem <- function(x,
 .print_footer_exp <- function(x) {
   if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
     msg <- NULL
+    # we need this to check whether we have extremely large cofficients
+    spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
     exponentiate <- .additional_arguments(x, "exponentiate", FALSE)
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
         msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
+        # we only check for exp(coef), so exp() here soince coefficients are on logit-scale
+        spurious_coefficients <- exp(spurious_coefficients)
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
         msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
+        # don't show warning about complete separation
+        spurious_coefficients <- NULL
       }
     } else if (.is_valid_exponentiate_argument(exponentiate) && isTRUE(.additional_arguments(x, "log_response", FALSE))) { # nolint
       msg <- c(
         "This model has a log-transformed response variable, and exponentiated parameters are reported.",
         "A one-unit increase in the predictor is associated with multiplying the outcome by that predictor's coefficient." # nolint
       )
+      # don't show warning about complete separation
+      spurious_coefficients <- NULL
+    }
+
+    # check for complete separation coefficients or possible issues with
+    # too few data points
+    if (!is.null(spurious_coefficients) && any(spurious_coefficients > 140)) {
+      msg <- c(msg, "Furthermore, note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
+    } else if (any(spurious_coefficients > 20)) {
+      msg <- c(msg, "Furthermore, note that some coefficients are very large, which may indicate issues with too few data points for some parameters. Consider using bias-corrected or penalized regression models.") # nolint
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
