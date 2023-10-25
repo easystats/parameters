@@ -141,6 +141,7 @@ test_that("model_parameters - cgamm", {
       ran_pars = TRUE,
       show_summary = FALSE,
       log_link = FALSE,
+      logit_link = FALSE,
       pretty_labels = c(
         `(Intercept)` = "(Intercept)",
         `cgam::s.incr(x)` = "cgam::s.incr(x)"
