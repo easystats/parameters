@@ -943,10 +943,12 @@ format.parameters_sem <- function(x,
 
     # check for complete separation coefficients or possible issues with
     # too few data points
-    if (!is.null(spurious_coefficients) && any(spurious_coefficients > 140)) {
-      msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
-    } else if (any(spurious_coefficients > 20)) {
-      msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with too few data points for some parameters. Consider using bias-corrected or penalized regression models.") # nolint
+    if (!is.null(spurious_coefficients)) {
+      if (any(spurious_coefficients > 140)) {
+        msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
+      } else if (any(spurious_coefficients > 20)) {
+       msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with too few data points for some parameters. Consider using bias-corrected or penalized regression models.") # nolint
+      }
     }
 
     if (!is.null(msg) && isTRUE(getOption("parameters_warning_exponentiate", TRUE))) {
