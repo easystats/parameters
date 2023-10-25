@@ -945,9 +945,13 @@ format.parameters_sem <- function(x,
       spurious_coefficients <- NULL
     }
 
+    # following check only for models with logit-link
+    logit_model <- isTRUE(.additional_arguments(x, "logit_link", FALSE)) || 
+      isTRUE(attributes(x)$coefficient_name %in% c("Log-Odds", "Odds Ratio"))
+
     # check for complete separation coefficients or possible issues with
     # too few data points
-    if (!is.null(spurious_coefficients) && isTRUE(.additional_arguments(x, "log_link", FALSE))) {
+    if (!is.null(spurious_coefficients) && logit_model) {
       if (any(spurious_coefficients > 140)) {
         msg <- c(msg, "Note that some coefficients are very large, which may indicate issues with complete separation.") # nolint
       } else if (any(spurious_coefficients > 20)) {

@@ -56,6 +56,7 @@
   attr(params, "ran_pars") <- isFALSE(group_level)
   attr(params, "show_summary") <- isTRUE(summary)
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
+  attr(params, "logit_link") <- isTRUE(identical(info$link_function, "logit"))
 
   # add parameters with value and variable
   attr(params, "pretty_labels") <- .format_value_labels(params, model)
