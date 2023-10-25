@@ -34,7 +34,8 @@ withr::with_options(
   {
     test_that("print warning about quasi complete separation", {
       data(mtcars)
-      m_sep3 <- suppressWarnings(glm(vs ~ qsec, data = mtcars, family = binomial))
+      set.seed(323)
+      m_sep3 <- suppressWarnings(glm(vs ~ qsec, data = mtcars[sample(1:32, 15, replace = TRUE), ], family = binomial))
       out <- model_parameters(m_sep3)
       expect_snapshot(print(out))
     })

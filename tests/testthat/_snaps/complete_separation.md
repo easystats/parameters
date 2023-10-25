@@ -16,8 +16,8 @@
       The model has a log- or logit-link. Consider using `exponentiate =
         TRUE` to interpret coefficients as ratios.
         
-      Note that some coefficients are very large, which may indicate issues
-        with complete separation.
+      Some coefficients are very large, which may indicate issues with
+        complete separation.
 
 ---
 
@@ -36,18 +36,18 @@
       The model has a log- or logit-link. Consider using `exponentiate =
         TRUE` to interpret coefficients as ratios.
         
-      Note that some coefficients are very large, which may indicate issues
-        with complete separation.
+      Some coefficients are very large, which may indicate issues with
+        complete separation.
 
 # print warning about quasi complete separation
 
     Code
       print(out)
     Output
-      Parameter   | Log-Odds |    SE |            95% CI |     z |     p
-      ------------------------------------------------------------------
-      (Intercept) |   -56.36 | 21.45 | [-114.76, -25.33] | -2.63 | 0.009
-      qsec        |     3.12 |  1.19 | [   1.40,   6.37] |  2.62 | 0.009
+      Parameter   | Log-Odds |    SE |         95% CI |     z |     p
+      ---------------------------------------------------------------
+      (Intercept) |   -70.25 | 88.29 | [    , -16.06] | -0.80 | 0.426
+      qsec        |     4.12 |  5.22 | [0.97,       ] |  0.79 | 0.430
     Message
       
       Uncertainty intervals (profile-likelihood) and p-values (two-tailed)
@@ -56,7 +56,7 @@
       The model has a log- or logit-link. Consider using `exponentiate =
         TRUE` to interpret coefficients as ratios.
         
-      Note that some coefficients are very large, which may indicate issues
+      Some coefficients seem to be rather large, which may indicate issues
         with (quasi) complete separation. Consider using bias-corrected or
         penalized regression models.
 
