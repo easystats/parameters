@@ -48,11 +48,11 @@ Axis Factor Analysis, \code{"minres"} for minimum residual (OLS) factoring,
 \code{type = "PCA"}.}
 
 \item{package}{Package from which respective methods are used. Can be
-\code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"}, \code{"PCDimension"} or
-\code{"fit"}. Note that \code{"fit"} (which actually also relies on the \strong{psych}
-package) can be very slow for bigger datasets. Thus, the default is
-\code{c("nFactors", "psych")}. You must have the respective packages installed
-for the methods to be used.}
+\code{"all"} or a vector containing \code{"nFactors"}, \code{"psych"}, \code{"PCDimension"},
+\code{"fit"} or \code{"EGAnet"}. Note that \code{"fit"} (which actually also relies on the
+\code{psych} package) and \code{"EGAnet"} can be very slow for bigger datasets. Thus,
+the default is \code{c("nFactors", "psych")}. You must have the respective
+packages installed for the methods to be used.}
 
 \item{cor}{An optional correlation matrix that can be used (note that the
 data must still be passed as the first argument). If \code{NULL}, will

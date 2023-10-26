@@ -21,11 +21,11 @@
 #'   `"default"` will select `"minres"` if `type = "FA"` and `"pc"` if
 #'   `type = "PCA"`.
 #' @param package Package from which respective methods are used. Can be
-#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"` or
-#'   `"fit"`. Note that `"fit"` (which actually also relies on the **psych**
-#'   package) can be very slow for bigger datasets. Thus, the default is
-#'   `c("nFactors", "psych")`. You must have the respective packages installed
-#'   for the methods to be used.
+#'   `"all"` or a vector containing `"nFactors"`, `"psych"`, `"PCDimension"`,
+#'   `"fit"` or `"EGAnet"`. Note that `"fit"` (which actually also relies on the
+#'   `psych` package) and `"EGAnet"` can be very slow for bigger datasets. Thus,
+#'   the default is `c("nFactors", "psych")`. You must have the respective
+#'   packages installed for the methods to be used.
 #' @param safe If `TRUE`, the function will run all the procedures in try
 #'   blocks, and will only return those that work and silently skip the ones
 #'   that may fail.
@@ -118,7 +118,7 @@ n_factors <- function(x,
                       n_max = NULL,
                       ...) {
   if (all(package == "all")) {
-    package <- c("nFactors", "psych", "fit", "pcdimension")
+    package <- c("nFactors", "EGAnet", "psych", "fit", "pcdimension")
   }
 
   # Get number of observations
@@ -130,7 +130,7 @@ n_factors <- function(x,
       package <- package[!package %in% c("pcdimension", "PCDimension")]
     } else if (is.matrix(x) || inherits(x, "easycormatrix")) {
       insight::format_error(
-        "Please input the correlation matrix via the `cor` argument and the number of rows / observations via the first argument."
+        "Please input the correlation matrix via the `cor` argument and the number of rows / observations via the first argument." # nolint
       )
     }
   }
