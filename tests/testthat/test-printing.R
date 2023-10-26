@@ -1,3 +1,4 @@
+skip_on_cran()
 skip_if_not_installed("withr")
 skip_if(getRversion() < "4.0.0")
 
@@ -104,6 +105,18 @@ withr::with_options(
           select = "{coef}{stars}|[{ci}]"
         )
       )
+    })
+  }
+)
+
+withr::with_options(
+  list(parameters_warning_exponentiate = TRUE),
+  {
+    test_that("message about interpretation of log-resoponse", {
+      data(mtcars)
+      m <- lm(log(mpg) ~ gear, data = mtcars)
+      out <- model_parameters(m, exponentiate = TRUE)
+      expect_snapshot(print(out))
     })
   }
 )

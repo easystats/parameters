@@ -346,3 +346,23 @@
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald t-distribution approximation.
 
+# message about interpretation of log-resoponse
+
+    Code
+      print(out)
+    Output
+      Parameter   | Coefficient |   SE |        95% CI | t(30) |      p
+      -----------------------------------------------------------------
+      (Intercept) |        9.29 | 2.24 | [5.67, 15.21] |  9.23 | < .001
+      gear        |        1.22 | 0.08 | [1.07,  1.39] |  3.08 | 0.004 
+    Message
+      
+      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
+        using a Wald t-distribution approximation.
+      
+      This model has a log-transformed response variable, and exponentiated
+        parameters are reported.
+        
+      A one-unit increase in the predictor is associated with multiplying the
+        outcome by that predictor's coefficient.
+
