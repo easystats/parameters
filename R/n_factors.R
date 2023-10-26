@@ -552,7 +552,7 @@ print.n_clusters <- print.n_factors
     nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
   )))
   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
+    nfac_TMFG <- .safe(EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim, NA) # nolint
   )))
 
   .data_frame(
