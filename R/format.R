@@ -952,9 +952,9 @@ format.parameters_sem <- function(x,
     # check for complete separation coefficients or possible issues with
     # too few data points
     if (!is.null(spurious_coefficients) && logit_model) {
-      if (any(spurious_coefficients > 140)) {
+      if (any(spurious_coefficients > 100)) {
         msg <- c(msg, "Some coefficients are very large, which may indicate issues with complete separation.") # nolint
-      } else if (any(spurious_coefficients > 30)) {
+      } else if (any(spurious_coefficients > 25)) {
         msg <- c(msg, "Some coefficients seem to be rather large, which may indicate issues with (quasi) complete separation. Consider using bias-corrected or penalized regression models.") # nolint
       }
     }
