@@ -45,7 +45,7 @@
 #'   implemented in the [**see**-package](https://easystats.github.io/see/).
 #'   `n_components()` is a convenient short-cut  for `n_factors(type = "PCA")`.
 #'
-#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE)
+#' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE) && require("EGAnet", quietly = TRUE) && require("psych", quietly = TRUE)
 #' library(parameters)
 #' n_factors(mtcars, type = "PCA")
 #'
