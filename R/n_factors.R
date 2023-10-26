@@ -7,8 +7,7 @@
 #' with the fewer factors.
 #'
 #' @param x A data frame.
-#' @param type Can be `"FA"` or `"PCA"`, depending on what you want to
-#'   do.
+#' @param type Can be `"FA"` or `"PCA"`, depending on what you want to do.
 #' @param rotation Only used for VSS (Very Simple Structure criterion, see
 #'   [psych::VSS()]). The rotation to apply. Can be `"none"`, `"varimax"`,
 #'   `"quartimax"`, `"bentlerT"`, `"equamax"`, `"varimin"`, `"geominT"` and
@@ -43,8 +42,7 @@
 #'
 #' @note There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
-#'   implemented in the
-#'   [**see**-package](https://easystats.github.io/see/).
+#'   implemented in the [**see**-package](https://easystats.github.io/see/).
 #'   `n_components()` is a convenient short-cut  for `n_factors(type = "PCA")`.
 #'
 #' @examplesIf require("PCDimension", quietly = TRUE) && require("nFactors", quietly = TRUE)

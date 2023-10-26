@@ -31,8 +31,7 @@ n_components(
 \arguments{
 \item{x}{A data frame.}
 
-\item{type}{Can be \code{"FA"} or \code{"PCA"}, depending on what you want to
-do.}
+\item{type}{Can be \code{"FA"} or \code{"PCA"}, depending on what you want to do.}
 
 \item{rotation}{Only used for VSS (Very Simple Structure criterion, see
 \code{\link[psych:VSS]{psych::VSS()}}). The rotation to apply. Can be \code{"none"}, \code{"varimax"},
@@ -86,8 +85,7 @@ different defaults for the function arguments.
 \note{
 There is also a
 \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
-implemented in the
-\href{https://easystats.github.io/see/}{\strong{see}-package}.
+implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 \code{n_components()} is a convenient short-cut  for \code{n_factors(type = "PCA")}.
 }
 \examples{
