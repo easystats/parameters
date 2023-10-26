@@ -26,7 +26,7 @@ test_that("n_factors, EGAnet does not fail", {
   skip_on_cran()
   skip_if_not_installed("EGAnet")
   set.seed(333)
-  x <- n_factors(mtcars, package = "EGAnet")
+  x <- n_factors(mtcars[, 1:4], package = "EGAnet")
   expect_identical(ncol(x), 3L)
   expect_identical(nrow(x), 1L)
   expect_identical(
