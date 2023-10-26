@@ -8,9 +8,6 @@
 * `print_md()` for `compare_parameters()` now gains more arguments, similar to
   the `print()` method.
 
-* `n_factors()` no longer supports `package = "EGAnet"`, as package *EGAnet* was
-  removed from CRAN.
-
 * `bootstrap_parameters()` and `model_parameters()` now accept bootstrapped
   samples returned by `bootstrap_model()`.
 

@@ -115,6 +115,7 @@ Suggests:
     drc,
     DRR,
     effectsize (>= 0.8.2),
+    EGAnet,
     emmeans (>= 1.7.0),
     estimatr,
     factoextra,

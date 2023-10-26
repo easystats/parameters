@@ -245,27 +245,25 @@ n_factors <- function(x,
     }
   }
 
-  # EGAnet was removed from CRAN
-
   # EGAnet -------------------------------------------
-  # if ("EGAnet" %in% package) {
-  #   insight::check_if_installed("EGAnet")
+  if ("EGAnet" %in% package) {
+    insight::check_if_installed("EGAnet")
 
-  #   if (safe) {
-  #     out <- rbind(
-  #       out,
-  #       tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
-  #         # warning = function(w) data.frame(),
-  #         error = function(e) data.frame()
-  #       )
-  #     )
-  #   } else {
-  #     out <- rbind(
-  #       out,
-  #       .n_factors_ega(x, cor, nobs, eigen_values, type)
-  #     )
-  #   }
-  # }
+    if (safe) {
+      out <- rbind(
+        out,
+        tryCatch(.n_factors_ega(x, cor, nobs, eigen_values, type),
+          # warning = function(w) data.frame(),
+          error = function(e) data.frame()
+        )
+      )
+    } else {
+      out <- rbind(
+        out,
+        .n_factors_ega(x, cor, nobs, eigen_values, type)
+      )
+    }
+  }
 
 
   # psych -------------------------------------------
@@ -545,28 +543,26 @@ print.n_clusters <- print.n_factors
 }
 
 
-# EGAnet was removed from CRAN
-
 # EGAnet ------------------------
-# .n_factors_ega <- function(x = NULL,
-#                            cor = NULL,
-#                            nobs = NULL,
-#                            eigen_values = NULL,
-#                            type = "FA") {
-#   # Replace with own correlation matrix
-#   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-#     nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
-#   )))
-#   junk <- utils::capture.output(suppressWarnings(suppressMessages(
-#     nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
-#   )))
+.n_factors_ega <- function(x = NULL,
+                           cor = NULL,
+                           nobs = NULL,
+                           eigen_values = NULL,
+                           type = "FA") {
+  # Replace with own correlation matrix
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(
+    nfac_glasso <- EGAnet::EGA(cor, n = nobs, model = "glasso", plot.EGA = FALSE)$n.dim # nolint
+  )))
+  junk <- utils::capture.output(suppressWarnings(suppressMessages(
+    nfac_TMFG <- EGAnet::EGA(cor, n = nobs, model = "TMFG", plot.EGA = FALSE)$n.dim # nolint
+  )))
 
-#   .data_frame(
-#     n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
-#     Method = c("EGA (glasso)", "EGA (TMFG)"),
-#     Family = "EGA"
-#   )
-# }
+  .data_frame(
+    n_Factors = as.numeric(c(nfac_glasso, nfac_TMFG)),
+    Method = c("EGA (glasso)", "EGA (TMFG)"),
+    Family = "EGA"
+  )
+}
 
 
 # psych ------------------------
