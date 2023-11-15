@@ -1,4 +1,4 @@
-skip_if_not_installed("marginaleffects", minimum_version = "0.9.0")
+skip_if_not_installed("marginaleffects", minimum_version = "0.15.0")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
@@ -44,6 +44,7 @@ test_that("predictions()", {
 
 
 test_that("comparisons()", {
+  data(iris)
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
   m <- marginaleffects::comparisons(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
@@ -71,6 +72,7 @@ test_that("comparisons()", {
 
 
 test_that("marginalmeans()", {
+  data(mtcars)
   dat <- mtcars
   dat$cyl <- factor(dat$cyl)
   dat$gear <- factor(dat$gear)
@@ -81,6 +83,7 @@ test_that("marginalmeans()", {
 
 
 test_that("hypotheses()", {
+  data(mtcars)
   x <- lm(mpg ~ hp + wt, data = mtcars)
   m <- marginaleffects::hypotheses(x, "hp = wt")
   expect_identical(nrow(parameters(m)), 1L)
@@ -89,6 +92,7 @@ test_that("hypotheses()", {
 
 test_that("multiple contrasts: Issue #779", {
   skip_if(getRversion() < "4.0.0")
+  data(mtcars)
   mod <- lm(mpg ~ as.factor(gear) * as.factor(cyl), data = mtcars)
   cmp <- suppressWarnings(marginaleffects::comparisons(
     mod,
@@ -99,4 +103,14 @@ test_that("multiple contrasts: Issue #779", {
   cmp <- suppressWarnings(parameters(cmp))
   expect_true("Comparison: gear" %in% colnames(cmp))
   expect_true("Comparison: cyl" %in% colnames(cmp))
+})
+
+
+test_that("model_parameters defaults to FALSE: Issue #916", {
+  data(mtcars)
+  mod <- lm(mpg ~ wt, data = mtcars)
+  pred <- marginaleffects::predictions(mod, newdata = marginaleffects::datagrid(wt = c(1, 2)))
+  out1 <- model_parameters(pred)
+  out2 <- model_parameters(pred, exponentiate = FALSE)
+  expect_equal(out1$Predicted, out2$Predicted, tolerance = 1e-4)
 })
