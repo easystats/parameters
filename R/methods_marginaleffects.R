@@ -65,7 +65,7 @@ model_parameters.slopes <- model_parameters.marginaleffects
 #' @export
 model_parameters.predictions <- function(model,
                                          ci = 0.95,
-                                         exponentiate = TRUE,
+                                         exponentiate = FALSE,
                                          ...) {
   insight::check_if_installed("marginaleffects")
 
