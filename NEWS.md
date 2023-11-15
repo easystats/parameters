@@ -1,3 +1,11 @@
+# parameters 0.21.4
+
+## Breaking changes
+
+* The `exponentiate` argument of `model_parameters()` for
+  `marginaleffects::predictions()` now defaults to `FALSE`, in line with all
+  the other `model_parameters()` methods.
+
 # parameters 0.21.3
 
 ## Changes
