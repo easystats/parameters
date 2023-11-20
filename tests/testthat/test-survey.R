@@ -5,7 +5,7 @@ withr::with_environment(
   new.env(),
   test_that("model_parameters svytable", {
     # svychisq is called in model_parameters
-    svychisq <- survey::svychisq
+    svychisq <<- survey::svychisq
 
     data(api, package = "survey")
     dclus1 <- survey::svydesign(id = ~dnum, weights = ~pw, data = apiclus1, fpc = ~fpc)
