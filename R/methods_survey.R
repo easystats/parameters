@@ -4,8 +4,6 @@
 model_parameters.svyglm <- function(model,
                                     ci = 0.95,
                                     ci_method = "wald",
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
@@ -16,16 +14,25 @@ model_parameters.svyglm <- function(model,
                                     ...) {
   if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
     insight::format_alert(
-      "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."
+      "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs." # nolint
     )
   }
+
+  # validation check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args", "bootstrap"),
+    class(x)[1],
+    function_name = "model_parameters",
+    verbose = verbose
+  )
 
   out <- .model_parameters_generic(
     model = model,
     ci = ci,
     ci_method = ci_method,
-    bootstrap = bootstrap,
-    iterations = iterations,
+    bootstrap = FALSE,
+    iterations = 1000,
     merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
