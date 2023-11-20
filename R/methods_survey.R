@@ -22,8 +22,7 @@ model_parameters.svyglm <- function(model,
   dot_args <- .check_dots(
     dots = list(...),
     not_allowed = c("vcov", "vcov_args", "bootstrap"),
-    class(x)[1],
-    function_name = "model_parameters",
+    class(model)[1],
     verbose = verbose
   )
 
