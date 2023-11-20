@@ -1,9 +1,9 @@
 skip_if_not_installed("withr")
+skip_if_not_installed("survey")
 
 withr::with_environment(
   new.env(),
   test_that("model_parameters svytable", {
-    skip_if_not_installed("survey")
     # svychisq is called in model_parameters
     svychisq <- survey::svychisq
 
