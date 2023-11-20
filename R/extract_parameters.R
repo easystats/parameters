@@ -43,12 +43,11 @@
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
   if (isTRUE(standardize == "refit")) {
-    args <- list(model, verbose = FALSE)
-    args <- c(args, list(...))
+    fun_args <- c(list(model, verbose = FALSE), dots)
     # argument name conflict with deprecated `robust`
-    args[["robust"]] <- NULL
+    fun_args[["robust"]] <- NULL
     fun <- datawizard::standardize
-    model <- do.call(fun, args)
+    model <- do.call(fun, fun_args)
   }
 
   parameters <- insight::get_parameters(model,
@@ -105,18 +104,18 @@
   # ==== CI - only if we don't already have CI for std. parameters
 
   if (!is.null(ci)) {
-    args <- list(model,
+    fun_args <- list(model,
       ci = ci,
       component = component,
       vcov = vcov,
       vcov_args = vcov_args,
       verbose = verbose
     )
-    args <- c(args, dots)
+    fun_args <- c(fun_args, dots)
     if (!is.null(ci_method)) {
-      args[["method"]] <- ci_method
+      fun_args[["method"]] <- ci_method
     }
-    ci_df <- suppressMessages(do.call("ci", args))
+    ci_df <- suppressMessages(do.call("ci", fun_args))
 
     if (!is.null(ci_df)) {
       # for multiple CI columns, reshape CI-dataframe to match parameters df
@@ -136,7 +135,7 @@
 
   # ==== p value
 
-  args <- list(model,
+  fun_args <- list(model,
     method = ci_method,
     effects = effects,
     verbose = verbose,
@@ -144,8 +143,8 @@
     vcov = vcov,
     vcov_args = vcov_args
   )
-  args <- c(args, dots)
-  pval <- do.call("p_value", args)
+  fun_args <- c(fun_args, dots)
+  pval <- do.call("p_value", fun_args)
 
   if (!is.null(pval)) {
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
@@ -155,18 +154,18 @@
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  args <- list(model,
+  fun_args <- list(model,
     effects = effects,
     component = component,
     verbose = verbose,
     vcov = vcov,
     vcov_args = vcov_args
   )
-  args <- c(args, dots)
+  fun_args <- c(fun_args, dots)
   if (!is.null(ci_method)) {
-    args[["method"]] <- ci_method
+    fun_args[["method"]] <- ci_method
   }
-  std_err <- do.call("standard_error", args)
+  std_err <- do.call("standard_error", fun_args)
 
   if (!is.null(std_err)) {
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
@@ -471,14 +470,14 @@
   if (!is.null(ci)) {
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
-      args <- list(model,
+      fun_args <- list(model,
         ci = ci,
         vcov = vcov,
         vcov_args = vcov_args,
         verbose = verbose
       )
-      args <- c(args, dots)
-      ci_df <- suppressMessages(do.call("ci", args))
+      fun_args <- c(fun_args, dots)
+      ci_df <- suppressMessages(do.call("ci", fun_args))
     } else if (ci_method %in% c("kenward", "kr")) {
       # special handling for KR-CIs, where we already have computed SE
       ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
@@ -496,13 +495,13 @@
   # standard error - only if we don't already have SE for std. parameters
   if (!"SE" %in% colnames(parameters)) {
     if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
-      args <- list(model,
+      fun_args <- list(model,
         vcov = vcov,
         vcov_args = vcov_args,
         verbose = verbose
       )
-      args <- c(args, dots)
-      parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
+      fun_args <- c(fun_args, dots)
+      parameters <- merge(parameters, do.call("standard_error", fun_args), by = "Parameter", sort = FALSE)
       # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
@@ -521,13 +520,13 @@
 
   # p value
   if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
-    args <- list(model,
+    fun_args <- list(model,
       vcov = vcov,
       vcov_args = vcov_args,
       verbose = verbose
     )
-    args <- c(args, dots)
-    parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
+    fun_args <- c(fun_args, dots)
+    parameters <- merge(parameters, do.call("p_value", fun_args), by = "Parameter", sort = FALSE)
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
@@ -958,9 +957,9 @@
     valid <- names(formals(lavaan::standardizedsolution))
     dots <- list(...)
     dots <- dots[names(dots) %in% valid]
-    args <- c(list(model, se = TRUE, level = ci, type = type), dots)
+    fun_args <- c(list(model, se = TRUE, level = ci, type = type), dots)
     f <- utils::getFromNamespace("standardizedsolution", "lavaan")
-    data <- do.call("f", args)
+    data <- do.call("f", fun_args)
     names(data)[names(data) == "est.std"] <- "est"
   }
 
