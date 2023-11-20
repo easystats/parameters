@@ -197,7 +197,7 @@ model_parameters.merMod <- function(model,
         }
       }
     } else {
-      args <- list(
+      fun_args <- list(
         model,
         ci = ci,
         ci_method = ci_method,
@@ -212,8 +212,8 @@ model_parameters.merMod <- function(model,
         vcov = vcov,
         vcov_args = vcov_args
       )
-      args <- c(args, dots)
-      params <- do.call(".extract_parameters_mixed", args)
+      fun_args <- c(fun_args, dots)
+      params <- do.call(".extract_parameters_mixed", fun_args)
     }
 
     params$Effects <- "fixed"
@@ -348,12 +348,12 @@ standard_error.merMod <- function(model,
   }
 
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
-    args <- list(model,
+    fun_args <- list(model,
       vcov = vcov,
       vcov_args = vcov_args
     )
-    args <- c(args, dots)
-    out <- do.call("standard_error.default", args)
+    fun_args <- c(fun_args, dots)
+    out <- do.call("standard_error.default", fun_args)
     return(out)
   }
 

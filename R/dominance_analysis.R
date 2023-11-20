@@ -347,11 +347,10 @@ dominance_analysis <- function(model, sets = NULL, all = NULL,
 
   # quote arguments for domin
   for (arg in quote_args) {
-    if (!(arg %in% names(args))) {
-      insight::format_error(arg, " in `quote_args` not among arguments in model.")
+    if (arg %in% names(args)) {
+      args[[arg]] <- str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
     } else {
-      args[[arg]] <-
-        str2lang(paste0("quote(", deparse(args[[arg]]), ")", collapse = ""))
+      insight::format_error(arg, " in `quote_args` not among arguments in model.")
     }
   }
 

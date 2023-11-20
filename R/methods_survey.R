@@ -26,7 +26,7 @@ model_parameters.svyglm <- function(model,
     verbose = verbose
   )
 
-  args <- list(
+  fun_args <- list(
     model,
     ci = ci,
     ci_method = ci_method,
@@ -38,8 +38,8 @@ model_parameters.svyglm <- function(model,
     summary = summary,
     verbose = verbose
   )
-  args <- c(args, dot_args)
-  out <- do.call(".model_parameters_generic", args)
+  fun_args <- c(fun_args, dot_args)
+  out <- do.call(".model_parameters_generic", fun_args)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
@@ -120,8 +120,8 @@ ci.svyolr <- ci.svyglm
 #' @export
 p_value.svyglm <- function(model, verbose = TRUE, ...) {
   statistic <- insight::get_statistic(model)
-  df <- insight::get_df(model, type = "residual")
-  p <- 2 * stats::pt(-abs(statistic$Statistic), df = df)
+  dof <- insight::get_df(model, type = "residual")
+  p <- 2 * stats::pt(-abs(statistic$Statistic), df = dof)
   .data_frame(
     Parameter = statistic$Parameter,
     p = as.vector(p)

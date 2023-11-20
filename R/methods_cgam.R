@@ -60,7 +60,7 @@ model_parameters.cgam <- function(model,
       ...
     )
   } else {
-    args <- list(
+    fun_args <- list(
       model,
       ci = ci,
       ci_method = ci_method,
@@ -74,8 +74,8 @@ model_parameters.cgam <- function(model,
       vcov = NULL,
       vcov_args = NULL
     )
-    args <- c(args, dot_args)
-    params <- do.call(".extract_parameters_generic", args)
+    fun_args <- c(fun_args, dot_args)
+    params <- do.call(".extract_parameters_generic", fun_args)
   }
 
   # fix statistic column

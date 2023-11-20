@@ -105,13 +105,13 @@ p_value.default <- function(model,
     if (inherits(vcov, "data.frame") || "SE" %in% colnames(vcov)) {
       se <- vcov
     } else {
-      args <- list(model,
+      fun_args <- list(model,
         vcov_args = vcov_args,
         vcov = vcov,
         verbose = verbose
       )
-      args <- c(args, dots)
-      se <- do.call("standard_error", args)
+      fun_args <- c(fun_args, dots)
+      se <- do.call("standard_error", fun_args)
     }
 
     dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)

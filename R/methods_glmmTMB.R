@@ -81,7 +81,7 @@ model_parameters.glmmTMB <- function(model,
         }
       }
     } else {
-      args <- list(
+      fun_args <- list(
         model,
         ci = ci,
         component = component,
@@ -100,8 +100,8 @@ model_parameters.glmmTMB <- function(model,
         wb_component = wb_component,
         summary = summary
       )
-      args <- c(args, dot_args)
-      params <- do.call(".extract_parameters_generic", args)
+      fun_args <- c(fun_args, dot_args)
+      params <- do.call(".extract_parameters_generic", fun_args)
     }
 
     # add dispersion parameter
@@ -131,7 +131,7 @@ model_parameters.glmmTMB <- function(model,
             if (verbose) {
               insight::format_alert(
                 "Cannot compute standard errors and confidence intervals for sigma parameter.",
-                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+                "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')." # nolint
               )
             }
             c(NA, NA)
@@ -157,7 +157,7 @@ model_parameters.glmmTMB <- function(model,
       params_random <- .extract_random_parameters(model, ci = ci, effects = effects, component = component)
       if (length(random_effects) > 1) {
         insight::format_alert(
-          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor."
+          "Cannot extract confidence intervals for random variance parameters from models with more than one grouping factor." # nolint
         )
       }
     } else {

@@ -223,13 +223,13 @@ p_value.hglm <- function(model,
                          ...) {
   dots <- list(...)
   dots$component <- NULL
-  args <- list(
+  fun_args <- list(
     model,
     dof = dof,
     component = "conditional",
     method = method,
     verbose = verbose
   )
-  args <- c(args, dots)
-  do.call("p_value.default", args)
+  fun_args <- c(fun_args, dots)
+  do.call("p_value.default", fun_args)
 }
