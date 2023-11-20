@@ -30,7 +30,6 @@ model_parameters.svyglm <- function(model,
     model,
     ci = ci,
     ci_method = ci_method,
-    merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
@@ -40,7 +39,7 @@ model_parameters.svyglm <- function(model,
     verbose = verbose
   )
   args <- c(args, dot_args)
-  out <- do.call(".extract_parameters_generic", args)
+  out <- do.call(".model_parameters_generic", args)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
