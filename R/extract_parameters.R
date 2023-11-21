@@ -79,7 +79,7 @@
   #      intercepts (alpha-coefficients) in the component column
 
   if (inherits(model, "polr")) {
-    intercept_groups <- which(grepl("Intercept:", parameters$Parameter, fixed = TRUE))
+    intercept_groups <- grep("Intercept:", parameters$Parameter, fixed = TRUE)
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(
@@ -103,7 +103,9 @@
 
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (!is.null(ci)) {
+  if (is.null(ci)) {
+    ci_cols <- NULL
+  } else {
     fun_args <- list(model,
       ci = ci,
       component = component,
@@ -117,7 +119,9 @@
     }
     ci_df <- suppressMessages(do.call("ci", fun_args))
 
-    if (!is.null(ci_df)) {
+    if (is.null(ci_df)) {
+      ci_cols <- NULL
+    } else {
       # for multiple CI columns, reshape CI-dataframe to match parameters df
       if (length(ci) > 1) {
         ci_df <- datawizard::reshape_ci(ci_df)
@@ -125,11 +129,7 @@
       # remember names of CI columns, used for later sorting of columns
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
-    } else {
-      ci_cols <- NULL
     }
-  } else {
-    ci_cols <- NULL
   }
 
 
@@ -185,10 +185,10 @@
 
   # ==== degrees of freedom
 
-  if (!is.null(ci_method)) {
-    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
-  } else {
+  if (is.null(ci_method)) {
     df_error <- degrees_of_freedom(model, method = "any", verbose = FALSE)
+  } else {
+    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     if (length(df_error) == 1) {
@@ -231,8 +231,8 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
-  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
+  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL # nolint
+  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
 
 
   # ==== filter parameters, if requested
@@ -382,16 +382,16 @@
   }
 
   # row to keep and drop
-  if (!is.null(keep)) {
-    rows_to_keep <- grepl(keep, params[[column]], perl = TRUE)
-  } else {
+  if (is.null(keep)) {
     rows_to_keep <- rep_len(TRUE, nrow(params))
+  } else {
+    rows_to_keep <- grepl(keep, params[[column]], perl = TRUE)
   }
 
-  if (!is.null(drop)) {
-    rows_to_drop <- !grepl(drop, params[[column]], perl = TRUE)
-  } else {
+  if (is.null(drop)) {
     rows_to_drop <- rep_len(TRUE, nrow(params))
+  } else {
+    rows_to_drop <- !grepl(drop, params[[column]], perl = TRUE)
   }
 
 
@@ -400,7 +400,7 @@
   if (nrow(out) == 0) {
     if (verbose) {
       insight::format_alert(
-        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."
+        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored." # nolint
       )
     }
     return(params)
@@ -451,23 +451,25 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    df <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    dof <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
-    df <- Inf
+    dof <- Inf
   }
 
   df_error <- data.frame(
     Parameter = parameters$Parameter,
-    df_error = as.vector(df),
+    df_error = as.vector(dof),
     stringsAsFactors = FALSE
   )
   # for KR-dof, we have the SE as well, to save computation time
-  df_error$SE <- attr(df, "se", exact = TRUE)
+  df_error$SE <- attr(dof, "se", exact = TRUE)
 
 
   # CI - only if we don't already have CI for std. parameters
 
-  if (!is.null(ci)) {
+  if (is.null(ci)) {
+    ci_cols <- NULL
+  } else {
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       fun_args <- list(model,
@@ -487,8 +489,6 @@
     if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
-  } else {
-    ci_cols <- NULL
   }
 
 
@@ -542,7 +542,7 @@
     } else {
       parameters <- merge(
         parameters,
-        p_value(model, dof = df, effects = "fixed"),
+        p_value(model, dof = dof, effects = "fixed"),
         by = "Parameter",
         sort = FALSE
       )
@@ -634,8 +634,8 @@
   }
 
   # Reorder
-  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
-  parameters <- parameters[order[order %in% names(parameters)]]
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
   # add sigma

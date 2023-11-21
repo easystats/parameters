@@ -198,22 +198,22 @@ degrees_of_freedom.nnet <- degrees_of_freedom.multinom
 standard_error.multinom <- function(model, ...) {
   se <- tryCatch(
     {
-      stderr <- summary(model)$standard.errors
-      if (is.null(stderr)) {
+      std_err <- summary(model)$standard.errors
+      if (is.null(std_err)) {
         vc <- insight::get_varcov(model)
-        stderr <- as.vector(sqrt(diag(vc)))
+        std_err <- as.vector(sqrt(diag(vc)))
       } else {
-        if (is.matrix(stderr)) {
+        if (is.matrix(std_err)) {
           tmp <- NULL
-          for (i in seq_len(nrow(stderr))) {
-            tmp <- c(tmp, as.vector(stderr[i, ]))
+          for (i in seq_len(nrow(std_err))) {
+            tmp <- c(tmp, as.vector(std_err[i, ]))
           }
         } else {
-          tmp <- as.vector(stderr)
+          tmp <- as.vector(std_err)
         }
-        stderr <- tmp
+        std_err <- tmp
       }
-      stderr
+      std_err
     },
     error = function(e) {
       vc <- insight::get_varcov(model)

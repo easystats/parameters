@@ -265,8 +265,8 @@ simulate_model.nestedLogit <- function(model, iterations = 1000, ...) {
 
   out <- lapply(unique(params$Component), function(i) {
     pars <- params[params$Component == i, ]
-    beta <- stats::setNames(pars$Estimate, pars$Parameter)
-    d <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov[[i]]))
+    betas <- stats::setNames(pars$Estimate, pars$Parameter)
+    d <- as.data.frame(.mvrnorm(n = iterations, mu = betas, Sigma = varcov[[i]]))
     d$Component <- i
     d
   })
@@ -287,10 +287,10 @@ simulate_parameters.nestedLogit <- function(model,
                                             ci_method = "quantile",
                                             test = "p-value",
                                             ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
 
-  out <- lapply(unique(data$Component), function(i) {
-    pars <- data[data$Component == i, ]
+  out <- lapply(unique(sim_data$Component), function(i) {
+    pars <- sim_data[sim_data$Component == i, ]
     d <- .summary_bootstrap(
       data = pars,
       test = test,

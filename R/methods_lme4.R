@@ -244,10 +244,10 @@ model_parameters.merMod <- function(model,
     params$Level <- NA
     params$Group <- ""
 
-    if (!is.null(params_random)) {
-      params <- params[match(colnames(params_random), colnames(params))]
-    } else {
+    if (is.null(params_random)) {
       params <- params[match(colnames(params_variance), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_random), colnames(params))]
     }
   }
 

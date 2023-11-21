@@ -173,12 +173,12 @@ model_parameters.glmmTMB <- function(model,
       # remove redundant dispersion parameter
       if (isTRUE(dispersion_param) && !is.null(params) && !is.null(params$Component)) {
         disp <- which(params$Component == "dispersion")
-        resid <- which(params_variance$Group == "Residual")
+        res <- which(params_variance$Group == "Residual")
         # check if we have dispersion parameter, and either no sigma
         # or sigma equals dispersion
         if (length(disp) > 0 &&
-          length(resid) > 0 &&
-          isTRUE(all.equal(params_variance$Coefficient[resid],
+          length(res) > 0 &&
+          isTRUE(all.equal(params_variance$Coefficient[res],
             params$Coefficient[disp],
             tolerance = 1e-5
           ))) {
@@ -202,10 +202,10 @@ model_parameters.glmmTMB <- function(model,
     }
 
     # reorder
-    if (!is.null(params_random)) {
-      params <- params[match(colnames(params_random), colnames(params))]
-    } else {
+    if (is.null(params_random)) {
       params <- params[match(colnames(params_variance), colnames(params))]
+    } else {
+      params <- params[match(colnames(params_random), colnames(params))]
     }
   }
 
@@ -466,16 +466,15 @@ simulate_parameters.glmmTMB <- function(model,
                                         ci_method = "quantile",
                                         test = "p-value",
                                         ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
-  out <-
-    .summary_bootstrap(
-      data = data,
-      test = test,
-      centrality = centrality,
-      ci = ci,
-      ci_method = ci_method,
-      ...
-    )
+  sim_data <- simulate_model(model, iterations = iterations, ...)
+  out <- .summary_bootstrap(
+    data = sim_data,
+    test = test,
+    centrality = centrality,
+    ci = ci,
+    ci_method = ci_method,
+    ...
+  )
 
   params <- insight::get_parameters(model, ...)
   if ("Effects" %in% colnames(params) && insight::n_unique(params$Effects) > 1) {
