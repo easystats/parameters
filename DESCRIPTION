@@ -146,6 +146,7 @@ Suggests:
     lme4,
     lmerTest,
     lmtest,
+    logistf,
     logspline,
     lqmm,
     M3C,
