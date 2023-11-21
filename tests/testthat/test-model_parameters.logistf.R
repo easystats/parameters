@@ -1,7 +1,7 @@
+skip_on_cran()
+
 skip_if_not_installed("logistf")
 skip_if_not_installed("withr")
-
-# skip_on_cran()
 
 withr::with_options(
   list(parameters_exponentiate = FALSE),
