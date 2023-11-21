@@ -764,7 +764,23 @@
       verbose = verbose,
       ...
     )
-  } else if (!is.null(standardize)) {
+  } else if (is.null(standardize)) {
+    parameters <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      verbose = verbose,
+      ...
+    )
+  } else {
     parameters <- bayestestR::describe_posterior(
       model,
       centrality = centrality,
@@ -802,22 +818,6 @@
       std_parameters,
       parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
       sort = FALSE
-    )
-  } else {
-    parameters <- bayestestR::describe_posterior(
-      model,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      bf_prior = bf_prior,
-      diagnostic = diagnostic,
-      priors = priors,
-      verbose = verbose,
-      ...
     )
   }
 
@@ -885,7 +885,7 @@
   if (!is.logical(standardize) && !(standardize %in% valid_std_options)) {
     if (verbose) {
       insight::format_alert(
-        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
+        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".", # nolint
         "Returning unstandardized solution."
       )
     }
@@ -927,7 +927,7 @@
   )]
 
   # Get estimates
-  data <- do.call(
+  sem_data <- do.call(
     lavaan::parameterEstimates,
     c(
       list(object = model, se = TRUE, ci = TRUE, level = ci),
@@ -935,7 +935,7 @@
     )
   )
 
-  label <- data$label
+  label <- sem_data$label
 
   # check if standardized estimates are requested, and if so, which type
   if (isTRUE(standardize) || !is.logical(standardize)) {
@@ -959,21 +959,21 @@
     dots <- dots[names(dots) %in% valid]
     fun_args <- c(list(model, se = TRUE, level = ci, type = type), dots)
     f <- utils::getFromNamespace("standardizedsolution", "lavaan")
-    data <- do.call("f", fun_args)
-    names(data)[names(data) == "est.std"] <- "est"
+    sem_data <- do.call("f", fun_args)
+    names(sem_data)[names(sem_data) == "est.std"] <- "est"
   }
 
 
   params <- data.frame(
-    To = data$lhs,
-    Operator = data$op,
-    From = data$rhs,
-    Coefficient = data$est,
-    SE = data$se,
-    CI_low = data$ci.lower,
-    CI_high = data$ci.upper,
-    z = data$z,
-    p = data$pvalue,
+    To = sem_data$lhs,
+    Operator = sem_data$op,
+    From = sem_data$rhs,
+    Coefficient = sem_data$est,
+    SE = sem_data$se,
+    CI_low = sem_data$ci.lower,
+    CI_high = sem_data$ci.upper,
+    z = sem_data$z,
+    p = sem_data$pvalue,
     stringsAsFactors = FALSE
   )
 
@@ -994,8 +994,8 @@
     params$p[is.na(params$p)] <- 0
   }
 
-  if ("group" %in% names(data)) {
-    params$Group <- data$group
+  if ("group" %in% names(sem_data)) {
+    params$Group <- sem_data$group
   }
 
   # filter parameters, if requested

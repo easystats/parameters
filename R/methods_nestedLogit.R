@@ -180,7 +180,11 @@ p_value.nestedLogit <- function(model,
                                 vcov_args = NULL,
                                 verbose = TRUE,
                                 ...) {
-  if (!is.null(vcov)) {
+  if (is.null(vcov)) {
+    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
+      stats::coef(summary(i))
+    })))[, "Pr(>|z|)"])
+  } else {
     p <- p_value.default(
       model,
       dof = dof,
@@ -191,10 +195,6 @@ p_value.nestedLogit <- function(model,
       verbose = verbose,
       ...
     )[["p"]]
-  } else {
-    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
-      stats::coef(summary(i))
-    })))[, "Pr(>|z|)"])
   }
 
   params <- insight::get_parameters(model, component = component)

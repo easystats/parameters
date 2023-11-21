@@ -84,7 +84,7 @@ model_parameters.cgam <- function(model,
   }
 
   # fix estimated df column
-  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) {
+  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) { # nolint
     params$df <- params$Coefficient
     params$df[params$Component != "smooth_terms"] <- NA
     params$df_error[params$Component == "smooth_terms"] <- NA

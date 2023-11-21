@@ -3,7 +3,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   dots <- list(...)
   if ("ci" %in% names(dots)) {
     insight::format_warning(
-      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead."
+      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead." # nolint
     )
     dots[["ci"]] <- NULL
   }
