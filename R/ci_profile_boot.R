@@ -84,14 +84,14 @@
   dot_args <- .check_profile_uniroot_args(...)
 
   if (is.null(profiled)) {
-    args <- list(x, method = "profile", level = ci, dot_args)
-    out <- as.data.frame(do.call(stats::confint, args))
+    fun_args <- list(x, method = "profile", level = ci, dot_args)
+    out <- as.data.frame(do.call(stats::confint, fun_args))
   } else {
-    args <- list(profiled, level = ci, dot_args)
-    out <- .safe(as.data.frame(do.call(stats::confint, args)))
+    fun_args <- list(profiled, level = ci, dot_args)
+    out <- .safe(as.data.frame(do.call(stats::confint, fun_args)))
     if (is.null(out)) {
-      args <- list(x, method = "profile", level = ci, dot_args)
-      out <- as.data.frame(do.call(stats::confint, args))
+      fun_args <- list(x, method = "profile", level = ci, dot_args)
+      out <- as.data.frame(do.call(stats::confint, fun_args))
     }
   }
   .process_glmmTMB_CI(x, out, ci, component)
@@ -103,8 +103,8 @@
 .ci_uniroot_glmmTMB <- function(x, ci, component, ...) {
   # make sure "..." doesn't pass invalid arguments to package TMB
   dot_args <- .check_profile_uniroot_args(...)
-  args <- list(x, level = ci, method = "uniroot", dot_args)
-  out <- as.data.frame(do.call(stats::confint, args))
+  fun_args <- list(x, level = ci, method = "uniroot", dot_args)
+  out <- as.data.frame(do.call(stats::confint, fun_args))
   .process_glmmTMB_CI(x, out, ci, component)
 }
 

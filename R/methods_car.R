@@ -3,7 +3,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
   dots <- list(...)
   if ("ci" %in% names(dots)) {
     insight::format_warning(
-      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead."
+      "The `ci` argument is not supported by `model_parameters` for objects of this class. Use the `level` argument of the `deltaMethod` function instead." # nolint
     )
     dots[["ci"]] <- NULL
   }
@@ -37,7 +37,7 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
     params <- .p_adjust(params, p_adjust, model, verbose)
   }
 
-  args <- list(
+  fun_args <- list(
     params,
     model,
     ci = ci,
@@ -49,9 +49,9 @@ model_parameters.deltaMethod <- function(model, p_adjust = NULL, verbose = TRUE,
     summary = FALSE,
     verbose = verbose
   )
-  args <- c(args, dots)
+  fun_args <- c(fun_args, dots)
 
-  params <- do.call(".add_model_parameters_attributes", args)
+  params <- do.call(".add_model_parameters_attributes", fun_args)
 
   class(params) <- c("parameters_model", "see_parameters_model", class(params))
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))

@@ -245,7 +245,7 @@
         "Coefficient"
       )
     }
-  } else if (!is.null(info) && !info$family == "unknown") {
+  } else if (!is.null(info) && info$family != "unknown") {
     if (isTRUE(exponentiate)) {
       if (info$is_exponential && identical(info$link_function, "log")) {
         coef_col <- "Prevalence Ratio"
@@ -348,7 +348,7 @@
   )
 
   # add Group variable
-  if (!is.null(clean_params$Group) && any(nchar(clean_params$Group) > 0)) {
+  if (!is.null(clean_params$Group) && any(nzchar(clean_params$Group, keepNA = TRUE))) {
     params$Group <- .safe(gsub("(.*): (.*)", "\\2", clean_params$Group))
   }
 
@@ -414,10 +414,10 @@
 
 
 .additional_arguments <- function(x, value, default) {
-  args <- attributes(x)$additional_arguments
+  add_args <- attributes(x)$additional_arguments
 
-  if (length(args) > 0 && value %in% names(args)) {
-    out <- args[[value]]
+  if (length(add_args) > 0 && value %in% names(add_args)) {
+    out <- add_args[[value]]
   } else {
     out <- attributes(x)[[value]]
   }

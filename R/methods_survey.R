@@ -4,8 +4,6 @@
 model_parameters.svyglm <- function(model,
                                     ci = 0.95,
                                     ci_method = "wald",
-                                    bootstrap = FALSE,
-                                    iterations = 1000,
                                     standardize = NULL,
                                     exponentiate = FALSE,
                                     p_adjust = NULL,
@@ -16,25 +14,32 @@ model_parameters.svyglm <- function(model,
                                     ...) {
   if (insight::n_obs(model) > 1e4 && ci_method == "likelihood") {
     insight::format_alert(
-      "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs."
+      "Likelihood confidence intervals may take longer time to compute. Use 'ci_method=\"wald\"' for faster computation of CIs." # nolint
     )
   }
 
-  out <- .model_parameters_generic(
-    model = model,
+  # validation check, warn if unsupported argument is used.
+  dot_args <- .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args", "bootstrap"),
+    class(model)[1],
+    verbose = verbose
+  )
+
+  fun_args <- list(
+    model,
     ci = ci,
     ci_method = ci_method,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = "Parameter",
     standardize = standardize,
     exponentiate = exponentiate,
     p_adjust = p_adjust,
     keep_parameters = keep,
     drop_parameters = drop,
     summary = summary,
-    ...
+    verbose = verbose
   )
+  fun_args <- c(fun_args, dot_args)
+  out <- do.call(".model_parameters_generic", fun_args)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
@@ -115,8 +120,8 @@ ci.svyolr <- ci.svyglm
 #' @export
 p_value.svyglm <- function(model, verbose = TRUE, ...) {
   statistic <- insight::get_statistic(model)
-  df <- insight::get_df(model, type = "residual")
-  p <- 2 * stats::pt(-abs(statistic$Statistic), df = df)
+  dof <- insight::get_df(model, type = "residual")
+  p <- 2 * stats::pt(-abs(statistic$Statistic), df = dof)
   .data_frame(
     Parameter = statistic$Parameter,
     p = as.vector(p)

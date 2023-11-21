@@ -49,7 +49,7 @@ p_value.logistf <- function(model, ...) {
   utils::capture.output(s <- summary(model)) # nolint
 
   .data_frame(
-    Parameter = .remove_backticks_from_string(names(s$prob)),
+    Parameter = .remove_backticks_from_string(names(s$coefficients)),
     p = as.vector(s$prob)
   )
 }

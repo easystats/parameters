@@ -43,12 +43,11 @@
   # ==== for refit, we completely refit the model, than extract parameters, ci etc. as usual
 
   if (isTRUE(standardize == "refit")) {
-    args <- list(model, verbose = FALSE)
-    args <- c(args, list(...))
+    fun_args <- c(list(model, verbose = FALSE), dots)
     # argument name conflict with deprecated `robust`
-    args[["robust"]] <- NULL
+    fun_args[["robust"]] <- NULL
     fun <- datawizard::standardize
-    model <- do.call(fun, args)
+    model <- do.call(fun, fun_args)
   }
 
   parameters <- insight::get_parameters(model,
@@ -80,7 +79,7 @@
   #      intercepts (alpha-coefficients) in the component column
 
   if (inherits(model, "polr")) {
-    intercept_groups <- which(grepl("Intercept:", parameters$Parameter, fixed = TRUE))
+    intercept_groups <- grep("Intercept:", parameters$Parameter, fixed = TRUE)
     parameters$Parameter <- gsub("Intercept: ", "", parameters$Parameter, fixed = TRUE)
   } else if (inherits(model, "clm") && !is.null(model$alpha)) {
     intercept_groups <- rep(
@@ -104,21 +103,25 @@
 
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (!is.null(ci)) {
-    args <- list(model,
+  if (is.null(ci)) {
+    ci_cols <- NULL
+  } else {
+    fun_args <- list(model,
       ci = ci,
       component = component,
       vcov = vcov,
       vcov_args = vcov_args,
       verbose = verbose
     )
-    args <- c(args, dots)
+    fun_args <- c(fun_args, dots)
     if (!is.null(ci_method)) {
-      args[["method"]] <- ci_method
+      fun_args[["method"]] <- ci_method
     }
-    ci_df <- suppressMessages(do.call("ci", args))
+    ci_df <- suppressMessages(do.call("ci", fun_args))
 
-    if (!is.null(ci_df)) {
+    if (is.null(ci_df)) {
+      ci_cols <- NULL
+    } else {
       # for multiple CI columns, reshape CI-dataframe to match parameters df
       if (length(ci) > 1) {
         ci_df <- datawizard::reshape_ci(ci_df)
@@ -126,17 +129,13 @@
       # remember names of CI columns, used for later sorting of columns
       ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", merge_by)]
       parameters <- merge(parameters, ci_df, by = merge_by, sort = FALSE)
-    } else {
-      ci_cols <- NULL
     }
-  } else {
-    ci_cols <- NULL
   }
 
 
   # ==== p value
 
-  args <- list(model,
+  fun_args <- list(model,
     method = ci_method,
     effects = effects,
     verbose = verbose,
@@ -144,8 +143,8 @@
     vcov = vcov,
     vcov_args = vcov_args
   )
-  args <- c(args, dots)
-  pval <- do.call("p_value", args)
+  fun_args <- c(fun_args, dots)
+  pval <- do.call("p_value", fun_args)
 
   if (!is.null(pval)) {
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
@@ -155,18 +154,18 @@
   # ==== standard error - only if we don't already have SE for std. parameters
 
   std_err <- NULL
-  args <- list(model,
+  fun_args <- list(model,
     effects = effects,
     component = component,
     verbose = verbose,
     vcov = vcov,
     vcov_args = vcov_args
   )
-  args <- c(args, dots)
+  fun_args <- c(fun_args, dots)
   if (!is.null(ci_method)) {
-    args[["method"]] <- ci_method
+    fun_args[["method"]] <- ci_method
   }
-  std_err <- do.call("standard_error", args)
+  std_err <- do.call("standard_error", fun_args)
 
   if (!is.null(std_err)) {
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
@@ -186,10 +185,10 @@
 
   # ==== degrees of freedom
 
-  if (!is.null(ci_method)) {
-    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
-  } else {
+  if (is.null(ci_method)) {
     df_error <- degrees_of_freedom(model, method = "any", verbose = FALSE)
+  } else {
+    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     if (length(df_error) == 1) {
@@ -232,8 +231,8 @@
 
   # ==== remove Component column if not needed
 
-  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL
-  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL
+  if (!is.null(parameters$Component) && insight::n_unique(parameters$Component) == 1 && !keep_component_column) parameters$Component <- NULL # nolint
+  if ((!is.null(parameters$Effects) && insight::n_unique(parameters$Effects) == 1) || effects == "fixed") parameters$Effects <- NULL # nolint
 
 
   # ==== filter parameters, if requested
@@ -383,16 +382,16 @@
   }
 
   # row to keep and drop
-  if (!is.null(keep)) {
-    rows_to_keep <- grepl(keep, params[[column]], perl = TRUE)
-  } else {
+  if (is.null(keep)) {
     rows_to_keep <- rep_len(TRUE, nrow(params))
+  } else {
+    rows_to_keep <- grepl(keep, params[[column]], perl = TRUE)
   }
 
-  if (!is.null(drop)) {
-    rows_to_drop <- !grepl(drop, params[[column]], perl = TRUE)
-  } else {
+  if (is.null(drop)) {
     rows_to_drop <- rep_len(TRUE, nrow(params))
+  } else {
+    rows_to_drop <- !grepl(drop, params[[column]], perl = TRUE)
   }
 
 
@@ -401,7 +400,7 @@
   if (nrow(out) == 0) {
     if (verbose) {
       insight::format_alert(
-        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored."
+        "The pattern defined in the `keep` (and `drop`) arguments would remove all parameters from the output. Thus, selecting specific parameters will be ignored." # nolint
       )
     }
     return(params)
@@ -452,33 +451,35 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    df <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    dof <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
   } else {
-    df <- Inf
+    dof <- Inf
   }
 
   df_error <- data.frame(
     Parameter = parameters$Parameter,
-    df_error = as.vector(df),
+    df_error = as.vector(dof),
     stringsAsFactors = FALSE
   )
   # for KR-dof, we have the SE as well, to save computation time
-  df_error$SE <- attr(df, "se", exact = TRUE)
+  df_error$SE <- attr(dof, "se", exact = TRUE)
 
 
   # CI - only if we don't already have CI for std. parameters
 
-  if (!is.null(ci)) {
+  if (is.null(ci)) {
+    ci_cols <- NULL
+  } else {
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
-      args <- list(model,
+      fun_args <- list(model,
         ci = ci,
         vcov = vcov,
         vcov_args = vcov_args,
         verbose = verbose
       )
-      args <- c(args, dots)
-      ci_df <- suppressMessages(do.call("ci", args))
+      fun_args <- c(fun_args, dots)
+      ci_df <- suppressMessages(do.call("ci", fun_args))
     } else if (ci_method %in% c("kenward", "kr")) {
       # special handling for KR-CIs, where we already have computed SE
       ci_df <- .ci_kenward_dof(model, ci = ci, df_kr = df_error)
@@ -488,21 +489,19 @@
     if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
-  } else {
-    ci_cols <- NULL
   }
 
 
   # standard error - only if we don't already have SE for std. parameters
   if (!"SE" %in% colnames(parameters)) {
     if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
-      args <- list(model,
+      fun_args <- list(model,
         vcov = vcov,
         vcov_args = vcov_args,
         verbose = verbose
       )
-      args <- c(args, dots)
-      parameters <- merge(parameters, do.call("standard_error", args), by = "Parameter", sort = FALSE)
+      fun_args <- c(fun_args, dots)
+      parameters <- merge(parameters, do.call("standard_error", fun_args), by = "Parameter", sort = FALSE)
       # special handling for KR-SEs, which we already have computed from dof
     } else if ("SE" %in% colnames(df_error)) {
       se_kr <- df_error
@@ -521,13 +520,13 @@
 
   # p value
   if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
-    args <- list(model,
+    fun_args <- list(model,
       vcov = vcov,
       vcov_args = vcov_args,
       verbose = verbose
     )
-    args <- c(args, dots)
-    parameters <- merge(parameters, do.call("p_value", args), by = "Parameter", sort = FALSE)
+    fun_args <- c(fun_args, dots)
+    parameters <- merge(parameters, do.call("p_value", fun_args), by = "Parameter", sort = FALSE)
   } else {
     if ("Pr(>|z|)" %in% names(parameters)) {
       names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
@@ -543,7 +542,7 @@
     } else {
       parameters <- merge(
         parameters,
-        p_value(model, dof = df, effects = "fixed"),
+        p_value(model, dof = dof, effects = "fixed"),
         by = "Parameter",
         sort = FALSE
       )
@@ -635,8 +634,8 @@
   }
 
   # Reorder
-  order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
-  parameters <- parameters[order[order %in% names(parameters)]]
+  col_order <- c("Parameter", coef_col, "SE", ci_cols, "t", "z", "df", "df_error", "p", "Component")
+  parameters <- parameters[col_order[col_order %in% names(parameters)]]
 
 
   # add sigma
@@ -765,7 +764,23 @@
       verbose = verbose,
       ...
     )
-  } else if (!is.null(standardize)) {
+  } else if (is.null(standardize)) {
+    parameters <- bayestestR::describe_posterior(
+      model,
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      diagnostic = diagnostic,
+      priors = priors,
+      verbose = verbose,
+      ...
+    )
+  } else {
     parameters <- bayestestR::describe_posterior(
       model,
       centrality = centrality,
@@ -803,22 +818,6 @@
       std_parameters,
       parameters[c("Parameter", setdiff(colnames(parameters), colnames(std_parameters)))],
       sort = FALSE
-    )
-  } else {
-    parameters <- bayestestR::describe_posterior(
-      model,
-      centrality = centrality,
-      dispersion = dispersion,
-      ci = ci,
-      ci_method = ci_method,
-      test = test,
-      rope_range = rope_range,
-      rope_ci = rope_ci,
-      bf_prior = bf_prior,
-      diagnostic = diagnostic,
-      priors = priors,
-      verbose = verbose,
-      ...
     )
   }
 
@@ -886,7 +885,7 @@
   if (!is.logical(standardize) && !(standardize %in% valid_std_options)) {
     if (verbose) {
       insight::format_alert(
-        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".",
+        "`standardize` should be one of `TRUE`, \"all\", \"std.all\", \"latent\", \"std.lv\", \"no_exogenous\" or \"std.nox\".", # nolint
         "Returning unstandardized solution."
       )
     }
@@ -928,7 +927,7 @@
   )]
 
   # Get estimates
-  data <- do.call(
+  sem_data <- do.call(
     lavaan::parameterEstimates,
     c(
       list(object = model, se = TRUE, ci = TRUE, level = ci),
@@ -936,7 +935,7 @@
     )
   )
 
-  label <- data$label
+  label <- sem_data$label
 
   # check if standardized estimates are requested, and if so, which type
   if (isTRUE(standardize) || !is.logical(standardize)) {
@@ -958,23 +957,23 @@
     valid <- names(formals(lavaan::standardizedsolution))
     dots <- list(...)
     dots <- dots[names(dots) %in% valid]
-    args <- c(list(model, se = TRUE, level = ci, type = type), dots)
+    fun_args <- c(list(model, se = TRUE, level = ci, type = type), dots)
     f <- utils::getFromNamespace("standardizedsolution", "lavaan")
-    data <- do.call("f", args)
-    names(data)[names(data) == "est.std"] <- "est"
+    sem_data <- do.call("f", fun_args)
+    names(sem_data)[names(sem_data) == "est.std"] <- "est"
   }
 
 
   params <- data.frame(
-    To = data$lhs,
-    Operator = data$op,
-    From = data$rhs,
-    Coefficient = data$est,
-    SE = data$se,
-    CI_low = data$ci.lower,
-    CI_high = data$ci.upper,
-    z = data$z,
-    p = data$pvalue,
+    To = sem_data$lhs,
+    Operator = sem_data$op,
+    From = sem_data$rhs,
+    Coefficient = sem_data$est,
+    SE = sem_data$se,
+    CI_low = sem_data$ci.lower,
+    CI_high = sem_data$ci.upper,
+    z = sem_data$z,
+    p = sem_data$pvalue,
     stringsAsFactors = FALSE
   )
 
@@ -995,8 +994,8 @@
     params$p[is.na(params$p)] <- 0
   }
 
-  if ("group" %in% names(data)) {
-    params$Group <- data$group
+  if ("group" %in% names(sem_data)) {
+    params$Group <- sem_data$group
   }
 
   # filter parameters, if requested

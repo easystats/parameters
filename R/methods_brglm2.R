@@ -45,7 +45,7 @@ model_parameters.bracl <- function(model,
     merge_by <- "Parameter"
   }
 
-  args <- list(
+  fun_args <- list(
     model,
     ci = ci,
     bootstrap = bootstrap,
@@ -60,9 +60,9 @@ model_parameters.bracl <- function(model,
     vcov = NULL,
     vcov_args = NULL
   )
-  args <- c(args, dot_args)
+  fun_args <- c(fun_args, dot_args)
 
-  out <- do.call(".model_parameters_generic", args)
+  out <- do.call(".model_parameters_generic", fun_args)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
@@ -198,22 +198,22 @@ degrees_of_freedom.nnet <- degrees_of_freedom.multinom
 standard_error.multinom <- function(model, ...) {
   se <- tryCatch(
     {
-      stderr <- summary(model)$standard.errors
-      if (is.null(stderr)) {
+      std_err <- summary(model)$standard.errors
+      if (is.null(std_err)) {
         vc <- insight::get_varcov(model)
-        stderr <- as.vector(sqrt(diag(vc)))
+        std_err <- as.vector(sqrt(diag(vc)))
       } else {
-        if (is.matrix(stderr)) {
+        if (is.matrix(std_err)) {
           tmp <- NULL
-          for (i in seq_len(nrow(stderr))) {
-            tmp <- c(tmp, as.vector(stderr[i, ]))
+          for (i in seq_len(nrow(std_err))) {
+            tmp <- c(tmp, as.vector(std_err[i, ]))
           }
         } else {
-          tmp <- as.vector(stderr)
+          tmp <- as.vector(std_err)
         }
-        stderr <- tmp
+        std_err <- tmp
       }
-      stderr
+      std_err
     },
     error = function(e) {
       vc <- insight::get_varcov(model)
@@ -257,9 +257,9 @@ simulate_parameters.multinom <- function(model,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
-    data = data,
+    data = sim_data,
     test = test,
     centrality = centrality,
     ci = ci,

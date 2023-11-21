@@ -27,8 +27,8 @@ standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = T
 
   # vcov: function which returns a matrix
   if (is.function(vcov)) {
-    args <- c(list(model), vcov_args, dots)
-    se <- .safe(sqrt(diag(do.call("vcov", args))))
+    fun_args <- c(list(model), vcov_args, dots)
+    se <- .safe(sqrt(diag(do.call("vcov", fun_args))))
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)

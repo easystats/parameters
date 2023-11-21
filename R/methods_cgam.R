@@ -60,7 +60,7 @@ model_parameters.cgam <- function(model,
       ...
     )
   } else {
-    args <- list(
+    fun_args <- list(
       model,
       ci = ci,
       ci_method = ci_method,
@@ -74,8 +74,8 @@ model_parameters.cgam <- function(model,
       vcov = NULL,
       vcov_args = NULL
     )
-    args <- c(args, dot_args)
-    params <- do.call(".extract_parameters_generic", args)
+    fun_args <- c(fun_args, dot_args)
+    params <- do.call(".extract_parameters_generic", fun_args)
   }
 
   # fix statistic column
@@ -84,7 +84,7 @@ model_parameters.cgam <- function(model,
   }
 
   # fix estimated df column
-  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) {
+  if (inherits(model, c("gam", "cgam", "scam", "rqss")) && "smooth_terms" %in% params$Component && !("df" %in% names(params))) { # nolint
     params$df <- params$Coefficient
     params$df[params$Component != "smooth_terms"] <- NA
     params$df_error[params$Component == "smooth_terms"] <- NA

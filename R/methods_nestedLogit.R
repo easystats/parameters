@@ -45,12 +45,12 @@ model_parameters.nestedLogit <- function(model,
   # tell user that profiled CIs don't respect vcov-args
   if (identical(ci_method, "profile") && (!is.null(vcov) || !is.null(vcov_args)) && isTRUE(verbose)) {
     insight::format_alert(
-      "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.",
+      "When `ci_method=\"profile\"`, `vcov` only modifies standard errors, test-statistic and p-values, but not confidence intervals.", # nolint
       "Use `ci_method=\"wald\"` to return confidence intervals based on robust standard errors."
     )
   }
 
-  args <- list(
+  fun_args <- list(
     model = model,
     ci = ci,
     ci_method = ci_method,
@@ -67,8 +67,8 @@ model_parameters.nestedLogit <- function(model,
     vcov = vcov,
     vcov_args = vcov_args
   )
-  args <- c(args, dots)
-  out <- do.call(".model_parameters_generic", args)
+  fun_args <- c(fun_args, dots)
+  out <- do.call(".model_parameters_generic", fun_args)
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
@@ -89,19 +89,17 @@ degrees_of_freedom.nestedLogit <- function(model,
     dof <- rep(vapply(model$models, stats::df.residual, numeric(1)), each = nrow(cf))
     if (!is.null(component) && !identical(component, "all")) {
       comp <- intersect(names(dof), component)
-      if (!length(comp)) {
+      if (length(comp)) {
+        dof <- dof[comp]
+      } else {
         if (verbose) {
-          insight::format_alert(
-            paste0(
-              "No matching model found. Possible values for `component` are ",
-              toString(paste0("'", names(model$models), "'")),
-              "."
-            )
-          )
+          insight::format_alert(paste0(
+            "No matching model found. Possible values for `component` are ",
+            toString(paste0("'", names(model$models), "'")),
+            "."
+          ))
         }
         dof <- Inf
-      } else {
-        dof <- dof[comp]
       }
     }
   } else {
@@ -128,8 +126,8 @@ standard_error.nestedLogit <- function(model,
 
   # vcov: function which returns a matrix
   if (is.function(vcov)) {
-    args <- c(list(model), vcov_args, dots)
-    se <- .safe(sqrt(diag(do.call("vcov", args))))
+    fun_args <- c(list(model), vcov_args, dots)
+    se <- .safe(sqrt(diag(do.call("vcov", fun_args))))
   }
 
   # vcov: character (with backward compatibility for `robust = TRUE`)
@@ -182,7 +180,11 @@ p_value.nestedLogit <- function(model,
                                 vcov_args = NULL,
                                 verbose = TRUE,
                                 ...) {
-  if (!is.null(vcov)) {
+  if (is.null(vcov)) {
+    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
+      stats::coef(summary(i))
+    })))[, "Pr(>|z|)"])
+  } else {
     p <- p_value.default(
       model,
       dof = dof,
@@ -193,10 +195,6 @@ p_value.nestedLogit <- function(model,
       verbose = verbose,
       ...
     )[["p"]]
-  } else {
-    p <- as.vector(as.data.frame(do.call(rbind, lapply(model$models, function(i) {
-      stats::coef(summary(i))
-    })))[, "Pr(>|z|)"])
   }
 
   params <- insight::get_parameters(model, component = component)
@@ -267,8 +265,8 @@ simulate_model.nestedLogit <- function(model, iterations = 1000, ...) {
 
   out <- lapply(unique(params$Component), function(i) {
     pars <- params[params$Component == i, ]
-    beta <- stats::setNames(pars$Estimate, pars$Parameter)
-    d <- as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov[[i]]))
+    betas <- stats::setNames(pars$Estimate, pars$Parameter)
+    d <- as.data.frame(.mvrnorm(n = iterations, mu = betas, Sigma = varcov[[i]]))
     d$Component <- i
     d
   })
@@ -289,10 +287,10 @@ simulate_parameters.nestedLogit <- function(model,
                                             ci_method = "quantile",
                                             test = "p-value",
                                             ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
 
-  out <- lapply(unique(data$Component), function(i) {
-    pars <- data[data$Component == i, ]
+  out <- lapply(unique(sim_data$Component), function(i) {
+    pars <- sim_data[sim_data$Component == i, ]
     d <- .summary_bootstrap(
       data = pars,
       test = test,

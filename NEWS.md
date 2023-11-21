@@ -6,6 +6,11 @@
   `marginaleffects::predictions()` now defaults to `FALSE`, in line with all
   the other `model_parameters()` methods.
 
+## Changes
+
+* `model_parameters()` for models of package *survey* now gives informative
+  messages when `bootstrap = TRUE` (which is currently not supported).
+
 # parameters 0.21.3
 
 ## Changes

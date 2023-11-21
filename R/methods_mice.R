@@ -108,7 +108,7 @@ model_parameters.mipo <- function(model,
     merge_by <- "Parameter"
   }
 
-  args <- list(
+  fun_args <- list(
     model,
     ci = ci,
     merge_by = merge_by,
@@ -119,9 +119,9 @@ model_parameters.mipo <- function(model,
     vcov = NULL,
     vcov_args = NULL
   )
-  args <- c(args, dot_args)
+  fun_args <- c(fun_args, dot_args)
 
-  out <- do.call(".model_parameters_generic", args)
+  out <- do.call(".model_parameters_generic", fun_args)
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   out
 }
