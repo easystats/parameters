@@ -139,19 +139,8 @@ format_parameters.parameters_model <- function(model, ...) {
   for (i in seq_len(nrow(types))) {
     name <- types$Parameter[i]
 
-    # No interaction
-    if (!types$Type[i] %in% c("interaction", "nested", "simple")) {
-      type <- types[i, ]
-      names[i] <- .format_parameter(
-        name,
-        variable = type$Variable,
-        type = type$Type,
-        level = type$Level,
-        brackets = brackets
-      )
-
+    if (types$Type[i] %in% c("interaction", "nested", "simple")) {
       # Interaction or nesting
-    } else {
       components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
@@ -192,6 +181,16 @@ format_parameters.parameters_model <- function(model, ...) {
         is_nested = is_nested,
         is_simple = is_simple,
         ...
+      )
+    } else {
+      # No interaction
+      type <- types[i, ]
+      names[i] <- .format_parameter(
+        name,
+        variable = type$Variable,
+        type = type$Type,
+        level = type$Level,
+        brackets = brackets
       )
     }
   }
@@ -345,9 +344,9 @@ format_parameters.parameters_model <- function(model, ...) {
 #' @keywords internal
 .format_ordered <- function(degree, brackets = c("[", "]")) {
   switch(degree,
-    `.L` = paste0(brackets[1], "linear", brackets[2]),
-    `.Q` = paste0(brackets[1], "quadratic", brackets[2]),
-    `.C` = paste0(brackets[1], "cubic", brackets[2]),
+    .L = paste0(brackets[1], "linear", brackets[2]),
+    .Q = paste0(brackets[1], "quadratic", brackets[2]),
+    .C = paste0(brackets[1], "cubic", brackets[2]),
     paste0(
       brackets[1],
       parameters::format_order(as.numeric(gsub("^", "", degree, fixed = TRUE)), textual = FALSE),
