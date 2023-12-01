@@ -20,6 +20,10 @@ test_that("principal_components", {
   )
 
   expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA"))
+
+  expect_identical(dim(predict(x)), c(32L, 2L))
+  expect_named(predict(x, names=c("A", "B")), c("A", "B"))
+  expect_identical(nrow(predict(x, newdata = mtcars[1:3, 1:7])), 3L)
 })
 
 
@@ -53,6 +57,27 @@ test_that("principal_components", {
   expect_named(x, c("Variable", "PC1", "PC2", "Complexity"))
 })
 
+test_that("principal_components", {
+  x <- model_parameters(principal(mtcars[, 1:7], nfactors = 2))
+  expect_equal(
+    x$RC1,
+    c(
+      -0.836114674884308,
+      0.766808147590597,
+      0.85441780762136,
+      0.548502661888057,
+      -0.889046093964722,
+      0.931879020871552,
+      -0.030485507571411
+    ),
+    tolerance = 0.01
+  )
+
+  expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness"))
+  expect_identical(dim(suppressWarnings(predict(x))), c(32L, 2L))
+  expect_identical(dim(suppressWarnings(predict(x, newdata=mtcars[1:3, 1:7]))), c(3L, 2L))
+})
+
 
 # predict ----------------------
 # N.B tests will fail if `GPArotation` package is not installed
@@ -75,6 +100,19 @@ test_that("predict model_parameters fa", {
     out$Opennness,
     c(-1.6092, -0.17222, 0.23341, -1.06152, -0.66086),
     tolerance = 0.01
+  )
+  expect_identical(nrow(predict(mp, keep_na = FALSE)), 2436L)
+  expect_identical(nrow(predict(mp, newdata = d[1:10, ], keep_na = FALSE)), 10L)
+})
+
+
+test_that("predict factor_analysis", {
+  model <- factor_analysis(d, n = 5)
+  expect_identical(nrow(predict(model, keep_na = FALSE)), 2436L)
+  expect_identical(nrow(predict(mp, newdata = d[1:10, ], keep_na = FALSE)), 10L)
+  expect_named(
+    predict(mp, names = c("A", "B", "C", "D", "E"), keep_na = FALSE),
+    c("A", "B", "C", "D", "E")
   )
 })
 
