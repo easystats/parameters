@@ -81,16 +81,16 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
 
     # ignore this string when determining maximum length
     poplev <- which(cv %in% c("NA (population-level)", "0 (population-level)"))
-    if (!insight::is_empty_object(poplev)) {
-      mcv <- cv[-poplev]
-    } else {
+    if (insight::is_empty_object(poplev)) {
       mcv <- cv
+    } else {
+      mcv <- cv[-poplev]
     }
 
-    if (!insight::is_empty_object(mcv)) {
-      cv.space2 <- max(nchar(mcv))
-    } else {
+    if (insight::is_empty_object(mcv)) {
       cv.space2 <- 0
+    } else {
+      cv.space2 <- max(nchar(mcv))
     }
 
     adjusted_predictors <- paste0(sprintf("* %*s = %*s", cv.space, cv.names, cv.space2, cv), collapse = "\n")

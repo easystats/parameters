@@ -332,11 +332,14 @@
   # check if we have a model object, else return parameter table
   model <- .get_object(params)
   if (is.null(model)) {
-    params
+    # get data from model call
+    model_data <- .safe(eval(attributes(params)$model_call$data))
+  } else {
+    # get data from model object
+    model_data <- insight::get_data(model, verbose = FALSE)
   }
 
   # check if we have model data, else return parameter table
-  model_data <- insight::get_data(model, verbose = FALSE)
   if (is.null(model_data)) {
     params
   }

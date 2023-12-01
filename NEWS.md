@@ -11,6 +11,11 @@
 * `model_parameters()` for models of package *survey* now gives informative
   messages when `bootstrap = TRUE` (which is currently not supported).
 
+## Bug fixes
+
+* `print(include_reference = TRUE)` for `model_parameters()` did not work when
+  run inside a pipe-chain.
+
 # parameters 0.21.3
 
 ## Changes
