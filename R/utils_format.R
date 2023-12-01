@@ -40,7 +40,7 @@
   # add modelname to column names; for single column layout per model, we just
   # need the column name. If the layout contains more than one column per model,
   # add modelname in parenthesis.
-  if (!is.null(modelname) && nchar(modelname) > 0) {
+  if (!is.null(modelname) && nzchar(modelname, keepNA = TRUE)) {
     if (ncol(out) > 1) {
       colnames(out) <- paste0(colnames(out), " (", modelname, ")")
     } else {
@@ -135,7 +135,7 @@
   # align columns width for text format
   .align_values <- function(i) {
     if (!is.null(i)) {
-      non_empty <- !is.na(i) & nchar(i) > 0
+      non_empty <- !is.na(i) & nzchar(i, keepNA = TRUE)
       i[non_empty] <- format(insight::trim_ws(i[non_empty]), justify = "right")
     }
     i
@@ -157,44 +157,44 @@
     x$ROPE_Percentage <- .align_values(x$ROPE_Percentage)
   }
   # create new string
-  row <- rep(style, times = nrow(x))
-  for (r in seq_along(row)) {
-    row[r] <- gsub("{estimate}", x[[coef_column]][r], row[r], fixed = TRUE)
+  table_row <- rep(style, times = nrow(x))
+  for (r in seq_along(table_row)) {
+    table_row[r] <- gsub("{estimate}", x[[coef_column]][r], table_row[r], fixed = TRUE)
     if (!is.null(ci_low) && !is.null(ci_high)) {
-      row[r] <- gsub("{ci_low}", ci_low[r], row[r], fixed = TRUE)
-      row[r] <- gsub("{ci_high}", ci_high[r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{ci_low}", ci_low[r], table_row[r], fixed = TRUE)
+      table_row[r] <- gsub("{ci_high}", ci_high[r], table_row[r], fixed = TRUE)
     }
     if ("SE" %in% colnames(x)) {
-      row[r] <- gsub("{se}", x[["SE"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{se}", x[["SE"]][r], table_row[r], fixed = TRUE)
     }
     if ("p" %in% colnames(x)) {
-      row[r] <- gsub("{p}", x[["p"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{p}", x[["p"]][r], table_row[r], fixed = TRUE)
     }
     if ("p_stars" %in% colnames(x)) {
-      row[r] <- gsub("{stars}", x[["p_stars"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{stars}", x[["p_stars"]][r], table_row[r], fixed = TRUE)
     }
     if ("pd" %in% colnames(x)) {
-      row[r] <- gsub("{pd}", x[["pd"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{pd}", x[["pd"]][r], table_row[r], fixed = TRUE)
     }
     if ("Rhat" %in% colnames(x)) {
-      row[r] <- gsub("{rhat}", x[["Rhat"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{rhat}", x[["Rhat"]][r], table_row[r], fixed = TRUE)
     }
     if ("ESS" %in% colnames(x)) {
-      row[r] <- gsub("{ess}", x[["ESS"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{ess}", x[["ESS"]][r], table_row[r], fixed = TRUE)
     }
     if ("ROPE_Percentage" %in% colnames(x)) {
-      row[r] <- gsub("{rope}", x[["ROPE_Percentage"]][r], row[r], fixed = TRUE)
+      table_row[r] <- gsub("{rope}", x[["ROPE_Percentage"]][r], table_row[r], fixed = TRUE)
     }
   }
   # some cleaning: columns w/o coefficient are empty
-  row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- ""
+  table_row[x[[coef_column]] == "" | is.na(x[[coef_column]])] <- "" # nolint
   # fix some p-value stuff, e.g. if pattern is "p={p]}",
   # we may have "p= <0.001", which we want to be "p<0.001"
-  row <- gsub("=<", "<", row, fixed = TRUE)
-  row <- gsub("= <", "<", row, fixed = TRUE)
-  row <- gsub("= ", "=", row, fixed = TRUE)
+  table_row <- gsub("=<", "<", table_row, fixed = TRUE)
+  table_row <- gsub("= <", "<", table_row, fixed = TRUE)
+  table_row <- gsub("= ", "=", table_row, fixed = TRUE)
   # final output
-  x <- data.frame(row)
+  x <- data.frame(table_row)
   colnames(x) <- column_names
   x
 }
