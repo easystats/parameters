@@ -71,3 +71,16 @@ test_that("n_factors, no rotation, psych only", {
     )
   )
 })
+
+test_that("n_factors, variance explained", {
+  skip_on_cran()
+  skip_if_not_installed("nFactors")
+  skip_if_not_installed("psych")
+  set.seed(333)
+  x <- n_factors(mtcars[, 1:4], type = "PCA")
+  expect_equal(
+    attributes(x)$Variance_Explained$Variance_Cumulative,
+    c(0.84126, 0.85088, 0.85859, 0.85859),
+    tolerance = 1e-4
+  )
+})

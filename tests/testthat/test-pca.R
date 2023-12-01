@@ -57,11 +57,10 @@ test_that("principal_components", {
 # predict ----------------------
 # N.B tests will fail if `GPArotation` package is not installed
 
-d <- na.omit(psych::bfi[, 1:25])
-model <- psych::fa(d, nfactors = 5)
-mp <- model_parameters(model, sort = TRUE, threshold = "max")
-
 test_that("predict model_parameters fa", {
+  d <- na.omit(psych::bfi[, 1:25])
+  model <- psych::fa(d, nfactors = 5)
+  mp <- model_parameters(model, sort = TRUE, threshold = "max")
   pr <- suppressMessages(
     predict(mp, names = c("Neuroticism", "Conscientiousness", "Extraversion", "Agreeableness", "Opennness"))
   )
