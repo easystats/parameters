@@ -3,7 +3,7 @@ skip_if_not_installed("nFactors")
 skip_if_not_installed("GPArotation")
 
 test_that("principal_components", {
-  x <- parameters::principal_components(mtcars[, 1:7], rotation = "varimax")
+  x <- principal_components(mtcars[, 1:7], rotation = "varimax")
 
   expect_equal(
     x$RC1,
@@ -58,7 +58,7 @@ test_that("principal_components", {
 })
 
 test_that("principal_components", {
-  x <- model_parameters(principal_component(mtcars[, 1:7], nfactors = 2))
+  x <- model_parameters(principal_components(mtcars[, 1:7], nfactors = 2))
   expect_equal(
     x$RC1,
     c(
