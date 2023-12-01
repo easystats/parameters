@@ -102,17 +102,12 @@ test_that("predict model_parameters fa", {
   )
   expect_identical(nrow(predict(mp, keep_na = FALSE)), 2436L)
   expect_identical(nrow(predict(mp, newdata = d[1:10, ], keep_na = FALSE)), 10L)
-})
-
-
-test_that("predict factor_analysis", {
-  model <- factor_analysis(d, n = 5)
-  expect_identical(nrow(predict(model, keep_na = FALSE)), 2436L)
-  expect_identical(nrow(predict(mp, newdata = d[1:10, ], keep_na = FALSE)), 10L)
   expect_named(
     predict(mp, names = c("A", "B", "C", "D", "E"), keep_na = FALSE),
     c("A", "B", "C", "D", "E")
   )
+  model <- factor_analysis(d, n = 5)
+  expect_identical(nrow(predict(model, keep_na = FALSE)), 2436L)
 })
 
 unloadNamespace("GPArotation")
