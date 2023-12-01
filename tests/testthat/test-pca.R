@@ -58,7 +58,7 @@ test_that("principal_components", {
 })
 
 test_that("principal_components", {
-  x <- model_parameters(principal(mtcars[, 1:7], nfactors = 2))
+  x <- model_parameters(principal_component(mtcars[, 1:7], nfactors = 2))
   expect_equal(
     x$RC1,
     c(
@@ -75,7 +75,7 @@ test_that("principal_components", {
 
   expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness"))
   expect_identical(dim(suppressWarnings(predict(x))), c(32L, 2L))
-  expect_identical(dim(suppressWarnings(predict(x, newdata=mtcars[1:3, 1:7]))), c(3L, 2L))
+  expect_identical(dim(suppressWarnings(predict(x, newdata = mtcars[1:3, 1:7]))), c(3L, 2L))
 })
 
 
