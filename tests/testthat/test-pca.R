@@ -22,7 +22,7 @@ test_that("principal_components", {
   expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA"))
 
   expect_identical(dim(predict(x)), c(32L, 2L))
-  expect_named(predict(x, names=c("A", "B")), c("A", "B"))
+  expect_named(predict(x, names = c("A", "B")), c("A", "B"))
   expect_identical(nrow(predict(x, newdata = mtcars[1:3, 1:7])), 3L)
 })
 
