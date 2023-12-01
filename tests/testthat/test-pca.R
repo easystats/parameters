@@ -3,7 +3,7 @@ skip_if_not_installed("nFactors")
 skip_if_not_installed("GPArotation")
 
 test_that("principal_components", {
-  x <- parameters::principal_components(mtcars[, 1:7], rotation = "varimax")
+  x <- principal_components(mtcars[, 1:7], rotation = "varimax")
 
   expect_equal(
     x$RC1,
@@ -22,7 +22,7 @@ test_that("principal_components", {
   expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness", "MSA"))
 
   expect_identical(dim(predict(x)), c(32L, 2L))
-  expect_named(predict(x, names=c("A", "B")), c("A", "B"))
+  expect_named(predict(x, names = c("A", "B")), c("A", "B"))
   expect_identical(nrow(predict(x, newdata = mtcars[1:3, 1:7])), 3L)
 })
 
@@ -58,7 +58,7 @@ test_that("principal_components", {
 })
 
 test_that("principal_components", {
-  x <- model_parameters(principal(mtcars[, 1:7], nfactors = 2))
+  x <- model_parameters(principal_components(mtcars[, 1:7], nfactors = 2))
   expect_equal(
     x$RC1,
     c(
@@ -75,7 +75,7 @@ test_that("principal_components", {
 
   expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness"))
   expect_identical(dim(suppressWarnings(predict(x))), c(32L, 2L))
-  expect_identical(dim(suppressWarnings(predict(x, newdata=mtcars[1:3, 1:7]))), c(3L, 2L))
+  expect_identical(dim(suppressWarnings(predict(x, newdata = mtcars[1:3, 1:7]))), c(3L, 2L))
 })
 
 
