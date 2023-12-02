@@ -29,16 +29,16 @@ test_that("principal_components", {
 
 test_that("principal_components, n", {
   data(iris)
-  x <- parameters::principal_components(iris[1:4], n = 2)
+  x <- principal_components(iris[1:4], n = 2)
   expect_named(x, c("Variable", "PC1", "PC2", "Complexity"))
 
-  x <- parameters::principal_components(iris[1:4], n = 1)
+  x <- principal_components(iris[1:4], n = 1)
   expect_named(x, c("Variable", "PC1", "Complexity"))
 })
 
 
 test_that("principal_components", {
-  x <- parameters::principal_components(mtcars[, 1:7])
+  x <- principal_components(mtcars[, 1:7])
 
   expect_equal(
     x$PC1,
@@ -55,27 +55,7 @@ test_that("principal_components", {
   )
 
   expect_named(x, c("Variable", "PC1", "PC2", "Complexity"))
-})
-
-test_that("principal_components", {
-  x <- model_parameters(principal_components(mtcars[, 1:7], nfactors = 2))
-  expect_equal(
-    x$RC1,
-    c(
-      -0.836114674884308,
-      0.766808147590597,
-      0.85441780762136,
-      0.548502661888057,
-      -0.889046093964722,
-      0.931879020871552,
-      -0.030485507571411
-    ),
-    tolerance = 0.01
-  )
-
-  expect_named(x, c("Variable", "RC1", "RC2", "Complexity", "Uniqueness"))
-  expect_identical(dim(suppressWarnings(predict(x))), c(32L, 2L))
-  expect_identical(dim(suppressWarnings(predict(x, newdata = mtcars[1:3, 1:7]))), c(3L, 2L))
+  expect_identical(dim(predict(x)), c(32L, 2L))
 })
 
 

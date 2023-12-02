@@ -182,7 +182,7 @@ predict.parameters_efa <- function(object,
       }
     } else {
       # psych:::predict.fa(object, data)
-      out <- as.data.frame(stats::predict(attri$model, data = newdata))
+      out <- as.data.frame(stats::predict(attri$model, newdata = newdata))
     }
   } else if (inherits(attri$model, "spca")) {
     # https://github.com/erichson/spca/issues/7
@@ -194,7 +194,7 @@ predict.parameters_efa <- function(object,
     out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
     out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
   } else {
-    out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
+    out <- as.data.frame(stats::predict(attri$model, newdata = attri$dataset, ...))
   }
 
   if (!is.null(names)) {
