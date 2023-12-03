@@ -150,7 +150,7 @@ predict.parameters_efa <- function(object,
                                    ...) {
   attri <- attributes(object)
 
-  if (inherits(attri$model, c("psych", "principal"))) {
+  if (inherits(attri$model, c("psych", "principal", "psych", "fa"))) {
     if (is.null(newdata)) {
       if ("scores" %in% names(attri)) {
         out <- as.data.frame(attri$scores)
@@ -166,23 +166,6 @@ predict.parameters_efa <- function(object,
     } else {
       # psych:::predict.principal(object, data)
       out <- stats::predict(attri$model, data = newdata)
-    }
-  } else if (inherits(attri$model, c("psych", "fa"))) {
-    if (is.null(newdata)) {
-      if ("scores" %in% names(attri)) {
-        out <- as.data.frame(attri$scores)
-        if (isTRUE(keep_na)) {
-          # Because pre-made scores don't preserve NA
-          out <- .merge_na(object, out)
-        }
-      } else {
-        d <- attri$data_set
-        d <- d[vapply(d, is.numeric, logical(1))]
-        out <- as.data.frame(stats::predict(attri$model, data = d))
-      }
-    } else {
-      # psych:::predict.fa(object, data)
-      out <- as.data.frame(stats::predict(attri$model, newdata = newdata))
     }
   } else if (inherits(attri$model, "spca")) {
     # https://github.com/erichson/spca/issues/7
