@@ -341,14 +341,14 @@ n_factors <- function(x,
   )
 
   # Add cumulative percentage of variance explained
-  fa <- factor_analysis(x, cor = cor, n = max(by_factors$n_Factors))  # Get it from our fa:: wrapper (TODO: that's probably not the most efficient)
+  fa <- factor_analysis(x, cor = cor, n = max(by_factors$n_Factors)) # Get it from our fa:: wrapper (TODO: that's probably not the most efficient)
   varex <- attributes(fa)$summary
   # Extract number of factors from EFA output (usually MR1, ML1, etc.)
   varex$n_Factors <- as.numeric(gsub("[^\\d]+", "", varex$Component, perl = TRUE))
   # Merge (and like that filter out empty methods)
   by_factors <- merge(by_factors, varex[, c("n_Factors", "Variance_Cumulative")], by = "n_Factors")
 
-  attr(out, "Variance_Explained") <- varex  # We add all the variance explained (for plotting)
+  attr(out, "Variance_Explained") <- varex # We add all the variance explained (for plotting)
   attr(out, "summary") <- by_factors
   attr(out, "n") <- min(as.numeric(as.character(
     by_factors[by_factors$n_Methods == max(by_factors$n_Methods), "n_Factors"]
