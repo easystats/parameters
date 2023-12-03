@@ -165,7 +165,7 @@ predict.parameters_efa <- function(object,
       }
     } else {
       # psych:::predict.principal(object, data)
-      out <- predict(attri$model, data = newdata)
+      out <- stats::predict(attri$model, data = newdata)
     }
   } else if (inherits(attri$model, c("psych", "fa"))) {
     if (is.null(newdata)) {
