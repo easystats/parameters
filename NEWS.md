@@ -11,6 +11,9 @@
 * `model_parameters()` for models of package *survey* now gives informative
   messages when `bootstrap = TRUE` (which is currently not supported).
 
+* `n_factors()` now also returns the explained variance for the number of
+  factors as attributes.
+
 # parameters 0.21.3
 
 ## Changes

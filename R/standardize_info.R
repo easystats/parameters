@@ -382,12 +382,12 @@ standardize_info.default <- function(model,
   }
 
   if (info$is_linear) {
-    if (!robust) {
-      sd_y <- datawizard::weighted_sd(response, w)
-      mean_y <- datawizard::weighted_mean(response, w)
-    } else {
+    if (robust) {
       sd_y <- datawizard::weighted_mad(response, w)
       mean_y <- datawizard::weighted_median(response, w)
+    } else {
+      sd_y <- datawizard::weighted_sd(response, w)
+      mean_y <- datawizard::weighted_mean(response, w)
     }
   } else {
     sd_y <- 1
@@ -567,12 +567,12 @@ standardize_info.default <- function(model,
     response <- as.numeric(data[, variable])
   }
 
-  if (!robust) {
-    sd_x <- datawizard::weighted_sd(response, weights)
-    mean_x <- datawizard::weighted_mean(response, weights)
-  } else {
+  if (robust) {
     sd_x <- datawizard::weighted_mad(response, weights)
     mean_x <- datawizard::weighted_median(response, weights)
+  } else {
+    sd_x <- datawizard::weighted_sd(response, weights)
+    mean_x <- datawizard::weighted_mean(response, weights)
   }
 
   list(sd = f * sd_x, mean = mean_x)

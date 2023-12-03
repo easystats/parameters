@@ -107,7 +107,7 @@ summary.parameters_efa <- function(object, ...) {
 
 
   x <- as.data.frame(t(x[, cols]))
-  x <- cbind(data.frame("Parameter" = row.names(x), stringsAsFactors = FALSE), x)
+  x <- cbind(data.frame(Parameter = row.names(x), stringsAsFactors = FALSE), x)
   names(x) <- c("Parameter", attributes(object)$summary$Component)
   row.names(x) <- NULL
 
@@ -149,40 +149,37 @@ predict.parameters_efa <- function(object,
                                    verbose = TRUE,
                                    ...) {
   attri <- attributes(object)
-  if (is.null(newdata)) {
-    if ("scores" %in% names(attri)) {
-      out <- as.data.frame(attri$scores)
-      if (isTRUE(keep_na)) {
-        out <- .merge_na(object, out, verbose)
-      }
-    } else {
-      if ("dataset" %in% names(attri)) {
-        out <- as.data.frame(stats::predict(attri$model, data = attri$dataset))
+
+  if (inherits(attri$model, c("psych", "principal", "psych", "fa"))) {
+    if (is.null(newdata)) {
+      if ("scores" %in% names(attri)) {
+        out <- as.data.frame(attri$scores)
+        if (isTRUE(keep_na)) {
+          # Because pre-made scores don't preserve NA
+          out <- .merge_na(object, out)
+        }
       } else {
-        insight::format_error(
-          "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}."
-        )
+        d <- attri$data_set
+        d <- d[vapply(d, is.numeric, logical(1))]
+        out <- as.data.frame(stats::predict(attri$model, data = d))
       }
-    }
-  } else {
-    if (inherits(attri$model, c("psych", "fa"))) {
-      # Clean-up newdata (keep only the variables used in the model)
-      newdata <- newdata[names(attri$model$complexity)] # assuming "complexity" info is there
-      # psych:::predict.fa(object, data)
-      out <- as.data.frame(stats::predict(attri$model, data = newdata))
-    } else if (inherits(attri$model, "spca")) {
-      # https://github.com/erichson/spca/issues/7
-      newdata <- newdata[names(attri$model$center)]
-      if (attri$standardize) {
-        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
-        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
-      }
-      out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
-      out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
     } else {
-      out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
+      # psych:::predict.principal(object, data)
+      out <- stats::predict(attri$model, data = newdata)
     }
+  } else if (inherits(attri$model, "spca")) {
+    # https://github.com/erichson/spca/issues/7
+    newdata <- newdata[names(attri$model$center)]
+    if (attri$standardize) {
+      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
+      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+    }
+    out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
+    out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
+  } else {
+    out <- as.data.frame(stats::predict(attri$model, newdata = attri$dataset, ...))
   }
+
   if (!is.null(names)) {
     names(out)[seq_along(names)] <- names
   }
