@@ -14,6 +14,11 @@
 * `n_factors()` now also returns the explained variance for the number of
   factors as attributes.
 
+## Bug fixes
+
+* `print(include_reference = TRUE)` for `model_parameters()` did not work when
+  run inside a pipe-chain.
+
 # parameters 0.21.3
 
 ## Changes

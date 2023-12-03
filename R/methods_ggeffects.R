@@ -1,10 +1,10 @@
 #' @export
 model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose = TRUE, ...) {
   ci <- attributes(model)$ci.lvl
-  terms <- attributes(model)$terms[-1]
+  co_terms <- attributes(model)$terms[-1]
   focal_term <- attributes(model)$terms[1]
   constant_values <- attributes(model)$constant.values
-  title <- attr(model, "title")
+  caption <- attr(model, "title")
 
   # exception for survival
   if (attributes(model)$type %in% c("surv", "survival", "cumhaz", "cumulative_hazard")) {
@@ -33,14 +33,14 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
     colnames(model)[1] <- focal_term
   }
 
-  if (length(terms) >= 1) {
-    model$Component <- paste0(terms[1], " = ", model$Component)
+  if (length(co_terms) >= 1) {
+    model$Component <- paste0(co_terms[1], " = ", model$Component)
   }
-  if (length(terms) >= 2) {
-    model$Group <- paste0(terms[2], " = ", model$Group)
+  if (length(co_terms) >= 2) {
+    model$Group <- paste0(co_terms[2], " = ", model$Group)
   }
-  if (length(terms) >= 3) {
-    model$Subgroup <- paste0(terms[3], " = ", model$Subgroup)
+  if (length(co_terms) >= 3) {
+    model$Subgroup <- paste0(co_terms[3], " = ", model$Subgroup)
   }
 
   # filter parameters
@@ -57,7 +57,7 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
   # special attributes
   attr(model, "is_ggeffects") <- TRUE
   attr(model, "footer_text") <- .generate_ggeffects_footer(constant_values)
-  attr(model, "title") <- c(title, "blue")
+  attr(model, "title") <- c(caption, "blue")
 
   attr(model, "object_name") <- insight::safe_deparse_symbol(substitute(model))
   class(model) <- c("parameters_model", "data.frame")
@@ -81,16 +81,16 @@ model_parameters.ggeffects <- function(model, keep = NULL, drop = NULL, verbose 
 
     # ignore this string when determining maximum length
     poplev <- which(cv %in% c("NA (population-level)", "0 (population-level)"))
-    if (!insight::is_empty_object(poplev)) {
-      mcv <- cv[-poplev]
-    } else {
+    if (insight::is_empty_object(poplev)) {
       mcv <- cv
+    } else {
+      mcv <- cv[-poplev]
     }
 
-    if (!insight::is_empty_object(mcv)) {
-      cv.space2 <- max(nchar(mcv))
-    } else {
+    if (insight::is_empty_object(mcv)) {
       cv.space2 <- 0
+    } else {
+      cv.space2 <- max(nchar(mcv))
     }
 
     adjusted_predictors <- paste0(sprintf("* %*s = %*s", cv.space, cv.names, cv.space2, cv), collapse = "\n")

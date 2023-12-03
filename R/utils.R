@@ -91,6 +91,10 @@
     if (is.null(model) || inherits(model, "parameters_model")) {
       model <- .safe(get(obj_name, envir = globalenv()))
     }
+    # prevent self reference
+    if (is.null(model) || inherits(model, "parameters_model")) {
+      model <- .safe(.dynGet(obj_name))
+    }
   }
   model
 }

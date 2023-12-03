@@ -61,6 +61,9 @@
   # add parameters with value and variable
   attr(params, "pretty_labels") <- .format_value_labels(params, model)
 
+  # save model call
+  attr(params, "model_call") <- .safe(insight::get_call(model))
+
   # use tryCatch, these might fail...
   attr(params, "test_statistic") <- .safe(insight::find_statistic(model))
   attr(params, "log_response") <- .safe(isTRUE(grepl("log", insight::find_transformation(model), fixed = TRUE)))
