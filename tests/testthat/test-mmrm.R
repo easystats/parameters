@@ -3,9 +3,8 @@ skip_on_cran()
 skip_if_not_installed("mmrm")
 skip_if_not(packageVersion("insight") > "0.18.8")
 
-data(fev_data, package = "mmrm")
-
 test_that("model_parameters", {
+  data(fev_data, package = "mmrm")
   m1 <- mmrm::mmrm(
     formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
     data = fev_data
@@ -51,6 +50,7 @@ test_that("model_parameters", {
 })
 
 test_that("model_parameters", {
+  data(fev_data, package = "mmrm")
   m1 <- mmrm::mmrm(
     formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
     data = fev_data,
