@@ -146,6 +146,7 @@ test_that("model_parameters - cgamm", {
         `(Intercept)` = "(Intercept)",
         `cgam::s.incr(x)` = "cgam::s.incr(x)"
       ),
+      model_call = cgam::cgamm(formula = y ~ cgam::s.incr(x) + (1 | group), reml = TRUE),
       test_statistic = "t-statistic",
       log_response = FALSE,
       log_predictors = FALSE,
