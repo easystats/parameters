@@ -363,8 +363,8 @@ cluster_analysis <- function(x,
         )
       )
     }
-    dist <- stats::dist(cluster_data, method = distance_method, ...)
-    model <- stats::hclust(dist, method = hclust_method, ...)
+    cluster_dist <- stats::dist(cluster_data, method = distance_method, ...)
+    model <- stats::hclust(cluster_dist, method = hclust_method, ...)
     out <- list(model = model, clusters = stats::cutree(model, k = n))
   }
   out
@@ -433,12 +433,12 @@ print.cluster_analysis <- function(x, ...) {
 
 #' @export
 summary.cluster_analysis <- function(object, ...) {
-  data <- as.data.frame(object)
+  obj_data <- as.data.frame(object)
   cols <- names(attributes(object)$data)
-  data <- data[names(data) %in% c(cols, "Cluster")] # Keep only data
+  obj_data <- obj_data[names(obj_data) %in% c(cols, "Cluster")] # Keep only data
 
-  class(data) <- c("cluster_analysis_summary", class(data))
-  data
+  class(obj_data) <- c("cluster_analysis_summary", class(obj_data))
+  obj_data
 }
 
 
