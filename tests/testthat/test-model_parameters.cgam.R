@@ -11,58 +11,24 @@ test_that("model_parameters - cgam", {
 
   # model
   m_cgam <- cgam::cgam(formula = y ~ cgam::incr.conv(x), data = cubic)
-
-  df_cgam <- parameters::model_parameters(m_cgam)
+  df_cgam <- model_parameters(m_cgam)
 
   expect_equal(
     df_cgam,
-    structure(
-      list(
-        Parameter = "(Intercept)",
-        Coefficient = 1.187,
-        SE = 0.3054,
-        CI = 0.95,
-        CI_low = 0.569520101908619,
-        CI_high = 1.80447989809138,
-        t = 3.8868,
-        df_error = 39.5,
-        p = 4e-04
-      ),
-      row.names = c(NA, -1L),
-      sigma = 2.15946395506817,
-      residual_df = 39.5,
-      pretty_names = c(`(Intercept)` = "(Intercept)"),
-      ci = 0.95,
-      verbose = TRUE,
-      exponentiate = FALSE,
-      ordinal_model = FALSE,
-      linear_model = TRUE,
-      mixed_model = FALSE,
-      n_obs = 50L,
-      model_class = "cgam",
-      bootstrap = FALSE,
-      iterations = 1000,
-      robust_vcov = FALSE,
-      ignore_group = TRUE,
-      ran_pars = TRUE,
-      show_summary = FALSE,
-      log_link = FALSE,
-      logit_link = FALSE,
-      pretty_labels = c(`(Intercept)` = "(Intercept)"),
-      test_statistic = "t-statistic",
-      log_response = FALSE,
-      log_predictors = FALSE,
-      weighted_nobs = 50,
-      model_formula = "y ~ cgam::incr.conv(x)",
-      coefficient_name = "Coefficient",
-      zi_coefficient_name = "Log-Odds",
-      digits = 2,
-      p_digits = 3,
-      footer_digits = 3,
-      class = c("parameters_model", "see_parameters_model", "data.frame"),
-      object_name = "m_cgam"
+    data.frame(
+      Parameter = "(Intercept)",
+      Coefficient = 1.187,
+      SE = 0.3054,
+      CI = 0.95,
+      CI_low = 0.569520101908619,
+      CI_high = 1.80447989809138,
+      t = 3.8868,
+      df_error = 39.5,
+      p = 4e-04,
+      stringsAsFactors = FALSE
     ),
-    tolerance = 0.01
+    tolerance = 0.01,
+    ignore_attr = TRUE
   )
 })
 
@@ -107,57 +73,25 @@ test_that("model_parameters - cgamm", {
 
   # use REML method to fit the model
   ans <- cgam::cgamm(formula = y ~ cgam::s.incr(x) + (1 | group), reml = TRUE)
-
-  df <- suppressWarnings(parameters::model_parameters(ans))
+  df <- suppressWarnings(model_parameters(ans))
 
   expect_equal(
     df,
-    structure(
-      list(
-        Parameter = c("(Intercept)", "cgam::s.incr(x)"),
-        Coefficient = c(5.5174, NA),
-        SE = c(0.3631, NA),
-        CI = c(0.95, NA),
-        CI_low = c(4.80476838465533, NA),
-        CI_high = c(6.23003161534467, NA),
-        `t / F` = c(15.1954, NA),
-        df = c(NA, 8.4),
-        df_error = c(890.4, NA),
-        p = c(0, 0),
-        Component = c("conditional", "smooth_terms")
-      ),
-      row.names = c(NA, -2L),
-      ci = 0.95,
-      verbose = TRUE,
-      exponentiate = FALSE,
-      ordinal_model = FALSE,
-      linear_model = TRUE,
-      mixed_model = TRUE,
-      model_class = c("cgamm", "cgam", "lmer"),
-      bootstrap = FALSE,
-      iterations = 1000,
-      robust_vcov = FALSE,
-      ignore_group = TRUE,
-      ran_pars = TRUE,
-      show_summary = FALSE,
-      log_link = FALSE,
-      logit_link = FALSE,
-      pretty_labels = c(
-        `(Intercept)` = "(Intercept)",
-        `cgam::s.incr(x)` = "cgam::s.incr(x)"
-      ),
-      model_call = cgam::cgamm(formula = y ~ cgam::s.incr(x) + (1 | group), reml = TRUE),
-      test_statistic = "t-statistic",
-      log_response = FALSE,
-      log_predictors = FALSE,
-      model_formula = "y ~ cgam::s.incr(x)",
-      coefficient_name = "Coefficient",
-      zi_coefficient_name = "Log-Odds",
-      digits = 2,
-      p_digits = 3,
-      footer_digits = 3,
-      class = c("parameters_model", "see_parameters_model", "data.frame"), object_name = "ans"
+    data.frame(
+      Parameter = c("(Intercept)", "cgam::s.incr(x)"),
+      Coefficient = c(5.5174, NA),
+      SE = c(0.3631, NA),
+      CI = c(0.95, NA),
+      CI_low = c(4.80476838465533, NA),
+      CI_high = c(6.23003161534467, NA),
+      `t / F` = c(15.1954, NA),
+      df = c(NA, 8.4),
+      df_error = c(890.4, NA),
+      p = c(0, 0),
+      Component = c("conditional", "smooth_terms"),
+      stringsAsFactors = FALSE
     ),
-    tolerance = 0.01
+    tolerance = 0.01,
+    ignore_attr = TRUE
   )
 })

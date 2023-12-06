@@ -150,34 +150,41 @@ predict.parameters_efa <- function(object,
                                    ...) {
   attri <- attributes(object)
 
-  if (inherits(attri$model, c("psych", "principal", "psych", "fa"))) {
-    if (is.null(newdata)) {
-      if ("scores" %in% names(attri)) {
-        out <- as.data.frame(attri$scores)
-        if (isTRUE(keep_na)) {
-          # Because pre-made scores don't preserve NA
-          out <- .merge_na(object, out)
-        }
-      } else {
-        d <- attri$data_set
-        d <- d[vapply(d, is.numeric, logical(1))]
-        out <- as.data.frame(stats::predict(attri$model, data = d))
+  # handle if no data is provided
+  if (is.null(newdata)) {
+    # check if we have scores attribute - these will be returned directly
+    if ("scores" %in% names(attri)) {
+      out <- as.data.frame(attri$scores)
+      if (isTRUE(keep_na)) {
+        out <- .merge_na(object, out, verbose)
       }
     } else {
-      # psych:::predict.principal(object, data)
-      out <- stats::predict(attri$model, data = newdata)
+      # if we have data, use that for prediction
+      if ("dataset" %in% names(attri)) {
+        d <- attri$data_set
+        d <- d[vapply(d, is.numeric, logical(1))]
+        out <- as.data.frame(stats::predict(attri$model, newdata = d))
+      } else {
+        insight::format_error(
+          "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}." # nolint
+        )
+      }
     }
-  } else if (inherits(attri$model, "spca")) {
-    # https://github.com/erichson/spca/issues/7
-    newdata <- newdata[names(attri$model$center)]
-    if (attri$standardize) {
-      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
-      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
-    }
-    out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
-    out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
   } else {
-    out <- as.data.frame(stats::predict(attri$model, newdata = attri$dataset, ...))
+    if (inherits(attri$model, "spca")) {
+      # https://github.com/erichson/spca/issues/7
+      newdata <- newdata[names(attri$model$center)]
+      if (attri$standardize) {
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
+        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+      }
+      out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
+      out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
+    } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
+      out <- as.data.frame(stats::predict(attri$model, data = newdata, ...))
+    } else {
+      out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
+    }
   }
 
   if (!is.null(names)) {
@@ -345,10 +352,10 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   # footer
-  if (!is.null(attributes(x)$type)) {
-    footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
-  } else {
+  if (is.null(attributes(x)$type)) {
     footer <- NULL
+  } else {
+    footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
   }
 
   insight::export_table(
@@ -378,48 +385,48 @@ print.parameters_omega_summary <- function(x, ...) {
   }
 
   if (type == "cluster") {
-    summary <- as.data.frame(x)
+    cluster_summary <- as.data.frame(x)
     variance <- attributes(x)$variance * 100
   } else {
-    summary <- attributes(x)$summary
-    variance <- max(summary$Variance_Cumulative) * 100
+    cluster_summary <- attributes(x)$summary
+    variance <- max(cluster_summary$Variance_Cumulative) * 100
   }
 
-  if (nrow(summary) == 1) {
-    text <- paste0("The unique ", type)
+  if (nrow(cluster_summary) == 1) {
+    text_variance <- paste0("The unique ", type)
   } else {
-    text <- paste0("The ", nrow(summary), " ", type, "s")
+    text_variance <- paste0("The ", nrow(cluster_summary), " ", type, "s")
   }
 
   # rotation
   if (!is.null(attributes(x)$rotation) && attributes(x)$rotation != "none") {
-    text <- paste0(text, " (", attributes(x)$rotation, " rotation)")
+    text_variance <- paste0(text_variance, " (", attributes(x)$rotation, " rotation)")
   }
 
 
-  text <- paste0(
-    text,
+  text_variance <- paste0(
+    text_variance,
     " accounted for ",
     sprintf("%.2f", variance),
     "% of the total variance of the original data"
   )
 
-  if (type == "cluster" || nrow(summary) == 1) {
-    text <- paste0(text, ".")
+  if (type == "cluster" || nrow(cluster_summary) == 1) {
+    text_variance <- paste0(text_variance, ".")
   } else {
-    text <- paste0(
-      text,
+    text_variance <- paste0(
+      text_variance,
       " (",
-      paste0(summary$Component,
+      paste0(cluster_summary$Component,
         " = ",
-        sprintf("%.2f", summary$Variance * 100),
+        sprintf("%.2f", cluster_summary$Variance * 100),
         "%",
         collapse = ", "
       ),
       ")."
     )
   }
-  paste0(sep, text, sep)
+  paste0(sep, text_variance, sep)
 }
 
 
@@ -479,8 +486,8 @@ sort.parameters_pca <- sort.parameters_efa
     }
   }
 
-  order <- row.names(x)
-  loadings <- loadings[as.numeric(as.character(order)), ] # Arrange by max
+  row_order <- row.names(x)
+  loadings <- loadings[as.numeric(as.character(row_order)), ] # Arrange by max
   row.names(loadings) <- NULL
 
   loadings
