@@ -452,16 +452,16 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 
   # Check number of columns: if more than 2, display PCs, if less, fail
   if (ncol(ori_data) <= 2) {
-    insight::format_error("Less than 2 variables in the dataset. Cannot compute enough principal components to represent clustering.")
+    insight::format_error("Less than 2 variables in the dataset. Cannot compute enough principal components to represent clustering.") # nolint
   }
 
   # Get 2 PCA Components
   pca <- principal_components(ori_data, n = 2)
-  data <- stats::predict(pca)
-  names(data) <- c("x", "y")
-  data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
+  prediction_data <- stats::predict(pca)
+  names(prediction_data) <- c("x", "y")
+  prediction_data$Cluster <- as.character(stats::na.omit(attributes(x)$clusters))
 
-  data$label <- row.names(ori_data)
+  prediction_data$label <- row.names(ori_data)
   if (!is.null(show_data) && show_data %in% c("label", "text")) {
     label <- "label"
   } else {
@@ -473,7 +473,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
   data_centers$Cluster <- as.character(as.data.frame(x)$Cluster)
 
   # Outliers
-  data$Cluster[data$Cluster == "0"] <- NA
+  prediction_data$Cluster[prediction_data$Cluster == "0"] <- NA
   data_centers <- data_centers[data_centers$Cluster != "0", ]
 
   layers <- list()
@@ -482,7 +482,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 
   layers[["l1"]] <- list(
     geom = show_data,
-    data = data,
+    data = prediction_data,
     aes = list(x = "x", y = "y", label = label, color = "Cluster")
   )
 
@@ -501,7 +501,7 @@ visualisation_recipe.cluster_analysis <- function(x, show_data = "text", ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- prediction_data
   layers
 }
 
