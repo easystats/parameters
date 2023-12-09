@@ -62,7 +62,7 @@ test_that("comparisons()", {
       chains = 1
     )
   )
-  m <- marginaleffects::marginaleffects(
+  m <- marginaleffects::slopes(
     x,
     newdata = insight::get_datagrid(x, at = "Species"),
     variables = "Petal.Length"
