@@ -14,6 +14,9 @@
 * `n_factors()` now also returns the explained variance for the number of
   factors as attributes.
 
+* `model_parameters()` for objects of package *metafor* now warns when unsupported
+  arguments (like `vcov`) are used.
+
 ## Bug fixes
 
 * `print(include_reference = TRUE)` for `model_parameters()` did not work when

@@ -65,6 +65,14 @@ model_parameters.rma <- function(model,
     ci <- ci_level / 100
   }
 
+  # validation check, warn if unsupported argument is used.
+  .check_dots(
+    dots = list(...),
+    not_allowed = c("vcov", "vcov_args"),
+    class(model)[1],
+    verbose = verbose
+  )
+
   meta_analysis_overall <- .model_parameters_generic(
     model = model,
     ci = ci,
