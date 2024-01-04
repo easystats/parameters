@@ -17,6 +17,8 @@
 * `model_parameters()` for objects of package *metafor* now warns when unsupported
   arguments (like `vcov`) are used.
 
+* Improved documentation for `pool_parameters()`.
+
 ## Bug fixes
 
 * `print(include_reference = TRUE)` for `model_parameters()` did not work when
