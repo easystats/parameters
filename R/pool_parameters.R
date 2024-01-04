@@ -8,7 +8,9 @@
 #' @param x A list of `parameters_model` objects, as returned by
 #'   [model_parameters()], or a list of model-objects that is supported by
 #'   `model_parameters()`.
-#' @param ... Currently not used.
+#' @param ... Arguments passed down to `model_parameters()`, if `x` is a list
+#'   of model-objects. Can be used, for instance, to specify arguments like
+#'   `ci` or `ci_method` etc.
 #' @inheritParams model_parameters.default
 #' @inheritParams bootstrap_model
 #' @inheritParams model_parameters.merMod
@@ -35,20 +37,32 @@
 #' multiple imputation. Biometrika, 86, 948-955. Rubin, D.B. (1987). Multiple
 #' Imputation for Nonresponse in Surveys. New York: John Wiley and Sons.
 #'
-#' @examples
+#' @examplesIf require("mice") && require("datawizard")
 #' # example for multiple imputed datasets
-#' if (require("mice")) {
-#'   data("nhanes2")
-#'   imp <- mice(nhanes2, printFlag = FALSE)
-#'   models <- lapply(1:5, function(i) {
-#'     lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
-#'   })
-#'   pool_parameters(models)
+#' data("nhanes2", package = "mice")
+#' imp <- mice::mice(nhanes2, printFlag = FALSE)
+#' models <- lapply(1:5, function(i) {
+#'   lm(bmi ~ age + hyp + chl, data = mice::complete(imp, action = i))
+#' })
+#' pool_parameters(models)
 #'
-#'   # should be identical to:
-#'   m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-#'   summary(pool(m))
-#' }
+#' # should be identical to:
+#' m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+#' summary(mice::pool(m))
+#'
+#' # For glm, mice used residual df, while `pool_parameters()` uses `Inf`
+#' nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
+#' imp <- mice::mice(nhanes2, printFlag = FALSE)
+#' models <- lapply(1:5, function(i) {
+#'   glm(hyp ~ age + chl, family = binomial, data = mice::complete(imp, action = i))
+#' })
+#' m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
+#' # residual df
+#' summary(mice::pool(m))$df
+#' # df = Inf
+#' pool_parameters(models)$df_error
+#' # use residual df instead
+#' pool_parameters(models, ci_method = "residual")$df_error
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 pool_parameters <- function(x,

@@ -10,3 +10,21 @@ test_that("pooled parameters", {
   expect_equal(pp$df_error, c(9.2225, 8.1903, 3.6727, 10.264, 6.4385), tolerance = 1e-3)
   expect_snapshot(print(pp))
 })
+
+test_that("pooled parameters", {
+  skip_if_not_installed("mice")
+  skip_if_not_installed("datawizard")
+  data("nhanes2", package = "mice")
+  nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
+  set.seed(123)
+  imp <- mice::mice(nhanes2, printFlag = FALSE)
+  models <- lapply(1:5, function(i) {
+    glm(hyp ~ age + chl, family = binomial, data = mice::complete(imp, action = i))
+  })
+  pp1 <- pool_parameters(models)
+  expect_equal(pp1$df_error, c(Inf, Inf, Inf, Inf), tolerance = 1e-3)
+  pp2 <- pool_parameters(models, ci_method = "residual")
+  m_mice <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
+  pp3 <- summary(mice::pool(m_mice))
+  expect_equal(pp2$df_error, pp3$df, tolerance = 1e-3)
+})

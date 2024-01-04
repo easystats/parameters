@@ -44,7 +44,9 @@ may be one of \code{"conditional"}, \code{"zi"}, \code{"zero-inflated"}, \code{"
 
 \item{verbose}{Toggle warnings and messages.}
 
-\item{...}{Currently not used.}
+\item{...}{Arguments passed down to \code{model_parameters()}, if \code{x} is a list
+of model-objects. Can be used, for instance, to specify arguments like
+\code{ci} or \code{ci_method} etc.}
 }
 \value{
 A data frame of indices related to the model's parameters.
@@ -74,19 +76,33 @@ Some model objects do not return standard errors (e.g. objects of class
 are returned.
 }
 \examples{
+\dontshow{if (require("mice") && require("datawizard")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # example for multiple imputed datasets
-if (require("mice")) {
-  data("nhanes2")
-  imp <- mice(nhanes2, printFlag = FALSE)
-  models <- lapply(1:5, function(i) {
-    lm(bmi ~ age + hyp + chl, data = complete(imp, action = i))
-  })
-  pool_parameters(models)
+data("nhanes2", package = "mice")
+imp <- mice::mice(nhanes2, printFlag = FALSE)
+models <- lapply(1:5, function(i) {
+  lm(bmi ~ age + hyp + chl, data = mice::complete(imp, action = i))
+})
+pool_parameters(models)
 
-  # should be identical to:
-  m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
-  summary(pool(m))
-}
+# should be identical to:
+m <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
+summary(mice::pool(m))
+
+# For glm, mice used residual df, while `pool_parameters()` uses `Inf`
+nhanes2$hyp <- datawizard::slide(as.numeric(nhanes2$hyp))
+imp <- mice::mice(nhanes2, printFlag = FALSE)
+models <- lapply(1:5, function(i) {
+  glm(hyp ~ age + chl, family = binomial, data = mice::complete(imp, action = i))
+})
+m <- with(data = imp, exp = glm(hyp ~ age + chl, family = binomial))
+# residual df
+summary(mice::pool(m))$df
+# df = Inf
+pool_parameters(models)$df_error
+# use residual df instead
+pool_parameters(models, ci_method = "residual")$df_error
+\dontshow{\}) # examplesIf}
 }
 \references{
 Barnard, J. and Rubin, D.B. (1999). Small sample degrees of freedom with
