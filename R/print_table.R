@@ -134,6 +134,10 @@ print_table <- function(x, digits = 2, p_digits = 3, ...) {
   } else {
     out <- tinytable::group_tt(out, j = col_groups)
   }
-  ## TODO: fix this and return "out" only, one https://github.com/vincentarelbundock/tinytable/issues/109 is resolved
-  print(out, output = "html")
+  # workaround, to make sure HTML is default output
+  m <- attr(out, "tinytable_meta")
+  m$output <- "html"
+  attr(out, "tinytable_meta") <- m
+
+  out
 }
