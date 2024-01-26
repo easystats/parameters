@@ -426,6 +426,13 @@ format.compare_parameters <- function(x,
     formatted_table <- split(out, f = split_by)
     formatted_table <- lapply(names(formatted_table), function(tab) {
       i <- formatted_table[[tab]]
+      # check if data frame is empty - this may happen if not all combinations
+      # of split_by factors are present in the data (e.g., zero-inflated mixed
+      # models, that have random effects for the count, but not for the zero-
+      # inflation component)
+      if (nrow(i) == 0L) {
+        return(NULL)
+      }
       # remove unique columns
       if (insight::n_unique(i$Component) == 1L) i$Component <- NULL
       if (insight::n_unique(i$Effects) == 1L) i$Effects <- NULL
@@ -446,6 +453,9 @@ format.compare_parameters <- function(x,
       }
       i
     })
+
+    # remove empty tables
+    formatted_table <- insight::compact_list(formatted_table)
 
     # for HTML, bind data frames
     if (identical(format, "html")) {

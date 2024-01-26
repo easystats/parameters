@@ -328,9 +328,12 @@
 }
 
 
-.add_reference_level <- function(params) {
-  # check if we have a model object, else return parameter table
-  model <- .get_object(params)
+.add_reference_level <- function(params, model = NULL) {
+  if (is.null(model)) {
+    # check if we have a model object, if not provided by user
+    model <- .get_object(params)
+  }
+  # no model object provided? Try to get data from model call
   if (is.null(model)) {
     # get data from model call
     model_data <- .safe(eval(attributes(params)$model_call$data))

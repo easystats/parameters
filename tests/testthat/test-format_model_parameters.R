@@ -173,3 +173,32 @@ withr::with_options(
     })
   }
 )
+
+skip_if_not_installed("lme4")
+skip_if_not_installed("glmmTMB")
+
+test_that("format, compare_parameters, mixed models", {
+  data(mtcars)
+  data(Salamanders, package = "glmmTMB")
+  model1 <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  model2 <- glmmTMB::glmmTMB(
+    count ~ spp + mined + (1 | site),
+    ziformula = ~mined,
+    family = poisson(),
+    data = Salamanders
+  )
+  out <- compare_parameters(model1, model2, effects = "all", component = "all")
+  f <- format(out)
+  expect_length(f, 3)
+  f <- format(out, format = "html")
+  expect_identical(
+    f$Component,
+    c(
+      "Fixed Effects", "Fixed Effects", "Fixed Effects", "Fixed Effects",
+      "Fixed Effects", "Fixed Effects", "Fixed Effects", "Fixed Effects",
+      "Fixed Effects", "Fixed Effects (Zero-Inflation Component)",
+      "Fixed Effects (Zero-Inflation Component)", "Random Effects",
+      "Random Effects", "Random Effects"
+    )
+  )
+})

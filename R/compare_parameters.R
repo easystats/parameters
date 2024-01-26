@@ -98,7 +98,7 @@ compare_parameters <- function(...,
       names(models) <- model_names
     }
   } else {
-    model_names <- match.call(expand.dots = FALSE)$`...`
+    model_names <- match.call(expand.dots = FALSE)[["..."]]
     if (length(names(model_names)) > 0) {
       model_names <- names(model_names)
     } else if (any(vapply(model_names, is.call, TRUE))) {
@@ -275,14 +275,14 @@ compare_models <- compare_parameters
       }
     } else {
       match_pretty_names <- att$pretty_names[x$Parameter]
-      if (!anyNA(match_pretty_names)) {
-        x$Parameter <- att$pretty_names[x$Parameter]
-      } else {
+      if (anyNA(match_pretty_names)) {
         match_pretty_names <- match(names(att$pretty_names), x$Parameter)
         match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
         if (length(match_pretty_names)) {
           x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
         }
+      } else {
+        x$Parameter <- att$pretty_names[x$Parameter]
       }
     }
   }
