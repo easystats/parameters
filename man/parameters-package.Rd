@@ -3,7 +3,6 @@
 \docType{package}
 \name{parameters-package}
 \alias{parameters-package}
-\alias{_PACKAGE}
 \title{parameters: Extracting, Computing and Exploring the Parameters of Statistical Models using R}
 \description{
 \strong{parameters}' primary goal is to provide utilities for processing the

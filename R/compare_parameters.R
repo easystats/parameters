@@ -16,6 +16,11 @@
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
+#' @param coefficient_names Character vector with strings that should be used
+#'   as column headers for the coefficient column. Must be of same length as
+#'   number of models in `...`, or length 1. If length 1, this name will be
+#'   used for all coefficient columns. If `NULL`, the name for the coefficient
+#'   column will detected automatically (as in `model_parameters()`).
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
@@ -75,6 +80,7 @@ compare_parameters <- function(...,
                                select = NULL,
                                column_names = NULL,
                                pretty_names = TRUE,
+                               coefficient_names = NULL,
                                keep = NULL,
                                drop = NULL,
                                verbose = TRUE) {
@@ -146,6 +152,11 @@ compare_parameters <- function(...,
     }
   }
 
+  # make sure we have enough coefficient names - else, repeat first value
+  if (!is.null(coefficient_names) && length(coefficient_names) < length(models)) {
+    coefficient_names <- rep(coefficient_names[1], length(models))
+  }
+
   # iterate all models and create list of model parameters
   m <- lapply(seq_along(models), function(i) {
     model <- models[[i]]
@@ -181,8 +192,10 @@ compare_parameters <- function(...,
 
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name
-    if (!is.null(coef_name)) {
+    if (!is.null(coef_name) && is.null(coefficient_names)) {
       colnames(dat)[colnames(dat) == "Coefficient"] <- coef_name
+    } else if (!is.null(coefficient_names)) {
+      colnames(dat)[colnames(dat) == "Coefficient"] <- coefficient_names[i]
     }
 
     # set pretty parameter names

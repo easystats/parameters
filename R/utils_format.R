@@ -328,6 +328,30 @@
 }
 
 
+.format_ranef_parameters <- function(x) {
+  if (!is.null(x$Group) && !is.null(x$Effects)) {
+    ran_pars <- which(x$Effects == "random")
+    stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
+    x$Parameter[ran_pars[stddevs]] <- paste0(
+      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
+      ": ",
+      x$Group[ran_pars[stddevs]],
+      ")"
+    )
+    corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
+    x$Parameter[ran_pars[corrs]] <- paste0(
+      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
+      ": ",
+      x$Group[ran_pars[corrs]],
+      ")"
+    )
+    x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
+    x$Group <- NULL
+  }
+  x
+}
+
+
 .add_reference_level <- function(params, model = NULL) {
   if (is.null(model)) {
     # check if we have a model object, if not provided by user

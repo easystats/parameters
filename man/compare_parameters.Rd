@@ -17,6 +17,7 @@ compare_parameters(
   select = NULL,
   column_names = NULL,
   pretty_names = TRUE,
+  coefficient_names = NULL,
   keep = NULL,
   drop = NULL,
   verbose = TRUE
@@ -34,6 +35,7 @@ compare_models(
   select = NULL,
   column_names = NULL,
   pretty_names = TRUE,
+  coefficient_names = NULL,
   keep = NULL,
   drop = NULL,
   verbose = TRUE
@@ -148,6 +150,12 @@ readable) parameter names. Or \code{"labels"}, in which case value and variable
 labels will be used as parameters names. The latter only works for "labelled"
 data, i.e. if the data used to fit the model had \code{"label"} and \code{"labels"}
 attributes. See also section \emph{Global Options to Customize Messages when Printing}.}
+
+\item{coefficient_names}{Character vector with strings that should be used
+as column headers for the coefficient column. Must be of same length as
+number of models in \code{...}, or length 1. If length 1, this name will be
+used for all coefficient columns. If \code{NULL}, the name for the coefficient
+column will detected automatically (as in \code{model_parameters()}).}
 
 \item{keep}{Character containing a regular expression pattern that
 describes the parameters that should be included (for \code{keep}) or excluded

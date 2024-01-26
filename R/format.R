@@ -107,24 +107,8 @@ format.parameters_model <- function(x,
   # check if we have mixed models with random variance parameters
   # in such cases, we don't need the group-column, but we rather
   # merge it with the parameter column
-  if (isTRUE(random_variances) && !is.null(x$Group) && !is.null(x$Effects)) {
-    ran_pars <- which(x$Effects == "random")
-    stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
-    x$Parameter[ran_pars[stddevs]] <- paste0(
-      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
-      ": ",
-      x$Group[ran_pars[stddevs]],
-      ")"
-    )
-    corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
-    x$Parameter[ran_pars[corrs]] <- paste0(
-      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
-      ": ",
-      x$Group[ran_pars[corrs]],
-      ")"
-    )
-    x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
-    x$Group <- NULL
+  if (isTRUE(random_variances)) {
+    x <- .format_ranef_parameters(x)
   }
 
   # group parameters - this function find those parameters that should be
