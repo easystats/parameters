@@ -587,26 +587,26 @@
 
   if (grepl("^conditional\\.(r|R)andom_variances", component_name)) {
     component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom_variances(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- "Random Effects Variances"
-    } else {
+    if (nzchar(component_name, keepNA = TRUE)) {
       component_name <- paste0("Random Effects Variances: ", component_name)
+    } else {
+      component_name <- "Random Effects Variances"
     }
   }
   if (grepl("^conditional\\.(r|R)andom", component_name)) {
     component_name <- insight::trim_ws(gsub("^conditional\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
-    } else {
+    if (nzchar(component_name, keepNA = TRUE)) {
       component_name <- paste0("Random Effects (Count Model): ", component_name)
+    } else {
+      component_name <- ifelse(ran_pars, "Random Effects Variances", "Random Effects (Count Model)")
     }
   }
   if (grepl("^zero_inflated\\.(r|R)andom", component_name)) {
     component_name <- insight::trim_ws(gsub("^zero_inflated\\.(r|R)andom(\\.)*", "", component_name))
-    if (nchar(component_name) == 0) {
-      component_name <- "Random Effects (Zero-Inflation Component)"
-    } else {
+    if (nzchar(component_name, keepNA = TRUE)) {
       component_name <- paste0("Random Effects (Zero-Inflation Component): ", component_name)
+    } else {
+      component_name <- "Random Effects (Zero-Inflation Component)"
     }
   }
   if (startsWith(component_name, "random.")) {
@@ -858,7 +858,7 @@
   if ("Subgroup" %in% names(x) && insight::n_unique(x$Subgroup) > 1) {
     split_by <- c(split_by, "Subgroup")
   }
-  split_by <- split_by[nchar(split_by) > 0]
+  split_by <- split_by[nzchar(split_by, keepNA = TRUE)]
   split_by
 }
 
@@ -931,7 +931,7 @@
 
   # fix column output
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
-    x$From <- ifelse(x$Label == "" | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
+    x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
     x$Label <- NULL
   }
 
@@ -1024,8 +1024,8 @@
 
     # Don't print if empty col
     tables[[type]][vapply(colnames(tables[[type]]), function(x) {
-      col <- tables[[type]][[x]]
-      (all(col == "") | all(is.na(col))) && !grepl("_CI_(high|low)$", x)
+      column <- tables[[type]][[x]]
+      (!any(nzchar(as.character(column), keepNA = TRUE)) | all(is.na(column))) && !grepl("_CI_(high|low)$", x)
     }, logical(1))] <- NULL
 
     attr(tables[[type]], "digits") <- digits
