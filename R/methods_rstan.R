@@ -39,7 +39,7 @@ model_parameters.stanfit <- function(model,
 
   if (effects != "fixed") {
     random_effect_levels <- which(
-      params$Effects %in% "random" & !startsWith(params$Parameter, "Sigma[")
+      params$Effects == "random" & !startsWith(params$Parameter, "Sigma[")
     )
     if (length(random_effect_levels) && isFALSE(group_level)) {
       params <- params[-random_effect_levels, ]

@@ -527,26 +527,24 @@
     )
     fun_args <- c(fun_args, dots)
     parameters <- merge(parameters, do.call("p_value", fun_args), by = "Parameter", sort = FALSE)
+  } else if ("Pr(>|z|)" %in% names(parameters)) {
+    names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
+  } else if (ci_method %in% special_ci_methods) {
+    # special handling for KR-p, which we already have computed from dof
+    # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
+    parameters <- merge(
+      parameters,
+      .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE),
+      by = "Parameter",
+      sort = FALSE
+    )
   } else {
-    if ("Pr(>|z|)" %in% names(parameters)) {
-      names(parameters)[grepl("Pr(>|z|)", names(parameters), fixed = TRUE)] <- "p"
-    } else if (ci_method %in% special_ci_methods) {
-      # special handling for KR-p, which we already have computed from dof
-      # parameters <- merge(parameters, .p_value_dof_kr(model, params = parameters, dof = df_error), by = "Parameter")
-      parameters <- merge(
-        parameters,
-        .p_value_dof(model, dof = df_error$df_error, method = ci_method, se = df_error$SE),
-        by = "Parameter",
-        sort = FALSE
-      )
-    } else {
-      parameters <- merge(
-        parameters,
-        p_value(model, dof = dof, effects = "fixed"),
-        by = "Parameter",
-        sort = FALSE
-      )
-    }
+    parameters <- merge(
+      parameters,
+      p_value(model, dof = dof, effects = "fixed"),
+      by = "Parameter",
+      sort = FALSE
+    )
   }
 
 

@@ -246,7 +246,7 @@ compare_parameters <- function(...,
   all_models[model_cols] <- NULL
 
   # remove empty group-column
-  if (all(nchar(all_models$Group) == 0)) {
+  if (!any(nzchar(as.character(all_models$Group), keepNA = TRUE))) {
     all_models$Group <- NULL
   }
 

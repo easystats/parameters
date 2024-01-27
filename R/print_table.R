@@ -15,7 +15,7 @@
 #' )
 #' out <- compare_parameters(m1, m2, m3, effects = "all", components = "all")
 #' print_table(out)
-#'
+#' }
 #' @rdname display.parameters_model
 #' @export
 print_table <- function(x, digits = 2, p_digits = 3, ...) {

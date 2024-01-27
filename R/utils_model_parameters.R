@@ -263,20 +263,18 @@
       } else if (info$is_count) {
         coef_col <- "IRR"
       }
-    } else {
-      if (info$is_exponential && identical(info$link_function, "log")) {
-        coef_col <- "Log-Prevalence"
-      } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
-        coef_col <- "Log-Odds"
-      } else if (info$is_binomial && !info$is_logit) {
-        if (info$link_function == "identity") {
-          coef_col <- "Risk"
-        } else {
-          coef_col <- "Log-Risk"
-        }
-      } else if (info$is_count) {
-        coef_col <- "Log-Mean"
+    } else if (info$is_exponential && identical(info$link_function, "log")) {
+      coef_col <- "Log-Prevalence"
+    } else if ((info$is_binomial && info$is_logit) || info$is_ordinal || info$is_multinomial || info$is_categorical) {
+      coef_col <- "Log-Odds"
+    } else if (info$is_binomial && !info$is_logit) {
+      if (info$link_function == "identity") {
+        coef_col <- "Risk"
+      } else {
+        coef_col <- "Log-Risk"
       }
+    } else if (info$is_count) {
+      coef_col <- "Log-Mean"
     }
   }
 
@@ -321,13 +319,11 @@
     } else if (inherits(model, c("clm", "clm2", "clmm"))) {
       ## TODO: make sure we catch all ordinal models properly here
       rows <- !tolower(params$Component) %in% c("location", "scale")
-    } else {
+    } else if (is.null(params$Component)) {
       # don't exponentiate dispersion
-      if (is.null(params$Component)) {
-        rows <- seq_len(nrow(params))
-      } else {
-        rows <- !tolower(params$Component) %in% c("dispersion", "residual")
-      }
+      rows <- seq_len(nrow(params))
+    } else {
+      rows <- !tolower(params$Component) %in% c("dispersion", "residual")
     }
     params[rows, columns] <- exp(params[rows, columns])
     if (all(c("Coefficient", "SE") %in% names(params))) {

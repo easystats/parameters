@@ -60,8 +60,8 @@ bootstrap_parameters.default <- function(model,
                                          ci_method = "quantile",
                                          test = "p-value",
                                          ...) {
-  data <- bootstrap_model(model, iterations = iterations, ...)
-  bootstrap_parameters(data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
+  boot_data <- bootstrap_model(model, iterations = iterations, ...)
+  bootstrap_parameters(boot_data, centrality = centrality, ci = ci, ci_method = ci_method, test = test, ...)
 }
 
 

@@ -323,6 +323,25 @@ print_html(
 )
 }
 \dontshow{\}) # examplesIf}
+\dontshow{if (require("tinytable") && require("lme4") && require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
+data(iris)
+data(Salamanders, package = "glmmTMB")
+m1 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+m2 <- lme4::lmer(
+  Sepal.Length ~ Petal.Length + Petal.Width + (1 | Species),
+  data = iris
+)
+m3 <- glmmTMB::glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula = ~mined,
+  family = poisson(),
+  data = Salamanders
+)
+out <- compare_parameters(m1, m2, m3, effects = "all", components = "all")
+print_table(out)
+}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=print.parameters_model]{print.parameters_model()}}

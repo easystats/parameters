@@ -68,9 +68,9 @@ simulate_parameters.default <- function(model,
   # check for valid input
   .is_model_valid(model)
 
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
   out <- .summary_bootstrap(
-    data = data,
+    data = sim_data,
     test = test,
     centrality = centrality,
     ci = ci,

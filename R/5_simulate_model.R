@@ -233,11 +233,11 @@ simulate_model.bracl <- simulate_model.default
   if (is.null(iterations)) iterations <- 1000
 
   params <- insight::get_parameters(model, effects = effects, component = component, verbose = FALSE)
-  beta <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
+  beta_mu <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
 
   # "..." allow specification of vcov-args (#784)
   varcov <- insight::get_varcov(model, component = component, effects = effects, ...)
-  as.data.frame(.mvrnorm(n = iterations, mu = beta, Sigma = varcov))
+  as.data.frame(.mvrnorm(n = iterations, mu = beta_mu, Sigma = varcov))
 
   ## Alternative approach, similar to arm::sim()
 
@@ -248,7 +248,7 @@ simulate_model.bracl <- simulate_model.default
   # b <- array(NA, c(100, k))
   # for (i in 1:iterations) {
   #   s[i] <- stats::sigma(model) * sqrt((n - k) / rchisq(1, n - k))
-  #   b[i,] <- .mvrnorm(n = 1, mu = beta, Sigma = beta.cov * s[i] ^ 2)
+  #   b[i,] <- .mvrnorm(n = 1, mu = beta_mu, Sigma = beta.cov * s[i] ^ 2)
   # }
 }
 

@@ -575,7 +575,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
     deviations[i_missing, ] <- NA
   }
 
-  if (method == "basic") {
+  if (method == "basic") { # nolint
     col_dev_resp <- "Deviation_Response_Basic"
     col_dev_pred <- "Deviation_Basic"
   } else if (method == "posthoc") {
@@ -642,7 +642,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
   if (method %in% c("smart", "posthoc")) {
     cant_posthocsmart <- FALSE
 
-    if (mi$is_linear && !colnames(stats::model.frame(model))[1] == insight::find_response(model)) {
+    if (mi$is_linear && colnames(stats::model.frame(model))[1] != insight::find_response(model)) {
       can_posthocsmart <- TRUE
     }
 
@@ -690,7 +690,7 @@ print_html.parameters_standardized <- function(x, digits = 2, ...) {
 
   # check if model has a response variable that should not be standardized.
   info$is_linear &&
-    !info$family == "inverse.gaussian" &&
+    info$family != "inverse.gaussian" &&
     !info$is_survival &&
     !info$is_censored
 

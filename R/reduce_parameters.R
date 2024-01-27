@@ -112,27 +112,27 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
   # Get weights / pseudo-loadings (correlations)
   cormat <- as.data.frame(stats::cor(x = x, y = features))
   cormat <- cbind(data.frame(Variable = row.names(cormat)), cormat)
-  weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
+  pca_weights <- as.data.frame(.sort_loadings(cormat, cols = 2:ncol(cormat)))
 
   if (n == "max") {
-    weights <- .filter_loadings(weights, threshold = "max", 2:ncol(weights))
-    non_empty <- vapply(weights[2:ncol(weights)], function(x) !all(is.na(x)), TRUE)
-    weights <- weights[c(TRUE, non_empty)]
+    pca_weights <- .filter_loadings(pca_weights, threshold = "max", 2:ncol(pca_weights))
+    non_empty <- vapply(pca_weights[2:ncol(pca_weights)], function(x) !all(is.na(x)), TRUE)
+    pca_weights <- pca_weights[c(TRUE, non_empty)]
     features <- features[, non_empty]
-    weights[is.na(weights)] <- 0
-    weights <- .filter_loadings(.sort_loadings(weights, cols = 2:ncol(weights)), threshold = "max", 2:ncol(weights))
+    pca_weights[is.na(pca_weights)] <- 0
+    pca_weights <- .filter_loadings(.sort_loadings(pca_weights, cols = 2:ncol(pca_weights)), threshold = "max", 2:ncol(pca_weights))
   }
 
   # Create varnames
-  varnames <- vapply(weights[2:ncol(weights)], function(x) {
-    name <- weights$Variable[!is.na(x)]
+  varnames <- vapply(pca_weights[2:ncol(pca_weights)], function(x) {
+    name <- pca_weights$Variable[!is.na(x)]
     weight <- insight::format_value(x[!is.na(x)])
     paste0(paste(name, weight, sep = "_"), collapse = "/")
   }, character(1))
   names(features) <- as.character(varnames)
 
   # Attributes
-  attr(features, "loadings") <- weights
+  attr(features, "loadings") <- pca_weights
   class(features) <- c("parameters_reduction", class(features))
 
   # Out
@@ -143,7 +143,7 @@ reduce_parameters.data.frame <- function(x, method = "PCA", n = "max", distance 
 
 #' @export
 reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "euclidean", ...) {
-  data <- reduce_parameters(
+  model_data <- reduce_parameters(
     datawizard::to_numeric(insight::get_predictors(x, ...), ...),
     method = method,
     n = n,
@@ -154,8 +154,8 @@ reduce_parameters.lm <- function(x, method = "PCA", n = "max", distance = "eucli
   y[insight::find_response(x)] <- insight::get_response(x)
   y$.row <- NULL
 
-  formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(data), "`"), collapse = " + "))
-  stats::update(x, formula = formula, data = cbind(data, y))
+  new_formula <- paste(insight::find_response(x), "~", paste(paste0("`", names(model_data), "`"), collapse = " + "))
+  stats::update(x, formula = new_formula, data = cbind(model_data, y))
 }
 
 #' @export

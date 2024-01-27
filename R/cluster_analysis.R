@@ -446,7 +446,7 @@ summary.cluster_analysis <- function(object, ...) {
 
 #' @export
 visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
-  data <- datawizard::data_to_long(
+  data_long <- datawizard::data_to_long(
     x,
     select = names(x)[-1], # skip 'Cluster' column
     names_to = "Group",
@@ -459,13 +459,13 @@ visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
 
   layers[["l1"]] <- list(
     geom = "bar",
-    data = data,
+    data = data_long,
     aes = list(x = "Cluster", y = "Center", fill = "Group"),
     position = "dodge"
   )
   layers[["l2"]] <- list(
     geom = "hline",
-    data = data,
+    data = data_long,
     aes = list(yintercept = 0),
     linetype = "dotted"
   )
@@ -479,7 +479,7 @@ visualisation_recipe.cluster_analysis_summary <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- data_long
   layers
 }
 
