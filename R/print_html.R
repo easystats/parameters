@@ -233,7 +233,7 @@ print_html.compare_parameters <- function(x,
   if (!is.null(user_labels)) {
     new_labels <- c(
       colnames(out[["_data"]])[1],
-      rep(user_labels, length.out = ncol(out[["_data"]]) - 1)
+      rep_len(user_labels, ncol(out[["_data"]]) - 1)
     )
     new_labels <- as.list(new_labels)
   }
@@ -270,7 +270,7 @@ print_html.compare_parameters <- function(x,
   # check where last parameter row ends. For "compare_models()", the
   # first Parameter value after data rows is "". If this is not found,
   # simply use number of rows as last row
-  last_row <- which(out[["_data"]][[pcol_name]] == "")[1]
+  last_row <- which(!nzchar(as.character(out[["_data"]][[pcol_name]]), keepNA = TRUE))[1]
   if (is.na(last_row)) {
     last_row <- nrow(out[["_data"]])
   } else {

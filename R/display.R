@@ -2,7 +2,9 @@
 #' @name display.parameters_model
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
-#'   `print_md()` is a alias for `display(format = "markdown")`.
+#' `print_md()` is a alias for `display(format = "markdown")`, `print_html()`
+#' is a alias for `display(format = "html")`. `print_table()` is for specific
+#' use cases only, and currently only works for `compare_parameters()` objects.
 #'
 #' @param x An object returned by [`model_parameters()`][model_parameters].
 #' @param object An object returned by [`model_parameters()`][model_parameters],

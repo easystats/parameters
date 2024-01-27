@@ -548,29 +548,26 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 }
 
 \examples{
+\dontshow{if (require("lme4") && require("glmmTMB")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parameters)
-if (require("lme4")) {
-  data(mtcars)
-  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-  model_parameters(model)
-}
-\donttest{
-if (require("glmmTMB")) {
-  data(Salamanders)
-  model <- glmmTMB(
-    count ~ spp + mined + (1 | site),
-    ziformula = ~mined,
-    family = poisson(),
-    data = Salamanders
-  )
-  model_parameters(model, effects = "all")
-}
+data(mtcars)
+model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+model_parameters(model)
 
-if (require("lme4")) {
-  model <- lmer(mpg ~ wt + (1 | gear), data = mtcars)
-  model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
+\donttest{
+data(Salamanders, package = "glmmTMB")
+model <- glmmTMB::glmmTMB(
+  count ~ spp + mined + (1 | site),
+  ziformula = ~mined,
+  family = poisson(),
+  data = Salamanders
+)
+model_parameters(model, effects = "all")
+
+model <- lme4::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+model_parameters(model, bootstrap = TRUE, iterations = 50, verbose = FALSE)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to

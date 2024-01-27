@@ -1,3 +1,22 @@
+#' @examplesIf require("tinytable") && require("lme4") && require("glmmTMB")
+#' \donttest{
+#' data(iris)
+#' data(Salamanders, package = "glmmTMB")
+#' m1 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' m2 <- lme4::lmer(
+#'   Sepal.Length ~ Petal.Length + Petal.Width + (1 | Species),
+#'   data = iris
+#' )
+#' m3 <- glmmTMB::glmmTMB(
+#'   count ~ spp + mined + (1 | site),
+#'   ziformula = ~mined,
+#'   family = poisson(),
+#'   data = Salamanders
+#' )
+#' out <- compare_parameters(m1, m2, m3, effects = "all", components = "all")
+#' print_table(out)
+#'
+#' @rdname display.parameters_model
 #' @export
 print_table <- function(x, digits = 2, p_digits = 3, ...) {
   insight::check_if_installed(c("datawizard", "tinytable"))
