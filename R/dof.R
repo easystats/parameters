@@ -118,7 +118,7 @@ degrees_of_freedom.default <- function(model, method = "analytical", ...) {
     }
   }
 
-  if (method == "any") {
+  if (method == "any") { # nolint
     dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
     if (is.null(dof) || all(is.infinite(dof)) || anyNA(dof)) {
       dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)

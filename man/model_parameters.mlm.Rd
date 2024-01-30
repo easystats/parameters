@@ -197,17 +197,16 @@ output from \code{model_parameters()} will split the coefficient tables
 by the different levels of the model's response.
 }
 \examples{
-library(parameters)
-if (require("brglm2", quietly = TRUE)) {
-  data("stemcell")
-  model <- bracl(
-    research ~ as.numeric(religion) + gender,
-    weights = frequency,
-    data = stemcell,
-    type = "ML"
-  )
-  model_parameters(model)
-}
+\dontshow{if (require("brglm2", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+data("stemcell", package = "brglm2")
+model <- brglm2::bracl(
+  research ~ as.numeric(religion) + gender,
+  weights = frequency,
+  data = stemcell,
+  type = "ML"
+)
+model_parameters(model)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[insight:standardize_names]{insight::standardize_names()}} to rename

@@ -78,7 +78,7 @@ bootstrap_model.default <- function(model,
   type <- match.arg(type, choices = c("ordinary", "parametric", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
-  model_data <- data <- insight::get_data(model, verbose = FALSE)
+  model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {
@@ -86,12 +86,10 @@ bootstrap_model.default <- function(model,
 
     if (inherits(model, "biglm")) {
       fit <- suppressMessages(stats::update(model, moredata = d))
+    } else if (verbose) {
+      fit <- stats::update(model, data = d)
     } else {
-      if (verbose) {
-        fit <- stats::update(model, data = d)
-      } else {
-        fit <- suppressMessages(stats::update(model, data = d))
-      }
+      fit <- suppressMessages(stats::update(model, data = d))
     }
 
     params <- insight::get_parameters(fit, verbose = FALSE)
@@ -103,7 +101,7 @@ bootstrap_model.default <- function(model,
       params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     }
 
-    return(params)
+    params
   }
 
   if (type == "parametric") {
@@ -111,7 +109,7 @@ bootstrap_model.default <- function(model,
       out <- model_data
       resp <- stats::simulate(x, nsim = 1)
       out[[model_response]] <- resp
-      return(out)
+      out
     }
     results <- boot::boot(
       data = data,
@@ -233,7 +231,7 @@ bootstrap_model.nestedLogit <- function(model,
   type <- match.arg(type, choices = c("ordinary", "balanced", "permutation", "antithetic"))
   parallel <- match.arg(parallel)
 
-  model_data <- data <- insight::get_data(model, verbose = FALSE)
+  model_data <- data <- insight::get_data(model, verbose = FALSE) # nolint
   model_response <- insight::find_response(model)
 
   boot_function <- function(model, data, indices) {

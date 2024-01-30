@@ -16,6 +16,11 @@
 #' @param ci_method Method for computing degrees of freedom for p-values
 #'   and confidence intervals (CI). See documentation for related model class
 #'   in [model_parameters()].
+#' @param coefficient_names Character vector with strings that should be used
+#'   as column headers for the coefficient column. Must be of same length as
+#'   number of models in `...`, or length 1. If length 1, this name will be
+#'   used for all coefficient columns. If `NULL`, the name for the coefficient
+#'   column will detected automatically (as in `model_parameters()`).
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.cpglmm
 #' @inheritParams print.parameters_model
@@ -75,6 +80,7 @@ compare_parameters <- function(...,
                                select = NULL,
                                column_names = NULL,
                                pretty_names = TRUE,
+                               coefficient_names = NULL,
                                keep = NULL,
                                drop = NULL,
                                verbose = TRUE) {
@@ -98,7 +104,7 @@ compare_parameters <- function(...,
       names(models) <- model_names
     }
   } else {
-    model_names <- match.call(expand.dots = FALSE)$`...`
+    model_names <- match.call(expand.dots = FALSE)[["..."]]
     if (length(names(model_names)) > 0) {
       model_names <- names(model_names)
     } else if (any(vapply(model_names, is.call, TRUE))) {
@@ -146,6 +152,11 @@ compare_parameters <- function(...,
     }
   }
 
+  # make sure we have enough coefficient names - else, repeat first value
+  if (!is.null(coefficient_names) && length(coefficient_names) < length(models)) {
+    coefficient_names <- rep(coefficient_names[1], length(models))
+  }
+
   # iterate all models and create list of model parameters
   m <- lapply(seq_along(models), function(i) {
     model <- models[[i]]
@@ -181,8 +192,10 @@ compare_parameters <- function(...,
 
     # set specific names for coefficient column
     coef_name <- attributes(dat)$coefficient_name
-    if (!is.null(coef_name)) {
+    if (!is.null(coef_name) && is.null(coefficient_names)) {
       colnames(dat)[colnames(dat) == "Coefficient"] <- coef_name
+    } else if (!is.null(coefficient_names)) {
+      colnames(dat)[colnames(dat) == "Coefficient"] <- coefficient_names[i]
     }
 
     # set pretty parameter names
@@ -233,7 +246,7 @@ compare_parameters <- function(...,
   all_models[model_cols] <- NULL
 
   # remove empty group-column
-  if (all(nchar(all_models$Group) == 0)) {
+  if (!any(nzchar(as.character(all_models$Group), keepNA = TRUE))) {
     all_models$Group <- NULL
   }
 
@@ -275,14 +288,14 @@ compare_models <- compare_parameters
       }
     } else {
       match_pretty_names <- att$pretty_names[x$Parameter]
-      if (!anyNA(match_pretty_names)) {
-        x$Parameter <- att$pretty_names[x$Parameter]
-      } else {
+      if (anyNA(match_pretty_names)) {
         match_pretty_names <- match(names(att$pretty_names), x$Parameter)
         match_pretty_names <- match_pretty_names[!is.na(match_pretty_names)]
         if (length(match_pretty_names)) {
           x$Parameter[match_pretty_names] <- att$pretty_names[x$Parameter[match_pretty_names]]
         }
+      } else {
+        x$Parameter <- att$pretty_names[x$Parameter]
       }
     }
   }

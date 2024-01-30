@@ -159,9 +159,9 @@
   }
 
   # rename sigma
-  sigma <- out$grp == "Residual"
-  if (any(sigma)) {
-    out$Parameter[sigma] <- "SD (Observations)"
+  sigma_res <- out$grp == "Residual"
+  if (any(sigma_res)) {
+    out$Parameter[sigma_res] <- "SD (Observations)"
   }
 
   # rename columns
@@ -313,8 +313,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
   if (is.null(ci_random)) {
     # check sample size, don't compute by default when larger than 1000
-    nobs <- insight::n_obs(model)
-    if (nobs >= 1000) {
+    n_obs <- insight::n_obs(model)
+    if (n_obs >= 1000) {
       return(out)
     }
 
@@ -323,7 +323,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     rs <- insight::find_random_slopes(model)
 
     # quit if if random slopes and larger sample size or more than 1 grouping factor
-    if (!is.null(rs) && (nobs >= 500 || length(re) > 1)) {
+    if (!is.null(rs) && (n_obs >= 500 || length(re) > 1)) {
       return(out)
     }
 
@@ -382,10 +382,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       merDeriv_loaded <- isNamespaceLoaded("merDeriv")
       # detach on exit
       on.exit(
-        {
-          if (!merDeriv_loaded) {
-            .unregister_vcov()
-          }
+        if (!merDeriv_loaded) {
+          .unregister_vcov()
         },
         add = TRUE,
         after = FALSE

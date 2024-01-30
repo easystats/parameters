@@ -26,7 +26,7 @@
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  if (method == "ml1") {
+  if (method == "ml1") { # nolint
     return(ci_ml1(model, ci = ci))
   } else if (method == "betwithin") {
     return(ci_betwithin(model, ci = ci))
@@ -110,9 +110,9 @@
       )
     } else {
       stderror <- switch(method,
-        "kenward" = se_kenward(model),
-        "kr" = se_kenward(model),
-        "satterthwaite" = se_satterthwaite(model),
+        kenward = se_kenward(model),
+        kr = se_kenward(model),
+        satterthwaite = se_satterthwaite(model),
         standard_error(model, component = component)
       )
     }

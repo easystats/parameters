@@ -2,46 +2,58 @@
 #' @name display.parameters_model
 #'
 #' @description Prints tables (i.e. data frame) in different output formats.
-#'   `print_md()` is a alias for `display(format = "markdown")`.
+#' `print_md()` is a alias for `display(format = "markdown")`, `print_html()`
+#' is a alias for `display(format = "html")`. `print_table()` is for specific
+#' use cases only, and currently only works for `compare_parameters()` objects.
 #'
 #' @param x An object returned by [`model_parameters()`][model_parameters].
 #' @param object An object returned by [`model_parameters()`][model_parameters],
-#'   [`simulate_parameters()`][simulate_parameters],
-#'   [`equivalence_test()`][equivalence_test.lm] or
-#'   [`principal_components()`][principal_components].
+#' [`simulate_parameters()`][simulate_parameters],
+#' [`equivalence_test()`][equivalence_test.lm] or
+#' [`principal_components()`][principal_components].
 #' @param format String, indicating the output format. Can be `"markdown"`
-#'   or `"html"`.
+#' or `"html"`.
 #' @param align Only applies to HTML tables. May be one of `"left"`,
-#'   `"right"` or `"center"`.
+#' `"right"` or `"center"`.
 #' @param digits,ci_digits,p_digits Number of digits for rounding or
-#'   significant figures. May also be `"signif"` to return significant
-#'   figures or `"scientific"` to return scientific notation. Control the
-#'   number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
-#'   to have scientific notation with 4 decimal places, or `digits = "signif5"`
-#'   for 5 significant figures (see also [signif()]).
+#' significant figures. May also be `"signif"` to return significant
+#' figures or `"scientific"` to return scientific notation. Control the
+#' number of digits by adding the value as suffix, e.g. `digits = "scientific4"`
+#' to have scientific notation with 4 decimal places, or `digits = "signif5"`
+#' for 5 significant figures (see also [signif()]).
 #' @param subtitle Table title (same as caption) and subtitle, as strings. If `NULL`,
-#'   no title or subtitle is printed, unless it is stored as attributes (`table_title`,
-#'   or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
-#'   data frames, `caption` may be a list of table captions, one for each table.
+#' no title or subtitle is printed, unless it is stored as attributes (`table_title`,
+#' or its alias `table_caption`, and `table_subtitle`). If `x` is a list of
+#' data frames, `caption` may be a list of table captions, one for each table.
 #' @param font_size For HTML tables, the font size.
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
-#'   column names are generated. See 'Examples'.
+#' column names are generated. See 'Examples'.
+#' @param theme String, indicating the table theme. Can be one of `"default"`,
+#' `"grid"`, `"striped"`, `"bootstrap"` or `"darklines"`.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table
 #' @inheritParams compare_parameters
 #'
 #' @return If `format = "markdown"`, the return value will be a character
-#'   vector in markdown-table format. If `format = "html"`, an object of
-#'   class `gt_tbl`.
+#' vector in markdown-table format. If `format = "html"`, an object of
+#' class `gt_tbl`. For `print_table()`, an object of class `tinytable` is
+#' returned.
 #'
 #' @details `display()` is useful when the table-output from functions,
-#'   which is usually printed as formatted text-table to console, should
-#'   be formatted for pretty table-rendering in markdown documents, or if
-#'   knitted from rmarkdown to PDF or Word files. See
-#'   [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
-#'   for examples.
+#' which is usually printed as formatted text-table to console, should
+#' be formatted for pretty table-rendering in markdown documents, or if
+#' knitted from rmarkdown to PDF or Word files. See
+#' [vignette](https://easystats.github.io/parameters/articles/model_parameters_formatting.html)
+#' for examples.
+#'
+#' `print_table()` is a special function for `compare_parameters()` objects,
+#' which prints the output as a formatted HTML table. It is still somewhat
+#' experimental, thus, only a fixed layout-style is available at the moment
+#' (columns for estimates, confidence intervals and p-values). However, it
+#' is possible to include other model components, like zero-inflation, or random
+#' effects in the table. See 'Examples'.
 #'
 #' @seealso [print.parameters_model()]
 #'

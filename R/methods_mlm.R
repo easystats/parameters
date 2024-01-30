@@ -20,18 +20,15 @@
 #' @seealso [insight::standardize_names()] to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
-#' @examples
-#' library(parameters)
-#' if (require("brglm2", quietly = TRUE)) {
-#'   data("stemcell")
-#'   model <- bracl(
-#'     research ~ as.numeric(religion) + gender,
-#'     weights = frequency,
-#'     data = stemcell,
-#'     type = "ML"
-#'   )
-#'   model_parameters(model)
-#' }
+#' @examplesIf require("brglm2", quietly = TRUE)
+#' data("stemcell", package = "brglm2")
+#' model <- brglm2::bracl(
+#'   research ~ as.numeric(religion) + gender,
+#'   weights = frequency,
+#'   data = stemcell,
+#'   type = "ML"
+#' )
+#' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export
@@ -80,9 +77,8 @@ standard_error.mlm <- function(model,
     se$Parameter <- est$Parameter
     se$Response <- est$Response
     return(se)
-
-    # manually
   } else {
+    # manually
     if (!is.null(vcov)) {
       insight::format_warning(
         "Unable to extract the variance-covariance matrix requested in `vcov`."
@@ -170,14 +166,12 @@ ci.mlm <- function(x,
     resp <- insight::get_parameters(x)$Response
     if (!"Response" %in% colnames(out) && nrow(out) == length(resp)) {
       out[["Response"]] <- resp
-    } else {
-      if (!isTRUE(all(out$Response == resp))) {
-        insight::format_error(
-          "Unable to assign labels to the model's parameters.",
-          "Please report this problem to the {.pkg parameters} issue tracker:",
-          "{.url https://github.com/easystats/parameters/issues}"
-        )
-      }
+    } else if (!isTRUE(all(out$Response == resp))) {
+      insight::format_error(
+        "Unable to assign labels to the model's parameters.",
+        "Please report this problem to the {.pkg parameters} issue tracker:",
+        "{.url https://github.com/easystats/parameters/issues}"
+      )
     }
   }
   out
@@ -206,10 +200,10 @@ simulate_parameters.mlm <- function(model,
                                     ci_method = "quantile",
                                     test = "p-value",
                                     ...) {
-  data <- simulate_model(model, iterations = iterations, ...)
+  sim_data <- simulate_model(model, iterations = iterations, ...)
   out <-
     .summary_bootstrap(
-      data = data,
+      data = sim_data,
       test = test,
       centrality = centrality,
       ci = ci,

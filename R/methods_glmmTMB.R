@@ -320,22 +320,20 @@ standard_error.glmmTMB <- function(model,
   )
 
   if (effects == "random") {
-    if (requireNamespace("TMB", quietly = TRUE) && requireNamespace("glmmTMB", quietly = TRUE)) {
-      s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
-      s2 <- sqrt(s1$diag.cov.random)
-      rand.ef <- glmmTMB::ranef(model)[[1]]
-      rand.se <- lapply(rand.ef, function(.x) {
-        cnt <- nrow(.x) * ncol(.x)
-        s3 <- s2[1:cnt]
-        s2 <- s2[-(1:cnt)]
-        d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
-        colnames(d) <- colnames(.x)
-        d
-      })
-      rand.se
-    } else {
+    if (!requireNamespace("TMB", quietly = TRUE) && !requireNamespace("glmmTMB", quietly = TRUE)) {
       return(NULL)
     }
+    s1 <- TMB::sdreport(model$obj, getJointPrecision = TRUE)
+    s2 <- sqrt(s1$diag.cov.random)
+    rand.ef <- glmmTMB::ranef(model)[[1]]
+    rand.se <- lapply(rand.ef, function(.x) {
+      cnt <- nrow(.x) * ncol(.x)
+      s3 <- s2[1:cnt]
+      s2 <- s2[-(1:cnt)]
+      d <- as.data.frame(matrix(sqrt(s3), ncol = ncol(.x), byrow = TRUE))
+      colnames(d) <- colnames(.x)
+      d
+    })
   } else {
     if (is.null(.check_component(model, component, verbose = verbose))) {
       return(NULL)

@@ -21,26 +21,24 @@ model_parameters.mmrm <- function(model,
 
   # extract model parameters table, as data frame
   out <- tryCatch(
-    {
-      .model_parameters_generic(
-        model = model,
-        ci = ci,
-        ci_method = ci_method,
-        bootstrap = bootstrap,
-        iterations = iterations,
-        merge_by = "Parameter",
-        standardize = standardize,
-        exponentiate = exponentiate,
-        p_adjust = p_adjust,
-        summary = summary,
-        keep_parameters = keep,
-        drop_parameters = drop,
-        vcov = NULL,
-        vcov_args = NULL,
-        verbose = verbose,
-        ...
-      )
-    },
+    .model_parameters_generic(
+      model = model,
+      ci = ci,
+      ci_method = ci_method,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = "Parameter",
+      standardize = standardize,
+      exponentiate = exponentiate,
+      p_adjust = p_adjust,
+      summary = summary,
+      keep_parameters = keep,
+      drop_parameters = drop,
+      vcov = NULL,
+      vcov_args = NULL,
+      verbose = verbose,
+      ...
+    ),
     error = function(e) {
       fail <- NA
       attr(fail, "error") <- gsub("  ", " ", gsub("\\n", "", e$message), fixed = TRUE)

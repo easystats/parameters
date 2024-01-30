@@ -158,33 +158,29 @@ predict.parameters_efa <- function(object,
       if (isTRUE(keep_na)) {
         out <- .merge_na(object, out, verbose)
       }
-    } else {
+    } else if ("dataset" %in% names(attri)) {
       # if we have data, use that for prediction
-      if ("dataset" %in% names(attri)) {
-        d <- attri$data_set
-        d <- d[vapply(d, is.numeric, logical(1))]
-        out <- as.data.frame(stats::predict(attri$model, newdata = d))
-      } else {
-        insight::format_error(
-          "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}." # nolint
-        )
-      }
-    }
-  } else {
-    if (inherits(attri$model, "spca")) {
-      # https://github.com/erichson/spca/issues/7
-      newdata <- newdata[names(attri$model$center)]
-      if (attri$standardize) {
-        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
-        newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
-      }
-      out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
-      out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
-    } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
-      out <- as.data.frame(stats::predict(attri$model, data = newdata, ...))
+      d <- attri$data_set
+      d <- d[vapply(d, is.numeric, logical(1))]
+      out <- as.data.frame(stats::predict(attri$model, newdata = d))
     } else {
-      out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
+      insight::format_error(
+        "Could not retrieve data nor model. Please report an issue on {.url https://github.com/easystats/parameters/issues}." # nolint
+      )
     }
+  } else if (inherits(attri$model, "spca")) {
+    # https://github.com/erichson/spca/issues/7
+    newdata <- newdata[names(attri$model$center)]
+    if (attri$standardize) {
+      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$center, FUN = "-", check.margin = TRUE)
+      newdata <- sweep(newdata, MARGIN = 2, STATS = attri$model$scale, FUN = "/", check.margin = TRUE)
+    }
+    out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
+    out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
+  } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
+    out <- as.data.frame(stats::predict(attri$model, data = newdata, ...))
+  } else {
+    out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
   }
 
   if (!is.null(names)) {
@@ -343,12 +339,10 @@ print.parameters_omega_summary <- function(x, ...) {
     } else {
       table_caption <- c(sprintf("# Loadings from %s (no rotation)", method), "blue")
     }
+  } else if (format == "markdown") {
+    table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
   } else {
-    if (format == "markdown") {
-      table_caption <- sprintf("Rotated loadings from %s (%s-rotation)", method, rotation_name)
-    } else {
-      table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
-    }
+    table_caption <- c(sprintf("# Rotated loadings from %s (%s-rotation)", method, rotation_name), "blue")
   }
 
   # footer

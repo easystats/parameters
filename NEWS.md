@@ -24,6 +24,9 @@
 * `print(include_reference = TRUE)` for `model_parameters()` did not work when
   run inside a pipe-chain.
 
+* Fixed issues with `format()` for objects returned by `compare_parameters()`
+  that included mixed models.
+
 # parameters 0.21.3
 
 ## Changes

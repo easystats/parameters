@@ -107,24 +107,8 @@ format.parameters_model <- function(x,
   # check if we have mixed models with random variance parameters
   # in such cases, we don't need the group-column, but we rather
   # merge it with the parameter column
-  if (isTRUE(random_variances) && !is.null(x$Group) && !is.null(x$Effects)) {
-    ran_pars <- which(x$Effects == "random")
-    stddevs <- startsWith(x$Parameter[ran_pars], "SD (")
-    x$Parameter[ran_pars[stddevs]] <- paste0(
-      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[stddevs]]),
-      ": ",
-      x$Group[ran_pars[stddevs]],
-      ")"
-    )
-    corrs <- startsWith(x$Parameter[ran_pars], "Cor (")
-    x$Parameter[ran_pars[corrs]] <- paste0(
-      gsub("(.*)\\)", "\\1", x$Parameter[ran_pars[corrs]]),
-      ": ",
-      x$Group[ran_pars[corrs]],
-      ")"
-    )
-    x$Parameter[x$Parameter == "SD (Observations: Residual)"] <- "SD (Residual)"
-    x$Group <- NULL
+  if (isTRUE(random_variances)) {
+    x <- .format_ranef_parameters(x)
   }
 
   # group parameters - this function find those parameters that should be
@@ -311,7 +295,7 @@ format.compare_parameters <- function(x,
     ran_group_rows <- NULL
   } else {
     ran_groups <- unique(insight::compact_character(x$Group))
-    ran_group_rows <- which(nchar(x$Group) > 0)
+    ran_group_rows <- which(nzchar(x$Group, keepNA = TRUE))
   }
 
   for (i in models) {
@@ -341,9 +325,12 @@ format.compare_parameters <- function(x,
       # find SD random parameters
       stddevs <- startsWith(out$Parameter[ran_pars_rows], "SD (")
       # check if we already fixed that name in a previous loop
-      fixed_name <- unlist(lapply(ran_groups, function(g) {
-        which(grepl(g, out$Parameter[ran_pars_rows[stddevs]], fixed = TRUE))
-      }))
+      fixed_name <- unlist(lapply(
+        ran_groups,
+        grep,
+        x = out$Parameter[ran_pars_rows[stddevs]],
+        fixed = TRUE
+      ))
       if (length(fixed_name)) {
         stddevs[fixed_name] <- FALSE
       }
@@ -359,9 +346,12 @@ format.compare_parameters <- function(x,
       # same for correlations
       corrs <- startsWith(out$Parameter[ran_pars_rows], "Cor (")
       # check if we already fixed that name in a previous loop
-      fixed_name <- unlist(lapply(ran_groups, function(g) {
-        which(grepl(g, out$Parameter[ran_pars_rows[corrs]], fixed = TRUE))
-      }))
+      fixed_name <- unlist(lapply(
+        ran_groups,
+        grep,
+        x = out$Parameter[ran_pars_rows[corrs]],
+        fixed = TRUE
+      ))
       if (length(fixed_name)) {
         corrs[fixed_name] <- FALSE
       }
@@ -426,6 +416,13 @@ format.compare_parameters <- function(x,
     formatted_table <- split(out, f = split_by)
     formatted_table <- lapply(names(formatted_table), function(tab) {
       i <- formatted_table[[tab]]
+      # check if data frame is empty - this may happen if not all combinations
+      # of split_by factors are present in the data (e.g., zero-inflated mixed
+      # models, that have random effects for the count, but not for the zero-
+      # inflation component)
+      if (nrow(i) == 0L) {
+        return(NULL)
+      }
       # remove unique columns
       if (insight::n_unique(i$Component) == 1L) i$Component <- NULL
       if (insight::n_unique(i$Effects) == 1L) i$Effects <- NULL
@@ -446,6 +443,9 @@ format.compare_parameters <- function(x,
       }
       i
     })
+
+    # remove empty tables
+    formatted_table <- insight::compact_list(formatted_table)
 
     # for HTML, bind data frames
     if (identical(format, "html")) {
@@ -545,7 +545,7 @@ format.parameters_sem <- function(x,
   footer <- NULL
   type <- tolower(format)
 
-  sigma <- attributes(x)$sigma
+  sigma_value <- attributes(x)$sigma
   r2 <- attributes(x)$r2
   residual_df <- attributes(x)$residual_df
   p_adjust <- attributes(x)$p_adjust
@@ -565,7 +565,7 @@ format.parameters_sem <- function(x,
 
   # footer: residual standard deviation
   if (isTRUE(show_sigma)) {
-    footer <- .add_footer_sigma(footer, digits, sigma, residual_df, type)
+    footer <- .add_footer_sigma(footer, digits, sigma_value, residual_df, type)
   }
 
   # footer: r-squared
@@ -876,7 +876,7 @@ format.parameters_sem <- function(x,
           string_approx <- ""
         }
 
-        if (!is.null(test_statistic) && !ci_method == "normal" && !isTRUE(bootstrap)) {
+        if (!is.null(test_statistic) && ci_method != "normal" && !isTRUE(bootstrap)) {
           string_statistic <- switch(tolower(test_statistic),
             `t-statistic` = "t",
             `chi-squared statistic` = ,
