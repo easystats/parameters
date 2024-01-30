@@ -27,7 +27,7 @@
 
   # for simplicity, we just use the model information from the first formula
   # when we have multivariate response models...
-  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info) && !inhertis(model, c("vgam", "vglm"))) {
     info <- info[[1]]
   }
 

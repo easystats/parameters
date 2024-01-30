@@ -68,7 +68,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
 .format_parameter_default <- function(model, effects = "fixed", brackets = c("[", "]"), ...) {
-  original_names <- names <- insight::find_parameters(model, effects = effects, flatten = TRUE)
+  original_names <- parameter_names <- insight::find_parameters(model, effects = effects, flatten = TRUE)
 
   # save some time, if model info is passed as argument
   dot_args <- list(...)
@@ -85,7 +85,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # quick fix, for multivariate response models, we use
   # info from first model only
-  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info)) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info) && !inhertis(model, c("vgam", "vglm"))) {
     info <- info[[1]]
   }
 
@@ -100,19 +100,19 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # special handling hurdle- and zeroinfl-models ---------------------
   if (isTRUE(info$is_zero_inflated) || isTRUE(info$is_hurdle)) {
-    names <- gsub("^(count_|zero_)", "", names)
+    parameter_names <- gsub("^(count_|zero_)", "", parameter_names)
     types$Parameter <- gsub("^(count_|zero_)", "", types$Parameter)
   }
 
   # special handling polr ---------------------
   if (inherits(model, "polr")) {
     original_names <- gsub("Intercept: ", "", original_names, fixed = TRUE)
-    names <- gsub("Intercept: ", "", names, fixed = TRUE)
+    parameter_names <- gsub("Intercept: ", "", parameter_names, fixed = TRUE)
   }
 
   # special handling bracl ---------------------
   if (inherits(model, "bracl")) {
-    names <- gsub("(.*):(.*)", "\\2", names)
+    parameter_names <- gsub("(.*):(.*)", "\\2", parameter_names)
   }
 
   # special handling DirichletRegModel ---------------------
@@ -121,11 +121,11 @@ format_parameters.parameters_model <- function(model, ...) {
     cf <- stats::coef(model)
     if (model$parametrization == "common") {
       pattern <- paste0("(", paste(model$varnames, collapse = "|"), ")\\.(.*)")
-      dirich_names <- names <- gsub(pattern, "\\2", names(unlist(cf)))
+      dirich_names <- parameter_names <- gsub(pattern, "\\2", names(unlist(cf)))
     } else {
-      dirich_names <- names <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
+      dirich_names <- parameter_names <- gsub("(.*)\\.(.*)\\.(.*)", "\\3", names(unlist(cf)))
     }
-    original_names <- names
+    original_names <- parameter_names
     if (!is.null(dirich_names)) {
       types$Parameter <- dirich_names
     }
@@ -133,7 +133,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
 
   # remove "as.factor()", "log()" etc. from parameter names
-  names <- .clean_parameter_names(names)
+  parameter_names <- .clean_parameter_names(parameter_names)
 
 
   for (i in seq_len(nrow(types))) {
@@ -175,7 +175,7 @@ format_parameters.parameters_model <- function(model, ...) {
           )
         }
       }
-      names[i] <- .format_interaction(
+      parameter_names[i] <- .format_interaction(
         components = components,
         type = types[i, "Type"],
         is_nested = is_nested,
@@ -185,7 +185,7 @@ format_parameters.parameters_model <- function(model, ...) {
     } else {
       # No interaction
       type <- types[i, ]
-      names[i] <- .format_parameter(
+      parameter_names[i] <- .format_parameter(
         name,
         variable = type$Variable,
         type = type$Type,
@@ -196,9 +196,9 @@ format_parameters.parameters_model <- function(model, ...) {
   }
 
   # do some final formatting, like replacing underscores or dots with whitespace.
-  names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", names, perl = TRUE)
+  parameter_names <- gsub("(\\.|_)(?![^\\[]*\\])", " ", parameter_names, perl = TRUE)
   # remove double spaces
-  names <- gsub("  ", " ", names, fixed = TRUE)
+  parameter_names <- gsub("  ", " ", parameter_names, fixed = TRUE)
 
   # "types$Parameter" here is cleaned, i.e. patterns like "log()", "as.factor()"
   # etc. are removed. However, these patterns are needed in "format_table()",
@@ -207,8 +207,8 @@ format_parameters.parameters_model <- function(model, ...) {
   # so output will be NA resp. blank fields... Thus, I think we should use
   # the original parameter-names here.
 
-  names(names) <- original_names # types$Parameter
-  names
+  names(parameter_names) <- original_names # types$Parameter
+  parameter_names
 }
 
 
@@ -361,7 +361,7 @@ format_parameters.parameters_model <- function(model, ...) {
 # replace pretty names with value labels, when present ---------------
 
 .format_value_labels <- function(params, model = NULL) {
-  labels <- NULL
+  pretty_labels <- NULL
   if (is.null(model)) {
     model <- .get_object(params)
   }
@@ -390,9 +390,9 @@ format_parameters.parameters_model <- function(model, ...) {
         out <- attr(vec, "label", exact = TRUE)
       }
       if (is.null(out)) {
-        return(i)
+        i
       } else {
-        return(out)
+        out
       }
     })
 
@@ -406,7 +406,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
     # name elements
     names(lbs) <- names(preds) <- colnames(mf)
-    labels <- .safe(stats::setNames(
+    pretty_labels <- .safe(stats::setNames(
       unlist(lbs, use.names = FALSE),
       unlist(preds, use.names = FALSE)
     ))
@@ -415,7 +415,7 @@ format_parameters.parameters_model <- function(model, ...) {
     pn <- attributes(params)$pretty_names
     # replace former pretty names with labels, if we have any labels
     # (else, default pretty names are returned)
-    if (!is.null(labels)) {
+    if (!is.null(pretty_labels)) {
       # check if we have any interactions, and if so, create combined labels
       interactions <- pn[grepl(":", names(pn), fixed = TRUE)]
       if (length(interactions)) {
@@ -424,23 +424,23 @@ format_parameters.parameters_model <- function(model, ...) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))
           # combine labels
-          labs <- c(labs, paste0(sapply(out, function(l) labels[l]), collapse = " * "))
+          labs <- c(labs, paste0(sapply(out, function(l) pretty_labels[l]), collapse = " * "))
         }
         # add interaction terms to labels string
         names(labs) <- names(interactions)
-        labels <- c(labels, labs)
+        pretty_labels <- c(pretty_labels, labs)
       }
       # make sure "invalid" labels are ignored
-      common_labels <- intersect(names(labels), names(pn))
-      pn[common_labels] <- labels[common_labels]
+      common_labels <- intersect(names(pretty_labels), names(pn))
+      pn[common_labels] <- pretty_labels[common_labels]
     }
-    labels <- pn
+    pretty_labels <- pn
   }
 
   # missing labels return original parameter name (e.g., variance components in mixed models)
   out <- stats::setNames(params$Parameter, params$Parameter)
-  labels <- labels[names(labels) %in% params$Parameter]
-  out[match(names(labels), params$Parameter)] <- labels
+  pretty_labels <- pretty_labels[names(pretty_labels) %in% params$Parameter]
+  out[match(names(pretty_labels), params$Parameter)] <- pretty_labels
 
   out
 }
