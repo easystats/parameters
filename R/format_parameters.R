@@ -85,7 +85,7 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # quick fix, for multivariate response models, we use
   # info from first model only
-  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info) && !inhertis(model, c("vgam", "vglm"))) {
+  if (insight::is_multivariate(model) && !"is_zero_inflated" %in% names(info) && !inherits(model, c("vgam", "vglm"))) {
     info <- info[[1]]
   }
 
