@@ -20,18 +20,15 @@
 #' @seealso [insight::standardize_names()] to rename
 #'   columns into a consistent, standardized naming scheme.
 #'
-#' @examples
-#' library(parameters)
-#' if (require("brglm2", quietly = TRUE)) {
-#'   data("stemcell")
-#'   model <- bracl(
-#'     research ~ as.numeric(religion) + gender,
-#'     weights = frequency,
-#'     data = stemcell,
-#'     type = "ML"
-#'   )
-#'   model_parameters(model)
-#' }
+#' @examplesIf require("brglm2", quietly = TRUE)
+#' data("stemcell", package = "brglm2")
+#' model <- brglm2::bracl(
+#'   research ~ as.numeric(religion) + gender,
+#'   weights = frequency,
+#'   data = stemcell,
+#'   type = "ML"
+#' )
+#' model_parameters(model)
 #' @return A data frame of indices related to the model's parameters.
 #' @inheritParams simulate_model
 #' @export

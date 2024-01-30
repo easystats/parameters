@@ -13,7 +13,7 @@
 #'   family = poisson(),
 #'   data = Salamanders
 #' )
-#' out <- compare_parameters(m1, m2, m3, effects = "all", components = "all")
+#' out <- compare_parameters(m1, m2, m3, effects = "all", component = "all")
 #' print_table(out)
 #' }
 #' @rdname display.parameters_model

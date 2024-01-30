@@ -280,7 +280,8 @@ to the end.}
 \value{
 If \code{format = "markdown"}, the return value will be a character
 vector in markdown-table format. If \code{format = "html"}, an object of
-class \code{gt_tbl}.
+class \code{gt_tbl}. For \code{print_table()}, an object of class \code{tinytable} is
+returned.
 }
 \description{
 Prints tables (i.e. data frame) in different output formats.
@@ -295,6 +296,13 @@ be formatted for pretty table-rendering in markdown documents, or if
 knitted from rmarkdown to PDF or Word files. See
 \href{https://easystats.github.io/parameters/articles/model_parameters_formatting.html}{vignette}
 for examples.
+
+\code{print_table()} is a special function for \code{compare_parameters()} objects,
+which prints the output as a formatted HTML table. It is still somewhat
+experimental, thus, only a fixed layout-style is available at the moment
+(columns for estimates, confidence intervals and p-values). However, it
+is possible to include other model components, like zero-inflation, or random
+effects in the table. See 'Examples'.
 }
 \examples{
 \dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
@@ -338,7 +346,7 @@ m3 <- glmmTMB::glmmTMB(
   family = poisson(),
   data = Salamanders
 )
-out <- compare_parameters(m1, m2, m3, effects = "all", components = "all")
+out <- compare_parameters(m1, m2, m3, effects = "all", component = "all")
 print_table(out)
 }
 \dontshow{\}) # examplesIf}
