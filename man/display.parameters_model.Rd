@@ -129,7 +129,7 @@
   ...
 )
 
-print_table(x, digits = 2, p_digits = 3, style = "default", ...)
+print_table(x, digits = 2, p_digits = 3, theme = "default", ...)
 }
 \arguments{
 \item{object}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
@@ -277,7 +277,8 @@ variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
 
-\item{style}{String, indicating the table style. Currently, only \code{"default"}}
+\item{theme}{String, indicating the table theme. Can be one of \code{"default"},
+\code{"grid"}, \code{"striped"}, \code{"bootstrap"} or \code{"darklines"}.}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
