@@ -18,7 +18,7 @@
 #' }
 #' @rdname display.parameters_model
 #' @export
-print_table <- function(x, digits = 2, p_digits = 3, ...) {
+print_table <- function(x, digits = 2, p_digits = 3, theme = "default", ...) {
   insight::check_if_installed(c("datawizard", "tinytable"))
 
   if (!inherits(x, "compare_parameters")) {
@@ -46,6 +46,15 @@ print_table <- function(x, digits = 2, p_digits = 3, ...) {
     # }
     x <- .format_ranef_parameters(x)
     x$Group <- NULL
+  }
+
+  # check if we have only have fixed effects, and if so, remove column
+  if (!is.null(x$Effects) && all(x$Effects == "fixed")) {
+    x$Effects <- NULL
+  }
+  # check if we have only have conditional component, and if so, remove column
+  if (!is.null(x$Component) && all(x$Component == "conditional")) {
+    x$Component <- NULL
   }
 
   # check if we have models with extra components (e.g., zero-inflated models)
@@ -153,6 +162,8 @@ print_table <- function(x, digits = 2, p_digits = 3, ...) {
   } else {
     out <- tinytable::group_tt(out, j = col_groups)
   }
+  # style table
+  out <- .apply_table_theme(out, x, theme = theme, row_header_pos = row_header_pos)
   # workaround, to make sure HTML is default output
   m <- attr(out, "tinytable_meta")
   m$output <- "html"

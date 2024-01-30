@@ -29,6 +29,8 @@
 #' @param line_padding For HTML tables, the distance (in pixel) between lines.
 #' @param column_labels Labels of columns for HTML tables. If `NULL`, automatic
 #' column names are generated. See 'Examples'.
+#' @param theme String, indicating the table theme. Can be one of `"default"`,
+#' `"grid"`, `"striped"`, `"bootstrap"` or `"darklines"`.
 #' @inheritParams print.parameters_model
 #' @inheritParams insight::format_table
 #' @inheritParams insight::export_table

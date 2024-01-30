@@ -129,7 +129,7 @@
   ...
 )
 
-print_table(x, digits = 2, p_digits = 3, ...)
+print_table(x, digits = 2, p_digits = 3, style = "default", ...)
 }
 \arguments{
 \item{object}{An object returned by \code{\link[=model_parameters]{model_parameters()}},
@@ -276,6 +276,8 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
+
+\item{style}{String, indicating the table style. Currently, only \code{"default"}}
 }
 \value{
 If \code{format = "markdown"}, the return value will be a character
