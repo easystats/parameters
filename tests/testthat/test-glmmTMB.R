@@ -456,6 +456,7 @@ withr::with_options(
 
     # proper alignment of CIs ---------------------
     test_that("print-model_parameters glmmTMB CI alignment", {
+      skip_if_not_installed("curl")
       skip_if_offline()
       skip_on_os(c("mac", "linux", "solaris"))
       skip_if_not(getRversion() < "4.3.0")

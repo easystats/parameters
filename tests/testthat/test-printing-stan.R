@@ -1,3 +1,4 @@
+skip_if_not_installed("curl")
 skip_if_offline()
 skip_on_cran()
 skip_if_not_installed("brms")

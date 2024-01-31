@@ -14,6 +14,7 @@ test_that("p_value", {
 skip_on_cran()
 
 test_that("p_value", {
+  skip_if_not_installed("curl")
   skip_if_offline()
   skip_if_not_installed("httr")
   skip_if_not_installed("lme4")
