@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.3.10
+Version: 0.21.4
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -216,4 +216,3 @@ Config/Needs/website:
     r-lib/pkgdown,
     easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/see
