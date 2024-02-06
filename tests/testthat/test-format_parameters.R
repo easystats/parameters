@@ -381,5 +381,20 @@ withr::with_options(
         "e42dep [2] * c12hour"
       )
     })
+
+    test_that("format_parameters, cut", {
+      data(mtcars)
+      mtcars$grp <- cut(mtcars$mpg, breaks = c(0, 15, 20, 50))
+      out <- model_parameters(lm(wt ~ grp, data = mtcars))
+      expect_equal(
+        attributes(out)$pretty_names,
+        c(
+          `(Intercept)` = "(Intercept)", `grp(15,20]` = "grp [>15-20]",
+          `grp(20,50]` = "grp [>20-50]"
+        ),
+        ignore_attr = TRUE
+      )
+      expect_identical(out$Parameter, c("(Intercept)", "grp(15,20]", "grp(20,50]"))
+    })
   }
 )
