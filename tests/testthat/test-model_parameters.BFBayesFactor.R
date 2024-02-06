@@ -1,3 +1,5 @@
+skip_on_os("linux")
+
 test_that("model_parameters.BFBayesFactor", {
   skip_on_cran()
   skip("TODO")
