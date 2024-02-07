@@ -1,3 +1,10 @@
+# parameters 0.21.6
+
+## Bug fixes
+
+* Fixed issue with parameter names for `model_parameters()` and objects from
+  package *epiR*.
+
 # parameters 0.21.5
 
 ## Bug fixes
