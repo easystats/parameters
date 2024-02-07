@@ -319,11 +319,11 @@ format_parameters.parameters_model <- function(model, ...) {
   if (all(grepl(pattern_cut_right, level))) {
     lower_bounds <- gsub(pattern_cut_right, "\\1", level)
     upper_bounds <- gsub(pattern_cut_right, "\\2", level)
-    level <- paste0(as.numeric(lower_bounds) + 1, "-", upper_bounds)
+    level <- paste0(">", as.numeric(lower_bounds), "-", upper_bounds)
   } else if (all(grepl(pattern_cut_left, level))) {
     lower_bounds <- gsub(pattern_cut_left, "\\1", level)
     upper_bounds <- gsub(pattern_cut_left, "\\2", level)
-    level <- paste0(lower_bounds, "-", as.numeric(upper_bounds) - 1)
+    level <- paste0(lower_bounds, "-<", as.numeric(upper_bounds))
   }
   paste0(variable, " ", brackets[1], level, brackets[2])
 }
