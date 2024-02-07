@@ -25,6 +25,7 @@ model_parameters.epi.2by2 <- function(model, verbose = TRUE, ...) {
   # pretty names
   pretty_names <- params$Parameter
   pretty_names[pretty_names == "PR"] <- "Prevalence Ratio"
+  pretty_names[pretty_names == "RR"] <- "Risk Ratio"
   pretty_names[pretty_names == "OR"] <- "Odds Ratio"
   pretty_names[pretty_names == "ARisk"] <- "Attributable Risk"
   pretty_names[pretty_names == "PARisk"] <- "Attributable Risk in Population"
