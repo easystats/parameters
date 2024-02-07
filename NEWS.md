@@ -1,3 +1,10 @@
+# parameters 0.21.5
+
+## Bug fixes
+
+* Fixes CRAN check errors related to the changes in the latest update of
+  *marginaleffects*.
+
 # parameters 0.21.4
 
 ## Breaking changes
