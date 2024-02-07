@@ -18,7 +18,7 @@ test_that("model_parameters.aov", {
   model <- aov(Sepal.Width ~ Species, data = iris)
   mp <- suppressMessages(model_parameters(model, effectsize_type = c("omega", "eta", "epsilon")))
   expect_identical(sum(mp$df), 149)
-  expect_names(mp, c(
+  expect_named(mp, c(
     "Parameter", "Sum_Squares", "df", "Mean_Square", "F", "p",
     "Omega2", "Eta2", "Epsilon2"
   ))
@@ -33,25 +33,25 @@ test_that("model_parameters.aov", {
 test_that("model_parameters.anova", {
   skip_if_not_installed("lme4")
   model <- anova(lm(Sepal.Width ~ Species, data = iris))
-  expect_identical(sum(model_parameters(model)$df), 149)
+  expect_identical(sum(model_parameters(model)$df), 149L)
 
   model <- anova(lm(Sepal.Length ~ Species * Cat1 * Cat2, data = iris))
-  expect_identical(sum(model_parameters(model)$df), 149)
+  expect_identical(sum(model_parameters(model)$df), 149L)
 
   model <- anova(lme4::lmer(wt ~ 1 + (1 | gear), data = mtcars))
-  expect_identical(nrow(model_parameters(model)), 0)
+  expect_identical(nrow(model_parameters(model)), 0L)
 
   model <- anova(lme4::lmer(wt ~ cyl + (1 | gear), data = mtcars))
-  expect_identical(sum(model_parameters(model)$df), 1)
+  expect_identical(sum(model_parameters(model)$df), 1L)
 
   model <- anova(lme4::lmer(wt ~ drat + cyl + (1 | gear), data = mtcars))
-  expect_eexpect_identicalual(sum(model_parameters(model)$df), 2)
+  expect_identical(sum(model_parameters(model)$df), 2L)
 
   model <- anova(lme4::lmer(wt ~ drat * cyl + (1 | gear), data = mtcars))
-  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 3)
+  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 3L)
 
   model <- anova(lme4::lmer(wt ~ drat / cyl + (1 | gear), data = mtcars))
-  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 2)
+  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 2L)
 })
 
 
@@ -61,13 +61,13 @@ test_that("model_parameters.anova", {
   skip_if_not_installed("httr")
 
   model <- insight::download_model("anova_3")
-  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149)
+  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149L)
 
   model <- insight::download_model("anova_4")
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df, na.rm = TRUE), 2)
 
   model <- insight::download_model("anova_lmerMod_5")
-  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 1)
+  expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 1L)
 
   model <- insight::download_model("anova_lmerMod_6")
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 12)
