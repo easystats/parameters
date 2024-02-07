@@ -2,7 +2,7 @@ skip_on_cran()
 skip_if_not_installed("epiR")
 
 test_that("model_parameters.epi2x2", {
-  data(mtacrs)
+  data(mtcars)
   tab <- xtabs(~ am + vs, data = mtcars)
   out <- model_parameters(epiR::epi.2by2(tab))
   expect_identical(out$Parameter, c("RR", "OR", "ARisk", "AFRisk", "PARisk", "PAFRisk"))
