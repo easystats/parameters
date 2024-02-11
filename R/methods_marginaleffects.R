@@ -9,6 +9,9 @@ model_parameters.marginaleffects <- function(model,
                                              ci = 0.95,
                                              exponentiate = FALSE,
                                              ...) {
+
+  attri <- attributes(model)  # Store attributes that might have been added (e.g., modelbased)
+
   insight::check_if_installed("marginaleffects")
   out <- insight::standardize_names(
     marginaleffects::tidy(model, conf_level = ci, ...),
@@ -38,6 +41,7 @@ model_parameters.marginaleffects <- function(model,
   } else if (inherits(model, "hypotheses")) {
     attr(out, "coefficient_name") <- "Estimate"
   }
+  attributes(out) <- modifyList(attri, attributes(out))  # Add potential original attributes
 
   # exponentiate coefficients and SE/CI, if requested
   out <- .exponentiate_parameters(out, model = NULL, exponentiate)
