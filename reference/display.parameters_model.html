@@ -16,7 +16,7 @@ use cases only, and currently only works for compare_parameters() objects.'><met
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.3.10</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -1840,19 +1840,47 @@ effects in the table. See 'Examples'.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;script&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     function styleCell_tinytable_smkvguomypn0gbjlwepz(i, j, css_id) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       var table = document.getElementById("tinytable_jtcafx9o4vz1sfxiui59");</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       table.rows[i].cells[j].classList.add(css_id);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     function insertSpanRow_dz2528uf6d84vf5qck5z(i, colspan, content) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       var table = document.getElementById('tinytable_jtcafx9o4vz1sfxiui59');</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       var newRow = table.insertRow(i);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       var newCell = newRow.insertCell(0);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       newCell.setAttribute("colspan", colspan);</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       // newCell.innerText = content;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       // this may be unsafe, but innerText does not interpret &lt;br&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       newCell.innerHTML = content;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       function styleCell_tinytable_smkvguomypn0gbjlwepz(i, j, css_id) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var table = document.getElementById("tinytable_jtcafx9o4vz1sfxiui59");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         table.rows[i].cells[j].classList.add(css_id);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       function insertSpanRow_dz2528uf6d84vf5qck5z(i, colspan, content) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var table = document.getElementById('tinytable_jtcafx9o4vz1sfxiui59');</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var newRow = table.insertRow(i);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var newCell = newRow.insertCell(0);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.setAttribute("colspan", colspan);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // newCell.innerText = content;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // this may be unsafe, but innerText does not interpret &lt;br&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         newCell.innerHTML = content;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       function spanCell_tinytable_smkvguomypn0gbjlwepz(i, j, rowspan, colspan) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         var table = document.getElementById("tinytable_jtcafx9o4vz1sfxiui59");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         const targetRow = table.rows[i];</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         const targetCell = targetRow.cells[j];</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         for (let r = 0; r &lt; rowspan; r++) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           // Only start deleting cells to the right for the first row (r == 0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           if (r === 0) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             // Delete cells to the right of the target cell in the first row</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             for (let c = colspan - 1; c &gt; 0; c--) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               if (table.rows[i + r].cells[j + c]) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 table.rows[i + r].deleteCell(j + c);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           // For rows below the first, delete starting from the target column</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           if (r &gt; 0) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             for (let c = colspan - 1; c &gt;= 0; c--) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               if (table.rows[i + r] &amp;&amp; table.rows[i + r].cells[j]) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 table.rows[i + r].deleteCell(j);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         // Set rowspan and colspan of the target cell</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         targetCell.rowSpan = rowspan;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         targetCell.colSpan = colspan;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { styleCell_tinytable_smkvguomypn0gbjlwepz(1, 0, 'tinytable_css_v1mrbt9a9zi6btpr5kel') })</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { styleCell_tinytable_smkvguomypn0gbjlwepz(1, 1, 'tinytable_css_v1mrbt9a9zi6btpr5kel') })</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> window.addEventListener('load', function () { styleCell_tinytable_smkvguomypn0gbjlwepz(1, 2, 'tinytable_css_v1mrbt9a9zi6btpr5kel') })</span>

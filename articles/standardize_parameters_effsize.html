@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.3.10</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -388,14 +388,14 @@ used.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span></code></pre></div>
-<pre><code>&gt; Parameter     | Coefficient |     SE |              95% CI | t(494) |      p
-&gt; ----------------------------------------------------------------------------
-&gt; (Intercept)   |     9806.10 | 446.71 | [8928.41, 10683.79] |  21.95 | &lt; .001
-&gt; xtra hours    |     1221.35 |  30.72 | [1161.00,  1281.71] |  39.76 | &lt; .001
-&gt; n comps       |     2944.87 | 131.12 | [2687.25,  3202.48] |  22.46 | &lt; .001
-&gt; age g [31-35] |      393.36 | 241.01 | [ -80.18,   866.90] |   1.63 | 0.103 
-&gt; age g [36-45] |      597.61 | 427.72 | [-242.77,  1437.99] |   1.40 | 0.163 
-&gt; seniority     |      443.76 | 102.38 | [ 242.62,   644.91] |   4.33 | &lt; .001</code></pre>
+<pre><code>&gt; Parameter      | Coefficient |     SE |              95% CI | t(494) |      p
+&gt; -----------------------------------------------------------------------------
+&gt; (Intercept)    |     9806.10 | 446.71 | [8928.41, 10683.79] |  21.95 | &lt; .001
+&gt; xtra hours     |     1221.35 |  30.72 | [1161.00,  1281.71] |  39.76 | &lt; .001
+&gt; n comps        |     2944.87 | 131.12 | [2687.25,  3202.48] |  22.46 | &lt; .001
+&gt; age g [&gt;30-35] |      393.36 | 241.01 | [ -80.18,   866.90] |   1.63 | 0.103 
+&gt; age g [&gt;35-45] |      597.61 | 427.72 | [-242.77,  1437.99] |   1.40 | 0.163 
+&gt; seniority      |      443.76 | 102.38 | [ 242.62,   644.91] |   4.33 | &lt; .001</code></pre>
 <p>It seems like the best or most important predictor is
 <code>n_comps</code> as it has the coefficient. However, it is hard to
 compare among predictors, as they are on different scales. To address
@@ -483,14 +483,14 @@ original model would:</p>
 &gt;       0.0821</code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">mod_z</span><span class="op">)</span></span></code></pre></div>
-<pre><code>&gt; Parameter     | Coefficient |   SE |        95% CI | t(494) |      p
-&gt; --------------------------------------------------------------------
-&gt; (Intercept)   |       -0.05 | 0.03 | [-0.11, 0.02] |  -1.47 | 0.142 
-&gt; xtra hours    |        0.77 | 0.02 | [ 0.73, 0.81] |  39.76 | &lt; .001
-&gt; n comps       |        0.39 | 0.02 | [ 0.36, 0.43] |  22.46 | &lt; .001
-&gt; age g [31-35] |        0.06 | 0.04 | [-0.01, 0.14] |   1.63 | 0.103 
-&gt; age g [36-45] |        0.10 | 0.07 | [-0.04, 0.23] |   1.40 | 0.163 
-&gt; seniority     |        0.08 | 0.02 | [ 0.04, 0.12] |   4.33 | &lt; .001</code></pre>
+<pre><code>&gt; Parameter      | Coefficient |   SE |        95% CI | t(494) |      p
+&gt; ---------------------------------------------------------------------
+&gt; (Intercept)    |       -0.05 | 0.03 | [-0.11, 0.02] |  -1.47 | 0.142 
+&gt; xtra hours     |        0.77 | 0.02 | [ 0.73, 0.81] |  39.76 | &lt; .001
+&gt; n comps        |        0.39 | 0.02 | [ 0.36, 0.43] |  22.46 | &lt; .001
+&gt; age g [&gt;30-35] |        0.06 | 0.04 | [-0.01, 0.14] |   1.63 | 0.103 
+&gt; age g [&gt;35-45] |        0.10 | 0.07 | [-0.04, 0.23] |   1.40 | 0.163 
+&gt; seniority      |        0.08 | 0.02 | [ 0.04, 0.12] |   4.33 | &lt; .001</code></pre>
 </div>
 <div class="section level5">
 <h5 id="posthoc-refit-without-refitting">

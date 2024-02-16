@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.3.10</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.5.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,7 +193,7 @@ can be done with <code><a href="../reference/format_parameters.html">format_para
 <span><span class="co">#&gt;      poly(Sepal.Length, 2)2           Speciesversicolor </span></span>
 <span><span class="co">#&gt; "Sepal Length [2nd degree]"      "Species [versicolor]" </span></span>
 <span><span class="co">#&gt;            Speciesvirginica                 Petlen(3,7] </span></span>
-<span><span class="co">#&gt;       "Species [virginica]"              "Petlen [4-7]"</span></span></code></pre></div>
+<span><span class="co">#&gt;       "Species [virginica]"             "Petlen [&gt;3-7]"</span></span></code></pre></div>
 <p><code><a href="../reference/format_parameters.html">format_parameters()</a></code> returns a (named) character vector
 with the original coefficients as <em>names</em> of each character
 element, and the formatted names of the coefficients as values of the
@@ -205,7 +205,7 @@ character vector. Let’s look at the results again:</p>
 <span><span class="co">#&gt; Sepal Length [2nd degree]</span></span>
 <span><span class="co">#&gt; Species [versicolor]</span></span>
 <span><span class="co">#&gt; Species [virginica]</span></span>
-<span><span class="co">#&gt; Petlen [4-7]</span></span></code></pre></div>
+<span><span class="co">#&gt; Petlen [&gt;3-7]</span></span></code></pre></div>
 <p>Now variable names and factor levels, but also polynomial terms or
 even factors grouped with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> are much more readable.
 Factor levels are separated from the variable name, inside brackets.
@@ -326,7 +326,7 @@ default for <code><a href="../reference/model_parameters.html">model_parameters(
 <span><span class="co">#&gt; 3 Sepal Length [2nd degree]       -1.30 0.31 [-1.92, -0.68]  -4.14 &lt; .001</span></span>
 <span><span class="co">#&gt; 4      Species [versicolor]       -1.01 0.28 [-1.56, -0.46]  -3.62 &lt; .001</span></span>
 <span><span class="co">#&gt; 5       Species [virginica]       -0.99 0.29 [-1.55, -0.43]  -3.48 &lt; .001</span></span>
-<span><span class="co">#&gt; 6              Petlen [4-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</span></span></code></pre></div>
+<span><span class="co">#&gt; 6             Petlen [&gt;3-7]       -0.14 0.28 [-0.69,  0.42]  -0.48 0.630</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="exporting-the-parameters-table">Exporting the Parameters Table<a class="anchor" aria-label="anchor" href="#exporting-the-parameters-table"></a>
@@ -376,7 +376,7 @@ all these steps automatically:</p>
 <span><span class="co">#&gt; Sepal Length [2nd degree] |       -1.30 | 0.31 | [-1.92, -0.68] |  -4.14 | &lt; .001</span></span>
 <span><span class="co">#&gt; Species [versicolor]      |       -1.01 | 0.28 | [-1.56, -0.46] |  -3.62 | &lt; .001</span></span>
 <span><span class="co">#&gt; Species [virginica]       |       -0.99 | 0.29 | [-1.55, -0.43] |  -3.48 | &lt; .001</span></span>
-<span><span class="co">#&gt; Petlen [4-7]              |       -0.14 | 0.28 | [-0.69,  0.42] |  -0.48 | 0.630</span></span></code></pre></div>
+<span><span class="co">#&gt; Petlen [&gt;3-7]             |       -0.14 | 0.28 | [-0.69,  0.42] |  -0.48 | 0.630</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="formatting-the-parameters-table-in-markdown">Formatting the Parameters Table in Markdown<a class="anchor" aria-label="anchor" href="#formatting-the-parameters-table-in-markdown"></a>
@@ -537,7 +537,7 @@ Word tables.</p>
 <td align="center">&lt; .001</td>
 </tr>
 <tr class="even">
-<td align="left">Petlen (4-7)</td>
+<td align="left">Petlen (&gt;3-7)</td>
 <td align="center">-0.14</td>
 <td align="center">0.28</td>
 <td align="center">(-0.69, 0.42)</td>
@@ -1044,7 +1044,7 @@ PDF.</p>
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left" style="border-right-width: 1px; border-right-style: solid; border-right-color: #d3d3d3;">Petlen (4-7)</td>
+<td headers="Parameter" class="gt_row gt_left" style="border-right-width: 1px; border-right-style: solid; border-right-color: #d3d3d3;">Petlen (&gt;3-7)</td>
 <td headers="Coefficient" class="gt_row gt_center">-0.14</td>
 <td headers="SE" class="gt_row gt_center">0.28</td>
 <td headers="95% CI" class="gt_row gt_center">(-0.69, 0.42)</td>
@@ -1555,7 +1555,7 @@ inside markdown-documents. A wrapper around these both is
 <td headers="p" class="gt_row gt_center">&lt; .001</td>
 </tr>
 <tr>
-<td headers="Parameter" class="gt_row gt_left" style="border-right-width: 1px; border-right-style: solid; border-right-color: #d3d3d3;">Petlen (4-7)</td>
+<td headers="Parameter" class="gt_row gt_left" style="border-right-width: 1px; border-right-style: solid; border-right-color: #d3d3d3;">Petlen (&gt;3-7)</td>
 <td headers="Coefficient" class="gt_row gt_center">-0.14</td>
 <td headers="SE" class="gt_row gt_center">0.28</td>
 <td headers="95% CI" class="gt_row gt_center">(-0.69, 0.42)</td>
