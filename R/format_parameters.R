@@ -141,7 +141,15 @@ format_parameters.parameters_model <- function(model, ...) {
 
     if (types$Type[i] %in% c("interaction", "nested", "simple")) {
       # Interaction or nesting
-      components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+
+      # for "serp" models, coefficients end with ":1", ":2", etc. - we need
+      # to take this into account when splitting the name into components.
+      if (inherits(model, "serp")) {
+        pattern <- "(:(?![0-9]+$))"
+        components <- unlist(strsplit(name, pattern, perl = TRUE), use.names = FALSE)
+      } else {
+        components <- unlist(strsplit(name, ":", fixed = TRUE), use.names = FALSE)
+      }
       is_nested <- types$Type[i] == "nested"
       is_simple <- types$Type[i] == "simple"
 

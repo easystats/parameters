@@ -1,5 +1,9 @@
 # parameters 0.21.6
 
+## New supported models
+
+* Support for models of class `serp` (*serp*).
+
 ## Bug fixes
 
 * Fixed issue with parameter names for `model_parameters()` and objects from
