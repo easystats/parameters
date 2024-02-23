@@ -9,7 +9,7 @@ test_that("model_parameters.serp", {
     lambda = 5, data = ordinal::wine
   )
   mp <- model_parameters(m1)
-  expect_snapshot(print(mp))
+  expect_snapshot(print(mp, verbose = FALSE))
 
   # validate against coef
   out <- coef(summary(m1))

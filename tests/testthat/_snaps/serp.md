@@ -1,7 +1,7 @@
 # model_parameters.serp
 
     Code
-      print(mp)
+      print(mp, verbose = FALSE)
     Output
       Parameter                  | Log-Odds |   SE |         95% CI |     z |      p
       ------------------------------------------------------------------------------
@@ -25,10 +25,4 @@
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
-      
-      The model has a log- or logit-link. Consider using `exponentiate =
-        TRUE` to interpret coefficients as ratios.
-        
-      Some coefficients are very large, which may indicate issues with
-        complete separation.
 
