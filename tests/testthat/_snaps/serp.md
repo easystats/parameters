@@ -1,7 +1,7 @@
 # model_parameters.serp
 
     Code
-      print(mp, verbose = FALSE)
+      suppressMessages(print(mp))
     Output
       Parameter                  | Log-Odds |   SE |         95% CI |     z |      p
       ------------------------------------------------------------------------------
@@ -17,12 +17,8 @@
       contactyes:2               |     1.35 | 0.67 | [ 0.03,  2.66] |  2.01 | 0.044 
       contactyes:3               |     1.35 | 0.76 | [-0.13,  2.83] |  1.78 | 0.075 
       contactyes:4               |     1.22 | 0.86 | [-0.46,  2.89] |  1.42 | 0.156 
-      temp [warm] × contactyes:1 |     0.37 | 1.12 | [-1.82,  2.56] |  0.33 | 0.741 
-      temp [warm] × contactyes:2 |     0.35 | 1.03 | [-1.66,  2.37] |  0.34 | 0.730 
-      temp [warm] × contactyes:3 |     0.36 | 0.97 | [-1.55,  2.26] |  0.37 | 0.713 
-      temp [warm] × contactyes:4 |     0.32 | 1.02 | [-1.68,  2.33] |  0.32 | 0.751 
-    Message
-      
-      Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
-        using a Wald z-distribution approximation.
+      temp [warm] * contactyes:1 |     0.37 | 1.12 | [-1.82,  2.56] |  0.33 | 0.741 
+      temp [warm] * contactyes:2 |     0.35 | 1.03 | [-1.66,  2.37] |  0.34 | 0.730 
+      temp [warm] * contactyes:3 |     0.36 | 0.97 | [-1.55,  2.26] |  0.37 | 0.713 
+      temp [warm] * contactyes:4 |     0.32 | 1.02 | [-1.68,  2.33] |  0.32 | 0.751 
 
