@@ -8,7 +8,8 @@ withr::with_options(
   test_that("model_parameters.serp", {
     data(wine, package = "serp")
     m1 <- serp::serp(
-      rating ~ temp * contact, slope = "penalize",
+      rating ~ temp * contact,
+      slope = "penalize",
       link = "logit", reverse = TRUE, tuneMethod = "user",
       lambda = 5, data = ordinal::wine
     )

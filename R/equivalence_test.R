@@ -17,7 +17,7 @@ bayestestR::equivalence_test
 #'   equivalence. Can be `"bayes"`, `"classic"` or `"cet"`. See
 #'   'Details'.
 #' @param test Hypothesis test for computing contrasts or pairwise comparisons.
-#'   See [`?ggeffects::hypothesis_test`](https://strengejacke.github.io/ggeffects/reference/hypothesis_test.html)
+#'   See [`?ggeffects::test_predictions`](https://strengejacke.github.io/ggeffects/reference/test_predictions.html)
 #'   for details.
 #' @param verbose Toggle warnings and messages.
 #' @param ... Arguments passed to or from other methods.
@@ -318,7 +318,7 @@ equivalence_test.ggeffects <- function(x,
   rule <- match.arg(tolower(rule), choices = c("bayes", "classic", "cet"))
   range <- .check_rope_range(x, range, verbose)
 
-  out <- ggeffects::hypothesis_test(
+  out <- ggeffects::test_predictions(
     x,
     terms = focal,
     test = test,
