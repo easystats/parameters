@@ -79,7 +79,7 @@ BugReports: https://github.com/easystats/parameters/issues
 Depends:
     R (>= 3.6)
 Imports:
-    bayestestR (>= 0.13.1),
+    bayestestR (>= 0.13.2),
     datawizard (>= 0.9.1),
     insight (>= 0.19.8),
     graphics,
