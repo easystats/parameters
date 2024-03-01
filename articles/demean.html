@@ -248,7 +248,7 @@ indicating the “within-subject” effect)</p></li>
 <span><span class="co">#&gt; phq4 within |       -3.66 | 0.41 | [-4.46, -2.86] |  -8.95 | &lt; .001</span></span>
 <span></span>
 <span><span class="co"># we compare the results with those from the "lfe"-package for panel data</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MatthieuStigler/lfe" class="external-link">lfe</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-econometrics/lfe" class="external-link">lfe</a></span><span class="op">)</span></span>
 <span><span class="va">fe_model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lfe/man/felm.html" class="external-link">felm</a></span><span class="op">(</span></span>
 <span>  <span class="va">QoL</span> <span class="op">~</span> <span class="va">time</span> <span class="op">+</span> <span class="va">phq4</span> <span class="op">|</span> <span class="va">ID</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">qol_cancer</span></span>
@@ -469,15 +469,15 @@ levels):</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/random_parameters.html">random_parameters</a></span><span class="op">(</span><span class="va">rewb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Random Effects</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Within-Group Variance              119.47 (10.93)</span></span>
+<span><span class="co">#&gt; Within-Group Variance              119.51 (10.93)</span></span>
 <span><span class="co">#&gt; Between-Group Variance</span></span>
-<span><span class="co">#&gt;   Random Intercept (ID)             107.5 (10.37)</span></span>
-<span><span class="co">#&gt;   Random Intercept (ID.1)           25.76  (5.08)</span></span>
-<span><span class="co">#&gt;   Random Slope (ID.time)             0.49   (0.7)</span></span>
+<span><span class="co">#&gt;   Random Intercept (ID)            111.26 (10.55)</span></span>
+<span><span class="co">#&gt;   Random Intercept (ID.1)           21.86  (4.68)</span></span>
+<span><span class="co">#&gt;   Random Slope (ID.time)             0.46  (0.68)</span></span>
 <span><span class="co">#&gt;   Random Slope (ID.1.phq4_within)   14.37  (3.79)</span></span>
 <span><span class="co">#&gt; Correlations</span></span>
-<span><span class="co">#&gt;   ID.time                           -0.99</span></span>
-<span><span class="co">#&gt;   ID.phq4_within                     0.44</span></span>
+<span><span class="co">#&gt;   ID.time                              -1</span></span>
+<span><span class="co">#&gt;   ID.phq4_within                     0.48</span></span>
 <span><span class="co">#&gt; N (groups per factor)</span></span>
 <span><span class="co">#&gt;   ID                                  188</span></span>
 <span><span class="co">#&gt; Observations                          564</span></span></code></pre></div>
