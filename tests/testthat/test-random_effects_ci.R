@@ -7,7 +7,7 @@ skip_on_cran()
 data(sleepstudy, package = "lme4")
 data(cake, package = "lme4")
 set.seed(123)
-sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
 m1 <- suppressMessages(lme4::lmer(
   angle ~ temperature + (temperature | recipe) + (temperature | replicate),
@@ -20,11 +20,31 @@ m5 <- suppressMessages(lme4::lmer(Reaction ~ Days + (Days + Months | Subject), d
 
 ## TODO also check messages for profiled CI
 
-expect_message(mp1 <- model_parameters(m1, ci_random = TRUE), "meaningful")
+expect_message(
+  {
+    mp1 <- model_parameters(m1, ci_random = TRUE)
+  },
+  regex = "meaningful"
+)
 mp2 <- model_parameters(m2, ci_random = TRUE)
-expect_message(mp3 <- model_parameters(m3, ci_random = TRUE), "meaningful")
-expect_message(mp4 <- model_parameters(m4, ci_random = TRUE), "meaningful")
-expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "meaningful")
+expect_message(
+  {
+    mp3 <- model_parameters(m3, ci_random = TRUE)
+  },
+  regex = "meaningful"
+)
+expect_message(
+  {
+    mp4 <- model_parameters(m4, ci_random = TRUE)
+  },
+  regex = "meaningful"
+)
+expect_message(
+  {
+    mp5 <- model_parameters(m5, ci_random = TRUE)
+  },
+  regex = "meaningful"
+)
 
 
 # model 1 ---------------------
@@ -239,7 +259,7 @@ test_that("random effects CIs, double slope", {
 test_that("random effects CIs, simple slope", {
   data(sleepstudy, package = "lme4")
   set.seed(123)
-  sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+  sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
   m2 <- lme4::lmer(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
   m5 <- lme4::lmer(Reaction ~ Days + (0 + Days + Months | Subject), data = sleepstudy)
@@ -280,9 +300,9 @@ test_that("random effects CIs, simple slope", {
 # poly random slope --------------------------
 test_that("random effects CIs, poly slope", {
   data(cake, package = "lme4")
-  suppressMessages(
+  suppressMessages({
     m <- lme4::lmer(angle ~ poly(temp, 2) + (poly(temp, 2) | replicate) + (1 | recipe), data = cake)
-  )
+  })
   mp <- model_parameters(m, ci_random = TRUE)
 
   expect_equal(
