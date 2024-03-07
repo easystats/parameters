@@ -391,6 +391,17 @@
   # copy object, so we save original data
   out <- params
 
+  # sanity check - is pretty_names NULL? If so, use Parameters as pretty_names
+  if (is.null(pretty_names)) {
+    pretty_names <- stats::setNames(params$Parameter, params$Parameter)
+  }
+
+  # if we use "include_reference" and set "pretty_names = FALSE", pretty_names
+  # is no named vector. So we need to make sure we have a named vector
+  if (is.null(names(pretty_names))) {
+    pretty_names <- stats::setNames(pretty_names, params$Parameter)
+  }
+
   # if we use "keep" or "drop", we have less parameters in our data frame,
   # so we need to make sure we only have those pretty_names, which names match
   # the parameters in the data frame
