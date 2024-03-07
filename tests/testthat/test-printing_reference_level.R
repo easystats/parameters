@@ -1,3 +1,26 @@
+test_that("print in pipe", {
+  data(iris)
+  model <- lm(Sepal.Length ~ Petal.Length + Species, data = iris)
+  out <- model_parameters(model, include_reference = TRUE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "(Intercept)", "Petal.Length", "Speciessetosa", "Speciesversicolor",
+      "Speciesvirginica"
+    )
+  )
+  expect_equal(out$Coefficient, c(3.68353, 0.90456, 0, -1.60097, -2.11767), tolerance = 1e-4)
+  out <- model_parameters(model, include_reference = TRUE, pretty_names = FALSE)
+  expect_identical(
+    out$Parameter,
+    c(
+      "(Intercept)", "Petal.Length", "Speciessetosa", "Speciesversicolor",
+      "Speciesvirginica"
+    )
+  )
+  expect_equal(out$Coefficient, c(3.68353, 0.90456, 0, -1.60097, -2.11767), tolerance = 1e-4)
+})
+
 # skip_if(getRversion() < "4.0.0")
 
 # test_that("simple reference level", {

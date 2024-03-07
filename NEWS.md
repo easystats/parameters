@@ -4,6 +4,11 @@
 
 * Support for models of class `serp` (*serp*).
 
+## Changes
+
+* `include_reference` can now directly be set to `TRUE` in `model_parameters()`
+  and doesn't require a call to `print()` anymore.
+
 ## Bug fixes
 
 * Fixed issue with parameter names for `model_parameters()` and objects from
