@@ -1,4 +1,5 @@
 skip_if_not_installed("marginaleffects", minimum_version = "0.18.0")
+skip_if_not_installed("insight", minimum_version = "0.19.8.8")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
@@ -9,7 +10,7 @@ test_that("marginaleffects()", {
   expect_identical(nrow(out), 1L)
   expect_named(out, c(
     "Parameter", "Coefficient", "SE", "Statistic",
-    "p", "s.value", "CI", "CI_low", "CI_high"
+    "p", "S", "CI", "CI_low", "CI_high"
   ))
   out <- model_parameters(model, exponentiate = TRUE)
   expect_equal(out$Coefficient, 1.394, tolerance = 1e-3)
@@ -36,7 +37,7 @@ test_that("predictions()", {
   expect_identical(nrow(out), 3L)
   expect_named(out, c(
     "Predicted", "SE", "CI", "CI_low", "CI_high", "Statistic",
-    "p", "Species", "s.value"
+    "p", "Species", "S"
   ))
   out <- parameters(p, exponentiate = TRUE)
   expect_equal(out$Predicted, c(30.81495, 15.95863, 19.57004), tolerance = 1e-4)
