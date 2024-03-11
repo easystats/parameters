@@ -93,7 +93,7 @@ test_that("model_parameters.clm2", {
 })
 
 test_that("model_parameters.clmm, exponentiate works w/o component column", {
-  datas(wine, package = "ordinal")
+  data(wine, package = "ordinal")
   mox <- ordinal::clmm(rating ~ temp + contact + (1 | judge), data = wine)
   out1 <- model_parameters(mox, exponentiate = FALSE)
   out2 <- model_parameters(mox, exponentiate = TRUE)
