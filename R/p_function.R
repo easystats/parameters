@@ -92,6 +92,17 @@
 #' (which is in line with the "unconditional" interpretation in the sense of
 #' Rafi and Greenland).
 #'
+#' Ascribing a probabilistic interpretation to one realized confidence interval
+#' is possible without repeated sampling of the specific experiment. Important
+#' is the assumption that a _sampling distribution_ is a good description of the
+#' variability of the parameter (_Vos and Holbert 2022_). At the core, the
+#' interpretation of a confidence interval is "I assume that this sampling
+#' distribution is a good description of the uncertainty of the parameter. If
+#' that's a good assumption, then the values in this interval are the most
+#' plausible or compatible with the data". The source of confidence in
+#' probability statements is the assumption that the selected sampling
+#' distribution is appropriate.
+#'
 #' "The realized confidence distribution is clearly an epistemic probability
 #' distribution" (_Schweder 2018_). In Bayesian words, compatibility intervals
 #' (or confidence distributons, or consonance curves) are "posteriors without
@@ -156,20 +167,21 @@
 #' - Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
 #'   inference with confidence distributions. Cambridge University Press, 2016.
 #'
-#' @examples
+#' - Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+#'   Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
+#'
+#' @examplesIf requireNamespace("see")
 #' model <- lm(Sepal.Length ~ Species, data = iris)
 #' p_function(model)
 #'
-#' if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
-#'   model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
-#'   result <- p_function(model)
+#' model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
+#' result <- p_function(model)
 #'
-#'   # single panels
-#'   plot(result, n_columns = 2)
+#' # single panels
+#' plot(result, n_columns = 2)
 #'
-#'   # integrated plot, the default
-#'   plot(result)
-#' }
+#' # integrated plot, the default
+#' plot(result)
 #' @export
 p_function <- function(model,
                        ci_levels = c(0.25, 0.5, 0.75, emph = 0.95),

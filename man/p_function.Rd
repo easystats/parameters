@@ -194,6 +194,17 @@ compatibility intervals is "conditional" - on the data \emph{and} model assumpti
 (which is in line with the "unconditional" interpretation in the sense of
 Rafi and Greenland).
 
+Ascribing a probabilistic interpretation to one realized confidence interval
+is possible without repeated sampling of the specific experiment. Important
+is the assumption that a \emph{sampling distribution} is a good description of the
+variability of the parameter (\emph{Vos and Holbert 2022}). At the core, the
+interpretation of a confidence interval is "I assume that this sampling
+distribution is a good description of the uncertainty of the parameter. If
+that's a good assumption, then the values in this interval are the most
+plausible or compatible with the data". The source of confidence in
+probability statements is the assumption that the selected sampling
+distribution is appropriate.
+
 "The realized confidence distribution is clearly an epistemic probability
 distribution" (\emph{Schweder 2018}). In Bayesian words, compatibility intervals
 (or confidence distributons, or consonance curves) are "posteriors without
@@ -229,19 +240,19 @@ For certain models (like mixed models), profiled intervals may be more
 accurate, however, this is currently not supported.
 }
 \examples{
+\dontshow{if (requireNamespace("see")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(Sepal.Length ~ Species, data = iris)
 p_function(model)
 
-if (requireNamespace("see") && packageVersion("see") > "0.7.3") {
-  model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
-  result <- p_function(model)
+model <- lm(mpg ~ wt + as.factor(gear) + am, data = mtcars)
+result <- p_function(model)
 
-  # single panels
-  plot(result, n_columns = 2)
+# single panels
+plot(result, n_columns = 2)
 
-  # integrated plot, the default
-  plot(result)
-}
+# integrated plot, the default
+plot(result)
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
@@ -270,5 +281,7 @@ Data Confrontation in Economics, pp. 285-217. Princeton University Press,
 Princeton, NJ, 2003
 \item Schweder T, Hjort NL. Confidence, Likelihood, Probability: Statistical
 inference with confidence distributions. Cambridge University Press, 2016.
+\item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
 }

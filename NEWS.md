@@ -14,6 +14,10 @@
 * Fixed issue with parameter names for `model_parameters()` and objects from
   package *epiR*.
 
+* Fixed issue with `exponentiate = TRUE` for `model_parameters()` with models
+  of class `clmm` (package *ordinal*), when model had no `component` column
+  (e.g., no scale or location parameters were returned).
+
 # parameters 0.21.5
 
 ## Bug fixes
