@@ -36,8 +36,8 @@ test_that("predictions()", {
   out <- parameters(p)
   expect_identical(nrow(out), 3L)
   expect_named(out, c(
-    "Predicted", "SE", "CI", "CI_low", "CI_high", "Statistic",
-    "p", "Species", "S"
+    "Predicted", "SE", "CI", "CI_low", "CI_high", "S", "Statistic",
+    "p", "Species"
   ))
   out <- parameters(p, exponentiate = TRUE)
   expect_equal(out$Predicted, c(30.81495, 15.95863, 19.57004), tolerance = 1e-4)
@@ -70,7 +70,6 @@ test_that("comparisons()", {
   )
   expect_identical(nrow(parameters(m)), 1L)
 })
-
 
 
 test_that("hypotheses()", {
