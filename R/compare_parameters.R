@@ -83,6 +83,7 @@ compare_parameters <- function(...,
                                coefficient_names = NULL,
                                keep = NULL,
                                drop = NULL,
+                               include_reference = FALSE,
                                verbose = TRUE) {
   models <- list(...)
 
@@ -186,6 +187,7 @@ compare_parameters <- function(...,
         keep = keep,
         drop = drop,
         wb_component = FALSE,
+        include_reference = include_reference,
         verbose = verbose
       )
     }
