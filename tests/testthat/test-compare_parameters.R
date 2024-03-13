@@ -150,6 +150,15 @@ withr::with_options(
       )
 
       # with reference level
+      cp <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept", include_reference = TRUE)
+      out <- print_md(cp, groups = list(
+        Groups = 2:4,
+        Interactions = 5:6,
+        Controls = 1
+      ))
+      expect_snapshot(print(out))
+
+      # with reference level
       cp <- compare_parameters(lm1, lm2, drop = "^\\(Intercept", include_reference = TRUE)
       out <- print_md(cp, groups = list(
         Groups = 2:4,

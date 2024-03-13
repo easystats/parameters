@@ -376,6 +376,10 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
   col_groups <- sapply(models, function(i) which(i == col_names), simplify = FALSE)
   # clean column names. These still contain the model name
   colnames(formatted_table) <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table))
+  # check if we have column spans at all?
+  if (all(lengths(col_groups) == 1)) {
+    col_groups <- NULL
+  }
   # group rows?
   if (!is.null(groups)) {
     # make sure we have numeric indices for groups
