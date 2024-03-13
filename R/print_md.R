@@ -346,7 +346,7 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
 
 # helper -----------------------
 
-.export_table_tt <- function(x, formatted_table, groups, caption = NULL, footer = NULL) {
+.export_table_tt <- function(x, formatted_table, groups, caption = NULL, footer = NULL, outformat = "markdown") {
   insight::check_if_installed("tinytable", minimum_version = "0.1.0")
   row_groups <- NULL
   # check if we have a list of tables
@@ -423,7 +423,12 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
       }
       g
     })
-    names(row_groups) <- paste0("*", names(groups), "*")
+    # set element names
+    names(row_groups) <- names(groups)
+    if (identical(outformat, "markdown")) {
+      # for markdown, format italic
+      names(row_groups) <- paste0("*", names(row_groups), "*")
+    }
   }
   # replace NA in formatted_table by ""
   formatted_table[is.na(formatted_table)] <- ""
@@ -431,6 +436,6 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
   out <- tinytable::tt(formatted_table, notes = footer, caption = caption)
   # insert sub header rows and column spans
   out <- tinytable::group_tt(out, i = row_groups, j = col_groups)
-  out@output <- "markdown"
+  out@output <- outformat
   out
 }
