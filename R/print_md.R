@@ -174,9 +174,62 @@ print_md.compare_parameters <- function(x,
 
   if (identical(engine, "tt")) {
     insight::check_if_installed("tinytable", minimum_version = "0.1.0")
-    gsub("(.*) \\((.*)\\)$", "\\2", colnames(out))
-    gsub("(.*) \\((.*)\\)$", "\\1", colnames(out))
-    lapply(groups, function(i) match(i, out$Parameter))
+    # we need to find out which columns refer to which model, in order to
+    # add a column heading for each model
+    models <- attributes(x)$model_names
+    col_names <- gsub("(.*) \\((.*)\\)$", "\\2", colnames(formatted_table))
+    col_groups <- sapply(models, function(i) which(i == col_names), simplify = FALSE)
+    row_groups <- NULL
+    # clean column names. These still contain the model name
+    colnames(formatted_table) <- gsub("(.*) \\((.*)\\)$", "\\1", colnames(formatted_table))
+    # group rows?
+    if (!is.null(groups)) {
+      # make sure we have numeric indices for groups
+      groups <- lapply(groups, function(g) {
+        if (is.character(g)) {
+          # if groups were provided as parameter names, we find the row position
+          # by matching the parameter name
+          match(g, formatted_table$Parameter)
+        } else {
+          # else, we assume that the group is a row position
+          g
+        }
+      })
+      # if row indices are not sorted, we need to resort the parameters data frame
+      if (is.unsorted(unlist(groups))) {
+        new_rows <- c(unlist(groups), setdiff(seq_len(nrow(formatted_table)), unlist(groups)))
+        formatted_table <- formatted_table[new_rows, ]
+        # we need to update indices in groups as well. Therefore, we need to convert
+        # list of row indices into a vector with row indices, then subtract the
+        # differences of old and new row positions, and then split that vector into
+        # a list again
+        groups <- stats::setNames(unlist(groups), rep(names(groups), lengths(groups)))
+        groups <- groups - (unlist(groups) - sort(unlist(groups)))
+        groups <- split(unname(groups), factor(names(groups), levels = unique(names(groups))))
+      }
+      # find matching rows for groups
+      row_groups <- lapply(seq_along(groups), function(i) {
+        g <- groups[[i]]
+        if (is.character(g)) {
+          # if groups were provided as parameter names, we find the row position
+          # by matching the parameter name
+          g <- match(g, formatted_table$Parameter)[1]
+        } else {
+          # else, we assume that the group is a row position
+          g <- g[1]
+        }
+        g
+      })
+      names(row_groups) <- paste0("*", names(groups), "*")
+    }
+    # replace NA in formatted_table by ""
+    formatted_table[is.na(formatted_table)] <- ""
+    # create base table
+    out <- tinytable::tt(formatted_table)
+    # insert sub header rows and column spans
+    out <- tinytable::group_tt(out, i = row_groups, j = col_groups)
+    out@output <- "markdown"
+    out
   } else {
     insight::export_table(
       formatted_table,
