@@ -28,7 +28,7 @@ test_that("model_parameters.glm", {
 
 
 test_that("model_parameters.BBmm", {
-  skip_if_not_installed("PROreg")
+  skip_if_not_installed("PROreg", minimum_version = "1.3.0")
   set.seed(1234)
 
   # defining the parameters
@@ -73,7 +73,7 @@ test_that("model_parameters.BBmm", {
 })
 
 test_that("model_parameters.BBreg", {
-  skip_if_not_installed("PROreg")
+  skip_if_not_installed("PROreg", minimum_version = "1.3.0")
   set.seed(18)
   # we simulate a covariate, fix the paramters of the beta-binomial
   # distribution and simulate a response variable.
