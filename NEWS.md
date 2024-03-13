@@ -9,6 +9,10 @@
 * `include_reference` can now directly be set to `TRUE` in `model_parameters()`
   and doesn't require a call to `print()` anymore.
 
+* `print_md()` for `compare_parameters()` now by default uses the *tinytable*
+  package to create markdown tables. This allows better control for column
+  heading spanning over multiple columns.
+
 ## Bug fixes
 
 * Fixed issue with parameter names for `model_parameters()` and objects from
