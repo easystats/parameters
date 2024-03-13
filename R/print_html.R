@@ -171,7 +171,7 @@ print_html.compare_parameters <- function(x,
   }
 
   # markdown engine?
-  engine <- match.arg(engine, c("gt", "default", "tt"))
+  engine <- match.arg(getOption("easystats_html_engine", engine), c("gt", "default", "tt"))
 
   # for tiny table, we can just call print_md()
   if (engine == "tt") {
