@@ -153,6 +153,9 @@ print_md.compare_parameters <- function(x,
   if (missing(select) || is.null(select)) {
     select <- attributes(x)$output_style
   }
+  if (missing(groups)) {
+    groups <- attributes(x)$parameter_groups
+  }
 
   # markdown engine?
   engine <- match.arg(engine, c("tt", "default"))

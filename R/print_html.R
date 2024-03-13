@@ -46,6 +46,9 @@ print_html.parameters_model <- function(x,
   if (missing(select) || is.null(select)) {
     select <- attributes(x)$output_style
   }
+  if (missing(groups)) {
+    groups <- attributes(x)$parameter_groups
+  }
 
   # we need glue-like syntax right now...
   if (!is.null(select)) {

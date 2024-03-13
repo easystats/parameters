@@ -185,6 +185,27 @@ withr::with_options(
         )),
         regex = "Some group indices"
       )
+
+      # output identical for both calls
+      cp1 <- compare_parameters(lm1, lm2, select = "{estimate} ({ci})|{p}", drop = "^\\(Intercept")
+      out1 <- capture.output(print_md(cp1, groups = list(
+        Groups = c("grp (2)", "grp (3)"),
+        Interactions = c("Days * grp (2)", "Days * grp (3)"),
+        Controls = "Days"
+      )))
+      cp2 <- compare_parameters(
+        lm1,
+        lm2,
+        select = "{estimate} ({ci})|{p}",
+        drop = "^\\(Intercept",
+        groups = list(
+          Groups = c("grp (2)", "grp (3)"),
+          Interactions = c("Days * grp (2)", "Days * grp (3)"),
+          Controls = "Days"
+        )
+      )
+      out2 <- capture.output(print_md(cp2))
+      expect_identical(out1, out2)
     })
   }
 )
