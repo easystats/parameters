@@ -150,6 +150,7 @@ print_html.compare_parameters <- function(x,
                                           font_size = "100%",
                                           line_padding = 4,
                                           column_labels = NULL,
+                                          engine = "gt",
                                           ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -167,6 +168,29 @@ print_html.compare_parameters <- function(x,
   # get attributes
   if (missing(select) || is.null(select)) {
     select <- attributes(x)$output_style
+  }
+
+  # markdown engine?
+  engine <- match.arg(engine, c("gt", "default", "tt"))
+
+  # for tiny table, we can just call print_md()
+  if (engine == "tt") {
+    return(print_md(
+      x,
+      digits = digits,
+      ci_digits = ci_digits,
+      p_digits = p_digits,
+      caption = caption,
+      subtitle = subtitle,
+      footer = footer,
+      select = select,
+      split_components = TRUE,
+      ci_brackets = ci_brackets,
+      zap_small = zap_small,
+      groups = groups,
+      engine = "tt",
+      outformat = "html"
+    ))
   }
 
   # we need glue-like syntax right now...

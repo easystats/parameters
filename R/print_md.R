@@ -173,12 +173,20 @@ print_md.compare_parameters <- function(x,
   )
 
   if (identical(engine, "tt")) {
+    # retrieve output format - print_md() may be called from print_html()
+    dots <- list(...)
+    if (identical(dots$outformat, "html")) {
+      outformat <- "html"
+    } else {
+      outformat <- "markdown"
+    }
     .export_table_tt(
       x,
       formatted_table,
       groups,
       caption = caption,
-      footer = footer
+      footer = footer,
+      outformat = outformat
     )
   } else {
     insight::export_table(
