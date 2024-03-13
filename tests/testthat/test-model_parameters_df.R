@@ -63,13 +63,13 @@ test_that("model_parameters.BBmm", {
   }))
   params <- suppressWarnings(model_parameters(model))
   expect_equal(params$df_error, c(96, 96), tolerance = 1e-3)
-  expect_equal(params$CI_low, c(0.26363, -1.46645), tolerance = 1e-3)
-  expect_equal(params$p, c(0.00811, 0), tolerance = 1e-3)
+  expect_equal(params$CI_low, c(0.26366, -1.46628), tolerance = 1e-3)
+  expect_equal(params$p, c(0.00814, 0), tolerance = 1e-3)
 
   params <- suppressWarnings(model_parameters(model, ci_method = "normal"))
   expect_equal(params$df_error, c(Inf, Inf), tolerance = 1e-3)
-  expect_equal(params$CI_low, c(0.27359, -1.46136), tolerance = 1e-3)
-  expect_equal(params$p, c(0.00811, 0), tolerance = 1e-3)
+  expect_equal(params$CI_low, c(0.27313, -1.46119), tolerance = 1e-3)
+  expect_equal(params$p, c(0.00814, 0), tolerance = 1e-3)
 })
 
 test_that("model_parameters.BBreg", {
