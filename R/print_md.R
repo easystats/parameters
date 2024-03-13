@@ -136,6 +136,7 @@ print_md.compare_parameters <- function(x,
                                         ci_brackets = c("(", ")"),
                                         zap_small = FALSE,
                                         groups = NULL,
+                                        engine = "tt",
                                         ...) {
   # check if user supplied digits attributes
   if (missing(digits)) {
@@ -153,6 +154,9 @@ print_md.compare_parameters <- function(x,
     select <- attributes(x)$output_style
   }
 
+  # markdown engine?
+  engine <- match.arg(engine, c("tt", "default"))
+
   formatted_table <- format(
     x,
     select = select,
@@ -164,16 +168,24 @@ print_md.compare_parameters <- function(x,
     ci_brackets = ci_brackets,
     format = "markdown",
     zap_small = zap_small,
-    groups = groups
+    groups = groups,
+    engine = engine
   )
 
-  insight::export_table(
-    formatted_table,
-    format = "markdown",
-    caption = caption,
-    subtitle = subtitle,
-    footer = footer
-  )
+  if (identical(engine, "tt")) {
+    insight::check_if_installed("tinytable", minimum_version = "0.1.0")
+    gsub("(.*) \\((.*)\\)$", "\\2", colnames(out))
+    gsub("(.*) \\((.*)\\)$", "\\1", colnames(out))
+    lapply(groups, function(i) match(i, out$Parameter))
+  } else {
+    insight::export_table(
+      formatted_table,
+      format = "markdown",
+      caption = caption,
+      subtitle = subtitle,
+      footer = footer
+    )
+  }
 }
 
 

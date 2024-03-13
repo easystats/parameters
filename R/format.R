@@ -253,6 +253,7 @@ format.compare_parameters <- function(x,
                                       zap_small = FALSE,
                                       format = NULL,
                                       groups = NULL,
+                                      engine = NULL,
                                       ...) {
   m_class <- attributes(x)$model_class
   x$Method <- NULL
@@ -393,7 +394,7 @@ format.compare_parameters <- function(x,
   # group parameters - this function find those parameters that should be
   # grouped, reorders parameters into groups and indents lines that belong
   # to one group, adding a header for each group
-  if (!is.null(groups)) {
+  if (!is.null(groups) && !identical(engine, "tt")) {
     out <- .parameter_groups(out, groups)
   }
   indent_groups <- attributes(x)$indent_groups
