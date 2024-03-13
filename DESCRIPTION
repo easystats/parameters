@@ -182,7 +182,7 @@ Suggests:
     PMCMRplus,
     poorman,
     posterior,
-    PROreg,
+    PROreg (>= 1.3.0),
     pscl,
     psych,
     pvclust,
