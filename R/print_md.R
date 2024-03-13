@@ -91,10 +91,10 @@ print_md.parameters_model <- function(x,
     footer <- ""
   }
   if (!identical(footer, "")) {
-    if (!is.null(footer)) {
-      footer <- paste0("\n", footer, "\n", footer_stats)
-    } else {
+    if (is.null(footer)) {
       footer <- footer_stats
+    } else {
+      footer <- paste0("\n", footer, "\n", footer_stats)
     }
   }
 
@@ -285,14 +285,12 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
   rule <- attributes(x)$rule
   rope <- attributes(x)$rope
 
-  if (!is.null(rule)) {
-    if (rule == "cet") {
-      table_caption <- "Conditional Equivalence Testing"
-    } else if (rule == "classic") {
-      table_caption <- "TOST-test for Practical Equivalence"
-    } else {
-      table_caption <- "Test for Practical Equivalence"
-    }
+  if (is.null(rule)) {
+    table_caption <- "Test for Practical Equivalence"
+  } else if (rule == "cet") {
+    table_caption <- "Conditional Equivalence Testing"
+  } else if (rule == "classic") {
+    table_caption <- "TOST-test for Practical Equivalence"
   } else {
     table_caption <- "Test for Practical Equivalence"
   }

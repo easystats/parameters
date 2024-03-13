@@ -54,7 +54,7 @@
 #' (columns for estimates, confidence intervals and p-values). However, it
 #' is possible to include other model components, like zero-inflation, or random
 #' effects in the table. See 'Examples'. An alternative is to set `engine = "tt"`
-#' in `print_html()` tp use the _tinytable_ package for creating HTML tables.
+#' in `print_html()` to use the _tinytable_ package for creating HTML tables.
 #'
 #' @seealso [print.parameters_model()]
 #'

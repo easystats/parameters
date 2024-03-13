@@ -312,10 +312,10 @@ print.parameters_model <- function(x,
     footer <- ""
   }
   if (!identical(footer, "")) {
-    if (!is.null(footer)) {
-      footer <- paste0("\n", footer, "\n", footer_stats)
-    } else {
+    if (is.null(footer)) {
       footer <- footer_stats
+    } else {
+      footer <- paste0("\n", footer, "\n", footer_stats)
     }
   }
 
@@ -572,10 +572,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   for (i in seq_along(shared_cols)) {
     col_width[i] <- max(unlist(lapply(formatted_table, function(j) {
       column <- j[[shared_cols[i]]]
-      if (!is.null(column)) {
-        max(nchar(column))
-      } else {
+      if (is.null(column)) {
         NA
+      } else {
+        max(nchar(column))
       }
     })))
   }
