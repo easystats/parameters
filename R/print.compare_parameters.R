@@ -31,6 +31,9 @@ print.compare_parameters <- function(x,
   if (missing(select)) {
     select <- attributes(x)$output_style
   }
+  if (missing(groups)) {
+    groups <- attributes(x)$parameter_groups
+  }
 
   formatted_table <- format(
     x,

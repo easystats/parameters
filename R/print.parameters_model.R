@@ -137,6 +137,10 @@
 #' default for the `select` argument. See argument's documentation for available
 #' options.
 #'
+#' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
+#' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
+#' create HTML tables. If set to `tt`, the _tinytable_ package is used.
+#'
 #' @details `summary()` is a convenient shortcut for
 #'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
@@ -308,10 +312,10 @@ print.parameters_model <- function(x,
     footer <- ""
   }
   if (!identical(footer, "")) {
-    if (!is.null(footer)) {
-      footer <- paste0("\n", footer, "\n", footer_stats)
-    } else {
+    if (is.null(footer)) {
       footer <- footer_stats
+    } else {
+      footer <- paste0("\n", footer, "\n", footer_stats)
     }
   }
 
@@ -412,7 +416,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                           show_formula = FALSE,
                           format = "text") {
   # get attributes
-  sigma <- attributes(x)$sigma
+  model_sigma <- attributes(x)$sigma
   show_summary <- isTRUE(attributes(x)$show_summary)
   verbose <- .additional_arguments(x, "verbose", TRUE)
 
@@ -423,7 +427,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
   show_r2 <- .additional_arguments(x, "show_summary", FALSE)
 
   # set defaults, if necessary
-  if (is.null(sigma)) {
+  if (is.null(model_sigma)) {
     show_sigma <- FALSE
   }
 
@@ -522,10 +526,10 @@ print.parameters_random <- function(x, digits = 2, ...) {
   random_params$Term[is.na(random_params$Term)] <- ""
   random_params$SD[is.na(random_params$SD)] <- ""
 
-  non_empty <- random_params$Term != "" & random_params$Type != ""
+  non_empty <- random_params$Term != "" & random_params$Type != "" # nolint
   random_params$Line[non_empty] <- sprintf("%s (%s)", random_params$Type[non_empty], random_params$Term[non_empty])
 
-  non_empty <- random_params$Term != "" & random_params$Type == ""
+  non_empty <- random_params$Term != "" & random_params$Type == "" # nolint
   random_params$Line[non_empty] <- sprintf("%s", random_params$Term[non_empty])
 
   # final fix, indentions
@@ -567,11 +571,11 @@ print.parameters_random <- function(x, digits = 2, ...) {
   col_width <- rep(NA, length(shared_cols))
   for (i in seq_along(shared_cols)) {
     col_width[i] <- max(unlist(lapply(formatted_table, function(j) {
-      col <- j[[shared_cols[i]]]
-      if (!is.null(col)) {
-        max(nchar(col))
-      } else {
+      column <- j[[shared_cols[i]]]
+      if (is.null(column)) {
         NA
+      } else {
+        max(nchar(column))
       }
     })))
   }

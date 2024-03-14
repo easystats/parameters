@@ -154,20 +154,18 @@ print_table <- function(x, digits = 2, p_digits = 3, theme = "default", ...) {
   }
 
   # base table
-  out <- tinytable::tt(x, caption = NULL, notes = NULL, ...)
+  out <- tinytable::tt(as.data.frame(x), caption = NULL, notes = NULL, ...)
   # add subheaders, if any
-  if (!is.null(row_header_labels)) {
+  if (is.null(row_header_labels)) {
+    out <- tinytable::group_tt(out, j = col_groups)
+  } else {
     out <- tinytable::group_tt(out, i = row_header_labels, j = col_groups)
     out <- tinytable::style_tt(out, i = row_header_pos, italic = TRUE)
-  } else {
-    out <- tinytable::group_tt(out, j = col_groups)
   }
   # style table
   out <- insight::apply_table_theme(out, x, theme = theme, sub_header_positions = row_header_pos)
-  # workaround, to make sure HTML is default output
-  m <- attr(out, "tinytable_meta")
-  m$output <- "html"
-  attr(out, "tinytable_meta") <- m
+  # make sure HTML is default output
+  out@output <- "html"
 
   out
 }

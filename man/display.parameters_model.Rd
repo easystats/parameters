@@ -305,7 +305,8 @@ which prints the output as a formatted HTML table. It is still somewhat
 experimental, thus, only a fixed layout-style is available at the moment
 (columns for estimates, confidence intervals and p-values). However, it
 is possible to include other model components, like zero-inflation, or random
-effects in the table. See 'Examples'.
+effects in the table. See 'Examples'. An alternative is to set \code{engine = "tt"}
+in \code{print_html()} to use the \emph{tinytable} package for creating HTML tables.
 }
 \examples{
 \dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

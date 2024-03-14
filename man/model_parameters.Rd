@@ -374,6 +374,9 @@ will replace the interaction mark (by default, \code{*}) with the related charac
 \item \code{parameters_select}: \verb{options(parameters_select = <value>)} will set the
 default for the \code{select} argument. See argument's documentation for available
 options.
+\item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
+the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
+create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 }
 }
 

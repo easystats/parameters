@@ -83,6 +83,8 @@ compare_parameters <- function(...,
                                coefficient_names = NULL,
                                keep = NULL,
                                drop = NULL,
+                               include_reference = FALSE,
+                               groups = NULL,
                                verbose = TRUE) {
   models <- list(...)
 
@@ -186,6 +188,7 @@ compare_parameters <- function(...,
         keep = keep,
         drop = drop,
         wb_component = FALSE,
+        include_reference = include_reference,
         verbose = verbose
       )
     }
@@ -253,6 +256,7 @@ compare_parameters <- function(...,
   attr(all_models, "model_names") <- gsub("\"", "", unlist(lapply(model_names, insight::safe_deparse)), fixed = TRUE)
   attr(all_models, "output_style") <- select
   attr(all_models, "all_attributes") <- object_attributes
+  attr(all_models, "parameter_groups") <- groups
   class(all_models) <- c("compare_parameters", "see_compare_parameters", unique(class(all_models)))
 
   all_models
