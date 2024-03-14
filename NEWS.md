@@ -25,6 +25,9 @@
   of class `clmm` (package *ordinal*), when model had no `component` column
   (e.g., no scale or location parameters were returned).
 
+* `include_reference` now also works when factor were created "on-the-fly" inside
+  the model formula (i.e. `y ~ as.factor(x)`).
+
 # parameters 0.21.5
 
 ## Bug fixes

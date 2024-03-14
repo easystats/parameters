@@ -422,8 +422,8 @@
 
       # for on-the-fly conversion of factors, the names of the factors can
       # can also contain "factor()" or "as.factor()" - we need to remove these
-      if (any(grepl("(as\\.factor|factor)", fn))) {
-        fn_clean <- gsub("(as\\.factor|factor)\\((.*)\\)", "\\2", fn)
+      if (any(grepl("(as\\.factor|factor|as\\.character)", fn))) {
+        fn_clean <- gsub("(as\\.factor|factor|as\\.character)\\((.*)\\)", "\\2", fn)
       } else {
         fn_clean <- fn
       }
