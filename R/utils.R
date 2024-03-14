@@ -140,16 +140,39 @@
 }
 
 
-.find_factor_levels <- function(data) {
-  out <- lapply(colnames(data), function(i) {
-    v <- data[[i]]
+.find_factor_levels <- function(model_data, model = NULL, model_call = NULL) {
+  # check whether we have on-the-fly conversion of factors
+  if (!is.null(model)) {
+    model_terms <- insight::find_terms(model)
+  } else if (!is.null(model_call)) {
+    model_terms <- insight::find_terms(model_call)
+  } else {
+    model_terms <- NULL
+  }
+  # extract all model terms, we now have "as.factor(term)" etc., if any
+  if (!is.null(model_terms$conditional)) {
+    # extract variable names from "as.factor(term)" etc.
+    factor_terms <- grep("(as\\.factor|factor)", model_terms$conditional, value = TRUE)
+    cleaned <- gsub("(as\\.factor|factor)\\((.*)\\)", "\\2", factor_terms)
+    # convert on-the-fly factors into real factors
+    if (length(cleaned)) {
+      for (i in seq_along(cleaned)) {
+        model_data[[factor_terms[i]]] <- as.factor(model_data[[cleaned[i]]])
+      }
+    }
+  }
+  # extract levels from factors, so we know the reference level
+  out <- lapply(colnames(model_data), function(i) {
+    v <- model_data[[i]]
     if (is.factor(v)) {
       paste0(i, levels(v))
+    } else if (is.character(v)) {
+      paste0(i, unique(v))
     } else {
       NULL
     }
   })
-  names(out) <- names(data)
+  names(out) <- names(model_data)
   insight::compact_list(out)
 }
 

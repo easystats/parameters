@@ -374,7 +374,7 @@
   }
 
   # find factors and factor levels and check if we have any factors in the data
-  factors <- .find_factor_levels(model_data)
+  factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
   if (!length(factors)) {
     params
   }
@@ -419,8 +419,16 @@
     if (length(found)) {
       # the reference level is *not* in the pretty names yet
       reference_level <- f[!f %in% names(pretty_names)]
+
+      # for on-the-fly conversion of factors, the names of the factors can
+      # can also contain "factor()" or "as.factor()" - we need to remove these
+      if (any(grepl("(as\\.factor|factor)", fn))) {
+        fn_clean <- gsub("(as\\.factor|factor)\\((.*)\\)", "\\2", fn)
+      } else {
+        fn_clean <- fn
+      }
       # create a pretty level for the reference category
-      pretty_level <- paste0(fn, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
+      pretty_level <- paste0(fn_clean, " [", sub(fn, "", reference_level, fixed = TRUE), "]")
       # insert new pretty level at the correct position in "pretty_names"
       pretty_names <- .insert_element_at(
         pretty_names,
