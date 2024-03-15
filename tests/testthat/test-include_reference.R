@@ -19,7 +19,12 @@ test_that("include_reference, on-the-fly factors", {
   expect_equal(attributes(out1)$pretty_names, attributes(out2)$pretty_names, ignore_attr = TRUE)
   expect_equal(out1$Coefficient, out2$Coefficient, tolerance = 1e-4)
 
-  skip_if(getRversion() < "4.3.0")
+  skip_if_not_installed("tinytable")
+  out <- compare_parameters(m1, m2, include_reference = TRUE)
+  expect_snapshot(print_md(out, engine = "tt"))
+
+
+  skip_if(getRversion() < "4.3.2")
   skip_if_not_installed("datawizard")
   out3 <- mtcars |>
     datawizard::data_modify(gear = factor(gear), am = as.factor(am)) |>

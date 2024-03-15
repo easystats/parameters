@@ -53,6 +53,7 @@
     # here we either have "<br>" or " " as line breaks, followed by empty "()"
     i <- gsub("<br>()", "", i, fixed = TRUE)
     i <- gsub(" ()", "", i, fixed = TRUE)
+    i <- gsub("<br>(, )", "", i, fixed = TRUE)
     i <- gsub(" (, )", "", i, fixed = TRUE)
     i[i == "()"] <- ""
     i[i == "(, )"] <- ""

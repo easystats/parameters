@@ -115,7 +115,8 @@ display.parameters_model <- function(object,
       footer_digits = footer_digits, align = align, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
       font_size = font_size, line_padding = line_padding,
-      column_labels = column_labels, verbose = verbose, ...
+      column_labels = column_labels, include_reference = include_reference,
+      verbose = verbose, ...
     )
   } else {
     print_md(
@@ -124,7 +125,7 @@ display.parameters_model <- function(object,
       footer = footer, ci_digits = ci_digits, p_digits = p_digits,
       footer_digits = footer_digits, ci_brackets = ci_brackets,
       show_sigma = show_sigma, show_formula = show_formula, zap_small = zap_small,
-      verbose = verbose, ...
+      include_reference = include_reference, verbose = verbose, ...
     )
   }
 }
