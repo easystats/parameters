@@ -16,6 +16,9 @@ test_that("include_reference, on-the-fly factors", {
   out1 <- model_parameters(m1, include_reference = TRUE)
   out2 <- model_parameters(m2, include_reference = TRUE)
 
+  expect_snapshot(print(out1))
+  expect_snapshot(print(out2))
+
   expect_equal(attributes(out1)$pretty_names, attributes(out2)$pretty_names, ignore_attr = TRUE)
   expect_equal(out1$Coefficient, out2$Coefficient, tolerance = 1e-4)
 
