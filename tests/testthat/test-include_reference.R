@@ -37,7 +37,7 @@ test_that("include_reference, on-the-fly factors", {
   out1 <- model_parameters(m1, include_reference = TRUE)
   out3 <- mtcars |>
     datawizard::data_modify(gear = factor(gear), am = as.factor(am)) |>
-    lm(mpg ~ gear + am + hp, data = _) |>
+    lm(formula = mpg ~ gear + am + hp) |>
     model_parameters(include_reference = TRUE)
 
   expect_equal(attributes(out1)$pretty_names, attributes(out3)$pretty_names, ignore_attr = TRUE)
