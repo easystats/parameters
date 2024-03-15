@@ -21,7 +21,7 @@ test_that("include_reference, on-the-fly factors", {
   expect_snapshot(print_md(out, engine = "tt"))
 
 
-  skip_if(getRversion() < "4.3.2")
+  skip_if(getRversion() < "4.3.3")
   skip_if_not_installed("datawizard")
   out3 <- mtcars |>
     datawizard::data_modify(gear = factor(gear), am = as.factor(am)) |>
