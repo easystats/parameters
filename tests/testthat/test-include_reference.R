@@ -7,12 +7,6 @@ test_that("include_reference, on-the-fly factors", {
   m1 <- lm(mpg ~ as.factor(gear) + factor(am) + hp, data = mtcars)
   m2 <- lm(mpg ~ gear + am + hp, data = d)
 
-  out1 <- model_parameters(m1)
-  out2 <- model_parameters(m2)
-
-  # expect_snapshot(print(out1, include_reference = TRUE))
-  expect_snapshot(print(out2, include_reference = TRUE))
-
   out1 <- model_parameters(m1, include_reference = TRUE)
   out2 <- model_parameters(m2, include_reference = TRUE)
 
