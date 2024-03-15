@@ -528,7 +528,7 @@
                                            is_zero_inflated,
                                            is_ordinal_model,
                                            is_multivariate = FALSE,
-                                           ran_pars,
+                                           ran_pars, # nolint
                                            formatted_table = NULL) {
   # prepare component names
   .conditional_fixed_text <- if (is_zero_inflated) {
@@ -952,7 +952,7 @@
 
   # fix column output
   if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
-    x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")"))
+    x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")")) # nolint
     x$Label <- NULL
   }
 
@@ -1070,7 +1070,7 @@
     # rename columns for zero-inflation part
     if (startsWith(type, "zero") && !is.null(zi_coef_name) && !is.null(coef_column)) {
       colnames(tables[[type]])[which(colnames(tables[[type]]) == coef_column)] <- zi_coef_name
-      colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name)
+      colnames(tables[[type]])[which(colnames(tables[[type]]) == paste0("Std_", coef_column))] <- paste0("Std_", zi_coef_name) # nolint
     }
 
     # rename columns for correlation, location or scale part
@@ -1150,8 +1150,8 @@
       }
       # replace brackets by parenthesis
       if (!is.null(parameter_column) && parameter_column %in% colnames(formatted_table)) {
-        formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE)
-        formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE)
+        formatted_table[[parameter_column]] <- gsub("[", ci_brackets[1], formatted_table[[parameter_column]], fixed = TRUE) # nolint
+        formatted_table[[parameter_column]] <- gsub("]", ci_brackets[2], formatted_table[[parameter_column]], fixed = TRUE) # nolint
       }
     }
 

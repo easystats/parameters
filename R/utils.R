@@ -144,7 +144,7 @@
   # check whether we have on-the-fly conversion of factors
   if (!is.null(model)) {
     model_terms <- insight::find_terms(model)
-  } else if (!is.null(model_call)) {
+  } else if (!is.null(model_call)) { # nolint
     model_terms <- insight::find_terms(model_call)
   } else {
     model_terms <- NULL
