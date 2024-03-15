@@ -357,14 +357,14 @@ as table header. However, you can also return a single table:</p>
 </h3>
 <p>Sometimes, it can be helpful to include the reference level of
 categorical predictors in the table. This can be done by setting
-<code>include_reference = TRUE</code> in the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>
-method. Since the reference level is not a parameter, it is shown in a
-separate row, with <code>0</code> for the coefficient and blank cells
-for the remaining columns.</p>
+<code>include_reference = TRUE</code> (either directly in
+<code><a href="../reference/model_parameters.html">model_parameters()</a></code> or in the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method).
+Since the reference level is not a parameter, it is shown in a separate
+row, with <code>0</code> for the coefficient and blank cells for the
+remaining columns.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, include_reference <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, include_reference <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |   SE |         95% CI | t(146) |      p</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------</span></span>
 <span><span class="co">#&gt; (Intercept)          |        3.68 | 0.11 | [ 3.47,  3.89] |  34.72 | &lt; .001</span></span>
