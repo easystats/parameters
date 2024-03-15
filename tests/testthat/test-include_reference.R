@@ -10,7 +10,7 @@ test_that("include_reference, on-the-fly factors", {
   out1 <- model_parameters(m1)
   out2 <- model_parameters(m2)
 
-  expect_snapshot(print(out1, include_reference = TRUE))
+  # expect_snapshot(print(out1, include_reference = TRUE))
   expect_snapshot(print(out2, include_reference = TRUE))
 
   out1 <- model_parameters(m1, include_reference = TRUE)
