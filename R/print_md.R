@@ -443,8 +443,10 @@ print_md.parameters_distribution <- function(x, digits = 2, ci_brackets = c("(",
   formatted_table[is.na(formatted_table)] <- ""
   # create base table
   out <- tinytable::tt(formatted_table, notes = footer, caption = caption)
-  # insert sub header rows and column spans
-  out <- tinytable::group_tt(out, i = row_groups, j = col_groups)
+  # insert sub header rows and column spans, if we have them
+  if (!(is.null(row_groups) && is.null(col_groups))) {
+    out <- tinytable::group_tt(out, i = row_groups, j = col_groups)
+  }
   out@output <- outformat
   out
 }
