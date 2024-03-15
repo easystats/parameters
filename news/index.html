@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.5.7</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.21.5.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,6 +101,7 @@
 <h3 id="bug-fixes-0-21-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-21-6"></a></h3>
 <ul><li><p>Fixed issue with parameter names for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> and objects from package <em>epiR</em>.</p></li>
 <li><p>Fixed issue with <code>exponentiate = TRUE</code> for <code><a href="../reference/model_parameters.html">model_parameters()</a></code> with models of class <code>clmm</code> (package <em>ordinal</em>), when model had no <code>component</code> column (e.g., no scale or location parameters were returned).</p></li>
+<li><p><code>include_reference</code> now also works when factor were created “on-the-fly” inside the model formula (i.e. <code>y ~ as.factor(x)</code>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
