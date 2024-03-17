@@ -1,5 +1,5 @@
 skip_if_not_installed("marginaleffects", minimum_version = "0.18.0")
-skip_if_not_installed("insight", minimum_version = "0.19.8.8")
+skip_if_not_installed("insight", minimum_version = "0.19.9")
 skip_if_not_installed("rstanarm")
 
 test_that("marginaleffects()", {
