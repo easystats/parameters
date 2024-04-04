@@ -209,3 +209,19 @@ withr::with_options(
     })
   }
 )
+
+skip_on_cran()
+skip_if_not_installed("blme")
+skip_if_not_installed("glmmTMB")
+skip_if_not_installed("lme4")
+
+test_that("compare_parameters, works with blmer and glmmTMB", {
+  data(sleepstudy, package = "lme4")
+  control <- lme4::lmerControl(check.conv.grad = "ignore")
+  fm1 <- blme::blmer(Reaction ~ Days + (0 + Days | Subject), sleepstudy,
+    control = control,
+    cov.prior = gamma
+  )
+  fm2 <- glmmTMB::glmmTMB(Reaction ~ Days + (1 + Days | Subject), sleepstudy)
+  expect_silent(compare_parameters(fm1, fm2))
+})

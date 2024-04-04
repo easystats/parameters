@@ -169,7 +169,7 @@ compare_parameters <- function(...,
       dat <- model
     } else {
       # set default-ci_type for Bayesian models
-      if (.is_bayesian_model(model) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) {
+      if (.is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod")) && !ci_method %in% c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai")) { # nolint
         ci_method_tmp <- "eti"
       } else {
         ci_method_tmp <- ci_method
