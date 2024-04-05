@@ -200,9 +200,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-random", {
       params <- model_parameters(m1, effects = "random", group_level = TRUE)
-      expect_equal(c(nrow(params), ncol(params)), c(8, 10))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 10L))
+      expect_named(
+        params,
         c(
           "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "Component", "Effects", "Group"
@@ -231,9 +231,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-ran_pars", {
       params <- model_parameters(m1, effects = "random")
-      expect_equal(c(nrow(params), ncol(params)), c(2, 9))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
+      expect_named(
+        params,
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_identical(
@@ -253,9 +253,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-all_pars", {
       params <- model_parameters(m1, effects = "all")
-      expect_equal(c(nrow(params), ncol(params)), c(8, 12))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 12L))
+      expect_named(
+        params,
         c(
           "Parameter", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "z", "df_error", "p", "Effects", "Group", "Component"
@@ -285,8 +285,8 @@ withr::with_options(
     test_that("model_parameters.mixed-all", {
       params <- model_parameters(m1, effects = "all", group_level = TRUE)
       expect_identical(c(nrow(params), ncol(params)), c(14L, 13L))
-      expect_identical(
-        colnames(params),
+      expect_named(
+        params,
         c(
           "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "z", "df_error", "p", "Component", "Effects",
@@ -349,8 +349,8 @@ withr::with_options(
     test_that("model_parameters.mixed-ran_pars", {
       params <- model_parameters(m4, effects = "random")
       expect_identical(c(nrow(params), ncol(params)), c(6L, 9L))
-      expect_identical(
-        colnames(params),
+      expect_named(
+        params,
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_identical(
@@ -408,7 +408,7 @@ withr::with_options(
 
     test_that("print-model_parameters glmmTMB", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))
@@ -442,7 +442,7 @@ withr::with_options(
 
     test_that("print-model_parameters glmmTMB digits", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
@@ -459,7 +459,7 @@ withr::with_options(
       skip_if_not_installed("curl")
       skip_if_offline()
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       model_pr <- tryCatch(
         {
@@ -488,7 +488,7 @@ withr::with_options(
 
     test_that("model_parameters.mixed-all", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       params <- model_parameters(m4, effects = "all")
       expect_identical(c(nrow(params), ncol(params)), c(12L, 12L))
@@ -527,7 +527,7 @@ withr::with_options(
 
     test_that("print-model_parameters", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)
       expect_snapshot(mp)
