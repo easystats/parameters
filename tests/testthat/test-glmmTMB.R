@@ -419,27 +419,167 @@ withr::with_options(
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-5])
 
+
       mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional", verbose = FALSE)
-      expect_snapshot(print(mp))
+      out <- utils::capture.output(print(mp))
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(3.40563, 1.21316, -1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(1.64567, 0.5919, -1), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "fixed", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-6])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(`(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]")
+      )
+      expect_identical(
+        substr(out, 1, 12),
+        c(
+          "# Fixed Effe", "", "Parameter   ", "------------", "(Intercept) ",
+          "child       ", "camper [1]  "
+        )
+      )
+      expect_equal(mp$Coefficient, c(1.88964, 0.15712, -0.17007), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(0.5878, -0.78781, -0.92836), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated", verbose = FALSE)
-      expect_snapshot(print(mp))
+      out <- utils::capture.output(print(mp))
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(2.73583, 1.56833, 1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(1.16329, 0.64246, -1), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional", verbose = FALSE)
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-5])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     2.55 | 0.25 ", "child       |    -1.09 | 0.10 ",
+          "camper [1]  |     0.27 | 0.10 ", "", "# Random Effects", "",
+          "Parameter                   | ", "------------------------------",
+          "SD (Intercept: persons)     | ", "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(2.54713, -1.08747, 0.2723, 3.40563, 1.21316, -1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(2.06032, -1.27967, 0.07461, 1.64567, 0.5919, -1), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated", verbose = FALSE)
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-6])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Zero-Inflatio", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------", "(Intercept) |     1.89 | 0.66 ",
+          "child       |     0.16 | 0.48 ", "camper [1]  |    -0.17 | 0.39 ",
+          "", "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(1.88964, 0.15712, -0.17007, 2.73583, 1.56833, 1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(0.5878, -0.78781, -0.92836, 1.16329, 0.64246, -1), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE, verbose = FALSE)
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-c(5, 14)])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper1",    # nolint
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)",
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",             # nolint
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Count Model)", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------", "(Intercept) |     2.55 | 0.25 ",
+          "child       |    -1.09 | 0.10 ", "camper [1]  |     0.27 | 0.10 ",
+          "", "# Fixed Effects (Zero-Inflatio", "", "Parameter   | Log-Odds |   SE ",
+          "------------------------------", "(Intercept) |     1.89 | 0.66 ",
+          "child       |     0.16 | 0.48 ", "camper [1]  |    -0.17 | 0.39 ",
+          "", "# Random Effects Variances", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ", "Cor (Intercept~xb: persons) | ",
+          "", "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(
+        mp$Coefficient,
+        c(
+          2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
+          1.21316, -1, 2.73583, 1.56833, 1
+        ),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        mp$CI_low,
+        c(
+          2.06032, -1.27967, 0.07461, 0.5878, -0.78781, -0.92836, 1.64567,
+          0.5919, -1, 1.16329, 0.64246, -1
+        ),
+        tolerance = 1e-3
+      )
     })
 
 
