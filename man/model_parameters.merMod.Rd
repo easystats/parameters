@@ -376,7 +376,7 @@ There is no gold-standard about how to deal with singularity and which
 random-effects specification to choose. One way is to fully go Bayesian
 (with informative priors). Other proposals are listed in the documentation
 of \code{\link[performance:check_singularity]{performance::check_singularity()}}. However, since version 1.1.9, the
-\strong{glmmTMB} allows to use priors in a frequentist framework, too. One
+\strong{glmmTMB} package allows to use priors in a frequentist framework, too. One
 recommendation is to use a Gamma prior (\emph{Chung et al. 2013}). The mean may
 vary from 1 to very large values (like \code{1e8}), and the shape parameter should
 be set to a value of 2.5. You can then \code{update()} your model with the specified
@@ -384,15 +384,15 @@ prior. In \strong{glmmTMB}, the code would look like this:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# "model" is an object of class gmmmTMB
 prior <- data.frame(
- prior = "gamma(1, 2.5)", # mean can be 1, but even 1e8
- class = "ranef" # for random effects
+  prior = "gamma(1, 2.5)",  # mean can be 1, but even 1e8
+  class = "ranef"           # for random effects
 )
 model_with_priors <- update(model, priors = prior)
 }\if{html}{\out{</div>}}
 
 Large values for the mean parameter of the Gamma prior have no large impact
 on the random effects variances in terms of a "bias". Thus, if \code{1} doesn't
-fix the singular fit, you can try larger values.
+fix the singular fit, you can safely try larger values.
 }
 
 \section{Dispersion parameters in \emph{glmmTMB}}{

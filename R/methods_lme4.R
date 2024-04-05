@@ -70,7 +70,7 @@
 #' random-effects specification to choose. One way is to fully go Bayesian
 #' (with informative priors). Other proposals are listed in the documentation
 #' of [`performance::check_singularity()`]. However, since version 1.1.9, the
-#' **glmmTMB** allows to use priors in a frequentist framework, too. One
+#' **glmmTMB** package allows to use priors in a frequentist framework, too. One
 #' recommendation is to use a Gamma prior (_Chung et al. 2013_). The mean may
 #' vary from 1 to very large values (like `1e8`), and the shape parameter should
 #' be set to a value of 2.5. You can then `update()` your model with the specified
@@ -78,16 +78,16 @@
 #'
 #' ```
 #' # "model" is an object of class gmmmTMB
-#'prior <- data.frame(
-#'  prior = "gamma(1, 2.5)", # mean can be 1, but even 1e8
-#'  class = "ranef" # for random effects
+#' prior <- data.frame(
+#'   prior = "gamma(1, 2.5)",  # mean can be 1, but even 1e8
+#'   class = "ranef"           # for random effects
 #' )
 #' model_with_priors <- update(model, priors = prior)
 #' ```
 #'
 #' Large values for the mean parameter of the Gamma prior have no large impact
 #' on the random effects variances in terms of a "bias". Thus, if `1` doesn't
-#' fix the singular fit, you can try larger values.
+#' fix the singular fit, you can safely try larger values.
 #'
 #' @section Dispersion parameters in *glmmTMB*:
 #' For some models from package **glmmTMB**, both the dispersion parameter and
