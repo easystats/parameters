@@ -540,10 +540,10 @@ withr::with_options(
         attributes(mp)$pretty_labels,
         c(
           `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
-          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper1",    # nolint
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper1", # nolint
           `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
           `Cor (Intercept~xb)` = "Cor (Intercept~xb)",
-          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",             # nolint
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)", # nolint
           `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
         )
       )

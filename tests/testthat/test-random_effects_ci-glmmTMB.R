@@ -13,7 +13,7 @@ skip_on_cran()
 data(sleepstudy, package = "lme4")
 data(cake, package = "lme4")
 set.seed(123)
-sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
 set.seed(123)
 m1 <- suppressWarnings(glmmTMB::glmmTMB(
@@ -232,7 +232,7 @@ test_that("random effects CIs, double slope", {
 test_that("random effects CIs, simple slope", {
   data(sleepstudy, package = "lme4")
   set.seed(123)
-  sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+  sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
   set.seed(123)
   m2 <- glmmTMB::glmmTMB(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)

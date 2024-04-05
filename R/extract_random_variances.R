@@ -254,7 +254,9 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         sdcor = unname(values[-1])
       )
     }))
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- do.call(rbind, lapply(seq_along(from), function(i) {
         values <- corrs[from[i]:to[i]]
         .data_frame(
@@ -264,8 +266,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           sdcor = unname(values[-1])
         )
       }))
-    } else {
-      out_cor <- NULL
     }
   } else {
     out_sd <- .data_frame(
@@ -274,15 +274,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       var2 = NA_character_,
       sdcor = unname(stddevs)
     )
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- .data_frame(
         grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
         var1 = "(Intercept)",
         var2 = names(corrs),
         sdcor = unname(corrs)
       )
-    } else {
-      out_cor <- NULL
     }
   }
 
@@ -713,13 +713,13 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
     vc1 <- list(vc1)
     names(vc1) <- re_names[[1]]
-    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
     attr(vc1, "useSc") <- TRUE
 
     if (!is.null(vc2)) {
       vc2 <- list(vc2)
       names(vc2) <- re_names[[2]]
-      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
       attr(vc2, "useSc") <- FALSE
     }
 
@@ -760,12 +760,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     varcorr <- lapply(names(lme4::VarCorr(model)), function(i) {
       element <- lme4::VarCorr(model)[[i]]
       if (i != "residual__") {
-        if (!is.null(element$cov)) {
-          out <- as.matrix(drop(element$cov[, 1, ]))
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
-        } else {
+        if (is.null(element$cov)) {
           out <- as.matrix(drop(element$sd[, 1])^2)
           colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
+        } else {
+          out <- as.matrix(drop(element$cov[, 1, ]))
+          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
         }
         attr(out, "sttdev") <- element$sd[, 1]
       } else {
