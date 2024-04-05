@@ -63,14 +63,14 @@
   # check for errors
   if (is.null(out)) {
     if (isTRUE(verbose)) {
-      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.")
+      insight::format_warning("Something went wrong when calculating random effects parameters. Only showing model's fixed effects now. You may use `effects=\"fixed\"` to speed up the call to `model_parameters()`.") # nolint
     }
     return(NULL)
   }
 
   out$Component <- "conditional"
 
-  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) {
+  if (insight::model_info(model, verbose = FALSE)$is_zero_inflated && !is.null(insight::find_random(model)$zero_inflated_random)) { # nolint
     zi_var <- suppressWarnings(
       .extract_random_variances_helper(
         model,
@@ -254,7 +254,9 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         sdcor = unname(values[-1])
       )
     }))
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- do.call(rbind, lapply(seq_along(from), function(i) {
         values <- corrs[from[i]:to[i]]
         .data_frame(
@@ -264,8 +266,6 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           sdcor = unname(values[-1])
         )
       }))
-    } else {
-      out_cor <- NULL
     }
   } else {
     out_sd <- .data_frame(
@@ -274,15 +274,15 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
       var2 = NA_character_,
       sdcor = unname(stddevs)
     )
-    if (!is.null(corrs)) {
+    if (is.null(corrs)) {
+      out_cor <- NULL
+    } else {
       out_cor <- .data_frame(
         grp = gsub("(.*) =(.*)", "\\1", attributes(x)$title),
         var1 = "(Intercept)",
         var2 = names(corrs),
         sdcor = unname(corrs)
       )
-    } else {
-      out_cor <- NULL
     }
   }
 
@@ -300,7 +300,14 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
 # extract CI for random SD ------------------------
 
-.random_sd_ci <- function(model, out, ci_method, ci, ci_random, corr_param, sigma_param, component = NULL, verbose = FALSE) {
+.random_sd_ci <- function(model,
+                          out,
+                          ci_method,
+                          ci, ci_random,
+                          corr_param,
+                          sigma_param,
+                          component = NULL,
+                          verbose = FALSE) {
   ## TODO needs to be removed once MCM > 0.1.5 is on CRAN
   if (startsWith(insight::safe_deparse(insight::get_call(model)), "mcm_lmer")) {
     return(out)
@@ -340,7 +347,13 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     if (!is.null(ci_method) && ci_method %in% c("profile", "boot")) {
       out <- tryCatch(
         {
-          var_ci <- as.data.frame(suppressWarnings(stats::confint(model, parm = "theta_", oldNames = FALSE, method = ci_method, level = ci)))
+          var_ci <- as.data.frame(suppressWarnings(stats::confint(
+            model,
+            parm = "theta_",
+            oldNames = FALSE,
+            method = ci_method,
+            level = ci
+          )))
           colnames(var_ci) <- c("CI_low", "CI_high")
 
           rn <- row.names(var_ci)
@@ -370,7 +383,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           if (isTRUE(verbose)) {
             insight::format_alert(
               "Cannot compute profiled standard errors and confidence intervals for random effects parameters.",
-              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity')."
+              "Your model may suffer from singularity (see '?lme4::isSingular' and '?performance::check_singularity').",
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package."
             )
           }
           out
@@ -445,7 +459,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
               for (gr in setdiff(unique(out$Group), "Residual")) {
                 rnd_slope_corr_grp <- rnd_slope_corr & out$Group == gr
                 dummy <- gsub("Cor \\((.*)~(.*)\\)", "\\2.\\1", out$Parameter[rnd_slope_corr_grp])
-                var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp]
+                var_ci$Parameter[var_ci$Group == gr][match(dummy, var_ci$Parameter[var_ci$Group == gr])] <- out$Parameter[rnd_slope_corr_grp] # nolint
               }
             }
 
@@ -484,10 +498,11 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
             out$CI_high[!var_ci_corr_param] <- exp(log(coefs) + stats::qnorm(0.975) * delta_se)
 
             # warn if singular fit
-            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) {
+            if (isTRUE(verbose) && insight::check_if_installed("performance", quietly = TRUE) && isTRUE(performance::check_singularity(model))) { # nolint
               insight::format_alert(
-                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).",
-                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!"
+                "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).", # nolint
+                "Some of the standard errors and confidence intervals of the random effects parameters are probably not meaningful!", # nolint
+                "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
               )
             }
             out
@@ -495,17 +510,18 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           error = function(e) {
             if (isTRUE(verbose)) {
               if (grepl("nAGQ of at least 1 is required", e$message, fixed = TRUE)) {
-                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.")
+                insight::format_alert("Argument `nAGQ` needs to be larger than 0 to compute confidence intervals for random effect parameters.") # nolint
               }
               if (grepl("Multiple cluster variables detected.", e$message, fixed = TRUE)) {
-                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.")
+                insight::format_alert("Confidence intervals for random effect parameters are currently not supported for multiple grouping variables.") # nolint
               }
               if (grepl("exactly singular", e$message, fixed = TRUE) ||
                 grepl("computationally singular", e$message, fixed = TRUE) ||
                 grepl("Exact singular", e$message, fixed = TRUE)) {
                 insight::format_alert(
                   "Cannot compute standard errors and confidence intervals for random effects parameters.",
-                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`)."
+                  "Your model may suffer from singularity (see see `?lme4::isSingular` and `?performance::check_singularity`).", # nolint
+                  "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
                 )
               }
             }
@@ -513,7 +529,7 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           }
         )
       } else if (isTRUE(verbose)) {
-        insight::format_alert("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters.")
+        insight::format_alert("Package 'merDeriv' needs to be installed to compute confidence intervals for random effect parameters.") # nolint
       }
     }
   } else if (inherits(model, "glmmTMB")) {
@@ -553,8 +569,8 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
           # add Group
           var_ci$Group <- NA
           if (length(group_factor) > 1) {
-            var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"])
-            var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"])
+            var_ci$Group[var_ci$Component == "conditional"] <- gsub(paste0("^", group_factor2, "\\.cond\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "conditional"]) # nolint
+            var_ci$Group[var_ci$Component == "zi"] <- gsub(paste0("^", group_factor2, "\\.zi\\.(.*)"), "\\1", var_ci$Parameter[var_ci$Component == "zi"]) # nolint
           } else {
             var_ci$Group <- group_factor
             # check if sigma was properly identified
@@ -594,17 +610,19 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
         # check results - warn user
         if (isTRUE(verbose)) {
           missing_ci <- any(is.na(var_ci$CI_low) | is.na(var_ci$CI_high))
-          singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model))
+          singular_fit <- insight::check_if_installed("performance", quietly = TRUE) & isTRUE(performance::check_singularity(model)) # nolint
 
           if (singular_fit) {
             insight::format_alert(
               "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
-              "Some of the confidence intervals of the random effects parameters are probably not meaningful!"
+              "Some of the confidence intervals of the random effects parameters are probably not meaningful!",
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
             )
           } else if (missing_ci) {
             insight::format_alert(
               "Your model may suffer from singularity (see `?lme4::isSingular` and `?performance::check_singularity`).",
-              "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!"
+              "Some of the confidence intervals of the random effects parameters could not be calculated or are probably not meaningful!", # nolint
+              "You may try to impose a prior on the random effects parameters, e.g. using the {.pkg glmmTMB} package." # nolint
             )
           }
         }
@@ -695,13 +713,13 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
 
     vc1 <- list(vc1)
     names(vc1) <- re_names[[1]]
-    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+    attr(vc1, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
     attr(vc1, "useSc") <- TRUE
 
     if (!is.null(vc2)) {
       vc2 <- list(vc2)
       names(vc2) <- re_names[[2]]
-      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE))
+      attr(vc2, "sc") <- sqrt(insight::get_deviance(model, verbose = FALSE) / insight::get_df(model, type = "residual", verbose = FALSE)) # nolint
       attr(vc2, "useSc") <- FALSE
     }
 
@@ -742,12 +760,12 @@ as.data.frame.VarCorr.lme <- function(x, row.names = NULL, optional = FALSE, ...
     varcorr <- lapply(names(lme4::VarCorr(model)), function(i) {
       element <- lme4::VarCorr(model)[[i]]
       if (i != "residual__") {
-        if (!is.null(element$cov)) {
-          out <- as.matrix(drop(element$cov[, 1, ]))
-          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
-        } else {
+        if (is.null(element$cov)) {
           out <- as.matrix(drop(element$sd[, 1])^2)
           colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$sd), fixed = TRUE)
+        } else {
+          out <- as.matrix(drop(element$cov[, 1, ]))
+          colnames(out) <- rownames(out) <- gsub("Intercept", "(Intercept)", rownames(element$cov), fixed = TRUE)
         }
         attr(out, "sttdev") <- element$sd[, 1]
       } else {

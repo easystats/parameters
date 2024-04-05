@@ -200,9 +200,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-random", {
       params <- model_parameters(m1, effects = "random", group_level = TRUE)
-      expect_equal(c(nrow(params), ncol(params)), c(8, 10))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 10L))
+      expect_named(
+        params,
         c(
           "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "Component", "Effects", "Group"
@@ -231,9 +231,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-ran_pars", {
       params <- model_parameters(m1, effects = "random")
-      expect_equal(c(nrow(params), ncol(params)), c(2, 9))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(2L, 9L))
+      expect_named(
+        params,
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_identical(
@@ -253,9 +253,9 @@ withr::with_options(
 
     test_that("model_parameters.mixed-all_pars", {
       params <- model_parameters(m1, effects = "all")
-      expect_equal(c(nrow(params), ncol(params)), c(8, 12))
-      expect_identical(
-        colnames(params),
+      expect_identical(c(nrow(params), ncol(params)), c(8L, 12L))
+      expect_named(
+        params,
         c(
           "Parameter", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "z", "df_error", "p", "Effects", "Group", "Component"
@@ -285,8 +285,8 @@ withr::with_options(
     test_that("model_parameters.mixed-all", {
       params <- model_parameters(m1, effects = "all", group_level = TRUE)
       expect_identical(c(nrow(params), ncol(params)), c(14L, 13L))
-      expect_identical(
-        colnames(params),
+      expect_named(
+        params,
         c(
           "Parameter", "Level", "Coefficient", "SE", "CI", "CI_low",
           "CI_high", "z", "df_error", "p", "Component", "Effects",
@@ -347,10 +347,15 @@ withr::with_options(
     ))
 
     test_that("model_parameters.mixed-ran_pars", {
-      params <- model_parameters(m4, effects = "random")
+      expect_message(
+        {
+          params <- model_parameters(m4, effects = "random")
+        },
+        regex = "Your model may"
+      )
       expect_identical(c(nrow(params), ncol(params)), c(6L, 9L))
-      expect_identical(
-        colnames(params),
+      expect_named(
+        params,
         c("Parameter", "Coefficient", "SE", "CI", "CI_low", "CI_high", "Effects", "Group", "Component")
       )
       expect_identical(
@@ -408,33 +413,173 @@ withr::with_options(
 
     test_that("print-model_parameters glmmTMB", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m4, effects = "fixed", component = "conditional")
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-5])
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional")
-      expect_snapshot(print(mp))
+
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional", verbose = FALSE)
+      out <- utils::capture.output(print(mp))
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Random Effects",
+          "",
+          "Parameter                   | ",
+          "------------------------------",
+          "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(3.40563, 1.21316, -1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(1.64567, 0.5919, -1), tolerance = 1e-3)
+
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "fixed", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-6])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(`(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]")
+      )
+      expect_identical(
+        substr(out, 1, 12),
+        c(
+          "# Fixed Effe", "", "Parameter   ", "------------", "(Intercept) ",
+          "child       ", "camper [1]  "
+        )
+      )
+      expect_equal(mp$Coefficient, c(1.88964, 0.15712, -0.17007), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(0.5878, -0.78781, -0.92836), tolerance = 1e-3)
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated")
-      expect_snapshot(print(mp))
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated", verbose = FALSE)
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-5])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(2.73583, 1.56833, 1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(1.16329, 0.64246, -1), tolerance = 1e-3)
 
-      mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated")
-      out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-6])
 
-      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE)
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional", verbose = FALSE)
       out <- utils::capture.output(print(mp))
-      expect_snapshot(out[-c(5, 14)])
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------",
+          "(Intercept) |     2.55 | 0.25 ", "child       |    -1.09 | 0.10 ",
+          "camper [1]  |     0.27 | 0.10 ", "", "# Random Effects", "",
+          "Parameter                   | ", "------------------------------",
+          "SD (Intercept: persons)     | ", "SD (xb: persons)            | ",
+          "Cor (Intercept~xb: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(2.54713, -1.08747, 0.2723, 3.40563, 1.21316, -1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(2.06032, -1.27967, 0.07461, 1.64567, 0.5919, -1), tolerance = 1e-3)
+
+
+      mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated", verbose = FALSE)
+      out <- utils::capture.output(print(mp))
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)",
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Zero-Inflatio", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------", "(Intercept) |     1.89 | 0.66 ",
+          "child       |     0.16 | 0.48 ", "camper [1]  |    -0.17 | 0.39 ",
+          "", "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(mp$Coefficient, c(1.88964, 0.15712, -0.17007, 2.73583, 1.56833, 1), tolerance = 1e-3)
+      expect_equal(mp$CI_low, c(0.5878, -0.78781, -0.92836, 1.16329, 0.64246, -1), tolerance = 1e-3)
+
+
+      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE, verbose = FALSE)
+      out <- utils::capture.output(print(mp))
+      expect_identical(
+        attributes(mp)$pretty_labels,
+        c(
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper [1]",
+          `(Intercept)` = "(Intercept)", child = "child", camper1 = "camper1", # nolint
+          `SD (Intercept)` = "SD (Intercept)", `SD (xb)` = "SD (xb)",
+          `Cor (Intercept~xb)` = "Cor (Intercept~xb)",
+          `SD (Intercept)` = "SD (Intercept)", `SD (zg)` = "SD (zg)", # nolint
+          `Cor (Intercept~zg)` = "Cor (Intercept~zg)"
+        )
+      )
+      expect_identical(
+        substr(out, 1, 30),
+        c(
+          "# Fixed Effects (Count Model)", "", "Parameter   | Log-Mean |   SE ",
+          "------------------------------", "(Intercept) |     2.55 | 0.25 ",
+          "child       |    -1.09 | 0.10 ", "camper [1]  |     0.27 | 0.10 ",
+          "", "# Fixed Effects (Zero-Inflatio", "", "Parameter   | Log-Odds |   SE ",
+          "------------------------------", "(Intercept) |     1.89 | 0.66 ",
+          "child       |     0.16 | 0.48 ", "camper [1]  |    -0.17 | 0.39 ",
+          "", "# Random Effects Variances", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (xb: persons)            | ", "Cor (Intercept~xb: persons) | ",
+          "", "# Random Effects (Zero-Inflati", "", "Parameter                   | ",
+          "------------------------------", "SD (Intercept: persons)     | ",
+          "SD (zg: persons)            | ", "Cor (Intercept~zg: persons) | "
+        )
+      )
+      expect_equal(
+        mp$Coefficient,
+        c(
+          2.54713, -1.08747, 0.2723, 1.88964, 0.15712, -0.17007, 3.40563,
+          1.21316, -1, 2.73583, 1.56833, 1
+        ),
+        tolerance = 1e-3
+      )
+      expect_equal(
+        mp$CI_low,
+        c(
+          2.06032, -1.27967, 0.07461, 0.5878, -0.78781, -0.92836, 1.64567,
+          0.5919, -1, 1.16329, 0.64246, -1
+        ),
+        tolerance = 1e-3
+      )
     })
 
 
@@ -442,7 +587,7 @@ withr::with_options(
 
     test_that("print-model_parameters glmmTMB digits", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "all")
       out <- utils::capture.output(print(mp, digits = 4, ci_digits = 5))
@@ -459,7 +604,7 @@ withr::with_options(
       skip_if_not_installed("curl")
       skip_if_offline()
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       model_pr <- tryCatch(
         {
@@ -488,7 +633,7 @@ withr::with_options(
 
     test_that("model_parameters.mixed-all", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       params <- model_parameters(m4, effects = "all")
       expect_identical(c(nrow(params), ncol(params)), c(12L, 12L))
@@ -527,7 +672,7 @@ withr::with_options(
 
     test_that("print-model_parameters", {
       skip_on_os(c("mac", "linux", "solaris"))
-      skip_if_not(getRversion() < "4.3.0")
+      skip_if_not(getRversion() >= "4.3.3")
 
       mp <- model_parameters(m1, effects = "fixed", verbose = FALSE)
       expect_snapshot(mp)

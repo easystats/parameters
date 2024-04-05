@@ -40,7 +40,7 @@
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
-#' @section Confidence intervals for random effect variances:
+#' @section Confidence intervals for random effects variances:
 #' For models of class `merMod` and `glmmTMB`, confidence intervals for random
 #' effect variances can be calculated.
 #'
@@ -60,6 +60,34 @@
 #'
 #' - For models of class `glmmTMB`, confidence intervals for random effect
 #' variances always use a Wald t-distribution approximation.
+#'
+#' @section Singular fits (random effects variances near zero):
+#' If a model is "singular", this means that some dimensions of the
+#' variance-covariance matrix have been estimated as exactly zero. This
+#' often occurs for mixed models with complex random effects structures.
+#'
+#' There is no gold-standard about how to deal with singularity and which
+#' random-effects specification to choose. One way is to fully go Bayesian
+#' (with informative priors). Other proposals are listed in the documentation
+#' of [`performance::check_singularity()`]. However, since version 1.1.9, the
+#' **glmmTMB** package allows to use priors in a frequentist framework, too. One
+#' recommendation is to use a Gamma prior (_Chung et al. 2013_). The mean may
+#' vary from 1 to very large values (like `1e8`), and the shape parameter should
+#' be set to a value of 2.5. You can then `update()` your model with the specified
+#' prior. In **glmmTMB**, the code would look like this:
+#'
+#' ```
+#' # "model" is an object of class gmmmTMB
+#' prior <- data.frame(
+#'   prior = "gamma(1, 2.5)",  # mean can be 1, but even 1e8
+#'   class = "ranef"           # for random effects
+#' )
+#' model_with_priors <- update(model, priors = prior)
+#' ```
+#'
+#' Large values for the mean parameter of the Gamma prior have no large impact
+#' on the random effects variances in terms of a "bias". Thus, if `1` doesn't
+#' fix the singular fit, you can safely try larger values.
 #'
 #' @section Dispersion parameters in *glmmTMB*:
 #' For some models from package **glmmTMB**, both the dispersion parameter and
@@ -81,6 +109,11 @@
 #' @note If the calculation of random effects parameters takes too long, you may
 #' use `effects = "fixed"`. There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #' implemented in the [**see**-package](https://easystats.github.io/see/).
+#'
+#' @references
+#' Chung Y, Rabe-Hesketh S, Dorie V, Gelman A, and Liu J. 2013. "A Nondegenerate
+#' Penalized Likelihood Estimator for Variance Parameters in Multilevel Models."
+#' Psychometrika 78 (4): 685–709. \doi{10.1007/s11336-013-9328-2}
 #'
 #' @examplesIf require("lme4") && require("glmmTMB")
 #' library(parameters)

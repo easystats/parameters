@@ -37,6 +37,7 @@ DirichletReg
 DoF
 DoFs
 Dom
+Dorie
 Dupont
 EFA
 EGAnet
@@ -64,6 +65,7 @@ HDI
 HEXACO
 HLM
 Heisig
+Hesketh
 Heteroskedasticity
 Higgs
 Hinkley
@@ -86,6 +88,7 @@ LMMs
 Lakens
 Laparra
 Lawley
+Liu
 MADs
 MCMCglmm
 MLM
@@ -103,6 +106,7 @@ NL
 Neter
 Neyman
 Nieto
+Nondegenerate
 Nonresponse
 ORCID
 Olkin
@@ -116,6 +120,7 @@ PloS
 Psychometrika
 REWB
 ROPE's
+Rabe
 Rafi
 Rchoice
 Revelle
@@ -174,6 +179,7 @@ behaviours
 betareg
 biserial
 blavaan
+blme
 bmwiernik
 brglm
 brms

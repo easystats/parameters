@@ -1,5 +1,9 @@
 # parameters 0.21.7
 
+## Bug fixes
+
+* Fixes issue in `compare_parameters()` for models from package *blme*.
+
 # parameters 0.21.6
 
 ## New supported models

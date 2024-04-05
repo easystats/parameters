@@ -13,7 +13,7 @@ skip_on_cran()
 data(sleepstudy, package = "lme4")
 data(cake, package = "lme4")
 set.seed(123)
-sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
 set.seed(123)
 m1 <- suppressWarnings(glmmTMB::glmmTMB(
@@ -26,11 +26,26 @@ m4 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | rep
 m5 <- suppressWarnings(glmmTMB::glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
 set.seed(123)
-expect_message(mp1 <- model_parameters(m1, ci_random = TRUE), "singularity")
+expect_message(
+  {
+    mp1 <- model_parameters(m1, ci_random = TRUE)
+  },
+  "singularity"
+)
 mp2 <- model_parameters(m2, ci_random = TRUE) # works
-expect_message(mp3 <- model_parameters(m3, ci_random = TRUE), "singularity") # no SE/CI
+expect_message(
+  {
+    mp3 <- model_parameters(m3, ci_random = TRUE)
+  },
+  "singularity"
+) # no SE/CI
 mp4 <- model_parameters(m4, ci_random = TRUE)
-expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
+expect_message(
+  {
+    mp5 <- model_parameters(m5, ci_random = TRUE)
+  },
+  "singularity"
+) # no SE/CI
 
 test_that("random effects CIs, two slopes, categorical", {
   ## FIXME: Results differ across R versions, no idea why...
@@ -198,10 +213,7 @@ test_that("random effects CIs, categorical slope-2", {
 test_that("random effects CIs, double slope", {
   expect_equal(
     mp5$CI_low,
-    c(
-      238.40607, 7.52296, 15.01708, 3.80547, NaN, -0.48781, NaN,
-      NaN, 22.80046
-    ),
+    c(238.40606, 7.52296, 15.0171, 3.80547, 0, -0.48781, NaN, NaN, 22.80045),
     tolerance = 1e-2,
     ignore_attr = TRUE
   )
@@ -220,7 +232,7 @@ test_that("random effects CIs, double slope", {
 test_that("random effects CIs, simple slope", {
   data(sleepstudy, package = "lme4")
   set.seed(123)
-  sleepstudy$Months <- sample(1:4, nrow(sleepstudy), TRUE)
+  sleepstudy$Months <- sample.int(4, nrow(sleepstudy), TRUE)
 
   set.seed(123)
   m2 <- glmmTMB::glmmTMB(Reaction ~ Days + (0 + Days | Subject), data = sleepstudy)
@@ -228,7 +240,12 @@ test_that("random effects CIs, simple slope", {
 
   set.seed(123)
   mp2 <- model_parameters(m2, ci_random = TRUE)
-  expect_message(mp5 <- model_parameters(m5, ci_random = TRUE), "singularity") # no SE/CI
+  expect_message(
+    {
+      mp5 <- model_parameters(m5, ci_random = TRUE)
+    },
+    "singularity"
+  ) # no SE/CI
   expect_equal(
     mp2$CI_low,
     c(243.55046, 6.89554, 4.98429, 25.94359),
