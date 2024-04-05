@@ -26,17 +26,26 @@ m4 <- suppressWarnings(glmmTMB::glmmTMB(angle ~ temperature + (temperature | rep
 m5 <- suppressWarnings(glmmTMB::glmmTMB(Reaction ~ Days + (Days + Months | Subject), data = sleepstudy))
 
 set.seed(123)
-expect_message({
-  mp1 <- model_parameters(m1, ci_random = TRUE)
-}, "singularity")
+expect_message(
+  {
+    mp1 <- model_parameters(m1, ci_random = TRUE)
+  },
+  "singularity"
+)
 mp2 <- model_parameters(m2, ci_random = TRUE) # works
-expect_message({
-  mp3 <- model_parameters(m3, ci_random = TRUE)
-}, "singularity") # no SE/CI
+expect_message(
+  {
+    mp3 <- model_parameters(m3, ci_random = TRUE)
+  },
+  "singularity"
+) # no SE/CI
 mp4 <- model_parameters(m4, ci_random = TRUE)
-expect_message({
-  mp5 <- model_parameters(m5, ci_random = TRUE)
-}, "singularity") # no SE/CI
+expect_message(
+  {
+    mp5 <- model_parameters(m5, ci_random = TRUE)
+  },
+  "singularity"
+) # no SE/CI
 
 test_that("random effects CIs, two slopes, categorical", {
   ## FIXME: Results differ across R versions, no idea why...
@@ -231,9 +240,12 @@ test_that("random effects CIs, simple slope", {
 
   set.seed(123)
   mp2 <- model_parameters(m2, ci_random = TRUE)
-  expect_message({
-    mp5 <- model_parameters(m5, ci_random = TRUE)
-  }, "singularity")  # no SE/CI
+  expect_message(
+    {
+      mp5 <- model_parameters(m5, ci_random = TRUE)
+    },
+    "singularity"
+  ) # no SE/CI
   expect_equal(
     mp2$CI_low,
     c(243.55046, 6.89554, 4.98429, 25.94359),
