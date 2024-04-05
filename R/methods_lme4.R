@@ -76,7 +76,7 @@
 #' be set to a value of 2.5. You can then `update()` your model with the specified
 #' prior. In **glmmTMB**, the code would look like this:
 #'
-#' ````
+#' ```
 #' # "model" is an object of class gmmmTMB
 #'prior <- data.frame(
 #'  prior = "gamma(1, 2.5)", # mean can be 1, but even 1e8
