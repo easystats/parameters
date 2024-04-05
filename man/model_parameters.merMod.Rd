@@ -375,7 +375,7 @@ often occurs for mixed models with complex random effects structures.
 There is no gold-standard about how to deal with singularity and which
 random-effects specification to choose. One way is to fully go Bayesian
 (with informative priors). Other proposals are listed in the documentation
-of [\code{performance::check_singularity()}]. However, since version 1.1.9, the
+of \code{\link[performance:check_singularity]{performance::check_singularity()}}. However, since version 1.1.9, the
 \strong{glmmTMB} allows to use priors in a frequentist framework, too. One
 recommendation is to use a Gamma prior (\emph{Chung et al. 2013}). The mean may
 vary from 1 to very large values (like \code{1e8}), and the shape parameter should
@@ -388,15 +388,11 @@ prior <- data.frame(
  class = "ranef" # for random effects
 )
 model_with_priors <- update(model, priors = prior)
-```
+}\if{html}{\out{</div>}}
 
 Large values for the mean parameter of the Gamma prior have no large impact
-on the random effects variances in terms of a "bias". Thus, if `1` doesn't
+on the random effects variances in terms of a "bias". Thus, if \code{1} doesn't
 fix the singular fit, you can try larger values.
-
-
-[`performance::check_singularity()`]: R:\%60performance::check_singularity()\%60
-}\if{html}{\out{</div>}}
 }
 
 \section{Dispersion parameters in \emph{glmmTMB}}{
