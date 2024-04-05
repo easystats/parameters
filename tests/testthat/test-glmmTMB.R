@@ -347,7 +347,12 @@ withr::with_options(
     ))
 
     test_that("model_parameters.mixed-ran_pars", {
-      params <- model_parameters(m4, effects = "random")
+      expect_message(
+        {
+          params <- model_parameters(m4, effects = "random")
+        },
+        regex = "Your model may"
+      )
       expect_identical(c(nrow(params), ncol(params)), c(6L, 9L))
       expect_named(
         params,
@@ -414,25 +419,25 @@ withr::with_options(
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-5])
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "conditional", verbose = FALSE)
       expect_snapshot(print(mp))
 
       mp <- model_parameters(m4, ci_random = TRUE, effects = "fixed", component = "zero_inflated")
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-6])
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "random", component = "zero_inflated", verbose = FALSE)
       expect_snapshot(print(mp))
 
-      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional")
+      mp <- model_parameters(m4, ci_random = TRUE, effects = "all", component = "conditional", verbose = FALSE)
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-5])
 
-      mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated")
+      mp <- model_parameters(m4, effects = "all", ci_random = TRUE, component = "zero_inflated", verbose = FALSE)
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-6])
 
-      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE)
+      mp <- model_parameters(m4, effects = "all", component = "all", ci_random = TRUE, verbose = FALSE)
       out <- utils::capture.output(print(mp))
       expect_snapshot(out[-c(5, 14)])
     })
