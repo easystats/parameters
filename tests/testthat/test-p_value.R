@@ -77,22 +77,22 @@ test_that("p_value", {
 
   # ANOVA lmer
   model <- insight::download_model("anova_lmerMod_0")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_1")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_2")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_3")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_4")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_5")
-  expect_equal(p_value(model), NA)
+  expect_identical(p_value(model), NA)
 
   model <- insight::download_model("anova_lmerMod_6")
   expect_equal(p_value(model)$p[2], 0, tolerance = 0.01)

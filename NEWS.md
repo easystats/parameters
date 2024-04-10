@@ -4,6 +4,10 @@
 
 * Fixes issue in `compare_parameters()` for models from package *blme*.
 
+* Fixed conflict in `model_parameters()` when both `include_reference = TRUE` and
+  `pretty_names = "labels"` were used. Now, pretty labels are correctly updated
+  and preserved.
+
 # parameters 0.21.6
 
 ## New supported models
