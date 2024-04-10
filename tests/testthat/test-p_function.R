@@ -4,7 +4,7 @@ model <- lm(Sepal.Length ~ Species, data = iris)
 test_that("p_function ci-levels", {
   out <- p_function(model)
 
-  expect_equal(dim(out), c(12, 5))
+  expect_identical(dim(out), c(12L, 5L))
 
   expect_equal(
     out$CI,
@@ -38,7 +38,7 @@ test_that("p_function ci-levels", {
 test_that("p_function keep-drop", {
   out <- p_function(model, keep = "Speciesversicolor")
 
-  expect_equal(dim(out), c(4, 5))
+  expect_identical(dim(out), c(4L, 5L))
 
   expect_equal(
     out$CI,
@@ -46,7 +46,7 @@ test_that("p_function keep-drop", {
     tolerance = 1e-4
   )
 
-  expect_equal(
+  expect_identical(
     out$Parameter,
     c(
       "Speciesversicolor", "Speciesversicolor", "Speciesversicolor",
@@ -60,7 +60,7 @@ test_that("p_function print", {
   out <- p_function(model)
   ref <- capture.output(print(out))
 
-  expect_equal(
+  expect_identical(
     ref,
     c(
       "Consonance Function",

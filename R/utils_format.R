@@ -454,6 +454,8 @@
   }
   # update pretty_names attribute
   attr(out, "pretty_names") <- pretty_names
+  # update pretty_labels attribute
+  pretty_names[match(names(attr(out, "pretty_labels")), names(pretty_names))] <- attr(out, "pretty_labels")
   attr(out, "pretty_labels") <- pretty_names
 
   out
