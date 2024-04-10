@@ -1,7 +1,7 @@
 test_that("pretty_names", {
   data(mtcars)
-  attr(mtcars2$hp, "label") <- "Gross horsepower"
-  mod <- lm(mpg ~ hp + factor(cyl), mtcars2)
+  attr(mtcars$hp, "label") <- "Gross horsepower"
+  mod <- lm(mpg ~ hp + factor(cyl), mtcars)
 
   p <- parameters::parameters(mod, pretty_names = "labels", include_reference = TRUE)
   expect_identical(
