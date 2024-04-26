@@ -376,6 +376,14 @@
 
   # find factors and factor levels and check if we have any factors in the data
   factors <- .find_factor_levels(model_data, model, model_call = attributes(params)$model_call)
+  # next, check contrasts of factors. including the reference level makes
+  # only sense if there are contrasts that are all zeros, which means that
+  # the reference level is not included in the model matrix
+  remove_contrasts <- .remove_reference_contrasts(model)
+  # keep only factors with valid contrasts
+  if (!is.null(remove_contrasts) && length(remove_contrasts)) {
+    factors <- factors[setdiff(names(factors), remove_contrasts)]
+  }
   if (!length(factors)) {
     params
   }
