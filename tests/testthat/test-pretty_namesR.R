@@ -20,4 +20,16 @@ test_that("pretty_names", {
       `factor(cyl)8` = "cyl [8]"
     )
   )
+
+  mtcars2 <- transform(mtcars, cyl = as.factor(cyl))
+  attr(mtcars2$cyl, "label") <- "Cylinders"
+  model <- lm(mpg ~ wt + cyl, data = mtcars2)
+  p <- model_parameters(model, pretty_names = "labels", include_reference = TRUE)
+  expect_identical(
+    attr(p, "pretty_labels"),
+    c(
+      `(Intercept)` = "(Intercept)", wt = "wt", cyl4 = "Cylinders [4]",
+      cyl6 = "Cylinders [6]", cyl8 = "Cylinders [8]"
+    )
+  )
 })
