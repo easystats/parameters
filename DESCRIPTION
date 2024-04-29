@@ -139,7 +139,6 @@ Suggests:
     haven,
     httr,
     Hmisc,
-    ivprobit,
     ivreg,
     knitr,
     lavaan,
