@@ -58,9 +58,6 @@
   attr(params, "log_link") <- isTRUE(grepl("log", info$link_function, fixed = TRUE))
   attr(params, "logit_link") <- isTRUE(identical(info$link_function, "logit"))
 
-  # add parameters with value and variable
-  attr(params, "pretty_labels") <- .format_value_labels(params, model)
-
   # save model call
   attr(params, "model_call") <- .safe(insight::get_call(model))
 
@@ -207,6 +204,9 @@
     params <- .safe(.add_reference_level(params, model), params)
     attributes(params) <- utils::modifyList(a, attributes(params))
   }
+
+  # add parameters with value and variable
+  attr(params, "pretty_labels") <- .format_value_labels(params, model)
 
   row.names(params) <- NULL
   params

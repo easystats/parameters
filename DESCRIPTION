@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.6.4
+Version: 0.21.6.6
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -139,7 +139,6 @@ Suggests:
     haven,
     httr,
     Hmisc,
-    ivprobit,
     ivreg,
     knitr,
     lavaan,
@@ -219,3 +218,4 @@ Config/Needs/website:
     r-lib/pkgdown,
     easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight
