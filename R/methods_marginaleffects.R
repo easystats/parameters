@@ -23,6 +23,9 @@ model_parameters.marginaleffects <- function(model,
 
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
 
+  # do not print or report these columns
+  out <- out[, !colnames(out) %in% c("predicted_lo", "predicted_hi"), drop = FALSE]
+
   if (inherits(model, "marginalmeans")) {
     attr(out, "coefficient_name") <- "Marginal Means"
   } else if (inherits(model, "comparisons")) {

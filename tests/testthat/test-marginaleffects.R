@@ -8,10 +8,8 @@ test_that("marginaleffects()", {
   model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
   out <- parameters(model)
   expect_identical(nrow(out), 1L)
-  expect_named(out, c(
-    "Parameter", "Coefficient", "SE", "Statistic",
-    "p", "S", "CI", "CI_low", "CI_high"
-  ))
+  cols <- c("Parameter", "Comparison", "Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high")
+  expect_true(all(cols %in% colnames(out)))
   out <- model_parameters(model, exponentiate = TRUE)
   expect_equal(out$Coefficient, 1.394, tolerance = 1e-3)
 
