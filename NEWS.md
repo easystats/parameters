@@ -1,5 +1,9 @@
 # parameters 0.21.7
 
+## Changes
+
+* Fixed issues related to latest release from _marginaleffects_.
+
 ## Bug fixes
 
 * Fixes issue in `compare_parameters()` for models from package *blme*.
