@@ -493,7 +493,7 @@ equivalence_test.ggeffects <- function(x,
 
   out <- do.call(rbind, lapply(names(params), function(np) {
     est <- params[[np]][, "(Intercept)"]
-    stderr <- se[[np]][, "(Intercept)"]
+    std_err <- se[[np]][, "(Intercept)"]
 
     d <- data.frame(
       Parameter = rownames(params[[np]]),
@@ -504,13 +504,13 @@ equivalence_test.ggeffects <- function(x,
     )
 
     conf_int <- as.data.frame(t(data.frame(
-      CI_low = est - stderr * fac,
-      CI_high = est + stderr * fac
+      CI_low = est - std_err * fac,
+      CI_high = est + std_err * fac
     )))
 
     conf_int2 <- as.data.frame(t(data.frame(
-      CI_low = est - stderr * fac_narrow,
-      CI_high = est + stderr * fac_narrow
+      CI_low = est - std_err * fac_narrow,
+      CI_high = est + std_err * fac_narrow
     )))
 
     l <- Map(
@@ -568,13 +568,11 @@ equivalence_test.ggeffects <- function(x,
         decision <- "Rejected"
       }
       # non-significant results
-    } else {
+    } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
       # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
-      if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
-        decision <- "Accepted"
-      } else {
-        decision <- "Undecided"
-      }
+      decision <- "Accepted"
+    } else {
+      decision <- "Undecided"
     }
   }
 
@@ -663,7 +661,7 @@ equivalence_test.ggeffects <- function(x,
       params <- insight::get_parameters(model)
 
       # degrees of freedom
-      df <- degrees_of_freedom(model, method = "any")
+      dof <- degrees_of_freedom(model, method = "any")
 
       # mu
       params$mu <- params$Estimate * -1
@@ -671,8 +669,8 @@ equivalence_test.ggeffects <- function(x,
       # se
       se <- standard_error(model)
 
-      stats::pt((range[1] - params$mu) / se$SE, df, lower.tail = TRUE) +
-        stats::pt((range[2] - params$mu) / se$SE, df, lower.tail = FALSE)
+      stats::pt((range[1] - params$mu) / se$SE, df = dof, lower.tail = TRUE) +
+        stats::pt((range[2] - params$mu) / se$SE, df = dof, lower.tail = FALSE)
     },
     error = function(e) {
       NULL
@@ -788,55 +786,3 @@ plot.equivalence_test_lm <- function(x, ...) {
   insight::check_if_installed("see")
   NextMethod()
 }
-#'
-#'
-#' #' @export
-#' print_md.equivalence_test_lm <- function(x,
-#'                                          digits = 2,
-#'                                          ci_digits = digits,
-#'                                          p_digits = 3,
-#'                                          ci_brackets = NULL,
-#'                                          zap_small = FALSE,
-#'                                          ...) {
-#'   orig_x <- x
-#'
-#'   rule <- attributes(x)$rule
-#'   if (!is.null(rule)) {
-#'     if (rule == "cet") {
-#'       title <- "Conditional Equivalence Testing"
-#'     } else if (rule == "classic") {
-#'       title <- "TOST-test for Practical Equivalence"
-#'     } else {
-#'       title <- "Test for Practical Equivalence"
-#'     }
-#'   } else {
-#'     title <- "Test for Practical Equivalence"
-#'   }
-#'
-#'   .rope <- attr(x, "rope", exact = TRUE)
-#'   subtitle <- sprintf("  ROPE: [%.*f %.*f]\n\n", digits, .rope[1], digits, .rope[2])
-#'
-#'   # formatting
-#'   x <- format(x,
-#'               digits = digits,
-#'               ci_digits = ci_digits,
-#'               p_digits = p_digits,
-#'               ci_width = NULL,
-#'               ci_brackets = ci_brackets,
-#'               format = "md",
-#'               zap_small = zap_small,
-#'               ...)
-#'
-#'   if ("Group" %in% colnames(x)) {
-#'     group_by <- "Group"
-#'   } else {
-#'     group_by <- NULL
-#'   }
-#'
-#'   cat(insight::export_table(x,
-#'                             format = "md",
-#'                             title = title,
-#'                             subtitle = subtitle,
-#'                             group_by = group_by))
-#'   invisible(orig_x)
-#' }
