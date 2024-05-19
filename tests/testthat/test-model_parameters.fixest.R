@@ -16,7 +16,7 @@ test_that("model_parameters.fixest", {
 
   qol_cancer <- cbind(
     qol_cancer,
-    datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+    datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
   )
 
   m1 <- fixest::feols(QoL ~ time + phq4 | ID, data = qol_cancer)

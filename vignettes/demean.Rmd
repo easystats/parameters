@@ -112,7 +112,7 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ```{r}
 qol_cancer <- cbind(
   qol_cancer,
-  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 )
 ```
 
@@ -354,7 +354,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
 ```
 
 Let's look at the raw data...
@@ -526,7 +526,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)
