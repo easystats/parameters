@@ -90,7 +90,7 @@ You can check if your model may suffer from heterogeneity bias using the
 
 ```{r}
 library(performance)
-check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), group = "ID")
+check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), by = "ID")
 ```
 
 # Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach
