@@ -346,7 +346,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
 
   ## Correctly identify within and between terms
   dev_resp <- standardize_info(m, include_pseudo = TRUE)$Deviation_Response_Pseudo
-  expect_identical(insight::n_unique(dev_resp[c(2, 4, 5, 6)]), 1)
+  expect_identical(insight::n_unique(dev_resp[c(2, 4, 5, 6)]), 1L)
   expect_true(dev_resp[2] != dev_resp[3])
 
 

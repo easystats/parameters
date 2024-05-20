@@ -5,7 +5,7 @@ skip_if_not_installed("rstanarm")
 test_that("marginaleffects()", {
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
-  model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
   out <- parameters(model)
   expect_identical(nrow(out), 1L)
   cols <- c("Parameter", "Comparison", "Coefficient", "SE", "Statistic", "p", "S", "CI", "CI_low", "CI_high")
@@ -23,7 +23,7 @@ test_that("marginaleffects()", {
       chains = 1
     )
   )
-  model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  model <- marginaleffects::avg_slopes(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
   expect_identical(nrow(parameters(model)), 1L)
 })
 
@@ -46,7 +46,7 @@ test_that("comparisons()", {
   data(iris)
   # Frequentist
   x <- lm(Sepal.Width ~ Species * Petal.Length, data = iris)
-  m <- marginaleffects::avg_comparisons(x, newdata = insight::get_datagrid(x, at = "Species"), variables = "Petal.Length")
+  m <- marginaleffects::avg_comparisons(x, newdata = insight::get_datagrid(x, by = "Species"), variables = "Petal.Length")
   expect_identical(nrow(parameters(m)), 1L)
   out <- parameters(m, exponentiate = TRUE)
   expect_equal(out$Coefficient, 1.393999, tolerance = 1e-4)
@@ -63,7 +63,7 @@ test_that("comparisons()", {
   )
   m <- marginaleffects::avg_slopes(
     x,
-    newdata = insight::get_datagrid(x, at = "Species"),
+    newdata = insight::get_datagrid(x, by = "Species"),
     variables = "Petal.Length"
   )
   expect_identical(nrow(parameters(m)), 1L)
@@ -85,7 +85,7 @@ test_that("multiple contrasts: Issue #779", {
   cmp <- suppressWarnings(marginaleffects::comparisons(
     mod,
     variables = c("gear", "cyl"),
-    newdata = insight::get_datagrid(mod, at = c("gear", "cyl")),
+    newdata = insight::get_datagrid(mod, by = c("gear", "cyl")),
     cross = TRUE
   ))
   cmp <- suppressWarnings(parameters(cmp))
