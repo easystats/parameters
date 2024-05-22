@@ -374,7 +374,7 @@ speed.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -393,7 +393,7 @@ due to repeated measurements.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.5, alpha = 0.5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -432,7 +432,7 @@ between-effect now.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -455,7 +455,7 @@ within- and between-effects.
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
