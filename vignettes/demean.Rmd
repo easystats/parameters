@@ -90,7 +90,7 @@ You can check if your model may suffer from heterogeneity bias using the
 
 ```{r}
 library(performance)
-check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), group = "ID")
+check_heterogeneity_bias(qol_cancer, select = c("phq4", "education"), by = "ID")
 ```
 
 # Adressing heterogeneity bias: the Fixed Effects Regression (FE) approach
@@ -112,7 +112,7 @@ and as such, FE avoids estimating a parameter for each higher-level unit.
 ```{r}
 qol_cancer <- cbind(
   qol_cancer,
-  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), group = "ID")
+  datawizard::demean(qol_cancer, select = c("phq4", "QoL"), by = "ID")
 )
 ```
 
@@ -354,7 +354,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
 ```
 
 Let's look at the raw data...
@@ -374,7 +374,7 @@ speed.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(colour = "#555555", size = 2.5, alpha = 0.5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
 ```
@@ -393,7 +393,7 @@ due to repeated measurements.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.5, alpha = 0.5) +
-  geom_smooth(method = "lm", se = F, colour = "#555555") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#555555") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -432,7 +432,7 @@ between-effect now.
 ```{r echo=FALSE}
 ggplot(d, aes(x, y)) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -455,7 +455,7 @@ within- and between-effects.
 ggplot(d, aes(x, y)) +
   geom_smooth(mapping = aes(colour = grp), method = "lm", se = FALSE) +
   geom_point(mapping = aes(colour = grp), size = 2.2, alpha = 0.6) +
-  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = F, colour = "#444444") +
+  geom_smooth(mapping = aes(x = x_between, y = y_between), method = "lm", se = FALSE, colour = "#444444") +
   see::scale_color_flat() +
   see::theme_modern() +
   labs(x = "Typing Speed", y = "Typing Errors", colour = "Type Experience")
@@ -526,7 +526,7 @@ d <- d %>%
 labs <- c("very slow", "slow", "average", "fast", "very fast")
 levels(d$grp) <- rev(labs)
 
-d <- cbind(d, datawizard::demean(d, c("x", "y"), group = "grp"))
+d <- cbind(d, datawizard::demean(d, c("x", "y"), by = "grp"))
 
 # Between-subject effect of typing speed
 m1 <- lm(y ~ x_between, data = d)

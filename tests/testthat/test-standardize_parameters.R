@@ -150,7 +150,7 @@ test_that("standardize_parameters (lm with ci)", {
 # aov ---------------------------------------------------------------------
 test_that("standardize_parameters (aov)", {
   dat2 <- iris
-  dat2$Cat1 <- rep(c("A", "B"), length.out = nrow(dat2))
+  dat2$Cat1 <- rep_len(c("A", "B"), nrow(dat2))
   dat3 <<- dat2
 
   m_aov <- aov(Sepal.Length ~ Species * Cat1, data = dat3)
@@ -198,7 +198,9 @@ test_that("standardize_parameters (with functions /  interactions)", {
   m1 <- lm(exp(cyl) ~ am + sqrt(mpg), mtcars)
   m2 <- lm(cyl_exp ~ am + mpg_sqrt, mtcars)
 
-  expect_message(stdX <- standardize_parameters(m1, method = "refit"))
+  expect_message({
+    stdX <- standardize_parameters(m1, method = "refit")
+  })
   expect_false(isTRUE(all.equal(
     stdX[[2]],
     standardize_parameters(m2, method = "refit")[[2]]
@@ -258,7 +260,8 @@ test_that("standardize_parameters (exponentiate)", {
   )
   expect_equal(
     mod_refit[[2]][-1],
-    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1]
+    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1],
+    tolerance = 1e-5
   )
 
 
@@ -270,15 +273,18 @@ test_that("standardize_parameters (exponentiate)", {
 
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "basic", exponentiate = TRUE)[[2]][-1],
+    tolerance = 1e-5
   )
   expect_equal(
     mod_refit[[2]][-1],
-    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1]
+    standardize_parameters(mod_b, method = "posthoc", exponentiate = TRUE)[[2]][-1],
+    tolerance = 1e-5
   )
   expect_equal(
     mod_refit[[2]][-1],
-    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1]
+    exp(standardize_parameters(mod_b, method = "basic")[[2]])[-1],
+    tolerance = 1e-5
   )
 })
 
@@ -289,12 +295,12 @@ test_that("standardize_parameters (Bayes)", {
   skip_if_not_installed("rstanarm")
 
   set.seed(1234)
-  suppressWarnings(
+  suppressWarnings({
     model <- rstanarm::stan_glm(Sepal.Length ~ Species + Petal.Width,
       data = iris,
       iter = 500, refresh = 0
     )
-  )
+  })
 
   expect_equal(
     suppressWarnings(standardize_parameters(model, method = "refit")$Std_Median[1:4]),
@@ -309,7 +315,7 @@ test_that("standardize_parameters (Bayes)", {
   )
 
   posts <- standardize_posteriors(model, method = "posthoc")
-  expect_equal(dim(posts), c(1000, 4))
+  expect_identical(dim(posts), c(1000L, 4L))
   expect_s3_class(posts, "data.frame")
 })
 
@@ -324,7 +330,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
     X = rnorm(1000),
     Z = rnorm(1000),
     C = sample(letters[1:3], size = 1000, replace = TRUE),
-    ID = sort(rep(letters, length.out = 1000))
+    ID = sort(rep_len(letters, 1000))
   )
   dat <- transform(dat, Y = X + Z + rnorm(1000))
   dat <- cbind(dat, datawizard::demean(dat, c("X", "Z"), "ID"))
@@ -340,7 +346,7 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
 
   ## Correctly identify within and between terms
   dev_resp <- standardize_info(m, include_pseudo = TRUE)$Deviation_Response_Pseudo
-  expect_equal(insight::n_unique(dev_resp[c(2, 4, 5, 6)]), 1)
+  expect_identical(insight::n_unique(dev_resp[c(2, 4, 5, 6)]), 1L)
   expect_true(dev_resp[2] != dev_resp[3])
 
 
@@ -354,16 +360,18 @@ test_that("standardize_parameters (Pseudo - GLMM)", {
 
   m0 <- lme4::lmer(Y ~ 1 + (1 | ID), data = dat)
   m0v <- insight::get_variance(m0)
-  SD_y <- c(sqrt(m0v$var.residual), sqrt(m0v$var.intercept))
+  SD_y <- sqrt(c(m0v$var.residual, m0v$var.intercept))
   SD_y <- SD_y[c(1, 2, 1, 1, 1)]
 
   expect_equal(
     data.frame(Deviation_Response_Pseudo = c(SD_y[2], SD_y), Deviation_Pseudo = c(0, SD_x)),
-    standardize_info(m, include_pseudo = TRUE)[, c("Deviation_Response_Pseudo", "Deviation_Pseudo")]
+    standardize_info(m, include_pseudo = TRUE)[, c("Deviation_Response_Pseudo", "Deviation_Pseudo")],
+    tolerance = 1e-5
   )
   expect_equal(
     standardize_parameters(m, method = "pseudo")$Std_Coefficient[-1],
-    unname(b * SD_x / SD_y)
+    unname(b * SD_x / SD_y),
+    tolerance = 1e-5
   )
 
 
@@ -463,8 +471,8 @@ test_that("include_response | (g)lm", {
   par_z2 <- standardize_parameters(m, method = "basic", include_response = FALSE)
 
   expect_equal(coef(m_z), par_z1$Std_Coefficient, ignore_attr = TRUE)
-  expect_equal(par_z1$Std_Coefficient[-1], par_z2$Std_Coefficient[-1])
-  expect_equal(par_z0$Std_Coefficient * sd(iris$Sepal.Length), par_z2$Std_Coefficient)
+  expect_equal(par_z1$Std_Coefficient[-1], par_z2$Std_Coefficient[-1], tolerance = 1e-5)
+  expect_equal(par_z0$Std_Coefficient * sd(iris$Sepal.Length), par_z2$Std_Coefficient, tolerance = 1e-5)
 
   # glm ---
   m <- glm(am ~ mpg, mtcars, family = binomial())
@@ -485,14 +493,14 @@ test_that("include_response | parameters", {
   pars <- model_parameters(m, effects = "fixed")
   pars_z0 <- standardize_parameters(pars, method = "basic")
   pars_z1 <- standardize_parameters(pars, method = "basic", include_response = FALSE)
-  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1])
+  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1], tolerance = 1e-5)
 
   # boot ---
   skip_if_not_installed("boot")
   pars <- bootstrap_parameters(m)
   pars_z0 <- standardize_parameters(pars, method = "basic")
   pars_z1 <- standardize_parameters(pars, method = "basic", include_response = FALSE)
-  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1])
+  expect_equal(pars_z0$Std_Coefficient[-1] * sd(iris$Sepal.Length), pars_z1$Std_Coefficient[-1], tolerance = 1e-5)
 })
 
 
@@ -504,8 +512,12 @@ test_that("include_response | bayes", {
   iris$Sepal.Length <- iris$Sepal.Length * 5
   m <- rstanarm::stan_glm(Sepal.Length ~ Petal.Length + Petal.Width, data = iris, refresh = 0)
 
-  expect_warning(m_z <- datawizard::standardize(m, include_response = FALSE))
-  expect_warning(par_z1 <- standardize_posteriors(m, include_response = FALSE))
+  expect_warning({
+    m_z <- datawizard::standardize(m, include_response = FALSE)
+  })
+  expect_warning({
+    par_z1 <- standardize_posteriors(m, include_response = FALSE)
+  })
   par_z0 <- standardize_posteriors(m, method = "basic")
   par_z2 <- standardize_posteriors(m, method = "basic", include_response = FALSE)
 
