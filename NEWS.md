@@ -1,3 +1,10 @@
+# parameters 0.21.8
+
+## Breaking changes
+
+* Deprecated arguments in `model_parameters()` for `htest`, `aov` and
+  `BFBayesFactor` objects were removed.
+
 # parameters 0.21.7
 
 ## Changes
