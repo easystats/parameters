@@ -35,7 +35,6 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
-#' @param omega_squared,eta_squared,epsilon_squared Deprecated. Please use `effectsize_type`.
 #' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
 #'   to calculate _partial_ effect sizes types, use `partial = TRUE`. For objects
 #'   of class `htest` or `BFBayesFactor`, `adjust = TRUE` can be used to return
@@ -110,34 +109,7 @@ model_parameters.aov <- function(model,
                                  drop = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
-                                 omega_squared = NULL,
-                                 eta_squared = NULL,
-                                 epsilon_squared = NULL,
                                  ...) {
-  ## TODO: remove in a later update
-  # handle deprected arguments ------
-  if (!is.null(omega_squared)) {
-    insight::format_warning(
-      "Argument `omega_squared` is deprecated.",
-      "Please use `effectsize_type = \"omega\"` instead."
-    )
-    effectsize_type <- "omega"
-  }
-  if (!is.null(eta_squared)) {
-    insight::format_warning(
-      "Argument `eta_squared` is deprecated.",
-      "Please use `effectsize_type = \"eta\"` instead."
-    )
-    effectsize_type <- "eta"
-  }
-  if (!is.null(epsilon_squared)) {
-    insight::format_warning(
-      "Argument `epsilon_squared` is deprecated.",
-      "Please use `effectsize_type = \"epsilon\"` instead."
-    )
-    effectsize_type <- "epsilon"
-  }
-
   # save model object, for later checks
   original_model <- model
   object_name <- insight::safe_deparse_symbol(substitute(model))
