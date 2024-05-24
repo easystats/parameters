@@ -143,10 +143,10 @@ model_parameters.aov <- function(model,
   object_name <- insight::safe_deparse_symbol(substitute(model))
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
-    if (!requireNamespace("car", quietly = TRUE)) {
-      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
-    } else {
+    if (requireNamespace("car", quietly = TRUE)) {
       model <- car::Anova(model, type = type)
+    } else {
+      insight::format_warning("Package {.pkg car} required for type-2 or type-3 Anova. Defaulting to type-1.")
     }
   }
 
@@ -349,6 +349,7 @@ model_parameters.maov <- model_parameters.aov
       if (is.numeric(type)) {
         return(type)
       }
+      # nolint start
       switch(type,
         `1` = ,
         `I` = 1,
@@ -358,6 +359,7 @@ model_parameters.maov <- model_parameters.aov
         `III` = 3,
         1
       )
+      # nolint end
     }
 
     # default to 1
@@ -437,12 +439,10 @@ model_parameters.maov <- model_parameters.aov
           if (is.null(cn) || (all(cn %in% c(0, 1)))) {
             return(TRUE)
           }
-        } else {
-          if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
-            return(TRUE)
-          }
+        } else if (abs(mean(i, na.rm = TRUE)) > 1e-2) {
+          return(TRUE)
         }
-        return(FALSE)
+        FALSE
       }, TRUE)
     } else {
       treatment_contrasts_or_not_centered <- FALSE
@@ -451,7 +451,7 @@ model_parameters.maov <- model_parameters.aov
     # successfully checked predictors, or if not possible, at least found interactions?
     if (!is.null(interaction_terms) && (any(treatment_contrasts_or_not_centered) || is.null(predictors))) {
       insight::format_alert(
-        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)."
+        "Type 3 ANOVAs only give sensible and informative results when covariates are mean-centered and factors are coded with orthogonal contrasts (such as those produced by `contr.sum`, `contr.poly`, or `contr.helmert`, but *not* by the default `contr.treatment`)." # nolint
       )
     }
   }
