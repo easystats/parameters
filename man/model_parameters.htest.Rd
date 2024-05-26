@@ -12,9 +12,6 @@
   bootstrap = FALSE,
   effectsize_type = NULL,
   verbose = TRUE,
-  cramers_v = NULL,
-  phi = NULL,
-  standardized_d = NULL,
   ...
 )
 

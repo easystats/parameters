@@ -46,9 +46,6 @@ model_parameters.htest <- function(model,
                                    bootstrap = FALSE,
                                    effectsize_type = NULL,
                                    verbose = TRUE,
-                                   cramers_v = NULL,
-                                   phi = NULL,
-                                   standardized_d = NULL,
                                    ...) {
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
