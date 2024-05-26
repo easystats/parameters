@@ -13,7 +13,6 @@
 #' @inheritParams bayestestR::describe_posterior
 #' @inheritParams p_value
 #' @inheritParams model_parameters.htest
-#' @param cohens_d,cramers_v Deprecated. Please use `effectsize_type`.
 #'
 #' @details
 #' The meaning of the extracted parameters:
@@ -29,24 +28,26 @@
 #'   the *g* parameters; See the *Bayes Factors for ANOVAs* paper
 #'   (\doi{10.1016/j.jmp.2012.08.001}).
 #'
-#' @examples
+#' @examplesIf require("BayesFactor")
 #' \donttest{
-#' if (require("BayesFactor")) {
-#'   # Bayesian t-test
-#'   model <- ttestBF(x = rnorm(100, 1, 1))
-#'   model_parameters(model)
-#'   model_parameters(model, cohens_d = TRUE, ci = .9)
+#' # Bayesian t-test
+#' model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
+#' model_parameters(model)
+#' model_parameters(model, effectsize_type = "cohens_d", ci = 0.9)
 #'
-#'   # Bayesian contingency table analysis
-#'   data(raceDolls)
-#'   bf <- contingencyTableBF(raceDolls, sampleType = "indepMulti", fixedMargin = "cols")
-#'   model_parameters(bf,
-#'     centrality = "mean",
-#'     dispersion = TRUE,
-#'     verbose = FALSE,
-#'     effectsize_type = "cramers_v"
-#'   )
-#' }
+#' # Bayesian contingency table analysis
+#' data(raceDolls)
+#' bf <- BayesFactor::contingencyTableBF(
+#'   raceDolls,
+#'   sampleType = "indepMulti",
+#'   fixedMargin = "cols"
+#' )
+#' model_parameters(bf,
+#'   centrality = "mean",
+#'   dispersion = TRUE,
+#'   verbose = FALSE,
+#'   effectsize_type = "cramers_v"
+#' )
 #' }
 #' @return A data frame of indices related to the model's parameters.
 #' @export
@@ -62,15 +63,8 @@ model_parameters.BFBayesFactor <- function(model,
                                            effectsize_type = NULL,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
-                                           cohens_d = NULL,
-                                           cramers_v = NULL,
                                            ...) {
   insight::check_if_installed("BayesFactor")
-
-  ## TODO: remove in a later update
-  # handle deprected arguments ------
-  if (!is.null(cramers_v)) effectsize_type <- "cramers_v"
-  if (!is.null(cohens_d)) effectsize_type <- "cohens_d"
 
   if (any(startsWith(names(model@numerator), "Null"))) {
     if (isTRUE(verbose)) {

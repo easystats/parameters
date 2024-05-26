@@ -12,17 +12,6 @@
   bootstrap = FALSE,
   effectsize_type = NULL,
   verbose = TRUE,
-  cramers_v = NULL,
-  phi = NULL,
-  standardized_d = NULL,
-  hedges_g = NULL,
-  omega_squared = NULL,
-  eta_squared = NULL,
-  epsilon_squared = NULL,
-  cohens_g = NULL,
-  rank_biserial = NULL,
-  rank_epsilon_squared = NULL,
-  kendalls_w = NULL,
   ...
 )
 
@@ -55,8 +44,6 @@ effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{cramers_v, phi, cohens_g, standardized_d, hedges_g, omega_squared, eta_squared, epsilon_squared, rank_biserial, rank_epsilon_squared, kendalls_w}{Deprecated. Please use \code{effectsize_type}.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are

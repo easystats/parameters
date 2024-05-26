@@ -21,20 +21,22 @@ model_parameters.DirichletRegModel <- function(model,
 
   ## TODO check merge by
 
-  junk <- utils::capture.output(out <- .model_parameters_generic( # nolint
-    model = model,
-    ci = ci,
-    component = component,
-    bootstrap = bootstrap,
-    iterations = iterations,
-    merge_by = merge_by,
-    standardize = standardize,
-    exponentiate = exponentiate,
-    p_adjust = p_adjust,
-    keep_parameters = keep,
-    drop_parameters = drop,
-    ...
-  ))
+  junk <- utils::capture.output({
+    out <- .model_parameters_generic(
+      model = model,
+      ci = ci,
+      component = component,
+      bootstrap = bootstrap,
+      iterations = iterations,
+      merge_by = merge_by,
+      standardize = standardize,
+      exponentiate = exponentiate,
+      p_adjust = p_adjust,
+      keep_parameters = keep,
+      drop_parameters = drop,
+      ...
+    )
+  })
 
   out$Response[is.na(out$Response)] <- ""
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(model))
