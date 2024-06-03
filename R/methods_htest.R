@@ -519,7 +519,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_prop <- function(model) {
   out <- data.frame(
-    Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
+    Proportion = paste(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
     stringsAsFactors = FALSE
   )
   if (length(model$estimate) == 2) {
@@ -663,17 +663,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(model$alternative)) {
     h1_text <- "Alternative hypothesis: "
-    if (!is.null(model$null.value)) {
-      if (length(model$null.value) == 1L) {
-        alt.char <- switch(model$alternative,
-          two.sided = "not equal to",
-          less = "less than",
-          greater = "greater than"
-        )
-        h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
-      } else {
-        h1_text <- paste0(h1_text, model$alternative)
-      }
+    if (is.null(model$null.value)) {
+      h1_text <- paste0(h1_text, model$alternative)
+    } else if (length(model$null.value) == 1L) {
+      alt.char <- switch(model$alternative,
+        two.sided = "not equal to",
+        less = "less than",
+        greater = "greater than"
+      )
+      h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
     } else {
       h1_text <- paste0(h1_text, model$alternative)
     }
