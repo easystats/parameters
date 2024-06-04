@@ -128,7 +128,10 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                       ...) {
   m_info <- insight::model_info(model, verbose = FALSE)
 
-  if (m_info$is_correlation) {
+  if (!is.null(model$method) && startsWith(model$method, "Box-")) {
+    # Box-Pierce ---------
+    out <- .extract_htest_boxpierce(model)
+  } else if (m_info$is_correlation) {
     # correlation ---------
     out <- .extract_htest_correlation(model)
   } else if (.is_levenetest(model)) {
@@ -172,6 +175,22 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   out
 }
 
+
+
+
+# extract htest Box-Pierce ----------------------
+
+#' @keywords internal
+.extract_htest_boxpierce <- function(model) {
+  data.frame(
+    Parameter = model$data.name,
+    Chi2 = model$statistic,
+    df_error = model$parameter,
+    p = model$p.value,
+    Method = model$method,
+    stringsAsFactors = FALSE
+  )
+}
 
 
 
@@ -500,7 +519,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 #' @keywords internal
 .extract_htest_prop <- function(model) {
   out <- data.frame(
-    Proportion = paste0(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
+    Proportion = paste(insight::format_value(model$estimate, as_percent = TRUE), collapse = " / "),
     stringsAsFactors = FALSE
   )
   if (length(model$estimate) == 2) {
@@ -556,6 +575,13 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
                                   ...) {
   # check if effect sizes are requested
   if (!requireNamespace("effectsize", quietly = TRUE) || is.null(effectsize_type)) {
+    return(out)
+  }
+
+  # return on invalid options. We may have partial matching with argument
+  # `effects` for `effectsize_type`, and thus all "effects" options should be
+  # ignored.
+  if (effectsize_type %in% c("fixed", "random", "all")) {
     return(out)
   }
 
@@ -637,17 +663,15 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   if (!is.null(model$alternative)) {
     h1_text <- "Alternative hypothesis: "
-    if (!is.null(model$null.value)) {
-      if (length(model$null.value) == 1L) {
-        alt.char <- switch(model$alternative,
-          two.sided = "not equal to",
-          less = "less than",
-          greater = "greater than"
-        )
-        h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
-      } else {
-        h1_text <- paste0(h1_text, model$alternative)
-      }
+    if (is.null(model$null.value)) {
+      h1_text <- paste0(h1_text, model$alternative)
+    } else if (length(model$null.value) == 1L) {
+      alt.char <- switch(model$alternative,
+        two.sided = "not equal to",
+        less = "less than",
+        greater = "greater than"
+      )
+      h1_text <- paste0(h1_text, "true ", names(model$null.value), " is ", alt.char, " ", model$null.value)
     } else {
       h1_text <- paste0(h1_text, model$alternative)
     }
