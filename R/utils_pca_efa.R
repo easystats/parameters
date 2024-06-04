@@ -352,13 +352,20 @@ print.parameters_omega_summary <- function(x, ...) {
     footer <- c(.text_components_variance(x, sep = ifelse(format == "markdown", "", "\n")), "yellow")
   }
 
+  # alignment?
+  if (is.null(labels)) {
+    alignment <- NULL
+  } else {
+    alignment <- paste(c("ll", rep("r", ncol(x) - 2)), collapse = "")
+  }
+
   insight::export_table(
     x,
     digits = digits,
     format = format,
     caption = table_caption,
     footer = footer,
-    align = "firstleft",
+    align = alignment,
     ...
   )
 }
