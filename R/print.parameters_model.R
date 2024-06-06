@@ -386,7 +386,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
                         ci_width = "auto",
                         ci_brackets = TRUE,
                         format = "text",
-                        group = NULL,
+                        groups = NULL,
                         include_reference = FALSE,
                         ...) {
   format(
@@ -401,7 +401,7 @@ print.parameters_random <- function(x, digits = 2, ...) {
     ci_brackets = ci_brackets,
     zap_small = zap_small,
     format = format,
-    group = group,
+    groups = groups,
     include_reference = include_reference,
     ...
   )

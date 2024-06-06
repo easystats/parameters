@@ -486,7 +486,9 @@
     } else {
       ci_df <- ci(model, ci = ci, method = ci_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
+    if (length(ci) > 1) {
+      ci_df <- datawizard::reshape_ci(ci_df)
+    }
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   }

@@ -26,9 +26,9 @@ n_clusters_elbow <- function(x,
   names(out) <- c("n_Clusters", "WSS")
 
   gradient <- c(0, diff(out$WSS))
-  optim <- out$n_Clusters[which.min(gradient)]
+  optimal <- out$n_Clusters[which.min(gradient)]
 
-  attr(out, "n") <- optim
+  attr(out, "n") <- optimal
   attr(out, "gradient") <- gradient
   attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_elbow", class(out))
@@ -75,9 +75,9 @@ n_clusters_gap <- function(x,
   out <- rez[c("clusters", "gap", "SE.sim")]
   names(out) <- c("n_Clusters", "Gap", "SE")
 
-  optim <- cluster::maxSE(f = out$Gap, SE.f = out$SE, method = gap_method)
+  optimal <- cluster::maxSE(f = out$Gap, SE.f = out$SE, method = gap_method)
 
-  attr(out, "n") <- optim
+  attr(out, "n") <- optimal
   attr(out, "ymin") <- rez$ymin
   attr(out, "ymax") <- rez$ymax
   attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
@@ -118,9 +118,9 @@ n_clusters_silhouette <- function(x,
   )
   names(out) <- c("n_Clusters", "Silhouette")
 
-  optim <- which.max(out$Silhouette)
+  optimal <- which.max(out$Silhouette)
 
-  attr(out, "n") <- optim
+  attr(out, "n") <- optimal
   attr(out, "duration") <- as.numeric(difftime(Sys.time(), t0, units = "secs"))
   class(out) <- c("n_clusters_silhouette", class(out))
   out
@@ -297,25 +297,28 @@ print.n_clusters_hclust <- function(x, ...) {
 
 #' @export
 visualisation_recipe.n_clusters_elbow <- function(x, ...) {
-  data <- as.data.frame(x)
-  data$Gradient <- datawizard::rescale(attributes(x)$gradient, c(min(data$WSS, max(data$WSS))))
+  input_df <- as.data.frame(x)
+  input_df$Gradient <- datawizard::rescale(
+    attributes(x)$gradient,
+    c(min(input_df$WSS, max(input_df$WSS)))
+  )
   layers <- list()
 
   # Layers -----------------------
   layers[["l1"]] <- list(
     geom = "line",
-    data = data,
+    data = input_df,
     aes = list(x = "n_Clusters", y = "WSS", group = 1),
     size = 1
   )
   layers[["l2"]] <- list(
     geom = "point",
-    data = data,
+    data = input_df,
     aes = list(x = "n_Clusters", y = "WSS")
   )
   layers[["l3"]] <- list(
     geom = "line",
-    data = data,
+    data = input_df,
     aes = list(x = "n_Clusters", y = "Gradient", group = 1),
     size = 0.5,
     color = "red",
@@ -323,7 +326,7 @@ visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   )
   layers[["l4"]] <- list(
     geom = "vline",
-    data = data,
+    data = input_df,
     xintercept = attributes(x)$n,
     linetype = "dotted"
   )
@@ -336,32 +339,32 @@ visualisation_recipe.n_clusters_elbow <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- input_df
   layers
 }
 
 
 #' @export
 visualisation_recipe.n_clusters_gap <- function(x, ...) {
-  data <- as.data.frame(x)
-  data$ymin <- attributes(x)$ymin
-  data$ymax <- attributes(x)$ymax
+  dataset <- as.data.frame(x)
+  dataset$ymin <- attributes(x)$ymin
+  dataset$ymax <- attributes(x)$ymax
   layers <- list()
 
   # Layers -----------------------
   layers[["l1"]] <- list(
     geom = "line",
-    data = data,
+    data = dataset,
     aes = list(x = "n_Clusters", y = "Gap", group = 1)
   )
   layers[["l2"]] <- list(
     geom = "pointrange",
-    data = data,
+    data = dataset,
     aes = list(x = "n_Clusters", y = "Gap", ymin = "ymin", ymax = "ymax")
   )
   layers[["l4"]] <- list(
     geom = "vline",
-    data = data,
+    data = dataset,
     xintercept = attributes(x)$n,
     linetype = "dotted"
   )
@@ -374,30 +377,30 @@ visualisation_recipe.n_clusters_gap <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- dataset
   layers
 }
 
 
 #' @export
 visualisation_recipe.n_clusters_silhouette <- function(x, ...) {
-  data <- as.data.frame(x)
+  dataset <- as.data.frame(x)
   layers <- list()
 
   # Layers -----------------------
   layers[["l1"]] <- list(
     geom = "line",
-    data = data,
+    data = dataset,
     aes = list(x = "n_Clusters", y = "Silhouette", group = 1)
   )
   layers[["l2"]] <- list(
     geom = "point",
-    data = data,
+    data = dataset,
     aes = list(x = "n_Clusters", y = "Silhouette")
   )
   layers[["l4"]] <- list(
     geom = "vline",
-    data = data,
+    data = dataset,
     xintercept = attributes(x)$n,
     linetype = "dotted"
   )
@@ -410,38 +413,41 @@ visualisation_recipe.n_clusters_silhouette <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- dataset
   layers
 }
 
 
 #' @export
 visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
-  data <- as.data.frame(x)
+  dataset <- as.data.frame(x)
 
   layers <- list()
 
 
   # Layers -----------------------
   if ("gradient" %in% names(attributes(x))) {
-    data$gradient <- datawizard::rescale(attributes(x)$gradient, c(min(data$eps), max(data$eps)))
+    dataset$gradient <- datawizard::rescale(
+      attributes(x)$gradient,
+      c(min(dataset$eps), max(dataset$eps))
+    )
 
     layers[["l1"]] <- list(
       geom = "line",
-      data = data,
+      data = dataset,
       aes = list(x = "n_Obs", y = "eps"),
       size = 1
     )
     layers[["l2"]] <- list(
       geom = "line",
-      data = data,
+      data = dataset,
       aes = list(x = "n_Obs", y = "gradient"),
       color = "red",
       linetype = "dashed"
     )
     layers[["l3"]] <- list(
       geom = "hline",
-      data = data,
+      data = dataset,
       yintercept = attributes(x)$eps,
       linetype = "dotted"
     )
@@ -452,24 +458,27 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
       title = "DBSCAN Method"
     )
   } else {
-    data$y <- datawizard::rescale(data$total_SS, c(min(data$n_Clusters), max(data$n_Clusters)))
+    dataset$y <- datawizard::rescale(
+      dataset$total_SS,
+      c(min(dataset$n_Clusters), max(dataset$n_Clusters))
+    )
 
     layers[["l1"]] <- list(
       geom = "line",
-      data = data,
+      data = dataset,
       aes = list(x = "eps", y = "n_Clusters"),
       size = 1
     )
     layers[["l2"]] <- list(
       geom = "line",
-      data = data,
+      data = dataset,
       aes = list(x = "eps", y = "y"),
       color = "red",
       linetype = "dashed"
     )
     layers[["l3"]] <- list(
       geom = "vline",
-      data = data,
+      data = dataset,
       xintercept = attributes(x)$eps,
       linetype = "dotted"
     )
@@ -483,7 +492,7 @@ visualisation_recipe.n_clusters_dbscan <- function(x, ...) {
 
   # Out
   class(layers) <- c("visualisation_recipe", "see_visualisation_recipe", class(layers))
-  attr(layers, "data") <- data
+  attr(layers, "data") <- dataset
   layers
 }
 

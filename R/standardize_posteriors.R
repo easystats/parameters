@@ -72,7 +72,7 @@ standardise_posteriors <- standardize_posteriors
   i <- match(deviations$Parameter, colnames(pars))
   pars <- pars[, i]
 
-  if (method == "basic") {
+  if (method == "basic") { # nolint
     col_dev_resp <- "Deviation_Response_Basic"
     col_dev_pred <- "Deviation_Basic"
   } else if (method == "posthoc") {
