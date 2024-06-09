@@ -30,12 +30,14 @@ knitr::opts_chunk$set(
   tidy.opts = list(width.cutoff = 100)
 )
 
+# hard deps
+library(parameters)
+library(datawizard)
+
+# soft deps
 pkgs <- c("gt", "glmmTMB")
 successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
-
 if (all(successfully_loaded)) {
-  library(parameters)
-  library(datawizard)
   library(glmmTMB)
   library(gt)
 }
@@ -67,7 +69,7 @@ print(mp, pretty_names = FALSE)
 
 If data is [labelled](https://strengejacke.github.io/sjlabelled/articles/intro_sjlabelled.html), `pretty_names = "labels"` will use variable and value labels as pretty names. If data is not labelled, default pretty names will be used.
 
-```{r eval=successfully_loaded["datawizard"]}
+```{r}
 data(efc, package = "datawizard")
 model <- lm(neg_c_7 ~ e42dep + c172code, data = efc)
 
