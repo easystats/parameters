@@ -15,8 +15,7 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
-```{r , include=FALSE}
-library(knitr)
+```{r, include=FALSE}
 options(knitr.kable.NA = "")
 options(digits = 2)
 
@@ -25,19 +24,20 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   warning = FALSE,
   message = FALSE,
+  eval = requireNamespace("gt", quietly = TRUE),
   comment = "#>",
   out.width = "100%",
   tidy.opts = list(width.cutoff = 100)
 )
 
-pkgs <- c("gt", "datawizard", "glmmTMB", "parameters")
-
+pkgs <- c("gt", "glmmTMB")
 successfully_loaded <- sapply(pkgs, requireNamespace, quietly = TRUE)
 
 if (all(successfully_loaded)) {
   library(parameters)
   library(datawizard)
   library(glmmTMB)
+  library(gt)
 }
 
 set.seed(333)
