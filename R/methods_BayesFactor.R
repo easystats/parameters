@@ -122,10 +122,10 @@ model_parameters.BFBayesFactor <- function(model,
   tryCatch(
     {
       bfm <- as.data.frame(bayestestR::bayesfactor_models(model)[-1, ])
-      if (!is.null(bfm$log_BF)) {
-        out$BF <- exp(bfm$log_BF)
-      } else {
+      if (is.null(bfm$log_BF)) {
         out$BF <- bfm$BF
+      } else {
+        out$BF <- exp(bfm$log_BF)
       }
     },
     error = function(e) {

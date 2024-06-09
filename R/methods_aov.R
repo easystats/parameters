@@ -412,7 +412,9 @@ model_parameters.maov <- model_parameters.aov
     predictors <- .safe(insight::get_predictors(model))
 
     # if data available, check contrasts and mean centering
-    if (!is.null(predictors)) {
+    if (is.null(predictors)) {
+      treatment_contrasts_or_not_centered <- FALSE
+    } else {
       treatment_contrasts_or_not_centered <- vapply(predictors, function(i) {
         if (is.factor(i)) {
           cn <- stats::contrasts(i)
@@ -424,8 +426,6 @@ model_parameters.maov <- model_parameters.aov
         }
         FALSE
       }, TRUE)
-    } else {
-      treatment_contrasts_or_not_centered <- FALSE
     }
 
     # successfully checked predictors, or if not possible, at least found interactions?

@@ -1,5 +1,5 @@
-iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
-iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
+iris$Cat1 <- rep_len(c("X", "X", "Y"), nrow(iris))
+iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 
 # aov ----------------------------------
 
@@ -271,7 +271,8 @@ test_that("works with manova", {
 
   set.seed(123)
   # fake a 2nd response variable
-  npk2 <- within(npk, foo <- rnorm(24))
+  foo <- rnorm(24)
+  npk2 <- within(npk, foo)
 
   # model
   m <- manova(cbind(yield, foo) ~ block + N * P * K, npk2)
@@ -345,7 +346,7 @@ test_that("works with Gam", {
         Sum_Squares = c(678.37287, 202.23503, 6.87905, 238.56023),
         df = c(1, 1, 1, 28),
         Mean_Square = c(678.37287, 202.23503, 6.87905, 8.52001),
-        `F` = c(79.62115, 23.73648, 0.8074, NA),
+        `F` = c(79.62115, 23.73648, 0.8074, NA), # nolint
         p = c(0, 4e-05, 0.37655, NA),
         Omega2_partial = c(0.71072, 0.41538, -0.00606, NA),
         Omega2_CI_low = c(0.70634, 0.41067, 0, NA),

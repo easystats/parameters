@@ -300,7 +300,7 @@ visualisation_recipe.n_clusters_elbow <- function(x, ...) {
   input_df <- as.data.frame(x)
   input_df$Gradient <- datawizard::rescale(
     attributes(x)$gradient,
-    c(min(input_df$WSS, max(input_df$WSS)))
+    min(input_df$WSS, max(input_df$WSS))
   )
   layers <- list()
 

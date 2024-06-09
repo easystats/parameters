@@ -45,7 +45,7 @@
 #' @param digits Argument for `print()`, indicates the number of digits
 #'   (rounding) to be used.
 #' @param labels Argument for `print()`, character vector of same length as
-#'   columns in `x`. If provided, adds an additonal column with the labels.
+#'   columns in `x`. If provided, adds an additional column with the labels.
 #' @param verbose Toggle warnings.
 #' @inheritParams n_factors
 #'
