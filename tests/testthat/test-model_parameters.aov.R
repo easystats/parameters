@@ -1,7 +1,7 @@
 skip_on_cran()
 
-iris$Cat1 <- rep(c("X", "X", "Y"), length.out = nrow(iris))
-iris$Cat2 <- rep(c("A", "B"), length.out = nrow(iris))
+iris$Cat1 <- rep_len(c("X", "X", "Y"), nrow(iris))
+iris$Cat2 <- rep_len(c("A", "B"), nrow(iris))
 
 # aov ----------------------------------
 
