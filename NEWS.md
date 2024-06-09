@@ -5,6 +5,11 @@
 * Deprecated arguments in `model_parameters()` for `htest`, `aov` and
   `BFBayesFactor` objects were removed.
 
+* Argument `effectsize_type` is deprecated. Please use `es_type` now. This change
+  was necessary to avoid conflicts with partial matching of argument names (here:
+  `effects`).
+
+
 ## New supported models
 
 * Support for objects from `stats::Box.test()`.
