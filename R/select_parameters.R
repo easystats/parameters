@@ -45,6 +45,9 @@ select_parameters <- function(model, ...) {
 
 
 #' @rdname select_parameters
+#' @param k The multiple of the number of degrees of freedom used for the penalty.
+#' Only `k = 2` gives the genuine AIC: `k = log(n)` is sometimes referred to as
+#' BIC or SBC.
 #' @inheritParams stats::step
 #' @export
 select_parameters.lm <- function(model,
