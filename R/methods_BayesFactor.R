@@ -33,7 +33,7 @@
 #' # Bayesian t-test
 #' model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 #' model_parameters(model)
-#' model_parameters(model, effectsize_type = "cohens_d", ci = 0.9)
+#' model_parameters(model, es_type = "cohens_d", ci = 0.9)
 #'
 #' # Bayesian contingency table analysis
 #' data(raceDolls)
@@ -46,7 +46,7 @@
 #'   centrality = "mean",
 #'   dispersion = TRUE,
 #'   verbose = FALSE,
-#'   effectsize_type = "cramers_v"
+#'   es_type = "cramers_v"
 #' )
 #' }
 #' @return A data frame of indices related to the model's parameters.
@@ -60,9 +60,10 @@ model_parameters.BFBayesFactor <- function(model,
                                            rope_range = "default",
                                            rope_ci = 0.95,
                                            priors = TRUE,
-                                           effectsize_type = NULL,
+                                           es_type = NULL,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
+                                           effectsize_type = NULL,
                                            ...) {
   insight::check_if_installed("BayesFactor")
 
@@ -81,6 +82,12 @@ model_parameters.BFBayesFactor <- function(model,
       insight::format_warning("Can't extract model parameters.")
     }
     return(NULL)
+  }
+
+  ## TODO: remove deprecation warning later
+  if (!is.null(effectsize_type)) {
+    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
+    es_type <- effectsize_type
   }
 
   out <- bayestestR::describe_posterior(
@@ -132,7 +139,7 @@ model_parameters.BFBayesFactor <- function(model,
   }
 
   # Effect size?
-  if (!is.null(effectsize_type)) {
+  if (!is.null(es_type)) {
     # needs {effectsize} to be installed
     insight::check_if_installed("effectsize")
 
@@ -144,7 +151,7 @@ model_parameters.BFBayesFactor <- function(model,
           dispersion = dispersion,
           ci_method = ci_method,
           rope_ci = rope_ci,
-          type = effectsize_type,
+          type = es_type,
           ...
         )
 

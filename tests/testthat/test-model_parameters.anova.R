@@ -94,7 +94,7 @@ test_that("model_parameters_Anova-effectsize", {
   # parameters table including effect sizes
   mp <- model_parameters(
     model,
-    effectsize_type = "eta",
+    es_type = "eta",
     ci = 0.9,
     df_error = dof_satterthwaite(mm)[2:3]
   )

@@ -16,13 +16,13 @@
 #' model_parameters(model)
 #'
 #' model <- t.test(iris$Sepal.Width, iris$Sepal.Length)
-#' model_parameters(model, effectsize_type = "hedges_g")
+#' model_parameters(model, es_type = "hedges_g")
 #'
 #' model <- t.test(mtcars$mpg ~ mtcars$vs)
-#' model_parameters(model, effectsize_type = "hedges_g")
+#' model_parameters(model, es_type = "hedges_g")
 #'
 #' model <- t.test(iris$Sepal.Width, mu = 1)
-#' model_parameters(model, effectsize_type = "cohens_d")
+#' model_parameters(model, es_type = "cohens_d")
 #'
 #' data(airquality)
 #' airquality$Month <- factor(airquality$Month, labels = month.abb[5:9])
@@ -35,7 +35,7 @@
 #' model_parameters(model)
 #'
 #' model <- suppressWarnings(chisq.test(table(mtcars$am, mtcars$cyl)))
-#' model_parameters(model, effectsize_type = "cramers_v")
+#' model_parameters(model, es_type = "cramers_v")
 #'
 #' @return A data frame of indices related to the model's parameters.
 #'
@@ -44,15 +44,22 @@ model_parameters.htest <- function(model,
                                    ci = 0.95,
                                    alternative = NULL,
                                    bootstrap = FALSE,
-                                   effectsize_type = NULL,
+                                   es_type = NULL,
                                    verbose = TRUE,
+                                   effectsize_type = NULL,
                                    ...) {
+  ## TODO: remove deprecation warning later
+  if (!is.null(effectsize_type)) {
+    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
+    es_type <- effectsize_type
+  }
+
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
   } else {
     parameters <- .extract_parameters_htest(
       model,
-      effectsize_type = effectsize_type,
+      es_type = es_type,
       ci = ci,
       alternative = alternative,
       verbose = verbose,
@@ -121,7 +128,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 #' @keywords internal
 .extract_parameters_htest <- function(model,
-                                      effectsize_type = NULL,
+                                      es_type = NULL,
                                       ci = 0.95,
                                       alternative = NULL,
                                       verbose = TRUE,
@@ -164,7 +171,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
   out <- .add_effectsize_htest(model,
     out,
-    effectsize_type = effectsize_type,
+    es_type = es_type,
     ci = ci,
     alternative = alternative,
     verbose = verbose,
@@ -568,20 +575,20 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
 
 .add_effectsize_htest <- function(model,
                                   out,
-                                  effectsize_type = NULL,
+                                  es_type = NULL,
                                   ci = 0.95,
                                   alternative = NULL,
                                   verbose = TRUE,
                                   ...) {
   # check if effect sizes are requested
-  if (!requireNamespace("effectsize", quietly = TRUE) || is.null(effectsize_type)) {
+  if (!requireNamespace("effectsize", quietly = TRUE) || is.null(es_type)) {
     return(out)
   }
 
   # return on invalid options. We may have partial matching with argument
-  # `effects` for `effectsize_type`, and thus all "effects" options should be
+  # `effects` for `es_type`, and thus all "effects" options should be
   # ignored.
-  if (effectsize_type %in% c("fixed", "random", "all")) {
+  if (es_type %in% c("fixed", "random", "all")) {
     return(out)
   }
 
@@ -590,7 +597,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     {
       effectsize::effectsize(
         model,
-        type = effectsize_type,
+        type = es_type,
         ci = ci,
         alternative = alternative,
         verbose = verbose,
@@ -600,7 +607,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
     error = function(e) {
       if (verbose) {
         msg <- c(
-          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(effectsize_type), "."),
+          paste0("Could not compute effectsize ", effectsize::get_effectsize_label(es_type), "."),
           paste0("Possible reason: ", e$message)
         )
         insight::format_alert(msg)
@@ -616,7 +623,7 @@ model_parameters.svytable <- function(model, verbose = TRUE, ...) {
   ## TODO: check if effectsize prefixes are correct @mattansb
 
   # Find prefix for CI-columns
-  prefix <- switch(effectsize_type,
+  prefix <- switch(es_type,
     cohens_g = "Cohens_",
     cramers_v = "Cramers_",
     phi = "phi_",

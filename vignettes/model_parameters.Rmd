@@ -106,7 +106,7 @@ summaries, including confidence intervals
 
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species, data = iris) |>
-  parameters(effectsize_type = c("omega", "eta", "epsilon"))
+  parameters(es_type = c("omega", "eta", "epsilon"))
 ```
 
 Let's complicate things further with an interaction term:
@@ -114,7 +114,7 @@ Let's complicate things further with an interaction term:
 ```{r eval=successfully_loaded["effectsize"]}
 aov(Sepal.Length ~ Species * Sepal.Width, data = iris) |>
   parameters(
-    effectsize_type = c("omega", "eta"),
+    es_type = c("omega", "eta"),
     ci = 0.8
   )
 ```
