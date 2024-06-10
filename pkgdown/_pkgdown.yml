@@ -102,6 +102,7 @@ reference:
       - format_parameters
       - format_p_adjust
       - format_df_adjust
+      - format.compare_parameters
       - parameters_type
       - print_md
 

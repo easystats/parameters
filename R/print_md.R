@@ -1,6 +1,6 @@
 # normal print ----------------------------
 
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 print_md.parameters_model <- function(x,
                                       pretty_names = TRUE,
@@ -123,6 +123,7 @@ print_md.parameters_simulate <- print_md.parameters_model
 # compare parameters -------------------------
 
 
+#' @rdname print.compare_parameters
 #' @export
 print_md.compare_parameters <- function(x,
                                         digits = 2,

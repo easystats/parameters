@@ -1,3 +1,35 @@
+#' @title Print comparisons of model parameters
+#' @name print.compare_parameters
+#'
+#' @description A `print()`-method for objects from [`compare_parameters()`].
+#'
+#' @param x An object returned by [`compare_parameters()`].
+#' @param engine Character string, naming the package or engine to be used for
+#' printing into HTML or markdown format. Currently supported `"gt"` (or
+#' `"default"`) to use the *gt* package to print to HTML and the default easystats
+#' engine to create markdown tables. If `engine = "tt"`, the *tinytable* package
+#' is used for printing to HTML or markdown. Not all `print()` methods support
+#' the `"tt"` engine yet. If a specific `print()` method has no `engine` argument,
+#' `insight::export_table()` is used, which uses *gt* for HTML printing.
+#' @inheritParams print.parameters_model
+#' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
+#'
+#' @return Invisibly returns the original input object.
+#'
+#' @examplesIf require("gt", quietly = TRUE)
+#' \donttest{
+#' data(iris)
+#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#'
+#' # custom style
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
+#' print(result)
+#'
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
+#' print_html(result)
+#' }
 #' @export
 print.compare_parameters <- function(x,
                                      split_components = TRUE,
