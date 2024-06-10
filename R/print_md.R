@@ -123,6 +123,7 @@ print_md.parameters_simulate <- print_md.parameters_model
 # compare parameters -------------------------
 
 
+#' @rdname display.parameters_model
 #' @export
 print_md.compare_parameters <- function(x,
                                         digits = 2,
