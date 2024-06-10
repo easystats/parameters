@@ -136,12 +136,20 @@ number of digits by adding the value as suffix, e.g. \code{digits = "scientific4
 to have scientific notation with 4 decimal places, or \code{digits = "signif5"}
 for 5 significant figures (see also \code{\link[=signif]{signif()}}).}
 
+\item{ci_width}{Minimum width of the returned string for confidence
+intervals. If not \code{NULL} and width is larger than the string's length,
+leading whitespaces are added to the string. If \code{width="auto"}, width
+will be set to the length of the longest string.}
+
 \item{ci_brackets}{Logical, if \code{TRUE} (default), CI-values are
 encompassed in square brackets (else in parentheses).}
 
 \item{zap_small}{Logical, if \code{TRUE}, small values are rounded after
 \code{digits} decimal places. If \code{FALSE}, values with more decimal
 places than \code{digits} are printed in scientific notation.}
+
+\item{format}{String, indicating the output format. Can be \code{"markdown"}
+or \code{"html"}.}
 
 \item{groups}{Named list, can be used to group parameters in the printed output.
 List elements may either be character vectors that match the name of those

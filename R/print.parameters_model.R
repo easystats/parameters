@@ -94,6 +94,7 @@
 #'   so this is just for completeness.
 #' @inheritParams insight::format_table
 #' @inheritParams compare_parameters
+#' @inheritParams display.parameters_model
 #'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection model_parameters Labeling the Degrees of Freedom

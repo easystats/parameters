@@ -6,11 +6,9 @@
 #' is a alias for `display(format = "html")`. `print_table()` is for specific
 #' use cases only, and currently only works for `compare_parameters()` objects.
 #'
-#' @param x An object returned by [`model_parameters()`][model_parameters].
-#' @param object An object returned by [`model_parameters()`][model_parameters],
-#' [`simulate_parameters()`][simulate_parameters],
-#' [`equivalence_test()`][equivalence_test.lm] or
-#' [`principal_components()`][principal_components].
+#' @param x An object returned by [`model_parameters()`].
+#' @param object An object returned by [`model_parameters()`],[`simulate_parameters()`],
+#' [`equivalence_test()`] or [`principal_components()`].
 #' @param format String, indicating the output format. Can be `"markdown"`
 #' or `"html"`.
 #' @param align Only applies to HTML tables. May be one of `"left"`,
@@ -56,7 +54,7 @@
 #' effects in the table. See 'Examples'. An alternative is to set `engine = "tt"`
 #' in `print_html()` to use the _tinytable_ package for creating HTML tables.
 #'
-#' @seealso [print.parameters_model()]
+#' @seealso [print.parameters_model()] and [print.compare_parameters()]
 #'
 #' @examplesIf require("gt", quietly = TRUE)
 #' model <- lm(mpg ~ wt + cyl, data = mtcars)

@@ -1,7 +1,7 @@
 # usual models ---------------------------------
 
 #' @inheritParams print.parameters_model
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 format.parameters_model <- function(x,
                                     pretty_names = TRUE,
