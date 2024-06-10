@@ -201,8 +201,8 @@ returned.
 }
 \description{
 Prints tables (i.e. data frame) in different output formats.
-\code{print_md()} is a alias for \code{display(format = "markdown")}, \code{print_html()}
-is a alias for \code{display(format = "html")}. \code{print_table()} is for specific
+\code{print_md()} is an alias for \code{display(format = "markdown")}, \code{print_html()}
+is an alias for \code{display(format = "html")}. \code{print_table()} is for specific
 use cases only, and currently only works for \code{compare_parameters()} objects.
 }
 \details{

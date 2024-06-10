@@ -143,13 +143,11 @@
 #' create HTML tables. If set to `tt`, the _tinytable_ package is used.
 #'
 #' @details `summary()` is a convenient shortcut for
-#'   `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
+#' `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.
 #'
 #' @return Invisibly returns the original input object.
 #'
-#' @seealso There is a dedicated method to use inside rmarkdown files,
-#'   [`print_md()`][print_md.parameters_model]. See also
-#'   [`display()`][display.parameters_model].
+#' @seealso See also [`display()`][display.parameters_model].
 #'
 #' @examplesIf require("gt", quietly = TRUE) && require("glmmTMB", quietly = TRUE)
 #' \donttest{

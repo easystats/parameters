@@ -392,7 +392,5 @@ print_html(result)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-There is a dedicated method to use inside rmarkdown files,
-\code{\link[=print_md.parameters_model]{print_md()}}. See also
-\code{\link[=display.parameters_model]{display()}}.
+See also \code{\link[=display.parameters_model]{display()}}.
 }
