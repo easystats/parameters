@@ -1,7 +1,7 @@
 # usual models ---------------------------------
 
 #' @inheritParams print.parameters_model
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 format.parameters_model <- function(x,
                                     pretty_names = TRUE,
@@ -240,6 +240,7 @@ format.parameters_brms_meta <- format.parameters_model
 # Compare parameters ----------------------
 
 
+#' @rdname print.compare_parameters
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,
@@ -671,7 +672,7 @@ format.parameters_sem <- function(x,
 # footer: r-squared
 .add_footer_r2 <- function(footer = NULL, digits = 3, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
-    rsq <- .safe(paste0(unlist(lapply(r2, function(i) {
+    rsq <- .safe(paste(unlist(lapply(r2, function(i) {
       paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
     })), collapse = "; "))
 
