@@ -167,6 +167,11 @@ to the end.}
 either a default caption or no table caption is printed. Use \code{caption = ""}
 to suppress the table caption.}
 
+\item{subtitle}{Table title (same as caption) and subtitle, as strings. If \code{NULL},
+no title or subtitle is printed, unless it is stored as attributes (\code{table_title},
+or its alias \code{table_caption}, and \code{table_subtitle}). If \code{x} is a list of
+data frames, \code{caption} may be a list of table captions, one for each table.}
+
 \item{footer}{Can either be \code{FALSE} or an empty string (i.e. \code{""}) to
 suppress the footer, \code{NULL} to print the default footer, or a string. The
 latter will combine the string value with the default footer.}
@@ -177,6 +182,13 @@ adjusted to the minimum required width. If a named numeric vector, value
 names are matched against column names, and for each match, the specified
 width is used. If \code{"fixed"}, and table is split into multiple components,
 columns across all table components are adjusted to have the same width.}
+
+\item{font_size}{For HTML tables, the font size.}
+
+\item{line_padding}{For HTML tables, the distance (in pixel) between lines.}
+
+\item{column_labels}{Labels of columns for HTML tables. If \code{NULL}, automatic
+column names are generated. See 'Examples'.}
 }
 \value{
 Invisibly returns the original input object.

@@ -1,6 +1,6 @@
 # normal print ----------------------------
 
-#' @rdname display.parameters_model
+#' @rdname print.parameters_model
 #' @export
 print_md.parameters_model <- function(x,
                                       pretty_names = TRUE,
