@@ -78,7 +78,7 @@
 )
 }
 \arguments{
-\item{x, object}{An object returned by \code{\link[=compare_parameters]{compare_parameters()}}.}
+\item{x}{An object returned by \code{\link[=compare_parameters]{compare_parameters()}}.}
 
 \item{split_components}{Logical, if \code{TRUE} (default), For models with
 multiple components (zero-inflation, smooth terms, ...), each component is
@@ -160,6 +160,14 @@ row". A possible use case might be to emphasize focal predictors and control
 variables, see 'Examples'. Parameters will be re-ordered according to the
 order used in \code{groups}, while all non-matching parameters will be added
 to the end.}
+
+\item{engine}{Character string, naming the package or engine to be used for
+printing into HTML or markdown format. Currently supported \code{"gt"} (or
+\code{"default"}) to use the \emph{gt} package to print to HTML and the default easystats
+engine to create markdown tables. If \code{engine = "tt"}, the \emph{tinytable} package
+is used for printing to HTML or markdown. Not all \code{print()} methods support
+the \code{"tt"} engine yet. If a specific \code{print()} method has no \code{engine} argument,
+\code{insight::export_table()} is used, which uses \emph{gt} for HTML printing.}
 
 \item{...}{Arguments passed to or from other methods.}
 

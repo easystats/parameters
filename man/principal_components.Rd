@@ -110,7 +110,7 @@ predicted data and original data is equal.}
 (rounding) to be used.}
 
 \item{labels}{Argument for \code{print()}, character vector of same length as
-columns in \code{x}. If provided, adds an additonal column with the labels.}
+columns in \code{x}. If provided, adds an additional column with the labels.}
 }
 \value{
 A data frame of loadings.

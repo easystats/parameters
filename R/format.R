@@ -672,7 +672,7 @@ format.parameters_sem <- function(x,
 # footer: r-squared
 .add_footer_r2 <- function(footer = NULL, digits = 3, r2 = NULL, type = "text") {
   if (!is.null(r2)) {
-    rsq <- .safe(paste0(unlist(lapply(r2, function(i) {
+    rsq <- .safe(paste(unlist(lapply(r2, function(i) {
       paste0(attributes(i)$names, ": ", insight::format_value(i, digits = digits))
     })), collapse = "; "))
 
