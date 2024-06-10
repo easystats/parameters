@@ -246,6 +246,7 @@ create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 }
 
 \examples{
+\dontshow{if (require("gt", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 data(iris)
 lm1 <- lm(Sepal.Length ~ Species, data = iris)
@@ -259,4 +260,5 @@ print(result)
 result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
 print_html(result)
 }
+\dontshow{\}) # examplesIf}
 }

@@ -16,7 +16,7 @@
 #'
 #' @return Invisibly returns the original input object.
 #'
-#' @examples
+#' @examplesIf require("gt", quietly = TRUE)
 #' \donttest{
 #' data(iris)
 #' lm1 <- lm(Sepal.Length ~ Species, data = iris)
