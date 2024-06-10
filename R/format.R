@@ -240,6 +240,7 @@ format.parameters_brms_meta <- format.parameters_model
 # Compare parameters ----------------------
 
 
+#' @rdname print.compare_parameters
 #' @inheritParams print.parameters_model
 #' @export
 format.compare_parameters <- function(x,

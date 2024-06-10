@@ -10,7 +10,6 @@
 \alias{format.parameters_model}
 \alias{print_html.parameters_model}
 \alias{print_md.parameters_model}
-\alias{print_md.compare_parameters}
 \alias{print_table}
 \title{Print tables in different output formats}
 \usage{
@@ -127,23 +126,6 @@
   groups = NULL,
   include_reference = FALSE,
   verbose = TRUE,
-  ...
-)
-
-\method{print_md}{compare_parameters}(
-  x,
-  digits = 2,
-  ci_digits = digits,
-  p_digits = 3,
-  caption = NULL,
-  subtitle = NULL,
-  footer = NULL,
-  select = NULL,
-  split_components = TRUE,
-  ci_brackets = c("(", ")"),
-  zap_small = FALSE,
-  groups = NULL,
-  engine = "tt",
   ...
 )
 

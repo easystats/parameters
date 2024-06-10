@@ -1,3 +1,28 @@
+#' @title Print comparisons of model parameters
+#' @name print.compare_parameters
+#'
+#' @description A `print()`-method for objects from [`compare_parameters()`].
+#'
+#' @param x,object An object returned by [`compare_parameters()`].
+#' @inheritParams print.parameters_model
+#' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
+#'
+#' @return Invisibly returns the original input object.
+#'
+#' @examples
+#' \donttest{
+#' data(iris)
+#' lm1 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#'
+#' # custom style
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}{stars} ({se})")
+#' print(result)
+#'
+#' # custom style, in HTML
+#' result <- compare_parameters(lm1, lm2, select = "{estimate}<br>({se})|{p}")
+#' print_html(result)
+#' }
 #' @export
 print.compare_parameters <- function(x,
                                      split_components = TRUE,
