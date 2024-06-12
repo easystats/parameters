@@ -214,9 +214,9 @@ Note that the parameters in the table summary are re-ordered according to the or
 ```{r}
 # group parameters, either by parameter name or position
 print(mp, groups = list(
-  "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-  "Interactions" = c("gear4:vs", "gear5:vs"),
-  "Controls" = c(2, 3, 7)
+  Engine = c("cyl6", "cyl8", "vs", "hp"),
+  Interactions = c("gear4:vs", "gear5:vs"),
+  Controls = c(2, 3, 7)
 )) # gear 4 and 5, drat
 ```
 
@@ -227,9 +227,9 @@ If you prefer tables without vertical borders, use the `sep` argument to define 
 print(mp,
   sep = "  ",
   groups = list(
-    "Engine" = c("cyl6", "cyl8", "vs", "hp"),
-    "Interactions" = c("gear4:vs", "gear5:vs"),
-    "Controls" = c(2, 3, 7)
+    Engine = c("cyl6", "cyl8", "vs", "hp"),
+    Interactions = c("gear4:vs", "gear5:vs"),
+    Controls = c(2, 3, 7)
   )
 )
 ```
