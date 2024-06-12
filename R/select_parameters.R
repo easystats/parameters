@@ -6,21 +6,17 @@
 #' @param model A statistical model (of class `lm`, `glm`, or `merMod`).
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @details
-#'   \subsection{Classical lm and glm}{
-#'     For frequentist GLMs, `select_parameters()` performs an AIC-based
-#'     stepwise selection.
-#'   }
+#' @section Classical lm and glm:
+#' For frequentist GLMs, `select_parameters()` performs an AIC-based stepwise
+#' selection.
 #'
-#'   \subsection{Mixed models}{
-#'     For mixed-effects models of class `merMod`, stepwise selection is
-#'     based on [cAIC4::stepcAIC()]. This step function
-#'     only searches the "best" model based on the random-effects structure,
-#'     i.e. `select_parameters()` adds or excludes random-effects until
-#'     the cAIC can't be improved further.
-#'   }
+#' @section Mixed models:
+#' For mixed-effects models of class `merMod`, stepwise selection is based on
+#' [`cAIC4::stepcAIC()`]. This step function only searches the "best" model
+#' based on the random-effects structure, i.e. `select_parameters()` adds or
+#' excludes random-effects until the cAIC can't be improved further.
 #'
-#' @examples
+#' @examplesIf requireNamespace("lme4")
 #' model <- lm(mpg ~ ., data = mtcars)
 #' select_parameters(model)
 #'
@@ -28,13 +24,11 @@
 #' select_parameters(model)
 #' \donttest{
 #' # lme4 -------------------------------------------
-#' if (require("lme4")) {
-#'   model <- lmer(
-#'     Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
-#'     data = iris
-#'   )
-#'   select_parameters(model)
-#' }
+#' model <- lme4::lmer(
+#'   Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
+#'   data = iris
+#' )
+#' select_parameters(model)
 #' }
 #'
 #' @return The model refitted with optimal number of parameters.
