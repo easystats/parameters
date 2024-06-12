@@ -149,7 +149,14 @@ n_clusters_silhouette <- function(x,
 #' }
 #' }
 #' @export
-n_clusters_dbscan <- function(x, standardize = TRUE, include_factors = FALSE, method = c("kNN", "SS"), min_size = 0.1, eps_n = 50, eps_range = c(0.1, 3), ...) {
+n_clusters_dbscan <- function(x,
+                              standardize = TRUE,
+                              include_factors = FALSE,
+                              method = c("kNN", "SS"),
+                              min_size = 0.1,
+                              eps_n = 50,
+                              eps_range = c(0.1, 3),
+                              ...) {
   method <- match.arg(method)
   t0 <- Sys.time()
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
@@ -250,7 +257,13 @@ n_clusters_hclust <- function(x,
 
 
 #' @keywords internal
-.n_clusters_factoextra <- function(x, method = "wss", standardize = TRUE, include_factors = FALSE, clustering_function = stats::kmeans, n_max = 10, ...) {
+.n_clusters_factoextra <- function(x,
+                                   method = "wss",
+                                   standardize = TRUE,
+                                   include_factors = FALSE,
+                                   clustering_function = stats::kmeans,
+                                   n_max = 10,
+                                   ...) {
   x <- .prepare_data_clustering(x, include_factors = include_factors, standardize = standardize, ...)
 
   insight::check_if_installed("factoextra")
@@ -265,31 +278,31 @@ n_clusters_hclust <- function(x,
 
 #' @export
 print.n_clusters_elbow <- function(x, ...) {
-  insight::print_color(paste0("The Elbow method, that aims at minimizing the total intra-cluster variation (i.e., the total within-cluster sum of square), suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green")
+  insight::print_color(paste0("The Elbow method, that aims at minimizing the total intra-cluster variation (i.e., the total within-cluster sum of square), suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green") # nolint
   invisible(x)
 }
 
 #' @export
 print.n_clusters_gap <- function(x, ...) {
-  insight::print_color(paste0("The Gap method, that compares the total intracluster variation of k clusters with their expected values under null reference distribution of the data, suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green")
+  insight::print_color(paste0("The Gap method, that compares the total intracluster variation of k clusters with their expected values under null reference distribution of the data, suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green") # nolint
   invisible(x)
 }
 
 #' @export
 print.n_clusters_silhouette <- function(x, ...) {
-  insight::print_color(paste0("The Silhouette method, based on the average quality of clustering, suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green")
+  insight::print_color(paste0("The Silhouette method, based on the average quality of clustering, suggests that the optimal number of clusters is ", attributes(x)$n, "."), "green") # nolint
   invisible(x)
 }
 
 #' @export
 print.n_clusters_dbscan <- function(x, ...) {
-  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size, "), which corresponds to ", attributes(x)$n, " clusters."), "green")
+  insight::print_color(paste0("The DBSCAN method, based on the total clusters sum of squares, suggests that the optimal eps = ", attributes(x)$eps, " (with min. cluster size set to ", attributes(x)$min_size, "), which corresponds to ", attributes(x)$n, " clusters."), "green") # nolint
   invisible(x)
 }
 
 #' @export
 print.n_clusters_hclust <- function(x, ...) {
-  insight::print_color(paste0("The bootstrap analysis of hierachical clustering highlighted ", attributes(x)$n, " significant clusters."), "green")
+  insight::print_color(paste0("The bootstrap analysis of hierachical clustering highlighted ", attributes(x)$n, " significant clusters."), "green") # nolint
   invisible(x)
 }
 

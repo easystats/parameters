@@ -111,10 +111,15 @@ select_parameters.merMod <- function(model,
   )
 
 
-  # Using MuMIn's dredge(): works nicely BUT throws unnecessary warnings and requires to set global options for na.action even tho no NaNs.
+  # Using MuMIn's dredge(): works nicely BUT throws unnecessary warnings and
+  # requires to set global options for na.action even tho no NaNs.
   # The code is here: https://github.com/cran/MuMIn/blob/master/R/dredge.R Maybe it could be reimplemented?
   # insight::check_if_installed("MuMIn")
-  # model <- lmer(Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species), data = iris, na.action = na.fail)
+  # model <- lmer(
+  #  Sepal.Width ~ Sepal.Length * Petal.Width * Petal.Length + (1 | Species),
+  #  data = iris,
+  #  na.action = na.fail
+  # )
   # summary(MuMIn::get.models(MuMIn::dredge(model), 1)[[1]])
 
   best
