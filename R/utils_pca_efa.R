@@ -178,7 +178,7 @@ predict.parameters_efa <- function(object,
     out <- as.matrix(newdata) %*% as.matrix(attri$model$loadings)
     out <- stats::setNames(as.data.frame(out), paste0("Component", seq_len(ncol(out))))
   } else if (inherits(attri$model, c("psych", "fa", "principal"))) {
-    out <- as.data.frame(stats::predict(attri$model, data = newdata[rownames(attri$model$r)], ...))
+    out <- as.data.frame(stats::predict(attri$model, data = newdata[rownames(attri$model$weights)], ...))
   } else {
     out <- as.data.frame(stats::predict(attri$model, newdata = newdata, ...))
   }
