@@ -9,7 +9,6 @@
   was necessary to avoid conflicts with partial matching of argument names (here:
   `effects`).
 
-
 ## New supported models
 
 * Support for objects from `stats::Box.test()`.
