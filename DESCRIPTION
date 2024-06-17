@@ -40,7 +40,7 @@ Authors@R:
              family = "Arel-Bundock",
              role = "ctb",
              email = "vincent.arel-bundock@umontreal.ca",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab")),
+             comment = c(ORCID = "0000-0003-2042-7063", Twitter = "@vincentab")),
       person(given = "Jeffrey",
              family = "Girard",
              role = "ctb",
