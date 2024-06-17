@@ -13,6 +13,12 @@
 
 * Support for objects from `stats::Box.test()`.
 
+## Bug fix
+
+* Fixed edgecase in `predict()` for `factor_analysis()`.
+
+* Fixed wrong ORCID in `DESCRIPTION`.
+
 # parameters 0.21.7
 
 ## Changes
