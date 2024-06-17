@@ -1,1 +1,1 @@
-This release addresses errors in CRAN checks related to the last *marginaleffects* update.
+This release addresses issues with duplicated ORCID in the DESCRIPTION file.
