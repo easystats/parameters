@@ -84,7 +84,7 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
-\code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
+\code{SD}. \strong{See \code{\link[datawizard:standardize]{datawizard::standardize()}} for more details.}
 \itemize{
 \item \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
@@ -148,8 +148,9 @@ When the model's formula contains transformations (e.g. \code{y ~ exp(X)}) \code
 equivalent to \code{exp(scale(X))}), the \code{"basic"} method standardizes the
 transformed data (e.g. equivalent to \code{scale(exp(X))}).
 \cr\cr
-See the \emph{Transformed Variables} section in \code{\link[=standardize.default]{standardize.default()}} for more
-details on how different transformations are dealt with when \code{method = "refit"}.
+See the \emph{Transformed Variables} section in \code{\link[datawizard:standardize.default]{datawizard::standardize.default()}}
+for more details on how different transformations are dealt with when
+\code{method = "refit"}.
 }
 
 \subsection{Confidence Intervals}{

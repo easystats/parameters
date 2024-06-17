@@ -13,7 +13,7 @@
 #' @inheritParams datawizard::standardize.default
 #' @inheritParams effectsize::chisq_to_phi
 #' @param ... For `standardize_parameters()`, arguments passed to
-#'   [model_parameters()], such as:
+#'   [`model_parameters()`], such as:
 #' - `ci_method`, `centrality` for Mixed models and Bayesian models...
 #' - `exponentiate`, ...
 #' - etc.
@@ -30,7 +30,7 @@
 #' include interactions or transformations (e.g., polynomial or spline terms).
 #' The `robust` (default to `FALSE`) argument enables a robust standardization
 #' of data, i.e., based on the `median` and `MAD` instead of the `mean` and
-#' `SD`. **See [standardize()] for more details.**
+#' `SD`. **See [`datawizard::standardize()`] for more details.**
 #'   - **Note** that `standardize_parameters(method = "refit")` may not return
 #'   the same results as fitting a model on data that has been standardized with
 #'   `standardize()`; `standardize_parameters()` used the data used by the model
@@ -52,7 +52,7 @@
 #' deviation of model's matrix' parameter of factors levels (transformed to
 #' integers) or binary predictors. Although being inappropriate for these cases,
 #' this method is the one implemented by default in other software packages,
-#' such as [lm.beta::lm.beta()].
+#' such as [`lm.beta::lm.beta()`].
 #' - **smart** (Standardization of Model's parameters with Adjustment,
 #' Reconnaissance and Transformation - *experimental*): Similar to `method =
 #' "posthoc"` in that it does not involve model refitting. The difference is
@@ -64,9 +64,9 @@
 #' delta.
 #' - **pseudo** (*for 2-level (G)LMMs only*): In this (post-hoc) method, the
 #' response and the predictor are standardized based on the level of prediction
-#' (levels are detected with [performance::check_heterogeneity_bias()]): Predictors
+#' (levels are detected with [`performance::check_heterogeneity_bias()`]): Predictors
 #' are standardized based on their SD at level of prediction (see also
-#' [datawizard::demean()]); The outcome (in linear LMMs) is standardized based
+#' [`datawizard::demean()`]); The outcome (in linear LMMs) is standardized based
 #' on a fitted random-intercept-model, where `sqrt(random-intercept-variance)`
 #' is used for level 2 predictors, and `sqrt(residual-variance)` is used for
 #' level 1 predictors (Hoffman 2015, page 342). A warning is given when a
@@ -91,9 +91,9 @@
 #' equivalent to `exp(scale(X))`), the `"basic"` method standardizes the
 #' transformed data (e.g. equivalent to `scale(exp(X))`).
 #' \cr\cr
-#' See the *Transformed Variables* section in [standardize.default()] for more
-#' details on how different transformations are dealt with when `method =
-#' "refit"`.
+#' See the *Transformed Variables* section in [`datawizard::standardize.default()`]
+#' for more details on how different transformations are dealt with when
+#' `method = "refit"`.
 #'
 #' ## Confidence Intervals
 #' The returned confidence intervals are re-scaled versions of the

@@ -87,7 +87,7 @@
 #' include interactions or transformations (e.g., polynomial or spline terms).
 #' The `robust` (default to `FALSE`) argument enables a robust standardization
 #' of data, i.e., based on the `median` and `MAD` instead of the `mean` and
-#' `SD`. **See [standardize()] for more details.**
+#' `SD`. **See [`datawizard::standardize()`] for more details.**
 #' **Note** that `standardize_parameters(method = "refit")` may not return
 #' the same results as fitting a model on data that has been standardized with
 #' `standardize()`; `standardize_parameters()` used the data used by the model
