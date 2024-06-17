@@ -13,6 +13,8 @@
 
 * Support for objects from `stats::Box.test()`.
 
+* Support for `glmgee` models from package *glmtoolbox*.
+
 ## Bug fix
 
 * Fixed edge case in `predict()` for `factor_analysis()`.
