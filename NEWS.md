@@ -15,7 +15,7 @@
 
 ## Bug fix
 
-* Fixed edgecase in `predict()` for `factor_analysis()`.
+* Fixed edge case in `predict()` for `factor_analysis()`.
 
 * Fixed wrong ORCID in `DESCRIPTION`.
 
