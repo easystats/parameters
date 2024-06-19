@@ -178,7 +178,7 @@ bootstrap_model.merMod <- function(model,
     } else {
       params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
     }
-    return(params)
+    params
   }
 
   if (verbose) {
@@ -244,9 +244,7 @@ bootstrap_model.nestedLogit <- function(model,
     }
 
     params <- insight::get_parameters(fit, verbose = FALSE)
-    params <- stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
-
-    return(params)
+    stats::setNames(params$Estimate, params$Parameter) # Transform to named vector
   }
 
   results <- boot::boot(
