@@ -1,18 +1,25 @@
-# parameters 0.21.8
+# parameters 0.22.0
 
 ## Breaking changes
 
 * Deprecated arguments in `model_parameters()` for `htest`, `aov` and
   `BFBayesFactor` objects were removed.
 
+* Argument `effectsize_type` is deprecated. Please use `es_type` now. This change
+  was necessary to avoid conflicts with partial matching of argument names (here:
+  `effects`).
+
 ## New supported models
 
 * Support for objects from `stats::Box.test()`.
 
-## Bug fixes
+* Support for `glmgee` models from package *glmtoolbox*.
 
-* Fixed issues with partial matching of argument `effects` and `effectsize_type`
-  in `model_parameters()` for objects of class `htest`.
+## Bug fix
+
+* Fixed edge case in `predict()` for `factor_analysis()`.
+
+* Fixed wrong ORCID in `DESCRIPTION`.
 
 # parameters 0.21.7
 

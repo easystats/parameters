@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.21.7.4
+Version: 0.22.0
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -40,7 +40,7 @@ Authors@R:
              family = "Arel-Bundock",
              role = "ctb",
              email = "vincent.arel-bundock@umontreal.ca",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@vincentab")),
+             comment = c(ORCID = "0000-0003-2042-7063", Twitter = "@vincentab")),
       person(given = "Jeffrey",
              family = "Girard",
              role = "ctb",
@@ -177,7 +177,7 @@ Suggests:
     panelr,
     pbkrtest,
     PCDimension,
-    performance (>= 0.10.8),
+    performance (>= 0.12.0),
     plm,
     PMCMRplus,
     poorman,
@@ -213,8 +213,5 @@ RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/Needs/website:
-    rstudio/bslib,
-    r-lib/pkgdown,
-    easystats/easystatstemplate
+Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true

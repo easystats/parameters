@@ -252,9 +252,9 @@ print_md.parameters_efa_summary <- function(x, digits = 3, ...) {
   table_caption <- "(Explained) Variance of Components"
 
   if ("Parameter" %in% names(x)) {
-    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+    x$Parameter <- c("Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
   } else if ("Component" %in% names(x)) {
-    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)")
+    names(x) <- c("Component", "Eigenvalues", "Variance Explained", "Variance Explained (Cumulative)", "Variance Explained (Proportion)") # nolint
   }
   insight::export_table(x, digits = digits, format = "markdown", caption = table_caption, align = "firstleft")
 }
@@ -327,7 +327,7 @@ print_md.equivalence_test_lm <- function(x, digits = 2, ci_brackets = c("(", ")"
   }
 
   if (!is.null(rope)) {
-    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2])
+    names(formatted_table)[names(formatted_table) == "% in ROPE"] <- sprintf("%% in ROPE (%.*f, %.*f)", digits, rope[1], digits, rope[2]) # nolint
   }
 
   insight::export_table(formatted_table, format = "markdown", caption = table_caption, align = "firstleft")

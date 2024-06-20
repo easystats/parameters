@@ -84,7 +84,7 @@ test_that("model_parameters.BFBayesFactor", {
     centrality = "mean",
     dispersion = TRUE,
     verbose = FALSE,
-    effectsize_type = "cramers_v",
+    es_type = "cramers_v",
     adjust = TRUE,
     include_proportions = TRUE
   ))
@@ -158,7 +158,7 @@ test_that("model_parameters.BFBayesFactor, with effectsize", {
   skip_if_not_installed("BayesFactor")
   set.seed(123)
   df_t_es <- as.data.frame(
-    parameters(BayesFactor::ttestBF(mtcars$wt, mu = 3), effectsize_type = "cohens_d")
+    parameters(BayesFactor::ttestBF(mtcars$wt, mu = 3), es_type = "cohens_d")
   )
 
   # TODO: fix column order

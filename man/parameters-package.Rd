@@ -46,7 +46,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Zen J. Lau \email{zenjuen.lau@ntu.edu.sg} [contributor]
-  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} (\href{https://orcid.org/0000-0003-1995-6531}{ORCID}) (@vincentab) [contributor]
+  \item Vincent Arel-Bundock \email{vincent.arel-bundock@umontreal.ca} (\href{https://orcid.org/0000-0003-2042-7063}{ORCID}) (@vincentab) [contributor]
   \item Jeffrey Girard \email{me@jmgirard.com} (\href{https://orcid.org/0000-0002-7359-3746}{ORCID}) (@jeffreymgirard) [contributor]
   \item Christina Maimone \email{christina.maimone@northwestern.edu} [reviewer]
   \item Niels Ohlsen (@Niels_Bremen) [reviewer]

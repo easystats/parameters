@@ -34,11 +34,12 @@
 
 \method{model_parameters}{Gam}(
   model,
-  effectsize_type = NULL,
+  es_type = NULL,
   df_error = NULL,
   type = NULL,
   table_wide = FALSE,
   verbose = TRUE,
+  effectsize_type = NULL,
   ...
 )
 
@@ -143,7 +144,7 @@ names.}
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
 passed down to \code{bootstrap_model()}.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
@@ -159,6 +160,8 @@ ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
+
+\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 }
 \value{
 A data frame of indices related to the model's parameters.

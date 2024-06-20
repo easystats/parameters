@@ -99,7 +99,7 @@ models). This method is particularly recommended for complex models that
 include interactions or transformations (e.g., polynomial or spline terms).
 The \code{robust} (default to \code{FALSE}) argument enables a robust standardization
 of data, i.e., based on the \code{median} and \code{MAD} instead of the \code{mean} and
-\code{SD}. \strong{See \code{\link[=standardize]{standardize()}} for more details.}
+\code{SD}. \strong{See \code{\link[datawizard:standardize]{datawizard::standardize()}} for more details.}
 \strong{Note} that \code{standardize_parameters(method = "refit")} may not return
 the same results as fitting a model on data that has been standardized with
 \code{standardize()}; \code{standardize_parameters()} used the data used by the model

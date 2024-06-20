@@ -355,7 +355,7 @@
                                       verbose = TRUE) {
   # check pattern
   if (!is.null(keep) && length(keep) > 1) {
-    keep <- paste0("(", paste0(keep, collapse = "|"), ")")
+    keep <- paste0("(", paste(keep, collapse = "|"), ")")
     if (verbose) {
       insight::format_alert(
         sprintf("The `keep` argument has more than 1 element. Merging into following regular expression: `%s`.", keep)
@@ -365,7 +365,7 @@
 
   # check pattern
   if (!is.null(drop) && length(drop) > 1) {
-    drop <- paste0("(", paste0(drop, collapse = "|"), ")")
+    drop <- paste0("(", paste(drop, collapse = "|"), ")")
     if (verbose) {
       insight::format_alert(
         sprintf("The `drop` argument has more than 1 element. Merging into following regular expression: `%s`.", drop)
@@ -486,7 +486,9 @@
     } else {
       ci_df <- ci(model, ci = ci, method = ci_method, effects = "fixed")
     }
-    if (length(ci) > 1) ci_df <- datawizard::reshape_ci(ci_df)
+    if (length(ci) > 1) {
+      ci_df <- datawizard::reshape_ci(ci_df)
+    }
     ci_cols <- names(ci_df)[!names(ci_df) %in% c("CI", "Parameter")]
     parameters <- merge(parameters, ci_df, by = "Parameter", sort = FALSE)
   }

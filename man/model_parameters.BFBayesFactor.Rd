@@ -14,9 +14,10 @@
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
-  effectsize_type = NULL,
+  es_type = NULL,
   include_proportions = FALSE,
   verbose = TRUE,
+  effectsize_type = NULL,
   ...
 )
 }
@@ -58,7 +59,7 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effectsize_type}{The effect size of interest. Not that possibly not all
+\item{es_type}{The effect size of interest. Not that possibly not all
 effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
@@ -68,6 +69,8 @@ cell proportions/counts for Bayesian contingency table analysis (from
 information is often redundant.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }
@@ -98,7 +101,7 @@ the \emph{g} parameters; See the \emph{Bayes Factors for ANOVAs} paper
 # Bayesian t-test
 model <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
 model_parameters(model)
-model_parameters(model, effectsize_type = "cohens_d", ci = 0.9)
+model_parameters(model, es_type = "cohens_d", ci = 0.9)
 
 # Bayesian contingency table analysis
 data(raceDolls)
@@ -111,7 +114,7 @@ model_parameters(bf,
   centrality = "mean",
   dispersion = TRUE,
   verbose = FALSE,
-  effectsize_type = "cramers_v"
+  es_type = "cramers_v"
 )
 }
 \dontshow{\}) # examplesIf}

@@ -68,14 +68,14 @@ test_that("model_parameters-chisq-test works with `svychisq` objects", {
 
 test_that("model_parameters-chisq-test adjusted", {
   expect_message({
-    mp <- model_parameters(stats::chisq.test(table(mtcars$am)), effectsize_type = "phi", ci = 0.95)
+    mp <- model_parameters(stats::chisq.test(table(mtcars$am)), es_type = "phi", ci = 0.95)
   })
   expect_equal(mp$Chi2, 1.125, tolerance = 1e-3)
   expect_named(mp, c("Chi2", "df", "p", "Method"))
 })
 
 test_that("model_parameters-t-test standardized d", {
-  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), effectsize_type = "cohens_d")
+  params <- model_parameters(t.test(iris$Sepal.Width, iris$Sepal.Length), es_type = "cohens_d")
   expect_equal(params$Cohens_d, -4.210417, tolerance = 0.05)
   expect_equal(params$d_CI_low, -4.655306, tolerance = 0.05)
   expect_named(
@@ -89,7 +89,7 @@ test_that("model_parameters-t-test standardized d", {
 })
 
 test_that("model_parameters-t-test standardized d", {
-  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), effectsize_type = "cohens_d", verbose = FALSE)
+  mp <- model_parameters(t.test(mtcars$mpg ~ mtcars$vs), es_type = "cohens_d", verbose = FALSE)
   expect_equal(mp$Cohens_d, -1.696032, tolerance = 1e-3)
   expect_named(
     mp,
