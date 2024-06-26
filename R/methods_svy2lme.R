@@ -102,7 +102,7 @@ standard_error.svy2lme <- function(model, ...) {
 #' @export
 p_value.svy2lme <- function(model, ...) {
   stat <- insight::get_statistic(model)
-  p <- 2 * stats::pnorm(abs(stat$Statistic))
+  p <- 2 * stats::pnorm(abs(stat$Statistic), lower.tail = FALSE)
   .data_frame(
     Parameter = stat$Parameter,
     p = as.vector(p)
