@@ -1,3 +1,9 @@
+# parameters 0.22.1
+
+## New supported models
+
+* Support for `svy2lme` models from package *svylme*.
+
 # parameters 0.22.0
 
 ## Breaking changes
