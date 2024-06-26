@@ -41,10 +41,7 @@ model_parameters.svy2lme <- function(model,
     params_variance <- .extract_random_variances(
       model,
       ci = ci,
-      effects = effects,
-      ci_method = ci_method,
-      ci_random = ci_random,
-      verbose = verbose
+      effects = effects
     )
   }
 
