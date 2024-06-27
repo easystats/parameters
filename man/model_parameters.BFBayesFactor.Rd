@@ -17,7 +17,6 @@
   es_type = NULL,
   include_proportions = FALSE,
   verbose = TRUE,
-  effectsize_type = NULL,
   ...
 )
 }
@@ -69,8 +68,6 @@ cell proportions/counts for Bayesian contingency table analysis (from
 information is often redundant.}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 }

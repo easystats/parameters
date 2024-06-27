@@ -63,7 +63,6 @@ model_parameters.BFBayesFactor <- function(model,
                                            es_type = NULL,
                                            include_proportions = FALSE,
                                            verbose = TRUE,
-                                           effectsize_type = NULL,
                                            ...) {
   insight::check_if_installed("BayesFactor")
 
@@ -82,12 +81,6 @@ model_parameters.BFBayesFactor <- function(model,
       insight::format_warning("Can't extract model parameters.")
     }
     return(NULL)
-  }
-
-  ## TODO: remove deprecation warning later
-  if (!is.null(effectsize_type)) {
-    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
-    es_type <- effectsize_type
   }
 
   out <- bayestestR::describe_posterior(
@@ -143,12 +136,12 @@ model_parameters.BFBayesFactor <- function(model,
     # needs {effectsize} to be installed
     insight::check_if_installed("effectsize")
 
-    ## TODO: add back ci-argument, once effectsize >= 0.7.1 is on CRAN.
     tryCatch(
       {
         effsize <- effectsize::effectsize(model,
           centrality = centrality,
           dispersion = dispersion,
+          ci = ci,
           ci_method = ci_method,
           rope_ci = rope_ci,
           type = es_type,

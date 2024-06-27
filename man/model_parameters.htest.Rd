@@ -12,7 +12,6 @@
   bootstrap = FALSE,
   es_type = NULL,
   verbose = TRUE,
-  effectsize_type = NULL,
   ...
 )
 
@@ -45,8 +44,6 @@ effect sizes are applicable to the model object. See 'Details'. For Anova
 models, can also be a character vector with multiple effect size names.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
 \code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
