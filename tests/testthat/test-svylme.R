@@ -1,3 +1,6 @@
+skip_on_cran()
+skip_on_os(c("mac", "linux", "solaris"))
+
 skip_if_not_installed("withr")
 skip_if_not_installed("survey")
 skip_if_not_installed("lme4")

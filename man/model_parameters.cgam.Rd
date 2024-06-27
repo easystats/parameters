@@ -39,7 +39,6 @@
   type = NULL,
   table_wide = FALSE,
   verbose = TRUE,
-  effectsize_type = NULL,
   ...
 )
 
