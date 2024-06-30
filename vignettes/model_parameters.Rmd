@@ -32,7 +32,8 @@ knitr::opts_chunk$set(
 
 pkgs <- c(
   "effectsize", "BayesFactor", "lme4", "metafor", "lavaan", "nFactors", "BH",
-  "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR"
+  "EGAnet", "brms", "psych", "rstanarm", "glmmTMB", "GLMMadaptive", "FactoMineR",
+  "RcppEigen"
 )
 
 successfully_loaded <- vapply(pkgs, requireNamespace, TRUE, quietly = TRUE)

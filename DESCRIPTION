@@ -188,6 +188,7 @@ Suggests:
     pvclust,
     quantreg,
     randomForest,
+    RcppEigen,
     rmarkdown,
     rms,
     rstanarm,
