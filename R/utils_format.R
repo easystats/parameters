@@ -954,16 +954,16 @@
   }
 
   # fix column output
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Label" %in% colnames(x)) {
     x$From <- ifelse(!nzchar(as.character(x$Label), keepNA = TRUE) | x$Label == x$To, x$From, paste0(x$From, " (", x$Label, ")")) # nolint
     x$Label <- NULL
   }
 
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && !"Parameter" %in% colnames(x)) {
     parameter_column <- colnames(x)[1]
   }
 
-  if (inherits(attributes(x)$model, c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
+  if (inherits(attributes(x)[["model"]], c("lavaan", "blavaan")) && "Defined" %in% x$Component) {
     x$From[x$Component == "Defined"] <- ""
     x$Operator[x$Component == "Defined"] <- ""
     x$To <- ifelse(x$Component == "Defined", paste0("(", x$To, ")"), x$To)
@@ -1175,7 +1175,7 @@
     # fix non-equal length of columns
     final_table <- .fix_nonmatching_columns(
       final_table,
-      is_lavaan = inherits(attributes(x)$model, c("lavaan", "blavaan"))
+      is_lavaan = inherits(attributes(x)[["model"]], c("lavaan", "blavaan"))
     )
     do.call(rbind, final_table)
   } else {

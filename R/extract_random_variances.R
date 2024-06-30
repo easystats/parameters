@@ -108,6 +108,42 @@
 .extract_random_variances.MixMod <- .extract_random_variances.glmmTMB
 
 
+# svy2lme ------------------------
+
+.extract_random_variances.svy2lme <- function(model, ci = 0.95, effects = "random", ...) {
+  s <- sqrt(as.vector(model$s2))
+  stdev <- matrix(s * sqrt(diag(model$L)), ncol = 1)
+  vcnames <- c(paste0("SD (", model$znames, ")"), "SD (Observations)")
+  grp_names <- names(model$znames)
+  if (is.null(grp_names)) {
+    grp_names <- model$znames
+  }
+
+  out <- data.frame(
+    Parameter = vcnames,
+    Level = NA,
+    Coefficient = c(as.vector(stdev), s),
+    SE = NA,
+    CI_low = NA,
+    CI_high = NA,
+    t = NA,
+    df_error = NA,
+    p = NA,
+    Effects = "random",
+    Group = c(grp_names, "Residual"),
+    stringsAsFactors = FALSE
+  )
+
+  # fix intercept names
+  out$Parameter <- gsub("(Intercept)", "Intercept", out$Parameter, fixed = TRUE)
+
+  if (effects == "random") {
+    out[c("t", "df_error", "p")] <- NULL
+  }
+
+  rownames(out) <- NULL
+  out
+}
 
 
 

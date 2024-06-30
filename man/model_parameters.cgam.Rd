@@ -39,7 +39,6 @@
   type = NULL,
   table_wide = FALSE,
   verbose = TRUE,
-  effectsize_type = NULL,
   ...
 )
 
@@ -160,8 +159,6 @@ ANOVA-tables using \code{car::Anova()} will be returned. (Ignored for
 \item{table_wide}{Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
-
-\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 }
 \value{
 A data frame of indices related to the model's parameters.

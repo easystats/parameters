@@ -527,6 +527,6 @@ plot.n_clusters_dbscan <- plot.n_clusters_elbow
 #' @export
 plot.n_clusters_hclust <- function(x, ...) {
   insight::check_if_installed("pvclust")
-  graphics::plot(attributes(x)$model)
-  pvclust::pvrect(attributes(x)$model, alpha = attributes(x)$ci, pv = "si")
+  graphics::plot(attributes(x)[["model"]])
+  pvclust::pvrect(attributes(x)[["model"]], alpha = attributes(x)$ci, pv = "si")
 }

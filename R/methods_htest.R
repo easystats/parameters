@@ -46,14 +46,7 @@ model_parameters.htest <- function(model,
                                    bootstrap = FALSE,
                                    es_type = NULL,
                                    verbose = TRUE,
-                                   effectsize_type = NULL,
                                    ...) {
-  ## TODO: remove deprecation warning later
-  if (!is.null(effectsize_type)) {
-    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
-    es_type <- effectsize_type
-  }
-
   if (bootstrap) {
     insight::format_error("Bootstrapped h-tests are not yet implemented.")
   } else {

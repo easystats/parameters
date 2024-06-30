@@ -18,7 +18,6 @@
   drop = NULL,
   table_wide = FALSE,
   verbose = TRUE,
-  effectsize_type = NULL,
   ...
 )
 
@@ -96,8 +95,6 @@ wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: \code{FALSE}.}
 
 \item{verbose}{Toggle warnings and messages.}
-
-\item{effectsize_type}{Deprecated. Use \code{es_type} instead.}
 
 \item{...}{Arguments passed to \code{\link[effectsize:effectsize]{effectsize::effectsize()}}. For example,
 to calculate \emph{partial} effect sizes types, use \code{partial = TRUE}. For objects

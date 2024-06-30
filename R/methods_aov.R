@@ -35,7 +35,6 @@
 #'   (e.g., `"g"`, `"l"`, `"two"`...). See section *One-Sided CIs* in
 #'   the [effectsize_CIs vignette](https://easystats.github.io/effectsize/).
 #' @inheritParams model_parameters.default
-#' @param effectsize_type Deprecated. Use `es_type` instead.
 #' @param ... Arguments passed to [`effectsize::effectsize()`]. For example,
 #'   to calculate _partial_ effect sizes types, use `partial = TRUE`. For objects
 #'   of class `htest` or `BFBayesFactor`, `adjust = TRUE` can be used to return
@@ -110,17 +109,10 @@ model_parameters.aov <- function(model,
                                  drop = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
-                                 effectsize_type = NULL,
                                  ...) {
   # save model object, for later checks
   original_model <- model
   object_name <- insight::safe_deparse_symbol(substitute(model))
-
-  ## TODO: remove deprecation warning later
-  if (!is.null(effectsize_type)) {
-    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
-    es_type <- effectsize_type
-  }
 
   if (inherits(model, "aov") && !is.null(type) && type > 1) {
     if (requireNamespace("car", quietly = TRUE)) {

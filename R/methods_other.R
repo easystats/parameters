@@ -41,14 +41,7 @@ model_parameters.Gam <- function(model,
                                  type = NULL,
                                  table_wide = FALSE,
                                  verbose = TRUE,
-                                 effectsize_type = NULL,
                                  ...) {
-  ## TODO: remove deprecation warning later
-  if (!is.null(effectsize_type)) {
-    insight::format_warning("Argument `effectsize_type` is deprecated. Use `es_type` instead.")
-    es_type <- effectsize_type
-  }
-
   model_parameters(
     summary(model)$parametric.anova,
     es_type = es_type,
