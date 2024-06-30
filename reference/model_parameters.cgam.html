@@ -9,7 +9,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="ht
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ of generalized additive models (GAM(M)s)."><meta property="og:image" content="ht
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from Generalized Additive (Mixed) Models</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.22.0/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.22.0/R/methods_mgcv.R" class="external-link"><code>R/methods_mgcv.R</code></a>, <a href="https://github.com/easystats/parameters/blob/v0.22.0/R/methods_other.R" class="external-link"><code>R/methods_other.R</code></a>, and 1 more</small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_cgam.R" class="external-link"><code>R/methods_cgam.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_mgcv.R" class="external-link"><code>R/methods_mgcv.R</code></a>, <a href="https://github.com/easystats/parameters/blob/main/R/methods_other.R" class="external-link"><code>R/methods_other.R</code></a>, and 1 more</small>
       <div class="d-none name"><code>model_parameters.cgam.Rd</code></div>
     </div>
 
@@ -111,7 +111,6 @@ of generalized additive models (GAM(M)s).</p>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -266,10 +265,6 @@ ANOVA-tables using <code><a href="https://rdrr.io/pkg/car/man/Anova.html" class=
 <dd><p>Logical that decides whether the ANOVA table should be in
 wide format, i.e. should the numerator and denominator degrees of freedom
 be in the same row. Default: <code>FALSE</code>.</p></dd>
-
-
-<dt id="arg-effectsize-type">effectsize_type<a class="anchor" aria-label="anchor" href="#arg-effectsize-type"></a></dt>
-<dd><p>Deprecated. Use <code>es_type</code> instead.</p></dd>
 
 </dl></div>
     <div class="section level2">

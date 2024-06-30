@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parameters from ANOVAs</h1>
-      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/v0.22.0/R/methods_aov.R" class="external-link"><code>R/methods_aov.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/parameters/blob/main/R/methods_aov.R" class="external-link"><code>R/methods_aov.R</code></a></small>
       <div class="d-none name"><code>model_parameters.aov.Rd</code></div>
     </div>
 
@@ -88,7 +88,6 @@
 <span>  drop <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table_wide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  effectsize_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -196,10 +195,6 @@ be in the same row. Default: <code>FALSE</code>.</p></dd>
 <dd><p>Toggle warnings and messages.</p></dd>
 
 
-<dt id="arg-effectsize-type">effectsize_type<a class="anchor" aria-label="anchor" href="#arg-effectsize-type"></a></dt>
-<dd><p>Deprecated. Use <code>es_type</code> instead.</p></dd>
-
-
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed to <code><a href="https://easystats.github.io/effectsize/reference/effectsize.html" class="external-link">effectsize::effectsize()</a></code>. For example,
 to calculate <em>partial</em> effect sizes types, use <code>partial = TRUE</code>. For objects
@@ -268,8 +263,6 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, es_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span><span class="op">)</span>, ci <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Sum_Squares |  df | Mean_Square |    F |     p |   Omega2 | Omega2 90% CI | Eta2 |  Eta2 90% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 | 4.04e-03 |  [0.00, 1.00] | 0.01 | [0.00, 1.00]</span>
@@ -292,9 +285,6 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-in"><span>  es_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"omega"</span>, <span class="st">"eta"</span>, <span class="st">"epsilon"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  alternative <span class="op">=</span> <span class="st">"greater"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Sum_Squares |  df | Mean_Square |    F |     p |   Omega2 | Eta2 | Epsilon2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big |        1.10 |   1 |        1.10 | 1.61 | 0.207 | 4.04e-03 | 0.01 | 4.07e-03</span>
@@ -345,7 +335,6 @@ covariates are mean-centred and factors are coded with orthogonal contrasts
 <span class="r-in"><span>  ci <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
 <span class="r-in"><span>  df_error <span class="op">=</span> <span class="fu"><a href="p_value_satterthwaite.html">dof_satterthwaite</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `effectsize_type` is deprecated. Use `es_type` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Sum_Squares | df | Mean_Square |      F | Eta2 (partial) |  Eta2 90% CI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Big   |        1.10 |  1 |        1.10 |   4.96 |           0.03 | [0.01, 1.00]</span>
