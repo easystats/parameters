@@ -4,6 +4,11 @@
 
 * Support for `svy2lme` models from package *svylme*.
 
+## Bug fixes
+
+* `model_parameters()` for `anova()` from mixed models now also includes the
+  denominator degrees of freedom in the output (`df_error`).
+
 # parameters 0.22.0
 
 ## Breaking changes
@@ -199,7 +204,7 @@
 
 * `as.data.frame` methods for extracting posterior draws via `bootstrap_model()`
   have been retired. Instead, directly using `bootstrap_model()` is recommended.
-  
+
 ## Changes to functions
 
 * `equivalence_test()` gets a method for `ggeffects` objects from package
@@ -351,7 +356,7 @@
 * Following functions were moved from package *parameters* to *performance*:
   `check_sphericity_bartlett()`, `check_kmo()`, `check_factorstructure()` and
   `check_clusterstructure()`.
-  
+
 ## Changes to functions
 
 * Added `sparse` option to `principal_components()` for sparse PCA.

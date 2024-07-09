@@ -22,6 +22,15 @@ test_that("model_parameters.anova", {
   expect_equal(mp[["F"]], c(53.40138, 60.42944, 13.96887, NA), tolerance = 1e-3)
 })
 
+test_that("model_parameters.anova for mixed models", {
+  skip_if_not_installed("lme4")
+  skip_if_not_installed("lmerTest")
+  m <- lmerTest::lmer(mpg ~ wt + (1 | gear), data = mtcars)
+  out <- parameters::model_parameters(anova(m))
+  expect_named(out, c("Parameter", "Sum_Squares", "df", "df_error", "Mean_Square", "F", "p"))
+  expect_equal(out$df_error, 21.92272, tolerance = 1e-4)
+})
+
 test_that("linear hypothesis tests", {
   skip_if_not_installed("car")
   skip_if_not_installed("carData")

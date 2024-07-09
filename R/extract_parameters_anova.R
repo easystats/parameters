@@ -49,6 +49,7 @@
   names(parameters) <- gsub("Resid. Dev", "Deviance_error", names(parameters), fixed = TRUE)
   # error-df
   if (!"df_error" %in% names(parameters)) {
+    names(parameters) <- gsub("DenDF", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("den Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Res.Df", "df_error", names(parameters), fixed = TRUE)
     names(parameters) <- gsub("Resid. Df", "df_error", names(parameters), fixed = TRUE)
