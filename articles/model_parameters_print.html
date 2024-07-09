@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,23 +39,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html" aria-label="Reference"><span class="fa fa-file-code"></span> Reference</a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Articles"><span class="fa fa-book-reader"></span> Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/overview_of_vignettes.html">Overview of Vignettes</a></li>
-    <li><a class="dropdown-item" href="../articles/model_parameters.html">Summary of Model Parameters</a></li>
-    <li><a class="dropdown-item" href="../articles/standardize_parameters_effsize.html">Parameter and Model Standardization</a></li>
-    <li><a class="dropdown-item" href="../articles/model_parameters_robust.html">Robust Estimation of Standard Errors, Confidence Intervals, and p-values</a></li>
-    <li><a class="dropdown-item" href="../articles/model_parameters_mice.html">Model Parameters for Multiply Imputed Repeated Analyses</a></li>
-    <li><a class="dropdown-item" href="../articles/demean.html">Analysing Longitudinal or Panel Data</a></li>
-    <li><a class="dropdown-item" href="../articles/model_parameters_formatting.html">Formatting Model Parameters</a></li>
-    <li><a class="dropdown-item" href="../articles/model_parameters_print.html">Printing Model Parameters</a></li>
-    <li><a class="dropdown-item" href="../articles/parameters_reduction.html">Feature Reduction (PCA, cMDS, ICA, ...)</a></li>
-    <li><a class="dropdown-item" href="../articles/efa_cfa.html">Structural Models (EFA, CFA, SEM, ...)</a></li>
-    <li><a class="dropdown-item" href="../articles/parameters_selection.html">Selection of Model Parameters</a></li>
-    <li><a class="dropdown-item" href="../articles/clustering.html">Clustering with easystats</a></li>
-  </ul>
-</li>
+<li class="active nav-item"><a class="nav-link" href="../articles/index.html" aria-label="Articles"><span class="fa fa-book-reader"></span> Articles</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html" aria-label="News"><span class="fa fa-newspaper"></span> News</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -147,9 +131,8 @@ variable names, interactions are denoted by <code>*</code> etc.</p>
 <span><span class="co">#&gt; Species [virginica]                 |       -3.15 | 0.63 | [-4.41, -1.90] |  -4.97 | &lt; .001</span></span>
 <span><span class="co">#&gt; Petal Length                        |        0.54 | 0.28 | [ 0.00,  1.09] |   1.96 | 0.052 </span></span>
 <span><span class="co">#&gt; Species [versicolor] × Petal Length |        0.29 | 0.30 | [-0.30,  0.87] |   0.97 | 0.334 </span></span>
-<span><span class="co">#&gt; Species [virginica] × Petal Length  |        0.45 | 0.29 | [-0.12,  1.03] |   1.56 | 0.120</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Species [virginica] × Petal Length  |        0.45 | 0.29 | [-0.12,  1.03] |   1.56 | 0.120</span></span>
+<span></span>
 <span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, pretty_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                      | Coefficient |   SE |         95% CI | t(144) |      p</span></span>
@@ -164,7 +147,7 @@ variable names, interactions are denoted by <code>*</code> etc.</p>
 <code>pretty_names = "labels"</code> will use variable and value labels
 as pretty names. If data is not labelled, default pretty names will be
 used.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">efc</span>, package <span class="op">=</span> <span class="st">"datawizard"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">neg_c_7</span> <span class="op">~</span> <span class="va">e42dep</span> <span class="op">+</span> <span class="va">c172code</span>, data <span class="op">=</span> <span class="va">efc</span><span class="op">)</span></span>
 <span></span>
@@ -176,9 +159,8 @@ used.</p>
 <span><span class="co">#&gt; e42dep [2]  |       -1.00 | 3.72 | [-8.41,  6.41] | -0.27 | 0.789</span></span>
 <span><span class="co">#&gt; e42dep [3]  |        2.68 | 3.16 | [-3.60,  8.96] |  0.85 | 0.398</span></span>
 <span><span class="co">#&gt; e42dep [4]  |        3.88 | 3.10 | [-2.29, 10.04] |  1.25 | 0.214</span></span>
-<span><span class="co">#&gt; c172code    |        1.14 | 0.93 | [-0.70,  2.99] |  1.23 | 0.221</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; c172code    |        1.14 | 0.93 | [-0.70,  2.99] |  1.23 | 0.221</span></span>
+<span></span>
 <span><span class="co"># using value and variable labels</span></span>
 <span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, pretty_names <span class="op">=</span> <span class="st">"labels"</span><span class="op">)</span></span>
@@ -198,7 +180,7 @@ the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">prin
 not all information is required. <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> will return the
 coefficient, confidence intervals and p-values. <code>select</code>
 allows to select specific columns only.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span></span>
@@ -216,9 +198,8 @@ allows to select specific columns only.</p>
 <span><span class="co">#&gt; Species [virginica] × Petal Length  |        0.45 | [-0.12,  1.03] | 0.120 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model: Sepal.Length ~ Species * Petal.Length (150 Observations)</span></span>
-<span><span class="co">#&gt; Residual standard deviation: 0.336 (df = 144)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Residual standard deviation: 0.336 (df = 144)</span></span>
+<span></span>
 <span><span class="co"># Parameter name, SE and p</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span>, select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Parameter"</span>, <span class="st">"SE"</span>, <span class="st">"p"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           |   SE |      p</span></span>
@@ -240,7 +221,7 @@ customized output. See examples below for
 <code>TRUE</code>, which means that models with multiple components like
 fixed and random effects, count and zero-inflated part etc. are split
 into separate tables in the output.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/glmmTMB/man/glmmTMB.html" class="external-link">glmmTMB</a></span><span class="op">(</span><span class="va">count</span> <span class="op">~</span> <span class="va">spp</span> <span class="op">+</span> <span class="va">mined</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">site</span><span class="op">)</span>,</span>
@@ -288,7 +269,7 @@ into separate tables in the output.</p>
 <span><span class="co">#&gt; SD (Intercept: site) |        0.38 | [0.17, 0.87]</span></span></code></pre></div>
 <p>Redundant columns are removed. The related model component is shown
 as table header. However, you can also return a single table:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, split_component <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -320,7 +301,7 @@ as table header. However, you can also return a single table:</p>
 <p>A model summary can be added to the table when
 <code>summary = TRUE</code> in the call to
 <code><a href="../reference/model_parameters.html">model_parameters()</a></code>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, summary <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           | Coefficient |   SE |         95% CI | t(144) |      p</span></span>
@@ -346,7 +327,7 @@ categorical predictors in the table. This can be done by setting
 Since the reference level is not a parameter, it is shown in a separate
 row, with <code>0</code> for the coefficient and blank cells for the
 remaining columns.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, include_reference <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |   SE |         95% CI | t(146) |      p</span></span>
@@ -363,7 +344,7 @@ remaining columns.</p>
 <p><code>digits</code> changes the digits for coefficients, standard
 errors and statistics. <code>ci_digits</code> and <code>p_digits</code>
 are especially for the confidence intervals and p-values.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |     SE |           95% CI |  t(147) |      p</span></span>
@@ -373,7 +354,7 @@ are especially for the confidence intervals and p-values.</p>
 <span><span class="co">#&gt; Species [virginica]  |      1.5820 | 0.1030 | [1.3785, 1.7855] | 15.3655 | &lt; .001</span></span></code></pre></div>
 <p>p-values can be displayed in exact, scientific notation if
 required.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span>, p_digits <span class="op">=</span> <span class="st">"scientific"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter            | Coefficient |   SE |       95% CI | t(147) |            p</span></span>
 <span><span class="co">#&gt; --------------------------------------------------------------------------------</span></span>
@@ -390,7 +371,7 @@ for models with multiple components, where each component is shown as
 separate table, columns are possibly no longer aligned across tables.
 See the following example from a zero-inflated mixed model that has
 three components (fixed count, fixed zero-inflated, random effects):</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Salamanders"</span><span class="op">)</span></span>
 <span><span class="co"># we create very long parameter names for this predictor here</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Salamanders</span><span class="op">$</span><span class="va">spp</span><span class="op">)</span><span class="op">)</span></span>
@@ -434,7 +415,7 @@ the width of specific columns, or to fix column widths of the same
 columns across tables to have the same width. In the latter case, use
 <code>column_width = "fixed"</code> in the <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>
 method.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
@@ -465,7 +446,7 @@ method.</p>
 <p>If <code>column_width</code> is a named vector, names are matched
 against column names, and those columns gain the specified minimum
 width.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, column_width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>SE <span class="op">=</span> <span class="fl">8</span>, `95% CI` <span class="op">=</span> <span class="fl">12</span>, p <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects (Count Model)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -504,7 +485,7 @@ parameters in the table (data frame).</p>
 <p>In the following example, we see the names of the parameters in the
 <code>Parameter</code> column, while the rownumbers indicate their
 position.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span>
 <span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">gear</span><span class="op">)</span></span>
@@ -533,7 +514,7 @@ group <code>"controls"</code> has the parameters from rows 2, 3 and
 7.</p>
 <p>Note that the parameters in the table summary are re-ordered
 according to the order specified in <code>groups</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  Engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl6"</span>, <span class="st">"cyl8"</span>, <span class="st">"vs"</span>, <span class="st">"hp"</span><span class="op">)</span>,</span>
@@ -558,7 +539,7 @@ according to the order specified in <code>groups</code>.</p>
 <code>sep</code> argument to define the string that is used as
 border-separator. This argument is passed down to
 <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># group parameters, either by parameter name or position</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mp</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">"  "</span>,</span>
@@ -591,7 +572,7 @@ border-separator. This argument is passed down to
 <code><a href="../reference/compare_parameters.html">compare_models()</a></code>) allows to create tables for multiple
 models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -613,7 +594,7 @@ models, aligned side by side.</p>
 <p>By default, estimates and confidence intervals are shown. Using
 <code>select</code> allows us to create different output, e.g. standard
 errors instead of confidence intervals, or including p-values.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, select <span class="op">=</span> <span class="st">"se_p"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
@@ -647,7 +628,7 @@ p-values</li>
 </ul>
 <p>Note that you have to add parentheses manually, e.g. around
 confidence intervals.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># estimates, p-stars and standard error in parentheses</span></span>
 <span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, select <span class="op">=</span> <span class="st">"{estimate}{stars} ({se})"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           |            lm1 |             lm2 |             lm3</span></span>
@@ -659,9 +640,8 @@ confidence intervals.</p>
 <span><span class="co">#&gt; Species (versicolor) × Petal Length |                |                 |     0.29 (0.30)</span></span>
 <span><span class="co">#&gt; Species (virginica) × Petal Length  |                |                 |     0.45 (0.29)</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Observations                        |            150 |             150 |             150</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Observations                        |            150 |             150 |             150</span></span>
+<span></span>
 <span><span class="co"># estimates, CI, p and stars</span></span>
 <span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, select <span class="op">=</span> <span class="st">"{estimate} ({ci_low}, {ci_high}), p={p}{stars}"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parameter                           |                           lm1 |                              lm2 |                              lm3</span></span>
@@ -677,7 +657,7 @@ confidence intervals.</p>
 <p><code>select</code> also works for <code><a href="../reference/model_parameters.html">model_parameters()</a></code>,
 however, it’s necessary to call this argument via the
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># estimates, p-stars and CI in parentheses</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">lm3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span>, select <span class="op">=</span> <span class="st">"{estimate}{stars} ({ci})"</span><span class="op">)</span></span>
@@ -696,7 +676,7 @@ however, it’s necessary to call this argument via the
 <p>The column names for the models are by default the objects’ names.
 You can define own names using the <code>column_names</code>
 argument.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span></span>
 <span>  <span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>,</span>
 <span>  column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"First Model"</span>, <span class="st">"Second Model"</span>, <span class="st">"Third Model"</span><span class="op">)</span></span>
@@ -720,7 +700,7 @@ random effects, or models with count- and zero-inflation parts, using
 arguments <code>effects = "all"</code> and/or
 <code>component = "all"</code> prints separate tables for each model
 component.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/glmmTMB/glmmTMB" class="external-link">glmmTMB</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"fish"</span><span class="op">)</span></span>
 <span></span>
@@ -771,7 +751,7 @@ component.</p>
 <p>For such tables, they usually become clearer when the columns per
 model are aligned to a fixed width. You can do this using
 <code>column_width = "fixed"</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">m0</span>, <span class="va">m1</span>, <span class="va">m2</span>, effects <span class="op">=</span> <span class="st">"all"</span>, component <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, column_width <span class="op">=</span> <span class="st">"fixed"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Fixed Effects</span></span>
@@ -816,7 +796,7 @@ this vignette</a>). Since parameter names in
 <code>as.data.frame(cp)$Parameter</code> will probably return special
 unicode characters that you need to take care of in the
 <code>groups</code> argument (unless you use numeric indices).</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span></span>
@@ -827,9 +807,8 @@ unicode characters that you need to take care of in the
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">cp</span><span class="op">)</span><span class="op">$</span><span class="va">Parameter</span> <span class="co"># note the unicode char as interaction mark</span></span>
 <span><span class="co">#&gt; [1] "Species (versicolor)"                "Species (virginica)"                </span></span>
 <span><span class="co">#&gt; [3] "Petal Length"                        "Species (versicolor) × Petal Length"</span></span>
-<span><span class="co">#&gt; [5] "Species (virginica) × Petal Length"</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; [5] "Species (virginica) × Petal Length"</span></span>
+<span></span>
 <span><span class="co"># create groups. Interactions only present in 2nd model</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cp</span>, groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  Species <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -869,7 +848,7 @@ wider than the current available width (i.e. line length) of the console
 is split into multiple parts. Else, if <code>table_width</code> is
 numeric and table rows are wider than <code>table_width</code>, the
 table is split into multiple parts.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
@@ -888,9 +867,8 @@ table is split into multiple parts.</p>
 <span><span class="co">#&gt; Species (virginica) × Petal Length  |                   |                      |  0.45 (-0.12,  1.03) |  0.45 (-0.12,  1.03)</span></span>
 <span><span class="co">#&gt; Petal Width                         |                   |                      |                      |  0.03 (-0.28,  0.34)</span></span>
 <span><span class="co">#&gt; ----------------------------------------------------------------------------------------------------------------------------</span></span>
-<span><span class="co">#&gt; Observations                        |               150 |                  150 |                  150 |                  150</span></span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co">#&gt; Observations                        |               150 |                  150 |                  150 |                  150</span></span>
+<span></span>
 <span><span class="co"># table split into two parts</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compare_parameters.html">compare_parameters</a></span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">tab</span>, table_width <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span>
@@ -940,7 +918,7 @@ package</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
 </div>
 
     </footer>
