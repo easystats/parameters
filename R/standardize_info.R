@@ -17,7 +17,7 @@
 #'
 #' @family standardize
 #'
-#' @examples
+#' @examplesIf insight::check_if_installed("datawizard", minimum_version = "0.12.0", quietly = TRUE)
 #' model <- lm(mpg ~ ., data = mtcars)
 #' standardize_info(model)
 #' standardize_info(model, robust = TRUE)
@@ -422,6 +422,7 @@ standardize_info.default <- function(model,
   }
 
   insight::check_if_installed("performance")
+  insight::check_if_installed("datawizard", minimum_version = "0.12.0")
 
   f <- if (two_sd) 2 else 1
 
