@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,7 @@
 <h3 id="bug-fixes-0-22-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-22-1"></a></h3>
 <ul><li><p>Fixed issue with <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code> when ROPE range was not symmetrically centered around zero (e.g., <code>range = c(-99, 0.1)</code>).</p></li>
 <li><p><code><a href="../reference/model_parameters.html">model_parameters()</a></code> for <code><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova()</a></code> from mixed models now also includes the denominator degrees of freedom in the output (<code>df_error</code>).</p></li>
+<li><p><code>print(..., pretty_names = "labels")</code> for tobit-models from package <em>AER</em> now include value labels, if available.</p></li>
 <li><p>Patch release, to ensure that performance runs with older version of datawizard on Mac OS X with R (old-release).</p></li>
 </ul></div>
 </div>
