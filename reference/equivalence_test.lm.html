@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,14 +174,17 @@ results are low proportions inside the ROPE (the closer to zero the
 better).</p></li>
 <li><p>"classic" - The TOST rule (Lakens 2017)</p>
 <p>This rule follows the "TOST rule", i.e. a two one-sided test procedure
-(<em>Lakens 2017</em>). Following this rule, practical equivalence of an effect
-(i.e. H0) is <em>rejected</em>, when the coefficient is statistically significant
-<em>and</em> the narrow confidence intervals (i.e. <code>1-2*alpha</code>) <em>include</em> or
-<em>exceed</em> the ROPE boundaries. Practical equivalence is assumed
-(i.e. H0 "accepted") when the narrow confidence intervals are completely
-inside the ROPE, no matter if the effect is statistically significant
-or not. Else, the decision whether to accept or reject practical
-equivalence is undecided.</p></li>
+(<em>Lakens 2017</em>). Following this rule...</p><ul><li><p>practical equivalence is assumed (i.e. H0 <em>"accepted"</em>) when the narrow
+confidence intervals are completely inside the ROPE, no matter if the
+effect is statistically significant or not;</p></li>
+<li><p>practical equivalence (i.e. H0) is <em>rejected</em>, when the coefficient is
+statistically significant, both when the narrow confidence intervals
+(i.e. <code>1-2*alpha</code>) include or exclude the the ROPE boundaries, but the
+narrow confidence intervals are <em>not fully covered</em> by the ROPE;</p></li>
+<li><p>else the decision whether to accept or reject practical equivalence is
+undecided (i.e. when effects are <em>not</em> statistically significant <em>and</em>
+the narrow confidence intervals overlaps the ROPE).</p></li>
+</ul></li>
 <li><p>"cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)</p>
 <p>The Conditional Equivalence Testing as described by <em>Campbell and
 Gustafson 2018</em>. According to this rule, practical equivalence is
