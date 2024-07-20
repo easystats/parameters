@@ -378,6 +378,12 @@ format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)
+    # sanity check - any labels?
+    has_labels <- vapply(mf, function(i) !is.null(attr(i, "labels", exact = TRUE)), logical(1))
+    # if we don't have labels, we try to get data from environment
+    if (!any(has_labels)) {
+      mf <- insight::get_data(model, source = "environment", verbose = FALSE)
+    }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
