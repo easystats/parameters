@@ -42,6 +42,7 @@ test_that("equivalence_test, unequal rope-range", {
 })
 
 test_that("equivalence_test, unequal rope-range, plots", {
+  skip_on_cran()
   skip_if_not_installed("vdiffr")
   data(iris)
   m <- lm(Sepal.Length ~ Species, data=iris)
