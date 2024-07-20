@@ -72,10 +72,10 @@ format_parameters.parameters_model <- function(model, ...) {
 
   # save some time, if model info is passed as argument
   dot_args <- list(...)
-  if (!is.null(dot_args$model_info)) {
-    info <- dot_args$model_info
-  } else {
+  if (is.null(dot_args$model_info)) {
     info <- insight::model_info(model, verbose = FALSE)
+  } else {
+    info <- dot_args$model_info
   }
 
   ## TODO remove is.list() when insight 0.8.3 on CRAN
@@ -299,16 +299,16 @@ format_parameters.parameters_model <- function(model, ...) {
     if (type == "interaction") {
       components <- paste0(
         "(",
-        paste0(utils::head(components, -1), collapse = sep),
+        paste(utils::head(components, -1), collapse = sep),
         ")",
         sep,
         utils::tail(components, 1)
       )
     } else {
-      components <- paste0(components, collapse = sep)
+      components <- paste(components, collapse = sep)
     }
   } else {
-    components <- paste0(components, collapse = sep)
+    components <- paste(components, collapse = sep)
   }
   components
 }
@@ -378,6 +378,12 @@ format_parameters.parameters_model <- function(model, ...) {
   if (!is.null(model) && insight::is_regression_model(model) && !is.data.frame(model)) {
     # get data, but exclude response - we have no need for that label
     mf <- insight::get_data(model, source = "mf", verbose = FALSE)
+    # sanity check - any labels?
+    has_labels <- vapply(mf, function(i) !is.null(attr(i, "labels", exact = TRUE)), logical(1))
+    # if we don't have labels, we try to get data from environment
+    if (!any(has_labels)) {
+      mf <- insight::get_data(model, source = "environment", verbose = FALSE)
+    }
     resp <- insight::find_response(model, combine = FALSE)
     mf <- mf[, setdiff(colnames(mf), resp), drop = FALSE]
 
@@ -432,7 +438,7 @@ format_parameters.parameters_model <- function(model, ...) {
           # extract single coefficient names from interaction term
           out <- unlist(strsplit(i, ":", fixed = TRUE))
           # combine labels
-          labs <- c(labs, paste0(sapply(out, function(l) pretty_labels[l]), collapse = " * "))
+          labs <- c(labs, paste(sapply(out, function(l) pretty_labels[l]), collapse = " * "))
         }
         # add interaction terms to labels string
         names(labs) <- names(interactions)
@@ -461,10 +467,10 @@ format_parameters.parameters_model <- function(model, ...) {
   win_os <- tryCatch(
     {
       si <- Sys.info()
-      if (!is.null(si["sysname"])) {
-        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
-      } else {
+      if (is.null(si["sysname"])) {
         FALSE
+      } else {
+        si["sysname"] == "Windows" || startsWith(R.version$os, "mingw")
       }
     },
     error = function(e) {

@@ -12,6 +12,9 @@
 * `model_parameters()` for `anova()` from mixed models now also includes the
   denominator degrees of freedom in the output (`df_error`).
 
+* `print(..., pretty_names = "labels")` for tobit-models from package *AER* now
+  include value labels, if available.
+
 * Patch release, to ensure that performance runs with older version of datawizard
   on Mac OS X with R (old-release).
 
