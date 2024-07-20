@@ -6,6 +6,9 @@
 
 ## Bug fixes
 
+* Fixed issue with `equivalence_test()` when ROPE range was not symmetrically
+  centered around zero (e.g., `range = c(-99, 0.1)`).
+
 * `model_parameters()` for `anova()` from mixed models now also includes the
   denominator degrees of freedom in the output (`df_error`).
 
