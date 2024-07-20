@@ -100,14 +100,19 @@ better).
 \item "classic" - The TOST rule (Lakens 2017)
 
 This rule follows the "TOST rule", i.e. a two one-sided test procedure
-(\emph{Lakens 2017}). Following this rule, practical equivalence of an effect
-(i.e. H0) is \emph{rejected}, when the coefficient is statistically significant
-\emph{and} the narrow confidence intervals (i.e. \code{1-2*alpha}) \emph{include} or
-\emph{exceed} the ROPE boundaries. Practical equivalence is assumed
-(i.e. H0 "accepted") when the narrow confidence intervals are completely
-inside the ROPE, no matter if the effect is statistically significant
-or not. Else, the decision whether to accept or reject practical
-equivalence is undecided.
+(\emph{Lakens 2017}). Following this rule...
+\itemize{
+\item practical equivalence is assumed (i.e. H0 \emph{"accepted"}) when the narrow
+confidence intervals are completely inside the ROPE, no matter if the
+effect is statistically significant or not;
+\item practical equivalence (i.e. H0) is \emph{rejected}, when the coefficient is
+statistically significant, both when the narrow confidence intervals
+(i.e. \code{1-2*alpha}) include or exclude the the ROPE boundaries, but the
+narrow confidence intervals are \emph{not fully covered} by the ROPE;
+\item else the decision whether to accept or reject practical equivalence is
+undecided (i.e. when effects are \emph{not} statistically significant \emph{and}
+the narrow confidence intervals overlaps the ROPE).
+}
 \item "cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)
 
 The Conditional Equivalence Testing as described by \emph{Campbell and

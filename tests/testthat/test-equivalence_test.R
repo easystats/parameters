@@ -18,4 +18,25 @@ test_that("equivalence_test, unequal rope-range", {
   rez <- equivalence_test(m, range = c(-99, 0.1))
   expect_identical(rez$ROPE_Equivalence, c("Rejected", "Rejected", "Rejected"))
   expect_identical(rez$ROPE_low, c(-99, -99, -99))
+
+  data(mtcars)
+  mtcars[c("gear", "cyl")] <- lapply(mtcars[c("gear", "cyl")], as.factor)
+  m <- lm(mpg ~ hp + gear + cyl, data = mtcars)
+
+  rez <- equivalence_test(m, range = c(-Inf, 0.5))
+  expect_identical(
+    rez$ROPE_Equivalence,
+    c("Rejected", "Accepted", "Undecided", "Rejected", "Accepted", "Undecided")
+  )
+  rez <- equivalence_test(m, range = c(-0.5, 0.5))
+  expect_identical(
+    rez$ROPE_Equivalence,
+    c("Rejected", "Accepted", "Undecided", "Rejected", "Rejected", "Undecided")
+  )
+
+  rez <- equivalence_test(m, range = c(-2, 2))
+  expect_identical(
+    rez$ROPE_Equivalence,
+    c("Rejected", "Accepted", "Undecided", "Rejected", "Rejected", "Undecided")
+  )
 })
