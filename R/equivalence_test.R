@@ -562,13 +562,13 @@ equivalence_test.ggeffects <- function(x,
     # significant result?
     if (min(ci_narrow) > 0 || max(ci_narrow) < 0) {
       # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
-      if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+      if (all(ci_narrow < max(range_rope)) && all(ci_narrow > min(range_rope))) {
         decision <- "Accepted"
       } else {
         decision <- "Rejected"
       }
       # non-significant results
-    } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+    } else if (all(ci_narrow < max(range_rope))) {
       # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
       decision <- "Accepted"
     } else {
