@@ -9,6 +9,9 @@
 * `model_parameters()` for `anova()` from mixed models now also includes the
   denominator degrees of freedom in the output (`df_error`).
 
+* Patch release, to ensure that performance runs with older version of datawizard
+  on Mac OS X with R (old-release).
+
 # parameters 0.22.0
 
 ## Breaking changes
