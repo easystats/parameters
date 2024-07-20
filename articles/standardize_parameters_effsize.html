@@ -12,14 +12,15 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../katex-auto.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.9/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Parameter and Model Standardization">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><link href="../deps/KaTex-0.16.10/katex.min.css" rel="stylesheet">
+<script src="../deps/KaTex-0.16.10/katex.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Parameter and Model Standardization">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -29,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,11 +195,9 @@ the <strong>Cohen’s <em>d</em></strong> between these two levels:</p>
 should be expressed in units of SD! But which SDs? Different SDs!</p>
 <p>When looking at the difference between groups as a
 <strong>slope</strong>, the standardized parameter is the difference
-between the means in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><msub><mi>D</mi><mrow><mi>m</mi><mi>p</mi><mi>g</mi></mrow></msub></mrow><annotation encoding="application/x-tex">SD_{mpg}</annotation></semantics></math>.
-That is, the <em>slope</em> between <code>Manual</code> and
-<code>Automatic</code> is a change of 1.20
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><msub><mi>D</mi><mrow><mi>m</mi><mi>p</mi><mi>g</mi></mrow></msub></mrow><annotation encoding="application/x-tex">SD_{mpg}</annotation></semantics></math>s.</p>
+between the means in <span class="math inline">SD_{mpg}</span>. That is,
+the <em>slope</em> between <code>Manual</code> and
+<code>Automatic</code> is a change of 1.20 <span class="math inline">SD_{mpg}</span>s.</p>
 <p>However, when looking a the difference as a <strong>distance between
 two populations</strong>, Cohen’s d is the distance between the means in
 units of <a href="https://easystats.github.io/effectsize/reference/sd_pooled.html" class="external-link"><strong>pooled
@@ -212,9 +211,8 @@ also estimate Cohen’s <em>d</em> as:</p>
 <pre><code>&gt; amAutomatic 
 &gt;         1.5</code></pre>
 <p>And we can also get an approximation of Cohen’s <em>d</em> by
-converting the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-statistic
-from the regression model via <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
+converting the <span class="math inline">t</span>-statistic from the
+regression model via <code><a href="https://easystats.github.io/effectsize/reference/t_to_r.html" class="external-link">t_to_d()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/model_parameters.html">model_parameters</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Parameter      | Coefficient |   SE |         95% CI | t(30) |      p
