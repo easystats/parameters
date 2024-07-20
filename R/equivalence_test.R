@@ -569,7 +569,7 @@ equivalence_test.ggeffects <- function(x,
       # non-significant results - undecided
       decision <- "Undecided"
     } else {
-      decision <- "Accepted"
+      decision <- "Rejected"
     }
   }
 
