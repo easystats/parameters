@@ -62,14 +62,17 @@ bayestestR::equivalence_test
 #' - "classic" - The TOST rule (Lakens 2017)
 #'
 #'   This rule follows the "TOST rule", i.e. a two one-sided test procedure
-#'   (_Lakens 2017_). Following this rule, practical equivalence of an effect
-#'   (i.e. H0) is *rejected*, when the coefficient is statistically significant
-#'   *and* the narrow confidence intervals (i.e. `1-2*alpha`) *include* or
-#'   *exceed* the ROPE boundaries. Practical equivalence is assumed
-#'   (i.e. H0 "accepted") when the narrow confidence intervals are completely
-#'   inside the ROPE, no matter if the effect is statistically significant
-#'   or not. Else, the decision whether to accept or reject practical
-#'   equivalence is undecided.
+#'   (_Lakens 2017_). Following this rule...
+#'   - practical equivalence is assumed (i.e. H0 *"accepted"*) when the narrow
+#'     confidence intervals are completely inside the ROPE, no matter if the
+#'     effect is statistically significant or not;
+#'   - practical equivalence (i.e. H0) is *rejected*, when the coefficient is
+#'     statistically significant, both when the narrow confidence intervals
+#'     (i.e. `1-2*alpha`) include or exclude the the ROPE boundaries, but the
+#'     narrow confidence intervals are *not fully covered* by the ROPE;
+#'   - else the decision whether to accept or reject practical equivalence is
+#'     undecided (i.e. when effects are *not* statistically significant *and*
+#'     the narrow confidence intervals overlaps the ROPE).
 #'
 #' - "cet" - Conditional Equivalence Testing (Campbell/Gustafson 2018)
 #'
@@ -559,20 +562,14 @@ equivalence_test.ggeffects <- function(x,
 
   if (rule == "classic") {
     final_ci <- ci_narrow
-    # significant result?
-    if (min(ci_narrow) > 0 || max(ci_narrow) < 0) {
-      # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
-      if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
-        decision <- "Accepted"
-      } else {
-        decision <- "Rejected"
-      }
-      # non-significant results
-    } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
-      # check if CI are entirely inside ROPE. If CI crosses ROPE, reject H0, else accept
+    if (all(ci_narrow < max(range_rope)) && all(ci_narrow > min(range_rope))) {
+      # narrow CI is fully inside ROPE - always accept
       decision <- "Accepted"
-    } else {
+    } else if (min(ci_narrow) < 0 && max(ci_narrow) > 0) {
+      # non-significant results - undecided
       decision <- "Undecided"
+    } else {
+      decision <- "Rejected"
     }
   }
 
@@ -585,7 +582,7 @@ equivalence_test.ggeffects <- function(x,
     if (min(ci_wide) > 0 || max(ci_wide) < 0) {
       decision <- "Rejected"
       # non-significant results, all narrow CI inside ROPE
-    } else if (min(abs(ci_narrow)) < max(abs(range_rope)) && max(abs(ci_narrow)) < max(abs(range_rope))) {
+    } else if (all(ci_narrow < max(range_rope)) && all(ci_narrow > min(range_rope))) {
       decision <- "Accepted"
     } else {
       decision <- "Undecided"
@@ -741,14 +738,12 @@ print.equivalence_test_lm <- function(x,
   orig_x <- x
 
   rule <- attributes(x)$rule
-  if (!is.null(rule)) {
-    if (rule == "cet") {
-      insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
-    } else if (rule == "classic") {
-      insight::print_color("# TOST-test for Practical Equivalence\n\n", "blue")
-    } else {
-      insight::print_color("# Test for Practical Equivalence\n\n", "blue")
-    }
+  if (is.null(rule)) {
+    insight::print_color("# Test for Practical Equivalence\n\n", "blue")
+  } else if (rule == "cet") {
+    insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
+  } else if (rule == "classic") {
+    insight::print_color("# TOST-test for Practical Equivalence\n\n", "blue")
   } else {
     insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   }
