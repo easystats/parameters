@@ -204,6 +204,7 @@ Suggests:
     tinytable (>= 0.1.0),
     TMB,
     truncreg,
+    vdiffr,
     VGAM,
     withr,
     WRS2
