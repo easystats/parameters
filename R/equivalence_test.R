@@ -738,14 +738,12 @@ print.equivalence_test_lm <- function(x,
   orig_x <- x
 
   rule <- attributes(x)$rule
-  if (!is.null(rule)) {
-    if (rule == "cet") {
-      insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
-    } else if (rule == "classic") {
-      insight::print_color("# TOST-test for Practical Equivalence\n\n", "blue")
-    } else {
-      insight::print_color("# Test for Practical Equivalence\n\n", "blue")
-    }
+  if (is.null(rule)) {
+    insight::print_color("# Test for Practical Equivalence\n\n", "blue")
+  } else if (rule == "cet") {
+    insight::print_color("# Conditional Equivalence Testing\n\n", "blue")
+  } else if (rule == "classic") {
+    insight::print_color("# TOST-test for Practical Equivalence\n\n", "blue")
   } else {
     insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   }

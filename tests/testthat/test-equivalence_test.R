@@ -10,7 +10,7 @@ test_that("equivalence_test", {
 
 test_that("equivalence_test, unequal rope-range", {
   data(iris)
-  m <- lm(Sepal.Length ~ Species, data=iris)
+  m <- lm(Sepal.Length ~ Species, data = iris)
   rez <- equivalence_test(m, range = c(-Inf, 0.1))
   expect_identical(rez$ROPE_Equivalence, c("Rejected", "Rejected", "Rejected"))
   expect_identical(rez$ROPE_low, c(-Inf, -Inf, -Inf))
@@ -45,7 +45,7 @@ test_that("equivalence_test, unequal rope-range, plots", {
   skip_on_cran()
   skip_if_not_installed("vdiffr")
   data(iris)
-  m <- lm(Sepal.Length ~ Species, data=iris)
+  m <- lm(Sepal.Length ~ Species, data = iris)
   rez <- equivalence_test(m, range = c(-Inf, 0.1))
   vdiffr::expect_doppelganger(
     "Equivalence-Test 1",
