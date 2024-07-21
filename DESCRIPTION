@@ -218,4 +218,3 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
-Remotes: easystats/bayestestR
