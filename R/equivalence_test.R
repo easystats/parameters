@@ -606,7 +606,10 @@ equivalence_test.ggeffects <- function(x,
 
 # helper ---------------------
 
-
+# this function simply takes the length of the range and calculates the proportion
+# of that range that is inside the rope. However, this assumed a "flat", i.e.
+# uniformly distributed interval, which is not accurate for standard confidence
+# intervals. thus, we no longer use this function, but switch to ".rope_coverage()".
 .sgpv <- function(range_rope, ci) {
   diff_rope <- abs(diff(range_rope))
   diff_ci <- abs(diff(ci))
@@ -638,6 +641,10 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
+# this function simulates a normal distribution, which approximately has the
+# same range / limits as the confidence interval, thus indeed representing a
+# normally distributed confidence interval. We then calculate the probability
+# mass of this interval that is inside the ROPE.
 .rope_coverage <- function(range_rope, ci_range) {
   diff_ci <- abs(diff(ci_range))
   out <- bayestestR::distribution_normal(
