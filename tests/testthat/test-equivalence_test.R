@@ -1,3 +1,5 @@
+skip_if_not_installed("bayestestR")
+
 test_that("equivalence_test", {
   data(mtcars)
   m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
@@ -28,6 +30,23 @@ test_that("equivalence_test, unequal rope-range", {
     rez$ROPE_Equivalence,
     c("Rejected", "Accepted", "Undecided", "Rejected", "Accepted", "Undecided")
   )
+
+  # validate thet range of CI equals approximated  normal distribution
+  diff_ci <- abs(diff(c(rez$CI_low[3], rez$CI_high[3])))
+  set.seed(123)
+  out <- bayestestR::distribution_normal(
+    n = 1000,
+    mean = rez$CI_high[3] - (diff_ci / 2),
+    sd = (diff_ci / 2) / 3.290525
+  )
+  expect_equal(range(out)[1], rez$CI_low[3], tolerance = 1e-4)
+  expect_equal(range(out)[2], rez$CI_high[3], tolerance = 1e-4)
+  expect_equal(
+    rez$SGPV[3],
+    bayestestR::rope(out, range = c(-Inf, 0.5), ci = 1)$ROPE_Percentage,
+    tolerance = 1e-4
+  )
+
   rez <- equivalence_test(m, range = c(-0.5, 0.5))
   expect_identical(
     rez$ROPE_Equivalence,
