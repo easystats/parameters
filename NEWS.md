@@ -1,5 +1,13 @@
 # parameters 0.22.1
 
+## Breaking changes
+
+* Revised calculation of the second generation p-value (SGPV) in `equivalence_test()`,
+  which should now be more accurate related to the proportion of the interval
+  that falls inside the ROPE. Formerly, the confidence interval was simply treated
+  as uniformly distributed when calculating the SGPV, now the interval is assumed
+  to be normally distributed.
+
 ## New supported models
 
 * Support for `svy2lme` models from package *svylme*.

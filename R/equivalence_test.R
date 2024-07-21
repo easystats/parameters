@@ -103,7 +103,8 @@ bayestestR::equivalence_test
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
 #' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
-#' proportion of the confidence interval range that is inside the ROPE.
+#' proportion of the confidence interval range (assuming a normally distributed,
+#' equal-tailed interval) that is inside the ROPE.
 #'
 #' ## ROPE range
 #' Some attention is required for finding suitable values for the ROPE limits
@@ -592,10 +593,9 @@ equivalence_test.ggeffects <- function(x,
   data.frame(
     CI_low = final_ci[1],
     CI_high = final_ci[2],
-    SGPV = .sgpv(range_rope, final_ci),
+    SGPV = .rope_coverage(range_rope, final_ci),
     ROPE_low = range_rope[1],
     ROPE_high = range_rope[2],
-    # ROPE_Percentage = .rope_coverage(range_rope, final_ci),
     ROPE_Equivalence = decision,
     stringsAsFactors = FALSE
   )
@@ -607,30 +607,30 @@ equivalence_test.ggeffects <- function(x,
 # helper ---------------------
 
 
-.sgpv <- function(rope, ci) {
-  diff_rope <- abs(diff(rope))
+.sgpv <- function(range_rope, ci) {
+  diff_rope <- abs(diff(range_rope))
   diff_ci <- abs(diff(ci))
 
   # inside?
-  if (min(ci) >= min(rope) && max(ci) <= max(rope)) {
+  if (min(ci) >= min(range_rope) && max(ci) <= max(range_rope)) {
     coverage <- 1
 
     # outside?
-  } else if (max(ci) < min(rope) || min(ci) > max(rope)) {
+  } else if (max(ci) < min(range_rope) || min(ci) > max(range_rope)) {
     coverage <- 0
 
     # CI covers completely rope?
-  } else if (max(ci) > max(rope) && min(ci) < min(rope)) {
+  } else if (max(ci) > max(range_rope) && min(ci) < min(range_rope)) {
     coverage <- diff_rope / diff_ci
 
     # CI inside rope and outside max rope?
-  } else if (min(ci) >= min(rope) && max(ci) > max(rope)) {
-    diff_in_rope <- max(rope) - min(ci)
+  } else if (min(ci) >= min(range_rope) && max(ci) > max(range_rope)) {
+    diff_in_rope <- max(range_rope) - min(ci)
     coverage <- diff_in_rope / diff_ci
 
     # CI inside rope and outside min rope?
-  } else if (max(ci) <= max(rope) && min(ci) < min(rope)) {
-    diff_in_rope <- max(ci) - min(rope)
+  } else if (max(ci) <= max(range_rope) && min(ci) < min(range_rope)) {
+    diff_in_rope <- max(ci) - min(range_rope)
     coverage <- diff_in_rope / diff_ci
   }
 
@@ -638,16 +638,15 @@ equivalence_test.ggeffects <- function(x,
 }
 
 
-## FIXME make sure this works for different CI levels
-.rope_coverage <- function(rope, ci_range, ci) {
+.rope_coverage <- function(range_rope, ci_range) {
   diff_ci <- abs(diff(ci_range))
   out <- bayestestR::distribution_normal(
     n = 1000,
     mean = ci_range[2] - (diff_ci / 2),
-    sd = diff_ci / 3.28
+    sd = diff_ci / (2 * 3.29)
   )
 
-  rc <- bayestestR::rope(out, range = rope, ci = ci)
+  rc <- bayestestR::rope(out, range = range_rope, ci = 1)
   rc$ROPE_Percentage
 }
 

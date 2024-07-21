@@ -149,7 +149,8 @@ practical equivalence and accept the alternative hypothesis.
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
 hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
-proportion of the confidence interval range that is inside the ROPE.
+proportion of the confidence interval range (assuming a normally distributed,
+equal-tailed interval) that is inside the ROPE.
 }
 
 \subsection{ROPE range}{
