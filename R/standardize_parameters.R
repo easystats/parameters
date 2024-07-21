@@ -225,6 +225,8 @@ standardize_parameters.default <- function(model,
     class(model) <- class(model)[class(model) != "aov"]
   }
   pars <- model_parameters(model, ci = ci, standardize = NULL, effects = "fixed", as_draws = TRUE, ...)
+  # save attributes for later, these are lost in between
+  att <- attributes(pars)
 
   # should post hoc exponentiate?
   exponentiate <- isTRUE(eval(match.call()[["exponentiate"]], envir = parent.frame()))
@@ -265,6 +267,11 @@ standardize_parameters.default <- function(model,
   if ("SE" %in% colnames(pars)) {
     attr(pars, "standard_error") <- pars$SE
     pars$SE <- NULL
+  }
+
+  # add those attributes back here...
+  if (!is.null(att)) {
+    attributes(pars) <- utils::modifyList(att, attributes(pars))
   }
 
   ## attributes
