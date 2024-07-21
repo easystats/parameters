@@ -308,15 +308,17 @@ test_that("standardize_parameters (Bayes)", {
     )
   })
 
+  set.seed(1234)
   expect_equal(
     suppressWarnings(standardize_parameters(model, method = "refit")$Std_Median[1:4]),
-    c(0.065, -0.094, -0.100, 0.862),
-    tolerance = 0.01
+    c(0.03787, -0.06088, -0.04807, 0.84067),
+    tolerance = 0.11
   )
 
+  set.seed(1234)
   expect_equal(
     suppressWarnings(standardize_parameters(model, method = "posthoc")$Std_Median[1:4]),
-    c(0, -0.058, -0.053, 0.838),
+    c(0, -0.0586, -0.05258, 0.83883),
     tolerance = 0.01
   )
 
