@@ -4,6 +4,10 @@
 
 * Support for `svy2lme` models from package *svylme*.
 
+## Changes
+
+* `standardize_parameters()` now also prettifies labels of factors.
+
 ## Bug fixes
 
 * Fixed issue with `equivalence_test()` when ROPE range was not symmetrically

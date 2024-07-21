@@ -24,6 +24,12 @@ test_that("Robust post hoc", {
   expect_error(standardize_parameters(model, method = "basic", robust = TRUE, two_sd = TRUE), NA)
 })
 
+# Labels ------------------------------------------------------------------
+test_that("Preserve labels", {
+  fit <- lm(Sepal.Length ~ Species, data = iris)
+  out <- standardize_parameters(fit)
+  expect_snapshot(print(out))
+})
 
 # model_parameters -------------------------------
 test_that("standardize_parameters (model_parameters)", {
