@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -225,7 +225,8 @@ practical equivalence and accept the alternative hypothesis.</p>
 <p>Second generation p-values (SGPV) were proposed as a statistic that
 represents <em>the proportion of data-supported hypotheses that are also null
 hypotheses</em> <em>(Blume et al. 2018, Lakens and Delacre 2020)</em>. It represents the
-proportion of the confidence interval range that is inside the ROPE.</p>
+proportion of the confidence interval range (assuming a normally distributed,
+equal-tailed interval) that is inside the ROPE.</p>
 </div>
 
 <div class="section">
@@ -288,7 +289,7 @@ Further readings can be found in the references.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI |   SGPV | Equivalence |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] | &lt; .001 |    Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.835  |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.986  |   Undecided | 0.137 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] | &gt; .999 |    Accepted | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] | &lt; .001 |    Rejected | 0.999 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] | &lt; .001 |    Rejected | &gt; .999</span>
@@ -302,7 +303,7 @@ Further readings can be found in the references.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI |   SGPV | Equivalence |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] | &lt; .001 |    Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.835  |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.986  |   Undecided | 0.137 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] | &gt; .999 |    Accepted | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] | &lt; .001 |    Rejected | 0.999 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] | &lt; .001 |    Rejected | &gt; .999</span>

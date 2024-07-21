@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22.1" id="parameters-0221">parameters 0.22.1<a class="anchor" aria-label="anchor" href="#parameters-0221"></a></h2>
+<div class="section level3">
+<h3 id="breaking-changes-0-22-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-22-1"></a></h3>
+<ul><li>Revised calculation of the second generation p-value (SGPV) in <code><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test()</a></code>, which should now be more accurate related to the proportion of the interval that falls inside the ROPE. Formerly, the confidence interval was simply treated as uniformly distributed when calculating the SGPV, now the interval is assumed to be normally distributed.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="new-supported-models-0-22-1">New supported models<a class="anchor" aria-label="anchor" href="#new-supported-models-0-22-1"></a></h3>
 <ul><li>Support for <code>svy2lme</code> models from package <em>svylme</em>.</li>
