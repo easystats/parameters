@@ -312,7 +312,7 @@ test_that("standardize_parameters (Bayes)", {
   expect_equal(
     suppressWarnings(standardize_parameters(model, method = "refit")$Std_Median[1:4]),
     c(0.03787, -0.06088, -0.04807, 0.84067),
-    tolerance = 0.11
+    tolerance = 0.1
   )
 
   set.seed(1234)
