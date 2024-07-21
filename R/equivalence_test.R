@@ -650,9 +650,17 @@ equivalence_test.ggeffects <- function(x,
   out <- bayestestR::distribution_normal(
     n = 1000,
     mean = ci_range[2] - (diff_ci / 2),
-    sd = diff_ci / (2 * 3.29)
+    # we divide the complete range by 2, the one-directional range for the SD
+    # then, the range from mean value to lower/upper limit, for a normal
+    # distribution is approximately 3.3 SD (3 SD cover 99.7% of the probability
+    # mass of the normal distribution). Thus, assuming that half of the ci_range
+    # refers to ~ 3.3 SD, we "normalize" the value (i.e. divide by 3.29) to get
+    # the value for one SD, which we need to build the normal distribution.
+    sd = (diff_ci / 2) / 3.29
   )
 
+  # The SGPV refers to the proportion of the confidence interval inside the
+  # full ROPE - thus, we set ci = 1 here
   rc <- bayestestR::rope(out, range = range_rope, ci = 1)
   rc$ROPE_Percentage
 }
