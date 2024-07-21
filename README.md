@@ -4,7 +4,6 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.02445/status.svg)](https://doi.org/10.21105/joss.02445)
 [![downloads](https://cranlogs.r-pkg.org/badges/parameters)](https://cran.r-project.org/package=parameters)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/parameters)](https://cranlogs.r-pkg.org/)
-[![status](https://tinyverse.netlify.com/badge/parameters)](https://CRAN.R-project.org/package=parameters)
 
 ***Describe and understand your model’s parameters!***
 
@@ -196,15 +195,15 @@ model <- psych::fa(attitude, nfactors = 3)
 model_parameters(model)
 #> # Rotated loadings from Factor Analysis (oblimin-rotation)
 #> 
-#> Variable   |  MR1  |  MR2  |  MR3  | Complexity | Uniqueness
+#> Variable   |   MR1 |   MR2 |   MR3 | Complexity | Uniqueness
 #> ------------------------------------------------------------
-#> rating     | 0.90  | -0.07 | -0.05 |    1.02    |    0.23   
-#> complaints | 0.97  | -0.06 | 0.04  |    1.01    |    0.10   
-#> privileges | 0.44  | 0.25  | -0.05 |    1.64    |    0.65   
-#> learning   | 0.47  | 0.54  | -0.28 |    2.51    |    0.24   
-#> raises     | 0.55  | 0.43  | 0.25  |    2.35    |    0.23   
-#> critical   | 0.16  | 0.17  | 0.48  |    1.46    |    0.67   
-#> advance    | -0.11 | 0.91  | 0.07  |    1.04    |    0.22   
+#> rating     |  0.90 | -0.07 | -0.05 |       1.02 |       0.23
+#> complaints |  0.97 | -0.06 |  0.04 |       1.01 |       0.10
+#> privileges |  0.44 |  0.25 | -0.05 |       1.64 |       0.65
+#> learning   |  0.47 |  0.54 | -0.28 |       2.51 |       0.24
+#> raises     |  0.55 |  0.43 |  0.25 |       2.35 |       0.23
+#> critical   |  0.16 |  0.17 |  0.48 |       1.46 |       0.67
+#> advance    | -0.11 |  0.91 |  0.07 |       1.04 |       0.22
 #> 
 #> The 3 latent factors (oblimin rotation) accounted for 66.60% of the total variance of the original data (MR1 = 38.19%, MR2 = 22.69%, MR3 = 5.72%).
 ```
