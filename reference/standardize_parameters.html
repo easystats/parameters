@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.0.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -286,62 +286,62 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"refit"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.24 | [ 0.05,  0.44]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -0.48 | [-0.76, -0.21]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.24 | [ 0.05,  0.44]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -0.48 | [-0.76, -0.21]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       0.64 | [ 0.45,  0.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: posthoc</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.00 | [ 0.00,  0.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -1.08 | [-1.66, -0.49]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.00 | [ 0.00,  0.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -1.08 | [-1.66, -0.49]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       0.64 | [ 0.45,  0.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"smart"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: smart</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.00 | [ 0.00,  0.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -1.00 | [-1.54, -0.46]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.55 | [ 0.07,  1.02]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.00 | [ 0.00,  0.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -1.00 | [-1.54, -0.46]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       0.64 | [ 0.45,  0.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.55 | [ 0.07,  1.02]</span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"basic"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: basic</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.00 | [ 0.00,  0.00]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -0.54 | [-0.84, -0.25]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.45,  0.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.38 | [ 0.05,  0.70]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.00 | [ 0.00,  0.00]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -0.54 | [-0.84, -0.25]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       0.64 | [ 0.45,  0.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.38 | [ 0.05,  0.70]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Robust and 2 SD</span></span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, robust <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.01 | [-0.16,  0.18]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -0.48 | [-0.72, -0.24]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       0.64 | [ 0.44,  0.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.32 | [ 0.04,  0.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.01 | [-0.16,  0.18]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -0.48 | [-0.72, -0.24]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       0.64 | [ 0.44,  0.84]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.32 | [ 0.04,  0.60]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Scaled by one MAD from the median.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, two_sd <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Standardization method: refit</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   | Std. Coef. |         95% CI</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.24 | [ 0.05,  0.44]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC      |      -0.48 | [-0.76, -0.21]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose        |       1.28 | [ 0.89,  1.68]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> suppVC:dose |       0.64 | [ 0.09,  1.20]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        | Std. Coef. |         95% CI</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      |       0.24 | [ 0.05,  0.44]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC]        |      -0.48 | [-0.76, -0.21]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose             |       1.28 | [ 0.89,  1.68]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp [VC] × dose |       0.64 | [ 0.09,  1.20]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Scaled by two SDs from the mean.</span></span>
 <span class="r-in"><span></span></span>
@@ -354,7 +354,7 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |      -0.58 | [-1.98, 0.70]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       0.25 | [-1.54, 2.10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |       2.10 | [-0.19, 5.28]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |      -0.36 | [-2.57, 1.54]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl × mpg   |      -0.36 | [-2.57, 1.54]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"posthoc"</span><span class="op">)</span></span></span>
@@ -365,7 +365,7 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |       0.00 | [ 0.00,  0.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |       1.46 | [-4.63,  9.37]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |       3.36 | [-2.31, 12.59]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |      -0.20 | [-1.44,  0.86]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl × mpg   |      -0.20 | [-1.44,  0.86]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="fu">standardize_parameters</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"basic"</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -376,7 +376,7 @@ What We Can Do About It. European Sociological Review (2010) 26:67–82.</p></li
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |           1.00 | [1.00,     1.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> cyl         |           4.32 | [0.01, 11681.98]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg         |          28.80 | [0.10, 2.92e+05]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl:mpg     |           0.54 | [0.01,    13.94]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl × mpg   |           0.54 | [0.01,    13.94]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">- Response is unstandardized.</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
