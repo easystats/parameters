@@ -81,6 +81,10 @@ standard_error.default <- function(model,
   dots <- list(...)
   se <- NULL
 
+  # if a vcov is provided, we calculate standard errors based on that matrix
+  # this is usually the case for HC (robust) standard errors
+  # ------------------------------------------------------------------------
+
   # vcov: matrix
   if (is.matrix(vcov)) {
     se <- sqrt(diag(vcov))
@@ -105,7 +109,9 @@ standard_error.default <- function(model,
     se <- sqrt(diag(.vcov))
   }
 
-  # classical se from summary()
+  # classical SE from summary()
+  # ------------------------------------------------------------------------
+
   if (is.null(se)) {
     se <- .safe({
       if (grepl("Zelig-", class(model)[1], fixed = TRUE)) {
@@ -116,7 +122,10 @@ standard_error.default <- function(model,
     })
   }
 
-  # classical se from get_varcov()
+  # if retrieving SE from summary() failed, we try to calculate SE based
+  # on classical se from get_varcov()
+  # ------------------------------------------------------------------------
+
   if (is.null(se)) {
     se <- .safe({
       varcov <- insight::get_varcov(model, component = component)
@@ -150,27 +159,30 @@ standard_error.default <- function(model,
 
 
 .get_se_from_summary <- function(model, component = NULL) {
-  cs <- suppressWarnings(stats::coef(summary(model)))
+  cs <- .safe(suppressWarnings(stats::coef(summary(model))))
   se <- NULL
 
-  if (is.list(cs) && !is.null(component)) cs <- cs[[component]]
-
-  if (!is.null(cs)) {
-    # do we have a se column?
-    se_col <- which(colnames(cs) == "Std. Error")
-
-    # if not, default to 2
-    if (length(se_col) == 0) se_col <- 2
-
-    se <- as.vector(cs[, se_col])
-
-    if (is.null(names(se))) {
-      coef_names <- rownames(cs)
-      if (length(coef_names) == length(se)) names(se) <- coef_names
+  if (!is.null(se)) {
+    if (is.list(cs) && !is.null(component)) {
+      cs <- cs[[component]]
     }
+    if (!is.null(cs)) {
+      # do we have a se column?
+      se_col <- which(colnames(cs) == "Std. Error")
+      # if not, default to 2
+      if (length(se_col) == 0) {
+        se_col <- 2
+      }
+      se <- as.vector(cs[, se_col])
+      if (is.null(names(se))) {
+        coef_names <- rownames(cs)
+        if (length(coef_names) == length(se)) {
+          names(se) <- coef_names
+        }
+      }
+    }
+    names(se) <- .remove_backticks_from_string(names(se))
   }
-
-  names(se) <- .remove_backticks_from_string(names(se))
   se
 }
 

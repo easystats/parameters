@@ -144,20 +144,20 @@ p_value.default <- function(model,
     })
   }
 
-  # output
-  if (!is.null(p)) {
-    params <- insight::get_parameters(model, component = component)
-    if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
-      p <- .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
-    } else {
-      p <- .data_frame(Parameter = names(p), p = as.vector(p))
+  # failure warning
+  if (is.null(p)) {
+    if (isTRUE(verbose)) {
+      insight::format_warning("Could not extract p-values from model object.")
     }
-    return(p)
+    return(NULL)
   }
 
-  # failure warning
-  if (is.null(p) && isTRUE(verbose)) {
-    insight::format_warning("Could not extract p-values from model object.")
+  # output
+  params <- insight::get_parameters(model, component = component)
+  if (length(p) == nrow(params) && "Component" %in% colnames(params)) {
+    .data_frame(Parameter = params$Parameter, p = as.vector(p), Component = params$Component)
+  } else {
+    .data_frame(Parameter = names(p), p = as.vector(p))
   }
 }
 
