@@ -169,23 +169,22 @@ p_value.default <- function(model,
   if (ncol(cs) >= 4) {
     # do we have a p-value column based on t?
     pvcn <- which(colnames(cs) == "Pr(>|t|)")
-
     # if not, do we have a p-value column based on z?
     if (length(pvcn) == 0) {
       pvcn <- which(colnames(cs) == "Pr(>|z|)")
     }
-
     # if not, default to 4
-    if (length(pvcn) == 0) pvcn <- 4
-
+    if (length(pvcn) == 0) {
+      pvcn <- 4
+    }
     p <- cs[, pvcn]
-
     if (is.null(names(p))) {
       coef_names <- rownames(cs)
-      if (length(coef_names) == length(p)) names(p) <- coef_names
+      if (length(coef_names) == length(p)) {
+        names(p) <- coef_names
+      }
     }
   }
-
   names(p) <- .remove_backticks_from_string(names(p))
   p
 }
