@@ -84,7 +84,7 @@ p_value.systemfit <- function(model, ...) {
 
 #' @export
 degrees_of_freedom.systemfit <- function(model, ...) {
-  df <- NULL
+  dof <- NULL
   s <- summary(model)$eq
   params <- insight::find_parameters(model)
   f <- insight::find_formula(model)
@@ -93,10 +93,10 @@ degrees_of_freedom.systemfit <- function(model, ...) {
   for (i in seq_along(system_names)) {
     dfs <- rep(s[[i]]$df[2], length(params[[i]]))
     df_names <- rep(names(params[i]), length(params[[i]]))
-    df <- c(df, stats::setNames(dfs, df_names))
+    dof <- c(dof, stats::setNames(dfs, df_names))
   }
 
-  df
+  dof
 }
 
 
