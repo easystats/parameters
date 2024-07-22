@@ -70,8 +70,8 @@ p_value.lme <- function(model,
     se <- standard_error(model, vcov = vcov, vcov_args = vcov_args, ...)
     tstat <- b$Estimate / se$SE
     # residuals are defined like this in `nlme:::summary.lme`
-    df <- model$fixDF[["X"]]
-    p <- 2 * stats::pt(-abs(tstat), df = df)
+    dof <- model$fixDF[["X"]]
+    p <- 2 * stats::pt(-abs(tstat), df = dof)
     param <- se$Parameter
   }
 
