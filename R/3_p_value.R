@@ -48,6 +48,7 @@ p_value.default <- function(model,
   .is_model_valid(model)
 
   dots <- list(...)
+  p <- NULL
 
   if (is.character(method)) {
     method <- tolower(method)
@@ -66,33 +67,29 @@ p_value.default <- function(model,
   }
 
   if (method == "ml1") {
-    p <- p_value_ml1(model)
-    return(p)
+    return(p_value_ml1(model))
   }
 
   if (method == "betwithin") {
-    p <- p_value_betwithin(model)
-    return(p)
+    return(p_value_betwithin(model))
   }
 
   if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
     if (is.null(dof)) {
       dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
     }
-    p <- .p_value_dof(
+    return(.p_value_dof(
       model,
       dof = dof,
       method = method,
       component = component,
       verbose = verbose,
       ...
-    )
-    return(p)
+    ))
   }
 
   if (method %in% c("hdi", "eti", "si", "bci", "bcai", "quantile")) {
-    p <- bayestestR::p_direction(model, ...)
-    return(p)
+    return(bayestestR::p_direction(model, ...))
   }
 
   # robust standard errors
