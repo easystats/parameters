@@ -65,7 +65,7 @@ test_that("emmeans | glmmTMB", {
   skip_if_not_installed("emmeans")
   skip_if_not_installed("boot")
   skip_if_not_installed("lme4")
-  skip_if_not_installed("glmmTMB")
+  suppressWarnings(skip_if_not_installed("glmmTMB"))
 
   data(Salamanders, package = "glmmTMB")
   model <- glmmTMB::glmmTMB(count ~ spp + mined + (1 | site), family = glmmTMB::nbinom2, data = Salamanders)
