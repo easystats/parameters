@@ -1,7 +1,7 @@
 # model_parameters.glmgee
 
     Code
-      out
+      print(out)
     Output
       # Fixed Effects
       
