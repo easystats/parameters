@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.1.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,12 +60,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">degrees_of_freedom</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">degrees_of_freedom</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"analytical"</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Default S3 method</span></span>
-<span><span class="fu">degrees_of_freedom</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"analytical"</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">dof</span><span class="op">(</span><span class="va">model</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dof</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"analytical"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,43 +73,35 @@
 <dd><p>A statistical model.</p></dd>
 
 
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
+<dd><p>Type of approximation for the degrees of freedom. Can be one of
+the following:</p><ul><li><p><code>"residual"</code> (aka <code>"analytical"</code>) returns the residual degrees of
+freedom, which usually is what <code><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">stats::df.residual()</a></code> returns. If a
+model object has no method to extract residual degrees of freedom, these
+are calculated as <code>n-p</code>, i.e. the number of observations minus the number
+of estimated parameters. If residual degrees of freedom cannot be extracted
+by either approach, returns <code>Inf</code>.</p></li>
+<li><p><code>"wald"</code> returns residual (aka analytical) degrees of freedom for models
+with t-statistic, <code>1</code> for models with Chi-squared statistic, and <code>Inf</code> for
+all other models. Also returns <code>Inf</code> if residual degrees of freedom cannot
+be extracted.</p></li>
+<li><p><code>"normal"</code> always returns <code>Inf</code>.</p></li>
+<li><p><code>"model"</code> returns model-based degrees of freedom, i.e. the number of
+(estimated) parameters.</p></li>
+<li><p>For mixed models, can also be <code>"ml1"</code> (or <code>"m-l-1"</code>, approximation of
+degrees of freedom based on a "m-l-1" heuristic as suggested by <em>Elff et
+al. 2019</em>) or <code>"between-within"</code> (or <code>"betwithin"</code>).</p></li>
+<li><p>For mixed models of class <code>merMod</code>, <code>type</code> can also be <code>"satterthwaite"</code>
+or <code>"kenward-roger"</code> (or <code>"kenward"</code>). See 'Details'.</p></li>
+</ul><p>Usually, when degrees of freedom are required to calculate p-values or
+confidence intervals, <code>type = "wald"</code> is likely to be the best choice in
+most cases.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Currently not used.</p></dd>
 
-
-<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>Can be <code>"analytical"</code> (default, DoFs are estimated based
-on the model type), <code>"residual"</code> in which case they are directly taken
-from the model if available (for Bayesian models, the goal (looking for
-help to make it happen) would be to refit the model as a frequentist one
-before extracting the DoFs), <code>"ml1"</code> (see <code><a href="p_value_ml1.html">dof_ml1()</a></code>), <code>"betwithin"</code>
-(see <code><a href="p_value_betwithin.html">dof_betwithin()</a></code>), <code>"satterthwaite"</code> (see <code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code>),
-<code>"kenward"</code> (see <code><a href="p_value_kenward.html">dof_kenward()</a></code>) or <code>"any"</code>, which tries to extract DoF
-by any of those methods, whichever succeeds. See 'Details'.</p></dd>
-
 </dl></div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Methods for calculating degrees of freedom:</p><ul><li><p><code>"analytical"</code> for models of class <code>lmerMod</code>, Kenward-Roger approximated
-degrees of freedoms are calculated, for other models, <code>n-k</code> (number of
-observations minus number of parameters).</p></li>
-<li><p><code>"residual"</code> tries to extract residual degrees of freedom, and returns
-<code>Inf</code> if residual degrees of freedom could not be extracted.</p></li>
-<li><p><code>"any"</code> first tries to extract residual degrees of freedom, and if these
-are not available, extracts analytical degrees of freedom.</p></li>
-<li><p><code>"nokr"</code> same as <code>"analytical"</code>, but does not Kenward-Roger approximation
-for models of class <code>lmerMod</code>. Instead, always uses <code>n-k</code> to calculate df
-for any model.</p></li>
-<li><p><code>"normal"</code> returns <code>Inf</code>.</p></li>
-<li><p><code>"wald"</code> returns residual df for models with t-statistic, and <code>Inf</code> for all other models.</p></li>
-<li><p><code>"kenward"</code> calls <code><a href="p_value_kenward.html">dof_kenward()</a></code>.</p></li>
-<li><p><code>"satterthwaite"</code> calls <code><a href="p_value_satterthwaite.html">dof_satterthwaite()</a></code>.</p></li>
-<li><p><code>"ml1"</code> calls <code><a href="p_value_ml1.html">dof_ml1()</a></code>.</p></li>
-<li><p><code>"betwithin"</code> calls <code><a href="p_value_betwithin.html">dof_betwithin()</a></code>.</p></li>
-</ul><p>For models with z-statistic, the returned degrees of freedom for model parameters
-is <code>Inf</code> (unless <code>method = "ml1"</code> or <code>method = "betwithin"</code>), because there is
-only one distribution for the related test statistic.</p>
-    </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>In many cases, <code>degrees_of_freedom()</code> returns the same as <code>df.residuals()</code>,
@@ -129,17 +118,15 @@ freedom.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">dof</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 144 144 144 144 144 144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 144</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">vs</span> <span class="op">~</span> <span class="va">mpg</span> <span class="op">*</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">dof</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 28</span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">dof</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]   2.53354 144.66692</span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dof</span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 146</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span></span></span>
@@ -166,7 +153,7 @@ freedom.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:parameters’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     compare_models</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 143 143 143 143 143 143 143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 144</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
