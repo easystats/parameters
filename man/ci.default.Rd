@@ -27,10 +27,9 @@
 
 \item{dof}{Number of degrees of freedom to be used when calculating
 confidence intervals. If \code{NULL} (default), the degrees of freedom are
-retrieved by calling \code{\link[=degrees_of_freedom]{degrees_of_freedom()}} with
-approximation method defined in \code{method}. If not \code{NULL}, use this argument
-to override the default degrees of freedom used to compute confidence
-intervals.}
+retrieved by calling \code{\link[insight:get_df]{insight::get_df()}} with approximation method
+defined in \code{method}. If not \code{NULL}, use this argument to override the
+default degrees of freedom used to compute confidence intervals.}
 
 \item{method}{Method for computing degrees of freedom for
 confidence intervals (CI) and the related p-values. Allowed are following
