@@ -26,6 +26,10 @@ p_value.glmgee <- function(model,
   est <- insight::get_parameters(model, component = "conditional")
   se <- standard_error(model, vcov = vcov, verbose = FALSE)
 
+  if (is.null(method)) {
+    method <- "wald"
+  }
+
   p <- 2 * stats::pt(
     abs(est$Estimate / se$SE),
     df = insight::get_df(x = model, type = method),
