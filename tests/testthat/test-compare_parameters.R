@@ -96,7 +96,7 @@ withr::with_options(
 
 
     test_that("compare_parameters, correct random effects", {
-      skip_if_not_installed("glmmTMB")
+      suppressWarnings(skip_if_not_installed("glmmTMB"))
       skip_if_not(getRversion() >= "4.0.0")
 
       data("fish")
