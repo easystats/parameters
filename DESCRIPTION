@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.22.1.1
+Version: 0.22.1.4
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -134,6 +134,7 @@ Suggests:
     ggplot2,
     GLMMadaptive,
     glmmTMB,
+    glmtoolbox,
     GPArotation,
     gt,
     haven,
@@ -218,3 +219,4 @@ Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/Needs/website: easystats/easystatstemplate
 Config/rcmdcheck/ignore-inconsequential-notes: true
+Remotes: easystats/insight

@@ -7,10 +7,9 @@
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
 #' @param dof Number of degrees of freedom to be used when calculating
 #'   confidence intervals. If `NULL` (default), the degrees of freedom are
-#'   retrieved by calling [`degrees_of_freedom()`] with
-#'   approximation method defined in `method`. If not `NULL`, use this argument
-#'   to override the default degrees of freedom used to compute confidence
-#'   intervals.
+#'   retrieved by calling [`insight::get_df()`] with approximation method
+#'   defined in `method`. If not `NULL`, use this argument to override the
+#'   default degrees of freedom used to compute confidence intervals.
 #' @param method Method for computing degrees of freedom for
 #'   confidence intervals (CI) and the related p-values. Allowed are following
 #'   options (which vary depending on the model class): `"residual"`,

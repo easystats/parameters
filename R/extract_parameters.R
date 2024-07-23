@@ -186,9 +186,9 @@
   # ==== degrees of freedom
 
   if (is.null(ci_method)) {
-    df_error <- degrees_of_freedom(model, method = "any", verbose = FALSE)
+    df_error <- insight::get_df(x = model, type = "wald", verbose = FALSE)
   } else {
-    df_error <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    df_error <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   }
   if (!is.null(df_error) && (length(df_error) == 1 || length(df_error) == nrow(parameters))) {
     if (length(df_error) == 1) {
@@ -451,7 +451,7 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    dof <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   } else {
     dof <- Inf
   }
@@ -565,7 +565,7 @@
     if (!ci_method %in% special_ci_methods) {
       df_error <- data.frame(
         Parameter = parameters$Parameter,
-        df_error = degrees_of_freedom(model, method = "any"),
+        df_error = insight::get_df(x = model, type = "wald"),
         stringsAsFactors = FALSE
       )
     }

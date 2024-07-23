@@ -76,7 +76,7 @@ p_value.default <- function(model,
 
   if (method %in% c("residual", "wald", "normal", "satterthwaite", "kenward", "kr")) {
     if (is.null(dof)) {
-      dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+      dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     }
     return(.p_value_dof(
       model,
@@ -111,7 +111,7 @@ p_value.default <- function(model,
       se <- do.call("standard_error", fun_args)
     }
 
-    dof <- degrees_of_freedom(model, method = "wald", verbose = FALSE)
+    dof <- insight::get_df(x = model, type = "wald", verbose = FALSE)
     se <- merge(se, co, sort = FALSE)
     se$Statistic <- se$Estimate / se$SE
     se$p <- 2 * stats::pt(abs(se$Statistic), df = dof, lower.tail = FALSE)
