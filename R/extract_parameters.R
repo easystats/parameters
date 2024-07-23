@@ -186,7 +186,7 @@
   # ==== degrees of freedom
 
   if (is.null(ci_method)) {
-    df_error <- insight::get_df(x = model, type = "residual", verbose = FALSE)
+    df_error <- insight::get_df(x = model, type = "wald", verbose = FALSE)
   } else {
     df_error <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   }
@@ -565,7 +565,7 @@
     if (!ci_method %in% special_ci_methods) {
       df_error <- data.frame(
         Parameter = parameters$Parameter,
-        df_error = insight::get_df(x = model, type = "residual"),
+        df_error = insight::get_df(x = model, type = "wald"),
         stringsAsFactors = FALSE
       )
     }

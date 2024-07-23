@@ -674,7 +674,7 @@ equivalence_test.ggeffects <- function(x,
       params <- insight::get_parameters(model)
 
       # degrees of freedom
-      dof <- insight::get_df(x = model, type = "residual")
+      dof <- insight::get_df(x = model, type = "wald")
 
       # mu
       params$mu <- params$Estimate * -1
