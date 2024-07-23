@@ -95,7 +95,7 @@ fit <- with(data = imp, exp = lm(bmi ~ age + hyp + chl))
 model_parameters(fit)
 \donttest{
 # model_parameters() also works for models that have no "tidy"-method in mice
-data(warpbreaks, package = "gee")
+data(warpbreaks)
 set.seed(1234)
 warpbreaks$tension[sample(1:nrow(warpbreaks), size = 10)] <- NA
 imp <- mice::mice(warpbreaks)
