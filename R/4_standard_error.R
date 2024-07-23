@@ -18,11 +18,12 @@
 #'  * A string which indicates the kind of uncertainty estimates to return.
 #'    - Heteroskedasticity-consistent: `"vcovHC"`, `"HC"`, `"HC0"`, `"HC1"`,
 #'      `"HC2"`, `"HC3"`, `"HC4"`, `"HC4m"`, `"HC5"`. See `?sandwich::vcovHC`.
-#'    - Cluster-robust: `"vcovCR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`, `"CR2"`,
-#'      `"CR3"`. See `?clubSandwich::vcovCR`.
-#'    - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`, `"webb"`.
-#'      See `?sandwich::vcovBS`.
-#'    - Other `sandwich` package functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`, `"vcovPL"`.
+#'    - Cluster-robust: `"vcovCR"`, `"CR0"`, `"CR1"`, `"CR1p"`, `"CR1S"`,
+#'      `"CR2"`, `"CR3"`. See `?clubSandwich::vcovCR`.
+#'    - Bootstrap: `"vcovBS"`, `"xy"`, `"residual"`, `"wild"`, `"mammen"`,
+#'      `"webb"`. See `?sandwich::vcovBS`.
+#'    - Other `sandwich` package functions: `"vcovHAC"`, `"vcovPC"`, `"vcovCL"`,
+#'      `"vcovPL"`.
 #' @param vcov_args List of arguments to be passed to the function identified by
 #'   the `vcov` argument. This function is typically supplied by the **sandwich**
 #'   or **clubSandwich** packages. Please refer to their documentation (e.g.,
@@ -46,18 +47,18 @@
 #'   standard errors. Depending on the model, may also include columns for model
 #'   components etc.
 #'
-#' @examples
+#' @examplesIf require("sandwich") && require("clubSandwich")
 #' model <- lm(Petal.Length ~ Sepal.Length * Species, data = iris)
 #' standard_error(model)
 #'
-#' if (require("sandwich") && require("clubSandwich")) {
-#'   standard_error(model, vcov = "HC3")
+#' # robust standard errors
+#' standard_error(model, vcov = "HC3")
 #'
-#'   standard_error(model,
-#'     vcov = "vcovCL",
-#'     vcov_args = list(cluster = iris$Species)
-#'   )
-#' }
+#' # cluster-robust standard errors
+#' standard_error(model,
+#'   vcov = "vcovCL",
+#'   vcov_args = list(cluster = iris$Species)
+#' )
 #' @export
 standard_error <- function(model, ...) {
   UseMethod("standard_error")
