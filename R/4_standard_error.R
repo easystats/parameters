@@ -163,27 +163,25 @@ standard_error.default <- function(model,
   cs <- .safe(suppressWarnings(stats::coef(summary(model))))
   se <- NULL
 
-  if (!is.null(se)) {
-    if (is.list(cs) && !is.null(component)) {
-      cs <- cs[[component]]
-    }
-    if (!is.null(cs)) {
-      # do we have a se column?
-      se_col <- which(colnames(cs) == "Std. Error")
-      # if not, default to 2
-      if (length(se_col) == 0) {
-        se_col <- 2
-      }
-      se <- as.vector(cs[, se_col])
-      if (is.null(names(se))) {
-        coef_names <- rownames(cs)
-        if (length(coef_names) == length(se)) {
-          names(se) <- coef_names
-        }
-      }
-    }
-    names(se) <- .remove_backticks_from_string(names(se))
+  if (is.list(cs) && !is.null(component)) {
+    cs <- cs[[component]]
   }
+  if (!is.null(cs)) {
+    # do we have a se column?
+    se_col <- which(colnames(cs) == "Std. Error")
+    # if not, default to 2
+    if (length(se_col) == 0) {
+      se_col <- 2
+    }
+    se <- as.vector(cs[, se_col])
+    if (is.null(names(se))) {
+      coef_names <- rownames(cs)
+      if (length(coef_names) == length(se)) {
+        names(se) <- coef_names
+      }
+    }
+  }
+  names(se) <- .remove_backticks_from_string(names(se))
   se
 }
 
