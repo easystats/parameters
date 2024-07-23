@@ -144,7 +144,7 @@
   # check if we have a valid dof vector
   if (is.null(dof)) {
     # residual df
-    dof <- degrees_of_freedom(model, method = method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = method, verbose = FALSE)
     # make sure we have a value for degrees of freedom
     if (is.null(dof) || length(dof) == 0 || .is_chi2_model(model, dof)) {
       dof <- Inf
