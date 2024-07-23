@@ -1,3 +1,10 @@
+# parameters 0.22.2
+
+## Changes
+
+* Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
+  now calls `insight::get_df()`.
+
 # parameters 0.22.1
 
 ## Breaking changes
