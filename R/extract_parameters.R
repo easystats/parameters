@@ -451,7 +451,7 @@
 
   # Degrees of freedom
   if (.dof_method_ok(model, ci_method)) {
-    dof <- degrees_of_freedom(model, method = ci_method, verbose = FALSE)
+    dof <- insight::get_df(x = model, type = ci_method, verbose = FALSE)
   } else {
     dof <- Inf
   }

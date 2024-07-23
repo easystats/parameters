@@ -28,7 +28,7 @@ p_value.glmgee <- function(model,
 
   p <- 2 * stats::pt(
     abs(est$Estimate / se$SE),
-    df = degrees_of_freedom(model, method = method),
+    df = insight::get_df(x = model, type = method),
     lower.tail = FALSE
   )
 

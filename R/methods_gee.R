@@ -26,13 +26,13 @@ p_value.gee <- function(model, method = NULL, ...) {
   if (isTRUE(list(...)$robust) || "vcov" %in% names(list(...))) {
     p <- 2 * stats::pt(
       abs(cs[, "Estimate"] / cs[, "Robust S.E."]),
-      df = degrees_of_freedom(model, method = method),
+      df = insight::get_df(x = model, type = method),
       lower.tail = FALSE
     )
   } else {
     p <- 2 * stats::pt(
       abs(cs[, "Estimate"] / cs[, "Naive S.E."]),
-      df = degrees_of_freedom(model, method = method),
+      df = insight::get_df(x = model, type = method),
       lower.tail = FALSE
     )
   }
