@@ -97,9 +97,3 @@ standard_error.gls <- standard_error.default
 
 #' @export
 p_value.gls <- p_value.default
-
-
-#' @export
-degrees_of_freedom.gls <- function(model, method = NULL, ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}

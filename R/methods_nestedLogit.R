@@ -76,40 +76,6 @@ model_parameters.nestedLogit <- function(model,
 
 
 #' @export
-degrees_of_freedom.nestedLogit <- function(model,
-                                           method = NULL,
-                                           component = "all",
-                                           verbose = TRUE,
-                                           ...) {
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  if (tolower(method) == "residual") {
-    cf <- as.data.frame(stats::coef(model))
-    dof <- rep(vapply(model$models, stats::df.residual, numeric(1)), each = nrow(cf))
-    if (!is.null(component) && !identical(component, "all")) {
-      comp <- intersect(names(dof), component)
-      if (length(comp)) {
-        dof <- dof[comp]
-      } else {
-        if (verbose) {
-          insight::format_alert(paste0(
-            "No matching model found. Possible values for `component` are ",
-            toString(paste0("'", names(model$models), "'")),
-            "."
-          ))
-        }
-        dof <- Inf
-      }
-    }
-  } else {
-    dof <- Inf
-  }
-  dof
-}
-
-
-#' @export
 standard_error.nestedLogit <- function(model,
                                        component = "all",
                                        vcov = NULL,

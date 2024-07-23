@@ -323,36 +323,3 @@ p_value.rqss <- function(model,
 
   p
 }
-
-
-
-
-# degrees of freedom ---------------------
-
-
-#' @export
-degrees_of_freedom.rqs <- function(model, ...) {
-  tryCatch(
-    {
-      s <- suppressWarnings(summary(model, covariance = TRUE))
-      cs <- lapply(s, function(i) i$rdf)
-      unique(unlist(cs))
-    },
-    error = function(e) {
-      NULL
-    }
-  )
-}
-
-
-
-#' @export
-degrees_of_freedom.rqss <- degrees_of_freedom.multinom
-
-
-#' @export
-degrees_of_freedom.rq <- degrees_of_freedom.rqs
-
-
-#' @export
-degrees_of_freedom.nlrq <- degrees_of_freedom.mhurdle

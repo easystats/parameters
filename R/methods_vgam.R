@@ -23,18 +23,9 @@ standard_error.vgam <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.vgam <- function(model, ...) {
-  params <- insight::get_parameters(model)
-  out <- stats::setNames(rep(NA, nrow(params)), params$Parameter)
-  out[names(model@nl.df)] <- model@nl.df
-  out
-}
-
-
-#' @export
 p_value.vgam <- function(model, ...) {
   stat <- insight::get_statistic(model)
-  stat$p <- as.vector(stats::pchisq(stat$Statistic, df = degrees_of_freedom(model), lower.tail = FALSE))
+  stat$p <- as.vector(stats::pchisq(stat$Statistic, df = insight::get_df(model), lower.tail = FALSE))
 
   stat[c("Parameter", "p", "Component")]
 }

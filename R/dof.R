@@ -3,39 +3,32 @@
 #' Estimate or extract degrees of freedom of models parameters.
 #'
 #' @param model A statistical model.
-#' @param method Can be `"analytical"` (default, DoFs are estimated based
-#'   on the model type), `"residual"` in which case they are directly taken
-#'   from the model if available (for Bayesian models, the goal (looking for
-#'   help to make it happen) would be to refit the model as a frequentist one
-#'   before extracting the DoFs), `"ml1"` (see [dof_ml1()]), `"betwithin"`
-#'   (see [dof_betwithin()]), `"satterthwaite"` (see [`dof_satterthwaite()`]),
-#'   `"kenward"` (see [`dof_kenward()`]) or `"any"`, which tries to extract DoF
-#'   by any of those methods, whichever succeeds. See 'Details'.
+#' @param method Type of approximation for the degrees of freedom. Can be one of
+#' the following:
+#'
+#'   + `"residual"` (aka `"analytical"`) returns the residual degrees of
+#'     freedom, which usually is what [`stats::df.residual()`] returns. If a
+#'     model object has no method to extract residual degrees of freedom, these
+#'     are calculated as `n-p`, i.e. the number of observations minus the number
+#'     of estimated parameters. If residual degrees of freedom cannot be extracted
+#'     by either approach, returns `Inf`.
+#'   + `"wald"` returns residual (aka analytical) degrees of freedom for models
+#'     with t-statistic, `1` for models with Chi-squared statistic, and `Inf` for
+#'     all other models. Also returns `Inf` if residual degrees of freedom cannot
+#'     be extracted.
+#'   + `"normal"` always returns `Inf`.
+#'   + `"model"` returns model-based degrees of freedom, i.e. the number of
+#'     (estimated) parameters.
+#'   + For mixed models, can also be `"ml1"` (or `"m-l-1"`, approximation of
+#'     degrees of freedom based on a "m-l-1" heuristic as suggested by _Elff et
+#'     al. 2019_) or `"between-within"` (or `"betwithin"`).
+#'   + For mixed models of class `merMod`, `type` can also be `"satterthwaite"`
+#'     or `"kenward-roger"` (or `"kenward"`). See 'Details'.
+#'
+#' Usually, when degrees of freedom are required to calculate p-values or
+#' confidence intervals, `type = "wald"` is likely to be the best choice in
+#' most cases.
 #' @param ... Currently not used.
-#'
-#' @details
-#' Methods for calculating degrees of freedom:
-#'
-#' - `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated
-#'   degrees of freedoms are calculated, for other models, `n-k` (number of
-#'   observations minus number of parameters).
-#' - `"residual"` tries to extract residual degrees of freedom, and returns
-#'   `Inf` if residual degrees of freedom could not be extracted.
-#' - `"any"` first tries to extract residual degrees of freedom, and if these
-#'   are not available, extracts analytical degrees of freedom.
-#' - `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation
-#'   for models of class `lmerMod`. Instead, always uses `n-k` to calculate df
-#'   for any model.
-#' - `"normal"` returns `Inf`.
-#' - `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
-#' - `"kenward"` calls [`dof_kenward()`].
-#' - `"satterthwaite"` calls [`dof_satterthwaite()`].
-#' - `"ml1"` calls [`dof_ml1()`].
-#' - `"betwithin"` calls [`dof_betwithin()`].
-#'
-#' For models with z-statistic, the returned degrees of freedom for model parameters
-#' is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is
-#' only one distribution for the related test statistic.
 #'
 #' @note
 #' In many cases, `degrees_of_freedom()` returns the same as `df.residuals()`,
@@ -47,17 +40,15 @@
 #' `"satterthwaite"`, each model parameter can have a different degree of
 #' freedom.
 #'
-#' @examples
+#' @examplesIf require("lme4", quietly = TRUE)
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 #' dof(model)
 #'
 #' model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 #' dof(model)
 #' \donttest{
-#' if (require("lme4", quietly = TRUE)) {
-#'   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-#'   dof(model)
-#' }
+#' model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#' dof(model)
 #'
 #' if (require("rstanarm", quietly = TRUE)) {
 #'   model <- stan_glm(
@@ -70,193 +61,13 @@
 #' }
 #' }
 #' @export
-degrees_of_freedom <- function(model, ...) {
-  UseMethod("degrees_of_freedom")
-}
-
-
-
-
-#' @rdname degrees_of_freedom
-#' @export
-degrees_of_freedom.default <- function(model, method = "analytical", ...) {
-  # check for valid input
-  .is_model_valid(model)
-
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  method <- tolower(method)
-
-  method <- match.arg(method, choices = c(
-    "analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward",
-    "nokr", "wald", "kr", "profile", "boot", "uniroot", "residual", "normal",
-    "likelihood"
-  ))
-
-  if (!.dof_method_ok(model, method, ...) || method %in% c("profile", "likelihood", "boot", "uniroot")) {
-    method <- "any"
-  }
-
-  stat <- insight::find_statistic(model)
-
-  # for z-statistic, always return Inf
-  if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
-    if (method == "residual") {
-      return(.degrees_of_freedom_residual(model, verbose = FALSE))
-    } else {
-      return(Inf)
-    }
-  }
-
-  # Chi2-distributions usually have 1 df
-  if (!is.null(stat) && stat == "chi-squared statistic") {
-    if (method == "residual") {
-      return(.degrees_of_freedom_residual(model, verbose = FALSE))
-    } else {
-      return(1)
-    }
-  }
-
-  if (method == "any") { # nolint
-    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
-    if (is.null(dof) || all(is.infinite(dof)) || anyNA(dof)) {
-      dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
-    }
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else if (method == "wald") {
-    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
-  } else if (method == "normal") {
-    dof <- Inf
-  } else if (method == "satterthwaite") {
-    dof <- dof_satterthwaite(model)
-  } else if (method == "betwithin") {
-    dof <- dof_betwithin(model)
-  } else if (method %in% c("kenward", "kr")) {
-    dof <- dof_kenward(model)
-  } else if (method == "analytical") {
-    dof <- .degrees_of_freedom_analytical(model, kenward = TRUE)
-  } else if (method == "nokr") {
-    dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
-  } else {
-    dof <- .degrees_of_freedom_residual(model)
-  }
-
-  if (!is.null(dof) && length(dof) > 0 && all(dof == 0)) {
-    insight::format_warning("Model has zero degrees of freedom!")
-  }
-
-  dof
+degrees_of_freedom <- function(model, method = "analytical", ...) {
+  insight::get_df(x = model, type = method, ...)
 }
 
 #' @rdname degrees_of_freedom
 #' @export
 dof <- degrees_of_freedom
-
-
-
-
-
-# Analytical approach ------------------------------
-
-
-#' @keywords internal
-.degrees_of_freedom_analytical <- function(model, kenward = TRUE) {
-  nparam <- n_parameters(model)
-  n <- insight::n_obs(model)
-
-  if (is.null(n)) {
-    n <- Inf
-  }
-
-  if (isTRUE(kenward) && inherits(model, "lmerMod")) {
-    dof <- as.numeric(dof_kenward(model))
-  } else {
-    dof <- rep(n - nparam, nparam)
-  }
-
-  dof
-}
-
-
-
-
-
-# Model approach (Residual df) ------------------------------
-
-
-#' @keywords internal
-.degrees_of_freedom_residual <- function(model, verbose = TRUE) {
-  if (.is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod"))) {
-    model <- bayestestR::bayesian_as_frequentist(model)
-  }
-
-  # 1st try
-  dof <- try(stats::df.residual(model), silent = TRUE)
-
-  # 2nd try
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    junk <- utils::capture.output(dof = try(summary(model)$df[2], silent = TRUE))
-  }
-
-  # 3rd try, nlme
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    dof <- try(unname(model$fixDF$X), silent = TRUE)
-  }
-
-  # last try
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    dof <- Inf
-    if (verbose) {
-      insight::format_alert("Could not extract degrees of freedom.")
-    }
-  }
-
-
-  # special cases
-  # if (inherits(model, "gam")) {
-  #   dof <- .dof_fit_gam(model, dof)
-  # }
-
-  dof
-}
-
-
-
-
-# residual df - for models with residual df, but no "df.residual()" method --------------
-
-
-#' @keywords internal
-.degrees_of_freedom_no_dfresid_method <- function(model, method = NULL) {
-  if (identical(method, "normal")) {
-    return(Inf)
-  } else if (!is.null(method) && method %in% c("ml1", "satterthwaite", "betwithin")) {
-    degrees_of_freedom.default(model, method = method)
-  } else {
-    .degrees_of_freedom_analytical(model, kenward = FALSE)
-  }
-}
-
-
-
-
-
-
-# helper --------------
-
-.dof_fit_gam <- function(model, dof) {
-  params <- insight::find_parameters(model)
-  if (!is.null(params$conditional)) {
-    dof <- rep(dof, length(params$conditional))
-  }
-  if (!is.null(params$smooth_terms)) {
-    s <- summary(model)
-    dof <- c(dof, s$s.table[, "Ref.df"])
-  }
-  dof
-}
 
 
 # Helper, check args ------------------------------
@@ -328,24 +139,4 @@ dof <- degrees_of_freedom
   }
 
   return(TRUE)
-}
-
-
-
-
-# helper
-
-.is_bayesian_model <- function(x, exclude = NULL) {
-  bayes_classes <- c(
-    "brmsfit", "stanfit", "MCMCglmm", "stanreg",
-    "stanmvreg", "bmerMod", "BFBayesFactor", "bamlss",
-    "bayesx", "mcmc", "bcplm", "bayesQR", "BGGM",
-    "meta_random", "meta_fixed", "meta_bma", "blavaan",
-    "blrm", "blmerMod"
-  )
-  # if exclude is not NULL, remove elements in exclude from bayes_class
-  if (!is.null(exclude)) {
-    bayes_classes <- bayes_classes[!bayes_classes %in% exclude]
-  }
-  inherits(x, bayes_classes)
 }

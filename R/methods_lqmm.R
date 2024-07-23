@@ -68,17 +68,6 @@ standard_error.lqm <- standard_error.lqmm
 
 
 #' @export
-degrees_of_freedom.lqmm <- function(model, ...) {
-  out <- model_parameters(model, ...)
-  out$df_error
-}
-
-
-#' @export
-degrees_of_freedom.lqm <- degrees_of_freedom.lqmm
-
-
-#' @export
 p_value.lqmm <- function(model, ...) {
   out <- model_parameters(model, ...)
   as.data.frame(out[c("Parameter", "p")])

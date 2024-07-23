@@ -1,15 +1,3 @@
-# degrees of freedom -----------------
-
-#' @export
-degrees_of_freedom.rlm <- function(model, method = "residual", ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}
-
-
-
-
-
-
 # ci -----------------
 
 #' @export
@@ -49,9 +37,6 @@ ci.polr <- function(x, ci = 0.95, dof = NULL, method = "profile", ...) {
 
 
 
-
-
-
 # SE -----------------
 
 #' @export
@@ -73,9 +58,6 @@ standard_error.polr <- function(model, method = NULL, ...) {
 
 
 
-
-
-
 # p -----------------
 
 #' @export
@@ -85,7 +67,7 @@ p_value.negbin <- p_value.default
 #' @export
 p_value.rlm <- function(model, ...) {
   cs <- stats::coef(summary(model))
-  p <- 2 * stats::pt(abs(cs[, 3]), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(cs[, 3]), df = insight::get_df(model, type = "wald"), lower.tail = FALSE)
   .data_frame(
     Parameter = .remove_backticks_from_string(names(p)),
     p = as.vector(p)
@@ -102,7 +84,7 @@ p_value.polr <- function(model, method = NULL, ...) {
 
   smry <- suppressMessages(as.data.frame(stats::coef(summary(model))))
   tstat <- smry[[3]]
-  p <- 2 * stats::pt(abs(tstat), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(tstat), df = insight::get_df(x = model, type = "wald"), lower.tail = FALSE)
   names(p) <- rownames(smry)
 
   .data_frame(
@@ -110,8 +92,6 @@ p_value.polr <- function(model, method = NULL, ...) {
     p = as.vector(p)
   )
 }
-
-
 
 
 

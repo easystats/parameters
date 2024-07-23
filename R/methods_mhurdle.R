@@ -62,12 +62,6 @@ ci.mhurdle <- function(x, ci = 0.95, ...) {
 
 
 #' @export
-degrees_of_freedom.mhurdle <- function(model, method = NULL, ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}
-
-
-#' @export
 standard_error.mhurdle <- function(model, component = c("all", "conditional", "zi", "zero_inflated", "infrequent_purchase", "ip", "auxiliary"), ...) {
   component <- match.arg(component)
   s <- summary(model)

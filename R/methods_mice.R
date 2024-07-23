@@ -11,21 +11,6 @@ ci.mira <- function(x, ci = 0.95, ...) {
 }
 
 
-# degrees of freedom ----------------------------
-
-#' @export
-degrees_of_freedom.mira <- function(model, ...) {
-  insight::check_if_installed("mice")
-  degrees_of_freedom(mice::pool(model), ...)
-}
-
-
-#' @export
-degrees_of_freedom.mipo <- function(model, ...) {
-  as.vector(summary(model)$df)
-}
-
-
 # p values ---------------------------------------
 
 #' @export

@@ -5,15 +5,6 @@
 
 
 #' @export
-degrees_of_freedom.plm <- function(model, method = "wald", ...) {
-  if (identical(method, "normal")) {
-    return(Inf)
-  }
-  model$df.residual
-}
-
-
-#' @export
 standard_error.plm <- function(model, vcov = NULL, vcov_args = NULL, verbose = TRUE, ...) {
   dots <- list(...)
   se <- NULL

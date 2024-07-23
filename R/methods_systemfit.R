@@ -33,7 +33,6 @@ model_parameters.systemfit <- function(model,
 }
 
 
-
 #' @export
 standard_error.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
@@ -57,7 +56,6 @@ standard_error.systemfit <- function(model, ...) {
 }
 
 
-
 #' @export
 p_value.systemfit <- function(model, ...) {
   cf <- stats::coef(summary(model))
@@ -79,26 +77,6 @@ p_value.systemfit <- function(model, ...) {
 
   do.call(rbind, out)
 }
-
-
-
-#' @export
-degrees_of_freedom.systemfit <- function(model, ...) {
-  dof <- NULL
-  s <- summary(model)$eq
-  params <- insight::find_parameters(model)
-  f <- insight::find_formula(model)
-  system_names <- names(f)
-
-  for (i in seq_along(system_names)) {
-    dfs <- rep(s[[i]]$df[2], length(params[[i]]))
-    df_names <- rep(names(params[i]), length(params[[i]]))
-    dof <- c(dof, stats::setNames(dfs, df_names))
-  }
-
-  dof
-}
-
 
 
 #' @export

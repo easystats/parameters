@@ -155,15 +155,6 @@ standard_error.hglm <- function(model,
 
 
 #' @export
-degrees_of_freedom.hglm <- function(model, method = "residual", ...) {
-  if (method == "any") {
-    method <- "residual"
-  }
-  insight::get_df(model, type = method, ...)
-}
-
-
-#' @export
 ci.hglm <- function(x,
                     ci = 0.95,
                     method = "wald",

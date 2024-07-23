@@ -182,19 +182,6 @@ ci.multinom <- function(x, ci = 0.95, method = "normal", verbose = TRUE, ...) {
 
 
 #' @export
-degrees_of_freedom.multinom <- function(model, method = NULL, ...) {
-  if (is.null(method) || identical(method, "normal")) {
-    Inf
-  } else {
-    insight::n_obs(model) - model$edf
-  }
-}
-
-#' @export
-degrees_of_freedom.nnet <- degrees_of_freedom.multinom
-
-
-#' @export
 standard_error.multinom <- function(model, ...) {
   se <- tryCatch(
     {

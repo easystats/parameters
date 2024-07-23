@@ -56,7 +56,7 @@ p_value.geeglm <- function(model, method = "wald", ...) {
 
   if (!is.null(stat)) {
     if (identical(method, "residual")) {
-      dof <- degrees_of_freedom(model, method = "residual")
+      dof <- insight::get_df(model, type = "residual")
       p <- as.vector(2 * stats::pt(
         sqrt(abs(stat$Statistic)),
         df = dof,

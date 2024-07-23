@@ -82,34 +82,6 @@ standard_error.fixest <- function(model, vcov = NULL, vcov_args = NULL, ...) {
 }
 
 
-#' @export
-degrees_of_freedom.fixest <- function(model, method = "wald", ...) {
-  # fixest degrees of freedom can be tricky. best to use the function by the
-  # package.
-  insight::check_if_installed("fixest")
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  method <- match.arg(
-    tolower(method),
-    choices = c("wald", "residual", "normal")
-  )
-
-  # we may have Inf DF, too
-  if (method == "normal") {
-    return(Inf)
-  }
-
-  method <- switch(method,
-    wald = "t",
-    residual = "resid"
-  )
-  fixest::degrees_freedom(model, type = method)
-}
-
-
-
-
 # .feglm -----------------------
 
 #' @export
@@ -213,22 +185,6 @@ ci.fixest_multi <- function(x, ...) {
 #' @export
 standard_error.fixest_multi <- function(model, ...) {
   out <- do.call(rbind, lapply(model, standard_error, ...))
-
-  # add response and group columns
-  id_columns <- .get_fixest_multi_columns(model)
-
-  # add response column
-  out$Response <- id_columns$Response
-  out$Group <- id_columns$Group
-
-  row.names(out) <- NULL
-  out
-}
-
-
-#' @export
-degrees_of_freedom.fixest_multi <- function(model, ...) {
-  out <- do.call(rbind, lapply(model, degrees_of_freedom, ...))
 
   # add response and group columns
   id_columns <- .get_fixest_multi_columns(model)

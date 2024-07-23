@@ -2,57 +2,47 @@
 % Please edit documentation in R/dof.R
 \name{degrees_of_freedom}
 \alias{degrees_of_freedom}
-\alias{degrees_of_freedom.default}
 \alias{dof}
 \title{Degrees of Freedom (DoF)}
 \usage{
-degrees_of_freedom(model, ...)
+degrees_of_freedom(model, method = "analytical", ...)
 
-\method{degrees_of_freedom}{default}(model, method = "analytical", ...)
-
-dof(model, ...)
+dof(model, method = "analytical", ...)
 }
 \arguments{
 \item{model}{A statistical model.}
 
-\item{...}{Currently not used.}
+\item{method}{Type of approximation for the degrees of freedom. Can be one of
+the following:
+\itemize{
+\item \code{"residual"} (aka \code{"analytical"}) returns the residual degrees of
+freedom, which usually is what \code{\link[stats:df.residual]{stats::df.residual()}} returns. If a
+model object has no method to extract residual degrees of freedom, these
+are calculated as \code{n-p}, i.e. the number of observations minus the number
+of estimated parameters. If residual degrees of freedom cannot be extracted
+by either approach, returns \code{Inf}.
+\item \code{"wald"} returns residual (aka analytical) degrees of freedom for models
+with t-statistic, \code{1} for models with Chi-squared statistic, and \code{Inf} for
+all other models. Also returns \code{Inf} if residual degrees of freedom cannot
+be extracted.
+\item \code{"normal"} always returns \code{Inf}.
+\item \code{"model"} returns model-based degrees of freedom, i.e. the number of
+(estimated) parameters.
+\item For mixed models, can also be \code{"ml1"} (or \code{"m-l-1"}, approximation of
+degrees of freedom based on a "m-l-1" heuristic as suggested by \emph{Elff et
+al. 2019}) or \code{"between-within"} (or \code{"betwithin"}).
+\item For mixed models of class \code{merMod}, \code{type} can also be \code{"satterthwaite"}
+or \code{"kenward-roger"} (or \code{"kenward"}). See 'Details'.
+}
 
-\item{method}{Can be \code{"analytical"} (default, DoFs are estimated based
-on the model type), \code{"residual"} in which case they are directly taken
-from the model if available (for Bayesian models, the goal (looking for
-help to make it happen) would be to refit the model as a frequentist one
-before extracting the DoFs), \code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}), \code{"betwithin"}
-(see \code{\link[=dof_betwithin]{dof_betwithin()}}), \code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}),
-\code{"kenward"} (see \code{\link[=dof_kenward]{dof_kenward()}}) or \code{"any"}, which tries to extract DoF
-by any of those methods, whichever succeeds. See 'Details'.}
+Usually, when degrees of freedom are required to calculate p-values or
+confidence intervals, \code{type = "wald"} is likely to be the best choice in
+most cases.}
+
+\item{...}{Currently not used.}
 }
 \description{
 Estimate or extract degrees of freedom of models parameters.
-}
-\details{
-Methods for calculating degrees of freedom:
-\itemize{
-\item \code{"analytical"} for models of class \code{lmerMod}, Kenward-Roger approximated
-degrees of freedoms are calculated, for other models, \code{n-k} (number of
-observations minus number of parameters).
-\item \code{"residual"} tries to extract residual degrees of freedom, and returns
-\code{Inf} if residual degrees of freedom could not be extracted.
-\item \code{"any"} first tries to extract residual degrees of freedom, and if these
-are not available, extracts analytical degrees of freedom.
-\item \code{"nokr"} same as \code{"analytical"}, but does not Kenward-Roger approximation
-for models of class \code{lmerMod}. Instead, always uses \code{n-k} to calculate df
-for any model.
-\item \code{"normal"} returns \code{Inf}.
-\item \code{"wald"} returns residual df for models with t-statistic, and \code{Inf} for all other models.
-\item \code{"kenward"} calls \code{\link[=dof_kenward]{dof_kenward()}}.
-\item \code{"satterthwaite"} calls \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}.
-\item \code{"ml1"} calls \code{\link[=dof_ml1]{dof_ml1()}}.
-\item \code{"betwithin"} calls \code{\link[=dof_betwithin]{dof_betwithin()}}.
-}
-
-For models with z-statistic, the returned degrees of freedom for model parameters
-is \code{Inf} (unless \code{method = "ml1"} or \code{method = "betwithin"}), because there is
-only one distribution for the related test statistic.
 }
 \note{
 In many cases, \code{degrees_of_freedom()} returns the same as \code{df.residuals()},
@@ -65,16 +55,15 @@ Furthermore, for other approximation methods like \code{"kenward"} or
 freedom.
 }
 \examples{
+\dontshow{if (require("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 dof(model)
 
 model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 \donttest{
-if (require("lme4", quietly = TRUE)) {
-  model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-  dof(model)
-}
+model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+dof(model)
 
 if (require("rstanarm", quietly = TRUE)) {
   model <- stan_glm(
@@ -86,4 +75,5 @@ if (require("rstanarm", quietly = TRUE)) {
   dof(model)
 }
 }
+\dontshow{\}) # examplesIf}
 }
