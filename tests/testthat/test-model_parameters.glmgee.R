@@ -4,7 +4,7 @@ skip_if_not_installed("glmtoolbox")
 test_that("model_parameters.glmgee", {
   data(spruces, package = "glmtoolbox")
   fit1 <- glmtoolbox::glmgee(
-    size ~ poly(days,4) + treat,
+    size ~ poly(days, 4) + treat,
     id = tree,
     family = Gamma("log"),
     corstr = "AR-M-dependent(1)",
