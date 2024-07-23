@@ -3,39 +3,32 @@
 #' Estimate or extract degrees of freedom of models parameters.
 #'
 #' @param model A statistical model.
-#' @param method Can be `"analytical"` (default, DoFs are estimated based
-#'   on the model type), `"residual"` in which case they are directly taken
-#'   from the model if available (for Bayesian models, the goal (looking for
-#'   help to make it happen) would be to refit the model as a frequentist one
-#'   before extracting the DoFs), `"ml1"` (see [dof_ml1()]), `"betwithin"`
-#'   (see [dof_betwithin()]), `"satterthwaite"` (see [`dof_satterthwaite()`]),
-#'   `"kenward"` (see [`dof_kenward()`]) or `"any"`, which tries to extract DoF
-#'   by any of those methods, whichever succeeds. See 'Details'.
+#' @param method Type of approximation for the degrees of freedom. Can be one of
+#' the following:
+#'
+#'   + `"residual"` (aka `"analytical"`) returns the residual degrees of
+#'     freedom, which usually is what [`stats::df.residual()`] returns. If a
+#'     model object has no method to extract residual degrees of freedom, these
+#'     are calculated as `n-p`, i.e. the number of observations minus the number
+#'     of estimated parameters. If residual degrees of freedom cannot be extracted
+#'     by either approach, returns `Inf`.
+#'   + `"wald"` returns residual (aka analytical) degrees of freedom for models
+#'     with t-statistic, `1` for models with Chi-squared statistic, and `Inf` for
+#'     all other models. Also returns `Inf` if residual degrees of freedom cannot
+#'     be extracted.
+#'   + `"normal"` always returns `Inf`.
+#'   + `"model"` returns model-based degrees of freedom, i.e. the number of
+#'     (estimated) parameters.
+#'   + For mixed models, can also be `"ml1"` (or `"m-l-1"`, approximation of
+#'     degrees of freedom based on a "m-l-1" heuristic as suggested by _Elff et
+#'     al. 2019_) or `"between-within"` (or `"betwithin"`).
+#'   + For mixed models of class `merMod`, `type` can also be `"satterthwaite"`
+#'     or `"kenward-roger"` (or `"kenward"`). See 'Details'.
+#'
+#' Usually, when degrees of freedom are required to calculate p-values or
+#' confidence intervals, `type = "wald"` is likely to be the best choice in
+#' most cases.
 #' @param ... Currently not used.
-#'
-#' @details
-#' Methods for calculating degrees of freedom:
-#'
-#' - `"analytical"` for models of class `lmerMod`, Kenward-Roger approximated
-#'   degrees of freedoms are calculated, for other models, `n-k` (number of
-#'   observations minus number of parameters).
-#' - `"residual"` tries to extract residual degrees of freedom, and returns
-#'   `Inf` if residual degrees of freedom could not be extracted.
-#' - `"any"` first tries to extract residual degrees of freedom, and if these
-#'   are not available, extracts analytical degrees of freedom.
-#' - `"nokr"` same as `"analytical"`, but does not Kenward-Roger approximation
-#'   for models of class `lmerMod`. Instead, always uses `n-k` to calculate df
-#'   for any model.
-#' - `"normal"` returns `Inf`.
-#' - `"wald"` returns residual df for models with t-statistic, and `Inf` for all other models.
-#' - `"kenward"` calls [`dof_kenward()`].
-#' - `"satterthwaite"` calls [`dof_satterthwaite()`].
-#' - `"ml1"` calls [`dof_ml1()`].
-#' - `"betwithin"` calls [`dof_betwithin()`].
-#'
-#' For models with z-statistic, the returned degrees of freedom for model parameters
-#' is `Inf` (unless `method = "ml1"` or `method = "betwithin"`), because there is
-#' only one distribution for the related test statistic.
 #'
 #' @note
 #' In many cases, `degrees_of_freedom()` returns the same as `df.residuals()`,
