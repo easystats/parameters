@@ -11,5 +11,5 @@ test_that("model_parameters.glmgee", {
     data = spruces
   )
   out <- model_parameters(fit1)
-  expect_snapshot(out, variant = "windows")
+  expect_snapshot(print(out), variant = "windows")
 })
