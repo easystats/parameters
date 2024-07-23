@@ -141,7 +141,7 @@ p_value.svyglm.nb <- function(model, ...) {
 
   est <- stats::coef(model)
   se <- sqrt(diag(stats::vcov(model, stderr = "robust")))
-  p <- 2 * stats::pt(abs(est / se), df = degrees_of_freedom(model, method = "any"), lower.tail = FALSE)
+  p <- 2 * stats::pt(abs(est / se), df = insight::get_df(model, type = "wald"), lower.tail = FALSE)
 
   .data_frame(
     Parameter = .remove_backticks_from_string(names(p)),

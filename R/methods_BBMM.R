@@ -64,18 +64,3 @@ p_value.BBreg <- function(model, ...) {
     p = as.data.frame(summary(model)$coefficients)$p.value
   )
 }
-
-
-
-#' @export
-degrees_of_freedom.BBmm <- function(model, method = "residual", ...) {
-  if (method %in% c("residual", "wald")) {
-    return(model$df)
-  } else {
-    return(degrees_of_freedom.default(model = model, method = method, ...))
-  }
-}
-
-
-#' @export
-degrees_of_freedom.BBreg <- degrees_of_freedom.BBmm

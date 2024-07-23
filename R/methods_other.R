@@ -20,13 +20,6 @@ p_value.complmrob <- p_value.default
 ci.complmrob <- ci.default
 
 
-#' @export
-degrees_of_freedom.complmrob <- function(model, method = "wald", ...) {
-  .degrees_of_freedom_no_dfresid_method(model, method)
-}
-
-
-
 
 
 ############# .Gam --------------

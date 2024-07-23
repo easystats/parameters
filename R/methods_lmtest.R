@@ -1,9 +1,4 @@
 #' @export
-degrees_of_freedom.coeftest <- function(model, ...) {
-  attributes(model)$df
-}
-
-#' @export
 ci.coeftest <- ci.default
 
 #' @export

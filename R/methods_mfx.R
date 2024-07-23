@@ -296,50 +296,6 @@ standard_error.betamfx <- function(model,
 
 
 
-
-# degrees of freedom ------------------
-
-
-#' @export
-degrees_of_freedom.logitor <- function(model, ...) {
-  degrees_of_freedom.default(model$fit, ...)
-}
-
-
-#' @export
-degrees_of_freedom.poissonirr <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.negbinirr <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.poissonmfx <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.logitmfx <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.negbinmfx <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.probitmfx <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.betaor <- degrees_of_freedom.logitor
-
-
-#' @export
-degrees_of_freedom.betamfx <- degrees_of_freedom.logitor
-
-
-
-
 # p values ------------------
 
 

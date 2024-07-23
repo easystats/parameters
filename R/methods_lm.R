@@ -47,9 +47,3 @@ p_value.summary.lm <- function(model, ...) {
 ci.summary.lm <- function(x, ci = 0.95, method = "residual", ...) {
   .ci_generic(model = x, ci = ci, method = method, dof = insight::get_df(x), ...)
 }
-
-
-#' @export
-degrees_of_freedom.summary.lm <- function(model, ...) {
-  model$fstatistic[3]
-}

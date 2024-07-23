@@ -126,18 +126,3 @@ standard_error.mmrm_fit <- standard_error.mmrm
 
 #' @export
 standard_error.mmrm_tmb <- standard_error.mmrm
-
-
-# degrees of freedom ------------------
-
-#' @export
-degrees_of_freedom.mmrm <- function(model, ...) {
-  summary_table <- stats::coef(summary(model))
-  unname(summary_table[, "df"])
-}
-
-#' @export
-degrees_of_freedom.mmrm_fit <- degrees_of_freedom.mmrm
-
-#' @export
-degrees_of_freedom.mmrm_tmb <- degrees_of_freedom.mmrm

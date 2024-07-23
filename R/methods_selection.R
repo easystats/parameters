@@ -83,7 +83,6 @@ standard_error.selection <- function(model, component = c("all", "selection", "o
 }
 
 
-
 #' @export
 simulate_model.selection <- function(model,
                                      iterations = 1000,
@@ -100,10 +99,3 @@ simulate_model.selection <- function(model,
 
 #' @export
 ci.selection <- ci.default
-
-
-#' @export
-degrees_of_freedom.selection <- function(model, ...) {
-  s <- summary(model)
-  s$param$df
-}

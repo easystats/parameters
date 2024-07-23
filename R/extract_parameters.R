@@ -318,7 +318,7 @@
     sig <- .safe(suppressWarnings(insight::get_sigma(model, ci = NULL, verbose = FALSE)))
     attr(params, "sigma") <- as.numeric(sig)
 
-    resdf <- .safe(suppressWarnings(insight::get_df(model, type = "residual")))
+    resdf <- .safe(suppressWarnings(insight::get_df(x = model, type = "residual")))
     attr(params, "residual_df") <- as.numeric(resdf)
   }
   params

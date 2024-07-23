@@ -310,3 +310,19 @@ compare_models <- compare_parameters
 
   x
 }
+
+
+.is_bayesian_model <- function(x, exclude = NULL) {
+  bayes_classes <- c(
+    "brmsfit", "stanfit", "MCMCglmm", "stanreg",
+    "stanmvreg", "bmerMod", "BFBayesFactor", "bamlss",
+    "bayesx", "mcmc", "bcplm", "bayesQR", "BGGM",
+    "meta_random", "meta_fixed", "meta_bma", "blavaan",
+    "blrm", "blmerMod"
+  )
+  # if exclude is not NULL, remove elements in exclude from bayes_class
+  if (!is.null(exclude)) {
+    bayes_classes <- bayes_classes[!bayes_classes %in% exclude]
+  }
+  inherits(x, bayes_classes)
+}

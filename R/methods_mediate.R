@@ -96,12 +96,6 @@ standard_error.mediate <- function(model, ...) {
 
 
 #' @export
-degrees_of_freedom.mediate <- function(model, ...) {
-  NULL
-}
-
-
-#' @export
 p_value.mediate <- function(model, ...) {
   info <- insight::model_info(model$model.y, verbose = FALSE)
   if (info$is_linear && !model$INT) {

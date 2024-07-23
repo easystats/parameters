@@ -27,23 +27,7 @@ model_parameters.emmGrid <- function(model,
   s <- summary(model, level = ci, adjust = "none")
   params <- as.data.frame(s)
 
-  # we assume frequentist here...
-  if (!.is_bayesian_emmeans(model)) {
-    # get statistic, se and p
-    statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
-    SE <- standard_error(model)
-    p <- p_value(model, ci = ci, adjust = "none")
-
-    params$Statistic <- statistic$Statistic
-    params$SE <- SE$SE
-    params$p <- p$p
-
-    # ==== adjust p-values?
-
-    if (!is.null(p_adjust)) {
-      params <- .p_adjust(params, p_adjust, model, verbose)
-    }
-  } else {
+  if (.is_bayesian_emmeans(model)) {
     # Bayesian models go here...
     params <- bayestestR::describe_posterior(
       model,
@@ -60,8 +44,22 @@ model_parameters.emmGrid <- function(model,
       verbose = verbose,
       ...
     )
-
     statistic <- NULL
+  } else {
+    # we assume frequentist here...
+    statistic <- insight::get_statistic(model, ci = ci, adjust = "none")
+    SE <- standard_error(model)
+    p <- p_value(model, ci = ci, adjust = "none")
+
+    params$Statistic <- statistic$Statistic
+    params$SE <- SE$SE
+    params$p <- p$p
+
+    # ==== adjust p-values?
+
+    if (!is.null(p_adjust)) {
+      params <- .p_adjust(params, p_adjust, model, verbose)
+    }
   }
 
 
@@ -88,11 +86,11 @@ model_parameters.emmGrid <- function(model,
   if (!any(startsWith(colnames(params), "CI_"))) {
     df_column <- grep("(df|df_error)", colnames(params))
     if (length(df_column) > 0) {
-      df <- params[[df_column[1]]]
+      dof <- params[[df_column[1]]]
     } else {
-      df <- Inf
+      dof <- Inf
     }
-    fac <- stats::qt((1 + ci) / 2, df = df)
+    fac <- stats::qt((1 + ci) / 2, df = dof)
     params$CI_low <- params$Estimate - fac * params$SE
     params$CI_high <- params$Estimate + fac * params$SE
   }
@@ -105,12 +103,12 @@ model_parameters.emmGrid <- function(model,
   # Reorder
   estimate_pos <- which(colnames(s) == estName)
   parameter_names <- colnames(params)[seq_len(estimate_pos - 1)]
-  order <- c(
+  col_order <- c(
     parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
     "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
     "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
   )
-  params <- params[order[order %in% names(params)]]
+  params <- params[col_order[col_order %in% names(params)]]
 
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params), fixed = TRUE)
@@ -210,12 +208,12 @@ model_parameters.summary_emm <- function(model,
   # Reorder
   estimate_pos <- which(colnames(model) == estName)
   parameter_names <- colnames(params)[seq_len(estimate_pos - 1)]
-  order <- c(
+  col_order <- c(
     parameter_names, "Estimate", "Median", "Mean", "SE", "SD", "MAD",
     "CI_low", "CI_high", "F", "t", "z", "df", "df_error", "p", "pd",
     "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"
   )
-  params <- params[order[order %in% names(params)]]
+  params <- params[col_order[col_order %in% names(params)]]
 
   # rename
   names(params) <- gsub("Estimate", "Coefficient", names(params), fixed = TRUE)
@@ -315,42 +313,6 @@ boot_em_standard_error <- function(model) {
 
 
 
-
-# degrees of freedom --------------------
-
-
-#' @export
-degrees_of_freedom.emmGrid <- function(model, ...) {
-  if (!is.null(model@misc$is_boot) && model@misc$is_boot) {
-    return(boot_em_df(model))
-  }
-
-  summary(model)$df
-}
-
-
-#' @export
-degrees_of_freedom.emm_list <- function(model, ...) {
-  if (!is.null(model[[1]]@misc$is_boot) && model[[1]]@misc$is_boot) {
-    return(boot_em_df(model))
-  }
-
-  s <- summary(model)
-  unlist(lapply(s, function(i) {
-    if (is.null(i$df)) {
-      rep(Inf, nrow(i))
-    } else {
-      i$df
-    }
-  }), use.names = FALSE)
-}
-
-boot_em_df <- function(model) {
-  est <- insight::get_parameters(model, summary = FALSE)
-  rep(NA, ncol(est))
-}
-
-
 # p values ----------------------
 
 
@@ -361,21 +323,20 @@ p_value.emmGrid <- function(model, ci = 0.95, adjust = "none", ...) {
     return(boot_em_pval(model, adjust))
   }
 
-
   s <- summary(model, level = ci, adjust = adjust)
   estimate_pos <- which(colnames(s) == attr(s, "estName"))
 
-  if (length(estimate_pos)) {
-    stat <- insight::get_statistic(model, ci = ci, adjust = adjust)
-    p <- 2 * stats::pt(abs(stat$Statistic), df = s$df, lower.tail = FALSE)
-
-    .data_frame(
-      Parameter = .pretty_emmeans_Parameter_names(model),
-      p = as.vector(p)
-    )
-  } else {
+  if (!length(estimate_pos)) {
     return(NULL)
   }
+
+  stat <- insight::get_statistic(model, ci = ci, adjust = adjust)
+  p <- 2 * stats::pt(abs(stat$Statistic), df = s$df, lower.tail = FALSE)
+
+  .data_frame(
+    Parameter = .pretty_emmeans_Parameter_names(model),
+    p = as.vector(p)
+  )
 }
 
 
@@ -418,8 +379,8 @@ p_value.emm_list <- function(model, adjust = "none", ...) {
 
     # test statistic and p-values
     stat <- params$Estimate / se
-    df <- degrees_of_freedom(model)
-    p_val <- 2 * stats::pt(abs(stat), df = df, lower.tail = FALSE)
+    dof <- insight::get_df(model)
+    p_val <- 2 * stats::pt(abs(stat), df = dof, lower.tail = FALSE)
     out$p[is.na(out$p)] <- p_val[is.na(out$p)]
   }
 

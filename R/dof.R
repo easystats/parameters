@@ -47,17 +47,15 @@
 #' `"satterthwaite"`, each model parameter can have a different degree of
 #' freedom.
 #'
-#' @examples
+#' @examplesIf require("lme4", quietly = TRUE)
 #' model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 #' dof(model)
 #'
 #' model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 #' dof(model)
 #' \donttest{
-#' if (require("lme4", quietly = TRUE)) {
-#'   model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-#'   dof(model)
-#' }
+#' model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#' dof(model)
 #'
 #' if (require("rstanarm", quietly = TRUE)) {
 #'   model <- stan_glm(
@@ -70,193 +68,13 @@
 #' }
 #' }
 #' @export
-degrees_of_freedom <- function(model, ...) {
-  UseMethod("degrees_of_freedom")
-}
-
-
-
-
-#' @rdname degrees_of_freedom
-#' @export
-degrees_of_freedom.default <- function(model, method = "analytical", ...) {
-  # check for valid input
-  .is_model_valid(model)
-
-  if (is.null(method)) {
-    method <- "wald"
-  }
-  method <- tolower(method)
-
-  method <- match.arg(method, choices = c(
-    "analytical", "any", "fit", "ml1", "betwithin", "satterthwaite", "kenward",
-    "nokr", "wald", "kr", "profile", "boot", "uniroot", "residual", "normal",
-    "likelihood"
-  ))
-
-  if (!.dof_method_ok(model, method, ...) || method %in% c("profile", "likelihood", "boot", "uniroot")) {
-    method <- "any"
-  }
-
-  stat <- insight::find_statistic(model)
-
-  # for z-statistic, always return Inf
-  if (!is.null(stat) && stat == "z-statistic" && !(method %in% c("ml1", "betwithin"))) {
-    if (method == "residual") {
-      return(.degrees_of_freedom_residual(model, verbose = FALSE))
-    } else {
-      return(Inf)
-    }
-  }
-
-  # Chi2-distributions usually have 1 df
-  if (!is.null(stat) && stat == "chi-squared statistic") {
-    if (method == "residual") {
-      return(.degrees_of_freedom_residual(model, verbose = FALSE))
-    } else {
-      return(1)
-    }
-  }
-
-  if (method == "any") { # nolint
-    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
-    if (is.null(dof) || all(is.infinite(dof)) || anyNA(dof)) {
-      dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
-    }
-  } else if (method == "ml1") {
-    dof <- dof_ml1(model)
-  } else if (method == "wald") {
-    dof <- .degrees_of_freedom_residual(model, verbose = FALSE)
-  } else if (method == "normal") {
-    dof <- Inf
-  } else if (method == "satterthwaite") {
-    dof <- dof_satterthwaite(model)
-  } else if (method == "betwithin") {
-    dof <- dof_betwithin(model)
-  } else if (method %in% c("kenward", "kr")) {
-    dof <- dof_kenward(model)
-  } else if (method == "analytical") {
-    dof <- .degrees_of_freedom_analytical(model, kenward = TRUE)
-  } else if (method == "nokr") {
-    dof <- .degrees_of_freedom_analytical(model, kenward = FALSE)
-  } else {
-    dof <- .degrees_of_freedom_residual(model)
-  }
-
-  if (!is.null(dof) && length(dof) > 0 && all(dof == 0)) {
-    insight::format_warning("Model has zero degrees of freedom!")
-  }
-
-  dof
+degrees_of_freedom <- function(model, method = "analytical", ...) {
+  insight::get_df(x = model, type = method, ...)
 }
 
 #' @rdname degrees_of_freedom
 #' @export
 dof <- degrees_of_freedom
-
-
-
-
-
-# Analytical approach ------------------------------
-
-
-#' @keywords internal
-.degrees_of_freedom_analytical <- function(model, kenward = TRUE) {
-  nparam <- n_parameters(model)
-  n <- insight::n_obs(model)
-
-  if (is.null(n)) {
-    n <- Inf
-  }
-
-  if (isTRUE(kenward) && inherits(model, "lmerMod")) {
-    dof <- as.numeric(dof_kenward(model))
-  } else {
-    dof <- rep(n - nparam, nparam)
-  }
-
-  dof
-}
-
-
-
-
-
-# Model approach (Residual df) ------------------------------
-
-
-#' @keywords internal
-.degrees_of_freedom_residual <- function(model, verbose = TRUE) {
-  if (.is_bayesian_model(model, exclude = c("bmerMod", "bayesx", "blmerMod", "bglmerMod"))) {
-    model <- bayestestR::bayesian_as_frequentist(model)
-  }
-
-  # 1st try
-  dof <- try(stats::df.residual(model), silent = TRUE)
-
-  # 2nd try
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    junk <- utils::capture.output(dof = try(summary(model)$df[2], silent = TRUE))
-  }
-
-  # 3rd try, nlme
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    dof <- try(unname(model$fixDF$X), silent = TRUE)
-  }
-
-  # last try
-  if (inherits(dof, "try-error") || is.null(dof) || all(is.na(dof))) {
-    dof <- Inf
-    if (verbose) {
-      insight::format_alert("Could not extract degrees of freedom.")
-    }
-  }
-
-
-  # special cases
-  # if (inherits(model, "gam")) {
-  #   dof <- .dof_fit_gam(model, dof)
-  # }
-
-  dof
-}
-
-
-
-
-# residual df - for models with residual df, but no "df.residual()" method --------------
-
-
-#' @keywords internal
-.degrees_of_freedom_no_dfresid_method <- function(model, method = NULL) {
-  if (identical(method, "normal")) {
-    return(Inf)
-  } else if (!is.null(method) && method %in% c("ml1", "satterthwaite", "betwithin")) {
-    degrees_of_freedom.default(model, method = method)
-  } else {
-    .degrees_of_freedom_analytical(model, kenward = FALSE)
-  }
-}
-
-
-
-
-
-
-# helper --------------
-
-.dof_fit_gam <- function(model, dof) {
-  params <- insight::find_parameters(model)
-  if (!is.null(params$conditional)) {
-    dof <- rep(dof, length(params$conditional))
-  }
-  if (!is.null(params$smooth_terms)) {
-    s <- summary(model)
-    dof <- c(dof, s$s.table[, "Ref.df"])
-  }
-  dof
-}
 
 
 # Helper, check args ------------------------------
@@ -328,24 +146,4 @@ dof <- degrees_of_freedom
   }
 
   return(TRUE)
-}
-
-
-
-
-# helper
-
-.is_bayesian_model <- function(x, exclude = NULL) {
-  bayes_classes <- c(
-    "brmsfit", "stanfit", "MCMCglmm", "stanreg",
-    "stanmvreg", "bmerMod", "BFBayesFactor", "bamlss",
-    "bayesx", "mcmc", "bcplm", "bayesQR", "BGGM",
-    "meta_random", "meta_fixed", "meta_bma", "blavaan",
-    "blrm", "blmerMod"
-  )
-  # if exclude is not NULL, remove elements in exclude from bayes_class
-  if (!is.null(exclude)) {
-    bayes_classes <- bayes_classes[!bayes_classes %in% exclude]
-  }
-  inherits(x, bayes_classes)
 }

@@ -2,20 +2,15 @@
 % Please edit documentation in R/dof.R
 \name{degrees_of_freedom}
 \alias{degrees_of_freedom}
-\alias{degrees_of_freedom.default}
 \alias{dof}
 \title{Degrees of Freedom (DoF)}
 \usage{
-degrees_of_freedom(model, ...)
+degrees_of_freedom(model, method = "analytical", ...)
 
-\method{degrees_of_freedom}{default}(model, method = "analytical", ...)
-
-dof(model, ...)
+dof(model, method = "analytical", ...)
 }
 \arguments{
 \item{model}{A statistical model.}
-
-\item{...}{Currently not used.}
 
 \item{method}{Can be \code{"analytical"} (default, DoFs are estimated based
 on the model type), \code{"residual"} in which case they are directly taken
@@ -25,6 +20,8 @@ before extracting the DoFs), \code{"ml1"} (see \code{\link[=dof_ml1]{dof_ml1()}}
 (see \code{\link[=dof_betwithin]{dof_betwithin()}}), \code{"satterthwaite"} (see \code{\link[=dof_satterthwaite]{dof_satterthwaite()}}),
 \code{"kenward"} (see \code{\link[=dof_kenward]{dof_kenward()}}) or \code{"any"}, which tries to extract DoF
 by any of those methods, whichever succeeds. See 'Details'.}
+
+\item{...}{Currently not used.}
 }
 \description{
 Estimate or extract degrees of freedom of models parameters.
@@ -65,16 +62,15 @@ Furthermore, for other approximation methods like \code{"kenward"} or
 freedom.
 }
 \examples{
+\dontshow{if (require("lme4", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 model <- lm(Sepal.Length ~ Petal.Length * Species, data = iris)
 dof(model)
 
 model <- glm(vs ~ mpg * cyl, data = mtcars, family = "binomial")
 dof(model)
 \donttest{
-if (require("lme4", quietly = TRUE)) {
-  model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-  dof(model)
-}
+model <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+dof(model)
 
 if (require("rstanarm", quietly = TRUE)) {
   model <- stan_glm(
@@ -86,4 +82,5 @@ if (require("rstanarm", quietly = TRUE)) {
   dof(model)
 }
 }
+\dontshow{\}) # examplesIf}
 }

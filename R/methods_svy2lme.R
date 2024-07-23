@@ -105,9 +105,3 @@ p_value.svy2lme <- function(model, ...) {
     p = as.vector(p)
   )
 }
-
-
-#' @export
-degrees_of_freedom.svy2lme <- function(model, ...) {
-  Inf
-}
