@@ -134,6 +134,7 @@ Suggests:
     ggplot2,
     GLMMadaptive,
     glmmTMB,
+    glmtoolbox,
     GPArotation,
     gt,
     haven,
