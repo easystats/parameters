@@ -5,6 +5,11 @@
 * Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
   now calls `insight::get_df()`.
 
+## Bug fixes
+
+* Fixed issue with warning for spuriously high coefficients for Stan-models
+  (non-Gaussian).
+
 # parameters 0.22.1
 
 ## Breaking changes

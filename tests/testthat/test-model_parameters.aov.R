@@ -58,7 +58,7 @@ test_that("model_parameters.anova", {
 test_that("model_parameters.anova", {
   skip_if_not_installed("curl")
   skip_if_offline()
-  skip_if_not_installed("httr")
+  skip_if_not_installed("httr2")
 
   model <- insight::download_model("anova_3")
   expect_identical(sum(model_parameters(model, verbose = FALSE)$df), 149L)
