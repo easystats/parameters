@@ -103,9 +103,9 @@
 
   # ==== CI - only if we don't already have CI for std. parameters
 
-  if (is.null(ci)) {
-    ci_cols <- NULL
-  } else {
+  ci_cols <- NULL
+  if (!is.null(ci)) {
+    # set up arguments for CI function
     fun_args <- list(model,
       ci = ci,
       component = component,
@@ -114,14 +114,13 @@
       verbose = verbose
     )
     fun_args <- c(fun_args, dots)
+    # add method argument if provided
     if (!is.null(ci_method)) {
       fun_args[["method"]] <- ci_method
     }
     ci_df <- suppressMessages(do.call("ci", fun_args))
-
-    if (is.null(ci_df)) {
-      ci_cols <- NULL
-    } else {
+    # success? merge CI into parameters
+    if (!is.null(ci_df)) {
       # for multiple CI columns, reshape CI-dataframe to match parameters df
       if (length(ci) > 1) {
         ci_df <- datawizard::reshape_ci(ci_df)
@@ -145,7 +144,7 @@
   )
   fun_args <- c(fun_args, dots)
   pval <- do.call("p_value", fun_args)
-
+  # success? merge p-values into parameters
   if (!is.null(pval)) {
     parameters <- merge(parameters, pval, by = merge_by, sort = FALSE)
   }
@@ -166,7 +165,7 @@
     fun_args[["method"]] <- ci_method
   }
   std_err <- do.call("standard_error", fun_args)
-
+  # success? merge SE into parameters
   if (!is.null(std_err)) {
     parameters <- merge(parameters, std_err, by = merge_by, sort = FALSE)
   }
@@ -467,9 +466,8 @@
 
   # CI - only if we don't already have CI for std. parameters
 
-  if (is.null(ci)) {
-    ci_cols <- NULL
-  } else {
+  ci_cols <- NULL
+  if (!is.null(ci)) {
     # robust (current or deprecated)
     if (!is.null(vcov) || isTRUE(list(...)[["robust"]])) {
       fun_args <- list(model,
