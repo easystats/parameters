@@ -312,7 +312,7 @@ format.compare_parameters <- function(x,
     # since we merged all models together, and we only have model-specific
     # columns for estimates, CI etc. but not for Effects and Component, we
     # extract "valid" rows via non-NA values in the coefficient column
-    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types(), "Coefficient"))
+    coef_column <- which(colnames(cols) %in% c(.all_coefficient_types, "Coefficient"))
     valid_rows <- which(!is.na(cols[[coef_column]]))
     # check if we have mixed models with random variance parameters
     # in such cases, we don't need the group-column, but we rather
@@ -919,11 +919,13 @@ format.parameters_sem <- function(x,
 
 
 .print_footer_exp <- function(x) {
+  # we need this to check whether we have extremely large cofficients
   if (isTRUE(getOption("parameters_exponentiate", TRUE))) {
     msg <- NULL
-    # we need this to check whether we have extremely large cofficients
-    if (all(c("Coefficient", "Parameter") %in% colnames(x))) {
-      spurious_coefficients <- abs(x$Coefficient[!.in_intercepts(x$Parameter)])
+    # try to find out the name of the coefficient column
+    coef_column <- intersect(colnames(x), .all_coefficient_names)
+    if (length(coef_column) && "Parameter" %in% colnames(x)) {
+      spurious_coefficients <- abs(x[[coef_column[1]]][!.in_intercepts(x$Parameter)])
     } else {
       spurious_coefficients <- NULL
     }
@@ -932,7 +934,9 @@ format.parameters_sem <- function(x,
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
         msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
         # we only check for exp(coef), so exp() here soince coefficients are on logit-scale
-        spurious_coefficients <- exp(spurious_coefficients)
+        if (!is.null(spurious_coefficients)) {
+          spurious_coefficients <- exp(spurious_coefficients)
+        }
       } else if (isTRUE(.additional_arguments(x, "log_response", FALSE))) {
         msg <- "The model has a log-transformed response variable. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
         # don't show warning about complete separation

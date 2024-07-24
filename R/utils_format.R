@@ -295,15 +295,15 @@
   }
 
   # fix coefficient column name for random effects
-  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types())) {
-    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+  if (!is.null(x$Effects) && all(x$Effects == "random") && any(colnames(x) %in% .all_coefficient_types)) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
   # fix coefficient column name for mixed count and zi pars
   if (!is.null(x$Component) &&
     sum(c("conditional", "zero_inflated", "dispersion") %in% x$Component) >= 2 &&
-    any(colnames(x) %in% .all_coefficient_types())) {
-    colnames(x)[colnames(x) %in% .all_coefficient_types()] <- "Coefficient"
+    any(colnames(x) %in% .all_coefficient_types)) {
+    colnames(x)[colnames(x) %in% .all_coefficient_types] <- "Coefficient"
   }
 
   # random pars with level? combine into parameter column
@@ -468,13 +468,14 @@
 # components into different tables, we change the column name for those "tables"
 # that contain the random effects or zero-inflation parameters
 
-.all_coefficient_types <- function() {
-  c(
-    "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
-    "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
-    "Estimated Counts", "Ratio"
-  )
-}
+.all_coefficient_types <- c(
+  "Odds Ratio", "Risk Ratio", "Prevalence Ratio", "IRR", "Log-Odds",
+  "Log-Mean", "Log-Ratio", "Log-Prevalence", "Probability", "Marginal Means",
+  "Estimated Counts", "Ratio"
+)
+
+
+.all_coefficient_names <- c("Coefficient", "Std_Coefficient", "Estimate", "Median", "Mean", "MAP")
 
 
 .format_stan_parameters <- function(out) {
@@ -1087,8 +1088,8 @@
     }
 
     # rename columns for random part
-    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types())) {
-      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types()] <- "Coefficient"
+    if (grepl("random", type, fixed = TRUE) && any(colnames(tables[[type]]) %in% .all_coefficient_types)) {
+      colnames(tables[[type]])[colnames(tables[[type]]) %in% .all_coefficient_types] <- "Coefficient"
     }
 
     if (grepl("random", type, fixed = TRUE) && isTRUE(ran_pars)) {
