@@ -285,7 +285,7 @@ options.
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 \item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
-print unicode-chars for symbols as column names, whereever possible (e.g.,
+print unicode-chars for symbols as column names, wherever possible (e.g.,
 \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
