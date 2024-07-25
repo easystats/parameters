@@ -382,7 +382,7 @@ which is converted into a p-value using <code><a href="https://easystats.github.
 
 <p>Note that the <em>interpretation</em> of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ <em>or not</em> between <code>a * b</code>
+performance of the model, can differ <em>or not</em> between <code>a * b</code>,
 <code>a : b</code>, and <code>a / b</code>, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on <code>a</code> or <code>b</code> being factors
@@ -429,6 +429,9 @@ options.</p></li>
 <li><p><code>easystats_html_engine</code>: <code>options(easystats_html_engine = "gt")</code> will set
 the default HTML engine for tables to <code>gt</code>, i.e. the <em>gt</em> package is used to
 create HTML tables. If set to <code>tt</code>, the <em>tinytable</em> package is used.</p></li>
+<li><p><code>insight_use_symbols</code>: <code>options(insight_use_symbols = TRUE)</code> will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+ω instead of <code>Omega</code>).</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

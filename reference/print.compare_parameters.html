@@ -241,7 +241,8 @@ the <code>"tt"</code> engine yet. If a specific <code><a href="https://rdrr.io/r
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Arguments passed to or from other methods.</p></dd>
+<dd><p>Arguments passed down to <code><a href="print.parameters_model.html">format.parameters_model()</a></code>,
+<code><a href="https://easystats.github.io/insight/reference/format_table.html" class="external-link">insight::format_table()</a></code> and <code><a href="https://easystats.github.io/insight/reference/export_table.html" class="external-link">insight::export_table()</a></code></p></dd>
 
 
 <dt id="arg-caption">caption<a class="anchor" aria-label="anchor" href="#arg-caption"></a></dt>
@@ -323,6 +324,9 @@ options.</p></li>
 <li><p><code>easystats_html_engine</code>: <code>options(easystats_html_engine = "gt")</code> will set
 the default HTML engine for tables to <code>gt</code>, i.e. the <em>gt</em> package is used to
 create HTML tables. If set to <code>tt</code>, the <em>tinytable</em> package is used.</p></li>
+<li><p><code>insight_use_symbols</code>: <code>options(insight_use_symbols = TRUE)</code> will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+ω instead of <code>Omega</code>).</p></li>
 </ul></div>
 
     <div class="section level2">
