@@ -175,7 +175,8 @@ so this is just for completeness.}
 
 \item{verbose}{Toggle messages and warnings.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed down to \code{\link[=format.parameters_model]{format.parameters_model()}},
+\code{\link[insight:format_table]{insight::format_table()}} and \code{\link[insight:export_table]{insight::export_table()}}}
 
 \item{sort}{Sort the loadings.}
 

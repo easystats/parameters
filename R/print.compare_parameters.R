@@ -78,7 +78,8 @@ print.compare_parameters <- function(x,
     ci_brackets = ci_brackets,
     format = "text",
     groups = groups,
-    zap_small = zap_small
+    zap_small = zap_small,
+    ...
   )
 
   # if we have multiple components, we can align colum width across components here

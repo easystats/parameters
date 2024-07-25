@@ -194,7 +194,8 @@ categorical predictors. The coefficient for the reference level is always
 \code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
 so this is just for completeness.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed down to \code{\link[=format.parameters_model]{format.parameters_model()}},
+\code{\link[insight:format_table]{insight::format_table()}} and \code{\link[insight:export_table]{insight::export_table()}}}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}
@@ -283,6 +284,9 @@ options.
 \item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
+\item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
+print unicode-chars for symbols as column names, whereever possible (e.g.,
+\ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
 
