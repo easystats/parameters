@@ -92,6 +92,8 @@
 #'   categorical predictors. The coefficient for the reference level is always
 #'   `0` (except when `exponentiate = TRUE`, then the coefficient will be `1`),
 #'   so this is just for completeness.
+#' @param ... Arguments passed down to [`format.parameters_model()`],
+#'   [`insight::format_table()`] and [`insight::export_table()`]
 #' @inheritParams insight::format_table
 #' @inheritParams compare_parameters
 #' @inheritParams display.parameters_model
@@ -141,6 +143,10 @@
 #' - `easystats_html_engine`: `options(easystats_html_engine = "gt")` will set
 #' the default HTML engine for tables to `gt`, i.e. the _gt_ package is used to
 #' create HTML tables. If set to `tt`, the _tinytable_ package is used.
+#'
+#' - `insight_use_symbols`: `options(insight_use_symbols = TRUE)` will try to
+#' print unicode-chars for symbols as column names, wherever possible (e.g.,
+#' \ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of `Omega`).
 #'
 #' @details `summary()` is a convenient shortcut for
 #' `print(object, select = "minimal", show_sigma = TRUE, show_formula = TRUE)`.

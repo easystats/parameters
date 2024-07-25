@@ -194,7 +194,8 @@ categorical predictors. The coefficient for the reference level is always
 \code{0} (except when \code{exponentiate = TRUE}, then the coefficient will be \code{1}),
 so this is just for completeness.}
 
-\item{...}{Arguments passed to or from other methods.}
+\item{...}{Arguments passed down to \code{\link[=format.parameters_model]{format.parameters_model()}},
+\code{\link[insight:format_table]{insight::format_table()}} and \code{\link[insight:export_table]{insight::export_table()}}}
 
 \item{caption}{Table caption as string. If \code{NULL}, depending on the model,
 either a default caption or no table caption is printed. Use \code{caption = ""}
@@ -283,6 +284,9 @@ options.
 \item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
+\item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+\ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
 
@@ -290,7 +294,7 @@ create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
 
 Note that the \emph{interpretation} of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
+performance of the model, can differ \emph{or not} between \code{a * b},
 \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on \code{a} or \code{b} being factors

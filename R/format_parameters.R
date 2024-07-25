@@ -11,7 +11,7 @@
 #' @section Interpretation of Interaction Terms:
 #' Note that the *interpretation* of interaction terms depends on many
 #' characteristics of the model. The number of parameters, and overall
-#' performance of the model, can differ *or not* between `a * b`
+#' performance of the model, can differ *or not* between `a * b`,
 #' `a : b`, and `a / b`, suggesting that sometimes interaction terms
 #' give different parameterizations of the same model, but other times it gives
 #' completely different models (depending on `a` or `b` being factors

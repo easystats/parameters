@@ -325,7 +325,7 @@ which is converted into a p-value using \code{\link[bayestestR:pd_to_p]{bayestes
 
 Note that the \emph{interpretation} of interaction terms depends on many
 characteristics of the model. The number of parameters, and overall
-performance of the model, can differ \emph{or not} between \code{a * b}
+performance of the model, can differ \emph{or not} between \code{a * b},
 \code{a : b}, and \code{a / b}, suggesting that sometimes interaction terms
 give different parameterizations of the same model, but other times it gives
 completely different models (depending on \code{a} or \code{b} being factors
@@ -377,6 +377,9 @@ options.
 \item \code{easystats_html_engine}: \code{options(easystats_html_engine = "gt")} will set
 the default HTML engine for tables to \code{gt}, i.e. the \emph{gt} package is used to
 create HTML tables. If set to \code{tt}, the \emph{tinytable} package is used.
+\item \code{insight_use_symbols}: \code{options(insight_use_symbols = TRUE)} will try to
+print unicode-chars for symbols as column names, wherever possible (e.g.,
+\ifelse{html}{\out{&omega;}}{\eqn{\omega}} instead of \code{Omega}).
 }
 }
 
