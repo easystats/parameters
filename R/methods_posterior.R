@@ -35,7 +35,7 @@ model_parameters.draws <- function(model,
   )
 
   # exponentiate coefficients and SE/CI, if requested
-  params <- .exponentiate_parameters(params)
+  params <- .exponentiate_parameters(params, exponentiate = exponentiate)
 
   attr(params, "ci") <- ci
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
