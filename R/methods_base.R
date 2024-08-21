@@ -59,10 +59,8 @@ standard_error.list <- function(model, verbose = TRUE, ...) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     standard_error(model)
-  } else {
-    if (isTRUE(verbose)) {
-      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
-    }
+  } else if (isTRUE(verbose)) {
+    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
   }
 }
 
@@ -140,10 +138,10 @@ p_value.numeric <- function(model, null = 0, ...) {
 
 #' @export
 p_value.data.frame <- function(model, ...) {
-  data <- model[vapply(model, is.numeric, TRUE)]
+  model_data <- model[vapply(model, is.numeric, TRUE)]
   .data_frame(
-    Parameter = names(data),
-    p = vapply(data, p_value, 1)
+    Parameter = names(model_data),
+    p = vapply(model_data, p_value, 1)
   )
 }
 
@@ -154,9 +152,7 @@ p_value.list <- function(model, method = NULL, verbose = TRUE, ...) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     p_value(model, method = method)
-  } else {
-    if (isTRUE(verbose)) {
-      insight::format_warning("Could not extract p-values from model object.")
-    }
+  } else if (isTRUE(verbose)) {
+    insight::format_warning("Could not extract p-values from model object.")
   }
 }
