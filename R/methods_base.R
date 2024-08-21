@@ -26,14 +26,13 @@ model_parameters.data.frame <- function(model,
 #' @rdname standard_error
 #' @export
 standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
-  if (force) {
-    standard_error(as.numeric(model), ...)
-  } else {
+  if (!force) {
     if (verbose) {
       insight::format_warning("Can't compute standard error of non-numeric variables.")
     }
     return(NA)
   }
+  standard_error(as.numeric(model), ...)
 }
 
 
