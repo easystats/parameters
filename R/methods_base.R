@@ -1,9 +1,13 @@
 #' @rdname model_parameters.stanreg
 #' @export
-model_parameters.data.frame <- function(model, as_draws = FALSE, verbose = TRUE, ...) {
+model_parameters.data.frame <- function(model,
+                                        as_draws = FALSE,
+                                        exponentiate = FALSE,
+                                        verbose = TRUE,
+                                        ...) {
   # treat data frame as bootstraps/posteriors?
   if (isTRUE(as_draws)) {
-    return(model_parameters.draws(model, verbose = verbose, ...))
+    return(model_parameters.draws(model, exponentiate = exponentiate, verbose = verbose, ...))
   }
   if (isTRUE(verbose)) {
     insight::format_warning(
@@ -22,14 +26,13 @@ model_parameters.data.frame <- function(model, as_draws = FALSE, verbose = TRUE,
 #' @rdname standard_error
 #' @export
 standard_error.factor <- function(model, force = FALSE, verbose = TRUE, ...) {
-  if (force) {
-    standard_error(as.numeric(model), ...)
-  } else {
+  if (!force) {
     if (verbose) {
       insight::format_warning("Can't compute standard error of non-numeric variables.")
     }
     return(NA)
   }
+  standard_error(as.numeric(model), ...)
 }
 
 
@@ -55,10 +58,8 @@ standard_error.list <- function(model, verbose = TRUE, ...) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     standard_error(model)
-  } else {
-    if (isTRUE(verbose)) {
-      insight::print_color("\nCould not extract standard errors from model object.\n", "red")
-    }
+  } else if (isTRUE(verbose)) {
+    insight::print_color("\nCould not extract standard errors from model object.\n", "red")
   }
 }
 
@@ -136,10 +137,10 @@ p_value.numeric <- function(model, null = 0, ...) {
 
 #' @export
 p_value.data.frame <- function(model, ...) {
-  data <- model[vapply(model, is.numeric, TRUE)]
+  model_data <- model[vapply(model, is.numeric, TRUE)]
   .data_frame(
-    Parameter = names(data),
-    p = vapply(data, p_value, 1)
+    Parameter = names(model_data),
+    p = vapply(model_data, p_value, 1)
   )
 }
 
@@ -150,9 +151,7 @@ p_value.list <- function(model, method = NULL, verbose = TRUE, ...) {
     model <- model$gam
     class(model) <- c("gam", "lm", "glm")
     p_value(model, method = method)
-  } else {
-    if (isTRUE(verbose)) {
-      insight::format_warning("Could not extract p-values from model object.")
-    }
+  } else if (isTRUE(verbose)) {
+    insight::format_warning("Could not extract p-values from model object.")
   }
 }

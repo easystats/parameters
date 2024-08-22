@@ -5,6 +5,9 @@
 * Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
   now calls `insight::get_df()`.
 
+* `model_parameters()` for data frames and `draws` objects from package
+  *posterior* also gets an `exponentiate` argument.
+
 ## Bug fixes
 
 * Fixed issue with warning for spuriously high coefficients for Stan-models

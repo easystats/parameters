@@ -8,6 +8,7 @@ model_parameters.draws <- function(model,
                                    test = "pd",
                                    rope_range = "default",
                                    rope_ci = 0.95,
+                                   exponentiate = FALSE,
                                    keep = NULL,
                                    drop = NULL,
                                    verbose = TRUE,
@@ -32,6 +33,9 @@ model_parameters.draws <- function(model,
     verbose = verbose,
     ...
   )
+
+  # exponentiate coefficients and SE/CI, if requested
+  params <- .exponentiate_parameters(params, exponentiate = exponentiate)
 
   attr(params, "ci") <- ci
   attr(params, "object_name") <- insight::safe_deparse_symbol(substitute(model))
