@@ -91,6 +91,9 @@
       c("intercept", "location", "scale"),
       lengths(model[c("Alpha", "beta", "zeta")])
     )
+  } else if (inherits(model, "ordinal_weightit")) {
+    intercept_groups <- rep("conditional", nrow(parameters))
+    intercept_groups[grep("|", parameters$Parameter, fixed = TRUE)] <- "intercept"
   } else {
     intercept_groups <- NULL
   }
@@ -173,7 +176,6 @@
 
   # ==== test statistic - fix values for robust vcov
 
-
   # deprecated argument `robust = TRUE`
   if (!is.null(vcov) || isTRUE(dots[["robust"]])) {
     parameters$Statistic <- parameters$Estimate / parameters$SE
@@ -223,7 +225,7 @@
   if (inherits(model, "polr") && !is.null(intercept_groups)) {
     parameters$Component <- "beta"
     parameters$Component[intercept_groups] <- "alpha"
-  } else if (inherits(model, c("clm", "clm2")) && !is.null(intercept_groups)) {
+  } else if (inherits(model, c("clm", "clm2", "ordinal_weightit")) && !is.null(intercept_groups)) {
     parameters$Component <- intercept_groups
   }
 

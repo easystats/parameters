@@ -1,5 +1,10 @@
 # parameters 0.22.2
 
+## New supported models
+
+* Support for models `glm_weightit`, `multinom_weightit` and `ordinal_weightit`
+  from package *WeightIt*.
+
 ## Changes
 
 * Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
