@@ -176,15 +176,26 @@ or \strong{clubSandwich} packages. Please refer to their documentation (e.g.,
 \code{?sandwich::vcovHAC}) to see the list of available arguments.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to
+\code{bootstrap_model()}. Further non-documented arguments are \code{digits},
+\code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of digits for
+the output. If \code{s_value = TRUE}, the p-value will be replaced by the
+S-value in the output (cf. \emph{Rafi and Greenland 2020}). \code{pd} adds an
+additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). \code{groups} can be used to group
+coefficients. It will be passed to the print-method, or can directly be
+used in \code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+Furthermore, see 'Examples' for this function. For developers, whose
+interest mainly is to get a "tidy" data frame of model summaries, it is
+recommended to set \code{pretty_names = FALSE} to speed up computation of the
+summary table.}
 }
 \value{
 A data frame of indices related to the model's parameters.
 }
 \description{
-Extract and compute indices and measures to describe parameters of (general)
-linear models (GLMs).
+Extract and compute indices and measures to describe parameters
+of (generalized) linear models (GLMs).
 }
 \section{Confidence intervals and approximation of degrees of freedom}{
 
@@ -376,6 +387,11 @@ model_parameters(model,
 # different p-value style in output
 model_parameters(model, p_digits = 5)
 model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
+
+# report S-value or probability of direction for parameters
+model_parameters(model, s_value = TRUE)
+model_parameters(model, pd = TRUE)
+
 \donttest{
 # logistic regression model
 model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")
@@ -396,6 +412,6 @@ model_parameters(model)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[insight:standardize_names]{insight::standardize_names()}} to
-rename columns into a consistent, standardized naming scheme.
+\code{\link[insight:standardize_names]{insight::standardize_names()}} to rename columns into a
+consistent, standardized naming scheme.
 }

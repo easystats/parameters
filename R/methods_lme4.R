@@ -33,8 +33,20 @@
 #'   intervals will be included. Set explicitly to `TRUE` or `FALSE` to enforce
 #'   or omit calculation of confidence intervals.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`.
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
+#'   `bootstrap_model()`. Further non-documented arguments are `digits`,
+#'   `p_digits`, `ci_digits` and `footer_digits` to set the number of digits for
+#'   the output. If `s_value = TRUE`, the p-value will be replaced by the
+#'   S-value in the output (cf. _Rafi and Greenland 2020_). `pd` adds an
+#'   additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
+#'   coefficients. It will be passed to the print-method, or can directly be
+#'   used in `print()`, see documentation in [`print.parameters_model()`].
+#'   Furthermore, see 'Examples' in [`model_parameters.default()`]. For
+#'   developers, whose interest mainly is to get a "tidy" data frame of model
+#'   summaries, it is recommended to set `pretty_names = FALSE` to speed up
+#'   computation of the summary table.
+#'
 #' @inheritParams model_parameters.default
 #' @inheritParams model_parameters.stanreg
 #'

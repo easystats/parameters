@@ -41,10 +41,10 @@
 #'   the number of digits for the output. If `s_value = TRUE`, the p-value will
 #'   be replaced by the S-value in the output (cf. _Rafi and Greenland 2020_).
 #'   `pd` adds an additional column with the _probability of direction_ (see
-#'   [bayestestR::p_direction()] for details). `groups` can be used to group
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
 #'   coefficients. It will be passed to the print-method, or can directly be used
-#'   in `print()`, see documentation in [print.parameters_model()]. Furthermore,
-#'   see 'Examples' in [model_parameters.default()]. For developers, whose
+#'   in `print()`, see documentation in [`print.parameters_model()`]. Furthermore,
+#'   see 'Examples' in [`model_parameters.default()`]. For developers, whose
 #'   interest mainly is to get a "tidy" data frame of model summaries, it is
 #'   recommended to set `pretty_names = FALSE` to speed up computation of the
 #'   summary table.
@@ -331,10 +331,11 @@ model_parameters <- function(model, ...) {
 parameters <- model_parameters
 
 
-#' Parameters from (General) Linear Models
+#' @title Parameters from (General) Linear Models
+#' @name model_parameters.default
 #'
-#' Extract and compute indices and measures to describe parameters of (general)
-#' linear models (GLMs).
+#' @description Extract and compute indices and measures to describe parameters
+#' of (generalized) linear models (GLMs).
 #'
 #' @param model Model object.
 #' @param ci Confidence Interval (CI) level. Default to `0.95` (`95%`).
@@ -407,14 +408,25 @@ parameters <- model_parameters
 #'   `$Parameter` column of the parameters table to get the exact parameter
 #'   names.
 #' @param ... Arguments passed to or from other methods. For instance, when
-#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are
-#'   passed down to `bootstrap_model()`.
+#'   `bootstrap = TRUE`, arguments like `type` or `parallel` are passed down to
+#'   `bootstrap_model()`. Further non-documented arguments are `digits`,
+#'   `p_digits`, `ci_digits` and `footer_digits` to set the number of digits for
+#'   the output. If `s_value = TRUE`, the p-value will be replaced by the
+#'   S-value in the output (cf. _Rafi and Greenland 2020_). `pd` adds an
+#'   additional column with the _probability of direction_ (see
+#'   [`bayestestR::p_direction()`] for details). `groups` can be used to group
+#'   coefficients. It will be passed to the print-method, or can directly be
+#'   used in `print()`, see documentation in [`print.parameters_model()`].
+#'   Furthermore, see 'Examples' for this function. For developers, whose
+#'   interest mainly is to get a "tidy" data frame of model summaries, it is
+#'   recommended to set `pretty_names = FALSE` to speed up computation of the
+#'   summary table.
 #' @param drop See `keep`.
 #' @param verbose Toggle warnings and messages.
 #' @inheritParams standard_error
 #'
-#' @seealso [`insight::standardize_names()`] to
-#'   rename columns into a consistent, standardized naming scheme.
+#' @seealso [`insight::standardize_names()`] to rename columns into a
+#'   consistent, standardized naming scheme.
 #'
 #' @inheritSection model_parameters Confidence intervals and approximation of degrees of freedom
 #'
@@ -441,6 +453,11 @@ parameters <- model_parameters
 #' # different p-value style in output
 #' model_parameters(model, p_digits = 5)
 #' model_parameters(model, digits = 3, ci_digits = 4, p_digits = "scientific")
+#'
+#' # report S-value or probability of direction for parameters
+#' model_parameters(model, s_value = TRUE)
+#' model_parameters(model, pd = TRUE)
+#'
 #' \donttest{
 #' # logistic regression model
 #' model <- glm(vs ~ wt + cyl, data = mtcars, family = "binomial")

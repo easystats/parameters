@@ -94,8 +94,19 @@ as \code{method}).}
 \item{n_max}{Maximal number of clusters to test.}
 
 \item{...}{Arguments passed to or from other methods. For instance, when
-\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are
-passed down to \code{bootstrap_model()}.}
+\code{bootstrap = TRUE}, arguments like \code{type} or \code{parallel} are passed down to
+\code{bootstrap_model()}. Further non-documented arguments are \code{digits},
+\code{p_digits}, \code{ci_digits} and \code{footer_digits} to set the number of digits for
+the output. If \code{s_value = TRUE}, the p-value will be replaced by the
+S-value in the output (cf. \emph{Rafi and Greenland 2020}). \code{pd} adds an
+additional column with the \emph{probability of direction} (see
+\code{\link[bayestestR:p_direction]{bayestestR::p_direction()}} for details). \code{groups} can be used to group
+coefficients. It will be passed to the print-method, or can directly be
+used in \code{print()}, see documentation in \code{\link[=print.parameters_model]{print.parameters_model()}}.
+Furthermore, see 'Examples' for this function. For developers, whose
+interest mainly is to get a "tidy" data frame of model summaries, it is
+recommended to set \code{pretty_names = FALSE} to speed up computation of the
+summary table.}
 
 \item{clustering_function, gap_method}{Other arguments passed to other
 functions. \code{clustering_function} is used by \code{fviz_nbclust()} and
