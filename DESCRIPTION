@@ -1,7 +1,7 @@
 Type: Package
 Package: parameters
 Title: Processing of Model Parameters
-Version: 0.22.1.8
+Version: 0.22.1.9
 Authors@R:
     c(person(given = "Daniel",
              family = "Lüdecke",
@@ -108,6 +108,7 @@ Suggests:
     ClassDiscovery,
     clubSandwich,
     cluster,
+    cobalt,
     coda,
     coxme,
     cplm,
@@ -207,6 +208,7 @@ Suggests:
     truncreg,
     vdiffr,
     VGAM,
+    WeightIt,
     withr,
     WRS2
 VignetteBuilder:
