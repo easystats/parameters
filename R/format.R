@@ -933,7 +933,7 @@ format.parameters_sem <- function(x,
     if (!.is_valid_exponentiate_argument(exponentiate)) {
       if (isTRUE(.additional_arguments(x, "log_link", FALSE))) {
         msg <- "The model has a log- or logit-link. Consider using `exponentiate = TRUE` to interpret coefficients as ratios." # nolint
-        # we only check for exp(coef), so exp() here soince coefficients are on logit-scale
+        # we only check for exp(coef), so exp() here since coefficients are on logit-scale
         if (!is.null(spurious_coefficients)) {
           spurious_coefficients <- exp(spurious_coefficients)
         }
