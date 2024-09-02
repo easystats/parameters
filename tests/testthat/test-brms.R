@@ -10,7 +10,7 @@ withr::with_options(
   list(parameters_warning_exponentiate = TRUE),
   {
     test_that("mp, footer exp", {
-      m <- insight::download_model("brms_bernoulli_1")
+      m <- suppressWarnings(insight::download_model("brms_bernoulli_1"))
       out <- parameters::model_parameters(m, exponentiate = FALSE)
       expect_snapshot(print(out))
       out <- parameters::model_parameters(m, exponentiate = TRUE)
