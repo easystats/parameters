@@ -2,7 +2,7 @@ skip_if_not_installed("withr")
 skip_if(getRversion() < "4.0.0")
 
 withr::with_options(
-  list("parameters_interaction" = "*"),
+  list(parameters_interaction = "*"),
   {
     lm1 <- lm(Sepal.Length ~ Species, data = iris)
     lm2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)

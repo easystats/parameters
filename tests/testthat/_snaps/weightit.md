@@ -24,6 +24,9 @@
       
       Uncertainty intervals (equal-tailed) and p-values (two-tailed) computed
         using a Wald z-distribution approximation.
+      
+      The model has a log- or logit-link. Consider using `exponentiate =
+        TRUE` to interpret coefficients as ratios.
 
 # weightit, ordinal
 
