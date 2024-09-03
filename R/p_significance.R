@@ -12,7 +12,7 @@ bayestestR::p_significance
 #' negligible effect in the median's direction, considering a parameter's _full_
 #' confidence interval. In comparison the the [`equivalence_test()`] function,
 #' where the *SGPV* (second generation p-value) describes the proportion of the
-#' confidence interval that is _inside_ the ROPE, the value returned by
+#' _full_ confidence interval that is _inside_ the ROPE, the value returned by
 #' `p_significance()` describes the _larger_ proportion of the _full_ confidence
 #' interval that is _outside_ the ROPE. This makes `p_significance()` comparable
 #' to [`bayestestR::p_direction()`], however, while `p_direction()` compares to

@@ -35,7 +35,7 @@ the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's \emph{full}
 confidence interval. In comparison the the \code{\link[=equivalence_test]{equivalence_test()}} function,
 where the \emph{SGPV} (second generation p-value) describes the proportion of the
-confidence interval that is \emph{inside} the ROPE, the value returned by
+\emph{full} confidence interval that is \emph{inside} the ROPE, the value returned by
 \code{p_significance()} describes the \emph{larger} proportion of the \emph{full} confidence
 interval that is \emph{outside} the ROPE. This makes \code{p_significance()} comparable
 to \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}, however, while \code{p_direction()} compares to
