@@ -7,7 +7,7 @@ bayestestR::p_significance
 #' @title Practical Significance (ps)
 #'
 #' @description Compute the probability of **Practical Significance**
-#' (***ps***), which can be conceptualized as a unidirectional equivalence test.
+#' (*ps*), which can be conceptualized as a unidirectional equivalence test.
 #' It returns the probability that an effect is above a given threshold
 #' corresponding to a negligible effect in the median's direction, considering
 #' a parameter's confidence interval. In comparison the the [`equivalence_test()`]
@@ -100,7 +100,7 @@ print.p_significance_lm <- function(x, digits = 2, p_digits = 3, ...) {
   }
   caption <- sprintf(
     "Practical Significance (threshold: %s)",
-    paste(insight::format_value(threshold, digits = 2), collapse = ", ")
+    toString(insight::format_value(threshold, digits = 2))
   )
   x$ps <- insight::format_p(x$ps, name = "ps", digits = p_digits)
   x <- insight::format_table(x, digits = digits, p_digits = p_digits)

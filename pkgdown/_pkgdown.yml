@@ -62,7 +62,7 @@ reference:
       - equivalence_test.lm
       - p_calibrate
       - p_function
-      - p_significance
+      - p_significance.lm
 
   - title: "Parameter Sampling"
     contents:
