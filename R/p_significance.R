@@ -6,14 +6,14 @@ bayestestR::p_significance
 
 #' @title Practical Significance (ps)
 #'
-#' @description Compute the probability of **Practical Significance**
-#' (*ps*), which can be conceptualized as a unidirectional equivalence test.
-#' It returns the probability that an effect is above a given threshold
-#' corresponding to a negligible effect in the median's direction, considering
-#' a parameter's confidence interval. In comparison the the [`equivalence_test()`]
-#' function, where the *SGPV* (second generation p-value) describes the proportion
-#' of the confidence interval that is _inside_ the ROPE, the value returned by
-#' `p_significance()` describes the _larger_ proportion of the confidence
+#' @description Compute the probability of **Practical Significance** (*ps*),
+#' which can be conceptualized as a unidirectional equivalence test. It returns
+#' the probability that an effect is above a given threshold corresponding to a
+#' negligible effect in the median's direction, considering a parameter's _full_
+#' confidence interval. In comparison the the [`equivalence_test()`] function,
+#' where the *SGPV* (second generation p-value) describes the proportion of the
+#' confidence interval that is _inside_ the ROPE, the value returned by
+#' `p_significance()` describes the _larger_ proportion of the _full_ confidence
 #' interval that is _outside_ the ROPE. This makes `p_significance()` comparable
 #' to [`bayestestR::p_direction()`], however, while `p_direction()` compares to
 #' a point-null by default, `p_significance()` compares to a range-null.
@@ -27,9 +27,9 @@ bayestestR::p_significance
 #' @seealso For more details, see [`bayestestR::p_significance()`]. See also
 #' [`equivalence_test()`].
 #'
-#' @details `p_significance()` returns the proportion of the confidence interval
-#' range (assuming a normally distributed, equal-tailed interval) that is
-#' outside a certain range (the negligible effect, or ROPE, see argument
+#' @details `p_significance()` returns the proportion of the _full_ confidence
+#' interval range (assuming a normally distributed, equal-tailed interval) that
+#' is outside a certain range (the negligible effect, or ROPE, see argument
 #' `threshold`). If there are values of the distribution both below and above
 #' the ROPE, `p_significance()` returns the higher probability of a value being
 #' outside the ROPE. Typically, this value should be larger than 0.5 to indicate
@@ -37,6 +37,39 @@ bayestestR::p_significance
 #' rather large compared to the range of the confidence interval,
 #' `p_significance()` will be less than 0.5, which indicates no clear practical
 #' significance.
+#'
+#' Note that the assumed interval, which is used to calculate the practical
+#' significance, is an _approximation_ of the _full interval_ based on the
+#' chosen confidence level. For example, if the 95% confidence interval of a
+#' coefficient ranges from -1 to 1, the underlying _full (normally distributed)
+#' interval_ approximately ranges from -1.9 to 1.9, see also following code:
+#'
+#' ```
+#' # simulate full normal distribution
+#' out <- bayestestR::distribution_normal(10000, 0, 0.5)
+#' # range of "full" distribution
+#' range(out)
+#' # range of 95% CI
+#' round(quantile(out, probs = c(0.025, 0.975)), 2)
+#' ```
+#'
+#' This ensures that the practical significance always refers to the general
+#' compatible parameter space of coefficients. Therefore, the _full interval_ is
+#' similar to a Bayesian posterior distribution of an equivalent Bayesian model,
+#' see following code:
+#'
+#' ```
+#' library(bayestestR)
+#' library(brms)
+#' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+#' m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+#' # probability of significance (ps) for frequentist model
+#' p_significance(m, threshold = 0.6) # ROPE for mpg as outcome
+#' # similar to ps of Bayesian models
+#' p_significance(m2)
+#' # similar to ps of simulated draws / bootstrap samples
+#' p_significance(simulate_model(m))
+#' ```
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #' implemented in the [**see**-package](https://easystats.github.io/see/).

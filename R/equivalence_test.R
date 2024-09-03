@@ -104,8 +104,42 @@ bayestestR::equivalence_test
 #' Second generation p-values (SGPV) were proposed as a statistic that
 #' represents _the proportion of data-supported hypotheses that are also null
 #' hypotheses_ _(Blume et al. 2018, Lakens and Delacre 2020)_. It represents the
-#' proportion of the confidence interval range (assuming a normally distributed,
-#' equal-tailed interval) that is inside the ROPE.
+#' proportion of the _full_ confidence interval range (assuming a normally
+#' distributed, equal-tailed interval) that is inside the ROPE.
+#'
+#' Note that the assumed interval, which is used to calculate the SGPV, is an
+#' _approximation_ of the _full interval_ based on the chosen confidence level.
+#' For example, if the 95% confidence interval of a coefficient ranges from -1
+#' to 1, the underlying _full (normally distributed) interval_ approximately
+#' ranges from -1.9 to 1.9, see also following code:
+#'
+#' ```
+#' # simulate full normal distribution
+#' out <- bayestestR::distribution_normal(10000, 0, 0.5)
+#' # range of "full" distribution
+#' range(out)
+#' # range of 95% CI
+#' round(quantile(out, probs = c(0.025, 0.975)), 2)
+#' ```
+#'
+#' This ensures that the SGPV always refers to the general compatible parameter
+#' space of coefficients, independent from the confidence interval chosen for
+#' testing practical equivalence. Therefore, the SGPV of the _full interval_ is
+#' similar to the ROPE coverage of Bayesian equivalence tests, see following
+#' code:
+#'
+#' ```
+#' library(bayestestR)
+#' library(brms)
+#' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+#' m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+#' # SGPV for frequentist models
+#' equivalence_test(m)
+#' # similar to ROPE coverage of Bayesian models
+#' equivalence_test(m2)
+#' # similar to ROPE coverage of simulated draws / bootstrap samples
+#' equivalence_test(simulate_model(m))
+#' ```
 #'
 #' ## ROPE range
 #' Some attention is required for finding suitable values for the ROPE limits

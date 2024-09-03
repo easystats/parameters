@@ -149,8 +149,40 @@ practical equivalence and accept the alternative hypothesis.
 Second generation p-values (SGPV) were proposed as a statistic that
 represents \emph{the proportion of data-supported hypotheses that are also null
 hypotheses} \emph{(Blume et al. 2018, Lakens and Delacre 2020)}. It represents the
-proportion of the confidence interval range (assuming a normally distributed,
-equal-tailed interval) that is inside the ROPE.
+proportion of the \emph{full} confidence interval range (assuming a normally
+distributed, equal-tailed interval) that is inside the ROPE.
+
+Note that the assumed interval, which is used to calculate the SGPV, is an
+\emph{approximation} of the \emph{full interval} based on the chosen confidence level.
+For example, if the 95\% confidence interval of a coefficient ranges from -1
+to 1, the underlying \emph{full (normally distributed) interval} approximately
+ranges from -1.9 to 1.9, see also following code:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# simulate full normal distribution
+out <- bayestestR::distribution_normal(10000, 0, 0.5)
+# range of "full" distribution
+range(out)
+# range of 95\% CI
+round(quantile(out, probs = c(0.025, 0.975)), 2)
+}\if{html}{\out{</div>}}
+
+This ensures that the SGPV always refers to the general compatible parameter
+space of coefficients, independent from the confidence interval chosen for
+testing practical equivalence. Therefore, the SGPV of the \emph{full interval} is
+similar to the ROPE coverage of Bayesian equivalence tests, see following
+code:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(bayestestR)
+library(brms)
+m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+# SGPV for frequentist models
+equivalence_test(m)
+# similar to ROPE coverage of Bayesian models
+equivalence_test(m2)
+# similar to ROPE coverage of simulated draws / bootstrap samples
+equivalence_test(simulate_model(m))
+}\if{html}{\out{</div>}}
 }
 
 \subsection{ROPE range}{
