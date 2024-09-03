@@ -235,18 +235,18 @@ lm(disp ~ ., data = mtcars) |>
 There is no standardized approach to drawing conclusions based on the
 available data and statistical models. A frequently chosen but also much
 criticized approach is to evaluate results based on their statistical
-significance (*Amrhein et al. 2017*).
+significance ((Amrhein, Korner-Nievergelt, & Roth, 2017)).
 
 A more sophisticated way would be to test whether estimated effects
 exceed the “smallest effect size of interest”, to avoid even the
 smallest effects being considered relevant simply because they are
 statistically significant, but clinically or practically irrelevant
-(*Lakens et al. 2018, Lakens 2024*). A rather unconventional approach,
-which is nevertheless advocated by various authors, is to interpret
-results from classical regression models in terms of probabilities,
-similar to the usual approach in Bayesian statistics (*Greenland et
-al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and Hjort
-2003; Vos 2022*).
+(Lakens, 2024; Lakens, Scheel, & Isager, 2018). A rather unconventional
+approach, which is nevertheless advocated by various authors, is to
+interpret results from classical regression models in terms of
+probabilities, similar to the usual approach in Bayesian statistics
+((Greenland, Rafi, Matthews, & Higgs, 2022; Rafi & Greenland, 2020;
+Schweder, 2018; Schweder & Hjort, 2003; Vos & Holbert, 2022)).
 
 The *parameters* package provides several options or functions to aid
 statistical inference. These are, for example:
@@ -275,12 +275,13 @@ statistical inference. These are, for example:
   many functions from the **bayestestR** package.
 
 Most of the above shown options or functions derive from methods
-originally implemented for Bayesian models (*Makowski et al. 2019*).
-However, assuming that model assumptions are met (which means, the model
-fits well to the data, the correct model is chosen that reflectsa the
-data generating process (distributional model family) etc.), it seems
-appropriate to interpret results from classical frequentist models in a
-“Bayesian way” (more details: documentation in \[`p_function()`\]).
+originally implemented for Bayesian models ((Makowski, Ben-Shachar, &
+Lüdecke, 2019)). However, assuming that model assumptions are met (which
+means, the model fits well to the data, the correct model is chosen that
+reflects the data generating process (distributional model family)
+etc.), it seems appropriate to interpret results from classical
+frequentist models in a “Bayesian way” (more details: documentation in
+[`p_function()`](https://easystats.github.io/parameters/reference/p_function.html)).
 
 ## Citation
 
@@ -315,3 +316,86 @@ Please note that the parameters project is released with a [Contributor
 Code of
 Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
 By contributing to this project, you agree to abide by its terms.
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0" line-spacing="2">
+
+<div id="ref-amrhein_earth_2017" class="csl-entry">
+
+Amrhein, V., Korner-Nievergelt, F., & Roth, T. (2017). The earth is flat
+( *p* \> 0.05): Significance thresholds and the crisis of unreplicable
+research. *PeerJ*, *5*, e3544. <https://doi.org/10.7717/peerj.3544>
+
+</div>
+
+<div id="ref-greenland_aid_2022" class="csl-entry">
+
+Greenland, S., Rafi, Z., Matthews, R., & Higgs, M. (2022). *To Aid
+Scientific Inference, Emphasize Unconditional Compatibility Descriptions
+of Statistics*. Retrieved from <http://arxiv.org/abs/1909.08583>
+
+</div>
+
+<div id="ref-lakens_improving_2022" class="csl-entry">
+
+Lakens, D. (2024). *Improving Your Statistical Inferences*.
+<https://doi.org/10.5281/ZENODO.6409077>
+
+</div>
+
+<div id="ref-lakens2020equivalence" class="csl-entry">
+
+Lakens, D., Scheel, A. M., & Isager, P. M. (2018). Equivalence testing
+for psychological research: A tutorial. *Advances in Methods and
+Practices in Psychological Science*, *1*(2), 259–269.
+<https://doi.org/10.1177/2515245918770963>
+
+</div>
+
+<div id="ref-makowski2019bayetestR" class="csl-entry">
+
+Makowski, D., Ben-Shachar, M., & Lüdecke, D. (2019).
+<span class="nocase">bayestestR</span>: Describing effects and their
+uncertainty, existence and significance within the bayesian framework.
+*Journal of Open Source Software*, *4*(40), 1541.
+<https://doi.org/10.21105/joss.01541>
+
+</div>
+
+<div id="ref-rafi_semantic_2020" class="csl-entry">
+
+Rafi, Z., & Greenland, S. (2020). Semantic and cognitive tools to aid
+statistical science: Replace confidence and significance by
+compatibility and surprise. *BMC Medical Research Methodology*, *20*(1),
+244. <https://doi.org/10.1186/s12874-020-01105-9>
+
+</div>
+
+<div id="ref-schweder_confidence_2018" class="csl-entry">
+
+Schweder, T. (2018). Confidence is epistemic probability for empirical
+science. *Journal of Statistical Planning and Inference*, *195*,
+116–125. <https://doi.org/10.1016/j.jspi.2017.09.016>
+
+</div>
+
+<div id="ref-schweder_frequentist_2003" class="csl-entry">
+
+Schweder, T., & Hjort, N. L. (2003). Frequentist Analogues of Priors and
+Posteriors. In B. Stigum (Ed.), *Econometrics and the Philosophy of
+Economics: Theory-Data Confrontations in Economics* (pp. 285–217).
+Retrieved from <https://www.duo.uio.no/handle/10852/10425>
+
+</div>
+
+<div id="ref-vos_frequentist_2022" class="csl-entry">
+
+Vos, P., & Holbert, D. (2022). Frequentist statistical inference without
+repeated sampling. *Synthese*, *200*(2), 89.
+<https://doi.org/10.1007/s11229-022-03560-x>
+
+</div>
+
+</div>

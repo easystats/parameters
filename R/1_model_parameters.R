@@ -294,7 +294,7 @@
 #' (*Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
 #' Hjort 2003; Vos 2022*).
 #'
-#' The _parameters_ package provides several options or functions to aid
+#' The **parameters** package provides several options or functions to aid
 #' statistical inference. These are, for example:
 #' - [`equivalence_test()`], to compute the (conditional) equivalence test for
 #'   frequentist models
@@ -317,7 +317,7 @@
 #' Most of the above shown options or functions derive from methods originally
 #' implemented for Bayesian models (*Makowski et al. 2019*). However, assuming
 #' that model assumptions are met (which means, the model fits well to the data,
-#' the correct model is chosen that reflectsa the data generating process
+#' the correct model is chosen that reflects the data generating process
 #' (distributional model family) etc.), it seems appropriate to interpret
 #' results from classical frequentist models in a "Bayesian way" (more details:
 #' documentation in [`p_function()`]).
@@ -350,7 +350,7 @@
 #'     Indices of Effect Existence and Significance in the Bayesian Framework.
 #'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
 #'
-#'   - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+#'   - Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 #'     regression models.
 #'
 #'   - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical

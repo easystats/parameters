@@ -339,7 +339,7 @@ probabilities, similar to the usual approach in Bayesian statistics
 (\emph{Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
 Hjort 2003; Vos 2022}).
 
-The \emph{parameters} package provides several options or functions to aid
+The \strong{parameters} package provides several options or functions to aid
 statistical inference. These are, for example:
 \itemize{
 \item \code{\link[=equivalence_test]{equivalence_test()}}, to compute the (conditional) equivalence test for
@@ -364,7 +364,7 @@ the \strong{bayestestR} package.
 Most of the above shown options or functions derive from methods originally
 implemented for Bayesian models (\emph{Makowski et al. 2019}). However, assuming
 that model assumptions are met (which means, the model fits well to the data,
-the correct model is chosen that reflectsa the data generating process
+the correct model is chosen that reflects the data generating process
 (distributional model family) etc.), it seems appropriate to interpret
 results from classical frequentist models in a "Bayesian way" (more details:
 documentation in \code{\link[=p_function]{p_function()}}).
@@ -451,7 +451,7 @@ in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
 \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
 Indices of Effect Existence and Significance in the Bayesian Framework.
 Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
-\item Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
+\item Neter, J., Wasserman, W., and Kutner, M. H. (1989). Applied linear
 regression models.
 \item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
 science: replace confidence and significance by compatibility and surprise.
