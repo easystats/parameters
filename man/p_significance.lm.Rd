@@ -13,10 +13,12 @@
 negligible effect, which can have following possible values:
 \itemize{
 \item \code{"default"}, in which case the range is set to \code{0.1} if input is a vector,
-and based on \code{\link[bayestestR:rope_range]{rope_range()}} if a Bayesian model is provided.
+and based on \code{\link[bayestestR:rope_range]{rope_range()}} if a (Bayesian) model is provided.
 \item a single numeric value (e.g., 0.1), which is used as range around zero
-(i.e. the threshold range is set to -0.1 and 0.1)
-\item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}).
+(i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
+interval)
+\item a numeric vector of length two (e.g., \code{c(-0.2, 0.1)}), useful for
+asymmetric intervals.
 }}
 
 \item{ci}{Confidence Interval (CI) level. Default to \code{0.95} (\verb{95\%}).}
@@ -77,7 +79,7 @@ library(brms)
 m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 # probability of significance (ps) for frequentist model
-p_significance(m, threshold = 0.6) # ROPE for mpg as outcome
+p_significance(m)
 # similar to ps of Bayesian models
 p_significance(m2)
 # similar to ps of simulated draws / bootstrap samples

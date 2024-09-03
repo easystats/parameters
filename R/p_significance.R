@@ -64,7 +64,7 @@ bayestestR::p_significance
 #' m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
 #' # probability of significance (ps) for frequentist model
-#' p_significance(m, threshold = 0.6) # ROPE for mpg as outcome
+#' p_significance(m)
 #' # similar to ps of Bayesian models
 #' p_significance(m2)
 #' # similar to ps of simulated draws / bootstrap samples
@@ -101,6 +101,11 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     .generate_posterior_from_ci(ci, ci_range)
   }))
   colnames(posterior) <- out$Parameter
+
+  # calculate the ROPE range
+  if (all(threshold == "default")) {
+    threshold <- bayestestR::rope_range(x, verbose = verbose)
+  }
 
   out$ps <- as.numeric(bayestestR::p_significance(
     posterior,
