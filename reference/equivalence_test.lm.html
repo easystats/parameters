@@ -225,8 +225,34 @@ practical equivalence and accept the alternative hypothesis.</p>
 <p>Second generation p-values (SGPV) were proposed as a statistic that
 represents <em>the proportion of data-supported hypotheses that are also null
 hypotheses</em> <em>(Blume et al. 2018, Lakens and Delacre 2020)</em>. It represents the
-proportion of the confidence interval range (assuming a normally distributed,
-equal-tailed interval) that is inside the ROPE.</p>
+proportion of the <em>full</em> confidence interval range (assuming a normally
+distributed, equal-tailed interval) that is inside the ROPE.</p>
+<p>Note that the assumed interval, which is used to calculate the SGPV, is an
+<em>approximation</em> of the <em>full interval</em> based on the chosen confidence level.
+For example, if the 95% confidence interval of a coefficient ranges from -1
+to 1, the underlying <em>full (normally distributed) interval</em> approximately
+ranges from -1.9 to 1.9, see also following code:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># simulate full normal distribution</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>out <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># range of "full" distribution</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">range</span>(out)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># range of 95% CI</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">quantile</span>(out, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)), <span class="dv">2</span>)</span></code></pre><p></p></div>
+<p>This ensures that the SGPV always refers to the general compatible parameter
+space of coefficients, independent from the confidence interval chosen for
+testing practical equivalence. Therefore, the SGPV of the <em>full interval</em> is
+similar to the ROPE coverage of Bayesian equivalence tests, see following
+code:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> gear <span class="sc">+</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(mpg <span class="sc">~</span> gear <span class="sc">+</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># SGPV for frequentist models</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">equivalence_test</span>(m)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># similar to ROPE coverage of Bayesian models</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">equivalence_test</span>(m2)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># similar to ROPE coverage of simulated draws / bootstrap samples</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">equivalence_test</span>(<span class="fu">simulate_model</span>(m))</span></code></pre><p></p></div>
 </div>
 
 <div class="section">
