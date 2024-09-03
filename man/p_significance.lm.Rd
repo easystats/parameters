@@ -29,22 +29,22 @@ and based on \code{\link[bayestestR:rope_range]{rope_range()}} if a Bayesian mod
 A data frame.
 }
 \description{
-Compute the probability of \strong{Practical Significance}
-(\emph{ps}), which can be conceptualized as a unidirectional equivalence test.
-It returns the probability that an effect is above a given threshold
-corresponding to a negligible effect in the median's direction, considering
-a parameter's confidence interval. In comparison the the \code{\link[=equivalence_test]{equivalence_test()}}
-function, where the \emph{SGPV} (second generation p-value) describes the proportion
-of the confidence interval that is \emph{inside} the ROPE, the value returned by
-\code{p_significance()} describes the \emph{larger} proportion of the confidence
+Compute the probability of \strong{Practical Significance} (\emph{ps}),
+which can be conceptualized as a unidirectional equivalence test. It returns
+the probability that an effect is above a given threshold corresponding to a
+negligible effect in the median's direction, considering a parameter's \emph{full}
+confidence interval. In comparison the the \code{\link[=equivalence_test]{equivalence_test()}} function,
+where the \emph{SGPV} (second generation p-value) describes the proportion of the
+confidence interval that is \emph{inside} the ROPE, the value returned by
+\code{p_significance()} describes the \emph{larger} proportion of the \emph{full} confidence
 interval that is \emph{outside} the ROPE. This makes \code{p_significance()} comparable
 to \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}, however, while \code{p_direction()} compares to
 a point-null by default, \code{p_significance()} compares to a range-null.
 }
 \details{
-\code{p_significance()} returns the proportion of the confidence interval
-range (assuming a normally distributed, equal-tailed interval) that is
-outside a certain range (the negligible effect, or ROPE, see argument
+\code{p_significance()} returns the proportion of the \emph{full} confidence
+interval range (assuming a normally distributed, equal-tailed interval) that
+is outside a certain range (the negligible effect, or ROPE, see argument
 \code{threshold}). If there are values of the distribution both below and above
 the ROPE, \code{p_significance()} returns the higher probability of a value being
 outside the ROPE. Typically, this value should be larger than 0.5 to indicate
@@ -52,6 +52,37 @@ practical significance. However, if the range of the negligible effect is
 rather large compared to the range of the confidence interval,
 \code{p_significance()} will be less than 0.5, which indicates no clear practical
 significance.
+
+Note that the assumed interval, which is used to calculate the practical
+significance, is an \emph{approximation} of the \emph{full interval} based on the
+chosen confidence level. For example, if the 95\% confidence interval of a
+coefficient ranges from -1 to 1, the underlying \emph{full (normally distributed)
+interval} approximately ranges from -1.9 to 1.9, see also following code:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# simulate full normal distribution
+out <- bayestestR::distribution_normal(10000, 0, 0.5)
+# range of "full" distribution
+range(out)
+# range of 95\% CI
+round(quantile(out, probs = c(0.025, 0.975)), 2)
+}\if{html}{\out{</div>}}
+
+This ensures that the practical significance always refers to the general
+compatible parameter space of coefficients. Therefore, the \emph{full interval} is
+similar to a Bayesian posterior distribution of an equivalent Bayesian model,
+see following code:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{library(bayestestR)
+library(brms)
+m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+# probability of significance (ps) for frequentist model
+p_significance(m, threshold = 0.6) # ROPE for mpg as outcome
+# similar to ps of Bayesian models
+p_significance(m2)
+# similar to ps of simulated draws / bootstrap samples
+p_significance(simulate_model(m))
+}\if{html}{\out{</div>}}
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
