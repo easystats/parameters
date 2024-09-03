@@ -698,6 +698,15 @@ equivalence_test.ggeffects <- function(x,
     # ci(out, ci = ci)
     # ci_range
     # -------------------------------------------------------------------------
+    # furthermore, using this approximation, following three approaches yield
+    # similar results:
+    # -------------------------------------------------------------------------
+    # m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+    # m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
+    # p_significance(m, threshold = 0.6) # the default for "mpg" as response
+    # p_significance(m2)
+    # p_significance(simulate_model(m))
+    # -------------------------------------------------------------------------
     sd = diff_ci / ((stats::qnorm((1 + ci) / 2) * (stats::qnorm(0.999975) / 2)))
   )
 }
