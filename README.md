@@ -31,11 +31,11 @@ of (model) objects from many different packages.
 badge](https://easystats.r-universe.dev/badges/parameters)](https://easystats.r-universe.dev)
 [![R-CMD-check](https://github.com/easystats/parameters/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/parameters/actions)
 
-| Type        | Source       | Command                                                                      |
-|-------------|--------------|------------------------------------------------------------------------------|
-| Release     | CRAN         | `install.packages("parameters")`                                             |
+| Type | Source | Command |
+|----|----|----|
+| Release | CRAN | `install.packages("parameters")` |
 | Development | r - universe | `install.packages("parameters", repos = "https://easystats.r-universe.dev")` |
-| Development | GitHub       | `remotes::install_github("easystats/parameters")`                            |
+| Development | GitHub | `remotes::install_github("easystats/parameters")` |
 
 > **Tip**
 >
@@ -229,6 +229,58 @@ lm(disp ~ ., data = mtcars) |>
 #> qsec        |      -14.68 |   6.14 | [ -27.31,  -2.05] | -2.39 | 0.024 
 #> carb        |      -28.75 |   5.60 | [ -40.28, -17.23] | -5.13 | < .001
 ```
+
+## Statistical inference - how to quantify evidence
+
+There is no standardized approach to drawing conclusions based on the
+available data and statistical models. A frequently chosen but also much
+criticized approach is to evaluate results based on their statistical
+significance (*Amrhein et al. 2017*).
+
+A more sophisticated way would be to test whether estimated effects
+exceed the “smallest effect size of interest”, to avoid even the
+smallest effects being considered relevant simply because they are
+statistically significant, but clinically or practically irrelevant
+(*Lakens et al. 2018, Lakens 2024*). A rather unconventional approach,
+which is nevertheless advocated by various authors, is to interpret
+results from classical regression models in terms of probabilities,
+similar to the usual approach in Bayesian statistics (*Greenland et
+al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and Hjort
+2003; Vos 2022*).
+
+The *parameters* package provides several options or functions to aid
+statistical inference. These are, for example:
+
+- [`equivalence_test()`](https://easystats.github.io/parameters/reference/equivalence_test.lm.html),
+  to compute the (conditional) equivalence test for frequentist models
+- [`p_significance()`](https://easystats.github.io/parameters/reference/p_significance.lm.html),
+  to compute the probability of *practical significance*, which can be
+  conceptualized as a unidirectional equivalence test
+- [`p_function()`](https://easystats.github.io/parameters/reference/p_function.html),
+  or *consonance function*, to compute p-values and compatibility
+  (confidence) intervals for statistical models
+- the `pd` argument (setting `pd = TRUE`) in `model_parameters()`
+  includes a column with the *probability of direction*, i.e. the
+  probability that a parameter is strictly positive or negative. See
+  [`bayestestR::p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html)
+  for details.
+- the `s_value` argument (setting `s_value = TRUE`) in
+  `model_parameters()` replaces the p-values with their related
+  *S*-values (*Rafi and Greenland 2020*)
+- finally, it is possible to generate distributions of model
+  coefficients by generating bootstrap-samples (setting
+  `bootstrap = TRUE`) or simulating draws from model coefficients using
+  [`simulate_model()`](https://easystats.github.io/parameters/reference/simulate_model.html).
+  These samples can then be treated as “posterior samples” and used in
+  many functions from the **bayestestR** package.
+
+Most of the above shown options or functions derive from methods
+originally implemented for Bayesian models (*Makowski et al. 2019*).
+However, assuming that model assumptions are met (which means, the model
+fits well to the data, the correct model is chosen that reflectsa the
+data generating process (distributional model family) etc.), it seems
+appropriate to interpret results from classical frequentist models in a
+“Bayesian way” (more details: documentation in \[`p_function()`\]).
 
 ## Citation
 

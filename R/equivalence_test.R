@@ -112,6 +112,8 @@ bayestestR::equivalence_test
 #' (argument `range`). See 'Details' in [bayestestR::rope_range()]
 #' for further information.
 #'
+#' @inheritSection model_parameters Statistical inference - how to quantify evidence
+#'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/parameters.html)
 #' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'

@@ -41,6 +41,8 @@ bayestestR::p_significance
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
+#' @inheritSection model_parameters Statistical inference - how to quantify evidence
+#'
 #' @return A data frame.
 #'
 #' @examplesIf requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0"
