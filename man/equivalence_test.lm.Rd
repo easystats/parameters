@@ -206,6 +206,7 @@ F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5
 }
 }
 \seealso{
-For more details, see \code{\link[bayestestR:equivalence_test]{bayestestR::equivalence_test()}}.
-Further readings can be found in the references.
+For more details, see \code{\link[bayestestR:equivalence_test]{bayestestR::equivalence_test()}}. Further
+readings can be found in the references. See also \code{\link[=p_significance]{p_significance()}} for
+a unidirectional equivalence test.
 }

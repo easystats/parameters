@@ -10,7 +10,13 @@ bayestestR::p_significance
 #' (***ps***), which can be conceptualized as a unidirectional equivalence test.
 #' It returns the probability that an effect is above a given threshold
 #' corresponding to a negligible effect in the median's direction, considering
-#' a parameter's confidence interval.
+#' a parameter's confidence interval. In comparison the the [`equivalence_test()`]
+#' function, where the *SGPV* (second generation p-value) describes the proportion
+#' of the confidence interval that is _inside_ the ROPE, the value returned by
+#' `p_significance()` describes the _larger_ proportion of the confidence
+#' interval that is _outside_ the ROPE. This makes `p_significance()` comparable
+#' to [`bayestestR::p_direction()`], however, while `p_direction()` compares to
+#' a point-null by default, `p_significance()` compares to a range-null.
 #'
 #' @param x A statistical model.
 #' @inheritParams bayestestR::p_significance

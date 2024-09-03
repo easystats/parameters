@@ -24,8 +24,9 @@ bayestestR::equivalence_test
 #' @inheritParams model_parameters.merMod
 #' @inheritParams p_value
 #'
-#' @seealso For more details, see [bayestestR::equivalence_test()].
-#'   Further readings can be found in the references.
+#' @seealso For more details, see [bayestestR::equivalence_test()]. Further
+#' readings can be found in the references. See also [`p_significance()`] for
+#' a unidirectional equivalence test.
 #'
 #' @details
 #' In classical null hypothesis significance testing (NHST) within a frequentist

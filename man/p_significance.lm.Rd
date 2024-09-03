@@ -33,7 +33,13 @@ Compute the probability of \strong{Practical Significance}
 (\emph{\strong{ps}}), which can be conceptualized as a unidirectional equivalence test.
 It returns the probability that an effect is above a given threshold
 corresponding to a negligible effect in the median's direction, considering
-a parameter's confidence interval.
+a parameter's confidence interval. In comparison the the \code{\link[=equivalence_test]{equivalence_test()}}
+function, where the \emph{SGPV} (second generation p-value) describes the proportion
+of the confidence interval that is \emph{inside} the ROPE, the value returned by
+\code{p_significance()} describes the \emph{larger} proportion of the confidence
+interval that is \emph{outside} the ROPE. This makes \code{p_significance()} comparable
+to \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}, however, while \code{p_direction()} compares to
+a point-null by default, \code{p_significance()} compares to a range-null.
 }
 \details{
 \code{p_significance()} returns the proportion of the confidence interval
