@@ -164,6 +164,55 @@ for further information.
 There is also a \href{https://easystats.github.io/see/articles/parameters.html}{\code{plot()}-method}
 implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
+\section{Statistical inference - how to quantify evidence}{
+
+There is no standardized approach to drawing conclusions based on the
+available data and statistical models. A frequently chosen but also much
+criticized approach is to evaluate results based on their statistical
+significance (\emph{Amrhein et al. 2017}).
+
+A more sophisticated way would be to test whether estimated effects exceed
+the "smallest effect size of interest", to avoid even the smallest effects
+being considered relevant simply because they are statistically significant,
+but clinically or practically irrelevant (\emph{Lakens et al. 2018, Lakens 2024}).
+
+A rather unconventional approach, which is nevertheless advocated by various
+authors, is to interpret results from classical regression models in terms of
+probabilities, similar to the usual approach in Bayesian statistics
+(\emph{Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
+Hjort 2003; Vos 2022}).
+
+The \emph{parameters} package provides several options or functions to aid
+statistical inference. These are, for example:
+\itemize{
+\item \code{\link[=equivalence_test]{equivalence_test()}}, to compute the (conditional) equivalence test for
+frequentist models
+\item \code{\link[=p_significance]{p_significance()}}, to compute the probability of \emph{practical significance},
+which can be conceptualized as a unidirectional equivalence test
+\item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
+compatibility (confidence) intervals for statistical models
+\item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
+a column with the \emph{probability of direction}, i.e. the probability that a
+parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for details.
+\item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
+replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
+\item finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting \code{bootstrap = TRUE}) or simulating
+draws from model coefficients using \code{\link[=simulate_model]{simulate_model()}}. These samples
+can then be treated as "posterior samples" and used in many functions from
+the \strong{bayestestR} package.
+}
+
+Most of the above shown options or functions derive from methods originally
+implemented for Bayesian models (\emph{Makowski et al. 2019}). However, assuming
+that model assumptions are met (which means, the model fits well to the data,
+the correct model is chosen that reflectsa the data generating process
+(distributional model family) etc.), it seems appropriate to interpret
+results from classical frequentist models in a "Bayesian way" (more details:
+documentation in \code{\link[=p_function]{p_function()}}).
+}
+
 \examples{
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
@@ -206,6 +255,7 @@ F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5
 }
 }
 \seealso{
-For more details, see \code{\link[bayestestR:equivalence_test]{bayestestR::equivalence_test()}}.
-Further readings can be found in the references.
+For more details, see \code{\link[bayestestR:equivalence_test]{bayestestR::equivalence_test()}}. Further
+readings can be found in the references. See also \code{\link[=p_significance]{p_significance()}} for
+a unidirectional equivalence test.
 }

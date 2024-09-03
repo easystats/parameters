@@ -19,7 +19,7 @@ test_that("weightit, multinom", {
     data = lalonde,
     weightit = w.out
   )
-  expect_snapshot(print(model_parameters(fit4)))
+  expect_snapshot(print(model_parameters(fit4, exponentiate = TRUE), zap_small = TRUE))
 })
 
 test_that("weightit, ordinal", {
@@ -39,5 +39,5 @@ test_that("weightit, ordinal", {
     data = lalonde,
     weightit = w.out
   )
-  expect_snapshot(print(model_parameters(fit5)))
+  expect_snapshot(print(model_parameters(fit5, exponentiate = TRUE), zap_small = TRUE))
 })

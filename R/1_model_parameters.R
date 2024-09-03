@@ -74,10 +74,7 @@
 #' packages or other software packages (like SPSS). To mimic behaviour of SPSS
 #' or packages such as **lm.beta**, use `standardize = "basic"`.
 #'
-#' @section
-#'
-#' Standardization Methods:
-#'
+#' @section Standardization Methods:
 #' - **refit**: This method is based on a complete model re-fit with a
 #' standardized version of the data. Hence, this method is equal to
 #' standardizing the variables before fitting the model. It is the "purest" and
@@ -280,21 +277,98 @@
 #' p-values are based on the probability of direction ([`bayestestR::p_direction()`]),
 #' which is converted into a p-value using [`bayestestR::pd_to_p()`].
 #'
+#' @section Statistical inference - how to quantify evidence:
+#' There is no standardized approach to drawing conclusions based on the
+#' available data and statistical models. A frequently chosen but also much
+#' criticized approach is to evaluate results based on their statistical
+#' significance (*Amrhein et al. 2017*).
+#'
+#' A more sophisticated way would be to test whether estimated effects exceed
+#' the "smallest effect size of interest", to avoid even the smallest effects
+#' being considered relevant simply because they are statistically significant,
+#' but clinically or practically irrelevant (*Lakens et al. 2018, Lakens 2024*).
+#'
+#' A rather unconventional approach, which is nevertheless advocated by various
+#' authors, is to interpret results from classical regression models in terms of
+#' probabilities, similar to the usual approach in Bayesian statistics
+#' (*Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and
+#' Hjort 2003; Vos 2022*).
+#'
+#' The _parameters_ package provides several options or functions to aid
+#' statistical inference. These are, for example:
+#' - [`equivalence_test()`], to compute the (conditional) equivalence test for
+#'   frequentist models
+#' - [`p_significance()`], to compute the probability of *practical significance*,
+#'   which can be conceptualized as a unidirectional equivalence test
+#' - [`p_function()`], or _consonance function_, to compute p-values and
+#'   compatibility (confidence) intervals for statistical models
+#' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes
+#'   a column with the *probability of direction*, i.e. the probability that a
+#'   parameter is strictly positive or negative. See [`bayestestR::p_direction()`]
+#'   for details.
+#' - the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()`
+#'   replaces the p-values with their related _S_-values (*Rafi and Greenland 2020*)
+#' - finally, it is possible to generate distributions of model coefficients by
+#'   generating bootstrap-samples (setting `bootstrap = TRUE`) or simulating
+#'   draws from model coefficients using [`simulate_model()`]. These samples
+#'   can then be treated as "posterior samples" and used in many functions from
+#'   the **bayestestR** package.
+#'
+#' Most of the above shown options or functions derive from methods originally
+#' implemented for Bayesian models (*Makowski et al. 2019*). However, assuming
+#' that model assumptions are met (which means, the model fits well to the data,
+#' the correct model is chosen that reflectsa the data generating process
+#' (distributional model family) etc.), it seems appropriate to interpret
+#' results from classical frequentist models in a "Bayesian way" (more details:
+#' documentation in [`p_function()`]).
+#'
 #' @inheritSection format_parameters Interpretation of Interaction Terms
 #' @inheritSection print.parameters_model Global Options to Customize Messages and Tables when Printing
 #'
 #' @references
 #'
+#'   - Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+#'     flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+#'     research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
+#'
+#'   - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+#'     Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+#'     https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
 #'   - Hoffman, L. (2015). Longitudinal analysis: Modeling within-person
-#'   fluctuation and change. Routledge.
+#'     fluctuation and change. Routledge.
+#'
+#'   - Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+#'     Retrieved from https://lakens.github.io/statistical_inferences/.
+#'     \doi{10.5281/ZENODO.6409077}
+#'
+#'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+#'     for Psychological Research: A Tutorial. Advances in Methods and Practices
+#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'
+#'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+#'     Indices of Effect Existence and Significance in the Bayesian Framework.
+#'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #'   - Neter, J., Wasserman, W., & Kutner, M. H. (1989). Applied linear
-#'   regression models.
+#'     regression models.
 #'
 #'   - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
-#'   science: replace confidence and significance by compatibility and surprise.
-#'   BMC Medical Research Methodology (2020) 20:244.
-
+#'     science: replace confidence and significance by compatibility and surprise.
+#'     BMC Medical Research Methodology (2020) 20:244.
+#'
+#'   - Schweder T. Confidence is epistemic probability for empirical science.
+#'     Journal of Statistical Planning and Inference (2018) 195:116–125.
+#'     \doi{10.1016/j.jspi.2017.09.016}
+#'
+#'   - Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+#'     In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+#'     Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+#'     Princeton, NJ, 2003
+#'
+#'   - Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+#'     Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
+#'
 #' @return A data frame of indices related to the model's parameters.
 #' @export
 model_parameters <- function(model, ...) {

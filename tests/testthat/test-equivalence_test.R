@@ -31,7 +31,7 @@ test_that("equivalence_test, unequal rope-range", {
     c("Rejected", "Accepted", "Undecided", "Rejected", "Accepted", "Undecided")
   )
 
-  # validate thet range of CI equals approximated  normal distribution
+  # validate that range of CI equals approximated normal distribution
   diff_ci <- abs(diff(c(rez$CI_low[3], rez$CI_high[3])))
   set.seed(123)
   out <- bayestestR::distribution_normal(
@@ -41,6 +41,13 @@ test_that("equivalence_test, unequal rope-range", {
   )
   expect_equal(range(out)[1], rez$CI_low[3], tolerance = 1e-4)
   expect_equal(range(out)[2], rez$CI_high[3], tolerance = 1e-4)
+  # need procedure for SGP here...
+  set.seed(123)
+  out <- bayestestR::distribution_normal(
+    n = 10000,
+    mean = rez$CI_high[3] - (diff_ci / 2),
+    sd = diff_ci / ((stats::qnorm((1 + 0.95) / 2) * (stats::qnorm(0.999975) / 2)))
+  )
   expect_equal(
     rez$SGPV[3],
     bayestestR::rope(out, range = c(-Inf, 0.5), ci = 1)$ROPE_Percentage,
