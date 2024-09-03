@@ -67,7 +67,12 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     verbose = verbose
   ))
 
-  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
+  # for plot, we need to have it numeric
+  if (!is.numeric(threshold)) {
+    threshold <- 0.1
+  }
+
+  attr(out, "data") <- posterior
   attr(out, "threshold") <- threshold
   class(out) <- c("p_significance_lm", "p_significance", "see_p_significance", "data.frame")
   out
