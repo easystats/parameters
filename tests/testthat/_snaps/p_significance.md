@@ -3,7 +3,7 @@
     Code
       print(x)
     Output
-      Practical Significance (threshold: default)
+      Practical Significance (threshold: -0.10, 0.10)
       
       Parameter   |         95% CI |         ps
       -----------------------------------------

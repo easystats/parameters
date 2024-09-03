@@ -89,9 +89,18 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 
 #' @export
 print.p_significance_lm <- function(x, digits = 2, p_digits = 3, ...) {
+  threshold <- attributes(x)$threshold
+  # make sure it's numeric
+  if (!is.numeric(threshold)) {
+    threshold <- 0.1
+  }
+  # make sure we have both bounds for the range
+  if (length(threshold) == 1) {
+    threshold <- c(threshold * -1, threshold)
+  }
   caption <- sprintf(
     "Practical Significance (threshold: %s)",
-    insight::format_value(attributes(x)$threshold, digits = 2)
+    paste(insight::format_value(threshold, digits = 2), collapse = ", ")
   )
   x$ps <- insight::format_p(x$ps, name = "ps", digits = p_digits)
   x <- insight::format_table(x, digits = digits, p_digits = p_digits)
