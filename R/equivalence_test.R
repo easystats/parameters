@@ -646,9 +646,22 @@ equivalence_test.ggeffects <- function(x,
 # normally distributed confidence interval. We then calculate the probability
 # mass of this interval that is inside the ROPE.
 .rope_coverage <- function(range_rope, ci_range) {
+  out <- .generate_posterior_from_ci(ci_range)
+  # compare: ci_range and range(out)
+  # The SGPV refers to the proportion of the confidence interval inside the
+  # full ROPE - thus, we set ci = 1 here
+  rc <- bayestestR::rope(out, range = range_rope, ci = 1)
+  rc$ROPE_Percentage
+}
+
+
+.generate_posterior_from_ci <- function(ci_range, precision = 10000) {
+  # this function creates an approximate normal distribution that covers
+  # the CI-range, i.e. we "simulate" a posterior distribution of a
+  # frequentist CI
   diff_ci <- abs(diff(ci_range))
-  out <- bayestestR::distribution_normal(
-    n = 1000,
+  bayestestR::distribution_normal(
+    n = precision,
     mean = ci_range[2] - (diff_ci / 2),
     # we divide the complete range by 2, the one-directional range for the SD
     # then, the range from mean value to lower/upper limit, for a normal
@@ -658,13 +671,6 @@ equivalence_test.ggeffects <- function(x,
     # get the value for one SD, which we need to build the normal distribution.
     sd = (diff_ci / 2) / 3.290525
   )
-
-  # compare: ci_range and range(out)
-
-  # The SGPV refers to the proportion of the confidence interval inside the
-  # full ROPE - thus, we set ci = 1 here
-  rc <- bayestestR::rope(out, range = range_rope, ci = 1)
-  rc$ROPE_Percentage
 }
 
 

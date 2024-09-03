@@ -7,6 +7,8 @@
 
 ## Changes
 
+* Added `p_significance()` methods for frequentist models.
+
 * Methods for `degrees_of_freedom()` have been removed. `degrees_of_freedom()`
   now calls `insight::get_df()`.
 
