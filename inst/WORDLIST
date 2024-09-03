@@ -76,12 +76,14 @@ Hmisc
 Hofman
 Hofmann
 Hornik
+Isager
 ICA
 IRR
 JRM
 Jurs
 KMO
 Kenward
+Korner
 Kruschke
 Kutner
 LMM
@@ -107,6 +109,7 @@ NL
 Neter
 Neyman
 Nieto
+Nievergelt
 Nondegenerate
 Nonresponse
 ORCID
@@ -115,6 +118,7 @@ PCoA
 PHQ
 PLOS
 PMCMRplus
+PeerJ
 Pernet
 Pettersson
 PloS
@@ -139,6 +143,7 @@ Sadana
 Satterthwaite
 Satterthwaite's
 Schaeffer
+Scheel
 Schweder
 Sellke
 Shachar
@@ -253,6 +258,7 @@ joss
 jstatsoft
 kmeans
 labelled
+lakens
 lavaan
 lavaSearch
 lesslikely
@@ -329,6 +335,7 @@ tinytable
 tobit
 tseries
 unicode
+unreplicable
 varEST
 varimax
 vincentab
