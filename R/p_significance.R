@@ -43,7 +43,7 @@ bayestestR::p_significance
 #'
 #' @return A data frame.
 #'
-#' @examples
+#' @examplesIf requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0"
 #' data(qol_cancer)
 #' model <- lm(QoL ~ time + age + education, data = qol_cancer)
 #'

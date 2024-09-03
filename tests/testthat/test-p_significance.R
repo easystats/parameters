@@ -1,4 +1,5 @@
-skip_if_not_installed("bayestestR")
+skip_on_cran()
+skip_if_not_installed("bayestestR", minimum_version = "0.14.1")
 
 test_that("p_significance", {
   data(mtcars)
