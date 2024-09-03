@@ -289,8 +289,8 @@
 <div class="section level2">
 <h2 id="statistical-inference---how-to-quantify-evidence">Statistical inference - how to quantify evidence<a class="anchor" aria-label="anchor" href="#statistical-inference---how-to-quantify-evidence"></a>
 </h2>
-<p>There is no standardized approach to drawing conclusions based on the available data and statistical models. A frequently chosen but also much criticized approach is to evaluate results based on their statistical significance (<em>Amrhein et al. 2017</em>).</p>
-<p>A more sophisticated way would be to test whether estimated effects exceed the “smallest effect size of interest”, to avoid even the smallest effects being considered relevant simply because they are statistically significant, but clinically or practically irrelevant (<em>Lakens et al. 2018, Lakens 2024</em>). A rather unconventional approach, which is nevertheless advocated by various authors, is to interpret results from classical regression models in terms of probabilities, similar to the usual approach in Bayesian statistics (<em>Greenland et al. 2022; Rafi and Greenland 2020; Schweder 2018; Schweder and Hjort 2003; Vos 2022</em>).</p>
+<p>There is no standardized approach to drawing conclusions based on the available data and statistical models. A frequently chosen but also much criticized approach is to evaluate results based on their statistical significance ((Amrhein, Korner-Nievergelt, &amp; Roth, 2017)).</p>
+<p>A more sophisticated way would be to test whether estimated effects exceed the “smallest effect size of interest”, to avoid even the smallest effects being considered relevant simply because they are statistically significant, but clinically or practically irrelevant (Lakens, 2024; Lakens, Scheel, &amp; Isager, 2018). A rather unconventional approach, which is nevertheless advocated by various authors, is to interpret results from classical regression models in terms of probabilities, similar to the usual approach in Bayesian statistics ((Greenland, Rafi, Matthews, &amp; Higgs, 2022; Rafi &amp; Greenland, 2020; Schweder, 2018; Schweder &amp; Hjort, 2003; Vos &amp; Holbert, 2022)).</p>
 <p>The <em>parameters</em> package provides several options or functions to aid statistical inference. These are, for example:</p>
 <ul>
 <li>
@@ -303,7 +303,7 @@
 <li>the <code>s_value</code> argument (setting <code>s_value = TRUE</code>) in <code><a href="reference/model_parameters.html">model_parameters()</a></code> replaces the p-values with their related <em>S</em>-values (<em>Rafi and Greenland 2020</em>)</li>
 <li>finally, it is possible to generate distributions of model coefficients by generating bootstrap-samples (setting <code>bootstrap = TRUE</code>) or simulating draws from model coefficients using <a href="https://easystats.github.io/parameters/reference/simulate_model.html"><code>simulate_model()</code></a>. These samples can then be treated as “posterior samples” and used in many functions from the <strong>bayestestR</strong> package.</li>
 </ul>
-<p>Most of the above shown options or functions derive from methods originally implemented for Bayesian models (<em>Makowski et al. 2019</em>). However, assuming that model assumptions are met (which means, the model fits well to the data, the correct model is chosen that reflectsa the data generating process (distributional model family) etc.), it seems appropriate to interpret results from classical frequentist models in a “Bayesian way” (more details: documentation in [<code><a href="reference/p_function.html">p_function()</a></code>]).</p>
+<p>Most of the above shown options or functions derive from methods originally implemented for Bayesian models ((Makowski, Ben-Shachar, &amp; Lüdecke, 2019)). However, assuming that model assumptions are met (which means, the model fits well to the data, the correct model is chosen that reflects the data generating process (distributional model family) etc.), it seems appropriate to interpret results from classical frequentist models in a “Bayesian way” (more details: documentation in <a href="https://easystats.github.io/parameters/reference/p_function.html"><code>p_function()</code></a>).</p>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -334,6 +334,39 @@
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
 <p>Please note that the parameters project is released with a <a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct/" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-amrhein_earth_2017" class="csl-entry">
+Amrhein, V., Korner-Nievergelt, F., &amp; Roth, T. (2017). The earth is flat ( <em>p</em> &gt; 0.05): Significance thresholds and the crisis of unreplicable research. <em>PeerJ</em>, <em>5</em>, e3544. <a href="https://doi.org/10.7717/peerj.3544" class="external-link uri">https://doi.org/10.7717/peerj.3544</a>
+</div>
+<div id="ref-greenland_aid_2022" class="csl-entry">
+Greenland, S., Rafi, Z., Matthews, R., &amp; Higgs, M. (2022). <em>To Aid Scientific Inference, Emphasize Unconditional Compatibility Descriptions of Statistics</em>. Retrieved from <a href="http://arxiv.org/abs/1909.08583" class="external-link uri">http://arxiv.org/abs/1909.08583</a>
+</div>
+<div id="ref-lakens_improving_2022" class="csl-entry">
+Lakens, D. (2024). <em>Improving Your Statistical Inferences</em>. <a href="https://doi.org/10.5281/ZENODO.6409077" class="external-link uri">https://doi.org/10.5281/ZENODO.6409077</a>
+</div>
+<div id="ref-lakens2020equivalence" class="csl-entry">
+Lakens, D., Scheel, A. M., &amp; Isager, P. M. (2018). Equivalence testing for psychological research: A tutorial. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 259–269. <a href="https://doi.org/10.1177/2515245918770963" class="external-link uri">https://doi.org/10.1177/2515245918770963</a>
+</div>
+<div id="ref-makowski2019bayetestR" class="csl-entry">
+Makowski, D., Ben-Shachar, M., &amp; Lüdecke, D. (2019). <span class="nocase">bayestestR</span>: Describing effects and their uncertainty, existence and significance within the bayesian framework. <em>Journal of Open Source Software</em>, <em>4</em>(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+</div>
+<div id="ref-rafi_semantic_2020" class="csl-entry">
+Rafi, Z., &amp; Greenland, S. (2020). Semantic and cognitive tools to aid statistical science: Replace confidence and significance by compatibility and surprise. <em>BMC Medical Research Methodology</em>, <em>20</em>(1), 244. <a href="https://doi.org/10.1186/s12874-020-01105-9" class="external-link uri">https://doi.org/10.1186/s12874-020-01105-9</a>
+</div>
+<div id="ref-schweder_confidence_2018" class="csl-entry">
+Schweder, T. (2018). Confidence is epistemic probability for empirical science. <em>Journal of Statistical Planning and Inference</em>, <em>195</em>, 116–125. <a href="https://doi.org/10.1016/j.jspi.2017.09.016" class="external-link uri">https://doi.org/10.1016/j.jspi.2017.09.016</a>
+</div>
+<div id="ref-schweder_frequentist_2003" class="csl-entry">
+Schweder, T., &amp; Hjort, N. L. (2003). Frequentist Analogues of Priors and Posteriors. In B. Stigum (Ed.), <em>Econometrics and the Philosophy of Economics: Theory-Data Confrontations in Economics</em> (pp. 285–217). Retrieved from <a href="https://www.duo.uio.no/handle/10852/10425" class="external-link uri">https://www.duo.uio.no/handle/10852/10425</a>
+</div>
+<div id="ref-vos_frequentist_2022" class="csl-entry">
+Vos, P., &amp; Holbert, D. (2022). Frequentist statistical inference without repeated sampling. <em>Synthese</em>, <em>200</em>(2), 89. <a href="https://doi.org/10.1007/s11229-022-03560-x" class="external-link uri">https://doi.org/10.1007/s11229-022-03560-x</a>
+</div>
+</div>
 </div>
 </div>
 
