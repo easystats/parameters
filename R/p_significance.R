@@ -63,7 +63,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
   # distribution that covers the CI-range.
   posterior <- as.data.frame(lapply(seq_len(nrow(out)), function(i) {
     ci_range <- as.numeric(out[i, c("CI_low", "CI_high")])
-    .generate_posterior_from_ci(ci_range)
+    .generate_posterior_from_ci(ci, ci_range)
   }))
   colnames(posterior) <- out$Parameter
 

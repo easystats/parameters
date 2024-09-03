@@ -58,6 +58,7 @@ There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{
 implemented in the \href{https://easystats.github.io/see/}{\strong{see}-package}.
 }
 \examples{
+\dontshow{if (requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(qol_cancer)
 model <- lm(QoL ~ time + age + education, data = qol_cancer)
 
@@ -69,6 +70,7 @@ if (require("see", quietly = TRUE)) {
   result <- p_significance(model)
   plot(result)
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 For more details, see \code{\link[bayestestR:p_significance]{bayestestR::p_significance()}}. See also

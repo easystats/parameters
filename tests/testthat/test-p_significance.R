@@ -12,9 +12,9 @@ test_that("p_significance", {
 
   set.seed(123)
   x <- p_significance(m, ci = 0.8)
-  expect_equal(x$ps, c(1, 0.7446, 1, 0.9964, 0), tolerance = 1e-4)
+  expect_equal(x$ps, c(1, 0.6025, 0.9997, 0.8561, 0), tolerance = 1e-4)
 
   set.seed(123)
   x <- p_significance(m, threshold = 0.5)
-  expect_equal(x$ps, c(1, 0.4128, 1, 0.7751, 0), tolerance = 1e-4)
+  expect_equal(x$ps, c(1, 0.4471, 0.998, 0.676, 0), tolerance = 1e-4)
 })
