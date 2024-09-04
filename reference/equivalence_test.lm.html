@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,10 +228,10 @@ hypotheses</em> <em>(Blume et al. 2018, Lakens and Delacre 2020)</em>. It repres
 proportion of the <em>full</em> confidence interval range (assuming a normally
 distributed, equal-tailed interval) that is inside the ROPE.</p>
 <p>Note that the assumed interval, which is used to calculate the SGPV, is an
-<em>approximation</em> of the <em>full interval</em> based on the chosen confidence level.
-For example, if the 95% confidence interval of a coefficient ranges from -1
-to 1, the underlying <em>full (normally distributed) interval</em> approximately
-ranges from -1.9 to 1.9, see also following code:</p>
+estimation of the <em>full interval</em> based on the chosen confidence level. For
+example, if the 95% confidence interval of a coefficient ranges from -1 to 1,
+the underlying <em>full (normally distributed) interval</em> approximately ranges
+from -1.9 to 1.9, see also following code:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># simulate full normal distribution</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>out <span class="ot">&lt;-</span> bayestestR<span class="sc">::</span><span class="fu">distribution_normal</span>(<span class="dv">10000</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># range of "full" distribution</span></span>
@@ -387,7 +387,7 @@ a unidirectional equivalence test.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI |   SGPV | Equivalence |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] | &lt; .001 |    Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.908  |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.905  |   Undecided | 0.137 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] | &gt; .999 |    Accepted | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] | &lt; .001 |    Rejected | 0.999 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] | &lt; .001 |    Rejected | &gt; .999</span>
@@ -401,7 +401,7 @@ a unidirectional equivalence test.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter        |         90% CI |   SGPV | Equivalence |      p</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -----------------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      | [59.33, 68.41] | &lt; .001 |    Rejected | &gt; .999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.908  |   Undecided | 0.137 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> time             | [-0.76,  2.53] | 0.905  |   Undecided | 0.137 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> age              | [-0.26,  0.32] | &gt; .999 |    Accepted | &lt; .001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [mid]  | [ 5.13, 12.39] | &lt; .001 |    Rejected | 0.999 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> education [high] | [10.14, 18.57] | &lt; .001 |    Rejected | &gt; .999</span>
