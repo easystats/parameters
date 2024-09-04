@@ -735,17 +735,22 @@ equivalence_test.ggeffects <- function(x,
 
 
 .generate_posterior_from_ci <- function(ci = 0.95, ci_range, precision = 10000) {
-  # this function creates an approximate normal distribution that covers
-  # the CI-range, i.e. we "simulate" a posterior distribution from a
-  # frequentist CI
-  diff_ci <- abs(diff(ci_range))
+  # this function creates an approximate normal distribution that covers the
+  # CI-range, i.e. we "simulate" a posterior distribution from a frequentist CI
+
+  # first we need the z-values of thq quantiles from the CI range
   z_value <- stats::qnorm((1 + ci) / 2)
+  # then we need the range of the CI (in units), also to calculate the mean of
+  # the normal distribution
+  diff_ci <- abs(diff(ci_range))
+  mean_dist <- ci_range[2] - (diff_ci / 2)
+  # the range of Z-scores (from lower to upper quantile) gives us the range of
+  # the provided interval in terms of standard deviations. now we divide the
+  # known range of the provided CI (in units) by the z-score-range, which will
+  # give us the standard deviation of the distribution.
   sd_dist <- diff_ci / diff(c(-1 * z_value, z_value))
-  bayestestR::distribution_normal(
-    n = precision,
-    mean = ci_range[2] - (diff_ci / 2),
-    sd = sd_dist
-  )
+  # we now know all parameters (mean and sd) to simulate a normal distribution
+  bayestestR::distribution_normal(n = precision, mean = mean_dist, sd = sd_dist)
 }
 
 
