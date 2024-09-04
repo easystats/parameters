@@ -27,7 +27,7 @@ a point-null by default, p_significance() compares to a range-null."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">parameters</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.1.99</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,10 +105,12 @@ a point-null by default, <code><a href="https://easystats.github.io/bayestestR/r
 <dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
 <dd><p>The threshold value that separates significant from
 negligible effect, which can have following possible values:</p><ul><li><p><code>"default"</code>, in which case the range is set to <code>0.1</code> if input is a vector,
-and based on <code><a href="https://easystats.github.io/bayestestR/reference/rope_range.html" class="external-link">rope_range()</a></code> if a Bayesian model is provided.</p></li>
+and based on <code><a href="https://easystats.github.io/bayestestR/reference/rope_range.html" class="external-link">rope_range()</a></code> if a (Bayesian) model is provided.</p></li>
 <li><p>a single numeric value (e.g., 0.1), which is used as range around zero
-(i.e. the threshold range is set to -0.1 and 0.1)</p></li>
-<li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>).</p></li>
+(i.e. the threshold range is set to -0.1 and 0.1, i.e. reflects a symmetric
+interval)</p></li>
+<li><p>a numeric vector of length two (e.g., <code>c(-0.2, 0.1)</code>), useful for
+asymmetric intervals.</p></li>
 </ul></dd>
 
 
@@ -160,7 +162,7 @@ see following code:</p>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> gear <span class="sc">+</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">brm</span>(mpg <span class="sc">~</span> gear <span class="sc">+</span> wt <span class="sc">+</span> cyl <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># probability of significance (ps) for frequentist model</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">p_significance</span>(m, <span class="at">threshold =</span> <span class="fl">0.6</span>) <span class="co"># ROPE for mpg as outcome</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">p_significance</span>(m)</span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># similar to ps of Bayesian models</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">p_significance</span>(m2)</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># similar to ps of simulated draws / bootstrap samples</span></span>
