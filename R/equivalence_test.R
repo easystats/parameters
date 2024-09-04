@@ -775,7 +775,7 @@ equivalence_test.ggeffects <- function(x,
     # -------------------------------------------------------------------------
     # m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
     # m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
-    # p_significance(m, threshold = 0.6) # the default for "mpg" as response
+    # p_significance(m) # the default for "mpg" as response
     # p_significance(m2)
     # p_significance(simulate_model(m))
     # -------------------------------------------------------------------------
