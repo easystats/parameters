@@ -11,15 +11,18 @@ bayestestR::p_significance
 #' the probability that an effect is above a given threshold corresponding to a
 #' negligible effect in the median's direction, considering a parameter's _full_
 #' confidence interval. In other words, it returns the probability of a clear
-#' direction of an effect, which is larger than the smalles effect size of
-#' interest (e.g., a minimal important difference). In comparison the the
-#' [`equivalence_test()`] function, where the *SGPV* (second generation p-value)
-#' describes the proportion of the _full_ confidence interval that is _inside_
-#' the ROPE, the value returned by `p_significance()` describes the _larger_
-#' proportion of the _full_ confidence interval that is _outside_ the ROPE. This
-#' makes `p_significance()` comparable to [`bayestestR::p_direction()`],
-#' however, while `p_direction()` compares to a point-null by default,
-#' `p_significance()` compares to a range-null.
+#' direction of an effect, which is larger than the smallest effect size of
+#' interest (e.g., a minimal important difference). Its theoretical range is
+#' from zero to one, but the *ps* is typically larger than 0.5 (to indicate
+#' practical significance).
+#'
+#' In comparison the the [`equivalence_test()`] function, where the *SGPV*
+#' (second generation p-value) describes the proportion of the _full_ confidence
+#' interval that is _inside_ the ROPE, the value returned by `p_significance()`
+#' describes the _larger_ proportion of the _full_ confidence interval that is
+#' _outside_ the ROPE. This makes `p_significance()` comparable to
+#' [`bayestestR::p_direction()`], however, while `p_direction()` compares to a
+#' point-null by default, `p_significance()` compares to a range-null.
 #'
 #' @param x A statistical model.
 #' @inheritParams bayestestR::p_significance
@@ -118,7 +121,9 @@ bayestestR::p_significance
 #'   - Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
 #'     Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 #'
-#' @return A data frame.
+#' @return A data frame with columns for the parameter names, the confidence
+#' intervals and the values for practical significance. Higher values indicate
+#' more practical significance (upper bound is one).
 #'
 #' @examplesIf requireNamespace("bayestestR") && packageVersion("bayestestR") > "0.14.0"
 #' data(qol_cancer)
@@ -144,6 +149,23 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
   }))
   colnames(posterior) <- out$Parameter
 
+  # deal with Effects and Component columns
+  if ("Effects" %in% colnames(out) && insight::n_unique(out$Effects) == 1) {
+    out$Effects <- NULL
+  }
+  if ("Component" %in% colnames(out) && insight::n_unique(out$Component) == 1) {
+    out$Component <- NULL
+  }
+
+  # check we don't have duplicated columns in "posterior" we need this for
+  # plotting
+  if (anyDuplicated(colnames(posterior)) > 0 && !is.null(out$Component)) {
+    comps <- .rename_values(out$Component, "zero_inflated", "zi")
+    comps <- .rename_values(comps, "conditional", "cond")
+    colnames(posterior) <- paste0(out$Parameter, "_", comps)
+    out$Parameter <- paste0(out$Parameter, "_", comps)
+  }
+
   # calculate the ROPE range
   if (all(threshold == "default")) {
     threshold <- bayestestR::rope_range(x, verbose = verbose)
@@ -160,6 +182,9 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
     threshold <- 0.1
   }
 
+  # reorder
+  out <- out[intersect(c("Parameter", "CI", "CI_low", "CI_high", "ps", "Effects", "Component"), colnames(out))]
+
   attr(out, "data") <- posterior
   attr(out, "threshold") <- threshold
   class(out) <- c("p_significance_lm", "p_significance", "see_p_significance", "data.frame")
@@ -170,7 +195,7 @@ p_significance.lm <- function(x, threshold = "default", ci = 0.95, verbose = TRU
 # methods ---------------------------------------------------------------------
 
 #' @export
-print.p_significance_lm <- function(x, digits = 2, p_digits = 3, ...) {
+print.p_significance_lm <- function(x, digits = 2, ...) {
   threshold <- attributes(x)$threshold
   # make sure it's numeric
   if (!is.numeric(threshold)) {
@@ -184,8 +209,8 @@ print.p_significance_lm <- function(x, digits = 2, p_digits = 3, ...) {
     "Practical Significance (threshold: %s)",
     toString(insight::format_value(threshold, digits = 2))
   )
-  x$ps <- insight::format_p(x$ps, name = "ps", digits = p_digits)
-  x <- insight::format_table(x, digits = digits, p_digits = p_digits)
+  x$ps <- insight::format_pd(x$ps, name = NULL)
+  x <- insight::format_table(x, digits = digits)
   cat(insight::export_table(x, title = caption, ...))
 }
 
