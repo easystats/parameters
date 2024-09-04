@@ -153,10 +153,10 @@ proportion of the \emph{full} confidence interval range (assuming a normally
 distributed, equal-tailed interval) that is inside the ROPE.
 
 Note that the assumed interval, which is used to calculate the SGPV, is an
-\emph{approximation} of the \emph{full interval} based on the chosen confidence level.
-For example, if the 95\% confidence interval of a coefficient ranges from -1
-to 1, the underlying \emph{full (normally distributed) interval} approximately
-ranges from -1.9 to 1.9, see also following code:
+estimation of the \emph{full interval} based on the chosen confidence level. For
+example, if the 95\% confidence interval of a coefficient ranges from -1 to 1,
+the underlying \emph{full (normally distributed) interval} approximately ranges
+from -1.9 to 1.9, see also following code:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{# simulate full normal distribution
 out <- bayestestR::distribution_normal(10000, 0, 0.5)

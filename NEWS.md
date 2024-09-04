@@ -1,3 +1,10 @@
+# parameters 0.22.3
+
+## Changes
+
+* Used more accurate analytic approach to calculate normal distributions for
+  the SGPV in `equivalence_test()` and used in `p_significance()`.
+
 # parameters 0.22.2
 
 ## New supported models

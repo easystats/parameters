@@ -108,10 +108,10 @@ bayestestR::equivalence_test
 #' distributed, equal-tailed interval) that is inside the ROPE.
 #'
 #' Note that the assumed interval, which is used to calculate the SGPV, is an
-#' _approximation_ of the _full interval_ based on the chosen confidence level.
-#' For example, if the 95% confidence interval of a coefficient ranges from -1
-#' to 1, the underlying _full (normally distributed) interval_ approximately
-#' ranges from -1.9 to 1.9, see also following code:
+#' estimation of the _full interval_ based on the chosen confidence level. For
+#' example, if the 95% confidence interval of a coefficient ranges from -1 to 1,
+#' the underlying _full (normally distributed) interval_ approximately ranges
+#' from -1.9 to 1.9, see also following code:
 #'
 #' ```
 #' # simulate full normal distribution
@@ -736,50 +736,15 @@ equivalence_test.ggeffects <- function(x,
 
 .generate_posterior_from_ci <- function(ci = 0.95, ci_range, precision = 10000) {
   # this function creates an approximate normal distribution that covers
-  # the CI-range, i.e. we "simulate" a posterior distribution of a
+  # the CI-range, i.e. we "simulate" a posterior distribution from a
   # frequentist CI
   diff_ci <- abs(diff(ci_range))
+  z_value <- stats::qnorm((1 + ci) / 2)
+  sd_dist <- diff_ci / diff(c(-1 * z_value, z_value))
   bayestestR::distribution_normal(
     n = precision,
     mean = ci_range[2] - (diff_ci / 2),
-    # we divide the complete range by 2, the one-directional range for the SD.
-    # then, the range from mean value to lower/upper limit, for a normal
-    # distribution is approximately 3.3 SD (3 SD cover 99.7% of the probability
-    # mass of the normal distribution, `1 - ((1 - pnorm(3)) * 2)`). Thus,
-    # assuming that half of the ci_range refers to ~ 3.3 SD, we "normalize" the
-    # value (i.e. divide by 3.3) to get the value for one SD, which we need
-    # to build the normal distribution. The SD itself varies by confidence level,
-    # therefore we have a multiplier based on the confidence level. I agree this
-    # looks *very* hacky, but it is tested against following code, which used
-    # this code to create a normal distribution with "full" coverage, based on
-    # the approximation of the SD related to the CI-level. From this normal-
-    # distribution, the CI-level % interval is drawn and the range of the
-    # simulated normal distribution equals the desired range.
-    # -------------------------------------------------------------------------
-    # m <- lm(mpg ~ gear + hp + wt + cyl + am, data = mtcars)
-    # ci <- 0.75
-    # mp <- model_parameters(m, ci = ci)
-    # ci_range <- c(mp$CI_low[2], mp$CI_high[2])
-    # diff_ci <- abs(diff(ci_range))
-    # out <- bayestestR::distribution_normal(
-    #   n = 10000,
-    #   mean = ci_range[2] - (diff_ci / 2),
-    #   sd = diff_ci / ((stats::qnorm((1+ci)/2) * (stats::qnorm(0.999975) / 2)))
-    # )
-    # # these to ranges are roughly the same
-    # ci(out, ci = ci)
-    # ci_range
-    # -------------------------------------------------------------------------
-    # furthermore, using this approximation, following three approaches yield
-    # similar results:
-    # -------------------------------------------------------------------------
-    # m <- lm(mpg ~ gear + wt + cyl + hp, data = mtcars)
-    # m2 <- brm(mpg ~ gear + wt + cyl + hp, data = mtcars)
-    # p_significance(m) # the default for "mpg" as response
-    # p_significance(m2)
-    # p_significance(simulate_model(m))
-    # -------------------------------------------------------------------------
-    sd = diff_ci / ((stats::qnorm((1 + ci) / 2) * (stats::qnorm(0.999975) / 2)))
+    sd = sd_dist
   )
 }
 

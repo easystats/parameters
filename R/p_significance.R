@@ -43,8 +43,8 @@ bayestestR::p_significance
 #' significance.
 #'
 #' Note that the assumed interval, which is used to calculate the practical
-#' significance, is an _approximation_ of the _full interval_ based on the
-#' chosen confidence level. For example, if the 95% confidence interval of a
+#' significance, is an estimation of the _full interval_ based on the chosen
+#' confidence level. For example, if the 95% confidence interval of a
 #' coefficient ranges from -1 to 1, the underlying _full (normally distributed)
 #' interval_ approximately ranges from -1.9 to 1.9, see also following code:
 #'

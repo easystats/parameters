@@ -59,8 +59,8 @@ rather large compared to the range of the confidence interval,
 significance.
 
 Note that the assumed interval, which is used to calculate the practical
-significance, is an \emph{approximation} of the \emph{full interval} based on the
-chosen confidence level. For example, if the 95\% confidence interval of a
+significance, is an estimation of the \emph{full interval} based on the chosen
+confidence level. For example, if the 95\% confidence interval of a
 coefficient ranges from -1 to 1, the underlying \emph{full (normally distributed)
 interval} approximately ranges from -1.9 to 1.9, see also following code:
 
