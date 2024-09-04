@@ -10,13 +10,16 @@ bayestestR::p_significance
 #' which can be conceptualized as a unidirectional equivalence test. It returns
 #' the probability that an effect is above a given threshold corresponding to a
 #' negligible effect in the median's direction, considering a parameter's _full_
-#' confidence interval. In comparison the the [`equivalence_test()`] function,
-#' where the *SGPV* (second generation p-value) describes the proportion of the
-#' _full_ confidence interval that is _inside_ the ROPE, the value returned by
-#' `p_significance()` describes the _larger_ proportion of the _full_ confidence
-#' interval that is _outside_ the ROPE. This makes `p_significance()` comparable
-#' to [`bayestestR::p_direction()`], however, while `p_direction()` compares to
-#' a point-null by default, `p_significance()` compares to a range-null.
+#' confidence interval. In other words, it returns the probability of a clear
+#' direction of an effect, which is larger than the smalles effect size of
+#' interest (e.g., a minimal important difference). In comparison the the
+#' [`equivalence_test()`] function, where the *SGPV* (second generation p-value)
+#' describes the proportion of the _full_ confidence interval that is _inside_
+#' the ROPE, the value returned by `p_significance()` describes the _larger_
+#' proportion of the _full_ confidence interval that is _outside_ the ROPE. This
+#' makes `p_significance()` comparable to [`bayestestR::p_direction()`],
+#' however, while `p_direction()` compares to a point-null by default,
+#' `p_significance()` compares to a range-null.
 #'
 #' @param x A statistical model.
 #' @inheritParams bayestestR::p_significance
@@ -25,7 +28,8 @@ bayestestR::p_significance
 #' @param ... Arguments passed to other methods, e.g. `ci()`.
 #'
 #' @seealso For more details, see [`bayestestR::p_significance()`]. See also
-#' [`equivalence_test()`].
+#' [`equivalence_test()`], [`p_function()`] and [`bayestestR::p_direction()`]
+#' for functions related to checking effect existence and significance.
 #'
 #' @details `p_significance()` returns the proportion of the _full_ confidence
 #' interval range (assuming a normally distributed, equal-tailed interval) that
@@ -75,6 +79,44 @@ bayestestR::p_significance
 #' implemented in the [**see**-package](https://easystats.github.io/see/).
 #'
 #' @inheritSection model_parameters Statistical inference - how to quantify evidence
+#'
+#' @references
+#'
+#'   - Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+#'     flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+#'     research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
+#'
+#'   - Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+#'     Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+#'     https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+#'
+#'   - Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+#'     Retrieved from https://lakens.github.io/statistical_inferences/.
+#'     \doi{10.5281/ZENODO.6409077}
+#'
+#'   - Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+#'     for Psychological Research: A Tutorial. Advances in Methods and Practices
+#'     in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+#'
+#'   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+#'     Indices of Effect Existence and Significance in the Bayesian Framework.
+#'     Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+#'
+#'   - Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+#'     science: replace confidence and significance by compatibility and surprise.
+#'     BMC Medical Research Methodology (2020) 20:244.
+#'
+#'   - Schweder T. Confidence is epistemic probability for empirical science.
+#'     Journal of Statistical Planning and Inference (2018) 195:116–125.
+#'     \doi{10.1016/j.jspi.2017.09.016}
+#'
+#'   - Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+#'     In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+#'     Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+#'     Princeton, NJ, 2003
+#'
+#'   - Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+#'     Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 #'
 #' @return A data frame.
 #'

@@ -217,10 +217,11 @@ Hjort 2003; Vos 2022}).
 The \strong{parameters} package provides several options or functions to aid
 statistical inference. These are, for example:
 \itemize{
-\item \code{\link[=equivalence_test]{equivalence_test()}}, to compute the (conditional) equivalence test for
-frequentist models
-\item \code{\link[=p_significance]{p_significance()}}, to compute the probability of \emph{practical significance},
-which can be conceptualized as a unidirectional equivalence test
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
 \item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
 compatibility (confidence) intervals for statistical models
 \item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
@@ -263,6 +264,9 @@ if (require("see", quietly = TRUE)) {
 }
 \references{
 \itemize{
+\item Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
 \item Blume, J. D., D'Agostino McGowan, L., Dupont, W. D., & Greevy, R. A.
 (2018). Second-generation p-values: Improved rigor, reproducibility, &
 transparency in statistical analyses. PLOS ONE, 13(3), e0188299.
@@ -270,6 +274,9 @@ https://doi.org/10.1371/journal.pone.0188299
 \item Campbell, H., & Gustafson, P. (2018). Conditional equivalence
 testing: An alternative remedy for publication bias. PLOS ONE, 13(4),
 e0195145. doi: 10.1371/journal.pone.0195145
+\item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
 \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with
 R, JAGS, and Stan. Academic Press
 \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in
@@ -278,12 +285,33 @@ Science, 1(2), 270-280. doi: 10.1177/2515245918771304
 \item Lakens, D. (2017). Equivalence Tests: A Practical Primer for t Tests,
 Correlations, and Meta-Analyses. Social Psychological and Personality
 Science, 8(4), 355–362. doi: 10.1177/1948550617697177
-\item Lakens, D., & Delacre, M. (2020). Equivalence Testing and the Second
+\item Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+Retrieved from https://lakens.github.io/statistical_inferences/.
+\doi{10.5281/ZENODO.6409077}
+\item Lakens, D., and Delacre, M. (2020). Equivalence Testing and the Second
 Generation P-Value. Meta-Psychology, 4.
 https://doi.org/10.15626/MP.2018.933
+\item Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+for Psychological Research: A Tutorial. Advances in Methods and Practices
+in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+Indices of Effect Existence and Significance in the Bayesian Framework.
+Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
 \item Pernet, C. (2017). Null hypothesis significance testing: A guide to
 commonly misunderstood concepts and recommendations for good practice.
 F1000Research, 4, 621. doi: 10.12688/f1000research.6963.5
+\item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+science: replace confidence and significance by compatibility and surprise.
+BMC Medical Research Methodology (2020) 20:244.
+\item Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+\doi{10.1016/j.jspi.2017.09.016}
+\item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003
+\item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
 }
 \seealso{

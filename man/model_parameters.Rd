@@ -342,10 +342,11 @@ Hjort 2003; Vos 2022}).
 The \strong{parameters} package provides several options or functions to aid
 statistical inference. These are, for example:
 \itemize{
-\item \code{\link[=equivalence_test]{equivalence_test()}}, to compute the (conditional) equivalence test for
-frequentist models
-\item \code{\link[=p_significance]{p_significance()}}, to compute the probability of \emph{practical significance},
-which can be conceptualized as a unidirectional equivalence test
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
 \item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
 compatibility (confidence) intervals for statistical models
 \item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes

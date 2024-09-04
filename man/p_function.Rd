@@ -233,6 +233,30 @@ Frequentist inference is built on defining estimators with known \emph{aleatoric
 probability properties, from which we can draw \emph{epistemic} probabilistic
 statements of uncertainty (\emph{Schweder and Hjort 2016}).
 }
+
+\subsection{Functions in the {parameters} package to check for effect existence and significance}{
+
+The \strong{parameters} package provides several options or functions to aid
+statistical inference. Beyond \code{p_function()}, there are, for example:
+\itemize{
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
+\item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
+a column with the \emph{probability of direction}, i.e. the probability that a
+parameter is strictly positive or negative. See \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for details.
+\item the \code{s_value} argument (setting \code{s_value = TRUE}) in \code{model_parameters()}
+replaces the p-values with their related \emph{S}-values (\emph{Rafi and Greenland 2020})
+\item finally, it is possible to generate distributions of model coefficients by
+generating bootstrap-samples (setting \code{bootstrap = TRUE}) or simulating
+draws from model coefficients using \code{\link[=simulate_model]{simulate_model()}}. These samples
+can then be treated as "posterior samples" and used in many functions from
+the \strong{bayestestR} package.
+}
+}
 }
 \note{
 Curently, \code{p_function()} computes intervals based on Wald t- or z-statistic.
@@ -284,4 +308,8 @@ inference with confidence distributions. Cambridge University Press, 2016.
 \item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
 Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
 }
+}
+\seealso{
+See also \code{\link[=equivalence_test]{equivalence_test()}} and \code{\link[=p_significance]{p_significance()}} for
+functions related to checking effect existence and significance.
 }

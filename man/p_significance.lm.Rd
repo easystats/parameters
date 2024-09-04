@@ -35,13 +35,16 @@ Compute the probability of \strong{Practical Significance} (\emph{ps}),
 which can be conceptualized as a unidirectional equivalence test. It returns
 the probability that an effect is above a given threshold corresponding to a
 negligible effect in the median's direction, considering a parameter's \emph{full}
-confidence interval. In comparison the the \code{\link[=equivalence_test]{equivalence_test()}} function,
-where the \emph{SGPV} (second generation p-value) describes the proportion of the
-\emph{full} confidence interval that is \emph{inside} the ROPE, the value returned by
-\code{p_significance()} describes the \emph{larger} proportion of the \emph{full} confidence
-interval that is \emph{outside} the ROPE. This makes \code{p_significance()} comparable
-to \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}, however, while \code{p_direction()} compares to
-a point-null by default, \code{p_significance()} compares to a range-null.
+confidence interval. In other words, it returns the probability of a clear
+direction of an effect, which is larger than the smalles effect size of
+interest (e.g., a minimal important difference). In comparison the the
+\code{\link[=equivalence_test]{equivalence_test()}} function, where the \emph{SGPV} (second generation p-value)
+describes the proportion of the \emph{full} confidence interval that is \emph{inside}
+the ROPE, the value returned by \code{p_significance()} describes the \emph{larger}
+proportion of the \emph{full} confidence interval that is \emph{outside} the ROPE. This
+makes \code{p_significance()} comparable to \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}},
+however, while \code{p_direction()} compares to a point-null by default,
+\code{p_significance()} compares to a range-null.
 }
 \details{
 \code{p_significance()} returns the proportion of the \emph{full} confidence
@@ -111,10 +114,11 @@ Hjort 2003; Vos 2022}).
 The \strong{parameters} package provides several options or functions to aid
 statistical inference. These are, for example:
 \itemize{
-\item \code{\link[=equivalence_test]{equivalence_test()}}, to compute the (conditional) equivalence test for
-frequentist models
-\item \code{\link[=p_significance]{p_significance()}}, to compute the probability of \emph{practical significance},
-which can be conceptualized as a unidirectional equivalence test
+\item \code{\link[=equivalence_test.lm]{equivalence_test()}}, to compute the (conditional)
+equivalence test for frequentist models
+\item \code{\link[=p_significance.lm]{p_significance()}}, to compute the probability of
+\emph{practical significance}, which can be conceptualized as a unidirectional
+equivalence test
 \item \code{\link[=p_function]{p_function()}}, or \emph{consonance function}, to compute p-values and
 compatibility (confidence) intervals for statistical models
 \item the \code{pd} argument (setting \code{pd = TRUE}) in \code{model_parameters()} includes
@@ -154,7 +158,39 @@ if (require("see", quietly = TRUE)) {
 }
 \dontshow{\}) # examplesIf}
 }
+\references{
+\itemize{
+\item Amrhein, V., Korner-Nievergelt, F., and Roth, T. (2017). The earth is
+flat (p > 0.05): Significance thresholds and the crisis of unreplicable
+research. PeerJ, 5, e3544. \doi{10.7717/peerj.3544}
+\item Greenland S, Rafi Z, Matthews R, Higgs M. To Aid Scientific Inference,
+Emphasize Unconditional Compatibility Descriptions of Statistics. (2022)
+https://arxiv.org/abs/1909.08583v7 (Accessed November 10, 2022)
+\item Lakens, D. (2024). Improving Your Statistical Inferences (Version v1.5.1).
+Retrieved from https://lakens.github.io/statistical_inferences/.
+\doi{10.5281/ZENODO.6409077}
+\item Lakens, D., Scheel, A. M., and Isager, P. M. (2018). Equivalence Testing
+for Psychological Research: A Tutorial. Advances in Methods and Practices
+in Psychological Science, 1(2), 259–269. \doi{10.1177/2515245918770963}
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+Indices of Effect Existence and Significance in the Bayesian Framework.
+Frontiers in Psychology, 10, 2767. \doi{10.3389/fpsyg.2019.02767}
+\item Rafi Z, Greenland S. Semantic and cognitive tools to aid statistical
+science: replace confidence and significance by compatibility and surprise.
+BMC Medical Research Methodology (2020) 20:244.
+\item Schweder T. Confidence is epistemic probability for empirical science.
+Journal of Statistical Planning and Inference (2018) 195:116–125.
+\doi{10.1016/j.jspi.2017.09.016}
+\item Schweder T, Hjort NL. Frequentist analogues of priors and posteriors.
+In Stigum, B. (ed.), Econometrics and the Philosophy of Economics: Theory
+Data Confrontation in Economics, pp. 285-217. Princeton University Press,
+Princeton, NJ, 2003
+\item Vos P, Holbert D. Frequentist statistical inference without repeated sampling.
+Synthese 200, 89 (2022). \doi{10.1007/s11229-022-03560-x}
+}
+}
 \seealso{
 For more details, see \code{\link[bayestestR:p_significance]{bayestestR::p_significance()}}. See also
-\code{\link[=equivalence_test]{equivalence_test()}}.
+\code{\link[=equivalence_test]{equivalence_test()}}, \code{\link[=p_function]{p_function()}} and \code{\link[bayestestR:p_direction]{bayestestR::p_direction()}}
+for functions related to checking effect existence and significance.
 }

@@ -24,6 +24,9 @@
 #' For certain models (like mixed models), profiled intervals may be more
 #' accurate, however, this is currently not supported.
 #'
+#' @seealso See also [`equivalence_test()`] and [`p_significance()`] for
+#' functions related to checking effect existence and significance.
+#'
 #' @details
 #' ## Compatibility intervals and continuous _p_-values for different estimate values
 #'
@@ -129,6 +132,27 @@
 #' Frequentist inference is built on defining estimators with known _aleatoric_
 #' probability properties, from which we can draw _epistemic_ probabilistic
 #' statements of uncertainty (_Schweder and Hjort 2016_).
+#'
+#' ## Functions in the {parameters} package to check for effect existence and significance
+#'
+#' The **parameters** package provides several options or functions to aid
+#' statistical inference. Beyond `p_function()`, there are, for example:
+#' - [`equivalence_test()`][equivalence_test.lm], to compute the (conditional)
+#'   equivalence test for frequentist models
+#' - [`p_significance()`][p_significance.lm], to compute the probability of
+#'   *practical significance*, which can be conceptualized as a unidirectional
+#'   equivalence test
+#' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes
+#'   a column with the *probability of direction*, i.e. the probability that a
+#'   parameter is strictly positive or negative. See [`bayestestR::p_direction()`]
+#'   for details.
+#' - the `s_value` argument (setting `s_value = TRUE`) in `model_parameters()`
+#'   replaces the p-values with their related _S_-values (*Rafi and Greenland 2020*)
+#' - finally, it is possible to generate distributions of model coefficients by
+#'   generating bootstrap-samples (setting `bootstrap = TRUE`) or simulating
+#'   draws from model coefficients using [`simulate_model()`]. These samples
+#'   can then be treated as "posterior samples" and used in many functions from
+#'   the **bayestestR** package.
 #'
 #' @return A data frame with p-values and compatibility intervals.
 #'

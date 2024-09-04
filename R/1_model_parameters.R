@@ -296,10 +296,11 @@
 #'
 #' The **parameters** package provides several options or functions to aid
 #' statistical inference. These are, for example:
-#' - [`equivalence_test()`], to compute the (conditional) equivalence test for
-#'   frequentist models
-#' - [`p_significance()`], to compute the probability of *practical significance*,
-#'   which can be conceptualized as a unidirectional equivalence test
+#' - [`equivalence_test()`][equivalence_test.lm], to compute the (conditional)
+#'   equivalence test for frequentist models
+#' - [`p_significance()`][p_significance.lm], to compute the probability of
+#'   *practical significance*, which can be conceptualized as a unidirectional
+#'   equivalence test
 #' - [`p_function()`], or _consonance function_, to compute p-values and
 #'   compatibility (confidence) intervals for statistical models
 #' - the `pd` argument (setting `pd = TRUE`) in `model_parameters()` includes

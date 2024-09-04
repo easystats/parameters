@@ -58,7 +58,6 @@ reference:
 
   - title: "Effect Existence and Significance"
     contents:
-      - equivalence_test
       - equivalence_test.lm
       - p_calibrate
       - p_function
