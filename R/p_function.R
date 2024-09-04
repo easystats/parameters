@@ -133,7 +133,7 @@
 #' probability properties, from which we can draw _epistemic_ probabilistic
 #' statements of uncertainty (_Schweder and Hjort 2016_).
 #'
-#' ## Functions in the {parameters} package to check for effect existence and significance
+#' ## Functions in the parameters package to check for effect existence and significance
 #'
 #' The **parameters** package provides several options or functions to aid
 #' statistical inference. Beyond `p_function()`, there are, for example:

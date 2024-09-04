@@ -234,7 +234,7 @@ probability properties, from which we can draw \emph{epistemic} probabilistic
 statements of uncertainty (\emph{Schweder and Hjort 2016}).
 }
 
-\subsection{Functions in the {parameters} package to check for effect existence and significance}{
+\subsection{Functions in the parameters package to check for effect existence and significance}{
 
 The \strong{parameters} package provides several options or functions to aid
 statistical inference. Beyond \code{p_function()}, there are, for example:
