@@ -1,4 +1,5 @@
-skip_if_not_installed("WeightIt")
+skip_on_os("mac")
+skip_if_not_installed("WeightIt", minimum_version = "1.2.0")
 skip_if_not_installed("cobalt")
 skip_if_not_installed("insight", minimum_version = "0.20.4")
 
